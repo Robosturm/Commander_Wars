@@ -389,7 +389,7 @@ void ReplayMenu::startFastForward()
     
     m_StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
-    skipAnimations();
+    skipAnimations(false);
     
 }
 

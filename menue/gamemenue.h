@@ -128,7 +128,7 @@ public slots:
     /**
      * @brief skipAnimations
      */
-    void skipAnimations();
+    void skipAnimations(bool postAnimation);
     /**
      * @brief doMultiTurnMovement
      * @param pGameAction

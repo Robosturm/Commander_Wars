@@ -38,8 +38,14 @@ var Constructor = function()
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+        var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
+        var offset = Qt.point(-40, 7);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(-50, 7);
+        }
         sprite.loadSprite("vehicle_dust_stop",  false,
-                          BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount(), Qt.point(-40, 7), 1);
+                          BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount(), offset, 1);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)

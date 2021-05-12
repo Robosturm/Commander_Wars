@@ -15767,7 +15767,7 @@ Hovercrafts gain %0% firepower boost.</source>
         <location filename="../resources/scripts/cos/co_andy.js" line="220"/>
         <source>
 Special Unit:
-Repair Tanks
+Repair Tank
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -16012,7 +16012,7 @@ Units gain %0% firepower when attacking. His Units take 1 Damage after attacking
         <location filename="../resources/scripts/cos/co_brenner.js" line="204"/>
         <source>
 Special Unit:
-Repair Tanks
+Repair Tank
 
 Global Effect: 
 No bonus.</source>

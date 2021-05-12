@@ -222,7 +222,7 @@ public slots:
      * @param pUnit
      * @param gotAttacked
      */
-    void postBattleActions(float damage, Unit* pUnit, bool gotAttacked);
+    void postBattleActions(float damage, Unit* pUnit, bool gotAttacked, qint32 weapon);
     /**
      * @brief getDescription
      * @return

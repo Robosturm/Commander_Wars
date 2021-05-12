@@ -227,7 +227,17 @@ var Constructor = function()
     {
         return 1;
     };
-
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_CRYSTAL_TANK"];
+        }
+        return [];
+    };
     // CO - Intel
     this.getBio = function(co)
     {
@@ -247,8 +257,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by %0%.") +
-                qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
+        var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n") +
+                   qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by %0%.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
         text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
         return text;
     };

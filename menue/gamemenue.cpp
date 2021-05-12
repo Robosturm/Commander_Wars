@@ -655,7 +655,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             // clean up the action
             m_pCurrentAction = pGameAction;
             pGameAction = nullptr;
-            skipAnimations();
+            skipAnimations(false);
             if (!pMap->anyPlayerAlive())
             {
                 Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
@@ -830,7 +830,7 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     
 }
 
-void GameMenue::skipAnimations()
+void GameMenue::skipAnimations(bool postAnimation)
 {
     AnimationSkipMode skipAnimations = getSkipMode();
     Console::print("skipping Animations", Console::eDEBUG);
@@ -849,7 +849,7 @@ void GameMenue::skipAnimations()
             skipExceptBattle();
         }
     }
-    if (GameAnimationFactory::getAnimationCount() == 0)
+    if (GameAnimationFactory::getAnimationCount() == 0 && !postAnimation)
     {
         Console::print("GameMenue -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
@@ -1018,46 +1018,6 @@ GameMenue::AnimationSkipMode GameMenue::getSkipMode()
     return skipAnimations;
 }
 
-void GameMenue::autoScroll()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    if (QGuiApplication::focusWindow() == pApp &&
-        m_Focused &&
-        Settings::getAutoScrolling())
-    {
-        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr)
-        {
-            qint32 moveX = 0;
-            qint32 moveY = 0;
-            QPoint bottomRightUi = QPoint(135, 220);
-            if ((curPos.x() < Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() &&
-                 (curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() - 50) &&
-                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
-                curPos.y() > Settings::getHeight() - bottomRightUi.y())
-            {
-
-                moveX = -GameMap::getImageSize() * pMap->getZoom();
-            }
-            if ((curPos.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
-                (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
-                curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x())
-            {
-                moveY = -GameMap::getImageSize() * pMap->getZoom();
-            }
-            if (moveX != 0 || moveY != 0)
-            {
-                MoveMap(moveX , moveY);
-            }
-            else
-            {
-                InGameMenue::autoScroll();
-            }
-        }
-    }
-}
-
 void GameMenue::finishActionPerformed()
 {
     Console::print("Doing post action update", Console::eDEBUG);
@@ -1075,6 +1035,7 @@ void GameMenue::finishActionPerformed()
     pMap->killDeadUnits();
     pMap->getGameScript()->actionDone(m_pCurrentAction);
     pMap->getGameRules()->checkVictory();
+    skipAnimations(true);
     pMap->getGameRules()->createFogVision();
 }
 
@@ -1133,6 +1094,46 @@ void GameMenue::actionPerformed()
         doSaveMap();
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+void GameMenue::autoScroll()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (QGuiApplication::focusWindow() == pApp &&
+        m_Focused &&
+        Settings::getAutoScrolling())
+    {
+        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap.get() != nullptr)
+        {
+            qint32 moveX = 0;
+            qint32 moveY = 0;
+            QPoint bottomRightUi = QPoint(135, 220);
+            if ((curPos.x() < Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() &&
+                 (curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() - 50) &&
+                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
+                curPos.y() > Settings::getHeight() - bottomRightUi.y())
+            {
+
+                moveX = -GameMap::getImageSize() * pMap->getZoom();
+            }
+            if ((curPos.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
+                (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
+                curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x())
+            {
+                moveY = -GameMap::getImageSize() * pMap->getZoom();
+            }
+            if (moveX != 0 || moveY != 0)
+            {
+                MoveMap(moveX , moveY);
+            }
+            else
+            {
+                InGameMenue::autoScroll();
+            }
+        }
+    }
 }
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)

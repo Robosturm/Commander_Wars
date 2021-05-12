@@ -788,17 +788,17 @@ qint32 Player::getCostModifier(QString id, qint32 baseCost)
     return costModifier;
 }
 
-void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
+void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon)
 {
     if (!m_isDefeated)
     {
         if (m_playerCOs[0].get() != nullptr)
         {
-            m_playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+            m_playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked, weapon);
         }
         if (m_playerCOs[1].get() != nullptr)
         {
-            m_playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+            m_playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked, weapon);
         }
     }
 }

@@ -877,6 +877,7 @@ void HeavyAi::scoreUnitBuildings(spQmlVectorBuilding pBuildings, spQmlVectorUnit
                 updateUnitBuildData(unitData, data, funds);
             }
         }
+        // todo calc the score and create the action
     }
 }
 
@@ -895,7 +896,6 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
         {
             auto enableList = pData->getEnabledList();
             auto actionIds = pData->getActionIDs();
-            QVector<qint32> actions;
             for (qint32 i = 0; i < pData->getActionIDs().size(); i++)
             {
                 if (enableList[i])

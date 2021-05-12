@@ -44,7 +44,16 @@ void NeuralNetwork::setInput(QVector<double> in)
 	clean();
     for(qint32 i = 0; i < in.size(); ++i)
     {
-        m_layers[0]->neurons()[i]->setAccumulated(in[i]);
+        double value = in[i];
+        if (value > 1.0)
+        {
+            value = 1.0;
+        }
+        else if (value < -1.0)
+        {
+            value = -1.0;
+        }
+        m_layers[0]->neurons()[i]->setAccumulated(value);
     }
 }
 

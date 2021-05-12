@@ -1631,18 +1631,20 @@ void HumanPlayerInput::previousSelectOption()
 
 void HumanPlayerInput::autoEndTurn()
 {
-    if (m_pPlayer)
+    spGameMap pMap = GameMap::getInstance();
+    if (m_pPlayer != nullptr &&
+        pMap.get() != nullptr &&
+        pMap->getCurrentPlayer() == m_pPlayer)
     {
         Console::print("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
         CO* pCO1 = m_pPlayer->getCO(1);
-        if (Settings::getAutoEndTurn() &&
-            GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
+        if (Settings::getAutoEndTurn() &&            
             GameAnimationFactory::getAnimationCount() == 0 &&
             (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
             (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
         {
-            spGameMap pMap = GameMap::getInstance();
+
             qint32 heigth = pMap->getMapHeight();
             qint32 width = pMap->getMapWidth();
             for (qint32 y = 0; y < heigth; y++)

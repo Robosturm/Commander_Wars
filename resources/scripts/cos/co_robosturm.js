@@ -230,6 +230,17 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_TANK_HUNTER"];
+        }
+        return [];
+    };
     // CO - Intel
     this.getBio = function(co)
     {
@@ -249,7 +260,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain 1 additional movement point and have reduced firepower.") +
+        return qsTr("\nSpecial Unit:\nTank Hunter\n") +
+               qsTr("\nGlobal Effect: \nUnits gain 1 additional movement point and have reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain defense and have reduced firepower.");
     };
     this.getPowerDescription = function(co)

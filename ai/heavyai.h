@@ -35,6 +35,14 @@ class HeavyAi : public CoreAI
         CoUnitValue,
         Movementpoints,
         FondsUsage,
+        // not implemented yet
+        DealingFundsDamage,
+        ReceivingFundsDamge,
+        CapturePotential,
+
+        UnitsToTransportRatio,
+        Flying,
+        LoadingPotential,
 
 
         MaxSize,

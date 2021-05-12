@@ -231,7 +231,17 @@ var Constructor = function()
         }
         return 0;
     };
-
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_TANK_HUNTER"];
+        }
+        return [];
+    };
     // CO - Intel
     this.getBio = function(co)
     {
@@ -251,7 +261,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nDirect Units gain additional firepower and indirect Units loose firepower and 1 firerange.") +
+        return qsTr("\nSpecial Unit:\nTank Hunter\n") +
+               qsTr("\nGlobal Effect: \nDirect Units gain additional firepower and indirect Units loose firepower and 1 firerange.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower.");
     };
     this.getPowerDescription = function(co)
