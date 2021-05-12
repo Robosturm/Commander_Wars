@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
 #include "menue/costylemenu.h"
@@ -81,6 +82,7 @@ void COStyleMenu::exitMenue()
 
 void COStyleMenu::reloadMenue()
 {    
+    Userdata::getInstance()->storeUser();
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(spCOStyleMenu::create());
     oxygine::Actor::detach();    

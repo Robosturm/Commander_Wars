@@ -5,6 +5,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/filesupport.h"
+#include "coreengine/console.h"
 
 #include "resource_management/cospritemanager.h"
 
@@ -51,9 +52,9 @@ void Userdata::storeUser()
     {
         if (!Settings::getUsername().isEmpty())
         {
+            Console::print("Userdata::storeUser", Console::eDEBUG);
             QFile user(Settings::getUsername() + ".dat");
-            user.remove();
-            user.open(QIODevice::WriteOnly);
+            user.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream pStream(&user);
             serializeObject(pStream);
             user.close();
@@ -67,6 +68,7 @@ void Userdata::changeUser()
     QFile user(Settings::getUsername() + ".dat");
     if (user.exists())
     {
+        Console::print("Userdata::changeUser", Console::eDEBUG);
         user.open(QIODevice::ReadOnly);
         QDataStream pStream(&user);
         Userdata::deserializeObject(pStream);
@@ -138,6 +140,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
 
 void Userdata::deleteAchievement(QString id)
 {
+    Console::print("Userdata::deleteAchievement " + id, Console::eDEBUG);
     for (qint32 i = 0; i < m_achievements.size(); i++)
     {
         if (m_achievements[i].id == id)
@@ -210,6 +213,7 @@ QVector<Userdata::Achievement>* Userdata::getAchievements()
 
 void Userdata::addVictoryForMap(QString mapPath, QString co1, QString co2, qint32 score)
 {
+    Console::print("Userdata::addVictoryForMap", Console::eDEBUG);
     if (m_mapVictoryInfo.contains(mapPath))
     {
         auto item = m_mapVictoryInfo.find(mapPath);
