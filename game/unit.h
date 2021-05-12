@@ -973,7 +973,7 @@ private:
     qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
 
-    qint32 m_cloaked{false};
+    qint32 m_cloaked{0};
     bool m_Hidden{false};
 
     bool m_IgnoreUnitCollision{false};

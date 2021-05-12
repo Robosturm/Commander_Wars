@@ -97,7 +97,7 @@ var Constructor = function()
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Wait! Wait! Father! You've got to remember to deploy in an area with secure bases. If the enemy seizes them before you arrive... Father? He's gone. Oh, Father. What are you trying to prove?"),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
 
 
         var dialog12 = GameAnimationFactory.createGameAnimationDialog(

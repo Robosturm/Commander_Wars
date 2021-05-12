@@ -382,6 +382,7 @@ void Userdata::unlockAllShopItems(bool bought)
         item.buyable = true;
         item.bought |= bought;
     }
+     Userdata::getInstance()->storeUser();
 }
 
 void Userdata::serializeObject(QDataStream& pStream) const
