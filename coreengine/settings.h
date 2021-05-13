@@ -36,7 +36,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static bool getSimpleDeselect();
+    static void setSimpleDeselect(bool newSimpleDeselect);
+
     static QStringList getActiveModVersions();
     static QStringList getActiveMods();
     static void setActiveMods(const QStringList &activeMods);
@@ -502,6 +506,7 @@ private:
     static GameEnums::AutoFocusing m_autoFocusing;
     static bool m_centerOnMarkedField;
     static bool m_syncAnimations;
+    static bool m_simpleDeselect;
 
     // internal members
     static spSettings m_pInstance;

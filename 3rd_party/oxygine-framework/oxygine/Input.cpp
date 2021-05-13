@@ -68,6 +68,22 @@ namespace oxygine
         stage->handleEvent(&te);
     }
 
+    void Input::sendPointerZoomEvent(spStage stage, const Vector2& dir, PointerState* ps)
+    {
+        TouchEvent te(TouchEvent::ZOOM, true, ps->getPosition());
+        te.index = ps->getIndex();
+        te.wheelDirection = dir;
+        stage->handleEvent(&te);
+    }
+
+    void Input::sendPointerTouchScrollEvent(spStage stage, float x, float y, PointerState* ps)
+    {
+        TouchEvent te(TouchEvent::TOUCH_SCROLL, true, ps->getPosition());
+        te.index = ps->getIndex();
+        te.wheelDirection = Vector2(x, y);
+        stage->handleEvent(&te);
+    }
+
 
     Input::Input()
     {

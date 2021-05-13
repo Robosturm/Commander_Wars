@@ -214,10 +214,10 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     }
 
     qint32 bottomHeigth = createBottomSprite(x, y, width);
-    this->addChild(m_Cursor);
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
-    this->setHeight(maxY + bottomHeigth);
-    this->setWidth(width * GlobalUtils::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
+    addChild(m_Cursor);
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
+    setHeight(maxY + bottomHeigth);
+    setWidth(width * GlobalUtils::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
 }
 
 qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)
@@ -232,7 +232,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
     pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setY(y);
     pBottomBox->setX(x);
-    this->addChild(pBottomBox);
+    addChild(pBottomBox);
     return static_cast<qint32>(pBottomBox->getHeight());
 }
 
@@ -247,13 +247,8 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width)
     pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setWidth(width);
     pTopBox->setX(x);
-    this->addChild(pTopBox);
+    addChild(pTopBox);
     return static_cast<qint32>(pTopBox->getHeight());
-}
-
-void HumanPlayerInputMenu::leftClick(qint32, qint32)
-{
-    emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
 }
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
@@ -276,7 +271,7 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
             y = 0;
         }
     }
-    this->setPosition(x, y);
+    setPosition(x, y);
     moveMouseToItem(0, 0);
 }
 

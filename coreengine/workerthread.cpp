@@ -149,6 +149,18 @@ void WorkerThread::wheelEvent(qint32 x, qint32 y)
     input->sendPointerWheelEvent(oxygine::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
 }
 
+void WorkerThread::touchZoomEvent(qint32 x, qint32 y)
+{
+    oxygine::Input* input = &oxygine::Input::instance;
+    input->sendPointerZoomEvent(oxygine::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
+}
+
+void WorkerThread::touchScrollEvent(qint32 x, qint32 y)
+{
+    oxygine::Input* input = &oxygine::Input::instance;
+    input->sendPointerTouchScrollEvent(oxygine::getStage(), x, y, &input->m_pointerMouse);
+}
+
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;

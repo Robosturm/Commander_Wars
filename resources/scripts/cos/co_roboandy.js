@@ -200,6 +200,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_AT_CYCLE"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -219,7 +231,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain firepower and misfortune per star.") +
+        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nUnits gain firepower and misfortune per star.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower and misfortune per star.");
     };
     this.getPowerDescription = function(co)

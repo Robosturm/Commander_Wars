@@ -16,6 +16,8 @@ namespace oxygine
             TOUCH_UP,
             WHEEL_DIR,
             OUTX,       //OUT, X - avoid conflicts with WinAPI
+            ZOOM,
+            TOUCH_SCROLL,
             __LAST      //system
         };
 

@@ -164,6 +164,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_AT_CYCLE"];
+        }
+        return [];
+    };
+
 
     // CO - Intel
     this.getBio = function(co)
@@ -184,7 +196,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have reduced defense and increased firepower.") +
+        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nUnits have reduced defense and increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits have high offensive bonus and a defensive malus.");
     };
     this.getPowerDescription = function(co)

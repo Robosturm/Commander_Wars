@@ -288,6 +288,18 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SIEGE_CANNON"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -307,7 +319,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effect.") +
+        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nNo Effect.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower for each indirect unit that can attack the defending unit.");
     };
     this.getPowerDescription = function(co)

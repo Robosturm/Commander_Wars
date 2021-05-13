@@ -228,6 +228,17 @@ var Constructor = function()
     {
         return "BD";
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SIEGE_CANNON"];
+        }
+        return [];
+    };
 
     // CO - Intel
     this.getBio = function(co)
@@ -248,7 +259,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have 30% offensive and 20% defensive bonus.");
     };
     this.getPowerDescription = function(co)

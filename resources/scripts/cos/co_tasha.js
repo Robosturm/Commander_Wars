@@ -218,6 +218,17 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "AIRPORT" ||
+            buildingId === "TEMPORARY_AIRPORT")
+        {
+            return ["ZCOUNIT_KIROV"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -237,7 +248,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects") +
+        return qsTr("\nSpecial Unit:\nKirov\n") +
+               qsTr("\nGlobal Effect: \nNo Effects") +
                qsTr("\n\nCO Zone Effect: \nAir Units have 50% increased firepower and 30% increased defense.");
     };
     this.getPowerDescription = function(co)

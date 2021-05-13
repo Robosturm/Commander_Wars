@@ -28,7 +28,6 @@ signals:
     void sigItemSelected(QString actionID, qint32 cost);
     void sigCanceled(qint32 x, qint32 y);
 public slots:
-    void leftClick(qint32 x, qint32 y);
     void keyInput(oxygine::KeyEvent event);
     void moveMouseToItem(qint32 x, qint32 y);
 private:

@@ -82,7 +82,19 @@ void InGameMenue::loadHandling()
                 if (m_Focused)
                 {
                     pEvent->stopPropagation();
-                    emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y / 100));
+                    emit sigMouseWheel(pTouchEvent->wheelDirection.y);
+                }
+            }
+        });
+        addEventListener(oxygine::TouchEvent::TOUCH_SCROLL, [=](oxygine::Event *pEvent )->void
+        {
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
+            {
+                if (m_Focused)
+                {
+                    pEvent->stopPropagation();
+                    emit sigMouseWheel(pTouchEvent->wheelDirection.y);
                 }
             }
         });

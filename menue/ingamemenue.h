@@ -31,7 +31,7 @@ public:
     void MoveMap(qint32 x, qint32 y);
     virtual void autoScroll();
 signals:
-    void sigMouseWheel(qint32 direction);
+    void sigMouseWheel(float direction);
     void sigMoveMap(qint32 x, qint32 y);
     void sigRightClick(qint32 x, qint32 y);
     void sigRightClickDown(qint32 x, qint32 y);

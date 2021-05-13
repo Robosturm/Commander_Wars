@@ -93,26 +93,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             }
             else if (m_CurrentMenu.get() == nullptr)
             {
-                Unit* pUnit = m_pGameAction->getTargetUnit();
-                if (pUnit != nullptr && !pUnit->getHasMoved() &&
-                    m_pUnitPathFindingSystem.get() != nullptr)
-                {
-                    qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
-                    if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
-                        costs > 0)
-                    {
-                        m_ArrowPoints = m_pUnitPathFindingSystem->getPath(x, y);
-                        createCursorPath(x, y);
-                    }
-                    else
-                    {
-                        cleanUpInput();
-                    }
-                }
-                else
-                {
-                    cleanUpInput();
-                }
+                cancelSelection(x, y);
             }
             else
             {
@@ -135,6 +116,31 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     else
     {
         // do nothing
+    }
+}
+
+void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
+{
+    Console::print("HumanPlayerInput::cancelSelection", Console::eDEBUG);
+    Unit* pUnit = m_pGameAction->getTargetUnit();
+    if (pUnit != nullptr && !pUnit->getHasMoved() &&
+        m_pUnitPathFindingSystem.get() != nullptr)
+    {
+        qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
+        if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
+            costs > 0)
+        {
+            m_ArrowPoints = m_pUnitPathFindingSystem->getPath(x, y);
+            createCursorPath(x, y);
+        }
+        else
+        {
+            cleanUpInput();
+        }
+    }
+    else
+    {
+        cleanUpInput();
     }
 }
 
@@ -239,6 +245,7 @@ void HumanPlayerInput::syncMarkedFields()
 
 void HumanPlayerInput::cleanUpInput()
 {
+    Console::print("HumanPlayerInput::cleanUpInput", Console::eDEBUG);
     clearMenu();
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
@@ -291,25 +298,29 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
+    Console::print("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0)
     {
-        if (!GameMap::getInstance()->onMap(x, y) || !pMenu->getFocused())
-        {
-            return;
-        }
+        spGameMap pMap = GameMap::getInstance();
         bool isViewPlayer = (GameMap::getInstance()->getCurrentViewPlayer() == m_pPlayer);
-        if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
-            m_pPlayer == nullptr)
+        if (!pMap->onMap(x, y))
         {
-            Console::print("humanplayer input leftClick()", Console::eDEBUG);
-            if (m_CurrentMenu.get() != nullptr)
+            // do nothing
+        }
+        else if (!pMenu->getFocused())
+        {
+            if (m_CurrentMenu.get() != nullptr && Settings::getSimpleDeselect())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
                 cancelActionInput();
             }
-            else if (m_pMarkedFieldData.get() != nullptr)
+        }
+        else if (pMap->getCurrentPlayer() == m_pPlayer ||
+            m_pPlayer == nullptr)
+        {            
+            if (m_pMarkedFieldData.get() != nullptr)
             {
                 // did we select a marked field?
                 if (m_pMarkedFieldData->getAllFields())
@@ -460,6 +471,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
+                    Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
                     cleanUpInput();
                 }
             }

@@ -204,8 +204,6 @@ var Constructor = function()
         }
         return 0;
     };
-
-
     this.getAiCoUnitBonus = function(co, unit)
     {
         if (unit.getUnitType() === GameEnums.UnitType_Naval)
@@ -217,6 +215,16 @@ var Constructor = function()
             return 2;
         }
         return 0;
+    };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "AIRPORT" ||
+            buildingId === "TEMPORARY_AIRPORT")
+        {
+            return ["ZCOUNIT_KIROV"];
+        }
+        return [];
     };
     // CO - Intel
     this.getBio = function(co)
@@ -237,8 +245,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nAir units are stronger and Sea units weaker") +
-               qsTr("\n\nCO Zone Effect: \nAir units have increased firepower.");
+        return  qsTr("\nSpecial Unit:\nKirov\n") +
+                qsTr("\nGlobal Effect: \nAir units are stronger and Sea units weaker") +
+                qsTr("\n\nCO Zone Effect: \nAir units have increased firepower.");
     };
     this.getPowerDescription = function(co)
     {

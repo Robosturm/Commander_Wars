@@ -306,6 +306,17 @@ var Constructor = function()
     {
         return "AC";
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_AT_CYCLE"];
+        }
+        return [];
+    };
 
     // CO - Intel
     this.getBio = function(co)
@@ -326,7 +337,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
+        return qsTr("\nSpecial Unit:\nAT Cycle\n") +
+               qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
     };
     this.getPowerDescription = function(co)

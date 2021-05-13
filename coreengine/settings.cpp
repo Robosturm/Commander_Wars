@@ -112,6 +112,7 @@ bool Settings::m_showIngameCoordinates  = true;
 GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastPos;
 bool Settings::m_centerOnMarkedField = false;
 bool Settings::m_syncAnimations = false;
+bool Settings::m_simpleDeselect = false;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -136,6 +137,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getSimpleDeselect()
+{
+    return m_simpleDeselect;
+}
+
+void Settings::setSimpleDeselect(bool newSimpleDeselect)
+{
+    m_simpleDeselect = newSimpleDeselect;
 }
 
 bool Settings::getSyncAnimations()

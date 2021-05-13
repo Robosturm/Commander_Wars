@@ -311,6 +311,43 @@ namespace oxygine
         emit sigMouseMoveEvent(event->x(), event->y());
     }
 
+    void GameWindow::touchEvent(QTouchEvent *event)
+    {
+        switch (event->type())
+        {
+            case QEvent::TouchBegin:
+            case QEvent::TouchUpdate:
+            {
+                QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
+                QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+                if (touchPoints.count() == 2)
+                {
+                    // determine scale factor
+                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                    const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
+                    qreal scale = QLineF(touchPoint0.pos(), touchPoint1.pos()).length() /
+                                  QLineF(touchPoint0.startPos(), touchPoint1.startPos()).length();
+                    emit sigTouchZoomEvent(scale, scale);
+                }
+                else if (touchPoints.count() == 1 )
+                {
+                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                    if (touchPoint0.pos() != touchPoint0.lastPos())
+                    {
+                        emit sigTouchScrollEvent(touchPoint0.pos().x() - touchPoint0.lastPos().x(),
+                                                 touchPoint0.pos().y() - touchPoint0.lastPos().y());
+                    }
+                }
+                break;
+            }
+            case QEvent::TouchEnd:
+            {
+            }
+            default:
+                break;
+        }
+    }
+
     spEventDispatcher GameWindow::getDispatcher()
     {
         return m_dispatcher;

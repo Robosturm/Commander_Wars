@@ -120,6 +120,10 @@ public:
      */
     void cancelActionInput();
     /**
+     * @brief cancelSelection
+     */
+    void cancelSelection(qint32 x, qint32 y);
+    /**
      * @brief serialize stores the object
      * @param pStream
      */

@@ -266,6 +266,18 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SIEGE_CANNON"];
+        }
+        return [];
+    };
+
 
     this.getCOArmy = function()
     {
@@ -291,7 +303,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nIndirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
     };
     this.getPowerDescription = function(co)

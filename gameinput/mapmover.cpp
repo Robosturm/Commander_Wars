@@ -20,7 +20,7 @@ MapMover::~MapMover()
 {
 }
 
-void MapMover::mouseWheel(qint32 direction)
+void MapMover::mouseWheel(float direction)
 {
     GameMap::getInstance()->zoom(direction);
     m_pOwner->centerMapOnCursor();

@@ -75,6 +75,8 @@ namespace oxygine
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
         void sigMouseMoveEvent(qint32 x, qint32 y);
+        void sigTouchZoomEvent(qint32 x, qint32 y);
+        void sigTouchScrollEvent(qint32 x, qint32 y);
     public slots:
         /**
          * @brief getBrightness
@@ -110,7 +112,8 @@ namespace oxygine
         virtual void mousePressEvent(QMouseEvent *event) override;
         virtual void mouseReleaseEvent(QMouseEvent *event) override;
         virtual void wheelEvent(QWheelEvent *event) override;
-        virtual void mouseMoveEvent(QMouseEvent *event)override;
+        virtual void mouseMoveEvent(QMouseEvent *event)override;        
+        virtual void touchEvent(QTouchEvent *event) override;
 
         void updateData();
         bool beginRendering();

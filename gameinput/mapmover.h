@@ -18,7 +18,7 @@ public:
     explicit MapMover(InGameMenue* pOwner);
     virtual ~MapMover();
 public slots:
-    void mouseWheel(qint32 direction);
+    void mouseWheel(float direction);
     void MoveMap(qint32 x, qint32 y);
     virtual void keyInput(oxygine::KeyEvent event);
 //    virtual void keyUp(oxygine::KeyEvent event);

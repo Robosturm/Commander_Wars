@@ -236,6 +236,17 @@ var Constructor = function()
     {
         return "BM";
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SIEGE_CANNON"];
+        }
+        return [];
+    };
 
     // CO - Intel
     this.getBio = function(co)
@@ -256,7 +267,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nIndirect units have 1 increased firerange and non-infantry direct units have reduced firepower.") +
+        return qsTr("\nSpecial Unit:\nSiege Cannon\n") +
+               qsTr("\nGlobal Effect: \nIndirect units have 1 increased firerange and non-infantry direct units have reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nIndirect units  have an offensive bonus.");
     };
     this.getPowerDescription = function(co)
