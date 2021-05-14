@@ -36,8 +36,6 @@ namespace oxygine
         bool stopsImmediatePropagation;
         bool stopsPropagation;
 
-        spObject userDataObject;
-
         /**The event target*/
         spEventDispatcher target;
         /**The object that is actively processing the Event object with an event listener*/

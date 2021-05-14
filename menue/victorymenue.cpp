@@ -512,7 +512,6 @@ void VictoryMenue::addShopMoney()
         connect(pDialogValueCounter.get(), &DialogValueCounter::sigFinished, this, &VictoryMenue::onProgressTimerStart, Qt::QueuedConnection);
         addChild(pDialogValueCounter);
         pUserdata->addCredtis(highestScore);
-        pUserdata->storeUser();
         m_ProgressTimer.stop();
     }
     else

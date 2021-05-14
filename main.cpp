@@ -187,8 +187,6 @@ QQmlDebuggingEnabler enabler;
         GameMap::getInstance()->deleteMap();
     }
     Player::releaseStaticData();
-    // store current settings when closing
-    Userdata::getInstance()->storeUser();
     if (MainServer::getInstance() != nullptr)
     {
         MainServer::getInstance()->deleteLater();

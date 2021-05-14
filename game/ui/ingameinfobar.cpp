@@ -82,9 +82,8 @@ IngameInfoBar::IngameInfoBar()
 
 void IngameInfoBar::updatePlayerInfo()
 {
-
+    Mainapp::getInstance()->pauseRendering();
     m_pGameInfoBox->removeChildren();
-
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     spGameMap pMap = GameMap::getInstance();
@@ -330,6 +329,7 @@ void IngameInfoBar::updatePlayerInfo()
             }
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void IngameInfoBar::updateMinimap()

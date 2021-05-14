@@ -596,7 +596,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                                                        m_gameStarted;
+                           m_gameStarted;
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
@@ -651,6 +651,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             }
 
             pCurrentPlayer->getBaseGameInput()->centerCameraOnAction(pGameAction.get());
+
             pGameAction->perform();
             // clean up the action
             m_pCurrentAction = pGameAction;
@@ -1041,7 +1042,6 @@ void GameMenue::finishActionPerformed()
 
 void GameMenue::actionPerformed()
 {
-    Mainapp::getInstance()->pauseRendering();
     if (getParent() != nullptr)
     {
         Console::print("Action performed", Console::eDEBUG);
@@ -1093,7 +1093,6 @@ void GameMenue::actionPerformed()
     {
         doSaveMap();
     }
-    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMenue::autoScroll()

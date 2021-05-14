@@ -174,6 +174,7 @@ void HumanPlayerInput::cancelActionInput()
 
 void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
 {
+    Mainapp::getInstance()->pauseRendering();
     clearMarkedFields();
     // try to show fire ranges :)
     spGameMap pMap = GameMap::getInstance();
@@ -227,6 +228,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         }
     }
     syncMarkedFields();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::syncMarkedFields()
@@ -318,8 +320,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             }
         }
         else if (pMap->getCurrentPlayer() == m_pPlayer ||
-            m_pPlayer == nullptr)
-        {            
+                 m_pPlayer == nullptr)
+        {
             if (m_pMarkedFieldData.get() != nullptr)
             {
                 // did we select a marked field?
@@ -808,6 +810,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 void HumanPlayerInput::createMarkedMoveFields()
 {
     Console::print("createMarkedMoveFields()", Console::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     clearMarkedFields();
     if (m_pUnitPathFindingSystem.get() != nullptr)
     {
@@ -826,6 +829,7 @@ void HumanPlayerInput::createMarkedMoveFields()
         }
         syncMarkedFields();
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
@@ -1651,7 +1655,7 @@ void HumanPlayerInput::autoEndTurn()
         Console::print("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
         CO* pCO1 = m_pPlayer->getCO(1);
-        if (Settings::getAutoEndTurn() &&            
+        if (Settings::getAutoEndTurn() &&
             GameAnimationFactory::getAnimationCount() == 0 &&
             (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
             (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))

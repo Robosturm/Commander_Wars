@@ -25,6 +25,7 @@ PlayerInfo::PlayerInfo()
 
 void PlayerInfo::updateData()
 {    
+    Mainapp::getInstance()->pauseRendering();
     // clean up
     this->removeChildren();
     // recreate the ui
@@ -194,7 +195,7 @@ void PlayerInfo::updateData()
     }
 
     setHeight(yPos);
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 bool PlayerInfo::getFlippedX() const

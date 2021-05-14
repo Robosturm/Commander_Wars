@@ -46,6 +46,7 @@ void Minimap::clear()
 
 void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
+    Mainapp::getInstance()->pauseRendering();
      // load minimap
     if (pMap.get() != nullptr)
     {
@@ -243,5 +244,5 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
         }
         Mainapp::getInstance()->continueRendering();
     }
-
+    Mainapp::getInstance()->continueRendering();
 }

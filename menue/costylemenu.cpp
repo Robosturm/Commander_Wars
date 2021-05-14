@@ -81,8 +81,7 @@ void COStyleMenu::exitMenue()
 }
 
 void COStyleMenu::reloadMenue()
-{    
-    Userdata::getInstance()->storeUser();
+{
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(spCOStyleMenu::create());
     oxygine::Actor::detach();    

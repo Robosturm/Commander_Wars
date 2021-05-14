@@ -143,6 +143,7 @@ void Building::setOwner(Player* pOwner)
         prevOwner == nullptr)
     {
         updateBuildingSprites(false);
+        updatePlayerColor(visible);
     }
     else
     {

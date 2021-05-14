@@ -299,6 +299,15 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
             pTween = pTween->getNextSibling();
         }
     }
+    for (auto & icons : m_pIconSprites)
+    {
+        oxygine::spTween pTween = icons->getFirstTween();
+        while (pTween.get() != nullptr)
+        {
+            pTween->setElapsed(syncTime);
+            pTween = pTween->getNextSibling();
+        }
+    }
 }
 
 Player* Unit::getOwner()

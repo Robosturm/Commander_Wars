@@ -1869,7 +1869,6 @@ void GameMap::nextTurnPlayerTimeout()
 
 void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
-    Mainapp::getInstance()->pauseRendering();
     Console::print("GameMap::nextTurn", Console::eDEBUG);
     m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
@@ -1946,7 +1945,6 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         pMenu->updateMinimap();
     }
     playMusic();
-    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::playMusic()

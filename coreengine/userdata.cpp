@@ -38,11 +38,13 @@ qint32 Userdata::getCredtis() const
 void Userdata::setCredtis(const qint32 &credtis)
 {
     m_credtis = credtis;
+    storeUser();
 }
 
 void Userdata::addCredtis(const qint32 &credtis)
 {
     m_credtis += credtis;
+    storeUser();
 }
 
 void Userdata::storeUser()
@@ -106,6 +108,7 @@ void Userdata::removeCOStyle(QString coid)
             break;
         }
     }
+    storeUser();
 }
 
 std::tuple<QString, QString, QImage, QImage, bool>* Userdata::getCOStyle(QString coid)
@@ -136,6 +139,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             }
         }
     }
+    storeUser();
 }
 
 void Userdata::deleteAchievement(QString id)
@@ -258,6 +262,7 @@ void Userdata::addVictoryForMap(QString mapPath, QString co1, QString co2, qint3
         info.score.append(score);
         m_mapVictoryInfo.insert(mapPath, info);
     }
+    storeUser();
 }
 
 const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
@@ -351,6 +356,7 @@ void Userdata::removeShopItem(GameEnums::ShopItemType itemType, QString key)
             break;
         }
     }
+    storeUser();
 }
 
 void Userdata::setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable)
@@ -364,6 +370,7 @@ void Userdata::setShopItemBuyable(GameEnums::ShopItemType itemType, QString key,
             break;
         }
     }
+    storeUser();
 }
 
 void Userdata::setShopItemBought(GameEnums::ShopItemType itemType, QString key, bool bought)
@@ -377,6 +384,7 @@ void Userdata::setShopItemBought(GameEnums::ShopItemType itemType, QString key, 
             break;
         }
     }
+    storeUser();
 }
 
 void Userdata::unlockAllShopItems(bool bought)
@@ -386,7 +394,7 @@ void Userdata::unlockAllShopItems(bool bought)
         item.buyable = true;
         item.bought |= bought;
     }
-     Userdata::getInstance()->storeUser();
+    storeUser();
 }
 
 void Userdata::serializeObject(QDataStream& pStream) const
