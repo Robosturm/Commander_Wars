@@ -93,7 +93,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 18;
+        return 19;
     }
 
 
@@ -404,12 +404,12 @@ public slots:
      * @brief getCloaked cloaked units are like stealthed units, but cloak will always be removed at the start of a players turn
      * @return
      */
-    qint32 getCloaked() const;
+    bool getCloaked() const;
     /**
      * @brief setCloaked cloaked units are like stealthed units, but cloak will always be removed at the start of a players turn
      * @param cloaked
      */
-    void setCloaked(qint32 cloaked);
+    void setCloaked(qint32 cloaked, qint32 byPlayer = -1);
     void updateStealthIcon();
     /**
      * @brief isStealthed checks if the unit is invisible for the given player. Either by terrain, Out of Vision or Stealthmode
@@ -592,7 +592,7 @@ public slots:
      * @brief updateIconDuration
      * @param player
      */
-    void updateIconDuration(qint32 player);
+    void updateStatusDurations(qint32 player);
     /**
      * @brief updateUnitStatus updates unit buffs
      */
@@ -720,7 +720,7 @@ public slots:
      * @brief useTerrainDefense
      * @return
      */
-    bool useTerrainDefense() const;
+    bool useTerrainDefense();
     /**
      * @brief getAttackHpBonus
      * @param position
@@ -973,7 +973,7 @@ private:
     qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
 
-    qint32 m_cloaked{0};
+    QVector<QPoint> m_cloaked;
     bool m_Hidden{false};
 
     bool m_IgnoreUnitCollision{false};

@@ -159,6 +159,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_INTEL_TRUCK"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -178,7 +190,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased") +
+        return qsTr("\nSpecial Unit:\nIntel truck\n") +
+               qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased") +
                qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
     };
     this.getPowerDescription = function(co)

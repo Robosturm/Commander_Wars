@@ -74,6 +74,8 @@ QString Unit::getDescription()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
     // load sprite of the base terrain
     QString function = "getDescription";
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function, args);
@@ -321,7 +323,10 @@ QString Unit::getName()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getName";
-        QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
         if (ret.isString())
         {
             return ret.toString();
@@ -338,7 +343,10 @@ qint32 Unit::getUnitType()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";
-    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -739,6 +747,8 @@ float Unit::getTerrainAnimationMoveSpeed()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationMoveSpeed";
     QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isNumber())
     {
@@ -939,7 +949,10 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
 GameEnums::WeaponType Unit::getTypeOfWeapon1()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon1");
+    QJSValueList args;
+    QJSValue value = pInterpreter->newQObject(this);
+    args << value;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon1", args);
     if (erg.isNumber())
     {
         return static_cast<GameEnums::WeaponType>(erg.toInt());
@@ -950,7 +963,10 @@ GameEnums::WeaponType Unit::getTypeOfWeapon1()
 GameEnums::WeaponType Unit::getTypeOfWeapon2()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon2");
+    QJSValueList args;
+    QJSValue value = pInterpreter->newQObject(this);
+    args << value;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon2", args);
     if (erg.isNumber())
     {
         return static_cast<GameEnums::WeaponType>(erg.toInt());
@@ -984,8 +1000,10 @@ bool Unit::canMoveAndFire(QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "canMoveAndFire";
-    QJSValueList args1;
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool())
     {
         return true;
@@ -1118,10 +1136,10 @@ QStringList  Unit::getTransportUnits()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTransportUnits";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     return erg.toVariant().toStringList();
 }
 
@@ -1445,12 +1463,14 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     return bonus;
 }
 
-bool Unit::useTerrainDefense() const
+bool Unit::useTerrainDefense()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "useTerrainDefense";
-    QJSValueList args1;
-    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
     if (erg.isBool() && erg.toBool())
     {
         return true;
@@ -1592,7 +1612,7 @@ void Unit::startOfTurn()
     }
 }
 
-void Unit::updateIconDuration(qint32 player)
+void Unit::updateStatusDurations(qint32 player)
 {
     qint32 i = 0;
     QStringList removeList;
@@ -1627,11 +1647,22 @@ void Unit::updateIconDuration(qint32 player)
             unloadIcon(item);
         }
     }    
+    for (qint32 i = 0; i < m_cloaked.size(); ++i)
+    {
+        if (m_cloaked[i].y() == player)
+        {
+            m_cloaked[i].setX(m_cloaked[i].x() - 1);
+            if (m_cloaked[i].x() <= 0)
+            {
+                m_cloaked.removeAt(i);
+            }
+            break;
+        }
+    }
 }
 
 void Unit::updateUnitStatus()
 {
-    m_cloaked--;
     updateBonus(m_OffensiveBonus);
     updateBonus(m_DefensiveBonus);
     updateBonus(m_VisionBonus);
@@ -1725,19 +1756,19 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
 void Unit::initUnit()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getMovementType";
-    QJSValue  erg = pInterpreter->doFunction(m_UnitID, function1);
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QString function1 = "init";
+    pInterpreter->doFunction(m_UnitID, function1, args1);
+    function1 = "initForMods";
+    pInterpreter->doFunction(m_UnitID, function1, args1);
+    function1 = "getMovementType";
+    QJSValue  erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
         m_MovementType = erg.toString();
     }
-    function1 = "init";
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    pInterpreter->doFunction(m_UnitID, function1, args1);
-    function1 = "initForMods";
-    pInterpreter->doFunction(m_UnitID, function1, args1);
     setFuel(m_fuel);
     setAmmo1(m_ammo1);
     setAmmo2(m_ammo2);
@@ -2064,8 +2095,10 @@ qint32 Unit::getLoadingPlace()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getLoadingPlace";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -2085,8 +2118,10 @@ QString Unit::getUnitDamageID()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamageID";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isString())
     {
         QString retStr = ret.toString();
@@ -2240,7 +2275,10 @@ QStringList Unit::getActionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
-    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     QStringList actionList;
     if (ret.isString())
     {
@@ -2671,14 +2709,33 @@ qint32 Unit::getTotalVisionHigh()
     return high;
 }
 
-qint32 Unit::getCloaked() const
+bool Unit::getCloaked() const
 {
-    return m_cloaked;
+    return (m_cloaked.size() > 0);
 }
 
-void Unit::setCloaked(qint32 cloaked)
+void Unit::setCloaked(qint32 cloaked, qint32 byPlayer)
 {
-    m_cloaked = cloaked;
+    if (byPlayer < 0)
+    {
+        byPlayer = m_pOwner->getPlayerID();
+    }
+    bool found = false;
+    for (auto & entry : m_cloaked)
+    {
+        if (entry.y() == byPlayer)
+        {
+            found = true;
+            if (entry.x() < cloaked)
+            {
+                entry.setX(cloaked);
+            }
+        }
+    }
+    if (!found)
+    {
+        m_cloaked.append(QPoint(cloaked, byPlayer));
+    }
     updateStealthIcon();
 }
 
@@ -2869,7 +2926,7 @@ void Unit::setIgnoreUnitCollision(bool IgnoreUnitCollision)
 
 bool Unit::isStatusStealthed() const
 {
-    return (m_Hidden || (m_cloaked > 0));
+    return (m_Hidden || (m_cloaked.size() > 0));
 }
 
 bool Unit::isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide) const
@@ -2945,7 +3002,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
             return true;
         }
         // a unit can be stealth by itself or by the terrain it's on.
-        if (getHidden() ||
+        if (isStatusStealthed() ||
             hasTerrainHide(pPlayer))
         {
             spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 1);
@@ -3031,7 +3088,12 @@ void Unit::serializeObject(QDataStream& pStream) const
     {
         pStream << m_FirerangeBonus[i];
     }
-    pStream << m_cloaked;
+    size = m_cloaked.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_cloaked[i];
+    }
     pStream << m_VisionHigh;
     pStream << m_customName;
     size = m_AiMovePath.size();
@@ -3260,7 +3322,26 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 12)
     {
-        pStream >> m_cloaked;
+        if (version > 18)
+        {
+            qint32 size = 0;
+            pStream >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint point;
+                pStream >> point;
+                m_cloaked.append(point);
+            }
+        }
+        else
+        {
+            qint32 duration = 0;
+            pStream >> duration;
+            if (duration > 0)
+            {
+                m_cloaked.append(QPoint(duration, m_pOwner->getPlayerID()));
+            }
+        }
     }
     if (version > 13)
     {

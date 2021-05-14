@@ -85,9 +85,11 @@ void Building::scaleAndShowOnSingleTile()
 QString Building::getDescription()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
     // load sprite of the base terrain
     QString function = "getDescription";
+    QJSValueList args;
+    QJSValue objArg = pInterpreter->newQObject(this);
+    args << objArg;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
     if (ret.isString())
     {
@@ -291,10 +293,10 @@ qint32 Building::getVision()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
-    QJSValueList args1;
-    QJSValue obj2 = pInterpreter->newQObject(this);
-    args1 << obj2;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -350,7 +352,10 @@ QString Building::getName()
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getName";
-        QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+        QJSValueList args1;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args1 << obj;
+        QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
         if (ret.isString())
         {
             return ret.toString();
@@ -424,6 +429,8 @@ QString Building::getMinimapIcon()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMiniMapIcon";
     QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isString())
     {
@@ -464,6 +471,8 @@ QStringList Building::getActionList()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
     QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     QStringList retList;
     if (ret.isString())
@@ -677,7 +686,10 @@ qint32 Building::getVisionBonus()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionBonus";
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+    QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();

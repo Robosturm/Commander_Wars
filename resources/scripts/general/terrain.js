@@ -38,7 +38,7 @@ var TERRAIN =
     {
     },
     // returns the defense of this terrain
-    getDefense : function()
+    getDefense : function(terrain)
     {
         return 0;
     },
@@ -73,22 +73,22 @@ var TERRAIN =
     },
 
     // vision created by this field
-    getVision : function(player)
+    getVision : function(player, terrain)
     {
         return -1;
     },
 
-    getBonusVision : function(unit)
+    getBonusVision : function(unit, terrain)
     {
         return 0;
     },
 
-    getVisionHide : function()
+    getVisionHide : function(terrain, player)
     {
         return false;
     },
 
-    getMiniMapIcon : function()
+    getMiniMapIcon : function(terrain)
     {
         return "minimap_plains";
     },
@@ -116,7 +116,7 @@ var TERRAIN =
         }
     },
 
-    getTerrainAnimationMoveSpeed : function()
+    getTerrainAnimationMoveSpeed : function(terrain)
     {
         return 0;
     },
@@ -160,7 +160,7 @@ var TERRAIN =
         }
     },
 
-    getDescription : function()
+    getDescription : function(terrain)
     {
         return "";
     },

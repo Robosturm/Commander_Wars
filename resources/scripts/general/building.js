@@ -7,18 +7,18 @@ var BUILDING =
     {
         building.setVisionHigh(1);
     },
-    getName : function()
+    getName : function(building)
     {
         return "";
     },
     // returns the defense of this terrain
-    getDefense : function()
+    getDefense : function(building)
     {
         return 3;
     },
 
     // vision bonus for units created by this building
-    getVisionBonus : function()
+    getVisionBonus : function(building)
     {
         return 0;
     },
@@ -99,7 +99,7 @@ var BUILDING =
         }
     },
 
-    getBaseIncome : function()
+    getBaseIncome : function(building)
     {
         return 1000;
     },
@@ -109,7 +109,7 @@ var BUILDING =
         return [];
     },
 
-    getActions : function()
+    getActions : function(building)
     {
         return "";
     },
@@ -195,7 +195,7 @@ var BUILDING =
         }
     },
 
-    getMiniMapIcon : function()
+    getMiniMapIcon : function(building)
     {
         return "minimap_building";
     },
@@ -220,7 +220,7 @@ var BUILDING =
         return 0;
     },
 
-    getBuildingTargets : function()
+    getBuildingTargets : function(building)
     {
         // hint for the ai
         return GameEnums.BuildingTarget_Own;
@@ -243,13 +243,13 @@ var BUILDING =
         return "back_town";
     },
 
-    getDescription : function()
+    getDescription : function(building)
     {
         return "";
     },
 
     // vision created by this field
-    getVision : function()
+    getVision : function(building)
     {
         return 0;
     },

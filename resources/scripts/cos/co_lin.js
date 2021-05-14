@@ -223,6 +223,17 @@ var Constructor = function()
         }
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_INTEL_TRUCK"];
+        }
+        return [];
+    };
 
     // CO - Intel
     this.getBio = function(co)
@@ -243,7 +254,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nIntel truck\n") +
+               qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nGround Units gain 30% firepower and defense.");
     };
     this.getPowerDescription = function(co)

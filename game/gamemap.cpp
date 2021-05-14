@@ -1643,7 +1643,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                     pUnit->removeShineTween();
                     pUnit->updateUnitStatus();
                 }
-                pUnit->updateIconDuration(playerId);
+                pUnit->updateStatusDurations(playerId);
             }
         }
     }
