@@ -2929,7 +2929,7 @@ bool Unit::isStatusStealthed() const
     return (m_Hidden || (m_cloaked.size() > 0));
 }
 
-bool Unit::isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide) const
+bool Unit::isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide)
 {
     terrainHide = hasTerrainHide(pPlayer);
     if ((isStatusStealthed() || terrainHide) &&
@@ -2963,7 +2963,7 @@ void Unit::updateStealthIcon()
     }
 }
 
-bool Unit::hasTerrainHide(Player* pPlayer) const
+bool Unit::hasTerrainHide(Player* pPlayer)
 {
     qint32 x = Unit::getX();
     qint32 y = Unit::getY();
@@ -2973,7 +2973,7 @@ bool Unit::hasTerrainHide(Player* pPlayer) const
             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off);
 }
 
-bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 testX, qint32 testY) const
+bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 testX, qint32 testY)
 {
     if (pPlayer != nullptr &&
         pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)

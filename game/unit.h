@@ -397,7 +397,7 @@ public slots:
      * @param pOwner
      * @return
      */
-    bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide) const;
+    bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide);
     bool getHidden() const;
     void setHidden(bool Hidden);
     /**
@@ -416,13 +416,13 @@ public slots:
      * @param pPlayer
      * @return
      */
-    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1) const;
+    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
     /**
      * @brief hasTerrainHide
      * @param pPlayer
      * @return
      */
-    bool hasTerrainHide(Player* pPlayer) const;
+    bool hasTerrainHide(Player* pPlayer);
 
     qint32 getUnitRank() const;
     void setUnitRank(const qint32 &UnitRank);
