@@ -46,7 +46,8 @@ var UNIT =
     getActions : function(unit)
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+        return ["ACTION_FIRE", "ACTION_SUPPORTSINGLE_SUPPLY", "ACTION_JOIN", "ACTION_LOAD",
+                "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     },
 
     getName : function(unit)

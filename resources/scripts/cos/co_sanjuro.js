@@ -347,6 +347,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SMUGGLER"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -366,7 +378,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
+        return qsTr("\nSpecial Unit:\nSmuggler\n") +
+               qsTr("\nGlobal Effect: \nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
                qsTr("\n\nCO Zone Effect: \nGlobal firepower effects are doubled.");
     };
 

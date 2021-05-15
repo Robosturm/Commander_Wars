@@ -234,6 +234,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_SMUGGLER"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -253,7 +265,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nIncome is reduced for buildings he captures.") +
+        return qsTr("\nSpecial Unit:\nSmuggler\n") +
+               qsTr("\nGlobal Effect: \nIncome is reduced for buildings he captures.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
     };
     this.getPowerDescription = function(co)

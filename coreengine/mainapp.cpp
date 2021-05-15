@@ -350,6 +350,18 @@ void Mainapp::changeScreenMode(qint32 mode)
             setPosition(0, 0);
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
+            QScreen *screen = QGuiApplication::primaryScreen();
+            QRect screenSize = screen->availableGeometry();
+            if (screenSize.width() < Settings::getWidth())
+            {
+                setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width());
+            }
+            if (screenSize.height() < Settings::getHeight())
+            {
+                setWidth(screenSize.height());
+                Settings::setHeight(screenSize.height());
+            }
             break;
         }
         case 2:

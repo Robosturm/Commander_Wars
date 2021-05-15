@@ -281,7 +281,7 @@ void OptionMenue::showSettings()
                                      QSize(960 ,  640 )};
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect screenSize;
-    if (Settings::getFullscreen() || Settings::getBorderless())
+    if (Settings::getFullscreen())
     {
         screenSize  = screen->geometry();
     }
