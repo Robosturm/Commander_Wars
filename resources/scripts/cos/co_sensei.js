@@ -203,6 +203,18 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_COMMANDO"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -222,7 +234,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nCopters have increased firepower and Naval Units are weaker.") +
+        return qsTr("\nSpecial Unit:\nCommando\n") +
+               qsTr("\nGlobal Effect: \nCopters have increased firepower and Naval Units are weaker.") +
                qsTr("\n\nCO Zone Effect: \nCopters have way more firepower and infantries higher firepower as well.");
     };
     this.getPowerDescription = function(co)

@@ -252,7 +252,7 @@ var Constructor = function()
             buildingId === "TOWN" ||
             buildingId === "HQ")
         {
-            return ["ZCOUNIT_ROYAL_GUARD"];
+            return ["ZCOUNIT_NEOSPIDER_TANK"];
         }
         return [];
     };
@@ -275,7 +275,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nRoyal Guard\n") +
+        return qsTr("\nSpecial Unit:\nNeo Spider Tank\n") +
                qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain additional firepower.");
     };

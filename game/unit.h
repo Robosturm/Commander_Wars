@@ -410,6 +410,14 @@ public slots:
      * @param cloaked
      */
     void setCloaked(qint32 cloaked, qint32 byPlayer = -1);
+    /**
+     * @brief removeCloaked
+     * @param byPlayer
+     */
+    void removeCloaked(qint32 byPlayer = -1);
+    /**
+     * @brief updateStealthIcon
+     */
     void updateStealthIcon();
     /**
      * @brief isStealthed checks if the unit is invisible for the given player. Either by terrain, Out of Vision or Stealthmode

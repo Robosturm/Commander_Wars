@@ -184,6 +184,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -203,7 +215,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effect.") +
+        return qsTr("\nSpecial Unit:\nIron Shield Generator\n") +
+               qsTr("\nGlobal Effect: \nNo Effect.") +
                qsTr("\n\nCO Zone Effect: \nDefense is increased.");
     };
     this.getPowerDescription = function(co)

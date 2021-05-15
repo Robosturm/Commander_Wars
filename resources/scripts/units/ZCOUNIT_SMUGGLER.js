@@ -1,5 +1,10 @@
 var Constructor = function()
 {
+    this.getUnitDamageID = function(unit)
+    {
+        return "RECON";
+    };
+
     this.init = function(unit)
     {
         unit.setAmmo1(10);

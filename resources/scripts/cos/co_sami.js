@@ -242,6 +242,18 @@ var Constructor = function()
         }
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_COMMANDO"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -261,8 +273,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.") +
-                qsTr("\n\nCO Zone Effect: \nInfantry Units have increased firepower.");
+        return qsTr("\nSpecial Unit:\nCommando\n") +
+               qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.") +
+               qsTr("\n\nCO Zone Effect: \nInfantry Units have increased firepower.");
     };
     this.getPowerDescription = function(co)
     {

@@ -2739,6 +2739,24 @@ void Unit::setCloaked(qint32 cloaked, qint32 byPlayer)
     updateStealthIcon();
 }
 
+void Unit::removeCloaked(qint32 byPlayer)
+{
+    if (byPlayer < 0)
+    {
+        byPlayer = m_pOwner->getPlayerID();
+    }
+    bool found = false;
+    for (qint32 i = 0; i < m_cloaked.size(); ++i)
+    {
+        if (m_cloaked[i].y() == byPlayer)
+        {
+            m_cloaked.removeAt(i);
+            break;
+        }
+    }
+    updateStealthIcon();
+}
+
 void Unit::updateIconTweens()
 {
     

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getUnitDamageID = function()
+    this.getUnitDamageID = function(unit)
     {
         return "HEAVY_TANK";
     };

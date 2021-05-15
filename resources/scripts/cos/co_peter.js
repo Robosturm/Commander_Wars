@@ -236,8 +236,8 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
-                qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
-                qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
+                   qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
+                   qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
         return text;
     };
     this.getPowerDescription = function(co)
