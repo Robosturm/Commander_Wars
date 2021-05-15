@@ -347,6 +347,7 @@ void Mainapp::changeScreenMode(qint32 mode)
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
             show();
+            setPosition(0, 0);
             Settings::setFullscreen(false);
             Settings::setBorderless(true);
             break;
@@ -355,21 +356,34 @@ void Mainapp::changeScreenMode(qint32 mode)
         {
             showFullScreen();
             QScreen *screen = QGuiApplication::primaryScreen();
-            QSize  screenSize = screen->availableSize ();
+            QRect screenSize = screen->geometry();
             // set window info
             Settings::setFullscreen(true);
-            Settings::setBorderless(true);
+            Settings::setBorderless(false);
             Settings::setWidth(screenSize.width());
             Settings::setHeight(screenSize.height());
+            setGeometry(screenSize);
             break;
         }
         default:
         {
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint, false);
-            showNormal();
             Settings::setFullscreen(false);
             Settings::setBorderless(false);
+            QScreen *screen = QGuiApplication::primaryScreen();
+            QRect screenSize = screen->availableGeometry();
+            if (screenSize.width() < Settings::getWidth())
+            {
+                setWidth(screenSize.width());
+                Settings::setWidth(screenSize.width());
+            }
+            if (screenSize.height() < Settings::getHeight())
+            {
+                setWidth(screenSize.height());
+                Settings::setHeight(screenSize.height());
+            }
+            showNormal();
         }
     }
     // change screen size after changing the border flags

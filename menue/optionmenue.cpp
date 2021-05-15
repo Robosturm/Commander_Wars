@@ -280,8 +280,16 @@ void OptionMenue::showSettings()
                                      QSize(960 ,  720 ),
                                      QSize(960 ,  640 )};
     QScreen *screen = QGuiApplication::primaryScreen();
-    QSize  screenSize = screen->availableSize ();
-    supportedSizes.push_front(screenSize);
+    QRect screenSize;
+    if (Settings::getFullscreen() || Settings::getBorderless())
+    {
+        screenSize  = screen->geometry();
+    }
+    else
+    {
+        screenSize  = screen->availableGeometry();
+    }
+    supportedSizes.push_front(screenSize.size());
     qint32 count = 0;
     while  (count < supportedSizes.size())
     {
