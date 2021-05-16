@@ -86,3 +86,15 @@ QStringList TerrainManager::getTerrainsSorted()
     }
     return sortedTerrains;
 }
+
+void TerrainManager::removeRessource(QString id)
+{
+    for (qint32 i = 0; i < m_loadedRessources.size(); ++i)
+    {
+        if (m_loadedRessources[i] == id)
+        {
+            m_loadedRessources.removeAt(i);
+            break;
+        }
+    }
+}

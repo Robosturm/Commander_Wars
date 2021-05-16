@@ -48,7 +48,7 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     connect(this, &PlayerSelection::sigChangeAllTeams, this, &PlayerSelection::changeAllTeams, Qt::QueuedConnection);
     connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
 
-    this->addChild(m_pPlayerSelection);
+    addChild(m_pPlayerSelection);
 }
 
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)

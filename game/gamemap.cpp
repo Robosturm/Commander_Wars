@@ -1873,6 +1873,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
     bool nextDay = nextPlayer();
+    playMusic();
     bool permanent = false;
     bool found = false;
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
@@ -1944,7 +1945,6 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         pMenu->updatePlayerinfo();
         pMenu->updateMinimap();
     }
-    playMusic();
 }
 
 void GameMap::playMusic()

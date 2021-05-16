@@ -28,6 +28,8 @@ public:
      * @return
      */
     QString getDescription(qint32 position);
+public slots:
+    void removeRessource(QString id);
 private:
     virtual ~COPerkManager() = default;
 };

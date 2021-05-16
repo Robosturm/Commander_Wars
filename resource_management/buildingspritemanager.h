@@ -7,6 +7,8 @@
 class BuildingSpriteManager : public QObject, public RessourceManagement<BuildingSpriteManager>
 {
     Q_OBJECT
+public slots:
+    void removeRessource(QString id);
 protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();

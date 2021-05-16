@@ -38,6 +38,8 @@ public:
      * @return
      */
     static QString getUnitTypeText(qint32 type);
+public slots:
+    void removeRessource(QString id);
 protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();

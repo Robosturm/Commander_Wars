@@ -149,3 +149,15 @@ oxygine::ResAnim* COSpriteManager::getResAnim(QString id, oxygine::error_policy 
     }
     return oxygine::Resources::getResAnim(id, ep);
 }
+
+void COSpriteManager::removeRessource(QString id)
+{
+    for (qint32 i = 0; i < m_loadedRessources.size(); ++i)
+    {
+        if (m_loadedRessources[i] == id)
+        {
+            m_loadedRessources.removeAt(i);
+            break;
+        }
+    }
+}

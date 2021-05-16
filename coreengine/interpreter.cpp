@@ -6,6 +6,10 @@
 #include "coreengine/userdata.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/terrainmanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/coperkmanager.h"
+#include "resource_management/unitspritemanager.h"
 
 #include <QDir>
 #include <QQmlEngine>
@@ -53,6 +57,14 @@ void Interpreter::init()
     globalObject().setProperty("userdata", userdata);
     QJSValue coSpriteManager = newQObject(COSpriteManager::getInstance());
     globalObject().setProperty("coSpriteManager", coSpriteManager);
+    QJSValue unitSpriteManager = newQObject(UnitSpriteManager::getInstance());
+    globalObject().setProperty("unitSpriteManager", unitSpriteManager);
+    QJSValue buildingspritemanager = newQObject(BuildingSpriteManager::getInstance());
+    globalObject().setProperty("buildingSpriteManager", buildingspritemanager);
+    QJSValue terrainSpriteManager = newQObject(TerrainManager::getInstance());
+    globalObject().setProperty("terrainSpriteManager", terrainSpriteManager);
+    QJSValue coPerkSpriteManager = newQObject(COPerkManager::getInstance());
+    globalObject().setProperty("coPerkSpriteManager", coPerkSpriteManager);
 
     GameEnums::registerEnums();
 

@@ -42,6 +42,11 @@ public slots:
      * @param maskTable
      */
     void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    /**
+     * @brief removeRessource
+     * @param id
+     */
+    void removeRessource(QString id);
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();

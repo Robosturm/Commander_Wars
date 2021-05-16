@@ -62,29 +62,14 @@
 
 #include "ai/heavyai.h"
 
-int main(qint32 argc, char* argv[])
+#include "resource_management/cospritemanager.h"
+#include "resource_management/terrainmanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/coperkmanager.h"
+#include "resource_management/unitspritemanager.h"
+
+void registerInterfaceData()
 {
-    qInstallMessageHandler(Console::messageOutput);
-    srand(static_cast<unsigned>(time(nullptr)));
-    QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
-#ifdef GAMEDEBUG
-QQmlDebuggingEnabler enabler;
-#endif
-
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("Commander Wars");
-    app.setApplicationVersion(Mainapp::getGameVersion());
-    Settings::loadSettings();
-    QDir dir("temp/");
-    dir.removeRecursively();
-    dir.mkpath(".");
-    Mainapp window;
-    window.setTitle("Commander Wars");
-    QStringList args = app.arguments();
-    window.loadArgs(args);
-    // start crash report handler
-    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
-
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
     qRegisterMetaType<VictoryMenue::GraphModes>("VictoryMenue::GraphModes");
@@ -167,6 +152,36 @@ QQmlDebuggingEnabler enabler;
     qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
     qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);
+    qmlRegisterInterface<COSpriteManager>("COSpriteManager", 1);
+    qmlRegisterInterface<UnitSpriteManager>("UnitSpriteManager", 1);
+    qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
+    qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
+    qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
+}
+
+int main(qint32 argc, char* argv[])
+{
+    qInstallMessageHandler(Console::messageOutput);
+    srand(static_cast<unsigned>(time(nullptr)));
+    QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
+#ifdef GAMEDEBUG
+QQmlDebuggingEnabler enabler;
+#endif
+
+    QGuiApplication app(argc, argv);
+    app.setApplicationName("Commander Wars");
+    app.setApplicationVersion(Mainapp::getGameVersion());
+    Settings::loadSettings();
+    QDir dir("temp/");
+    dir.removeRecursively();
+    dir.mkpath(".");
+    Mainapp window;
+    window.setTitle("Commander Wars");
+    QStringList args = app.arguments();
+    window.loadArgs(args);
+    // start crash report handler
+    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
+    registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());

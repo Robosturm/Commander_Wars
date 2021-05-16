@@ -30,6 +30,8 @@ public:
      * @return
      */
     QStringList getTerrainsSorted();
+public slots:
+    void removeRessource(QString id);
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();
