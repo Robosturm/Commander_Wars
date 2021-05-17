@@ -28,6 +28,7 @@
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 #include "objects/base/timespinbox.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 OptionMenue::OptionMenue()
 {
@@ -131,7 +132,9 @@ void OptionMenue::exitMenue()
     Settings::saveSettings();
     if (restartNeeded)
     {
-        restart();
+        spDialogMessageBox pMessage = spDialogMessageBox::create("Some changes need a restart of the game. The game will restart. Press Ok to restart.", true);
+        connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
+        addChild(pMessage);
     }
     else
     {

@@ -950,6 +950,10 @@ private:
      */
     oxygine::spActor m_CORange;
     /**
+     * @brief m_customRangeInfo
+     */
+    QVector<oxygine::spActor> m_customRangeInfo;
+    /**
      * @brief m_UnitID the id of this unit
      */
     QString m_UnitID;
