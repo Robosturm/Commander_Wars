@@ -1016,12 +1016,13 @@ namespace oxygine
     {
         float width = oxygine::getStage()->getWidth();
         float height = oxygine::getStage()->getHeight();
-        auto scaledSize = getScaledSize();
+        auto scaledWidth = m_size.x * rs.transform.a;
+        auto scaledHeight = m_size.y * rs.transform.d;
         static constexpr float  extension = 50.0f;
         if (rs.transform.x > width + extension ||
             rs.transform.y > height + extension ||
-            rs.transform.x + scaledSize.x < -extension ||
-            rs.transform.y + scaledSize.y < -extension)
+            rs.transform.x + scaledWidth < -extension ||
+            rs.transform.y + scaledHeight < -extension)
         {
             return false;
         }
