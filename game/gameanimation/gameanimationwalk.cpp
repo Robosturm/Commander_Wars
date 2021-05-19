@@ -25,12 +25,15 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
 
 bool GameAnimationWalk::onFinished(bool skipping)
 {    
-    Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
+    spGameMap pMap = GameMap::getInstance();
+    Player* pPlayer = pMap->getCurrentViewPlayer();
     Mainapp::getInstance()->getAudioThread()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
         m_pUnit->setUnitVisible(true);
     }
+    QPoint pos = m_movePath[0];
+    pMap->getTerrain(pos.x(), pos.y())->setUnit(m_pUnit);
     bool ret = GameAnimation::onFinished(skipping);
     
     return ret;

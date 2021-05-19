@@ -55,7 +55,7 @@ protected:
     GameEnums::Directions getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2);
 
 private:
-    Unit* m_pUnit;
+    spUnit m_pUnit;
     QVector<QPoint> m_movePath;
 };
 
