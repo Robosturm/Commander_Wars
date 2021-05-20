@@ -63,6 +63,14 @@ Unit::~Unit()
         m_CORange->removeChildren();
         m_CORange->detach();
     }
+    for (auto & customRange: m_customRangeInfo)
+    {
+        if (customRange.pActor.get())
+        {
+            customRange.pActor->removeChildren();
+            customRange.pActor->detach();
+        }
+    }
 }
 
 bool Unit::isValid()
@@ -151,7 +159,7 @@ void Unit::setOwner(Player* pOwner)
         m_pOwner->getCO(1)->setCOUnit(nullptr);
         setUnitRank(getMaxUnitRang());
     }
-    showCORange();
+    showRanges();
     m_pOwner = pOwner;
     for (auto & loadedUnit : m_TransportUnits)
     {
@@ -230,10 +238,10 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
         oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);                        
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
             pSprite->addTween(tween);
 
-            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);            
+            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
             pWaitSprite->addTween(tweenWait);
         }
         else
@@ -1091,11 +1099,9 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
         {
             if (m_TransportUnits[i] == pUnit)
             {
-
                 pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
                 m_TransportUnits[i]->updateIcons(pMap->getCurrentViewPlayer());
-                m_TransportUnits[i]->showCORange();
-
+                m_TransportUnits[i]->showRanges();
                 m_TransportUnits.removeAt(i);
                 break;
             }
@@ -1113,7 +1119,7 @@ void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
         {
             pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[index]);
             m_TransportUnits[index]->updateIcons(pMap->getCurrentViewPlayer());
-            m_TransportUnits[index]->showCORange();
+            m_TransportUnits[index]->showRanges();
         }
         m_TransportUnits.removeAt(index);
     }
@@ -1537,6 +1543,17 @@ void Unit::setUnitVisible(bool value)
     {
         m_CORange->setVisible(value);
     }
+    for (auto & customRange: m_customRangeInfo)
+    {
+        if (customRange.pActor.get() == nullptr)
+        {
+            updateRangeActor(customRange.pActor,
+                             customRange.range,
+                             customRange.id,
+                             customRange.color);
+        }
+        customRange.pActor->setVisible(value);
+    }
     setVisible(value);
 }
 
@@ -1646,7 +1663,7 @@ void Unit::updateStatusDurations(qint32 player)
         {
             unloadIcon(item);
         }
-    }    
+    }
     for (qint32 i = 0; i < m_cloaked.size(); ++i)
     {
         if (m_cloaked[i].y() == player)
@@ -2446,7 +2463,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     spUnit pUnit = m_pTerrain->getSpUnit();
     // teleport unit to target position
     pMap->getTerrain(x, y)->setUnit(pUnit);
-    showCORange();
+    showRanges();
     pUnit = nullptr;
     
 }
@@ -2499,10 +2516,10 @@ GameAnimation* Unit::killUnit()
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (ret.isQObject())
     {
-       pRet = dynamic_cast<GameAnimation*>(ret.toQObject());
-       pRet->writeDataInt32(getX());
-       pRet->writeDataInt32(getY());
-       pRet->setStartOfAnimationCall("UNIT", "onKilled");
+        pRet = dynamic_cast<GameAnimation*>(ret.toQObject());
+        pRet->writeDataInt32(getX());
+        pRet->writeDataInt32(getY());
+        pRet->setStartOfAnimationCall("UNIT", "onKilled");
     }
     // record destruction of this unit
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
@@ -3141,6 +3158,14 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_maxRange;
     pStream << m_maxFuel;
     pStream << m_baseMovementPoints;
+    size = m_customRangeInfo.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_customRangeInfo[i].id;
+        pStream << m_customRangeInfo[i].range;
+        pStream << m_customRangeInfo[i].color.rgba();
+    }
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3432,9 +3457,28 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     setAmmo1(bufAmmo1);
     setAmmo2(bufAmmo2);
     setFuel(bufFuel);
+    if (version > 19)
+    {
+        qint32 size;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            CustomRangeInfo customRangeInfo;
+            pStream >> customRangeInfo.id;
+            pStream >> customRangeInfo.range;
+            QRgb rgb;
+            pStream >> rgb;
+            customRangeInfo.color = rgb;
+            m_customRangeInfo.append(customRangeInfo);
+            updateRangeActor(customRangeInfo.pActor,
+                             customRangeInfo.range,
+                             customRangeInfo.id,
+                             customRangeInfo.color);
+        }
+    }
 }
 
-void Unit::showCORange()
+void Unit::showRanges()
 {    
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
@@ -3447,31 +3491,93 @@ void Unit::showCORange()
     else
     {
         createCORange(-1);
-    }    
+    }
+    updateCustomRangeActors();
+}
+
+void Unit::showCustomRange(QString id, qint32 range, QColor color)
+{
+    bool found = false;
+    for (auto & customRangeInfo : m_customRangeInfo)
+    {
+        if (customRangeInfo.id == id)
+        {
+            customRangeInfo.range = range;
+            customRangeInfo.color = color;
+            updateRangeActor(customRangeInfo.pActor,
+                             customRangeInfo.range,
+                             customRangeInfo.id,
+                             customRangeInfo.color);
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        CustomRangeInfo customRangeInfo;
+        customRangeInfo.range = range;
+        customRangeInfo.id = id;
+        customRangeInfo.color = color;
+        m_customRangeInfo.append(customRangeInfo);
+        updateRangeActor(customRangeInfo.pActor,
+                         customRangeInfo.range,
+                         customRangeInfo.id,
+                         customRangeInfo.color);
+    }
+}
+
+void Unit::removeCustomRange(QString id)
+{
+    for (qint32 i = 0; i < m_customRangeInfo.size(); ++i)
+    {
+        if (m_customRangeInfo[i].id == id)
+        {
+            m_customRangeInfo[i].pActor->removeChildren();
+            m_customRangeInfo[i].pActor->detach();
+            m_customRangeInfo.removeAt(i);
+            break;
+        }
+    }
 }
 
 void Unit::createCORange(qint32 coRange)
 {
-    if (m_CORange.get() == nullptr)
+    QColor color = m_pOwner->getColor();
+    updateRangeActor(m_CORange, coRange, "co+range+marker", color);
+}
+
+void Unit::updateCustomRangeActors()
+{
+    for (auto & customRangeInfo : m_customRangeInfo)
     {
-        m_CORange = oxygine::spActor::create();
+        updateRangeActor(customRangeInfo.pActor,
+                         customRangeInfo.range,
+                         customRangeInfo.id,
+                         customRangeInfo.color);
+    }
+}
+
+void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString resAnim, QColor color)
+{
+    if (pActor.get() == nullptr)
+    {
+        pActor = oxygine::spActor::create();
     }
     else
     {
-        m_CORange->detach();
+        pActor->detach();
     }
-    m_CORange->removeChildren();
-    m_CORange->setPriority(static_cast<qint32>(Mainapp::ZOrder::CORange));
+    pActor->removeChildren();
+    pActor->setPriority(static_cast<qint32>(Mainapp::ZOrder::CORange));
     spGameMap pMap = GameMap::getInstance();
-    if (m_pTerrain != nullptr && coRange >= 0 && pMap.get())
+    if (m_pTerrain != nullptr && range >= 0 && pMap.get())
     {
-        QColor color = m_pOwner->getColor();
-        CreateOutline::addCursorRangeOutline(m_CORange, "co+range+marker", coRange, color);
-        m_CORange->setPosition(GameMap::getImageSize() * Unit::getX(), GameMap::getImageSize() * Unit::getY());
-        pMap->addChild(m_CORange);
+        CreateOutline::addCursorRangeOutline(pActor, resAnim, range, color);
+        pActor->setPosition(GameMap::getImageSize() * Unit::getX(), GameMap::getImageSize() * Unit::getY());
+        pMap->addChild(pActor);
     }
     else
     {
-        m_CORange = nullptr;
+        pActor = nullptr;
     }
 }

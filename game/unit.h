@@ -93,7 +93,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 19;
+        return 20;
     }
 
 
@@ -565,7 +565,7 @@ public slots:
     /**
      * @brief showCORange
      */
-    void showCORange();
+    void showRanges();
     /**
      * @brief removeUnit removes this from game
      */
@@ -772,6 +772,18 @@ public slots:
      */
     void createCORange(qint32 coRange);
     /**
+     * @brief showCustomRange
+     * @param id
+     * @param range
+     * @param color
+     */
+    void showCustomRange(QString id, qint32 range, QColor color = Qt::white);
+    /**
+     * @brief removeCustomRange
+     * @param id
+     */
+    void removeCustomRange(QString id);
+    /**
      * @brief updateSprites reloads all sprites
      */
     void updateSprites(bool editor);
@@ -936,8 +948,18 @@ protected:
      * @return
      */
     qint32 getBonus(QVector<QPoint>& data);
-
-
+    /**
+     * @brief updateRangeActor
+     * @param pActor
+     * @param range
+     * @param resAnim
+     * @param color
+     */
+    void updateRangeActor(oxygine::spActor & pActor, qint32 range, QString resAnim, QColor color);
+    /**
+     * @brief updateCustomRangeActors
+     */
+    void updateCustomRangeActors();
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
@@ -949,10 +971,17 @@ private:
      * @brief m_CORange
      */
     oxygine::spActor m_CORange;
+    struct CustomRangeInfo
+    {
+        oxygine::spActor pActor;
+        QString id;
+        qint32 range;
+        QColor color;
+    };
     /**
      * @brief m_customRangeInfo
      */
-    QVector<oxygine::spActor> m_customRangeInfo;
+    QVector<CustomRangeInfo> m_customRangeInfo;
     /**
      * @brief m_UnitID the id of this unit
      */

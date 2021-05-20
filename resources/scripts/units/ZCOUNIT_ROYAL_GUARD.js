@@ -21,6 +21,7 @@ var Constructor = function()
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
+        unit.showCustomRange("cursor+border", 1, unit.getOwner().getColor());
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)

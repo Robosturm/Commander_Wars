@@ -14,6 +14,7 @@ ZCOUNIT_ROYAL_GUARD.init = function(unit)
     unit.setMinRange(1);
     unit.setMaxRange(1);
     unit.setVision(1);
+    unit.showCustomRange("cursor+border", 1, unit.getOwner().getColor());
 };
 ZCOUNIT_ROYAL_GUARD.getBaseCost = function()
 {
