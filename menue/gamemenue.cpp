@@ -26,6 +26,7 @@
 #include "resource_management/achievementmanager.h"
 
 #include "objects/base/tableview.h"
+#include "objects/base/moveinbutton.h"
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/ingame/coinfodialog.h"
 #include "objects/dialogs/ingame/dialogvictoryconditions.h"
@@ -331,11 +332,19 @@ void GameMenue::loadGameMenue()
 
     // back to normal code
     m_pPlayerinfo = spPlayerInfo::create();
+    m_pPlayerinfo->updateData();
+    addChild(m_pPlayerinfo);
+
     m_IngameInfoBar = spIngameInfoBar::create();
     m_IngameInfoBar->updateMinimap();
-    m_pPlayerinfo->updateData();
     addChild(m_IngameInfoBar);
-    addChild(m_pPlayerinfo);
+    if (Settings::getsmallScreenDevice())
+    {
+        m_IngameInfoBar->setX(Settings::getWidth() - 1);
+        auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getWidth());
+        connect(moveButton.get(), &MoveInButton::sigMoved, this, &GameMenue::doPlayerInfoFlipping, Qt::QueuedConnection);
+        m_IngameInfoBar->addChild(moveButton);
+    }
 
     m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getWidth(), 50);
 
@@ -446,7 +455,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     m_XYButtonBox = pButtonBox;
-    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
+    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getsmallScreenDevice());
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
@@ -1140,20 +1149,39 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
     if (m_xyTextInfo.get() != nullptr)
     {
         m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
-        QPoint pos = getMousePos(x, y);
-        bool flip = m_pPlayerinfo->getFlippedX();
-        qint32 screenWidth = Settings::getWidth() - m_IngameInfoBar->getScaledWidth();
-        const qint32 diff = screenWidth / 8;
-        if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Left)
+        doPlayerInfoFlipping();
+    }
+}
+
+void GameMenue::doPlayerInfoFlipping()
+{
+    qint32 x = m_Cursor->getMapPointX();
+    qint32 y = m_Cursor->getMapPointY();
+    QPoint pos = getMousePos(x, y);
+    bool flip = m_pPlayerinfo->getFlippedX();
+    qint32 screenWidth = m_IngameInfoBar->getX();
+    const qint32 diff = screenWidth / 8;
+    if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Left)
+    {
+        m_pPlayerinfo->setX(0);
+        flip = false;
+        if (m_XYButtonBox.get() != nullptr)
         {
-            m_pPlayerinfo->setX(0);
-            flip = false;
-            if (m_XYButtonBox.get() != nullptr)
-            {
-                m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
-            }
+            m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
         }
-        else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Right)
+    }
+    else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Right)
+    {
+        flip = true;
+        m_pPlayerinfo->setX(screenWidth);
+        if (m_XYButtonBox.get() != nullptr)
+        {
+            m_XYButtonBox->setX(0);
+        }
+    }
+    else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Flipping)
+    {
+        if ((pos.x() < (screenWidth) / 2 - diff))
         {
             flip = true;
             m_pPlayerinfo->setX(screenWidth);
@@ -1162,33 +1190,20 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
                 m_XYButtonBox->setX(0);
             }
         }
-        else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Flipping)
+        else if (pos.x() > (screenWidth) / 2 + diff)
         {
-            if ((pos.x() < (screenWidth) / 2 - diff && !flip))
+            m_pPlayerinfo->setX(0);
+            flip = false;
+            if (m_XYButtonBox.get() != nullptr)
             {
-                flip = true;
-                m_pPlayerinfo->setX(screenWidth);
-                if (m_XYButtonBox.get() != nullptr)
-                {
-                    m_XYButtonBox->setX(0);
-                }
-            }
-            else if (pos.x() > (screenWidth) / 2 + diff && flip)
-            {
-                m_pPlayerinfo->setX(0);
-                flip = false;
-                if (m_XYButtonBox.get() != nullptr)
-                {
-                    m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
-                }
+                m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
             }
         }
-        if (flip != m_pPlayerinfo->getFlippedX())
-        {
-            m_pPlayerinfo->setFlippedX(flip);
-            m_pPlayerinfo->updateData();
-        }
-        
+    }
+    if (flip != m_pPlayerinfo->getFlippedX())
+    {
+        m_pPlayerinfo->setFlippedX(flip);
+        m_pPlayerinfo->updateData();
     }
 }
 

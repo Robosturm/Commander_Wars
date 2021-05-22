@@ -10,20 +10,17 @@ class CO;
 class PlayerInfo;
 typedef oxygine::intrusive_ptr<PlayerInfo> spPlayerInfo;
 
+/**
+ * @brief Shows infos about the co's, funds and the powermeter
+ */
 class PlayerInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
     explicit PlayerInfo();
 
-
-
-signals:
-
 public slots:
     void updateData();
-
-
     void setFlippedX(bool value);
     bool getFlippedX() const;
 private:

@@ -1,4 +1,5 @@
 #include "objects/editorselection.h"
+#include "objects/base/moveinbutton.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
@@ -21,15 +22,16 @@ EditorSelection::EditorSelection()
 {
     setObjectName("EditorSelection");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setWidth(Settings::getWidth() / 4.0f);
-    this->setPosition(Settings::getWidth() - Settings::getWidth() / 4.0f, 0);
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setWidth(Settings::getWidth() / 4.0f);
+    setHeight(Settings::getHeight() - 80);
+    setPosition(Settings::getWidth() - Settings::getWidth() / 4.0f, 80);
     m_BoxSelectionType = createV9Box(0, m_startHSelectionType, Settings::getWidth() / 4.0f, m_selectionHeight);
     m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, Settings::getWidth() / 4.0f, m_selectionHeight);
     m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, Settings::getWidth() / 4.0f, m_selectionHeight);
-    m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, Settings::getWidth() / 4.0f, Settings::getHeight() - m_startHTerrain);
+    m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, Settings::getWidth() / 4.0f, Settings::getHeight() - m_startHTerrain - 80);
     m_PlacementSelectionClip = oxygine::spClipRectActor::create();
     m_PlacementSelectionClip->setPosition(10, 50);
     m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getWidth() - 20,
@@ -204,6 +206,12 @@ EditorSelection::EditorSelection()
     initSelection();
     // select terrains view
     updateTerrainView();
+
+    if (Settings::getsmallScreenDevice())
+    {
+        setX(Settings::getWidth() - 1);
+        addChild(spMoveInButton::create(this, getWidth()));
+    }
 }
 
 void EditorSelection::changeScrollValue(qint32 dir)
@@ -527,7 +535,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     oxygine::spBox9Sprite pSprite = oxygine::spBox9Sprite::create();
     pSprite->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pSprite->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    this->addChild(pSprite);
+    addChild(pSprite);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editorselection");
     pSprite->setResAnim(pAnim);
     pSprite->setSize(width, heigth);

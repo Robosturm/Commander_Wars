@@ -149,6 +149,10 @@ public slots:
      */
     void cursorMoved(qint32 x, qint32 y);
     /**
+     * @brief doPlayerInfoFlipping
+     */
+    void doPlayerInfoFlipping();
+    /**
      * @brief victory
      * @param team
      */

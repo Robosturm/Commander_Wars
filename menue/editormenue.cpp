@@ -54,9 +54,9 @@ EditorMenue::EditorMenue()
     m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
 
     m_EditorSelection = spEditorSelection::create();
-    this->addChild(m_EditorSelection);
+    addChild(m_EditorSelection);
 
-    m_Topbar = spTopbar::create(0, Settings::getWidth() -  m_EditorSelection->getWidth());
+    m_Topbar = spTopbar::create(0, Settings::getWidth());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
@@ -111,15 +111,18 @@ EditorMenue::EditorMenue()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_xyTextInfo = spLabel::create(180);
-    m_xyTextInfo->setStyle(style);
-    m_xyTextInfo->setHtmlText("X: 0 Y: 0");
-    m_xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(m_xyTextInfo);
-    pButtonBox->setSize(200, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
-    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    addChild(pButtonBox);
+    if (!Settings::getsmallScreenDevice())
+    {
+        m_xyTextInfo = spLabel::create(180);
+        m_xyTextInfo->setStyle(style);
+        m_xyTextInfo->setHtmlText("X: 0 Y: 0");
+        m_xyTextInfo->setPosition(8, 8);
+        pButtonBox->addChild(m_xyTextInfo);
+        pButtonBox->setSize(200, 50);
+        pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
+        pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+        addChild(pButtonBox);
+    }
     addChild(m_Topbar);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
@@ -789,8 +792,10 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     m_Topbar->hide();
-    m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
-
+    if (m_xyTextInfo.get() != nullptr)
+    {
+        m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
+    }
     spGameMap pMap = GameMap::getInstance();
     m_copyRectActor->detach();
     if (pMap->onMap(x, y))

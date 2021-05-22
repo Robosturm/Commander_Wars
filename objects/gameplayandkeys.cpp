@@ -396,6 +396,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Simple Cancel: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If active units and actions can be canceld by long press. This is only recommended for devices without a keyboard."));
+    pCheckbox->setChecked(Settings::getSimpleDeselect());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
+    {
+        Settings::setSimpleDeselect(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -740,9 +756,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Screenshot: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = spSelectKey::create(Settings::getKey_screenshot());
+    pSelectKey->setTooltipText(tr("Key for taking an screenshot."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_screenshot, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Editor"));
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
+    y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
@@ -825,18 +854,6 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key to select the previous editor item"));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorSelectionLeft, Qt::QueuedConnection);
-    m_pOptions->addItem(pSelectKey);
-    y += 40;
-
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Screenshot: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pSelectKey = spSelectKey::create(Settings::getKey_screenshot());
-    pSelectKey->setTooltipText(tr("Key for taking an screensho."));
-    pSelectKey->setPosition(sliderOffset - 130, y);
-    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_screenshot, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 

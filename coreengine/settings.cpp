@@ -21,6 +21,7 @@ bool Settings::m_borderless         = false;
 bool Settings::m_fullscreen         = false;
 float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
+bool Settings::m_smallScreenDevice  = false;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
@@ -138,6 +139,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getsmallScreenDevice()
+{
+    return m_smallScreenDevice;
+}
+
+void Settings::setSmallScreenDevice(bool newSmallScreenDevice)
+{
+    m_smallScreenDevice = newSmallScreenDevice;
 }
 
 qint32 Settings::getMenuItemRowCount()
@@ -761,9 +772,10 @@ void Settings::loadSettings()
     }
 
 
-    m_borderless  = settings.value("borderless", false).toBool();
-    m_fullscreen  = settings.value("fullscreen", true).toBool();
-    m_record  = settings.value("recordgames", false).toBool();
+    m_borderless = settings.value("borderless", false).toBool();
+    m_fullscreen = settings.value("fullscreen", true).toBool();
+    m_record = settings.value("recordgames", false).toBool();
+    m_smallScreenDevice = settings.value("SmallScreenDevice", false).toBool();
     settings.endGroup();
 
     // Keys
@@ -1322,6 +1334,7 @@ void Settings::saveSettings()
         settings.setValue("recordgames",                m_record);
         settings.setValue("brightness",                 m_brightness);
         settings.setValue("gamma",                      m_gamma);
+        settings.setValue("SmallScreenDevice",          m_smallScreenDevice);
         settings.endGroup();
 
         settings.beginGroup("Keys");

@@ -9,11 +9,14 @@
 #include <qguiapplication.h>
 
 Tooltip::Tooltip()
+    : m_TooltipTimer(this),
+      m_TooltipPauseTimer(this)
 {
     setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_TooltipTimer.setSingleShot(true);
+    m_TooltipPauseTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event*)
     {
         if (m_mouseHovered)
@@ -23,12 +26,15 @@ Tooltip::Tooltip()
     });
     addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        m_mouseHovered = true;
-        emit sigStartTooltip();
+        if (m_mouseHovered)
+        {
+            emit sigStartTooltip();
+        }
     });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         m_mouseHovered = false;
+        emit sigStartHoveredTimer();
         emit sigHideTooltip();
     });
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -39,7 +45,14 @@ Tooltip::Tooltip()
     connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
     connect(this, &Tooltip::sigStopTooltip, this, &Tooltip::stopTooltiptimer, Qt::QueuedConnection);
     connect(this, &Tooltip::sigStartTooltip, this, &Tooltip::restartTooltiptimer, Qt::QueuedConnection);
+    connect(this, &Tooltip::sigStartHoveredTimer, this, &Tooltip::startHoveredTimer, Qt::QueuedConnection);
     connect(&m_TooltipTimer, &QTimer::timeout, this, &Tooltip::showTooltip, Qt::QueuedConnection);
+    connect(&m_TooltipPauseTimer, &QTimer::timeout, this, [=]()
+    {
+        stopTooltiptimer();
+        hideTooltip();
+        m_mouseHovered = true;
+    }, Qt::QueuedConnection);
 }
 
 Tooltip::~Tooltip()
@@ -50,6 +63,11 @@ Tooltip::~Tooltip()
         m_Tooltip->detach();
         m_Tooltip = nullptr;
     }
+}
+
+void Tooltip::startHoveredTimer()
+{
+    m_TooltipPauseTimer.start(100);
 }
 
 void Tooltip::restartTooltiptimer()

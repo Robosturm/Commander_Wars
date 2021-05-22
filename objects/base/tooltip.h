@@ -19,6 +19,7 @@ signals:
     void sigHideTooltip();
     void sigStartTooltip();
     void sigStopTooltip();
+    void sigStartHoveredTimer();
 public slots:
     QString getTooltipText() const;
     void setTooltipText(const QString &tooltipText);
@@ -30,6 +31,7 @@ public slots:
     void hideTooltip();
     void disableTooltip();
     void enableTooltip();
+    void startHoveredTimer();
 protected:
     virtual void looseFocusInternal() override;
     void removeTooltip();
@@ -38,8 +40,9 @@ protected:
 private:
     QString m_tooltipText;
     QTimer m_TooltipTimer;
+    QTimer m_TooltipPauseTimer;
     bool m_disabled{false};
-    bool m_mouseHovered{false};
+    bool m_mouseHovered{true};
 };
 
 #endif // TOOLTIP_H
