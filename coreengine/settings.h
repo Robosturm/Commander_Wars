@@ -36,8 +36,10 @@ public:
 
     static void setUsername(const QString &Username);
 
-
 public slots:
+    static qint32 getMenuItemRowCount();
+    static void setMenuItemRowCount(qint32 newMenuItemRowCount);
+
     static bool getSimpleDeselect();
     static void setSimpleDeselect(bool newSimpleDeselect);
 
@@ -494,6 +496,7 @@ private:
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;
+    static qint32 m_MenuItemRowCount;
     static bool m_StaticMarkedFields;
     static float m_mouseSensitivity;
     static bool m_record;

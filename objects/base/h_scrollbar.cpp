@@ -125,6 +125,15 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     {
         scroll(pEvent);
     });
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+           emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y / m_ContentHeigth);
+           pTouchEvent->stopPropagation();
+        }
+    });
     connect(this, &H_Scrollbar::sigChangeScrollValue, this, &H_Scrollbar::changeScrollValue, Qt::QueuedConnection);
 }
 
@@ -159,6 +168,11 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
         }
         
     }
+}
+
+qint32 H_Scrollbar::getContentHeigth() const
+{
+    return m_ContentHeigth;
 }
 
 bool H_Scrollbar::getSliding() const

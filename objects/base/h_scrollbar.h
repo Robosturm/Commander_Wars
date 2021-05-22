@@ -24,9 +24,9 @@ public:
      * @param heigth
      */
     void setContentHeigth(qint32 heigth);
+    qint32 getContentHeigth() const;
 
     virtual void update(const oxygine::UpdateState&) override;
-
     virtual void setHeight(float h) override;
     bool getSliding() const;
     void setSliding(bool sliding);

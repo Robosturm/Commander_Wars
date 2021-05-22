@@ -213,7 +213,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setHtmlText(tr("Menu Heigth: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spSlider pMenuItemHeigth = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 10, (Settings::getHeight() - GameMap::getImageSize() * 2) / GameMap::getImageSize(), "");
+    spSlider pMenuItemHeigth = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 5, (Settings::getHeight() - GameMap::getImageSize() * 2) / GameMap::getImageSize(), "");
     pMenuItemHeigth->setTooltipText(tr("Amount of items per row for ingame menus before a new row is added."));
     pMenuItemHeigth->setPosition(sliderOffset - 130, y);
     pMenuItemHeigth->setCurrentValue(static_cast<qint32>(Settings::getMenuItemCount()));
@@ -221,6 +221,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     connect(pMenuItemHeigth.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setMenuItemCount(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Menu Width: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pMenuItemWidth = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 1, 20, "");
+    pMenuItemWidth->setTooltipText(tr("Amount of columns for ingame menus before a scrollable menu is shown."));
+    pMenuItemWidth->setPosition(sliderOffset - 130, y);
+    pMenuItemWidth->setCurrentValue(static_cast<qint32>(Settings::getMenuItemRowCount()));
+    m_pOptions->addItem(pMenuItemWidth);
+    connect(pMenuItemWidth.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setMenuItemRowCount(static_cast<quint32>(value));
     });
     y += 40;
 

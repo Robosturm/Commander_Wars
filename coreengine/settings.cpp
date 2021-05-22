@@ -102,6 +102,7 @@ QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
+qint32 Settings::m_MenuItemRowCount = 2;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
 quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
@@ -137,6 +138,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getMenuItemRowCount()
+{
+    return m_MenuItemRowCount;
+}
+
+void Settings::setMenuItemRowCount(qint32 newMenuItemRowCount)
+{
+    m_MenuItemRowCount = newMenuItemRowCount;
 }
 
 bool Settings::getSimpleDeselect()
@@ -1187,12 +1198,19 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         multiTurnCounter = 4u;
     }
-    m_MenuItemCount = settings.value("MenuItemCount", 11).toInt(&ok);
-    if(!ok || m_MenuItemCount <= 10 || m_MenuItemCount >= (m_height - GameMap::getImageSize() * 2) / GameMap::getImageSize())
+    m_MenuItemCount = settings.value("MenuItemCount", 13).toInt(&ok);
+    if(!ok || m_MenuItemCount < 5)
     {
         QString error = "Error in the Ini File: [Game] Setting: MenuItemCount";
         Console::print(error, Console::eERROR);
-        m_MenuItemCount = 13;
+        m_MenuItemCount = 5;
+    }
+    m_MenuItemRowCount = settings.value("MenuItemRowCount", 2).toInt(&ok);
+    if(!ok || m_MenuItemRowCount < 1)
+    {
+        QString error = "Error in the Ini File: [Game] Setting: MenuItemRowCount";
+        Console::print(error, Console::eERROR);
+        m_MenuItemRowCount = 1;
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
     m_spriteFilter = settings.value("SpriteFilter", GL_LINEAR_MIPMAP_LINEAR).toInt(&ok);
@@ -1379,6 +1397,7 @@ void Settings::saveSettings()
         settings.setValue("ShowCursor",                     m_ShowCursor);
         settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
         settings.setValue("MenuItemCount",                  m_MenuItemCount);
+        settings.setValue("MenuItemRowCount",               m_MenuItemRowCount);
         settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
         settings.setValue("ShowCoCount",                    m_showCoCount);
         settings.setValue("SpriteFilter",                   m_spriteFilter);
