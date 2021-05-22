@@ -272,6 +272,8 @@ namespace oxygine
             }
         }
         emit sigMousePressEvent(b, event->x(), event->y());
+        m_pressDownTime.start();
+        m_pressDownTimeRunning = true;
     }
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -299,7 +301,16 @@ namespace oxygine
                 // do nothing
             }
         }
-        emit sigMouseReleaseEvent(b, event->x(), event->y());
+        std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
+        if (time > std::chrono::milliseconds(500))
+        {
+            emit sigMouseLongPressEvent(b, event->x(), event->y());
+        }
+        else
+        {
+            emit sigMouseReleaseEvent(b, event->x(), event->y());
+        }
+        m_pressDownTimeRunning = false;
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
@@ -336,6 +347,23 @@ namespace oxygine
                     {
                         emit sigTouchScrollEvent(touchPoint0.pos().x() - touchPoint0.lastPos().x(),
                                                  touchPoint0.pos().y() - touchPoint0.lastPos().y());
+                    }
+                    else
+                    {
+                        if (m_pressDownTimeRunning)
+                        {
+                            std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
+                            if (time > std::chrono::milliseconds(500))
+                            {
+                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.pos().x(), touchPoint0.pos().y());
+                                m_pressDownTimeRunning = false;
+                            }
+                        }
+                        else
+                        {
+                             m_pressDownTime.start();
+                             m_pressDownTimeRunning = true;
+                        }
                     }
                 }
                 break;

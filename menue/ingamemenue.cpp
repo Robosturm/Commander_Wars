@@ -198,6 +198,15 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN_LONG, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr && Settings::getSimpleDeselect())
+        {
+            pEvent->stopPropagation();
+            emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+        }
+    });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);

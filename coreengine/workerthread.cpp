@@ -122,6 +122,8 @@ void WorkerThread::start()
     }
 
     connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMouseLongPressEvent, this, &WorkerThread::mouseLongPressEvent, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
@@ -134,6 +136,13 @@ void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32
     oxygine::Input* input = &oxygine::Input::instance;
     input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
                                   oxygine::TouchEvent::TOUCH_DOWN, &input->m_pointerMouse);
+}
+
+void WorkerThread::mouseLongPressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
+{
+    oxygine::Input* input = &oxygine::Input::instance;
+    input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
+                                  oxygine::TouchEvent::TOUCH_DOWN_LONG, &input->m_pointerMouse);
 }
 
 void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
