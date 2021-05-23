@@ -3166,6 +3166,7 @@ void Unit::serializeObject(QDataStream& pStream) const
         pStream << m_customRangeInfo[i].range;
         pStream << m_customRangeInfo[i].color.rgba();
     }
+    pStream << m_cursorInfoRange;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3476,6 +3477,18 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
                              customRangeInfo.color);
         }
     }
+    if (version > 20)
+    {
+        if (savegame)
+        {
+            pStream >> m_cursorInfoRange;
+        }
+        else
+        {
+            qint32 dummy2;
+            pStream >> dummy2;
+        }
+    }
 }
 
 void Unit::showRanges()
@@ -3555,6 +3568,16 @@ void Unit::updateCustomRangeActors()
                          customRangeInfo.id,
                          customRangeInfo.color);
     }
+}
+
+qint32 Unit::getCursorInfoRange() const
+{
+    return m_cursorInfoRange;
+}
+
+void Unit::setCursorInfoRange(qint32 newCursorInfoRange)
+{
+    m_cursorInfoRange = newCursorInfoRange;
 }
 
 void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString resAnim, QColor color)

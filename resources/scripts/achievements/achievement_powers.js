@@ -9,7 +9,7 @@ var Constructor = function()
         for (var i = 0; i < ACHIEVEMENT_POWERS.coPowers.length; ++i)
         {
             var data = ACHIEVEMENT_POWERS.coPowers[i];
-            var description = qsTr("Use the given amount of %0 with the given CO.")
+            var description = qsTr("Use the given amount of %0.")
             description = replaceTextArgs(description, [data[2]]);
             userdata.addAchievement("CO_POWER_" + data[0],
                                     data[3],

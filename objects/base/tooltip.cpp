@@ -23,12 +23,20 @@ Tooltip::Tooltip()
         {
             emit sigStartTooltip();
         }
+        else if (!m_TooltipPauseTimer.isActive())
+        {
+            emit sigStartHoveredTimer();
+        }
     });
     addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         if (m_mouseHovered)
         {
             emit sigStartTooltip();
+        }
+        else if (!m_TooltipPauseTimer.isActive())
+        {
+            emit sigStartHoveredTimer();
         }
     });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
@@ -169,6 +177,7 @@ void Tooltip::showTooltip()
 
 void Tooltip::enableTooltip()
 {
+    m_mouseHovered = true;
     m_disabled = false;
 }
 

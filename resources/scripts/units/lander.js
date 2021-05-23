@@ -79,7 +79,7 @@ var Constructor = function()
                 "ZCOUNIT_IRON_SHIELD_GENERATOR", "ZCOUNIT_NEOSPIDER_TANK",
                 "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_ROYAL_GUARD",
                 "ZCOUNIT_SIEGE_CANNON", "ZCOUNIT_SMUGGLER",
-                "ZCOUNIT_TANK_HUNTER", "ZCOUNIT_COMMANDO"];
+                "ZCOUNIT_TANK_HUNTER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {

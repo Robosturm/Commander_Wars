@@ -71,7 +71,7 @@ var Constructor = function()
     };
     this.getTransportUnits = function()
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO"];
+        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {

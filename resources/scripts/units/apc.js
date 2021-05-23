@@ -57,7 +57,7 @@ var Constructor = function()
     };
     this.getTransportUnits = function()
     {
-        return ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO"];
+        return ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     };
     this.startOfTurn = function(unit)
     {

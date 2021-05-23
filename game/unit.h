@@ -93,7 +93,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 20;
+        return 21;
     }
 
 
@@ -154,9 +154,19 @@ public:
      */
     void syncAnimation(oxygine::timeMS syncTime);
 
-signals:
+    signals:
 
 public slots:
+    /**
+     * @brief getCursorInfoRange
+     * @return
+     */
+    qint32 getCursorInfoRange() const;
+    /**
+     * @brief setCursorInfoRange
+     * @param newCursorInfoRange
+     */
+    void setCursorInfoRange(qint32 newCursorInfoRange);
     /**
      * @brief getAiMovePath
      * @return
@@ -1021,6 +1031,7 @@ private:
 
     qint32 m_minRange{1};
     qint32 m_maxRange{-1};
+    qint32 m_cursorInfoRange{-1};
     qint32 m_vision{1};
     qint32 m_UniqueID{0};
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};

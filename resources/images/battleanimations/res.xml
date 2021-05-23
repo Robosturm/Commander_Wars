@@ -7,6 +7,7 @@
 		<image file="GeneralSprites/bazooka_ge.png" />
 		<image file="GeneralSprites/bazooka_os.png" />
 		<image file="GeneralSprites/bazooka_bh.png" />
+		<image file="GeneralSprites/firebomb.png" />
 		<image file="GeneralSprites/bombs_projectile.png" cols = "4" />
 		<image file="GeneralSprites/bomb_falling.png" />		
 		<image file="GeneralSprites/medium_shot.png" cols = "6" />
@@ -941,6 +942,8 @@
 		<!-- partisan -->
 		<image file="partisan/partisan.png" />
 		<image file="partisan/partisan+mask.png" />
+		<image file="partisan/partisan+alt.png" />
+		<image file="partisan/partisan+alt+mask.png" />		
 		
 		<!-- smuggler -->
 		<image file="smuggler/smuggler.png" />

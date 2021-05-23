@@ -269,7 +269,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
+                   qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
         text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
         return text;
     };

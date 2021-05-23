@@ -739,7 +739,13 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
         }
         pCursor->addCursorRangeOutline(maxRange, Qt::red);
     }
-
+    qint32 infoRange = pUnit->getCursorInfoRange();
+    if (infoRange >= 1)
+    {
+        spGameMenue pMenue = GameMenue::getInstance();
+        Cursor* pCursor = pMenue->getCursor();
+        pCursor->addCursorRangeOutline(infoRange, Qt::white);
+    }
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
 }
@@ -1699,6 +1705,7 @@ void HumanPlayerInput::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
 }
+
 void HumanPlayerInput::deserializeObject(QDataStream& stream)
 {
     qint32 version;

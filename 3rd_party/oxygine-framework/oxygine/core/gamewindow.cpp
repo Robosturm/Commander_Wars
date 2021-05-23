@@ -301,14 +301,11 @@ namespace oxygine
                 // do nothing
             }
         }
+        emit sigMouseReleaseEvent(b, event->x(), event->y());
         std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
         if (time > std::chrono::milliseconds(500))
         {
             emit sigMouseLongPressEvent(b, event->x(), event->y());
-        }
-        else
-        {
-            emit sigMouseReleaseEvent(b, event->x(), event->y());
         }
         m_pressDownTimeRunning = false;
     }

@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         if (weapon === 1)
         {
             BATTLEANIMATION_MECH.loadFireAnimation(sprite, unit, defender, weapon);
