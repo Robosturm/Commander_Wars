@@ -75,6 +75,10 @@ var Constructor = function()
             otherUnit.setFuel(fuel - 35);
         }
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

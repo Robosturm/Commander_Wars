@@ -1,6 +1,6 @@
 CO_ANDY.coZoneBonus = 0;
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender)
+                                     defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -30,7 +30,7 @@ CO_ANDY.getMovementpointModifier = function(co, unit, posX, posY)
 };
 
 CO_ANDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

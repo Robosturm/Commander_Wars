@@ -298,7 +298,7 @@ var TAGPOWER =
     },
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                             defender, defPosX, defPosY, isDefender)
+                             defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
@@ -363,25 +363,25 @@ var TAGPOWER =
     },
 
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
 
     getOffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender)
+                                  defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
 
     getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender)
+                                  defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },

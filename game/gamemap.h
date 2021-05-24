@@ -373,6 +373,7 @@ signals:
     void sigShowWiki();
     void sigShowRules();
     void sigShowUnitStatistics();
+    void sigMovedMap();
 public slots:
     /**
      * @brief getMapMusic
@@ -604,7 +605,12 @@ public slots:
      * @param x
      * @param y
      */
-    void centerMap(qint32 x, qint32 y);
+    void centerMap(qint32 x, qint32 y, bool updateMinimapPosition = true);
+    /**
+     * @brief getCenteredPosition
+     * @return
+     */
+    QPoint getCenteredPosition();
     /**
      * @brief zoom zooms into or out of the map :)
      * @param zoom

@@ -577,6 +577,8 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
     QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
     QJSValue obj1 = pInterpreter->newQObject(pAttacker);
     args1 << obj1;
     args1 << attackerTakenDamage;
@@ -1871,8 +1873,8 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
         multiplier = pCO->getAiCoUnitBonus(pUnit, valid);
         if (!valid)
         {
-            if (pCO->getOffensiveBonus(pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                pCO->getDeffensiveBonus(nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false) > 0 ||
+            if (pCO->getOffensiveBonus(nullptr, pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                pCO->getDeffensiveBonus(nullptr, nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false) > 0 ||
                 pCO->getFirerangeModifier(pUnit, QPoint(-1, -1)) > 0)
             {
                 multiplier = 1.0f;

@@ -1,5 +1,5 @@
 CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -32,7 +32,7 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

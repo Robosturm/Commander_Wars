@@ -122,7 +122,7 @@ var Constructor = function()
         return "BD";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
     {
         var ret = 0;
         var variables = co.getVariables();
@@ -173,7 +173,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
     {
         var ret = 0;
         var unitId = defender.getUniqueID();
@@ -282,7 +282,7 @@ var Constructor = function()
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender)
+                                  defender, defPosX, defPosY, isDefender, action)
     {
         // check for luck finish if  the attacker is in co range or a power mode is active
         if (defender !== null && attacker !== null &&

@@ -54,7 +54,10 @@ var Constructor = function()
     {
         return true;
     };
-
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Direct;
+    };
     this.getDescription = function()
     {
         return qsTr("Specialised anti-air unit. Can negate one indirect attack per turn on own units. Damage negation is based on current units alive.");
@@ -69,24 +72,56 @@ var Constructor = function()
         var unitDefendedVariable = variables.createVariable("UNITDEFENDED");
         unitDefendedVariable.writeDataInt32(1);
     };
-    this.getSupportDamageReduction = function(unit, damage, attacker, attackerPosition, attackerBaseHp,
-                                              defenderPosition, defender, luckMode, realAttack)
+    this.doSupportDamageReduction = function(unit, attacker, attackerPosition, defender, defenderPosition)
     {
+        // gets called after the damage reduction has been applied
+        var ret = false;
         var variables = unit.getVariables();
-        var unitDefendedVariable = variables.createVariable("UNITDEFENDED");
-        var canDefend = unitDefendedVariable.readDataInt32();
-        var ret = 0;
+        var unitDefendedVariable = variables.getVariable("UNITDEFENDED");
+        var canDefend = 1;
+        if (unitDefendedVariable !== null)
+        {
+            canDefend = unitDefendedVariable.readDataInt32();
+        }
+        var ammo1 = unit.getAmmo1()
         var pos = unit.getPosition();
         if (canDefend > 0 &&
-            globals.getDistance(defenderPosition, pos) < unit.getMaxRange(pos))
+            globals.getDistance(defenderPosition, pos) < unit.getMaxRange(pos) &&
+            globals.getDistance(defenderPosition, attackerPosition) > 1 &&
+            ammo1 > 1)
         {
-            ret = damage * 10 / unit.getHpRounded();
-            if (realAttack)
-            {
-
-            }
+            unitDefendedVariable = variables.createVariable("UNITDEFENDED");
+            unitDefendedVariable.writeDataInt32(0);
+            unit.setAmmo1(unit.getAmmo1() - 1);
+            ret = true;
         }
         return ret;
+    };
+    this.predictSupportDamageReduction = function(unit, damage, attacker, attackerPosition, attackerBaseHp,
+                                                  defenderPosition, defender, luckMode)
+    {
+        var variables = unit.getVariables();
+        var unitDefendedVariable = variables.getVariable("UNITDEFENDED");
+        var canDefend = 1;
+        if (unitDefendedVariable !== null)
+        {
+            canDefend = unitDefendedVariable.readDataInt32();
+        }
+        var ret = 0;
+        var ammo1 = unit.getAmmo1();
+        var pos = unit.getPosition();
+        if (canDefend > 0 &&
+            globals.getDistance(defenderPosition, pos) <= unit.getMaxRange(pos) &&
+            globals.getDistance(defenderPosition, attackerPosition) > 1 &&
+            ammo1 > 0)
+        {
+            ret = damage * unit.getHpRounded() / 10;
+        }
+        return ret;
+    };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
     };
 }
 

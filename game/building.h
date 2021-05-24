@@ -17,6 +17,7 @@ class QmlVectorPoint;
 class Player;
 class Unit;
 class Terrain;
+class GameAction;
 
 class Building;
 typedef oxygine::intrusive_ptr<Building> spBuilding;
@@ -299,7 +300,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
     /**
      * @brief getDeffensiveFieldBonus
      * @param pAttacker
@@ -309,7 +310,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getDefensiveBonus
      * @return

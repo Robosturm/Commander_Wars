@@ -8,7 +8,7 @@ CO_SASHA.getBonusIncome = function(co, building, income)
 };
 
 CO_SASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -21,7 +21,7 @@ CO_SASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

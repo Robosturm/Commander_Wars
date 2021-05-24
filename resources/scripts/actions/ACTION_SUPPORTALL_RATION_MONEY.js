@@ -239,7 +239,7 @@ var Constructor = function()
 	};
     this.getDescription = function()
     {
-        return qsTr("Refills fuel and ammo to all units surrounding this unit.");
+        return qsTr("Refills fuel and ammo to all units surrounding this unit and grants money based on the amount of resupply.");
     };
 }
 

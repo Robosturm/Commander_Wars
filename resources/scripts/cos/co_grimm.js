@@ -132,7 +132,7 @@ var Constructor = function()
         return "YC";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         switch (co.getPowerMode())
         {
@@ -151,7 +151,7 @@ var Constructor = function()
         return 30;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {

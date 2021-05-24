@@ -681,7 +681,7 @@ public slots:
      * @param position
      * @return offensive bonus at this position
      */
-    qint32 getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getUnitBonusOffensive
      * @param position
@@ -690,7 +690,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getDamageReduction
      * @param pAttacker
@@ -700,7 +700,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+    float getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                               QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
@@ -712,7 +712,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    float getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
+    float getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getTerrainDefense
@@ -724,7 +724,7 @@ public slots:
      * @param position
      * @return defense bonus at this position
      */
-    qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
+    qint32 getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
     /**
      * @brief getUnitBonusDefensive
      * @param position
@@ -733,7 +733,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
+    qint32 getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
     /**
      * @brief useTerrainDefense
      * @return
@@ -848,7 +848,7 @@ public slots:
      * @param pDefender
      * @return
      */
-    bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false, QPoint unitPos = QPoint(-1, -1));
+    bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false, QPoint unitPos = QPoint(-1, -1), bool isDefenderPos = false);
     /**
      * @brief canAttackWithWeapon
      * @param weaponIndex

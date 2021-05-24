@@ -807,7 +807,7 @@ void CO::addUnitShines()
     }
 }
 
-qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveBonus";
@@ -823,6 +823,8 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -835,7 +837,7 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     return ergValue;
 }
 
-qint32 CO::getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveReduction";
@@ -851,6 +853,8 @@ qint32 CO::getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefe
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -863,7 +867,7 @@ qint32 CO::getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefe
     return ergValue;
 }
 
-qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -879,6 +883,8 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -891,7 +897,7 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     return ergValue;
 }
 
-qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveReduction";
@@ -907,6 +913,8 @@ qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDe
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -919,7 +927,7 @@ qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDe
     return ergValue;
 }
 
-float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                              Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -939,6 +947,8 @@ float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, 
     args1 << defPosition.y();
     args1 << isDefender;
     args1 << luckMode;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     float ergValue = 0.0f;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -951,7 +961,7 @@ float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, 
     return ergValue;
 }
 
-float CO::getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -970,6 +980,8 @@ float CO::getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint3
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     float ergValue = 0.0f;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {

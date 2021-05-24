@@ -30,7 +30,7 @@ CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 };
 
 CO_SABAKI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -43,7 +43,7 @@ CO_SABAKI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SABAKI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

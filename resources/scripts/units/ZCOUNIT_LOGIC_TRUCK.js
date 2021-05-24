@@ -70,6 +70,10 @@ var Constructor = function()
             ACTION_SUPPORTALL_RATION_MONEY.giveRation(unit);
         }
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

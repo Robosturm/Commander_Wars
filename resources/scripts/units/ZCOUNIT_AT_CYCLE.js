@@ -70,6 +70,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Infantry;
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

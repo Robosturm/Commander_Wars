@@ -66,7 +66,7 @@ CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 };
 
 CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -94,7 +94,7 @@ CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SOPHIE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

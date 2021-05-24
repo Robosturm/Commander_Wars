@@ -46,7 +46,9 @@ var Constructor = function()
                         ["ZCOUNIT_ROYAL_GUARD",     100,    qsTr("Protect the king!")],
                         ["ZCOUNIT_TANK_HUNTER",     100,    qsTr("The hunt begins!")],
                         ["ZCOUNIT_COMMANDO",        100,    qsTr("Onto the mountains!")],
-                        ["ZCOUNIT_PARTISAN",        100,    qsTr("For the rebellion!")],];
+                        ["ZCOUNIT_PARTISAN",        100,    qsTr("For the rebellion!")],
+                        ["ZCOUNIT_LOGIC_TRUCK",     100,    qsTr("Money is all i need!")],
+                        ["ZCOUNIT_CHAPERON",        100,    qsTr("No missile zone!")],];
 
 
 

@@ -10,7 +10,7 @@ CO_KANBEI.coZoneBonus = 0;
 CO_KANBEI.globalBonus = 30;
 CO_KANBEI.costIncrease = 20;
 CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -32,7 +32,7 @@ CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_KANBEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender)
+                                        defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

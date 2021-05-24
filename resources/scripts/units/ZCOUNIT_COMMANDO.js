@@ -125,6 +125,10 @@ var Constructor = function()
     {
         ZCOUNIT_COMMANDO.cloak(unit);
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

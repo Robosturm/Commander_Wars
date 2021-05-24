@@ -175,7 +175,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    qint32 getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
     /**
      * @brief getDeffensiveBonus
      * @param pAttacker
@@ -185,7 +185,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief startOfTurn
      */

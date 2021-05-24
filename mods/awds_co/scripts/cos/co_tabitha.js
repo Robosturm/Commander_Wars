@@ -1,5 +1,5 @@
 CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender)
+                                        defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -17,7 +17,7 @@ CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 10;
 };
 CO_TABITHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender)
+                                         defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

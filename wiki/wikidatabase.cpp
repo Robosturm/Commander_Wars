@@ -203,7 +203,7 @@ WikiDatabase::pageData WikiDatabase::getEntry(QString id)
             return m_Entries[i];
         }
     }
-    return pageData("", "", QStringList());
+    return pageData("", id, QStringList());
 }
 
 bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)

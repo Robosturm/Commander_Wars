@@ -24,13 +24,13 @@ var BUILDING =
     },
     // additional offensive bonus for a unit on this field
     getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
     //  additional deffensive bonus for a unit on this field
     getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
     {
         return 0;
     },
@@ -171,7 +171,7 @@ var BUILDING =
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))
             {
-                repairUnit(unit);
+                BUILDING.repairUnit(unit);
             }
         }
     },

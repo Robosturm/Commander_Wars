@@ -115,6 +115,10 @@ var Constructor = function()
             unit.loadIcon("arrow_up", map.getImageSize() / 2, map.getImageSize() / 2, 1, owner.getPlayerID());
         }
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

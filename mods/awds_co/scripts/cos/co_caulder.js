@@ -2,7 +2,7 @@ CO_CAULDER.coZoneBonus = 0;
 CO_CAULDER.coGlobalBonus = 20;
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender)
+                                         defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -20,7 +20,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender)
+                                        defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

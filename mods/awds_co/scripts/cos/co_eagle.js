@@ -11,7 +11,7 @@ CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
 };
 
 CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -57,7 +57,7 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_EAGLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

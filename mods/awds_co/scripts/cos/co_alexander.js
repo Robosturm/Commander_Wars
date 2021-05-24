@@ -51,7 +51,7 @@ CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
 
 CO_ALEXANDER.coZoneBonus = 0;
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -64,7 +64,7 @@ CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ALEXANDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

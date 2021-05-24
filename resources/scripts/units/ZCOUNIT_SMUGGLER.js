@@ -99,6 +99,10 @@ var Constructor = function()
         return ["ACTION_FIRE", "ACTION_SUPPORTSINGLE_SUPPLY", "ACTION_JOIN", "ACTION_LOAD",
                 "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

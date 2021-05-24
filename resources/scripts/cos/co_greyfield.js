@@ -136,7 +136,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
         switch (co.getPowerMode())
@@ -172,7 +172,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
         switch (co.getPowerMode())

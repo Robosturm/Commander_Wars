@@ -865,13 +865,26 @@ bool Unit::isAttackableFromPosition(Unit* pDefender, QPoint unitPos)
     return isAttackable(pDefender, false, unitPos);
 }
 
-bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint unitPos)
+bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint unitPos, bool isDefenderPos)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     spGameMap pMap = GameMap::getInstance();
     if (pDefender != nullptr &&
         pMap.get() != nullptr)
     {
+        QPoint defPos;
+        QPoint atkPos;
+        if (isDefenderPos)
+        {
+            defPos = unitPos;
+            atkPos = Unit::getPosition();
+        }
+        else
+        {
+            defPos = pDefender->Unit::getPosition();
+            atkPos = unitPos;
+        }
+
         if (m_pOwner->getFieldVisible(pDefender->Unit::getX(), pDefender->Unit::getY()) || ignoreOutOfVisionRange)
         {
             if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
@@ -882,7 +895,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
                         if (hasAmmo1() && !m_weapon1ID.isEmpty() &&
-                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, atkPos.x(), atkPos.y(), defPos.x(), defPos.y())))
                         {
                             if (pWeaponManager->getBaseDamage(m_weapon1ID, pDefender) > 0)
                             {
@@ -890,7 +903,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
                             }
                         }
                         if (hasAmmo2() && !m_weapon2ID.isEmpty() &&
-                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, atkPos.x(), atkPos.y(), defPos.x(), defPos.y())))
                         {
                             if (pWeaponManager->getBaseDamage(m_weapon2ID, pDefender) > 0)
                             {
@@ -1186,33 +1199,33 @@ void Unit::postAction(spGameAction pAction)
     pInterpreter->doFunction(m_UnitID, function1, args1);
 }
 
-qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 Unit::getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_OffensiveBonus);
-    bonus += getUnitBonusOffensive(position, pDefender, defPosition, isDefender);
+    bonus += getUnitBonusOffensive(pAction, position, pDefender, defPosition, isDefender);
     spGameMap pMap = GameMap::getInstance();
     CO* pCO0 = m_pOwner->getCO(0);
     if (pCO0 != nullptr)
     {
-        bonus += pCO0->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
+        bonus += pCO0->getOffensiveBonus(pAction, this, position, pDefender, defPosition, isDefender);
     }
     CO* pCO1 = m_pOwner->getCO(1);
     if (pCO1 != nullptr)
     {
-        bonus += pCO1->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
+        bonus += pCO1->getOffensiveBonus(pAction, this, position, pDefender, defPosition, isDefender);
     }
     if (m_pTerrain != nullptr)
     {
         Building* pBuilding = m_pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            bonus += pBuilding->getOffensiveFieldBonus(this, position, pDefender, defPosition, isDefender);
+            bonus += pBuilding->getOffensiveFieldBonus(pAction, this, position, pDefender, defPosition, isDefender);
         }
         else
         {
-            bonus += m_pTerrain->getOffensiveFieldBonus(this, position, pDefender, defPosition, isDefender);
+            bonus += m_pTerrain->getOffensiveFieldBonus(pAction, this, position, pDefender, defPosition, isDefender);
         }
     }
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -1225,12 +1238,12 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
             pCO0 = pPlayer->getCO(0);
             if (pCO0 != nullptr)
             {
-                bonus -= pCO0->getOffensiveReduction(this, position, pDefender, defPosition, isDefender);
+                bonus -= pCO0->getOffensiveReduction(pAction, this, position, pDefender, defPosition, isDefender);
             }
             pCO1 = pPlayer->getCO(1);
             if (pCO1 != nullptr)
             {
-                bonus -= pCO1->getOffensiveReduction(this, position, pDefender, defPosition, isDefender);
+                bonus -= pCO1->getOffensiveReduction(pAction, this, position, pDefender, defPosition, isDefender);
             }
         }
     }
@@ -1287,7 +1300,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     return bonus;
 }
 
-qint32 Unit::getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 Unit::getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusOffensive";
@@ -1301,6 +1314,8 @@ qint32 Unit::getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defP
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
@@ -1322,45 +1337,45 @@ qint32 Unit::getTerrainDefense()
     return 0;
 }
 
-float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+float Unit::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                                QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     float bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
+        bonus += pCO->getDamageReduction(pAction, damage, pAttacker, position, attackerBaseHp,
                                          this, defPosition, isDefender, luckMode);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
+        bonus += pCO->getDamageReduction(pAction, damage, pAttacker, position, attackerBaseHp,
                                          this, defPosition, isDefender, luckMode);
     }
     return bonus;
 }
 
-float Unit::getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
+float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
                           Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     float bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getTrueDamage(damage, this, position, attackerBaseHp,
+        bonus += pCO->getTrueDamage(pAction, damage, this, position, attackerBaseHp,
                                     pDefender, defPosition, isDefender);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getTrueDamage(damage, this, position, attackerBaseHp,
+        bonus += pCO->getTrueDamage(pAction, damage, this, position, attackerBaseHp,
                                     pDefender, defPosition, isDefender);
     }
     return bonus;
 }
 
-qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
+qint32 Unit::getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusDefensive";
@@ -1374,6 +1389,8 @@ qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkP
     args1 << atkPosition.x();
     args1 << atkPosition.y();
     args1 << isDefender;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
@@ -1385,22 +1402,22 @@ qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkP
     }
 }
 
-qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
+qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     spGameMap pMap = GameMap::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_DefensiveBonus);
-    bonus += getUnitBonusDefensive(position, pAttacker, atkPosition, isDefender);
+    bonus += getUnitBonusDefensive(pAction, position, pAttacker, atkPosition, isDefender);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position, isDefender);
+        bonus += pCO->getDeffensiveBonus(pAction, pAttacker, atkPosition, this, position, isDefender);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position, isDefender);
+        bonus += pCO->getDeffensiveBonus(pAction, pAttacker, atkPosition, this, position, isDefender);
     }
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -1412,12 +1429,12 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
             pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
             {
-                bonus -= pCO->getDeffensiveReduction(pAttacker, atkPosition, this, position, isDefender);
+                bonus -= pCO->getDeffensiveReduction(pAction, pAttacker, atkPosition, this, position, isDefender);
             }
             pCO = pPlayer->getCO(1);
             if (pCO != nullptr)
             {
-                bonus -= pCO->getDeffensiveReduction(pAttacker, atkPosition, this, position, isDefender);
+                bonus -= pCO->getDeffensiveReduction(pAction, pAttacker, atkPosition, this, position, isDefender);
             }
         }
     }
@@ -1443,11 +1460,11 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
         Building* pBuilding = m_pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            bonus += pBuilding->getDeffensiveFieldBonus(pAttacker, atkPosition, this, position, isDefender);
+            bonus += pBuilding->getDeffensiveFieldBonus(pAction, pAttacker, atkPosition, this, position, isDefender);
         }
         else
         {
-            bonus += m_pTerrain->getDeffensiveFieldBonus(pAttacker, atkPosition, this, position, isDefender);
+            bonus += m_pTerrain->getDeffensiveFieldBonus(pAction, pAttacker, atkPosition, this, position, isDefender);
         }
     }
     if (!m_pOwner->getWeatherImmune())

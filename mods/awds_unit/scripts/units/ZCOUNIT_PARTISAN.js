@@ -16,7 +16,3 @@ ZCOUNIT_PARTISAN.init = function(unit)
     unit.setVision(2);
     unit.setCursorInfoRange(3);
 };
-ZCOUNIT_PARTISAN.getBaseCost = function()
-{
-    return 2500;
-};

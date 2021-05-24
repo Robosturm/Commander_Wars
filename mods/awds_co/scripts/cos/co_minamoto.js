@@ -1,5 +1,5 @@
 CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender)
+                                         defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -65,7 +65,7 @@ CO_MINAMOTO.getMovementpointModifier = function(co, unit, posX, posY)
     return 0;
 };
 CO_MINAMOTO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

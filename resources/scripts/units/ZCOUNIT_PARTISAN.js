@@ -101,6 +101,10 @@ var Constructor = function()
         }
         fields.remove();
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

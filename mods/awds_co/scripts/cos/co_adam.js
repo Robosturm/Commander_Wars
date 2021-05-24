@@ -1,5 +1,5 @@
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender)
+                                     defender, defPosX, defPosY, isDefender, action)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -46,7 +46,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -144,7 +144,7 @@ CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY)
 };
 
 CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {

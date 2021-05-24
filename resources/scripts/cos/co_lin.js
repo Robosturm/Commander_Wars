@@ -116,7 +116,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
                          (attacker.getUnitType() === GameEnums.UnitType_Naval);
@@ -150,7 +150,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
                          (defender.getUnitType() === GameEnums.UnitType_Naval);

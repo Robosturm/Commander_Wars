@@ -867,3 +867,32 @@ void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor 
     pSprite->setPosition(posX, posY);
     m_pCursorInfoBox->addChild(pSprite);
 }
+
+void IngameInfoBar::syncMinimapPosition()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        QPoint centeredPos = pMap->getCenteredPosition();
+        oxygine::RectF bounds = m_pMinimapSlider->getDragBounds();
+        qint32 newX = bounds.getWidth() / 2 - centeredPos.x() * Minimap::IMAGE_SIZE;
+        qint32 newY = bounds.getHeight() / 2 - centeredPos.y() * Minimap::IMAGE_SIZE;
+        if (newX < bounds.getLeft())
+        {
+            newX = bounds.getLeft();
+        }
+        else if (newX > bounds.getRight())
+        {
+            newX = bounds.getRight();
+        }
+        if (newY < bounds.getTop())
+        {
+            newY = bounds.getTop();
+        }
+        else if (newY > bounds.getBottom())
+        {
+            newY = bounds.getBottom();
+        }
+        m_pMinimapSlider->getContent()->setPosition(newX, newY);
+    }
+}

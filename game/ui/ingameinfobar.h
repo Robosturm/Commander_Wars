@@ -24,7 +24,6 @@ public:
     }
 
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
-signals:
 
 public slots:
     void updateMinimap();
@@ -34,6 +33,7 @@ public slots:
     void createUnitInfo(qint32 x, qint32 y);
     void createTerrainInfo(qint32 x, qint32 y);
     void addColorbar(float divider, qint32 posX, qint32 posY, QColor color);
+    void syncMinimapPosition();
 private:
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_pMinimapSlider;

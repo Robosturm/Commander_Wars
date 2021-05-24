@@ -144,7 +144,7 @@ var Constructor = function()
         return "YC";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
         switch (co.getPowerMode())
@@ -184,7 +184,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                 defender, defPosX, defPosY, isDefender, action)
     {
         var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
         switch (co.getPowerMode())
