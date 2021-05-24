@@ -171,12 +171,12 @@ var BUILDING =
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))
             {
-                BUILDING.repairUnit(unit);
+                BUILDING.repairUnit(unit, x, y);
             }
         }
     },
 
-    repairUnit : function(unit)
+    repairUnit : function(unit, x, y)
     {
         // our unit and a repairable one
         // replenish it

@@ -202,6 +202,11 @@ public slots:
      */
     QVector<QPoint> getMovePath();
     /**
+     * @brief getMovePathLength
+     * @return
+     */
+    qint32 getMovePathLength();
+    /**
      * @brief getMovementTarget the unit on the final movement field
      * @return
      */

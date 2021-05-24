@@ -202,6 +202,11 @@ QVector<QPoint> GameAction::getMovePath()
     return m_Movepath;
 }
 
+qint32 GameAction::getMovePathLength()
+{
+    return m_Movepath.size();
+}
+
 bool GameAction::canBePerformed(QString actionID, bool emptyField)
 {
     if (!actionID.isEmpty())

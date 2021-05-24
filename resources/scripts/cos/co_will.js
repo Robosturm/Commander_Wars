@@ -206,6 +206,18 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_HOT_TANK"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -225,7 +237,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nHot Tank\n") +
+               qsTr("\nGlobal Effect:\nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 30% increased firepower.");
     };
     this.getPowerDescription = function(co)

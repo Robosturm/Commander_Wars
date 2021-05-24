@@ -174,6 +174,17 @@ var Constructor = function()
         var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
         co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_HOT_TANK"];
+        }
+        return [];
+    };
 
     // CO - Intel
     this.getBio = function(co)
@@ -194,8 +205,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
-                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
+                   qsTr("\nGlobal Effect: \nNo bonus.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
         return text;
     };

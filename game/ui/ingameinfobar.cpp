@@ -875,8 +875,9 @@ void IngameInfoBar::syncMinimapPosition()
     {
         QPoint centeredPos = pMap->getCenteredPosition();
         oxygine::RectF bounds = m_pMinimapSlider->getDragBounds();
-        qint32 newX = bounds.getWidth() / 2 - centeredPos.x() * Minimap::IMAGE_SIZE;
-        qint32 newY = bounds.getHeight() / 2 - centeredPos.y() * Minimap::IMAGE_SIZE;
+        oxygine::Vector2 size = m_pMinimapSlider->getSize();
+        qint32 newX = size.x / 2 - centeredPos.x() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleX();
+        qint32 newY = size.y / 2 - centeredPos.y() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleY();
         if (newX < bounds.getLeft())
         {
             newX = bounds.getLeft();
