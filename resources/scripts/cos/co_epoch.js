@@ -229,6 +229,17 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_AUTO_TANK"];
+        }
+        return [];
+    };
 
     this.getAiCoUnitBonus = function(co, unit)
     {
@@ -254,7 +265,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo effects") +
+        return qsTr("\nSpecial Unit:\nAuto Tank\n") +
+               qsTr("\nGlobal Effect: \nNo effects") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and luck.");
     };
     this.getPowerDescription = function(co)

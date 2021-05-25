@@ -69,7 +69,8 @@ var Constructor = function()
                 "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_ROYAL_GUARD",
                 "ZCOUNIT_SIEGE_CANNON", "ZCOUNIT_SMUGGLER",
                 "ZCOUNIT_TANK_HUNTER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN",
-                "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK"];
+                "ZCOUNIT_LOGIC_TRUCK", "ZCOUNIT_CHAPERON", "ZCOUNIT_HOT_TANK",
+                "ZCOUNIT_AUTO_TANK"];
     };
     this.useTerrainDefense = function()
     {

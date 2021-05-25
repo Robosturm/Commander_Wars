@@ -409,7 +409,7 @@ var Constructor = function()
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
-                currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 1.5, 0, 2);

@@ -2063,7 +2063,6 @@ bool Unit::getPerfectHpView(Player* pPlayer)
     return false;
 }
 
-
 void Unit::updateIcons(Player* pPlayer)
 {
     qint32 hpValue = GlobalUtils::roundUp(m_hp);
