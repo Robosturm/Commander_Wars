@@ -12,14 +12,14 @@ public:
      * @brief getRuntimeHash
      * @return
      */
-    static QByteArray getRuntimeHash(QStringList mods);
+    static QByteArray getRuntimeHash(const QStringList & mods);
     /**
      * @brief getHash
      * @param filter
      * @param folders
      * @return
      */
-    static QByteArray getHash(QStringList filter, QStringList folders);
+    static QByteArray getHash(QStringList filter, const QStringList & folders);
     /**
      * @brief writeByteArray
      * @param stream
@@ -40,7 +40,7 @@ public:
     static QByteArray readByteArray(QDataStream& stream);
 
     template<typename _TVectorList>
-    static void writeVectorList(QDataStream& stream, _TVectorList array)
+    static void writeVectorList(QDataStream& stream, const _TVectorList & array)
     {
         stream << static_cast<qint32>(array.size());
         for (qint32 i = 0; i < array.size(); i++)
@@ -69,7 +69,7 @@ public:
      * @param items
      * @param folder
      */
-    static void storeList(QString file, QStringList items, QString folder);
+    static void storeList(QString file, const QStringList  &items, QString folder);
     /**
      * @brief readList
      * @param file
@@ -87,7 +87,7 @@ public:
      *
      */
     template<typename _TMap>
-    static void writeMap(QDataStream& stream, _TMap map)
+    static void writeMap(QDataStream& stream, const _TMap & map)
     {
         stream << static_cast<qint32>(map.size());
         auto iter = map.constBegin();

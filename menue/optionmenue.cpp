@@ -4,7 +4,6 @@
 #include <QProcess>
 #include <QGuiApplication>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QScreen>
 
 #include "menue/optionmenue.h"

@@ -169,7 +169,7 @@ namespace oxygine
     void ResFontBM::loadBase(QDomElement node)
     {
         QVariant value = QVariant(node.attribute("linearFilter"));
-        if (value.type() == QVariant::Type::String &&
+        if (value.typeId() == QMetaType::QString &&
             !value.isNull())
         {
             if (value.toBool())
@@ -186,7 +186,7 @@ namespace oxygine
             m_linearFilter = GL_LINEAR;
         }
         value = QVariant(node.attribute("clamp2edge"));
-        if (value.type() == QVariant::Type::String &&
+        if (value.typeId() == QMetaType::QString &&
             !value.isNull())
         {
             m_clamp2edge = value.toBool();
@@ -232,7 +232,7 @@ namespace oxygine
                 downsample = 1;
             }
             QVariant value(node.attribute("premultiplied_alpha"));
-            if (value.type() == QVariant::Type::Bool)
+            if (value.typeId() == QMetaType::Bool)
             {
                 m_premultipliedAlpha = value.toBool();
             }

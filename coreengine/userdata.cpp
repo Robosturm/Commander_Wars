@@ -424,7 +424,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
     auto keys = m_mapVictoryInfo.keys();
     for (const auto & key : qAsConst(keys))
     {
-        auto & item = m_mapVictoryInfo[key];
+        const auto & item = m_mapVictoryInfo[key];
         pStream << key;
         Filesupport::writeVectorList(pStream, item.co1);
         Filesupport::writeVectorList(pStream, item.co2);

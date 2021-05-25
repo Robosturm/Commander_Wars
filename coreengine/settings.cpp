@@ -677,7 +677,7 @@ void Settings::setLanguage(const QString &language)
     QGuiApplication::removeTranslator(&m_Translator);
     m_language = language;
     // load language file and install it
-    if(m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+    if (m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
     {
          Console::print("Loaded language " + language, Console::eDEBUG);
     }
@@ -686,7 +686,10 @@ void Settings::setLanguage(const QString &language)
         QString error = "Error: Unknown Language " + m_language + " selected.";
         Console::print(error, Console::eERROR);
         m_language = "en";
-        m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm");
+        if (m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+        {
+            Console::print("Loaded language " + language, Console::eDEBUG);
+        }
     }
     QGuiApplication::installTranslator(&m_Translator);
     Interpreter* pInterpreter = Interpreter::getInstance();

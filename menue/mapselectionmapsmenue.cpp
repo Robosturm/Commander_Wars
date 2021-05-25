@@ -280,44 +280,35 @@ void MapSelectionMapsMenue::slotButtonNext()
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
-{
-    
-    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
+{    
+    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
     if (info.isFile())
     {
         m_pMapSelectionView->setCurrentFile(info.filePath());
         emit buttonNext();
-    }
-    
+    }    
 }
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
-{
-    
-    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
-    m_pMapSelectionView->loadMap(info);
-    
+{    
+    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
+    m_pMapSelectionView->loadMap(info);    
 }
 
 void MapSelectionMapsMenue::hideMapSelection()
-{
-    
+{    
     m_pRandomMap->setVisible(false);
-    m_pMapSelectionView->setVisible(false);
-    
+    m_pMapSelectionView->setVisible(false);    
 }
 
 void MapSelectionMapsMenue::showMapSelection()
-{
-    
+{    
     m_pRandomMap->setVisible(true);
-    m_pMapSelectionView->setVisible(true);
-    
+    m_pMapSelectionView->setVisible(true);    
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
-{
-    
+{    
     m_pRuleSelection->setVisible(false);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
@@ -326,8 +317,7 @@ void MapSelectionMapsMenue::hideRuleSelection()
         m_pRuleSelectionView->confirmRuleSelectionSetup();
         m_pRuleSelectionView = nullptr;
     }
-    m_pRuleSelection->clearContent();
-    
+    m_pRuleSelection->clearContent();    
 }
 
 void MapSelectionMapsMenue::showRuleSelection()

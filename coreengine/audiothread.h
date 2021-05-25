@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QVector>
-#include <QSoundEffect>
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
+//#include <QSoundEffect>
+//#include <QMediaPlayer>
+//#include <QMediaPlaylist>
 #include <QTimer>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -99,7 +99,7 @@ protected slots:
     void SlotSetVolume(qint32 value);
     void SlotAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void SlotClearPlayList();
-    void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    //void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void SlotPlayRandom();
     void SlotLoadFolder(QString folder);
     void SlotCheckMusicEnded(qint64 duration);
@@ -116,20 +116,20 @@ protected slots:
     void stopSecondPlayer();
     void bufferAudio();
 
-    void reportReplayError(QMediaPlayer::Error error);
+    //void reportReplayError(QMediaPlayer::Error error);
     void reportPlaylistErros();
 protected:
     void loadMusicFolder(QString folder, QStringList& loadedSounds);
 private:
     // two players one is buffering the other one is actually playing
-    QMediaPlayer m_Player;
-    QMediaPlaylist m_playList;
-    QMediaPlayer m_Player2;
-    QMediaPlaylist m_playList2;
+    //QMediaPlayer m_Player;
+    //QMediaPlaylist m_playList;
+    //QMediaPlayer m_Player2;
+    //QMediaPlaylist m_playList2;
     qint32 m_currentPlayer{-1};
     QVector<std::tuple<qint64, qint64>> m_PlayListdata;
     qint32 m_currentMedia{-1};
-    QVector<QSoundEffect*> m_Sounds;
+    //QVector<QSoundEffect*> m_Sounds;
     QVector<QTimer*> m_SoundTimers;
     QTimer m_doubleBufferTimer;
     bool m_loadBaseGameFolders{true};

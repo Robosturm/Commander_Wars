@@ -10,7 +10,7 @@ Filesupport::Filesupport() : QObject()
 
 }
 
-QByteArray Filesupport::getHash(QStringList filter, QStringList folders)
+QByteArray Filesupport::getHash(QStringList filter, const QStringList & folders)
 {
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
     for (const auto & folder : qAsConst(folders))
@@ -29,7 +29,7 @@ QByteArray Filesupport::getHash(QStringList filter, QStringList folders)
     return myHash.result();
 }
 
-QByteArray Filesupport::getRuntimeHash(QStringList mods)
+QByteArray Filesupport::getRuntimeHash(const QStringList & mods)
 {
     QStringList folders = mods;
     folders.append("/resources");
@@ -68,7 +68,7 @@ QByteArray Filesupport::readByteArray(QDataStream& stream)
     return array;
 }
 
-void Filesupport::storeList(QString file, QStringList items, QString folder)
+void Filesupport::storeList(QString file, const QStringList & items, QString folder)
 {
     QDir dir(folder);
     dir.mkpath(".");

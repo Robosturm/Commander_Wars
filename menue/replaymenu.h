@@ -79,7 +79,7 @@ private:
     bool m_paused{false};
     bool m_pauseRequested{false};
     spV_Scrollbar m_progressBar;
-    QMutex m_replayMutex{QMutex::RecursionMode::Recursive};
+    QRecursiveMutex m_replayMutex;
     oxygine::spButton m_playButton;
     oxygine::spButton m_pauseButton;
     oxygine::spButton m_fastForwardButton;

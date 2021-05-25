@@ -27,16 +27,16 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core REQUIRED)
 # Qt5LinguistTools
-find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
-find_package(Qt5 COMPONENTS Qml REQUIRED)
-find_package(Qt5 COMPONENTS Network REQUIRED)
-find_package(Qt5 COMPONENTS Gui REQUIRED)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt5 COMPONENTS Xml REQUIRED)
-find_package(Qt5 COMPONENTS Multimedia REQUIRED)
-find_package(Qt5 COMPONENTS OpenGL REQUIRED)
+find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
+find_package(Qt6 COMPONENTS Qml REQUIRED)
+find_package(Qt6 COMPONENTS Network REQUIRED)
+find_package(Qt6 COMPONENTS Gui REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Xml REQUIRED)
+#find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 
 # build dependend defines
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -47,7 +47,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DGAMEDEBUG
         -DOXYGINE_DEBUG_SAFECAST
     )
-    find_package(Qt5 COMPONENTS QmlDebug REQUIRED)
+    find_package(Qt6 COMPONENTS QmlDebug REQUIRED)
 else("Release")
     message("Compiling as Release")
     add_definitions(
@@ -63,24 +63,26 @@ add_definitions(
 )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
+    set(CMAKE_CXX_FLAGS "-g -Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
+    set(CMAKE_C_FLAGS "-g -Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
     find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
+    set(CMAKE_CXX_FLAGS "-g -Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
+    set(CMAKE_C_FLAGS "-g -Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
     set(ADDR_2_LINE "")
 else()  # this branch works at least for linux
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
     set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
     find_program(ADDR_2_LINE addr2line)
+    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
+    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
 endif()
 
 
 # show configuration
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
-message("Qt-Dir: ${Qt5_DIR}")
+message("Qt-Dir: ${Qt6_DIR}")
 message("Addr2Line Path: ${ADDR_2_LINE}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
@@ -525,7 +527,7 @@ set(TS_FILES
 
 
 # adds the translations and a target for it
-qt5_create_translation(
+qt_create_translation(
         QM_FILES
         ${${PROJECT_NAME}_SRCS}
         ${scripts}
@@ -540,33 +542,33 @@ qt5_create_translation(
 add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
 
 # create executable
-add_executable(
+qt_add_executable(
         ${PROJECT_NAME}
         ${${PROJECT_NAME}_OXYGINE_SRCS}
         ${${PROJECT_NAME}_SRCS}
         ICON.rc
 )
 
-if (WIN32) #disable console mode for VC++
-        set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
-endif(WIN32)
-
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    WIN32_EXECUTABLE TRUE
+    MACOSX_BUNDLE TRUE
+)
 
 # link libraries
 set(QT_LIBRARIES
-    Qt5::Core
-    Qt5::Qml
-    Qt5::Network
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::Xml
-    Qt5::Multimedia
-    Qt5::OpenGL
+    Qt6::Core
+    Qt6::Qml
+    Qt6::Network
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Xml
+    #Qt6::Multimedia
+    Qt6::OpenGL
 )
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(QT_DEBUG_LIBRARIES
-        Qt5::QmlDebug
+        Qt6::QmlDebug
     )
 else()
     set(QT_DEBUG_LIBRARIES
@@ -576,6 +578,7 @@ endif()
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(
         ${PROJECT_NAME}
+        PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
         # special linking of libs for windows
@@ -584,24 +587,25 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     target_link_libraries(
         ${PROJECT_NAME}
+        PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
-        # special linking of libs for android
-        GLESv2
     )
 else() # this branch works at least for linux
     target_link_libraries(
         ${PROJECT_NAME}
+        PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
     )
 endif()
 
 
+
 # install section
 set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
 
-get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
+get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
 
@@ -610,24 +614,19 @@ message(${QT_BIN_DIR})
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/Qt5Qml.dll
-        ${QT_BIN_DIR}/Qt5Core.dll
-        ${QT_BIN_DIR}/Qt5Network.dll
-        ${QT_BIN_DIR}/Qt5Multimedia.dll
-        ${QT_BIN_DIR}/Qt5Gui.dll
-        ${QT_BIN_DIR}/Qt5Widgets.dll
-        ${QT_BIN_DIR}/Qt5Svg.dll
-        ${QT_BIN_DIR}/Qt5Xml.dll
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/Qt6Qml.dll
+        ${QT_BIN_DIR}/Qt6Core.dll
+        ${QT_BIN_DIR}/Qt6Network.dll
+        #${QT_BIN_DIR}/Qt6Multimedia.dll
+        ${QT_BIN_DIR}/Qt6Gui.dll
+        ${QT_BIN_DIR}/Qt6Widgets.dll
+        ${QT_BIN_DIR}/Qt6Svg.dll
+        ${QT_BIN_DIR}/Qt6Xml.dll
+        ${QT_BIN_DIR}/Qt6OpenGL.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
-        ${QT_BIN_DIR}/d3dcompiler_47.dll
-        ${QT_BIN_DIR}/libEGL.dll
-        ${QT_BIN_DIR}/libGLESv2.dll
-        ${ADDR_2_LINE}
-        ${QT_BIN_DIR}/libGLESv2.dll
-        ${QT_BIN_DIR}/libEGL.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
+        ${ADDR_2_LINE}
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -654,14 +653,15 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
 
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/../lib/libQt5Qml.so
-        ${QT_BIN_DIR}/../lib/libQt5Core.so
-        ${QT_BIN_DIR}/../lib/libQt5Network.so
-        ${QT_BIN_DIR}/../lib/libQt5Multimedia.so
-        ${QT_BIN_DIR}/../lib/libQt5Gui.so
-        ${QT_BIN_DIR}/../lib/libQt5Widgets.so
-        ${QT_BIN_DIR}/../lib/libQt5Svg.so
-        ${QT_BIN_DIR}/../lib/libQt5Xml.so
+        ${QT_BIN_DIR}/../lib/libQt6Qml.so
+        ${QT_BIN_DIR}/../lib/libQt6Core.so
+        ${QT_BIN_DIR}/../lib/libQt6Network.so
+        ${QT_BIN_DIR}/../lib/libQt6Multimedia.so
+        ${QT_BIN_DIR}/../lib/libQt6Gui.so
+        ${QT_BIN_DIR}/../lib/libQt6Widgets.so
+        ${QT_BIN_DIR}/../lib/libQt6Svg.so
+        ${QT_BIN_DIR}/../lib/libQt6Xml.so
+        ${QT_BIN_DIR}/../lib/libQt6OpenGL.so
         ${ADDR_2_LINE}
     )
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -738,10 +738,11 @@ install(DIRECTORY mods DESTINATION                  ".")
 install(DIRECTORY templates DESTINATION             ".")
 install(DIRECTORY savegames DESTINATION             ".")
 install(DIRECTORY data DESTINATION                  ".")
-install(TARGETS ${PROJECT_NAME} DESTINATION         "."
+install(TARGETS ${PROJECT_NAME}
                 RUNTIME         DESTINATION         "."
-                ARCHIVE         DESTINATION         "."
+                BUNDLE          DESTINATION         "."
                 LIBRARY         DESTINATION         ".")
+
 # install libs
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)

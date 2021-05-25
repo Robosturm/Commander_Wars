@@ -286,13 +286,13 @@ namespace oxygine
 
             QVariant value = QVariant(child_node.attribute("trim"));
             bool trim = true;
-            if (value.type() == QVariant::Type::Bool)
+            if (value.typeId() == QMetaType::Bool)
             {
                 trim = value.toBool();
             }
             value = QVariant(child_node.attribute("extend"));
             bool extend = true;
-            if (value.type() == QVariant::Type::Bool)
+            if (value.typeId() == QMetaType::Bool)
             {
                 extend = value.toBool();
             }

@@ -271,7 +271,7 @@ namespace oxygine
                 // do nothing
             }
         }
-        emit sigMousePressEvent(b, event->x(), event->y());
+        emit sigMousePressEvent(b, event->position().x(), event->position().y());
         m_pressDownTime.start();
         m_pressDownTimeRunning = true;
     }
@@ -301,11 +301,11 @@ namespace oxygine
                 // do nothing
             }
         }
-        emit sigMouseReleaseEvent(b, event->x(), event->y());
+        emit sigMouseReleaseEvent(b, event->position().x(), event->position().y());
         std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
         if (time > std::chrono::milliseconds(500))
         {
-            emit sigMouseLongPressEvent(b, event->x(), event->y());
+            emit sigMouseLongPressEvent(b, event->position().x(), event->position().y());
         }
         m_pressDownTimeRunning = false;
     }
@@ -316,7 +316,7 @@ namespace oxygine
     }
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
-        emit sigMouseMoveEvent(event->x(), event->y());
+        emit sigMouseMoveEvent(event->position().x(), event->position().y());
     }
 
     void GameWindow::touchEvent(QTouchEvent *event)
@@ -327,23 +327,23 @@ namespace oxygine
             case QEvent::TouchUpdate:
             {
                 QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
-                QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+                QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->points();
                 if (touchPoints.count() == 2)
                 {
                     // determine scale factor
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
-                    qreal scale = QLineF(touchPoint0.pos(), touchPoint1.pos()).length() /
-                                  QLineF(touchPoint0.startPos(), touchPoint1.startPos()).length();
+                    qreal scale = QLineF(touchPoint0.position(), touchPoint1.position()).length() /
+                                  QLineF(touchPoint0.pressPosition(), touchPoint1.pressPosition()).length();
                     emit sigTouchZoomEvent(scale, scale);
                 }
                 else if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (touchPoint0.pos() != touchPoint0.lastPos())
+                    if (touchPoint0.position() != touchPoint0.lastPosition())
                     {
-                        emit sigTouchScrollEvent(touchPoint0.pos().x() - touchPoint0.lastPos().x(),
-                                                 touchPoint0.pos().y() - touchPoint0.lastPos().y());
+                        emit sigTouchScrollEvent(touchPoint0.position().x() - touchPoint0.lastPosition().x(),
+                                                 touchPoint0.position().y() - touchPoint0.lastPosition().y());
                     }
                     else
                     {
@@ -352,7 +352,7 @@ namespace oxygine
                             std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                             if (time > std::chrono::milliseconds(500))
                             {
-                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.pos().x(), touchPoint0.pos().y());
+                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                                 m_pressDownTimeRunning = false;
                             }
                         }

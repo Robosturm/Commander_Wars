@@ -98,22 +98,18 @@ void CampaignMenu::exitMenue()
 }
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
-{
-    
-    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
+{    
+    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
     if (info.isFile())
     {
         emit buttonNext();
-    }
-    
+    }    
 }
 
 void CampaignMenu::mapSelectionItemChanged(QString item)
-{
-    
-    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
-    m_pMapSelectionView->loadMap(info);
-    
+{    
+    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
+    m_pMapSelectionView->loadMap(info);    
 }
 
 void CampaignMenu::slotButtonNext()
@@ -144,20 +140,17 @@ void CampaignMenu::slotButtonNext()
 }
 
 void CampaignMenu::showSaveCampaign()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
 }
 
 void CampaignMenu::saveCampaign(QString filename)
-{
-    
+{    
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -165,6 +158,5 @@ void CampaignMenu::saveCampaign(QString filename)
         QDataStream stream(&file);
         m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
         file.close();
-    }
-    
+    }    
 }

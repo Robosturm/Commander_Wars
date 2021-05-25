@@ -131,7 +131,7 @@ namespace oxygine
     void ResAtlas::loadBase(QDomElement node)
     {
         QVariant value = QVariant(node.attribute("linearFilter"));
-        if (value.type() == QVariant::Type::String &&
+        if (value.typeId() == QMetaType::QString &&
             !value.isNull())
         {
             if (value.toBool())
@@ -148,7 +148,7 @@ namespace oxygine
             m_linearFilter = GL_LINEAR;
         }
         value = QVariant(node.attribute("clamp2edge"));
-        if (value.type() == QVariant::Type::String &&
+        if (value.typeId() == QMetaType::QString &&
             !value.isNull())
         {
             m_clamp2edge = value.toBool();
