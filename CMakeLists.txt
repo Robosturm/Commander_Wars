@@ -1,19 +1,16 @@
-cmake_minimum_required (VERSION 3.16.0)
-project (Commander_Wars)
+cmake_minimum_required (VERSION 3.19.0)
+project (Commander_Wars LANGUAGES CXX)
 
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
 
 # Special Information for Android
-# ANDROID_NATIVE_API_LEVEL needs to be 26 or higher
-# ANDROID_ABI needs to be v8 or higher eg. arm64-v8a
-# The related ANDROID_BUILD_ABI needs to be set e.g. _arm64-v8a
+# ANDROID_NATIVE_API_LEVEL needs to be 16 or higher
 # NDK Version needs to be: 21.3.6528147
 # Example configuration:
-# -DANDROID_NATIVE_API_LEVEL:STRING=26
+# -DANDROID_NATIVE_API_LEVEL:STRING=16
 # -DANDROID_ABI:STRING=arm64-v8a
-# -DANDROID_BUILD_ABI_arm64-v8a:BOOL=ON
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -27,9 +24,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+###################################################################################
+# Find external libs
+###################################################################################
 find_package(Qt6 COMPONENTS Core REQUIRED)
-# Qt5LinguistTools
-find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
+# Qt6LinguistTools
 find_package(Qt6 COMPONENTS Qml REQUIRED)
 find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
@@ -37,8 +36,13 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 #find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
+endif()
 
-# build dependend defines
+###################################################################################
+# Set build dependend defines
+###################################################################################
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     add_definitions(
@@ -55,31 +59,38 @@ else("Release")
     )
 endif()
 
-# general defines
+###################################################################################
+# General defines
+###################################################################################
 add_definitions(
     -DMAJOR=0
     -DMINOR=19
     -DREVISION=0
 )
 
+###################################################################################
+# Set up some compiler and linking options
+###################################################################################
+
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g -Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
     set(CMAKE_C_FLAGS "-g -Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
     find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    set(CMAKE_CXX_FLAGS "-g -Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-g -Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
+    set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
+    set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
     set(ADDR_2_LINE "")
 else()  # this branch works at least for linux
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
     set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
     find_program(ADDR_2_LINE addr2line)
-    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
 endif()
 
 
+###################################################################################
 # show configuration
+###################################################################################
+
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
 message("Qt-Dir: ${Qt6_DIR}")
@@ -87,9 +98,9 @@ message("Addr2Line Path: ${ADDR_2_LINE}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
 message("OS: ${CMAKE_SYSTEM_NAME}")
-message ("CFlags: ${CMAKE_C_FLAGS}")
-message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
-message ("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
+message("CFlags: ${CMAKE_C_FLAGS}")
+message("CXX Flags: ${CMAKE_CXX_FLAGS}")
+message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
@@ -172,7 +183,9 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
 # end oxygine stuff -> qoxygine
 ###################################################################################
 
+###################################################################################
 # source list of commander wars specific files
+###################################################################################
 set(${PROJECT_NAME}_SRCS
         main.cpp
 
@@ -477,6 +490,7 @@ set(${PROJECT_NAME}_SRCS
 #######################################################
 # this is just for the ide view nothing for execution #
 #######################################################
+# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE scripts "resources/*.js")
 FILE(GLOB_RECURSE images "resources/*.png")
 FILE(GLOB_RECURSE xmls "resources/*.xml")
@@ -510,40 +524,44 @@ add_custom_target(uiXml SOURCES ${UiXmls})
 # end of this is just for the ide view nothing for execution #
 ##############################################################
 
-# create translation here :)
-set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
-message ("Language Update Options: ${LUPDATE_OPTIONS}")
+##############################################################
+# Translation section                                        #
+##############################################################
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    # translation target isn't supported by qt 6 for android right now
+    # create translation here :)
+    set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
+    message ("Language Update Options: ${LUPDATE_OPTIONS}")
 
-# created translation files
-set(TS_FILES
-    translation/lang_de_DE.ts
-    translation/lang_en.ts
-)
+    # created translation files
+    set(TS_FILES
+        translation/lang_de_DE.ts
+        translation/lang_en.ts
+    )
 
-set(TS_FILES
-    translation/lang_de_DE.ts
-    translation/lang_en.ts
-)
+    set(TS_FILES
+        translation/lang_de_DE.ts
+        translation/lang_en.ts
+    )
+    # adds the translations and a target for it
+    qt_create_translation(
+            QM_FILES
+            ${${PROJECT_NAME}_SRCS}
+            ${scripts}
+            ${modScripts}
+            ${GameScripts}
+            ${CampaignScripts}
+            ${UiXmls}
+            ${TS_FILES}
+            OPTIONS ${LUPDATE_OPTIONS})
+     add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
+endif()
 
+##############################################################
+# Linking and executable section                             #
+##############################################################
 
-# adds the translations and a target for it
-qt_create_translation(
-        QM_FILES
-        ${${PROJECT_NAME}_SRCS}
-        ${scripts}
-        ${modScripts}
-        ${GameScripts}
-        ${CampaignScripts}
-        ${UiXmls}
-        ${TS_FILES}
-        OPTIONS ${LUPDATE_OPTIONS}
-)
-
-add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
-
-# create executable
-qt_add_executable(
-        ${PROJECT_NAME}
+qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
         ${${PROJECT_NAME}_OXYGINE_SRCS}
         ${${PROJECT_NAME}_SRCS}
         ICON.rc
@@ -552,6 +570,10 @@ qt_add_executable(
 set_target_properties(${PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+            QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android"
 )
 
 # link libraries
@@ -576,39 +598,32 @@ else()
 endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    target_link_libraries(
-        ${PROJECT_NAME}
-        PUBLIC
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
         # special linking of libs for windows
         Dbghelp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    target_link_libraries(
-        ${PROJECT_NAME}
-        PUBLIC
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
     )
 else() # this branch works at least for linux
-    target_link_libraries(
-        ${PROJECT_NAME}
-        PUBLIC
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         ${QT_DEBUG_LIBRARIES}
     )
 endif()
 
+qt_finalize_executable(${PROJECT_NAME})
 
-
-# install section
-set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
-
+##############################################################
+# Install section                                            #
+##############################################################
+# get qt dir
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
-
-
 message(${QT_BIN_DIR})
 
 # those libs are not the same for each platform and need to be selected based on the os
@@ -620,7 +635,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         #${QT_BIN_DIR}/Qt6Multimedia.dll
         ${QT_BIN_DIR}/Qt6Gui.dll
         ${QT_BIN_DIR}/Qt6Widgets.dll
-        ${QT_BIN_DIR}/Qt6Svg.dll
         ${QT_BIN_DIR}/Qt6Xml.dll
         ${QT_BIN_DIR}/Qt6OpenGL.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
@@ -659,7 +673,6 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../lib/libQt6Multimedia.so
         ${QT_BIN_DIR}/../lib/libQt6Gui.so
         ${QT_BIN_DIR}/../lib/libQt6Widgets.so
-        ${QT_BIN_DIR}/../lib/libQt6Svg.so
         ${QT_BIN_DIR}/../lib/libQt6Xml.so
         ${QT_BIN_DIR}/../lib/libQt6OpenGL.so
         ${ADDR_2_LINE}
@@ -727,28 +740,31 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling" OPTIONAL)
 endif()
 
-message("install lib dir: ${CMAKE_SYSTEM_PREFIX_PATH}")
+message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
+
 # install folders and executable
-install(DIRECTORY system DESTINATION                ".")
-install(DIRECTORY resources DESTINATION             ".")
-install(DIRECTORY maps DESTINATION                  ".")
-install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)
-install(DIRECTORY customTerrainImages DESTINATION   ".")
-install(DIRECTORY mods DESTINATION                  ".")
-install(DIRECTORY templates DESTINATION             ".")
-install(DIRECTORY savegames DESTINATION             ".")
-install(DIRECTORY data DESTINATION                  ".")
 install(TARGETS ${PROJECT_NAME}
                 RUNTIME         DESTINATION         "."
                 BUNDLE          DESTINATION         "."
                 LIBRARY         DESTINATION         ".")
 
-# install libs
-install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION         "mediaservice" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION              "audio" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION             "bearer" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION    "playlistformats" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION             "styles" OPTIONAL)
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    install(DIRECTORY system DESTINATION                ".")
+    install(DIRECTORY resources DESTINATION             ".")
+    install(DIRECTORY maps DESTINATION                  ".")
+    install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)
+    install(DIRECTORY customTerrainImages DESTINATION   ".")
+    install(DIRECTORY mods DESTINATION                  ".")
+    install(DIRECTORY templates DESTINATION             ".")
+    install(DIRECTORY savegames DESTINATION             ".")
+    install(DIRECTORY data DESTINATION                  ".")
+    # install libs
+    install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION         "mediaservice" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION              "audio" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION             "bearer" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION    "playlistformats" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION             "styles" OPTIONAL)
+endif()

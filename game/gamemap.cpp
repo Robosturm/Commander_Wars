@@ -889,7 +889,7 @@ void GameMap::moveMap(qint32 x, qint32 y)
     emit sigMovedMap();
 }
 
-void GameMap::zoom(float zoom)
+void GameMap::setZoom(float zoom)
 {
     if (zoom > 0)
     {

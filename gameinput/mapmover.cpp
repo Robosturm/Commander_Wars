@@ -22,7 +22,7 @@ MapMover::~MapMover()
 
 void MapMover::mouseWheel(float direction)
 {
-    GameMap::getInstance()->zoom(direction);
+    GameMap::getInstance()->setZoom(direction);
     m_pOwner->centerMapOnCursor();
 }
 
@@ -95,13 +95,13 @@ void MapMover::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_MapZoomIn() ||
                      cur == Settings::getKey_MapZoomIn2())
             {
-                GameMap::getInstance()->zoom(1);
+                GameMap::getInstance()->setZoom(1);
                 m_pOwner->centerMapOnCursor();
             }
             else if (cur == Settings::getKey_MapZoomOut() ||
                      cur == Settings::getKey_MapZoomOut2())
             {
-                GameMap::getInstance()->zoom(-1);
+                GameMap::getInstance()->setZoom(-1);
                 m_pOwner->centerMapOnCursor();
             }
         }

@@ -615,7 +615,7 @@ public slots:
      * @brief zoom zooms into or out of the map :)
      * @param zoom
      */
-    void zoom(float zoom);
+    void setZoom(float zoom);
     inline float getZoom() const
     {
         return m_zoom;
