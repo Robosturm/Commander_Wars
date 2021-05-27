@@ -246,7 +246,7 @@ void AudioThread::SlotAddMusic(QString File, qint64 startPointMs, qint64 endPoin
 //    }
 //    else
 //    {
-//        Console::print("Unable to locate music file: " + currentPath, Console::eDEBUG);
+//        Console::print("Unable to locate music file: " + currentPath, Console::eERROR);
 //    }
 }
 
