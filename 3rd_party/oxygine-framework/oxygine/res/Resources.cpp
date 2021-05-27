@@ -22,8 +22,8 @@ namespace oxygine
         r.cb = creationCallback;
         r.id = resTypeID;
 
-        registeredResources::iterator it = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), r.id, registeredResource::comparePred2);
-        if (it != m_registeredResources.end())
+        auto it = std::lower_bound(m_registeredResources.cbegin(), m_registeredResources.cend(), r.id, registeredResource::comparePred2);
+        if (it != m_registeredResources.cend())
         {
             if (it->id == resTypeID)
             {
@@ -36,8 +36,8 @@ namespace oxygine
 
     void Resources::unregisterResourceType(QString resTypeID)
     {
-        registeredResources::iterator it = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), resTypeID, registeredResource::comparePred2);
-        if (it != m_registeredResources.end())
+        auto it = std::lower_bound(m_registeredResources.cbegin(), m_registeredResources.cend(), resTypeID, registeredResource::comparePred2);
+        if (it != m_registeredResources.cend())
         {
             if (it->id == resTypeID)
             {

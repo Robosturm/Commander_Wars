@@ -261,7 +261,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
             m_Networkthread.start(QThread::Priority::NormalPriority);
-            m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
+            m_Workerthread.start(QThread::Priority::HighestPriority);
             emit m_Worker->sigStart();
             if (!m_noUi)
             {
@@ -279,7 +279,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (Settings::getServer() && !m_slave)
             {
                 MainServer::getInstance();
-                m_GameServerThread.start(QThread::Priority::TimeCriticalPriority);
+                m_GameServerThread.start(QThread::Priority::HighestPriority);
             }
             pLoadingScreen->hide();
             if (!m_slave)

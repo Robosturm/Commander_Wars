@@ -826,8 +826,7 @@ spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFi
         QDataStream scriptFilestream(&script);
         Filesupport::writeBytes(scriptFilestream, scriptData);
         script.close();
-        scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath() + "/", "");
-        scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath(), "");
+        scriptFile = GlobalUtils::makePathRelative(scriptFile);
         // save script file
         pNewMap->getGameScript()->setScriptFile(scriptFile);
         map.open(QIODevice::WriteOnly);

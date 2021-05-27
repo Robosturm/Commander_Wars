@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 
@@ -861,8 +862,7 @@ void RuleSelection::showSelectScript()
 
 void RuleSelection::scriptFileChanged(QString file)
 {
-    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
-    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    file = GlobalUtils::makePathRelative(file);
     m_MapScriptFile->setCurrentText(file);
     spGameMap pMap = GameMap::getInstance();
     pMap->getGameScript()->setScriptFile(file);

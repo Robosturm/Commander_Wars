@@ -27,34 +27,15 @@
 
 #include "coreengine/interpreter.h"
 
-spWikiDatabase WikiDatabase::m_pInstance = nullptr;
-
-WikiDatabase* WikiDatabase::getInstance()
-{
-    if (m_pInstance.get() == nullptr)
-    {
-        m_pInstance = spWikiDatabase::create();
-    }
-    return m_pInstance.get();
-}
-
 WikiDatabase::WikiDatabase()
-    : QObject()
+    : QObject(),
+      RessourceManagement<WikiDatabase>("/resources/images/wiki/res.xml",
+      "")
 {
     setObjectName("WikiDatabase");
     Mainapp* pMainapp = Mainapp::getInstance();
     this->moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
-
-    oxygine::Resources::loadXML("resources/images/wiki/res.xml");
-
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
-    {
-        if (QFile::exists(Settings::getMods().at(i) + "/images/wiki/res.xml"))
-        {
-            oxygine::Resources::loadXML(QString(Settings::getMods().at(i) + "/images/wiki/res.xml"));
-        }
-    }
 }
 
 void WikiDatabase::load()
@@ -97,9 +78,10 @@ void WikiDatabase::load()
         searchPaths.append(Settings::getMods().at(i) + "/scripts/wiki");
     }
     searchPaths.append("resources/scripts/wiki");
+    searchPaths.append(":/resources/scripts/wiki");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
-        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
+        QString path =  searchPaths[i];
         QStringList filter;
         filter << "*.js";
         QDirIterator dirIter = QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);

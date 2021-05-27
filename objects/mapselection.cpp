@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
+#include "coreengine/globalutils.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -225,7 +226,7 @@ void MapSelection::changeFolder(QString folder)
         {
             QString myPath = infoList[i].absoluteFilePath();
             QString item = myPath;
-            item.replace(QCoreApplication::applicationDirPath() + "/", "");
+            item =  GlobalUtils::makePathRelative(item);
             if ((myPath == newFolder) ||
                 (upFolder == infoList[i] ||
                  (infoList[i].isDir() && myPath.endsWith(".camp"))) ||

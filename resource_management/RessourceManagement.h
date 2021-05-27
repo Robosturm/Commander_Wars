@@ -15,78 +15,78 @@
 template<class TClass>
 class RessourceManagement : public oxygine::Resources
 {
-public:
-    /**
+    public:
+        /**
      * @brief getInstance
      * @return
      */
-    static TClass* getInstance();
-    /**
+        static TClass* getInstance();
+        /**
      * @brief loadAll loads all units data
      */
-    virtual void loadAll();
-    /**
+        virtual void loadAll();
+        /**
      * @brief getID
      * @param position
      * @return
      */
-    QString getID(qint32 position);
-    /**
+        QString getID(qint32 position);
+        /**
      * @brief getIndex
      * @param id
      * @return
      */
-    qint32 getIndex(QString id);
-    /**
+        qint32 getIndex(QString id);
+        /**
      * @brief getCount
      * @return
      */
-    qint32 getCount()
-    {
-        return m_loadedRessources.size();
-    }
-    /**
+        qint32 getCount()
+        {
+            return m_loadedRessources.size();
+        }
+        /**
      * @brief reset
      */
-    virtual void reset();
-    /**
+        virtual void reset();
+        /**
      * @brief exists
      * @param id
      * @return
      */
-    bool exists(QString id);
-    /**
+        bool exists(QString id);
+        /**
      * @brief getName
      * @param position
      * @return
      */
-    QString getName(qint32 position);
-    /**
+        QString getName(qint32 position);
+        /**
      * @brief getName
      * @param id
      * @return
      */
-    QString getName(QString id);
-    /**
+        QString getName(QString id);
+        /**
      * @brief getLoadedRessources
      * @return
      */
-    QStringList getLoadedRessources()
-    {
-        return m_loadedRessources;
-    }
-protected:
-    explicit RessourceManagement(QString resPath, QString scriptPath);
-    virtual ~RessourceManagement() = default;
-    void loadRessources(QString resPath);
-    void loadAll(QStringList& list);
-    void reset(QStringList& list);
-    QStringList getSearchPaths();
-protected:
-    QStringList m_loadedRessources;
-    QString m_scriptPath;
-private:
-    static TClass* m_pInstance;
+        QStringList getLoadedRessources()
+        {
+            return m_loadedRessources;
+        }
+    protected:
+        explicit RessourceManagement(QString resPath, QString scriptPath);
+        virtual ~RessourceManagement() = default;
+        void loadRessources(QString resPath);
+        void loadAll(QStringList& list);
+        void reset(QStringList& list);
+        QStringList getSearchPaths();
+    protected:
+        QStringList m_loadedRessources;
+        QString m_scriptPath;
+    private:
+        static TClass* m_pInstance;
 };
 
 template<class TClass>
@@ -115,12 +115,20 @@ void RessourceManagement<TClass>::loadRessources(QString resPath)
 {
     if (!resPath.isEmpty())
     {
+        if (QFile::exists(QString(RCC_PREFIX_PATH) + "resources/" + resPath))
+        {
+            oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath);
+        }
         if (QFile::exists("resources/" + resPath))
         {
             oxygine::Resources::loadXML("resources/" + resPath);
         }
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
+            if (QFile::exists(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath))
+            {
+                oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath);
+            }
             if (QFile::exists(Settings::getMods().at(i) + resPath))
             {
                 oxygine::Resources::loadXML(Settings::getMods().at(i) + resPath);
@@ -188,10 +196,12 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
     QStringList searchPaths;
     if (!m_scriptPath.isEmpty())
     {
+        searchPaths.append(QString(RCC_PREFIX_PATH) + "resources/" + m_scriptPath);
         searchPaths.append("resources/" + m_scriptPath);
         // make sure to overwrite existing js stuff
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
+            searchPaths.append(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/" + m_scriptPath);
             searchPaths.append(Settings::getMods().at(i) + "/" + m_scriptPath);
         }
     }
@@ -212,7 +222,7 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
     QStringList searchPaths = getSearchPaths();
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
-        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
+        QString path = searchPaths[i];
         QStringList filter;
         filter << "*.js";
         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);

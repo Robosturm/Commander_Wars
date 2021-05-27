@@ -450,22 +450,25 @@ void OptionMenue::showSettings()
     items.append(english.nativeLanguageName());
     languages.append("en");
     qint32 current = 0;
-    QString path =  QCoreApplication::applicationDirPath() + "/resources/translation/";
+    QStringList paths = {":/resources/translation/", "resources/translation/"};
     QStringList filter;
     filter << "*.qm";
-    QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
-    while (dirIter.hasNext())
+    for (const QString & path : qAsConst(paths))
     {
-        dirIter.next();
-        QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-        if (lang != "en")
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
         {
-            languages.append(lang);
-            QLocale langLoc(lang);
-            items.append(langLoc.nativeLanguageName());
-            if (lang == Settings::getLanguage())
+            dirIter.next();
+            QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+            if (lang != "en")
             {
-                current = items.size() - 1;
+                languages.append(lang);
+                QLocale langLoc(lang);
+                items.append(langLoc.nativeLanguageName());
+                if (lang == Settings::getLanguage())
+                {
+                    current = items.size() - 1;
+                }
             }
         }
     }

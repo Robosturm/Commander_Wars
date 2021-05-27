@@ -37,37 +37,37 @@ namespace oxygine
         QString fs_blur;
         QString vs_blit;
         QString fs_blit;
-        if (QFile::exists("system/pp_hblur_vs.glsl"))
+        if (QFile::exists(":/system/pp_hblur_vs.glsl"))
         {
-            QFile file("system/pp_hblur_vs.glsl");
+            QFile file(":/system/pp_hblur_vs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_h = stream.readAll();
         }
-        if (QFile::exists("system/pp_vblur_vs.glsl"))
+        if (QFile::exists(":/system/pp_vblur_vs.glsl"))
         {
-            QFile file("system/pp_vblur_vs.glsl");
+            QFile file(":/system/pp_vblur_vs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_v = stream.readAll();
         }
-        if (QFile::exists("system/pp_rast_fs.glsl"))
+        if (QFile::exists(":/system/pp_rast_fs.glsl"))
         {
-            QFile file("system/pp_rast_fs.glsl");
+            QFile file(":/system/pp_rast_fs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fs_blur = stream.readAll();
         }
-        if (QFile::exists("system/pp_blit_vs.glsl"))
+        if (QFile::exists(":/system/pp_blit_vs.glsl"))
         {
-            QFile file("system/pp_blit_vs.glsl");
+            QFile file(":/system/pp_blit_vs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_blit = stream.readAll();
         }
-        if (QFile::exists("system/pp_blit_fs.glsl"))
+        if (QFile::exists(":/system/pp_blit_fs.glsl"))
         {
-            QFile file("system/pp_blit_fs.glsl");
+            QFile file(":/system/pp_blit_fs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fs_blit = stream.readAll();

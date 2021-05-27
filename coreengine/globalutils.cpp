@@ -277,7 +277,6 @@ QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
 
 void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders)
 {
-    QStringList ret;
     QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
     while (dirIter.hasNext())
     {
@@ -296,11 +295,11 @@ void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirecto
         {
             file.replace(folder + "/", "");
             file.replace(folder, "");
-            bool exists = QFile::exists(QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
+            bool exists = QFile::exists(targetDirectory + "/" + file);
             if (replace || !exists)
             {
-                QFile::remove(QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
-                QFile::copy(dirIter.fileInfo().absoluteFilePath(), QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
+                QFile::remove(targetDirectory + "/" + file);
+                QFile::copy(dirIter.fileInfo().absoluteFilePath(), targetDirectory + "/" + file);
             }
         }
     }
@@ -366,4 +365,11 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
         Console::print("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
     }
     return ret;
+}
+
+QString GlobalUtils::makePathRelative(QString file)
+{
+    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    return file;
 }

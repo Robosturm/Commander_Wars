@@ -127,7 +127,7 @@ namespace oxygine
     protected:
         resources m_resources;
         resourcesMap m_resourcesMap;
-        typedef QVector< registeredResource > registeredResources;
+        typedef QVector<registeredResource> registeredResources;
         static registeredResources m_registeredResources;
         QString m_name;
         QVector<QDomDocument> m_docs;

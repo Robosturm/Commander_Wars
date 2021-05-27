@@ -26,6 +26,7 @@ NormalAi::NormalAi(QString configurationFile)
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    loadIni(":/normal/" + configurationFile);
     loadIni("normal/" + configurationFile);
 }
 

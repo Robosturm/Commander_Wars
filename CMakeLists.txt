@@ -487,38 +487,36 @@ set(${PROJECT_NAME}_SRCS
         ui_reader/uifactory.cpp
 )
 
-#######################################################
-# this is just for the ide view nothing for execution #
-#######################################################
-# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
-FILE(GLOB_RECURSE scripts "resources/*.js")
-FILE(GLOB_RECURSE images "resources/*.png")
-FILE(GLOB_RECURSE xmls "resources/*.xml")
-FILE(GLOB_RECURSE inis "resources/*.ini")
-add_custom_target(Resources SOURCES ${scripts} ${images} ${xmls} ${inis})
+##############################################################################
+# This section finds all resources so they can be linked to a rcc file later #
+##############################################################################
+FILE(GLOB_RECURSE scripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.js")
+FILE(GLOB_RECURSE images RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.png" )
+FILE(GLOB_RECURSE xmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.xml")
+FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.ini")
+FILE(GLOB_RECURSE ShaderScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "system/*.glsl")
 
-FILE(GLOB_RECURSE modScripts "mods/*.js")
-FILE(GLOB_RECURSE modDescs "mods/*.txt")
-FILE(GLOB_RECURSE modImages "resources/*.png")
-FILE(GLOB_RECURSE modXmls "resources/*.xml")
+# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
+
+FILE(GLOB_RECURSE modScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.js")
+FILE(GLOB_RECURSE modDescs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.txt")
+FILE(GLOB_RECURSE modImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.png")
+FILE(GLOB_RECURSE modXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.xml")
 add_custom_target(modscripts SOURCES ${modScripts} ${modImages} ${modXmls} ${modDescs})
 
-FILE(GLOB_RECURSE TemplateScripts "templates/*.js")
+FILE(GLOB_RECURSE TemplateScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
-FILE(GLOB_RECURSE GameScripts "maps/*.js")
+FILE(GLOB_RECURSE GameScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.js")
 add_custom_target(gamescripts SOURCES ${GameScripts})
 
-FILE(GLOB_RECURSE CampaignScripts "maps/*.jsm")
+FILE(GLOB_RECURSE CampaignScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.jsm")
 add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 
-FILE(GLOB_RECURSE ShaderScripts "system/*.glsl")
-add_custom_target(shaders SOURCES ${ShaderScripts})
-
-FILE(GLOB_RECURSE DataScripts "data/*.js")
+FILE(GLOB_RECURSE DataScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "data/*.js")
 add_custom_target(data SOURCES ${DataScripts})
 
-FILE(GLOB_RECURSE UiXmls "resources/ui/*.xml")
+FILE(GLOB_RECURSE UiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
 add_custom_target(uiXml SOURCES ${UiXmls})
 ##############################################################
 # end of this is just for the ide view nothing for execution #
@@ -742,6 +740,16 @@ endif()
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 
+qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
+    PREFIX "/"
+    FILES
+    ${images}
+    ${ShaderScripts}
+    ${scripts}
+    ${xmls}
+    ${inis}
+)
+
 # install folders and executable
 install(TARGETS ${PROJECT_NAME}
                 RUNTIME         DESTINATION         "."
@@ -749,8 +757,6 @@ install(TARGETS ${PROJECT_NAME}
                 LIBRARY         DESTINATION         ".")
 
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(DIRECTORY system DESTINATION                ".")
-    install(DIRECTORY resources DESTINATION             ".")
     install(DIRECTORY maps DESTINATION                  ".")
     install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)
     install(DIRECTORY customTerrainImages DESTINATION   ".")

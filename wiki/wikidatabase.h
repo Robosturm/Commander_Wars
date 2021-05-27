@@ -4,10 +4,9 @@
 #include <QObject>
 #include <QVector>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
+#include "resource_management/ressourcemanagement.h"
 #include "wiki/wikipage.h"
+
 
 class WikiDatabase;
 using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
@@ -15,7 +14,7 @@ using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
 /**
  * @brief The WikiDatabase class
  */
-class WikiDatabase : public QObject, public oxygine::Resources
+class WikiDatabase : public QObject, public RessourceManagement<WikiDatabase>
 {
     Q_OBJECT
 public:
@@ -25,8 +24,7 @@ public:
      * 1 = ID
      * 2 = Tags
      */
-    typedef std::tuple<QString, QString, QStringList> pageData;
-    static WikiDatabase* getInstance();
+    using pageData = std::tuple<QString, QString, QStringList> ;
     /**
      * @brief load
      */
@@ -84,11 +82,11 @@ signals:
 public slots:
 
 private:
+    friend RessourceManagement<WikiDatabase>;
     friend class oxygine::intrusive_ptr<WikiDatabase>;
     explicit WikiDatabase();
 
 private:
-    static spWikiDatabase m_pInstance;
     QVector<pageData> m_Entries;
 };
 

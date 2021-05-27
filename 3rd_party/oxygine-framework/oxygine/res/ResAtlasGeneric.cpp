@@ -6,6 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.h"
 
 #include "spritingsupport/spritecreator.h"
+#include "coreengine/console.h"
 
 #include <qvariant.h>
 #include <qfile.h>
@@ -261,14 +262,6 @@ namespace oxygine
                 createEmpty(walker, context);
                 continue;
             }
-
-            QFile fileInfo(walker.getPath("file"));
-            if (!fileInfo.exists())
-            {
-                qCritical("Invalid item found. %s", fileInfo.fileName().toStdString().c_str());
-                continue;
-            }
-
             bool found = false;
             for (const auto& item : anims)
             {
@@ -280,7 +273,7 @@ namespace oxygine
             }
             if (found)
             {
-                qCritical("Duplicate entry found. %s", fileInfo.fileName().toStdString().c_str());
+                Console::print("Duplicate entry found. " + walker.getPath("file"), Console::eFATAL);
                 continue;
             }
 
@@ -307,10 +300,23 @@ namespace oxygine
             qint32 frame_width = 0;
             qint32 frame_height = 0;
 
-            QImage img(walker.getPath("file"));
+            QImage img;
+            if (QFile::exists(walker.getPath("file")))
+            {
+                img = QImage(walker.getPath("file"));
+            }
+            else if (QFile::exists(RCC_PREFIX_PATH + walker.getPath("file")))
+            {
+                img = QImage(RCC_PREFIX_PATH + walker.getPath("file"));
+            }
+            else
+            {
+                Console::print("Invalid item found. " + walker.getPath("file"), Console::eFATAL);
+                continue;
+            }
             if (img.width() == 0 || img.height() == 0)
             {
-                qWarning("Image. Not found %s", walker.getPath("file").toStdString().c_str());
+                Console::print("Image is not valid " + walker.getPath("file"), Console::eWARNING);
                 continue;
             }
             rows = child_node.attribute("rows").toInt();

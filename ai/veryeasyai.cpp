@@ -28,6 +28,7 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    loadIni(":/very_easy/very_easy.ini");
     loadIni("very_easy/very_easy.ini");
 }
 

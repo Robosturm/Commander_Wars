@@ -198,23 +198,23 @@ namespace oxygine
 
         maxVertices = indices16.size() / 3 * 2;
 
-        if (QFile::exists("system/frac_shader.glsl"))
+        if (QFile::exists(":/system/frac_shader.glsl"))
         {
-            QFile file("system/frac_shader.glsl");
+            QFile file(":/system/frac_shader.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fracShaderBody = stream.readAll();
         }
-        if (QFile::exists("system/vertex_shader.glsl"))
+        if (QFile::exists(":/system/vertex_shader.glsl"))
         {
-            QFile file("system/vertex_shader.glsl");
+            QFile file(":/system/vertex_shader.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vertexShaderBody = stream.readAll();
         }
-        if (QFile::exists("system/frac_table_shader.glsl"))
+        if (QFile::exists(":/system/frac_table_shader.glsl"))
         {
-            QFile file("system/frac_table_shader.glsl");
+            QFile file(":/system/frac_table_shader.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fracTableShaderBody = stream.readAll();

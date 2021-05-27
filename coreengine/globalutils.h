@@ -20,6 +20,7 @@ public:
     static float randFloatBase(float low, float high);
     static double randDoubleBase(double low, double high);
 public slots:
+    static QString makePathRelative(QString file);
     /**
      * @brief seed
      * @param seed

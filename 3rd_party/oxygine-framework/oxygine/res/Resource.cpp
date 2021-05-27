@@ -4,6 +4,8 @@
 
 namespace oxygine
 {
+    const char* const Resource::RCC_PREFIX_PATH = ":/";
+
     Resource::Resource()
         : m_parent(0),
           m_loadCounter(0),

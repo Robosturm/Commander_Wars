@@ -1,9 +1,8 @@
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/terrainmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 #include "dialogmodifyterrain.h"
@@ -180,6 +179,6 @@ void DialogModifyTerrain::showLoadDialog()
 
 void DialogModifyTerrain::loadCustomSprite(QString id)
 {
-    QString imageId = id.replace(QCoreApplication::applicationDirPath() + "/", "");
+    QString imageId = GlobalUtils::makePathRelative(id);
     terrainClicked(imageId);
 }

@@ -121,7 +121,15 @@ namespace oxygine
 
         spImage mt = spImage::create();
 
-        QImage img(p.file);
+        QImage img;
+        if (QFile::exists(p.file))
+        {
+           img = QImage(p.file);
+        }
+        else if (QFile::exists(RCC_PREFIX_PATH + p.file))
+        {
+           img = QImage(RCC_PREFIX_PATH + p.file);
+        }
         mt->init(img, !m_premultipliedAlpha);
         CreateTextureTask opt;
         opt.src = mt;
@@ -250,12 +258,14 @@ namespace oxygine
         QFile file(path);
         if (!file.exists())
         {
-            return;
+            file.setFileName(QString(RCC_PREFIX_PATH) + path);
+            if (!file.exists())
+            {
+                Console::print("Unable to load font " + m_file, Console::eFATAL);
+                return;
+            }
         }
-        else
-        {
-            file.open(QIODevice::ReadOnly);
-        }
+        file.open(QIODevice::ReadOnly);
 
         QDomDocument doc;
         QString error;

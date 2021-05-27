@@ -323,8 +323,7 @@ void DialogRandomMap::showGeneratorSelection()
 
 void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 {
-    
-    filename = filename.replace(QCoreApplication::applicationDirPath() + "/", "");
+    filename =  GlobalUtils::makePathRelative(filename);
     m_GeneratorFile->setCurrentText(filename);
     QFile file(filename);
     if (file.exists())
