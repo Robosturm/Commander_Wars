@@ -367,13 +367,42 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
     return ret;
 }
 
-QString GlobalUtils::makePathRelative(QString file)
+QString GlobalUtils::makePathRelative(QString file, bool full)
 {
     file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
     file = file.replace(QCoreApplication::applicationDirPath(), "");
-    if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
+    if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH) && full)
     {
         file.remove(0, QString(oxygine::Resource::RCC_PREFIX_PATH).length());
     }
     return file;
+}
+
+QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
+{
+    QFileInfoList infoList;
+    infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
+    auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
+    for (const auto & item : qAsConst(virtList))
+    {
+        bool found = false;
+        for (const auto & item2 : qAsConst(infoList))
+        {
+            if (item2.baseName() == item.baseName())
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            infoList.append(item);
+        }
+    }
+    if (list.length() > 0)
+    {
+        infoList.append(QDir(folder).entryInfoList(list, QDir::Files));
+        infoList.append(QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(list, QDir::Files));
+    }
+    return infoList;
 }

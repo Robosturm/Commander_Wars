@@ -281,7 +281,7 @@ void MapSelectionMapsMenue::slotButtonNext()
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 {    
-    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
+    QFileInfo info = QFileInfo(item);
     if (info.isFile())
     {
         m_pMapSelectionView->setCurrentFile(info.filePath());
@@ -291,7 +291,7 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {    
-    QFileInfo info = QFileInfo(m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item);
+    QFileInfo info = QFileInfo(item);
     m_pMapSelectionView->loadMap(info);    
 }
 

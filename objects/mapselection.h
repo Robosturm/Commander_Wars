@@ -3,10 +3,8 @@
 
 #include <QObject>
 #include <QTimer>
-
 #include <QVector>
 #include <QElapsedTimer>
-
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -26,7 +24,7 @@ public:
     }
     QString getCurrentFile()
     {
-        return m_currentFolder + m_currentItem;
+        return m_currentItem;
     }
     virtual void update(const oxygine::UpdateState& us) override;
     /**

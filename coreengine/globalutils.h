@@ -2,6 +2,7 @@
 #define GLOBALUTILS_H
 
 #include <QObject>
+#include <QDir>
 #include <QRandomGenerator>
 #include "coreengine/qmlvector.h"
 #include "coreengine/qmlvector.h"
@@ -19,8 +20,9 @@ public:
     static qint32 randIntBase(qint32 low, qint32 high);
     static float randFloatBase(float low, float high);
     static double randDoubleBase(double low, double high);
+    static QFileInfoList getInfoList(QString folder, QStringList list = QStringList());
 public slots:
-    static QString makePathRelative(QString file);
+    static QString makePathRelative(QString file, bool full = true);
     /**
      * @brief seed
      * @param seed

@@ -187,17 +187,27 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     {
         loadSpriteAnim(pAnim, offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops);
     }
-    else if (QFile::exists(spriteID))
+    else
     {
-        QImage img(spriteID);
+
+        QImage img;
+        if (QFile::exists(spriteID))
+        {
+            img = QImage(spriteID);
+        }
+        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + spriteID))
+        {
+            img = QImage(oxygine::Resource::RCC_PREFIX_PATH + spriteID);
+        }
+        else
+        {
+            Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
+            return;
+        }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
         Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames);
         m_resAnims.append(pAnim);
         loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops);
-    }
-    else
-    {
-        Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
     }
 }
 

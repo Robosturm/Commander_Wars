@@ -652,7 +652,7 @@ void Multiplayermenu::requestMap(quint64 socketID)
     {
         QString command = QString(NetworkCommands::MAPDATA);
         Console::print("Sending command " + command, Console::eDEBUG);
-        QString file = GlobalUtils::makePathRelative(m_pMapSelectionView->getCurrentFile().filePath());
+        QString file = GlobalUtils::makePathRelative(m_pMapSelectionView->getCurrentFile().filePath(), false);
         QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -826,7 +826,7 @@ spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFi
         QDataStream scriptFilestream(&script);
         Filesupport::writeBytes(scriptFilestream, scriptData);
         script.close();
-        scriptFile = GlobalUtils::makePathRelative(scriptFile);
+        scriptFile = GlobalUtils::makePathRelative(scriptFile, true);
         // save script file
         pNewMap->getGameScript()->setScriptFile(scriptFile);
         map.open(QIODevice::WriteOnly);

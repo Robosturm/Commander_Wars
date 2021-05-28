@@ -608,12 +608,17 @@ void Mainapp::createBaseDirs()
     {
         "temp",
         "savegames",
-        "mods"
+        "mods",
         "data/gamerules",
         "data/randommaps",
         "data/records",
-        "maps"
-        "customTerrainImages"
+        "maps",
+        "customTerrainImages",
+        "resources",
+        "resources/aidata",
+        "resources/aidata/very_easy",
+        "resources/aidata/normal",
+        "resources/aidata/heavy",
     };
     for (const auto & path : qAsConst(dirs))
     {
@@ -624,7 +629,10 @@ void Mainapp::createBaseDirs()
     for (const auto & item : qAsConst(virtList))
     {
         QString path = GlobalUtils::makePathRelative(item.absoluteFilePath());
-        QDir newDir(path);
-        newDir.mkpath(".");
+        if (!path.endsWith(".camp"))
+        {
+            QDir newDir(path);
+            newDir.mkpath(".");
+        }
     }
 }

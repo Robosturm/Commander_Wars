@@ -280,7 +280,15 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
 {
     if (!filename.isEmpty())
     {
-        QImage image(filename);
+        QImage image;
+        if (QFile::exists(filename))
+        {
+            image = QImage(filename);
+        }
+        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + filename))
+        {
+            image = QImage(oxygine::Resource::RCC_PREFIX_PATH + filename);
+        }
         oxygine::spResAnim pAnim = oxygine::spSingleResAnim::create();
         m_backgroundAnims[index] = pAnim;
         Mainapp::getInstance()->loadResAnim(pAnim.get(), image);

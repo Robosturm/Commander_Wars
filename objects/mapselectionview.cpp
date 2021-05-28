@@ -232,8 +232,9 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap = nullptr;
         }
         bool savegame = info.fileName().endsWith(".msav");
-        m_pCurrentMap = spGameMap::create(info.absoluteFilePath(), true, fast, savegame);
-        m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(info.absoluteFilePath()));
+        QString file = info.absoluteFilePath();
+        m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
+        m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->clear();
         m_pMinimap->updateMinimap(m_pCurrentMap);

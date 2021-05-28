@@ -43,8 +43,6 @@ class FileDialog : public QObject, public oxygine::Actor
         void KeyInput(oxygine::KeyEvent event);
         void deleteItem();
     private:
-        QFileInfoList getInfoList(QString folder);
-    private:
         spTextbox m_CurrentFolder;
         spTextbox m_CurrentFile;
         spPanel m_MainPanel;

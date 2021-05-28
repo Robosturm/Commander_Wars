@@ -145,7 +145,7 @@ void FolderDialog::showFolder(QString folder)
     }
     else
     {
-        infoList = getInfoList(folder);
+        infoList = GlobalUtils::getInfoList(folder);
     }
 
     qint32 itemCount = 0;
@@ -236,30 +236,6 @@ void FolderDialog::showFolder(QString folder)
         m_CurrentFolder->setCurrentText(folder);
     }
     pApp->continueRendering();
-}
-
-QFileInfoList FolderDialog::getInfoList(QString folder)
-{
-    QFileInfoList infoList;
-    infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
-    auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
-    for (const auto & item : qAsConst(virtList))
-    {
-        bool found = false;
-        for (const auto & item2 : qAsConst(infoList))
-        {
-            if (item2.baseName() == item.baseName())
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            infoList.append(item);
-        }
-    }
-    return infoList;
 }
 
 void FolderDialog::deleteItem()

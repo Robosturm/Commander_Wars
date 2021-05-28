@@ -1,22 +1,22 @@
-#include "mapselection.h"
+#include "objects/mapselection.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "game/gamemap.h"
 
-#include "QDir"
-
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     : QObject(),
-      m_currentFolder("maps/")
+      m_currentFolder("maps")
 {
     setObjectName("MapSelection");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     m_itemChangedTimer.setSingleShot(true);
     m_itemChangedTimer.setInterval(350);
     connect(&m_itemChangedTimer, &QTimer::timeout, this, &MapSelection::itemChangeTimerExpired, Qt::QueuedConnection);
@@ -47,13 +47,13 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     });
     pArrowUp->setScaleX(4.0f);
     pArrowUp->setPosition(width / 2 - pAnim->getWidth() * 2, 0);
-    this->addChild(pArrowUp);
+    addChild(pArrowUp);
 
     qint32 arrowHeigth = static_cast<qint32>(pAnim->getHeight());
     qint32 y = arrowHeigth + 5;
 
 
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     pAnim = pObjectManager->getResAnim("mapSelectionTop");
     oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
@@ -63,7 +63,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);
     y += pAnim->getHeight();
-    this->addChild(pBackground);
+    addChild(pBackground);
 
      pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
     m_SelectedItem = oxygine::spBox9Sprite::create();
@@ -73,10 +73,10 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     m_SelectedItem->setSize(width - 12, m_itemHeigth);
     m_SelectedItem->setPosition(5, y);
     m_SelectedItem->setPriority(1);
-    this->addChild(m_SelectedItem);
+    addChild(m_SelectedItem);
     m_SelectedItem->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        this->m_itemClicked = true;
+        m_itemClicked = true;
         emit itemClicked(m_currentItem);
     });
 
@@ -176,6 +176,7 @@ MapSelection::~MapSelection()
 
 void MapSelection::setSelection(QString folder, QStringList files)
 {    
+    Console::print("MapSelection::setSelection", Console::eDEBUG);
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
@@ -194,11 +195,12 @@ void MapSelection::setCurrentItem(QString item)
 
 void MapSelection::changeFolder(QString folder)
 {    
+    Console::print("MapSelection::changeFolder " + folder, Console::eDEBUG);
     m_itemClicked = false;
     QString newFolder = folder;
     if (folder == "")
     {
-        newFolder = "maps/";
+        newFolder = "maps";
     }
     if (folder == "..")
     {
@@ -209,38 +211,30 @@ void MapSelection::changeFolder(QString folder)
     if (dir.exists() || virtDir.exists())
     {
         QFileInfo newFolderInfo(newFolder);
-        newFolder = newFolderInfo.absoluteFilePath() + "/";
+        newFolder = GlobalUtils::makePathRelative(newFolderInfo.absoluteFilePath());
+        Console::print("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
         m_Files.clear();
-        if ((newFolder != QCoreApplication::applicationDirPath() + "/maps//") &&
-            (newFolder != QCoreApplication::applicationDirPath() + "/maps/"))
+        if (newFolder != "maps")
         {
             m_Files.append("..");
         }
-        QFileInfoList infoList;
         QFileInfo upFolder(newFolder + "..");
-        QString list = "*.map;*.jsm";
-
-
-        infoList.append(QDir(newFolder).entryInfoList(QDir::Dirs));
-        infoList.append(QDir(newFolder).entryInfoList(list.split(";"), QDir::Files));
-
-
+        QStringList list = {"*.map", "*.jsm"};
+        QFileInfoList infoList = GlobalUtils::getInfoList(newFolder, list);
         Userdata* pUserdata = Userdata::getInstance();
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
         for (qint32 i = 1; i < infoList.size(); i++)
         {
             QString myPath = infoList[i].absoluteFilePath();
-            QString item = myPath;
-            item =  GlobalUtils::makePathRelative(item);
+            QString item = GlobalUtils::makePathRelative(myPath);
             if ((myPath == newFolder) ||
                 (upFolder == infoList[i] ||
-                 (infoList[i].isDir() && myPath.endsWith(".camp"))) ||
-                 (hideList.contains(item)))
+                (infoList[i].isDir() && myPath.endsWith(".camp"))) ||
+                (hideList.contains(item)))
             {
                 // skip ourself
                 continue;
             }
-
             if (infoList[i].isDir())
             {
                 QString path = infoList[i].absoluteFilePath();
@@ -248,7 +242,7 @@ void MapSelection::changeFolder(QString folder)
             }
             else if (infoList[i].isFile())
             {
-                m_Files.append(infoList[i].fileName());
+                m_Files.append(infoList[i].absoluteFilePath());
             }
         }
         m_currentFolder = newFolder;
@@ -274,8 +268,7 @@ void MapSelection::update(const oxygine::UpdateState& us)
 }
 
 void MapSelection::updateSelection(qint32 startIndex)
-{
-    
+{    
     m_itemClicked = false;
     m_currentStartIndex = startIndex;
     if (m_currentStartIndex < 0)
@@ -322,7 +315,9 @@ void MapSelection::updateSelection(qint32 startIndex)
             else
             {
                 // it's a map
-                QFile file(m_currentFolder + m_Files[m_currentStartIndex + i]);
+                QString fullFilename = m_Files[m_currentStartIndex + i];
+                Console::print("MapSelection::updateSelection Loading: " + fullFilename, Console::eDEBUG);
+                QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);
                 QString name;

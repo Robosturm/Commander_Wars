@@ -764,7 +764,6 @@ install(TARGETS ${PROJECT_NAME}
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)    
     install(DIRECTORY templates DESTINATION             ".")
-    install(DIRECTORY savegames DESTINATION             ".")
     # install libs
     install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)

@@ -206,15 +206,13 @@ void CampaignEditor::showSaveCampaign()
 }
 
 void CampaignEditor::showLoadCampaign()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     this->addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
 }
 
 void CampaignEditor::addCampaign(QString filename)

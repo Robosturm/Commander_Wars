@@ -310,15 +310,13 @@ DialogRandomMap::DialogRandomMap()
 }
 
 void DialogRandomMap::showGeneratorSelection()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = "data/randomMaps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);    
 }
 
 void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
@@ -326,6 +324,10 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
     filename =  GlobalUtils::makePathRelative(filename);
     m_GeneratorFile->setCurrentText(filename);
     QFile file(filename);
+    if (!file.exists())
+    {
+        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + filename);
+    }
     if (file.exists())
     {
         if (m_TerrainChances.get())
@@ -344,7 +346,6 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         QList<QVariant> buildingChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getBuildingBaseChances").toVariant().toList();
         m_UnitIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBases").toVariant().toStringList();
         QList<QVariant> unitChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBaseChances").toVariant().toList();
-
         QVector<QString> terrainStrings;
         QVector<qint32> terrainChances;
         if (m_TerrainIDs.size() == terrainChancesVariant.size())

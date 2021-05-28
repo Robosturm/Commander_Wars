@@ -65,7 +65,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
         QVector<QVector<spDecisionQuestion>> questions;
         CoreAI::getTrainingData(trainingDataFile, trainingData, questions);
         m_pRootNode = train(trainingData, questions);
-
+        Console::print("Storing tree: " + treeFile, Console::eDEBUG);
         // store trained tree for next use.
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);

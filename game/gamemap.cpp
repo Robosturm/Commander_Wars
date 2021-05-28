@@ -52,7 +52,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
@@ -78,8 +78,9 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
       m_savegame(savegame)
 {
     setObjectName("GameMap");
+    Console::print("Loading map: " + map, Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     loadMapData();
     QFile file(map);
     file.open(QIODevice::ReadOnly);

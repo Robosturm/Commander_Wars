@@ -8,6 +8,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 const QString Campaign::scriptName = "campaignScript";
 
@@ -75,6 +76,17 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
     {
         folder = files[0];
         files.removeAt(0);
+        for (qint32 i = 0; i < files.size(); ++i)
+        {
+            if (QFile::exists(folder + files[i]))
+            {
+                files[i] = folder + files[i];
+            }
+            else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
+            {
+                files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
+            }
+        }
         addDeveloperMaps(folder, files);
     }
     return std::tuple<QString, QStringList>(folder, files);
@@ -90,7 +102,7 @@ void Campaign::addDeveloperMaps(QString & folder, QStringList & files)
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = dirIter.fileInfo().fileName();
+            QString file = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
             if (!files.contains(file))
             {
                 files.append(file);

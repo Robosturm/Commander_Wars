@@ -188,7 +188,8 @@ void FileDialog::showFolder(QString folder)
     }
     else
     {
-        infoList = getInfoList(folder);
+        QStringList list = m_DropDownmenu->getCurrentItemText().split(";");
+        infoList = GlobalUtils::getInfoList(folder, list);
     }
     qint32 itemCount = 0;
     for (qint32 i = 1; i < infoList.size(); i++)
@@ -310,33 +311,6 @@ void FileDialog::showFolder(QString folder)
         m_CurrentFolder->setCurrentText(folder);
     }
     pApp->continueRendering();
-}
-
-QFileInfoList FileDialog::getInfoList(QString folder)
-{
-    QFileInfoList infoList;
-    QString list = m_DropDownmenu->getCurrentItemText();
-    infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
-    auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
-    for (const auto & item : qAsConst(virtList))
-    {
-        bool found = false;
-        for (const auto & item2 : qAsConst(infoList))
-        {
-            if (item2.baseName() == item.baseName())
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            infoList.append(item);
-        }
-    }
-    infoList.append(QDir(folder).entryInfoList(list.split(";"), QDir::Files));
-    infoList.append(QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(list.split(";"), QDir::Files));
-    return infoList;
 }
 
 void FileDialog::deleteItem()

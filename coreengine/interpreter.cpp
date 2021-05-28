@@ -91,6 +91,7 @@ void Interpreter::openScript(QString script, bool setup)
     }
     else
     {
+         Console::print("Loading script " + script, Console::eDEBUG);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         if (setup)
