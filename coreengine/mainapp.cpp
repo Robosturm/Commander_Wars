@@ -10,6 +10,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
+#include "coreengine/globalutils.h"
 
 #include "objects/loadingscreen.h"
 
@@ -48,7 +49,7 @@ Mainapp::Mainapp()
     m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
-
+    createBaseDirs();
     m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
     m_AudioWorker.setObjectName("AudioWorker");
@@ -597,4 +598,33 @@ QString Mainapp::qsTr(QString text)
 QString Mainapp::qsTr(const char* const text)
 {
     return QCoreApplication::translate(GAME_CONTEXT, text);
+}
+
+void Mainapp::createBaseDirs()
+{
+    QDir dir("temp/");
+    dir.removeRecursively();
+    QStringList dirs =
+    {
+        "temp",
+        "savegames",
+        "mods"
+        "data/gamerules",
+        "data/randommaps",
+        "data/records",
+        "maps"
+        "customTerrainImages"
+    };
+    for (const auto & path : qAsConst(dirs))
+    {
+        QDir newDir(path);
+        newDir.mkpath(".");
+    }
+    auto virtList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "maps").entryInfoList(QDir::Dirs);
+    for (const auto & item : qAsConst(virtList))
+    {
+        QString path = GlobalUtils::makePathRelative(item.absoluteFilePath());
+        QDir newDir(path);
+        newDir.mkpath(".");
+    }
 }

@@ -154,7 +154,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     // dummy impl for loading
     QVector<QString> wildcards;
     wildcards.append("*.msav");
-    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
@@ -652,7 +652,7 @@ void Multiplayermenu::requestMap(quint64 socketID)
     {
         QString command = QString(NetworkCommands::MAPDATA);
         Console::print("Sending command " + command, Console::eDEBUG);
-        QString file = m_pMapSelectionView->getCurrentFile().filePath().replace(QCoreApplication::applicationDirPath() + "/", "");
+        QString file = GlobalUtils::makePathRelative(m_pMapSelectionView->getCurrentFile().filePath());
         QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -902,10 +902,10 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
 {
-    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    QString path = "maps";
     if (m_saveGame)
     {
-        path = QCoreApplication::applicationDirPath() + "/savegames";
+        path = "savegames";
     }
     QStringList filter;
     filter << "*" + fileName;

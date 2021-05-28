@@ -8,6 +8,7 @@
 #include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
 
@@ -263,7 +264,7 @@ void ScriptDialogDialog::setCurrentDialogBackground(QString file)
     spDialogEntry pDialog = m_Event->getDialog(dialogIndex);
     if (fileInfo.exists() && fileInfo.isFile())
     {
-        QString filename = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+        QString filename = GlobalUtils::makePathRelative(file);
         pDialog->background = filename;
         loadBackground(filename, dialogIndex);
     }

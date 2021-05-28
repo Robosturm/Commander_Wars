@@ -2,6 +2,7 @@
 #define FILEDIALOG_H
 
 #include <QObject>
+#include <QDir>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "objects/base/textbox.h"
@@ -19,42 +20,45 @@ typedef oxygine::intrusive_ptr<FileDialog> spFileDialog;
  */
 class FileDialog : public QObject, public oxygine::Actor
 {
-    Q_OBJECT
-public:
-    /**
+        Q_OBJECT
+    public:
+        /**
      * @brief FileDialog
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "", bool preview = false);
-    virtual ~FileDialog();
+        explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "", bool preview = false);
+        virtual ~FileDialog();
 
-    bool getPreview() const;
-    void setPreview(bool preview);
+        bool getPreview() const;
+        void setPreview(bool preview);
 
-signals:
-    void sigFileSelected(QString file);
-    void sigCancel();
-    void sigShowFolder(QString folder);
-public slots:
-    void showFolder(QString folder);
-    void filterChanged(qint32);
-    void KeyInput(oxygine::KeyEvent event);
-    void deleteItem();
-private:
-    spTextbox m_CurrentFolder;
-    spTextbox m_CurrentFile;
-    spPanel m_MainPanel;
-    oxygine::spButton m_OkButton;
-    spDropDownmenu m_DropDownmenu;
-    oxygine::spButton m_CancelButton;
-    /**
-     * @brief m_Items items directories or folders
-     */
-    QVector<oxygine::spBox9Sprite> m_Items;
-    bool m_preview{false};
-    bool m_focused{true};
-    QVector<oxygine::spResAnim> m_ResAnims;
+    signals:
+        void sigFileSelected(QString file);
+        void sigCancel();
+        void sigShowFolder(QString folder);
+    public slots:
+        void showFolder(QString folder);
+        void filterChanged(qint32);
+        void KeyInput(oxygine::KeyEvent event);
+        void deleteItem();
+    private:
+        QFileInfoList getInfoList(QString folder);
+    private:
+        spTextbox m_CurrentFolder;
+        spTextbox m_CurrentFile;
+        spPanel m_MainPanel;
+        oxygine::spButton m_OkButton;
+        spDropDownmenu m_DropDownmenu;
+        oxygine::spButton m_CancelButton;
+        QString m_pathPrefix = "";
+        /**
+          * @brief m_Items items directories or folders
+        */
+        QVector<oxygine::spBox9Sprite> m_Items;
+        bool m_preview{false};
+        bool m_focused{true};
+        QVector<oxygine::spResAnim> m_ResAnims;
 };
 
 #endif // FILEDIALOG_H

@@ -501,19 +501,15 @@ FILE(GLOB_RECURSE modScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.js")
 FILE(GLOB_RECURSE modDescs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.txt")
 FILE(GLOB_RECURSE modImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.png")
 FILE(GLOB_RECURSE modXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.xml")
+FILE(GLOB_RECURSE GameScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.js")
+FILE(GLOB_RECURSE Maps RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.map")
+FILE(GLOB_RECURSE CampaignScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.jsm")
+FILE(GLOB_RECURSE MapImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.png")
+FILE(GLOB_RECURSE DataScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "data/*.js")
 
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE TemplateScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
-
-FILE(GLOB_RECURSE GameScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.js")
-add_custom_target(gamescripts SOURCES ${GameScripts})
-
-FILE(GLOB_RECURSE CampaignScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.jsm")
-add_custom_target(campaignscripts SOURCES ${CampaignScripts})
-
-FILE(GLOB_RECURSE DataScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "data/*.js")
-add_custom_target(data SOURCES ${DataScripts})
 
 FILE(GLOB_RECURSE UiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
 add_custom_target(uiXml SOURCES ${UiXmls})
@@ -752,6 +748,11 @@ qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
     ${modImages}
     ${modXmls}
     ${modDescs}
+    ${Maps}
+    ${GameScripts}
+    ${CampaignScripts}
+    ${MapImages}
+    ${DataScripts}
 )
 
 # install folders and executable
@@ -761,11 +762,9 @@ install(TARGETS ${PROJECT_NAME}
                 LIBRARY         DESTINATION         ".")
 
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(DIRECTORY maps DESTINATION                  ".")
     install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)    
     install(DIRECTORY templates DESTINATION             ".")
     install(DIRECTORY savegames DESTINATION             ".")
-    install(DIRECTORY data DESTINATION                  ".")
     # install libs
     install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)

@@ -7,6 +7,7 @@
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/checkbox.h"
@@ -185,15 +186,14 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
 }
 
 void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox)
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append(filter);
-    QString path = QCoreApplication::applicationDirPath() + startFolder;
+    QString path = startFolder;
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
     {
-        QString file = id.replace(QCoreApplication::applicationDirPath() + "/", "");
+        QString file = GlobalUtils::makePathRelative(id);
         pTextbox->setCurrentText(file);
         emit pTextbox->sigTextChanged(file);
     });

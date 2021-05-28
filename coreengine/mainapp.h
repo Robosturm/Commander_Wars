@@ -195,6 +195,7 @@ signals:
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
+    void createBaseDirs();
 private:
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;

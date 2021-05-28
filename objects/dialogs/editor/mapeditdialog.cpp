@@ -1,12 +1,12 @@
-#include "mapeditdialog.h"
+#include "objects/dialogs/editor/mapeditdialog.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/label.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, QString scriptFile,
@@ -184,8 +184,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
 void MapEditDialog::scriptFileChanged(QString file)
 {
-    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
-    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    file = GlobalUtils::makePathRelative(file);
     m_MapScriptFile->setCurrentText(file);
 }
 
@@ -194,7 +193,7 @@ void MapEditDialog::showSelectScript()
     
     QVector<QString> wildcards;
     wildcards.append("*.js");
-    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    QString path = "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);

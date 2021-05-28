@@ -371,5 +371,9 @@ QString GlobalUtils::makePathRelative(QString file)
 {
     file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
     file = file.replace(QCoreApplication::applicationDirPath(), "");
+    if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
+    {
+        file.remove(0, QString(oxygine::Resource::RCC_PREFIX_PATH).length());
+    }
     return file;
 }

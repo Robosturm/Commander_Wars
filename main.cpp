@@ -172,9 +172,7 @@ QQmlDebuggingEnabler enabler;
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
     Settings::loadSettings();
-    QDir dir("temp/");
-    dir.removeRecursively();
-    dir.mkpath(".");
+
     Mainapp window;
     window.setTitle("Commander Wars");
     QStringList args = app.arguments();
@@ -208,7 +206,6 @@ QQmlDebuggingEnabler enabler;
         window.getGameServerThread()->quit();
         window.getGameServerThread()->wait();
     }
-    dir.removeRecursively();
     //end
     if (returncode == 1)
     {

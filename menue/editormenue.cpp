@@ -366,7 +366,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.txt");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
@@ -377,7 +377,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aws");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
@@ -388,7 +388,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aws");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
@@ -399,7 +399,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aw4");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
@@ -410,7 +410,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.txt");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);

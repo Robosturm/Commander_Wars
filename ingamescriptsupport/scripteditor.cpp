@@ -193,7 +193,7 @@ void ScriptEditor::showSaveScript()
     
     QVector<QString> wildcards;
     wildcards.append("*.js");
-    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    QString path = "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
@@ -205,7 +205,7 @@ void ScriptEditor::showLoadScript()
     
     QVector<QString> wildcards;
     wildcards.append("*.js");
-    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    QString path = "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);

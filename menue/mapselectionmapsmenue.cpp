@@ -428,7 +428,7 @@ void MapSelectionMapsMenue::showLoadRules()
     
     QVector<QString> wildcards;
     wildcards.append("*.grl");
-    QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
+    QString path = "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
@@ -439,7 +439,7 @@ void MapSelectionMapsMenue::showSaveRules()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
-    QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
+    QString path = "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
@@ -480,7 +480,7 @@ void MapSelectionMapsMenue::showSaveMap()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.map");
-    QString path = QCoreApplication::applicationDirPath() + "/maps/";
+    QString path = "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);

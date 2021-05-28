@@ -1,11 +1,12 @@
-#include "folderdialog.h"
+#include "objects/dialogs/folderdialog.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
-#include "QDir"
+const char* const ROOT = "::::";
 
 FolderDialog::FolderDialog(QString startFolder)
 {
@@ -95,13 +96,13 @@ FolderDialog::FolderDialog(QString startFolder)
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         QDir dir(m_CurrentFolder->getCurrentText());
-        if (dir.cdUp() && m_CurrentFolder->getCurrentText() != "")
+        if (m_CurrentFolder->getCurrentText() != "")
         {
-            emit sigShowFolder(dir.absolutePath());
+            emit sigShowFolder(dir.absolutePath() + "/..");
         }
         else
         {
-            emit sigShowFolder("");
+            emit sigShowFolder(ROOT);
         }
     });
     connect(this, &FolderDialog::sigShowFolder, this, &FolderDialog::showFolder, Qt::QueuedConnection);
@@ -125,29 +126,45 @@ void FolderDialog::showFolder(QString folder)
     }
 
     folder = folder.replace("\\", "/");
+    folder = QDir(folder).absolutePath();
+    folder = GlobalUtils::makePathRelative(folder);
     m_Items.clear();
     QDir dir(folder);
-    if (!dir.exists())
+    QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + folder);
+    if (!dir.exists() && !virtDir.exists())
     {
-        folder = "";
+        folder = ROOT;
     }
 
     // this is the we have to do all the work function of the file dialog...
     // we want the root folder
     QFileInfoList infoList;
-    if (folder == "")
+    if (folder == ROOT)
     {
         infoList = QDir::drives();
     }
     else
     {
-        infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
+        infoList = getInfoList(folder);
     }
 
     qint32 itemCount = 0;
     for (qint32 i = 1; i < infoList.size(); i++)
     {
-        QString myPath = infoList[i].absoluteFilePath();
+        QString myPath;
+        if (folder == ROOT)
+        {
+            myPath = infoList[i].absoluteFilePath();
+        }
+        else if (infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() &&
+                 infoList[i].absoluteFilePath() != QCoreApplication::applicationDirPath() + "/")
+        {
+           myPath = GlobalUtils::makePathRelative(infoList[i].absoluteFilePath());
+        }
+        else
+        {
+            myPath = infoList[i].absoluteFilePath();
+        }
         if (myPath == folder)
         {
             // skip ourself
@@ -189,7 +206,14 @@ void FolderDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
-            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, ""));
+            if (folder == ROOT)
+            {
+                textField->setHtmlText(infoList[i].absoluteFilePath());
+            }
+            else
+            {
+                textField->setHtmlText(infoList[i].baseName());
+            }
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
@@ -203,8 +227,39 @@ void FolderDialog::showFolder(QString folder)
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
-    m_CurrentFolder->setCurrentText(folder);
+    if (folder == ROOT)
+    {
+        m_CurrentFolder->setCurrentText("");
+    }
+    else
+    {
+        m_CurrentFolder->setCurrentText(folder);
+    }
     pApp->continueRendering();
+}
+
+QFileInfoList FolderDialog::getInfoList(QString folder)
+{
+    QFileInfoList infoList;
+    infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
+    auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
+    for (const auto & item : qAsConst(virtList))
+    {
+        bool found = false;
+        for (const auto & item2 : qAsConst(infoList))
+        {
+            if (item2.baseName() == item.baseName())
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            infoList.append(item);
+        }
+    }
+    return infoList;
 }
 
 void FolderDialog::deleteItem()

@@ -259,7 +259,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::import()
 {
-    QString path = QCoreApplication::applicationDirPath();
+    QString path = "";
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
     connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
@@ -388,7 +388,7 @@ void Mainwindow::enterLoadGame()
     
     QVector<QString> wildcards;
     wildcards.append("*.sav");
-    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
@@ -399,7 +399,7 @@ void Mainwindow::enterLoadCampaign()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
-    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);    
@@ -430,7 +430,7 @@ void Mainwindow::enterReplayGame()
     
     QVector<QString> wildcards;
     wildcards.append("*.rec");
-    QString path = QCoreApplication::applicationDirPath() + "/data/records";
+    QString path = "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);

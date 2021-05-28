@@ -2,6 +2,7 @@
 #define FOLDERDIALOG_H
 
 #include <QObject>
+#include <QDir>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "objects/base/textbox.h"
@@ -19,34 +20,35 @@ typedef oxygine::intrusive_ptr<FolderDialog> spFolderDialog;
  */
 class FolderDialog : public QObject, public oxygine::Actor
 {
-    Q_OBJECT
-public:
-    /**
+        Q_OBJECT
+    public:
+        /**
      * @brief FolderDialog
      * @param startFolder initial folder of the file dialog
      */
-    explicit FolderDialog(QString startFolder);
-    virtual ~FolderDialog();
+        explicit FolderDialog(QString startFolder);
+        virtual ~FolderDialog();
 
-signals:
-    void sigFolderSelected(QString file);
-    void sigCancel();
-    void sigShowFolder(QString folder);
-public slots:
-    void showFolder(QString folder);
-    void KeyInput(oxygine::KeyEvent event);
-    void deleteItem();
-
-private:
-    spTextbox m_CurrentFolder;
-    spPanel m_MainPanel;
-    oxygine::spButton m_OkButton;
-    oxygine::spButton m_CancelButton;
-    /**
+    signals:
+        void sigFolderSelected(QString file);
+        void sigCancel();
+        void sigShowFolder(QString folder);
+    public slots:
+        void showFolder(QString folder);
+        void KeyInput(oxygine::KeyEvent event);
+        void deleteItem();
+    private:
+        QFileInfoList getInfoList(QString folder);
+    private:
+        spTextbox m_CurrentFolder;
+        spPanel m_MainPanel;
+        oxygine::spButton m_OkButton;
+        oxygine::spButton m_CancelButton;
+        /**
      * @brief m_Items items directories or folders
      */
-    QVector<oxygine::spBox9Sprite> m_Items;
-    bool m_focused{true};
+        QVector<oxygine::spBox9Sprite> m_Items;
+        bool m_focused{true};
 };
 
 #endif // FOLDERDIALOG_H

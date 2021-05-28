@@ -12,7 +12,7 @@
 
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     : QObject(),
-      m_currentFolder(QCoreApplication::applicationDirPath() + "/maps/")
+      m_currentFolder("maps/")
 {
     setObjectName("MapSelection");
     Mainapp* pApp = Mainapp::getInstance();
@@ -198,14 +198,15 @@ void MapSelection::changeFolder(QString folder)
     QString newFolder = folder;
     if (folder == "")
     {
-        newFolder = QCoreApplication::applicationDirPath() + "/maps/";
+        newFolder = "maps/";
     }
     if (folder == "..")
     {
         newFolder = m_currentFolder + "/..";
     }
     QDir dir(newFolder);
-    if (dir.exists())
+    QDir virtDir(oxygine::Resource::RCC_PREFIX_PATH + newFolder);
+    if (dir.exists() || virtDir.exists())
     {
         QFileInfo newFolderInfo(newFolder);
         newFolder = newFolderInfo.absoluteFilePath() + "/";
@@ -218,8 +219,12 @@ void MapSelection::changeFolder(QString folder)
         QFileInfoList infoList;
         QFileInfo upFolder(newFolder + "..");
         QString list = "*.map;*.jsm";
+
+
         infoList.append(QDir(newFolder).entryInfoList(QDir::Dirs));
         infoList.append(QDir(newFolder).entryInfoList(list.split(";"), QDir::Files));
+
+
         Userdata* pUserdata = Userdata::getInstance();
         auto hideList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Map, false);
         for (qint32 i = 1; i < infoList.size(); i++)

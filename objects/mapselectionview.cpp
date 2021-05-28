@@ -9,6 +9,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
@@ -232,7 +233,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         }
         bool savegame = info.fileName().endsWith(".msav");
         m_pCurrentMap = spGameMap::create(info.absoluteFilePath(), true, fast, savegame);
-        m_pCurrentMap->setMapPath(info.absoluteFilePath().replace(QCoreApplication::applicationDirPath(), ""));
+        m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(info.absoluteFilePath()));
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->clear();
         m_pMinimap->updateMinimap(m_pCurrentMap);

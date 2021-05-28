@@ -314,7 +314,7 @@ void DialogRandomMap::showGeneratorSelection()
     
     QVector<QString> wildcards;
     wildcards.append("*.js");
-    QString path = QCoreApplication::applicationDirPath() + "/data/randomMaps";
+    QString path = "data/randomMaps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);

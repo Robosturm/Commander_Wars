@@ -4,6 +4,7 @@
 
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -278,7 +279,7 @@ void ScriptEventAnimation::showLoadDialog()
 {
     QVector<QString> wildcards;
     wildcards.append("*.png");
-    QString path = QCoreApplication::applicationDirPath() + "/resources/images/animations/";
+    QString path = "resources/images/animations/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, sprite, true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEventAnimation::selectAnimation, Qt::QueuedConnection);
     oxygine::getStage()->addChild(fileDialog);    
@@ -286,7 +287,7 @@ void ScriptEventAnimation::showLoadDialog()
 
 void ScriptEventAnimation::selectAnimation(QString id)
 {
-    QString imageId = id.replace(QCoreApplication::applicationDirPath() + "/", "");
+    QString imageId = GlobalUtils::makePathRelative(id);
     QString animationId = id.replace("resources/images/animations/", "").replace("/", "").replace(".png", "");
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(animationId, oxygine::error_policy::ep_ignore_error);

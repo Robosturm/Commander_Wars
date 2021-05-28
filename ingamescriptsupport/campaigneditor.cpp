@@ -9,6 +9,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 
@@ -185,9 +186,9 @@ void CampaignEditor::showAddCampaign()
     
     QVector<QString> wildcards;
     wildcards.append("*.map");
-    QString path = QCoreApplication::applicationDirPath() + "/" + m_CampaignFolder->getCurrentText();
+    QString path = m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
     
 }
@@ -218,7 +219,7 @@ void CampaignEditor::showLoadCampaign()
 
 void CampaignEditor::addCampaign(QString filename)
 {
-    QString fileData = filename.replace(QCoreApplication::applicationDirPath() + "/", "");
+    QString fileData = GlobalUtils::makePathRelative(filename);
     if (fileData.endsWith(".map") &&
         fileData.startsWith(m_CampaignFolder->getCurrentText()))
     {
@@ -244,7 +245,7 @@ QString CampaignEditor::getMapName(QString filename)
 void CampaignEditor::showSelectFolder()
 {
     
-    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    QString path = "maps";
     spFolderDialog folderDialog = spFolderDialog::create(path);
     this->addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
@@ -253,7 +254,7 @@ void CampaignEditor::showSelectFolder()
 
 void CampaignEditor::selectFolder(QString folder)
 {
-    folder = folder.replace(QCoreApplication::applicationDirPath() + "/", "");
+    folder = GlobalUtils::makePathRelative(folder);
     QDir dir(folder);
     if (dir.exists())
     {
