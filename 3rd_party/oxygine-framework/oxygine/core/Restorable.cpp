@@ -7,9 +7,9 @@ namespace oxygine
     QMutex Restorable::m_mutex;
     Restorable::restorable Restorable::m_restorable;
 
-    Restorable::restorable::iterator Restorable::findRestorable(Restorable* r)
+    Restorable::restorable::const_iterator Restorable::findRestorable(Restorable* r)
     {
-        Restorable::restorable::iterator i = std::find(m_restorable.begin(), m_restorable.end(), r);
+        auto i = std::find(m_restorable.cbegin(), m_restorable.cend(), r);
         return i;
     }
 
@@ -82,7 +82,7 @@ namespace oxygine
 
         m_registered = true;
 
-        restorable::iterator i = findRestorable(this);
+        restorable::const_iterator i = findRestorable(this);
         Q_ASSERT(i == m_restorable.end());
         m_restorable.push_back(this);
     }
@@ -95,7 +95,7 @@ namespace oxygine
         }
         QMutexLocker al(&m_mutex);
         Q_ASSERT(m_restoring == false);
-        restorable::iterator i = findRestorable(this);
+        restorable::const_iterator i = findRestorable(this);
         if (i != m_restorable.end())
         {
             m_restorable.erase(i);

@@ -72,7 +72,7 @@ namespace oxygine
                 {
                     dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);
                 }
-                m_free.erase(m_free.begin() + i);
+                m_free.erase(m_free.cbegin() + i);
 
                 Point ds = rect.size - size;
 
@@ -94,7 +94,7 @@ namespace oxygine
                 if (!a.isEmpty() && std::min(a.getWidth(), a.getHeight()) > m_skipSize)
                 {
                     a.pos.y = rect.pos.y + h;
-                    rects::iterator i = std::lower_bound(m_free.begin(), m_free.end(), a, sortRects);
+                    rects::const_iterator i = std::lower_bound(m_free.cbegin(), m_free.cend(), a, sortRects);
                     m_free.insert(i, a);
                 }
 
@@ -102,7 +102,7 @@ namespace oxygine
                 if (!b.isEmpty() && std::min(b.getWidth(), b.getHeight()) > m_skipSize)
                 {
                     b.pos.x = rect.pos.x + w;
-                    rects::iterator i = std::lower_bound(m_free.begin(), m_free.end(), b, sortRects);
+                    rects::const_iterator i = std::lower_bound(m_free.cbegin(), m_free.cend(), b, sortRects);
                     m_free.insert(i, b);
                 }
 
@@ -165,7 +165,7 @@ namespace oxygine
         if (!a.rct.isEmpty() && std::min(a.rct.getWidth(), a.rct.getHeight()) > m_skipSize)
         {
             a.rct.pos.y = rct.rct.pos.y + h;
-            rects::iterator i = std::lower_bound(m_free.begin(), m_free.end(), a, sortRects);
+            rects::const_iterator i = std::lower_bound(m_free.cbegin(), m_free.cend(), a, sortRects);
             m_free.insert(i, a);
         }
 
@@ -173,7 +173,7 @@ namespace oxygine
         if (!b.rct.isEmpty() && std::min(b.rct.getWidth(), b.rct.getHeight()) > m_skipSize)
         {
             b.rct.pos.x = rct.rct.pos.x + w;
-            rects::iterator i = std::lower_bound(m_free.begin(), m_free.end(), b, sortRects);
+            rects::const_iterator i = std::lower_bound(m_free.cbegin(), m_free.cend(), b, sortRects);
             m_free.insert(i, b);
         }
     }
@@ -196,7 +196,7 @@ namespace oxygine
 
                 m_bounds.unite(srcRect);
 
-                m_free.erase(m_free.begin() + i);
+                m_free.erase(m_free.cbegin() + i);
                 place(rct, w, h, src, t, srcRect);
 
                 return true;

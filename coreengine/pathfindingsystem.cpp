@@ -192,7 +192,7 @@ void PathFindingSystem::explore()
                     Node workNode = Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts,
                                          pCurrent.x, pCurrent.y,
                                          qAbs(neighboursX - m_StartPoint.x()) + qAbs(neighboursY - m_StartPoint.y()));
-                    m_OpenList.insert(std::upper_bound(m_OpenList.begin(), m_OpenList.end(), workNode), workNode);
+                    m_OpenList.insert(std::upper_bound(m_OpenList.cbegin(), m_OpenList.cend(), workNode), workNode);
                 }
             }
         }

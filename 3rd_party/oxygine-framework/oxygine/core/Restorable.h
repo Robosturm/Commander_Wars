@@ -29,7 +29,7 @@ namespace oxygine
 
     protected:
     private:
-        restorable::iterator findRestorable(Restorable* r);
+        restorable::const_iterator findRestorable(Restorable* r);
 
     private:
         //non copyable

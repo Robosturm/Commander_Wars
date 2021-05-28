@@ -45,7 +45,7 @@ namespace oxygine
             const listener& ls = m_listeners.at(i);
             if (ls.id == id)
             {
-                m_listeners.erase(m_listeners.begin() + i);
+                m_listeners.erase(m_listeners.cbegin() + i);
                 break;
             }
         }
@@ -58,7 +58,7 @@ namespace oxygine
             const listener& ls = m_listeners.at(i);
             if (ls.cb.isOwner(CallbackThis))
             {
-                m_listeners.erase(m_listeners.begin() + i);
+                m_listeners.erase(m_listeners.cbegin() + i);
                 --i;
             }
         }
@@ -71,7 +71,7 @@ namespace oxygine
             const listener& ls = m_listeners.at(i);
             if (ls.type == et)
             {
-                m_listeners.erase(m_listeners.begin() + i);
+                m_listeners.erase(m_listeners.cbegin() + i);
                 --i;
             }
         }

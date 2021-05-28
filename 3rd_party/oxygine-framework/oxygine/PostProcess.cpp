@@ -180,10 +180,10 @@ namespace oxygine
 
         spNativeTexture result;
 
-        free::iterator it = lower_bound(_free.begin(), _free.end(), result, NTP(w, h, tf));
+        auto it = lower_bound(_free.cbegin(), _free.cend(), result, NTP(w, h, tf));
         if (it != _free.end())
         {
-            spNativeTexture& t = *it;
+            const spNativeTexture& t = *it;
             if (isGood(t, w, h, tf))
             {
                 result = t;
@@ -212,9 +212,9 @@ namespace oxygine
             spNativeTexture& texture = _rts[i];
             if (texture->getRefCounter() == 1)
             {
-                free::iterator it = lower_bound(_free.begin(), _free.end(), texture, NTP::cmp);
+                auto it = lower_bound(_free.cbegin(), _free.cend(), texture, NTP::cmp);
                 _free.insert(it, texture);
-                _rts.erase(_rts.begin() + i);
+                _rts.erase(_rts.cbegin() + i);
                 --i;
                 --sz;
                 continue;
@@ -229,14 +229,14 @@ namespace oxygine
             {
                 continue;
             }
-            _free.erase(_free.begin() + i);
+            _free.erase(_free.cbegin() + i);
             --i;
             --sz;
         }
 
         if (_free.size() > MAX_FREE_TEXTURES)
         {
-            _free.erase(_free.begin(), _free.begin() + _free.size() - MAX_FREE_TEXTURES);
+            _free.erase(_free.cbegin(), _free.cbegin() + _free.size() - MAX_FREE_TEXTURES);
         }
     }
 
