@@ -715,8 +715,9 @@ void OptionMenue::showMods()
     m_pGameplayAndKeys->setVisible(false);
     m_ModSelector->removeChildren();
 
-
+    QFileInfoList rccinfoList = QDir(":/mods").entryInfoList(QDir::Dirs);
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
+    infoList.append(rccinfoList);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();

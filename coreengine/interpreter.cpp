@@ -117,6 +117,10 @@ void Interpreter::openScript(QString script, bool setup)
 
 void Interpreter::loadScript(QString content, QString script)
 {
+    if (!QFile::exists(script))
+    {
+        script = oxygine::Resource::RCC_PREFIX_PATH + script;
+    }
     QJSValue value = evaluate(content, script);
     if (value.isError())
     {

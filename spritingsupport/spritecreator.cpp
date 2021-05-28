@@ -284,7 +284,6 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
         input = QString(oxygine::Resource::RCC_PREFIX_PATH) + input;
         inputInfo = QFileInfo(input);
     }
-
     if (inputInfo.isFile() && inputInfo.exists())
     {
         QImage img = createSprite(input, colorTableImg, maskTableImg, useColorBox, false);

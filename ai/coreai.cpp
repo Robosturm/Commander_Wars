@@ -649,6 +649,10 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit pUnits)
 void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
     QFile trainingFile(file);
+    if (!trainingFile.exists())
+    {
+        trainingFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + file);
+    }
     trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
     QTextStream stream(&trainingFile);
     bool questionsFound = false;
@@ -658,7 +662,13 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
     readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
 
     QStringList mods = Settings::getMods();
-    for (qint32 i = 0; i < mods.size(); i++)
+    QStringList fullMods;
+    for(const QString & mod : qAsConst(mods))
+    {
+        fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
+        fullMods.append(mod);
+    }
+    for (qint32 i = 0; i < fullMods.size(); i++)
     {
         QString modFilename = file;
         QFile modFile(modFilename.replace("resources/", mods[i] + "/"));
@@ -1055,7 +1065,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVect
                 {
                     if (pUnit->canMoveOver(x, y))
                     {
-                        qint32 stealthMalus = 0;                        
+                        qint32 stealthMalus = 0;
                         bool terrainHide = false;
                         if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
                         {

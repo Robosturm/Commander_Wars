@@ -492,18 +492,17 @@ set(${PROJECT_NAME}_SRCS
 ##############################################################################
 FILE(GLOB_RECURSE scripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.js")
 FILE(GLOB_RECURSE images RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.png" )
+FILE(GLOB_RECURSE customImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "customTerrainImages/*.png" )
 FILE(GLOB_RECURSE xmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.xml")
 FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.ini")
+FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.txt")
 FILE(GLOB_RECURSE ShaderScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "system/*.glsl")
-
-# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
-
 FILE(GLOB_RECURSE modScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.js")
 FILE(GLOB_RECURSE modDescs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.txt")
 FILE(GLOB_RECURSE modImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.png")
 FILE(GLOB_RECURSE modXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.xml")
-add_custom_target(modscripts SOURCES ${modScripts} ${modImages} ${modXmls} ${modDescs})
 
+# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE TemplateScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
@@ -744,10 +743,15 @@ qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
     PREFIX "/"
     FILES
     ${images}
+    ${customImages}
     ${ShaderScripts}
     ${scripts}
     ${xmls}
     ${inis}
+    ${modScripts}
+    ${modImages}
+    ${modXmls}
+    ${modDescs}
 )
 
 # install folders and executable
@@ -758,9 +762,7 @@ install(TARGETS ${PROJECT_NAME}
 
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     install(DIRECTORY maps DESTINATION                  ".")
-    install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)
-    install(DIRECTORY customTerrainImages DESTINATION   ".")
-    install(DIRECTORY mods DESTINATION                  ".")
+    install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)    
     install(DIRECTORY templates DESTINATION             ".")
     install(DIRECTORY savegames DESTINATION             ".")
     install(DIRECTORY data DESTINATION                  ".")

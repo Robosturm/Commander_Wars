@@ -349,13 +349,21 @@ void Terrain::loadBaseSprite(QString spriteID)
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
-    else if (QFile::exists(m_terrainSpriteName))
+    else if (QFile::exists(m_terrainSpriteName) || QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
-        QImage img(m_terrainSpriteName);
+        QImage img;
+        if (QFile::exists(m_terrainSpriteName))
+        {
+            img = QImage(m_terrainSpriteName);
+        }
+        else
+        {
+            img = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
+        }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
         Mainapp::getInstance()->loadResAnim(pAnim, img);
         m_SpriteAnim = pAnim;
@@ -366,7 +374,6 @@ void Terrain::loadBaseSprite(QString spriteID)
         }
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         m_pTerrainSprite = pSprite;
-
     }
     else
     {

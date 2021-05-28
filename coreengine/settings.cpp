@@ -1914,6 +1914,10 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
 {
     name = mod;
     QFile file(mod + "/mod.txt");
+    if (!file.exists())
+    {
+        file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt");
+    }
     isCosmetic = false;
     if (file.exists())
     {

@@ -321,7 +321,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.map");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
@@ -333,7 +333,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.map");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
