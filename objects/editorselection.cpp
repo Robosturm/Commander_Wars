@@ -379,6 +379,7 @@ void EditorSelection::createPlayerSelection()
         oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
+        pSprite->setScale(pAnim->getWidth() / GameMap::getImageSize());
         pBuilding->addChild(pSprite);
         m_Players.append(pBuilding);
         if (i >= 0)

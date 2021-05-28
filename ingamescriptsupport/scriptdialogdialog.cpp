@@ -142,6 +142,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     QJSValue ret = pInterpreter->doFunction("CO", function);
     auto additionalFaces = ret.toVariant().toStringList();
     QStringList coIds = ret.toVariant().toStringList();
+    coIds.append(additionalFaces);
     for (const auto & face : qAsConst(coIds))
     {
         oxygine::ResAnim* pAnim = nullptr;

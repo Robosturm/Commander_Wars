@@ -270,6 +270,8 @@ bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qin
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
+    args1 << attackerWeapon;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
     if (erg.isBool())
     {
