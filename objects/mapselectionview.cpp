@@ -341,7 +341,7 @@ void MapSelectionView::loadMapVictoryInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
-                if (pAnim != nullptr)
+                if (pAnim == nullptr)
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
@@ -359,7 +359,7 @@ void MapSelectionView::loadMapVictoryInfo()
                     {
                         pAnim = pCOSpriteManager->getResAnim("no_co+info");
                     }
-                    if (pAnim != nullptr)
+                    if (pAnim == nullptr)
                     {
                         pAnim = pCOSpriteManager->getResAnim("no_co+info");
                     }
