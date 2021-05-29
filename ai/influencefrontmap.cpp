@@ -16,7 +16,7 @@ InfluenceFrontMap::InfluenceFrontMap(const QVector<spIslandMap> & islands)
 {
     setObjectName("InfluenceFrontMap");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();

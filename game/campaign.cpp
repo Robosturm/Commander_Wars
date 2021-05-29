@@ -17,7 +17,7 @@ Campaign::Campaign(QString file)
 {
     setObjectName("Campaign");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_scriptFile = file;
     init();
@@ -28,7 +28,7 @@ Campaign::Campaign()
 {
     setObjectName("Campaign");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

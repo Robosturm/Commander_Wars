@@ -104,7 +104,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         pClipActor->addChild(pTextfield);
         pClipActor->setX(10);
         pClipActor->setSize(width - 20, m_itemHeigth);
-        this->addChild(pBackground);
+        addChild(pBackground);
         m_Items.append(pTextfield);
         qint32 itemPos = m_Items.size() - 1;
         pBackground->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
@@ -128,7 +128,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);
     y += pAnim->getHeight();
-    this->addChild(pBackground);
+    addChild(pBackground);
 
     oxygine::spButton pArrowDown = oxygine::spButton::create();
     pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
@@ -154,7 +154,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     });
     pArrowDown->setScaleX(4.0f);
     pArrowDown->setPosition(width / 2 - pAnim->getWidth() * 2, y + 5);
-    this->addChild(pArrowDown);
+    addChild(pArrowDown);
     changeFolder(folder);
     connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
     connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);

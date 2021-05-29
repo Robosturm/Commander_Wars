@@ -10,7 +10,7 @@ Checkbox::Checkbox()
 {
     setObjectName("Checkbox");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
     setResAnim(pAnim);
@@ -54,7 +54,7 @@ Checkbox::Checkbox()
         Mainapp::getInstance()->getAudioThread()->playSound("checkbox.wav");
         emit checkChanged(m_Checked);
     });
-    this->setSize(pAnim->getWidth(), pAnim->getHeight());
+    setSize(pAnim->getWidth(), pAnim->getHeight());
 }
 
 bool Checkbox::getChecked() const

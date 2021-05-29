@@ -48,7 +48,7 @@ EditorMenue::EditorMenue()
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     changeBackground("editormenu");
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
     m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
@@ -323,7 +323,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.map");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
 
@@ -335,7 +335,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.map");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -351,14 +351,14 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "EDITSCRIPT")
     {
         spScriptEditor scriptEditor = spScriptEditor::create();
-        this->addChild(scriptEditor);
+        addChild(scriptEditor);
         connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
         setFocused(false);
     }
     else if (itemID == "EDITCAMPAIGN")
     {
         spCampaignEditor campaignEditor = spCampaignEditor::create();
-        this->addChild(campaignEditor);
+        addChild(campaignEditor);
         connect(campaignEditor.get(),  &CampaignEditor::sigFinished, this, &EditorMenue::campaignFinished, Qt::QueuedConnection);
         setFocused(false);
     }
@@ -368,7 +368,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.txt");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -379,7 +379,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.aws");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -390,7 +390,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.aws");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -401,7 +401,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.aw4");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -412,7 +412,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         wildcards.append("*.txt");
         QString path = "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        this->addChild(fileDialog);
+        addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
@@ -422,7 +422,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         spMapEditDialog mapEditDialog = spMapEditDialog::create("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        this->addChild(mapEditDialog);
+        addChild(mapEditDialog);
         setFocused(false);
     }
     else if (itemID == "EDITMAP")
@@ -434,7 +434,7 @@ void EditorMenue::clickedTopbar(QString itemID)
                                                                 pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        this->addChild(mapEditDialog);
+        addChild(mapEditDialog);
         setFocused(false);
     }
     else if (itemID == "FLIPX")
@@ -762,7 +762,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 {
                     Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
-                    this->addChild(fieldinfo);
+                    addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                     {
                         setFocused(true);

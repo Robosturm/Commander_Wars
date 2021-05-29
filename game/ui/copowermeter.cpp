@@ -79,7 +79,7 @@ void CoPowermeter::drawPowerMeter()
                             oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), oxygine::timeMS(500), -1, true, oxygine::timeMS(i2 * 50));
                             pSprite->addTween(tween);
                         }
-                        this->addChild(pSprite);
+                        addChild(pSprite);
                     }
                     else
                     {
@@ -127,7 +127,7 @@ void CoPowermeter::drawPowerMeter()
                             oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), oxygine::timeMS(500), -1, true, oxygine::timeMS(i2 * 50));
                             pSprite->addTween(tween);
                         }
-                        this->addChild(pSprite);
+                        addChild(pSprite);
                     }
                 }
                 break;
@@ -160,7 +160,7 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween3);
                 queue->setLoops(-1);
                 pText->addTween(queue);
-                this->addChild(pText);
+                addChild(pText);
                 break;
             }
             case GameEnums::PowerMode_Superpower:
@@ -191,7 +191,7 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween3);
                 queue->setLoops(-1);
                 pText->addTween(queue);
-                this->addChild(pText);
+                addChild(pText);
                 break;
             }
             case GameEnums::PowerMode_Tagpower:
@@ -222,7 +222,7 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween3);
                 queue->setLoops(-1);
                 pText->addTween(queue);
-                this->addChild(pText);
+                addChild(pText);
                 break;
             }
         }

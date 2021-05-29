@@ -19,7 +19,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
 {
     setObjectName("GameAnimation");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_frameTime <= 0)
     {
@@ -230,7 +230,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     {
         pBox->setColor(color);
     }
-    this->addChild(pBox);
+    addChild(pBox);
     pBox->setPosition(offsetX, offsetY);
     if(!m_finishQueued)
     {
@@ -267,7 +267,7 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
         {
             pSprite->setColorTable(Player::getNeutralTableAnim());
         }
-        this->addChild(pSprite);
+        addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);
         if(!m_finishQueued)
         {
@@ -307,7 +307,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
     {
         pSprite->setColor(color);
     }
-    this->addChild(pSprite);
+    addChild(pSprite);
     pSprite->setPosition(offsetX, offsetY);
     if(!m_finishQueued)
     {
@@ -415,13 +415,13 @@ void GameAnimation::addSound(QString soundFile, qint32 loops, QString folder, qi
 void GameAnimation::addTweenScale(float endScale, qint32 duration)
 {
     oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())));
-    this->addTween(tween1);
+    addTween(tween1);
 }
 
 void GameAnimation::addTweenPosition(QPoint point, qint32 duration)
 {
     oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(point.x(), point.y())), oxygine::timeMS(static_cast<qint64>(duration/ Settings::getAnimationSpeed())));
-    this->addTween(tween1);
+    addTween(tween1);
 }
 
 void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay)

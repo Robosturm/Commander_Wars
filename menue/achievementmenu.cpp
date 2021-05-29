@@ -23,7 +23,7 @@ Achievementmenu::Achievementmenu()
     setObjectName("Achievementmenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Achievement Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

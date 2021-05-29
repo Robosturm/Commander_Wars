@@ -34,7 +34,7 @@ WikiDatabase::WikiDatabase()
 {
     setObjectName("WikiDatabase");
     Mainapp* pMainapp = Mainapp::getInstance();
-    this->moveToThread(pMainapp->getWorkerthread());    
+    moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
 }
 

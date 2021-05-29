@@ -12,11 +12,11 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 {
     setObjectName("H_Scrollbar");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     m_ScrollTimer.start();
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setSize(33, heigth);
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setSize(33, heigth);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
     m_pBox = oxygine::spBox9Sprite::create();
@@ -24,7 +24,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     m_pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBox->setResAnim(pAnim);
     m_pBox->setSize(33, heigth);
-    this->addChild(m_pBox);
+    addChild(m_pBox);
 
     m_pArrowDown = oxygine::spButton::create();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
@@ -150,15 +150,15 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
             {
                 y = 20;
             }
-            else if (y > this->getHeight() - m_slider->getHeight() - 20)
+            else if (y > getHeight() - m_slider->getHeight() - 20)
             {
-                y = this->getHeight() - m_slider->getHeight() - 20;
+                y = getHeight() - m_slider->getHeight() - 20;
             }
             m_slider->setY(y);
             // calc scroll value :)
-            if (static_cast<float>(this->getHeight() - m_slider->getHeight() - 20 - 20) > 0)
+            if (static_cast<float>(getHeight() - m_slider->getHeight() - 20 - 20) > 0)
             {
-                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(this->getHeight() - m_slider->getHeight() - 20 - 20);
+                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(getHeight() - m_slider->getHeight() - 20 - 20);
             }
             else
             {
@@ -203,14 +203,14 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
-    sliderHeight = ((this->getHeight() - 20 - 20) * this->getHeight()) / m_ContentHeigth;
+    sliderHeight = ((getHeight() - 20 - 20) * getHeight()) / m_ContentHeigth;
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
     }
-    else if (sliderHeight > (this->getHeight() - 20 - 20))
+    else if (sliderHeight > (getHeight() - 20 - 20))
     {
-        sliderHeight = (this->getHeight() - 20 - 20);
+        sliderHeight = (getHeight() - 20 - 20);
     }
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);

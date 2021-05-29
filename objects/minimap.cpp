@@ -20,7 +20,7 @@ Minimap::Minimap()
 {
     setObjectName("Minimap");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);

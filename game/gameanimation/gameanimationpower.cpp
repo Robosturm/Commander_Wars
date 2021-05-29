@@ -40,7 +40,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 {
     setObjectName("GameAnimationPower");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     Interpreter* pInterpreter = Interpreter::getInstance();
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim("power_background");

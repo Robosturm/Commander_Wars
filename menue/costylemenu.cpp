@@ -23,7 +23,7 @@ COStyleMenu::COStyleMenu()
     setObjectName("COStyleMenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     Console::print("Entering Co Style Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

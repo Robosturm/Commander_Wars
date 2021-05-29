@@ -20,7 +20,7 @@ Shopmenu::Shopmenu()
     setObjectName("Shopmenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Shop Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

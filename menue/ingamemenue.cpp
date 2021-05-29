@@ -16,7 +16,7 @@ InGameMenue::InGameMenue()
     m_MapMoveThread.setObjectName("MapMoveThread");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
@@ -29,7 +29,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     setObjectName("InGameMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
@@ -119,9 +119,9 @@ void InGameMenue::connectMapCursor()
                 if (m_Focused)
                 {
                     pEvent->stopPropagation();
-                    this->m_moveMap = true;
-                    this->m_MoveMapMousePoint.setX(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x));
-                    this->m_MoveMapMousePoint.setY(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y));
+                    m_moveMap = true;
+                    m_MoveMapMousePoint.setX(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x));
+                    m_MoveMapMousePoint.setY(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y));
                 }
             }
         }
@@ -134,7 +134,7 @@ void InGameMenue::connectMapCursor()
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Middle)
             {
                 pEvent->stopPropagation();
-                this->m_moveMap = false;
+                m_moveMap = false;
             }
         }
     });
@@ -149,13 +149,13 @@ void InGameMenue::connectMapCursor()
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
                 qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
 
-                if (this->m_moveMap)
+                if (m_moveMap)
                 {
-                    qint32 resX = static_cast<qint32>((this->m_MoveMapMousePoint.x() - curX) * Settings::getMouseSensitivity());
-                    qint32 resY = static_cast<qint32>((this->m_MoveMapMousePoint.y() - curY) * Settings::getMouseSensitivity());
-                    this->m_MoveMapMousePoint.setX(curX);
-                    this->m_MoveMapMousePoint.setY(curY);
-                    emit this->sigMoveMap(resX , resY);
+                    qint32 resX = static_cast<qint32>((m_MoveMapMousePoint.x() - curX) * Settings::getMouseSensitivity());
+                    qint32 resY = static_cast<qint32>((m_MoveMapMousePoint.y() - curY) * Settings::getMouseSensitivity());
+                    m_MoveMapMousePoint.setX(curX);
+                    m_MoveMapMousePoint.setY(curY);
+                    emit sigMoveMap(resX , resY);
                 }
                 emit m_Cursor->sigUpdatePosition(curX, curY);
             }

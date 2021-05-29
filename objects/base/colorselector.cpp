@@ -15,7 +15,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 {
     setObjectName("ColorSelector");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     // font style
     oxygine::TextStyle style = FontManager::getMainFont24();

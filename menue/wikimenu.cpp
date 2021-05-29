@@ -18,7 +18,7 @@ Wikimenu::Wikimenu()
     setObjectName("Wikimenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Wiki Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

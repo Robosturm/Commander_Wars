@@ -7,7 +7,7 @@
 LocalServer::LocalServer()
 {
     setObjectName("LocalServer");
-    this->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = true;
     isConnected = true;
 }

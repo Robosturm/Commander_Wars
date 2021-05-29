@@ -10,7 +10,10 @@ namespace oxygine
 {
     spStage Stage::instance;
 
-    Stage::Stage() : m_statUpdate(0), m_clipOuter(false), m_viewport(0, 0, 0, 0) //, _active(true)
+    Stage::Stage()
+        : m_statUpdate(0),
+          m_clipOuter(false),
+          m_viewport(0, 0, 0, 0)
     {
         spClock clock = spClock::create();
         setClock(clock);
@@ -27,7 +30,7 @@ namespace oxygine
         core::reset();
     }
 
-    Rect    Stage::calcCenteredViewport(const Point& displaySize, const Point& gameSize)
+    Rect Stage::calcCenteredViewport(const Point& displaySize, const Point& gameSize)
     {
         float width = (float)displaySize.x;
         float height = (float)displaySize.y;

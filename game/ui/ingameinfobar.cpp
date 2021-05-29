@@ -23,7 +23,7 @@ IngameInfoBar::IngameInfoBar()
 {
     setObjectName("IngameInfoBar");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     qint32 width = 300;
     qint32 cursorInfoHeigth = 330;

@@ -19,7 +19,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 {
     setObjectName("GameAnimationDialog");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
     connect(&m_finishTimer, &QTimer::timeout, [=]()

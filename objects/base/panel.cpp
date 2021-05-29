@@ -8,17 +8,17 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
 {
     setObjectName("Panel");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    moveToThread(pApp->getWorkerthread());
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     m_HScrollbar = spH_Scrollbar::create(size.height() - sliderSize, contentSize.height());
-    this->addChild(m_HScrollbar);
+    addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
     connect(m_HScrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledY, Qt::QueuedConnection);
 
     m_VScrollbar = spV_Scrollbar::create(size.width() - sliderSize, contentSize.width());
-    this->addChild(m_VScrollbar);
+    addChild(m_VScrollbar);
     m_VScrollbar->setY(size.height() - m_VScrollbar->getHeight());
     connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
 
@@ -32,14 +32,14 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
         m_Panelbox->setResAnim(pAnim);
         m_Panelbox->setSize(size.width() - m_HScrollbar->getWidth(),
                             size.height() - m_VScrollbar->getHeight());
-        this->addChild(m_Panelbox);
+        addChild(m_Panelbox);
         m_Panelbox->addChild(m_ClipRect);
         m_ClipRect->setPosition(10, 10);
         m_ClipRect->setSize(m_Panelbox->getWidth() - 20, m_Panelbox->getHeight() - 20);
     }
     else
     {
-        this->addChild(m_ClipRect);
+        addChild(m_ClipRect);
         m_ClipRect->setSize(size.width() - m_HScrollbar->getWidth(),
                             size.height() - m_VScrollbar->getHeight());
     }
@@ -143,9 +143,9 @@ void Panel::setContentHeigth(qint32 heigth)
     
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
-    if (heigth <= this->getHeight())
+    if (heigth <= getHeight())
     {
-        heigth = this->getHeight();
+        heigth = getHeight();
         if (m_HScrollbar->getVisible())
         {
             if (m_Panelbox.get() != nullptr)
@@ -180,9 +180,9 @@ void Panel::setContentWidth(qint32 width)
     
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
-    if (width <= this->getWidth())
+    if (width <= getWidth())
     {
-        width = this->getWidth();
+        width = getWidth();
         if (m_VScrollbar->getVisible())
         {
             if (m_Panelbox.get() != nullptr)

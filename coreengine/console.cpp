@@ -5,6 +5,7 @@
 #include <QClipboard>
 #include <QGuiApplication>
 #include <qlogging.h>
+#include <QLoggingCategory>
 #include <qdatetime.h>
 
 #include "coreengine/console.h"
@@ -70,7 +71,7 @@ Console::Console()
     setObjectName("Console");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = oxygine::spColorRectSprite::create();

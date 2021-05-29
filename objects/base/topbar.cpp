@@ -9,19 +9,19 @@ Topbar::Topbar(qint32 x, qint32 width)
 {
     setObjectName("Topbar");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
     m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    this->addChild(m_pSpriteBox);
+    addChild(m_pSpriteBox);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editorselection");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(width, 80);
     m_pSpriteBox->setPosition(x, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setSize(width, 80);
 }
 

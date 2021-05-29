@@ -13,7 +13,7 @@ SelectKey::SelectKey(Qt::Key code)
 {
     setObjectName("SelectKey");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     m_Button = ObjectManager::createButton("");
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

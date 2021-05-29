@@ -53,9 +53,9 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
 {
     setObjectName("Terrain");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
 }
@@ -269,7 +269,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
     m_pBaseTerrain = terrain;
     m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
-    this->addChild(m_pBaseTerrain);
+    addChild(m_pBaseTerrain);
 }
 
 void Terrain::loadSprites()
@@ -324,7 +324,7 @@ void Terrain::loadBaseTerrain(QString terrainID)
     m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y);
     m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
-    this->addChild(m_pBaseTerrain);
+    addChild(m_pBaseTerrain);
 }
 
 void Terrain::loadBaseSprite(QString spriteID)
@@ -345,7 +345,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         }
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-        this->addChild(pSprite);
+        addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
@@ -353,7 +353,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-        this->addChild(pSprite);
+        addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
         if (QFile::exists(m_terrainSpriteName))
@@ -558,7 +558,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-    this->addChild(pSprite);
+    addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }
 
@@ -700,7 +700,7 @@ void Terrain::setBuilding(Building* pBuilding)
         {
             pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
         }
-        this->addChild(pBuilding);
+        addChild(pBuilding);
         if (m_x >= 0 && m_y >= 0)
         {
             createBuildingDownStream();
@@ -757,7 +757,7 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         if (!OnlyDownStream)
         {
             pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
-            this->addChild(pBuilding);
+            addChild(pBuilding);
         }
     }
     // remove current unit to avoid strange impact :)
@@ -774,7 +774,7 @@ void Terrain::loadBuilding(QString buildingID)
     m_Building->updateBuildingSprites(false);
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
     m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
-    this->addChild(m_Building);
+    addChild(m_Building);
     createBuildingDownStream();
 }
 
@@ -1284,7 +1284,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             m_pBaseTerrain->setPosition(0, 0);
             if (m_pBaseTerrain->isValid())
             {
-                this->addChild(m_pBaseTerrain);
+                addChild(m_pBaseTerrain);
             }
             else
             {
@@ -1304,7 +1304,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
             if (!fast)
             {
                 m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-                this->addChild(m_Building);
+                addChild(m_Building);
             }
             m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();

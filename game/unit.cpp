@@ -26,7 +26,7 @@ Unit::Unit()
 {
     setObjectName("Unit");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
@@ -40,7 +40,7 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (!m_UnitID.isEmpty())
     {
@@ -269,12 +269,12 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
         }
         pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-        this->addChild(pSprite);
+        addChild(pSprite);
         m_pUnitSprites.append(pSprite);
         pWaitSprite->setColor(QColor(100, 100, 100, 170));
         pWaitSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-        this->addChild(pWaitSprite);
+        addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
         if (m_pOwner->getFlipUnitSprites() && flipSprite)
@@ -2608,7 +2608,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 
         pSprite->setPosition(x, y);
         pSprite->setPriority(static_cast<short>(Priorities::Icons));
 
-        this->addChild(pSprite);
+        addChild(pSprite);
         m_pIconSprites.append(pSprite);
 
         updateIconTweens();

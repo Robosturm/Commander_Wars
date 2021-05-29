@@ -41,7 +41,7 @@ Mainwindow::Mainwindow()
     setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -136,7 +136,7 @@ Mainwindow::Mainwindow()
     setButtonPosition(pButtonEditor, btnI);
     pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit this->sigEnterEditor();
+        emit sigEnterEditor();
     });
     connect(this, &Mainwindow::sigEnterEditor, this, &Mainwindow::enterEditor, Qt::QueuedConnection);
     btnI++;
@@ -391,7 +391,7 @@ void Mainwindow::enterLoadGame()
     wildcards.append("*.sav");
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
     
 }
@@ -402,7 +402,7 @@ void Mainwindow::enterLoadCampaign()
     wildcards.append("*.camp");
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
 }
 
@@ -433,7 +433,7 @@ void Mainwindow::enterReplayGame()
     wildcards.append("*.rec");
     QString path = "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
     
 }

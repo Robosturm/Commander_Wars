@@ -23,7 +23,7 @@ CO::CO(QString coID, Player* owner)
 {
     setObjectName("CO");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_perkList.append(coID);
     m_perkList.append("TAGPOWER");
@@ -39,7 +39,7 @@ void CO::init()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        pInterpreter->doFunction(this->m_coID, function1, args1);
+        pInterpreter->doFunction(m_coID, function1, args1);
     }
 }
 

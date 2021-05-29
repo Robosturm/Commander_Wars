@@ -32,7 +32,7 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
     setObjectName("PlayerSelection");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
 
     m_pPlayerSelection = spPanel::create(true,

@@ -9,9 +9,9 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
 {
     setObjectName("DropDownmenu");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setWidth(width);
+    moveToThread(pApp->getWorkerthread());
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setWidth(width);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();

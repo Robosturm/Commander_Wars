@@ -24,7 +24,7 @@ LobbyMenu::LobbyMenu()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Lobby Menue", Console::eDEBUG);
 
     if (!Settings::getServer())

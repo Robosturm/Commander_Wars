@@ -180,7 +180,7 @@ QVector<double> Neuron::getBackpropagationShifts(const QVector<double>& target)
     QVector<double> dw(m_previous.size(),0);
     if (m_layer->getType() == Layer::LayerType::OUTPUT)
     {
-        double d1 = output() - target[this->getNeuronId()];
+        double d1 = output() - target[getNeuronId()];
         double d2 = outputDerivative();
         for (qint32 i = 0; i < m_previous.size(); ++i)
         {

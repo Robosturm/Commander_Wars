@@ -10,11 +10,11 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
 {
     setObjectName("V_Scrollbar");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     m_ScrollTimer.start();
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setSize(width, 33);
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setSize(width, 33);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
     m_pBox = oxygine::spBox9Sprite::create();
@@ -22,7 +22,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBox->setResAnim(pAnim);
     m_pBox->setSize(width, 33);
-    this->addChild(m_pBox);
+    addChild(m_pBox);
 
     m_pArrowRigth = oxygine::spButton::create();
     m_pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));

@@ -11,7 +11,7 @@ LocalClient::LocalClient()
       m_pSocket(nullptr)
 {
     setObjectName("LocalClient");
-    this->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
 }
 

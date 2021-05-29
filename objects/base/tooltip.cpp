@@ -14,7 +14,7 @@ Tooltip::Tooltip()
 {
     setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     m_TooltipTimer.setSingleShot(true);
     m_TooltipPauseTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event*)

@@ -37,7 +37,7 @@ CampaignEditor::CampaignEditor()
 {
     setObjectName("CampaignEditor");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
@@ -45,10 +45,10 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -200,7 +200,7 @@ void CampaignEditor::showSaveCampaign()
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
     
 }
@@ -211,7 +211,7 @@ void CampaignEditor::showLoadCampaign()
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
 }
 
@@ -245,7 +245,7 @@ void CampaignEditor::showSelectFolder()
     
     QString path = "maps";
     spFolderDialog folderDialog = spFolderDialog::create(path);
-    this->addChild(folderDialog);
+    addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
     
 }

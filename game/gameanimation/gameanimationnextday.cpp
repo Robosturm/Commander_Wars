@@ -18,7 +18,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
 {
     setObjectName("GameAnimationNextDay");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());    
+    moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
@@ -34,7 +34,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (permanent)
     {
         pSprite->setColor(color);
-        this->setPriority(static_cast<qint32>(Mainapp::ZOrder::AnimationFullScreen));
+        setPriority(static_cast<qint32>(Mainapp::ZOrder::AnimationFullScreen));
     }
     else
     {

@@ -41,7 +41,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_Panel = spPanel::create(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
     m_Panel->setSubComponent(true);
     m_Panel->setVisible(false);
-    this->addChild(m_Panel);
+    addChild(m_Panel);
     m_pArrowDown = oxygine::spButton::create();
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getWidth() - 45, 10);
@@ -165,7 +165,7 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
 
     m_Items.append(pBox);
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->m_Panel->addItem(pBox);
+    m_Panel->addItem(pBox);
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {

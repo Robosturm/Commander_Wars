@@ -12,7 +12,7 @@ ProxyAi::ProxyAi()
     setObjectName("ProxyAi");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
 }
 

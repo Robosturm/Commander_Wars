@@ -120,7 +120,7 @@ namespace oxygine
 
             bool operator < (QString ob2) const
             {
-                return this->id > ob2;
+                return id > ob2;
             }
         };
 

@@ -20,7 +20,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 {
     setObjectName("GameAnimationCapture");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_frameTime = GameMap::frameTime / Settings::getCaptureAnimationSpeed();
 }
@@ -155,7 +155,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         pSprite->setPriority(10);
 
 
-        this->addChild(pSprite);
+        addChild(pSprite);
     }
 }
 
@@ -237,7 +237,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         }
         pSprite->setPosition(12, startPosition);
         pSprite->setPriority(20);
-        this->addChild(pSprite);
+        addChild(pSprite);
     }
     else
     {
@@ -254,7 +254,7 @@ void GameAnimationCapture::addBackgroundSprite(QString spriteID)
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(0);
-        this->addChild(pSprite);
+        addChild(pSprite);
     }
     else
     {

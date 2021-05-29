@@ -8,7 +8,7 @@ ScriptVariable::ScriptVariable(QString id)
 {
     setObjectName("ScriptVariable");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
 }
@@ -17,7 +17,7 @@ ScriptVariable::ScriptVariable()
 {
     setObjectName("ScriptVariable");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
 }

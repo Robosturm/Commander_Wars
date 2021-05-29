@@ -32,7 +32,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     setObjectName("MapSelectionMapsMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     Console::print("Entering Map Selection Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -428,7 +428,7 @@ void MapSelectionMapsMenue::showLoadRules()
     wildcards.append("*.grl");
     QString path = "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
     
 }
@@ -439,7 +439,7 @@ void MapSelectionMapsMenue::showSaveRules()
     wildcards.append("*.grl");
     QString path = "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
 }
 
@@ -480,7 +480,7 @@ void MapSelectionMapsMenue::showSaveMap()
     wildcards.append("*.map");
     QString path = "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
 }
 

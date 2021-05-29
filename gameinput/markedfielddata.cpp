@@ -8,7 +8,7 @@ MarkedFieldData::MarkedFieldData()
 {
     setObjectName("MarkedFieldData");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

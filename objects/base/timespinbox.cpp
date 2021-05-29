@@ -12,9 +12,9 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 {
     setObjectName("TimeSpinBox");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
     m_Textbox = oxygine::spBox9Sprite::create();
@@ -36,13 +36,13 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textfield->attachTo(pClipActor);
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width - 35, 40);
-    this->setSize(width, 40);
+    setSize(width, 40);
     m_Textfield->setWidth(m_Textbox->getWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getHeight());
     pClipActor->setSize(m_Textfield->getSize());
     pClipActor->setX(10);
     pClipActor->setY(5);
-    this->addChild(m_Textbox);
+    addChild(m_Textbox);
 
     m_pSpinBox = oxygine::spBox9Sprite::create();
     m_pSpinBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
@@ -107,10 +107,10 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_pSpinBox->addChild(m_pArrowUp);
     m_pArrowUp->setPosition(9, 8);
 
-    this->addChild(m_pSpinBox);
+    addChild(m_pSpinBox);
 
 
-    this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigFocused();
     });

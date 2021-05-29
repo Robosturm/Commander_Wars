@@ -100,7 +100,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
 void Multiplayermenu::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Multiplayer Menue", Console::eDEBUG);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
     m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
@@ -154,7 +154,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     wildcards.append("*.msav");
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
     
 }

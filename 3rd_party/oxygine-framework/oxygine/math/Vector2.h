@@ -39,7 +39,7 @@ namespace oxygine
         VectorT2 mult(const VectorT2& r) const {return VectorT2(x * r.x, y * r.y);}
         VectorT2 div(const VectorT2& r) const {return VectorT2(x / r.x, y / r.y);}
 
-        operator VectorT2<float> () const {return this->cast< VectorT2<float> >();}
+        operator VectorT2<float> () const {return cast< VectorT2<float> >();}
 
         template<typename R>
         R cast() const

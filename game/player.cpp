@@ -28,7 +28,7 @@ Player::Player()
 {
     setObjectName("Player");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pBaseGameInput = nullptr;
     // for older versions we allow all loaded units to be buildable

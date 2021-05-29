@@ -27,7 +27,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
 {
     setObjectName("PathFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     qint32 count = m_width * m_heigth;
     for (qint32 i = 0; i < count; ++i)

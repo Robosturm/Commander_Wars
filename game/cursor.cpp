@@ -11,9 +11,9 @@ Cursor::Cursor()
 {
     setObjectName("Cursor");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
     m_cursorRangeOutline = oxygine::spActor::create();
     addChild(m_cursorRangeOutline);
     connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
@@ -44,7 +44,7 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
     }
     m_CurrentCursor->setScale(scale * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
     m_CurrentCursor->setPosition(xOffset, yOffset);
-    this->addChild(m_CurrentCursor);
+    addChild(m_CurrentCursor);
     
 }
 
@@ -67,7 +67,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 
             m_MapPointX = x;
             m_MapPointY = y;
-            this->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+            setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             // provide cursor move signal
             emit sigCursorMoved(m_MapPointX, m_MapPointY);
             

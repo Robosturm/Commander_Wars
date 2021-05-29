@@ -31,7 +31,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     setObjectName("VictoryMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Victory Menue", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();

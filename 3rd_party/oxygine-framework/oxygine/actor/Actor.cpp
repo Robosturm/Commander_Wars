@@ -1014,8 +1014,8 @@ namespace oxygine
 
     bool Actor::onScreen(RenderState& rs)
     {
-        float width = oxygine::getStage()->getWidth();
-        float height = oxygine::getStage()->getHeight();
+        float width = oxygine::getStage()->getScaledWidth();
+        float height = oxygine::getStage()->getScaledHeight();
         auto scaledWidth = m_size.x * rs.transform.a;
         auto scaledHeight = m_size.y * rs.transform.d;
         if (rs.transform.x > width ||

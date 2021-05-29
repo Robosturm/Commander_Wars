@@ -10,9 +10,9 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
     setObjectName("DropDownmenuSprite");
     Q_ASSERT(items.size() != 0);
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setWidth(width);
+    moveToThread(pApp->getWorkerthread());
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    setWidth(width);
     m_pClipActor->setY(5);
 
     for (qint32 i = 0; i < items.size(); i++)

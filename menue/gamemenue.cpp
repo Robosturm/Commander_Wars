@@ -317,7 +317,7 @@ bool GameMenue::isNetworkGame()
 void GameMenue::loadGameMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -1531,7 +1531,7 @@ void GameMenue::saveGame()
     wildcards.append("*" + getSaveFileEnding());
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -1565,7 +1565,7 @@ void GameMenue::showSaveAndExitGame()
     }
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
-    this->addChild(saveDialog);
+    addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -1771,7 +1771,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
                 pUnit = nullptr;
             }
             spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
-            this->addChild(fieldinfo);
+            addChild(fieldinfo);
             connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
             {
                 setFocused(true);

@@ -19,15 +19,15 @@ PlayerInfo::PlayerInfo()
 {
     setObjectName("PlayerInfo");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    this->setScale(1.0f);
+    moveToThread(pApp->getWorkerthread());
+    setScale(1.0f);
 }
 
 void PlayerInfo::updateData()
 {    
     Mainapp::getInstance()->pauseRendering();
     // clean up
-    this->removeChildren();
+    removeChildren();
     // recreate the ui
     spGameMap pMap = GameMap::getInstance();
     qint32 playerIdx = 0;
@@ -84,7 +84,7 @@ void PlayerInfo::updateData()
             {
                 pSprite->setX(-pSprite->getScaledWidth());
             }
-            this->addChild(pSprite);
+            addChild(pSprite);
             qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
 
             CO* pCO = pPlayer->getCO(0);
@@ -112,7 +112,7 @@ void PlayerInfo::updateData()
             {
                 pSprite->setX(-pSprite->getScaledWidth());
             }
-            this->addChild(pSprite);
+            addChild(pSprite);
             if (pCO != nullptr)
             {
                 spCoPowermeter pCoPowermeter = spCoPowermeter::create(pCO);
@@ -160,7 +160,7 @@ void PlayerInfo::updateData()
                 {
                     pCoPowermeter->setX(68);
                 }
-                this->addChild(pSprite);
+                addChild(pSprite);
             }
             oxygine::TextStyle style = FontManager::getMainFont24();
 
@@ -183,7 +183,7 @@ void PlayerInfo::updateData()
             {
                 Text->setX(0);
             }
-            this->addChild(Text);
+            addChild(Text);
 
             yPos += itemHeigth;
         }

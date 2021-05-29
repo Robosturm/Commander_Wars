@@ -18,7 +18,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
 {
     setObjectName("DialogModifyTerrain");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -26,10 +26,10 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
@@ -173,7 +173,7 @@ void DialogModifyTerrain::showLoadDialog()
     QString path = "customTerrainImages";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName(), true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     
 }
 

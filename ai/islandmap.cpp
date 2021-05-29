@@ -12,7 +12,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
 {
     setObjectName("IslandMap");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     spGameMap pMap = GameMap::getInstance();
 

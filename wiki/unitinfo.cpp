@@ -23,11 +23,11 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 {
     setObjectName("UnitInfo");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
 
-    this->setWidth(width);
+    setWidth(width);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -70,7 +70,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setPosition(width - 210, y);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
 
     spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);

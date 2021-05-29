@@ -19,7 +19,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
 {
     setObjectName("COSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -27,10 +27,10 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     m_COSelection = spCOSelection::create(QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
     m_COSelection->colorChanged(color);

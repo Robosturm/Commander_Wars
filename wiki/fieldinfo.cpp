@@ -6,7 +6,7 @@ FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
 {
     setObjectName("FieldInfo");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     qint32 y = 10;

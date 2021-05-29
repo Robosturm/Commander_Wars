@@ -64,7 +64,7 @@ CoreAI::CoreAI(GameEnums::AiTypes aiType)
     setObjectName("CoreAI");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     // load static information from scripts to improve performance
     Interpreter* pInterpreter = Interpreter::getInstance();

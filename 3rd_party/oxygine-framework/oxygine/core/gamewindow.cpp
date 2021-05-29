@@ -35,9 +35,11 @@ namespace oxygine
         : m_dispatcher(spEventDispatcher::create())
     {
         setObjectName("GameWindow");
-        QSurfaceFormat newFormat = format();
-        newFormat.setSamples(2);    // Set the number of samples used for multisampling
-        setFormat(newFormat);
+        QSurfaceFormat format = QWindow::format();
+        format.setProfile(QSurfaceFormat::CoreProfile);
+        format.setDepthBufferSize(24);
+        format.setRenderableType(QSurfaceFormat::OpenGLES);
+        setFormat(format);
 
         _window = this;
         m_mainHandle = QThread::currentThreadId();
@@ -211,8 +213,12 @@ namespace oxygine
 
         // Create the stage. Stage is a root node for all updateable and drawable objects
         oxygine::Stage::instance = oxygine::spStage::create();
-        QSize size = GameWindow::size();
-        oxygine::getStage()->setSize(size.width(), size.height());
+//        QSize size = GameWindow::size();
+//        oxygine::getStage()->setSize(size.width(), size.height());
+//        QScreen* screen = QGuiApplication::primaryScreen();
+//        qreal ratio = screen->devicePixelRatio();
+//        Point gameSize = Point(size.width(), size.height());
+//        oxygine::getStage()->init(gameSize * ratio, gameSize);
         emit sigLoadRessources();
     }
 
@@ -321,13 +327,12 @@ namespace oxygine
 
     void GameWindow::touchEvent(QTouchEvent *event)
     {
+        QList<QTouchEvent::TouchPoint> touchPoints = event->points();
         switch (event->type())
         {
             case QEvent::TouchBegin:
             case QEvent::TouchUpdate:
             {
-                QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
-                QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->points();
                 if (touchPoints.count() == 2)
                 {
                     // determine scale factor
@@ -340,38 +345,14 @@ namespace oxygine
                 else if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
-                    if (touchPoint0.state() == QEventPoint::Released)
-                    {
-                        if (touchPoint0.position() == touchPoint0.lastPosition())
-                        {
-                            if (time > std::chrono::milliseconds(500))
-                            {
-                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                            }
-                            else
-                            {
-                                emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                            }
-                        }
-                        m_pressDownTimeRunning = false;
-                    }
-                    else if (touchPoint0.position() != touchPoint0.lastPosition())
+                    if (touchPoint0.position() != touchPoint0.lastPosition())
                     {
                         emit sigTouchScrollEvent(touchPoint0.position().x() - touchPoint0.lastPosition().x(),
                                                  touchPoint0.position().y() - touchPoint0.lastPosition().y());
                     }
                     else
                     {
-                        if (m_pressDownTimeRunning)
-                        {
-                            if (time > std::chrono::milliseconds(500))
-                            {
-                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                                m_pressDownTimeRunning = false;
-                            }
-                        }
-                        else
+                        if (!m_pressDownTimeRunning)
                         {
                              m_pressDownTime.start();
                              m_pressDownTimeRunning = true;
@@ -382,6 +363,27 @@ namespace oxygine
             }
             case QEvent::TouchEnd:
             {
+                if (touchPoints.count() == 1 )
+                {
+                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
+                    if (touchPoint0.state() == QEventPoint::Released)
+                    {
+                        if (touchPoint0.position() == touchPoint0.pressPosition())
+                        {
+                            if (time > std::chrono::milliseconds(500))
+                            {
+                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                            }
+                            else
+                            {
+                                emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                                emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                            }
+                        }
+                    }
+                    m_pressDownTimeRunning = false;
+                }
             }
             default:
                 break;

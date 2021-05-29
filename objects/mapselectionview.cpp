@@ -43,7 +43,7 @@ MapSelectionView::MapSelectionView()
 
     m_pMapSelection = spMapSelection::create(Settings::getHeight() - 70, width, "");
     m_pMapSelection->setPosition(10, 10);
-    this->addChild(m_pMapSelection);
+    addChild(m_pMapSelection);
     m_pMinimap = spMinimap::create();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
@@ -59,7 +59,7 @@ MapSelectionView::MapSelectionView()
     m_MapInfo = spPanel::create(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
                                 QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
-    this->addChild(m_MapInfo);
+    addChild(m_MapInfo);
 
     qint32 y = 10;
 

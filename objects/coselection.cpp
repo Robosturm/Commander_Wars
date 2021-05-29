@@ -13,7 +13,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
 {
     setObjectName("COSelection");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();

@@ -17,7 +17,7 @@ Wikipage::Wikipage()
 {
     setObjectName("Wikipage");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -27,10 +27,10 @@ Wikipage::Wikipage()
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);

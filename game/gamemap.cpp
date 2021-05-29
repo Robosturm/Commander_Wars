@@ -66,7 +66,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     loadMapData();
     GameMap::deserializeObject(stream);
     m_loaded = true;
@@ -913,7 +913,7 @@ void GameMap::setZoom(float zoom)
     {
         // all fine
     }
-    this->setScale(m_zoom);
+    setScale(m_zoom);
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
@@ -939,7 +939,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
                 m_fields[y].replace(x, pTerrain);
-                this->addChild(pTerrain);
+                addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
@@ -947,7 +947,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             {
                 pTerrainOld->detach();
                 m_fields[y].replace(x, pTerrain);
-                this->addChild(pTerrain);
+                addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
@@ -963,13 +963,13 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
     }
 }
 
-void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
+void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites)
 {
     replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
     updateTerrain(x, y);
-    if (updateSprites)
+    if (callUpdateSprites)
     {
-        this->updateSprites(x, y);
+        updateSprites(x, y);
     }
 }
 
@@ -1161,7 +1161,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             {
                 if (!fast)
                 {
-                    this->addChild(pTerrain);
+                    addChild(pTerrain);
                     pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                     pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
                 }

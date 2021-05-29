@@ -12,7 +12,7 @@ TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qin
 {
     setObjectName("TerrainFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

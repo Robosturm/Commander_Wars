@@ -16,7 +16,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 {
     setObjectName("MapEditDialog");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
@@ -24,10 +24,10 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     float y = 30;
     qint32 width = 250;
@@ -195,7 +195,7 @@ void MapEditDialog::showSelectScript()
     wildcards.append("*.js");
     QString path = "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
     
 }

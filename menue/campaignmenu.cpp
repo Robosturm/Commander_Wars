@@ -27,7 +27,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     setObjectName("CampaignMenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Console::print("Entering Campaign Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -153,7 +153,7 @@ void CampaignMenu::showSaveCampaign()
     wildcards.append("*.camp");
     QString path = "savegames";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    this->addChild(fileDialog);
+    addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    
 }
 

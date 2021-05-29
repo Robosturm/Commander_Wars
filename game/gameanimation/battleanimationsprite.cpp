@@ -39,7 +39,7 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
         m_hpRounded = pUnit->getHpRounded();
     }
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     // setup next frame timer
     m_nextFrameTimer.setSingleShot(true);

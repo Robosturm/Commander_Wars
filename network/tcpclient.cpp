@@ -13,7 +13,7 @@ TCPClient::TCPClient()
       m_pSocket(nullptr)
 {
     setObjectName("TCPClient");
-    this->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
 }
 

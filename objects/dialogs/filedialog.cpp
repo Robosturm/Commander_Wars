@@ -15,7 +15,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     setObjectName("FileDialog");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
@@ -23,10 +23,10 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
+    addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
     m_CurrentFolder = spTextbox::create(Settings::getWidth() - 60);
@@ -234,7 +234,7 @@ void FileDialog::showFolder(QString folder)
         textField->setX(13);
         textField->setY(5);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-        this->m_MainPanel->addItem(pBox);
+        m_MainPanel->addItem(pBox);
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
         {

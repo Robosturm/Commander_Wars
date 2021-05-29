@@ -13,7 +13,7 @@ GameAction::GameAction()
 {
     setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
@@ -25,7 +25,7 @@ GameAction::GameAction(QString actionID)
 {
     setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_buffer.open(QIODevice::ReadWrite);
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());

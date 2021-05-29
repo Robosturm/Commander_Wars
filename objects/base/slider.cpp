@@ -12,7 +12,7 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
 {
     setObjectName("Slider");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
     m_spinBox = spSpinBox::create(150, minValue, maxValue);

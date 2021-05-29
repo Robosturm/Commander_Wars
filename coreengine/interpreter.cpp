@@ -38,7 +38,7 @@ void Interpreter::reloadInterpreter(QString runtime)
 void Interpreter::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     setOutputWarningsToStandardError(false);
     setIncubationController(nullptr);
 

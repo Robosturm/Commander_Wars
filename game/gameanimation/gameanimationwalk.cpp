@@ -17,7 +17,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
 {
     setObjectName("GameAnimationWalk");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false);
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
@@ -128,7 +128,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                     }
                     tween1->addDoneCallback([=](oxygine::Event *)
                     {
-                        this->setVisible(isVisible);
+                        setVisible(isVisible);
                     });
                 }
 
@@ -206,7 +206,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
             pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim());
         }
 
-        this->addChild(pSprite);
+        addChild(pSprite);
     }
     else
     {

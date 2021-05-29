@@ -16,7 +16,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
 {
     setObjectName("TerrainInfo");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
     setWidth(width);

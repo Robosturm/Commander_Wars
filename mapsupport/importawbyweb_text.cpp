@@ -59,7 +59,7 @@ void GameMap::importAWByWebMap(QString file)
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
-                this->addChild(pTerrain);
+                addChild(pTerrain);
                 m_fields[y].append(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
