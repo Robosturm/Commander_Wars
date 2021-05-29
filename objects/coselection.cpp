@@ -17,8 +17,6 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-
-    pCOSpriteManager->loadAll();
     Interpreter* pInterpreter = Interpreter::getInstance();
     // create a co banner for each co in a different army
     qint32 bannerX = 0;

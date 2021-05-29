@@ -1,6 +1,4 @@
-#include "qcryptographichash.h"
-#include "qdir.h"
-#include "qdiriterator.h"
+#include <qcryptographichash.h>
 
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/lobbymenu.h"
@@ -903,13 +901,57 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
 {
     QString path = "maps";
-    if (m_saveGame)
-    {
-        path = "savegames";
-    }
     QStringList filter;
     filter << "*" + fileName;
     QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+    bool found = findAndLoadMap(dirIter, hash, m_saveGame);
+    if (!found)
+    {
+        QDirIterator virtDirIter(oxygine::Resource::RCC_PREFIX_PATH + path, filter, QDir::Files, QDirIterator::Subdirectories);
+        found = findAndLoadMap(virtDirIter, hash, m_saveGame);
+    }
+    if (found  && !m_saveGame)
+    {
+        if (!scriptFileName.isEmpty())
+        {
+            QFile scriptFile;
+            QByteArray myHashArray;
+            // check real drive and virt drive for script
+            if (QFile::exists(scriptFileName))
+            {
+                scriptFile.setFileName(scriptFileName);
+                scriptFile.open(QIODevice::ReadOnly);
+                QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+                myHash.addData(&scriptFile);
+                scriptFile.close();
+                myHashArray = myHash.result();
+
+            }
+            if (myHashArray != scriptHash && QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName))
+            {
+                scriptFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + scriptFileName);
+                scriptFile.open(QIODevice::ReadOnly);
+                QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+                myHash.addData(&scriptFile);
+                scriptFile.close();
+                QByteArray myHashArray = myHash.result();
+                if (myHashArray != scriptHash)
+                {
+                    found = false;
+                }
+            }
+            else
+            {
+                found = false;
+            }
+        }
+    }
+    return found;
+}
+
+bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame)
+{
+
     bool found = false;
     while (dirIter.hasNext() && !found)
     {
@@ -928,25 +970,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             found = true;
         }
     }
-    if (found  && !m_saveGame)
-    {
-        if (!scriptFileName.isEmpty())
-        {
-            QFile scriptFile(scriptFileName);
-            scriptFile.open(QIODevice::ReadOnly);
-            QCryptographicHash myHash(QCryptographicHash::Sha3_512);
-            myHash.addData(&scriptFile);
-            scriptFile.close();
-            QByteArray myHashArray = myHash.result();
-            if (myHashArray != scriptHash)
-            {
-                found = false;
-            }
-        }
-    }
-
     return found;
-
 }
 
 void Multiplayermenu::showRuleSelection()

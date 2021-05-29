@@ -495,7 +495,7 @@ FILE(GLOB_RECURSE images RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.png" 
 FILE(GLOB_RECURSE customImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "customTerrainImages/*.png" )
 FILE(GLOB_RECURSE xmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.xml")
 FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.ini")
-FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.txt")
+FILE(GLOB_RECURSE textFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.txt")
 FILE(GLOB_RECURSE ShaderScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "system/*.glsl")
 FILE(GLOB_RECURSE modScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.js")
 FILE(GLOB_RECURSE modDescs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.txt")
@@ -744,6 +744,7 @@ qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
     ${scripts}
     ${xmls}
     ${inis}
+    ${textFiles}
     ${modScripts}
     ${modImages}
     ${modXmls}
@@ -753,6 +754,7 @@ qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
     ${CampaignScripts}
     ${MapImages}
     ${DataScripts}
+    "resources/credits/credits.cred"
 )
 
 # install folders and executable

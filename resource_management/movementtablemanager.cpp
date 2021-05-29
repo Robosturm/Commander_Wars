@@ -27,7 +27,7 @@ void MovementTableManager::loadAll()
     dir.removeRecursively();
     dir.mkpath(".");
     QStringList data;
-    QFile file("resources/scripts/movementtables/movement_csv_import.txt");
+    QFile file(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/movementtables/movement_csv_import.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();
@@ -38,13 +38,7 @@ void MovementTableManager::loadAll()
         if (!jsData.isEmpty())
         {
             m_loadedRessources.append(data);
-            QFile tmp("temp/table.js");
-            tmp.open(QIODevice::WriteOnly);
-            QTextStream stream2(&tmp);
-            stream2 << jsData;
-            tmp.close();
-            pInterpreter->openScript("temp/table.js", true);
-            QFile::remove("temp/table.js");
+            pInterpreter->loadScript(jsData, "temp/movementtable.js");
         }
     }
     m_loadedRessources.sort();

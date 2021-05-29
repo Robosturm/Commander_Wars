@@ -48,7 +48,7 @@ CreditsMenue::CreditsMenue()
     });
     connect(this, &CreditsMenue::sigExitMenue, this, &CreditsMenue::exitMenue, Qt::QueuedConnection);
 
-    QFile file("resources/credits/credits.cred");
+    QFile file(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/credits/credits.cred");
     file.open(QIODevice::ReadOnly | QIODevice::Truncate);
     QTextStream stream(&file);
     while (!stream.atEnd())

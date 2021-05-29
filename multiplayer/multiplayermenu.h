@@ -4,6 +4,7 @@
 #include "memory.h"
 #include <QObject>
 #include <QTimer>
+#include <qdir.h>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -96,6 +97,7 @@ protected:
     void requestMap(quint64 socketID);
     void recieveMap(QDataStream & stream, quint64 socketID);
     void playerJoinedServer(QDataStream & stream, quint64 socketID);
+    bool findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame);
 private:
     /**
      * @brief init

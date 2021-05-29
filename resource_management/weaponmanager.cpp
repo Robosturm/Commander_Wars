@@ -54,7 +54,7 @@ void WeaponManager::loadAll()
     dir.removeRecursively();
     dir.mkpath(".");
     QStringList data;
-    QFile file("resources/scripts/weapons/weapon_csv_import.txt");
+    QFile file(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/weapons/weapon_csv_import.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();
@@ -65,13 +65,7 @@ void WeaponManager::loadAll()
         if (!jsData.isEmpty())
         {
             m_loadedRessources.append(data);
-            QFile tmp("temp/table.js");
-            tmp.open(QIODevice::WriteOnly);
-            QTextStream stream2(&tmp);
-            stream2 << jsData;
-            tmp.close();
-            pInterpreter->openScript("temp/table.js", true);
-            QFile::remove("temp/table.js");
+            pInterpreter->loadScript(jsData, "temp/weaponttable.js");
         }
     }
 }

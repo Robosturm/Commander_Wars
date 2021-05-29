@@ -75,6 +75,8 @@ class RessourceManagement : public oxygine::Resources
         {
             return m_loadedRessources;
         }
+        bool getLoaded() const;
+
     protected:
         explicit RessourceManagement(QString resPath, QString scriptPath);
         virtual ~RessourceManagement() = default;
@@ -85,6 +87,7 @@ class RessourceManagement : public oxygine::Resources
     protected:
         QStringList m_loadedRessources;
         QString m_scriptPath;
+        bool m_loaded{false};
     private:
         static TClass* m_pInstance;
 };
@@ -209,10 +212,17 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
 }
 
 template<class TClass>
+bool RessourceManagement<TClass>::getLoaded() const
+{
+    return m_loaded;
+}
+
+template<class TClass>
 void RessourceManagement<TClass>::loadAll()
 {
     reset();
     loadAll(m_loadedRessources);
+    m_loaded = true;
 }
 
 template<class TClass>

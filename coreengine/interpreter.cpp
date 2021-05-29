@@ -91,7 +91,7 @@ void Interpreter::openScript(QString script, bool setup)
     }
     else
     {
-         Console::print("Loading script " + script, Console::eDEBUG);
+        Console::print("Loading script " + script, Console::eDEBUG);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         if (setup)
@@ -104,7 +104,6 @@ void Interpreter::openScript(QString script, bool setup)
             }
         }
         scriptFile.close();
-
         QJSValue value = evaluate(contents, script);
         if (value.isError())
         {
@@ -118,10 +117,7 @@ void Interpreter::openScript(QString script, bool setup)
 
 void Interpreter::loadScript(QString content, QString script)
 {
-    if (!QFile::exists(script))
-    {
-        script = oxygine::Resource::RCC_PREFIX_PATH + script;
-    }
+    Console::print("Interpreter::loadScript: " + script, Console::eDEBUG);
     QJSValue value = evaluate(content, script);
     if (value.isError())
     {

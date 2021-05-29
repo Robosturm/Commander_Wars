@@ -171,6 +171,11 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
         QFile file(m_ResFilePath + "+table.png");
+        if (!file.exists())
+        {
+            m_ResFilePath = oxygine::Resource::RCC_PREFIX_PATH +  m_ResFilePath;
+            file.setFileName(m_ResFilePath + "+table.png");
+        }
         if (file.exists())
         {
             m_useColorBox = false;
@@ -189,7 +194,15 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         else
         {
             m_useColorBox = true;
-            QImage src(m_ResFilePath + "+nrm.png");
+            QImage src;
+            if (QFile::exists(m_ResFilePath + "+nrm.png"))
+            {
+                src = QImage(m_ResFilePath + "+nrm.png");
+            }
+            else
+            {
+                src = QImage(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+nrm.png");
+            }
             m_baseColorTable = SpriteCreator::createColorTable(src);
             m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);

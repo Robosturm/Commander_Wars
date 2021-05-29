@@ -36,8 +36,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
 
     Console::print("Entering Map Selection Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    pBuildingSpriteManager->loadAll();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);

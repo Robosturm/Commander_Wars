@@ -25,7 +25,7 @@ COStyleMenu::COStyleMenu()
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
 
-    Console::print("Entering Main Menue", Console::eDEBUG);
+    Console::print("Entering Co Style Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -88,20 +88,16 @@ void COStyleMenu::reloadMenue()
 }
 
 void COStyleMenu::selectedCOIDChanged(QString coid)
-{
-    
-    m_currentCOID = coid;
-    
+{    
+    m_currentCOID = coid;    
 }
 
 void COStyleMenu::editCOStyle()
-{
-    
+{    
     if (!m_currentCOID.isEmpty())
     {
         spDialogCOStyle pDialogCOStyle = spDialogCOStyle::create(m_currentCOID);
         addChild(pDialogCOStyle);
         connect(pDialogCOStyle.get(), &DialogCOStyle::sigFinished, this, &COStyleMenu::reloadMenue, Qt::QueuedConnection);
-    }
-    
+    }    
 }

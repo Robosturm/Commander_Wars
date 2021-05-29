@@ -327,6 +327,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
     if (!file.exists())
     {
         file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + filename);
+        filename = oxygine::Resource::RCC_PREFIX_PATH + filename;
     }
     if (file.exists())
     {
