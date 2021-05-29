@@ -36,10 +36,9 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 #find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    find_package(Qt6 COMPONENTS AndroidExtras REQUIRED)
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
-find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 
 ###################################################################################
 # Set build dependend defines
@@ -582,30 +581,31 @@ qt_finalize_executable(${PROJECT_NAME})
 ##############################################################
 # Translation section                                        #
 ##############################################################
-# translation target isn't supported by qt 6 for android right now
-# create translation here :)
-# set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
-message ("Language Update Options: ${LUPDATE_OPTIONS}")
-# created translation files
-set(TS_FILES
-    translation/lang_de_DE.ts
-    translation/lang_en.ts
-    )
-# adds the translations and a target for it
-qt_create_translation(
-    QM_FILES
-    ${${PROJECT_NAME}_SRCS}
-    ${scripts}
-    ${modScripts}
-    ${GameScripts}
-    ${CampaignScripts}
-    ${UiXmls}
-    ${TS_FILES}
-    OPTIONS ${LUPDATE_OPTIONS})
-qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})
-add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
-add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
-
+if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    # translation target isn't supported by qt 6 for android right now
+    # create translation here :)
+    # set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
+    message ("Language Update Options: ${LUPDATE_OPTIONS}")
+    # created translation files
+    set(TS_FILES
+        translation/lang_de_DE.ts
+        translation/lang_en.ts
+        )
+    # adds the translations and a target for it
+    qt_create_translation(
+        QM_FILES
+        ${${PROJECT_NAME}_SRCS}
+        ${scripts}
+        ${modScripts}
+        ${GameScripts}
+        ${CampaignScripts}
+        ${UiXmls}
+        ${TS_FILES}
+        OPTIONS ${LUPDATE_OPTIONS})
+    qt_add_translation(${PROJECT_NAME}_QM_FILES ${TS_FILES})
+    add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
+    add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
+endif()
 ##############################################################
 # Install section                                            #
 ##############################################################
