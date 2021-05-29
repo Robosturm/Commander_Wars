@@ -9,7 +9,9 @@
 #include <QLocale>
 #include <qguiapplication.h>
 #include <qscreen.h>
-#include "qlocale.h"
+#include <qlocale.h>
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";
 float Settings::m_mouseSensitivity   = -0.75f;
@@ -680,8 +682,13 @@ void Settings::setLanguage(const QString &language)
 {
     QGuiApplication::removeTranslator(&m_Translator);
     m_language = language;
+    QString languageFile = "resources/translation/lang_" + m_language + ".qm";
+    if (!QFile::exists(languageFile))
+    {
+        languageFile = oxygine::Resource::RCC_PREFIX_PATH + languageFile;
+    }
     // load language file and install it
-    if (m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+    if (m_Translator.load(QLocale(m_language), languageFile))
     {
          Console::print("Loaded language " + language, Console::eDEBUG);
     }
@@ -690,7 +697,7 @@ void Settings::setLanguage(const QString &language)
         QString error = "Error: Unknown Language " + m_language + " selected.";
         Console::print(error, Console::eERROR);
         m_language = "en";
-        if (m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+        if (m_Translator.load(QLocale(m_language), QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/lang_" + m_language))
         {
             Console::print("Loaded language " + language, Console::eDEBUG);
         }

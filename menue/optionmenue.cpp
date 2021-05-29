@@ -450,7 +450,7 @@ void OptionMenue::showSettings()
     items.append(english.nativeLanguageName());
     languages.append("en");
     qint32 current = 0;
-    QStringList paths = {":/resources/translation/", "resources/translation/"};
+    QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
     QStringList filter;
     filter << "*.qm";
     for (const QString & path : qAsConst(paths))
