@@ -236,17 +236,18 @@ Mainwindow::Mainwindow()
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
 
-    // import
-    oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));
-    pImport->attachTo(this);
-    pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
-    pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    if (!Settings::getsmallScreenDevice())
     {
-        emit sigImport();
-    });
-    connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
-    btnI++;
-
+        // import
+        oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));
+        pImport->attachTo(this);
+        pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
+        pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigImport();
+        });
+        connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
+    }
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
 
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -328,7 +329,7 @@ Mainwindow::~Mainwindow()
 void Mainwindow::enterSingleplayer()
 {    
     oxygine::getStage()->addChild(spMapSelectionMapsMenue::create());
-    leaveMenue();    
+    leaveMenue();
 }
 
 void Mainwindow::enterMultiplayer()
@@ -374,7 +375,7 @@ void Mainwindow::enterCreditsmenue()
 void Mainwindow::enterAchievementmenue()
 {    
     oxygine::getStage()->addChild(spAchievementmenu::create());
-    leaveMenue();    
+    leaveMenue();
 }
 
 void Mainwindow::enterShopMenu()
@@ -402,7 +403,7 @@ void Mainwindow::enterLoadCampaign()
     QString path = "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
-    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);    
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
 }
 
 void Mainwindow::loadCampaign(QString filename)
@@ -484,7 +485,7 @@ void Mainwindow::replayGame(QString filename)
 void Mainwindow::leaveMenue()
 {    
     Console::print("Leaving Main Menue", Console::eDEBUG);
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void Mainwindow::enterCOStyleMenu()
@@ -497,8 +498,8 @@ void Mainwindow::enterCOStyleMenu()
 
 void Mainwindow::quitGame()
 {
-     Mainapp* pApp = Mainapp::getInstance();
-     pApp->quitGame();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->quitGame();
 }
 
 void Mainwindow::onEnter()

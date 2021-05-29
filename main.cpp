@@ -167,7 +167,6 @@ int main(qint32 argc, char* argv[])
 #ifdef GAMEDEBUG
 QQmlDebuggingEnabler enabler;
 #endif
-
     QGuiApplication app(argc, argv);
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
@@ -188,13 +187,14 @@ QQmlDebuggingEnabler enabler;
     window.setGamma(Settings::getGamma());
     window.setPosition(Settings::getX(), Settings::getY());
     qint32 returncode = app.exec();
+    /*************************************************************************************************/
+
+    // shhutting down
     Settings::setX(window.x());
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
-    window.getWorkerthread()->exit(0);
-    /*************************************************************************************************/
+    window.getWorkerthread()->exit(0);    
     Settings::saveSettings();
-
     if (GameMap::getInstance() != nullptr)
     {
         GameMap::getInstance()->deleteMap();

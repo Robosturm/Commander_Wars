@@ -340,7 +340,23 @@ namespace oxygine
                 else if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (touchPoint0.position() != touchPoint0.lastPosition())
+                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
+                    if (touchPoint0.state() == QEventPoint::Released)
+                    {
+                        if (touchPoint0.position() == touchPoint0.lastPosition())
+                        {
+                            if (time > std::chrono::milliseconds(500))
+                            {
+                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                            }
+                            else
+                            {
+                                emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                            }
+                        }
+                        m_pressDownTimeRunning = false;
+                    }
+                    else if (touchPoint0.position() != touchPoint0.lastPosition())
                     {
                         emit sigTouchScrollEvent(touchPoint0.position().x() - touchPoint0.lastPosition().x(),
                                                  touchPoint0.position().y() - touchPoint0.lastPosition().y());
@@ -349,7 +365,6 @@ namespace oxygine
                     {
                         if (m_pressDownTimeRunning)
                         {
-                            std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                             if (time > std::chrono::milliseconds(500))
                             {
                                 emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());

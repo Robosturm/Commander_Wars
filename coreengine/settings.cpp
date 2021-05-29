@@ -21,7 +21,11 @@ bool Settings::m_borderless         = false;
 bool Settings::m_fullscreen         = false;
 float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
+#ifdef Q_OS_ANDROID
+bool Settings::m_smallScreenDevice  = true;
+#else
 bool Settings::m_smallScreenDevice  = false;
+#endif
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;

@@ -1516,7 +1516,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             {
                 stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
-                fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
             break;
         case QtInfoMsg:
@@ -1524,7 +1524,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             {
                 stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
-                fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
             break;
         case QtWarningMsg:
@@ -1532,7 +1532,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             {
                 stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
-                fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+                fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
             break;
         case QtCriticalMsg:

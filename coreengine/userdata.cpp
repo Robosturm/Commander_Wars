@@ -445,6 +445,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
 
 void Userdata::deserializeObject(QDataStream& pStream)
 {
+    Console::print("Userdata::deserializeObject", Console::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     qint32 version = 0;
     pStream >> version;

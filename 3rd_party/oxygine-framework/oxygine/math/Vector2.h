@@ -87,7 +87,9 @@ namespace oxygine
     bool VectorT2<T>::operator == (const VectorT2<T>& r) const
     {
         if (x == r.x && y == r.y)
+        {
             return true;
+        }
         return false;
     }
 
