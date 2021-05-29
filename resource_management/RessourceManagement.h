@@ -12,6 +12,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 
+
 template<class TClass>
 class RessourceManagement : public oxygine::Resources
 {
