@@ -234,6 +234,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         coSuperpower = pCO->getSuperPowerName();
     }
     m_COBio->setHtmlText(coBio);
+    m_COBio->setHeight(m_COBio->getHeight());
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
     m_HitText->setHtmlText(coHits);
     m_HitText->setY(m_HitSprite->getY() + 5);
@@ -242,6 +243,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_MissText->setY(m_MissSprite->getY() + 5);
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
     m_InfoText->setHtmlText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)));
+    m_InfoText->setHeight(m_InfoText->getTextRect().getHeight());
     m_InfoText->setY(m_InfoSprite->getY() + 50);
 
     m_pCoPowermeter->setCO(pCO.get());
@@ -253,12 +255,14 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_PowerDesc->setY(m_Powername->getY() + 40);
     m_Powername->setHtmlText(coPower);
     m_PowerDesc->setHtmlText(coPowerDesc);
+    m_PowerDesc->setHeight(m_PowerDesc->getTextRect().getHeight());
 
     m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().getHeight() + 20);
     m_SuperPowername->setY(m_SuperPowerSprite->getY());
     m_SuperPowerDesc->setY(m_SuperPowername->getY() + 40);
     m_SuperPowername->setHtmlText(coSuperpower);
     m_SuperPowerDesc->setHtmlText(coSuperpowerDesc);
+    m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().getHeight());
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();

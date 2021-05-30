@@ -38,6 +38,7 @@ public:
     void setSpinSpeed(qint32 SpinSpeed);
 
     virtual void setEnabled(bool value) override;
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const override;
 signals:
     void sigValueChanged(qint32 value);
 public slots:

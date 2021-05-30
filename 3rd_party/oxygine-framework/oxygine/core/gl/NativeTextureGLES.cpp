@@ -235,7 +235,6 @@ namespace oxygine
         return im.getRect(m_lockRect);
     }
 
-
     void NativeTextureGLES::unlock()
     {
         if (!m_lockFlags)
@@ -266,7 +265,6 @@ namespace oxygine
             m_lockFlags = 0;
         }
     }
-
 
     void NativeTextureGLES::updateRegion(qint32 x, qint32 y, const ImageData& data_)
     {

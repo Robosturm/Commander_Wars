@@ -39,7 +39,6 @@ namespace oxygine
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
         setFormat(newFormat);
-
         _window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
@@ -212,12 +211,6 @@ namespace oxygine
 
         // Create the stage. Stage is a root node for all updateable and drawable objects
         oxygine::Stage::instance = oxygine::spStage::create();
-//        QSize size = GameWindow::size();
-//        oxygine::getStage()->setSize(size.width(), size.height());
-//        QScreen* screen = QGuiApplication::primaryScreen();
-//        qreal ratio = screen->devicePixelRatio();
-//        Point gameSize = Point(size.width(), size.height());
-//        oxygine::getStage()->init(gameSize * ratio, gameSize);
         emit sigLoadRessources();
     }
 
@@ -366,16 +359,13 @@ namespace oxygine
                     std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                     if (touchPoint0.state() == QEventPoint::Released)
                     {
-                        if (touchPoint0.position() == touchPoint0.pressPosition())
+                        if (time > std::chrono::milliseconds(500))
                         {
-                            if (time > std::chrono::milliseconds(500))
-                            {
-                                emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                            }
-                            else
-                            {
-                                emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                            }
+                            emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                        }
+                        else
+                        {
+                            emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                         }
                     }
                     m_pressDownTimeRunning = false;

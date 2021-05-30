@@ -55,7 +55,8 @@ namespace oxygine
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
-        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio, viewport.getWidth() * ratio, viewport.getHeight() * ratio);
+        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
+                           viewport.getWidth() * ratio, viewport.getHeight() * ratio);
     }
 
     void VideoDriverGLES20::setShaderProgram(ShaderProgram* prog_)

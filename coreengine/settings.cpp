@@ -19,7 +19,7 @@ qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
 qint32 Settings::m_width             = 1024;
 qint32 Settings::m_height            = 800;
-bool Settings::m_borderless         = false;
+bool Settings::m_borderless         = true;
 bool Settings::m_fullscreen         = false;
 float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
@@ -786,10 +786,15 @@ void Settings::loadSettings()
     }
 
 
-    m_borderless = settings.value("borderless", false).toBool();
-    m_fullscreen = settings.value("fullscreen", true).toBool();
+    m_borderless = settings.value("borderless", true).toBool();
+    m_fullscreen = settings.value("fullscreen", false).toBool();
     m_record = settings.value("recordgames", false).toBool();
+#ifdef Q_OS_ANDROID
+    m_smallScreenDevice = settings.value("SmallScreenDevice", true).toBool();
+#else
     m_smallScreenDevice = settings.value("SmallScreenDevice", false).toBool();
+#endif
+
     settings.endGroup();
 
     // Keys

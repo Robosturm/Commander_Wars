@@ -485,6 +485,54 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+bool Mainapp::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::InputMethod)
+    {
+        QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(ev);
+        return keyInputMethodEvent(inputEvent);
+    }
+    if (ev->type() == QEvent::InputMethodQuery)
+    {
+        QInputMethodQueryEvent * inputEvent = static_cast<QInputMethodQueryEvent *>(ev);
+        return keyInputMethodQueryEvent(inputEvent);
+    }
+    else
+    {
+        return oxygine::GameWindow::event(ev);
+    }
+}
+
+bool Mainapp::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+{
+    if (FocusableObject::getFocusedObject() != nullptr && event->queries() == Qt::ImTextBeforeCursor)
+    {
+        FocusableObject::getFocusedObject()->keyInputMethodQueryEvent(event);
+        event->accept();
+        return true;
+    }
+    return false;
+}
+
+bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
+{
+    QString text = event->preeditString();
+    oxygine::KeyEvent keyEvent;
+    if (text.isEmpty())
+    {
+        text = event->commitString();
+        keyEvent.setCommit(true);
+    }
+    if (!text.isEmpty())
+    {
+
+        keyEvent.setText(text);
+        keyEvent.setInputEvent(true);
+        emit sigKeyDown(keyEvent);
+    }
+    return true;
+}
+
 bool Mainapp::getNoUi() const
 {
     return m_noUi;

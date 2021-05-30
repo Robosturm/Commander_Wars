@@ -116,6 +116,7 @@ CreditsMenue::CreditsMenue()
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(m_Authors[i][i2]);
             pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2.0f, y);
+            pTextfield->setHeight(pTextfield->getTextRect().getHeight());
             m_creditsActor->addChild(pTextfield);
             y += pTextfield->getTextRect().getHeight() + 5;
         }

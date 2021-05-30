@@ -65,11 +65,10 @@ namespace oxygine
             clippedRect.clip(ss_rect);
             if (!clippedRect.isEmpty())
             {
-                Rect gl_rect = Rect(
-                                   int(clippedRect.pos.x + 0.01f),
-                                   int(clippedRect.pos.y + 0.01f),
-                                   int(clippedRect.size.x + 0.01f),
-                                   int(clippedRect.size.y + 0.01f));
+                Rect gl_rect = Rect(static_cast<qint32>(clippedRect.pos.x + 0.01f),
+                                    static_cast<qint32>(clippedRect.pos.y + 0.01f),
+                                    static_cast<qint32>(clippedRect.size.x + 0.01f),
+                                    static_cast<qint32>(clippedRect.size.y + 0.01f));
 
                 if (!driver->getRenderTarget()->getHandle())
                 {

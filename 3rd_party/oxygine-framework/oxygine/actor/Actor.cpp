@@ -546,7 +546,6 @@ namespace oxygine
 
     void Actor::sizeChanged(const Vector2&)
     {
-
     }
 
     void Actor::__setSize(const Vector2& size)
@@ -1144,7 +1143,6 @@ namespace oxygine
         {
             pos = convert_global2local_(child->getParent(), parent, pos);
         }
-
         pos = child->parent2local(pos);
         return pos;
     }
@@ -1298,8 +1296,8 @@ namespace oxygine
         {
             return false;
         }
-        qint32 w = (int)objA->getWidth();
-        qint32 h = (int)objA->getHeight();
+        qint32 w = static_cast<qint32>(objA->getWidth());
+        qint32 h = static_cast<qint32>(objA->getHeight());
 
 
         for (qint32 y = 0; y < h; y += HIT_TEST_DOWNSCALE)

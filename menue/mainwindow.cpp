@@ -58,7 +58,7 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
-    qint32 buttonWidth = 200;
+    qint32 buttonWidth = 170;
     qint32 btnI = 0;
     QString lastSaveGame = Settings::getLastSaveGame();
     if (QFile::exists(lastSaveGame) && lastSaveGame.endsWith(".sav"))
@@ -309,16 +309,21 @@ void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
     static const qint32 buttonCount = 7;
     float buttonHeigth = pButton->getHeight() + 5;
-    if (GlobalUtils::isEven(btnI))
+    qint32 col = btnI % 3;
+    if (col == 0)
     {
-        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() - 10);
+        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() * 1.5f - 10);
     }
-    else
+    else if (col == 1)
     {
-        pButton->setX(Settings::getWidth() / 2.0f + 10);
+        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() * 0.5f);
     }
-    btnI = btnI / 2;
-    pButton->setY(Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
+    else if (col == 2)
+    {
+        pButton->setX(Settings::getWidth() / 2.0f + pButton->getWidth() * 0.5f + 10);
+    }
+    btnI = btnI / 3;
+    pButton->setY(Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI);
 }
 
 Mainwindow::~Mainwindow()

@@ -41,6 +41,7 @@ public:
      * @param value
      */
     virtual void setEnabled(bool value) override;
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const override;
 signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);

@@ -67,18 +67,6 @@ namespace oxygine
         return GL_ONE;
     }
 
-    bool VideoDriverGL::getScissorRect(Rect& r) const
-    {
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        GLboolean scrTest = window->glIsEnabled(GL_SCISSOR_TEST);
-
-        GLint box[4];
-        window->glGetIntegerv(GL_SCISSOR_BOX, box);
-        r = Rect(box[0], box[1], box[2], box[3]);
-
-        return scrTest ? true : false;
-    }
-
     spNativeTexture VideoDriverGL::getRenderTarget() const
     {
         return m_rt;
@@ -94,8 +82,9 @@ namespace oxygine
         GLint vp[4];
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_VIEWPORT, vp);
-
-        r = Rect(vp[0], vp[1], vp[2], vp[3]);;
+        qreal ratio = window->devicePixelRatio();
+        r = Rect(vp[0] / ratio, vp[1] / ratio,
+                 vp[2] / ratio, vp[3] / ratio);
     }
 
     void VideoDriverGL::setScissorRect(const Rect* rect)
@@ -103,13 +92,29 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         if (rect)
         {
+            qreal ratio = window->devicePixelRatio();
             window->glEnable(GL_SCISSOR_TEST);
-            window->glScissor(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
+            window->glScissor(rect->getX() * ratio, rect->getY() * ratio,
+                              rect->getWidth() * ratio, rect->getHeight() * ratio);
         }
         else
         {
             window->glDisable(GL_SCISSOR_TEST);
         }
+    }
+
+    bool VideoDriverGL::getScissorRect(Rect& r) const
+    {
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        GLboolean scrTest = window->glIsEnabled(GL_SCISSOR_TEST);
+
+        GLint box[4];
+        qreal ratio = window->devicePixelRatio();
+        window->glGetIntegerv(GL_SCISSOR_BOX, box);
+        r = Rect(box[0] / ratio, box[1] / ratio,
+                 box[2] / ratio, box[3] / ratio);
+
+        return scrTest ? true : false;
     }
 
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
@@ -123,7 +128,8 @@ namespace oxygine
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         qreal ratio = window->devicePixelRatio();
-        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio, viewport.getWidth() * ratio, viewport.getHeight() * ratio);
+        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio,
+                           viewport.getWidth() * ratio, viewport.getHeight() * ratio);
         window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {

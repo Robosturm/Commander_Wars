@@ -49,7 +49,7 @@ public:
     virtual void setEnabled(bool value) override;
     QString getUnit() const;
     void setUnit(const QString &unit);
-
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const override;
 signals:
     void sigValueChanged(qreal value);
 public slots:

@@ -266,6 +266,11 @@ void TimeSpinBox::setSpinSpeed(qint32 SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
+void TimeSpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const
+{
+    event->setValue(Qt::ImTextBeforeCursor, m_Text);
+}
+
 void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
@@ -273,7 +278,18 @@ void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
     if (m_focused)
     {
         restartTooltiptimer();
-        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+        if (event.getInputEvent())
+        {
+            QString msg = event.getText();
+            m_Text = msg;
+            if (event.getCommit())
+            {
+                looseFocusInternal();
+                qint32 value = checkInput();
+                emit sigValueChanged(value);
+            }
+        }
+        else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
             switch(cur)
             {

@@ -6,7 +6,7 @@ project (Commander_Wars LANGUAGES CXX)
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
 
 # Special Information for Android
-# ANDROID_NATIVE_API_LEVEL needs to be 26 or higher -> From 16 ongoing it's compiling but virtual key events aren't received
+# ANDROID_NATIVE_API_LEVEL needs to be 26
 # NDK Version needs to be: 21.3.6528147 -> This needs to be matched exactly
 
 # Find includes in corresponding build directories
@@ -61,7 +61,7 @@ endif()
 ###################################################################################
 add_definitions(
     -DMAJOR=0
-    -DMINOR=19
+    -DMINOR=20
     -DREVISION=0
     )
 
@@ -531,7 +531,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android"
-    )
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    QT_ANDROID_VERSION_NAME "0.20.0"
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    QT_ANDROID_VERSION_CODE "1"
+)
+
 
 # link libraries
 set(QT_LIBRARIES

@@ -31,7 +31,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     }
     if (Settings::getHeight() / 2 < maxItemCount * 40)
     {
-        maxItemCount = Settings::getHeight() / 40;
+        maxItemCount = Settings::getHeight() / 2 / 40;
     }
     qint32 scrollHeigth = maxItemCount * 40;
     if (itemcount < maxItemCount)

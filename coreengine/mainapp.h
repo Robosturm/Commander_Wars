@@ -195,6 +195,9 @@ signals:
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
+    bool keyInputMethodEvent(QInputMethodEvent *event);
+    bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event);
+    virtual bool event(QEvent *ev) override;
     void createBaseDirs();
 private:
     static Mainapp* m_pMainapp;

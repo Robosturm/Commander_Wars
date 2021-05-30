@@ -16,7 +16,15 @@ public:
     static void looseFocus();
     bool getSubComponent() const;
     void setSubComponent(bool subComponent);
-
+    static const FocusableObject* getFocusedObject()
+    {
+        return m_focusedObject;
+    }
+    /**
+     * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
+     * @param event
+     */
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const {};
 protected:
     virtual void focused(){};
     virtual void looseFocusInternal();

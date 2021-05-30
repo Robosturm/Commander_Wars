@@ -149,6 +149,11 @@ void Textbox::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
+void Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const
+{
+    event->setValue(Qt::ImTextBeforeCursor, m_Text);
+}
+
 void Textbox::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
@@ -156,7 +161,19 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
     if (m_focused)
     {
         restartTooltiptimer();
-        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+        if (event.getInputEvent())
+        {
+            QString msg = event.getText();
+            m_Text = msg;
+            if (event.getCommit())
+            {
+                looseFocusInternal();
+                Tooltip::setEnabled(true);
+                emit sigTextChanged(m_Text);
+                emit sigEnterPressed(m_Text);
+            }
+        }
+        else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
             switch(cur)
             {
