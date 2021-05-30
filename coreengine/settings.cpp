@@ -1268,6 +1268,11 @@ void Settings::loadSettings()
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
+#ifdef Q_OS_ANDROID
+    m_simpleDeselect = settings.value("SimpleDeselect", true).toBool();
+#else
+    m_simpleDeselect = settings.value("SimpleDeselect", false).toBool();
+#endif
 
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
@@ -1441,6 +1446,7 @@ void Settings::saveSettings()
         settings.setValue("DialogAnimation",                m_dialogAnimation);
         settings.setValue("CenterOnMarkedField",            m_centerOnMarkedField);
         settings.setValue("SyncAnimations",                 m_syncAnimations);
+        settings.setValue("SimpleDeselect",                 m_simpleDeselect);
         settings.endGroup();
 
         // network
