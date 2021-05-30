@@ -341,7 +341,7 @@ void GameMenue::loadGameMenue()
     if (Settings::getsmallScreenDevice())
     {
         m_IngameInfoBar->setX(Settings::getWidth() - 1);
-        auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getWidth());
+        auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth());
         connect(moveButton.get(), &MoveInButton::sigMoved, this, &GameMenue::doPlayerInfoFlipping, Qt::QueuedConnection);
         m_IngameInfoBar->addChild(moveButton);
     }

@@ -406,10 +406,7 @@ void OptionMenue::showSettings()
     pCheckbox->setTooltipText(tr("If checked several ui elements are hidden and get shown with an additional button.\nWarning disabling this on a smaller screen may lead to unplayable game experience."));
     pCheckbox->setChecked(Settings::getsmallScreenDevice());
     pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
-    {
-        Settings::setSmallScreenDevice(value);
-    });
+    pCheckbox->setEnabled(false);
     m_pOptions->addItem(pCheckbox);
     y += 40;
 

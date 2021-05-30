@@ -369,8 +369,10 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
 
 QString GlobalUtils::makePathRelative(QString file, bool full)
 {
-    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
-    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    QDir dir ("");
+    QString path = dir.absolutePath();
+    file = file.replace(path + "/", "");
+    file = file.replace(path, "");
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH) && full)
     {
         file.remove(0, QString(oxygine::Resource::RCC_PREFIX_PATH).length());

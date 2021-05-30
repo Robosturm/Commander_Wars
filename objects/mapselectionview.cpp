@@ -41,15 +41,20 @@ MapSelectionView::MapSelectionView()
         width = Settings::getWidth() / 2;
     }
 
-    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 70, width, "");
+    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 40, width, "");
     m_pMapSelection->setPosition(10, 10);
     addChild(m_pMapSelection);
     m_pMinimap = spMinimap::create();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
 
+    constexpr qint32 buildingInfoHeight = 135;
     QSize size(Settings::getWidth() - width - 80,
-               Settings::getHeight() / 2 - 135);
+               Settings::getHeight() / 2 - buildingInfoHeight);
+    if (Settings::getsmallScreenDevice())
+    {
+        size.setHeight(Settings::getHeight() - buildingInfoHeight - 15);
+    }
     m_MinimapPanel = spPanel::create(true, size, size);
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
@@ -60,7 +65,10 @@ MapSelectionView::MapSelectionView()
                                 QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     addChild(m_MapInfo);
-
+    if (Settings::getsmallScreenDevice())
+    {
+        m_MapInfo->setVisible(false);
+    }
     qint32 y = 10;
 
     oxygine::spTextField pTextfield = oxygine::spTextField::create();

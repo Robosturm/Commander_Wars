@@ -173,9 +173,9 @@ MapSelectionMapsMenue::~MapSelectionMapsMenue()
 }
 
 void MapSelectionMapsMenue::slotButtonBack()
-{
-    
+{    
     Console::print("slotButtonBack()", Console::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:
@@ -216,12 +216,13 @@ void MapSelectionMapsMenue::slotButtonBack()
             break;
         }
     }
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void MapSelectionMapsMenue::slotButtonNext()
 {    
     Console::print("slotButtonNext()", Console::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:
@@ -275,6 +276,7 @@ void MapSelectionMapsMenue::slotButtonNext()
             break;
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)

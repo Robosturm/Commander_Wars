@@ -210,7 +210,7 @@ EditorSelection::EditorSelection()
     if (Settings::getsmallScreenDevice())
     {
         setX(Settings::getWidth() - 1);
-        addChild(spMoveInButton::create(this, getWidth()));
+        addChild(spMoveInButton::create(this, getScaledWidth()));
     }
 }
 

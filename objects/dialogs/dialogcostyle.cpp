@@ -69,13 +69,16 @@ DialogCOStyle::DialogCOStyle(QString coid)
     {
         pixelSize = 2;
     }
-
-    m_pColorSelector = spColorSelector::create(Qt::white, pixelSize);
-    m_pColorSelector->setPosition(30, 30);
-    m_pSpriteBox->addChild(m_pColorSelector);
-    connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
-
-    QSize size(Settings::getWidth() - m_pColorSelector->getWidth() - 75, heigth);
+    qint32 colorSelectorWidth = 0;
+    if (!Settings::getsmallScreenDevice())
+    {
+        m_pColorSelector = spColorSelector::create(Qt::white, pixelSize);
+        m_pColorSelector->setPosition(30, 30);
+        m_pSpriteBox->addChild(m_pColorSelector);
+        connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
+        colorSelectorWidth = m_pColorSelector->getWidth();
+    }
+    QSize size(Settings::getWidth() - colorSelectorWidth - 75, heigth);
     m_pCOPanel = spPanel::create(true, size, size);
     m_pCOPanel->setPosition(Settings::getWidth() - size.width() - 30, 30);
     m_pSpriteBox->addChild(m_pCOPanel);
@@ -122,6 +125,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
     QSize size2(Settings::getWidth() - 60, 100);
     m_pPixelPanel = spPanel::create(true, size2, size2);
     m_pPixelPanel->setPosition(30, Settings::getHeight() - 175);
+    if (Settings::getsmallScreenDevice())
+    {
+        m_pPixelPanel->setVisible(false);
+    }
     m_pSpriteBox->addChild(m_pPixelPanel);
 
     changeCOStyle(currentStyleId);
@@ -222,43 +229,45 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             }
             updateSprites();
         });
-        m_pPixelPanel->clearContent();
-        m_Pixels.clear();
-        qint32 y = 10;
-        qint32 xStep = 0;
-
-        m_PixelsSelector = oxygine::spColorRectSprite::create();
-        m_PixelsSelector->setColor(QColor(32, 200, 32, 255));
-        m_PixelsSelector->setSize(20, 20);
-        m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
-        m_PixelsSelector->setPriority(-1);
-        m_pPixelPanel->addItem(m_PixelsSelector);
-        for (qint32 i = 0; i < m_maskTable.width(); i++)
+        if (Settings::getsmallScreenDevice())
         {
-            oxygine::spColorRectSprite pixel = oxygine::spColorRectSprite::create();
-            pixel->setSize(16, 16);
-            QColor color = m_maskTable.pixelColor(i, 0);
-            pixel->setColor(color.red(), color.green(), color.blue(), 255);
-            pixel->setPosition(xStep * 22 + 5, y);
-            pixel->addClickListener([=](oxygine::Event* pEvent)
-            {
-                pEvent->stopPropagation();
-                m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
-                m_currentPixel = i;
+            m_pPixelPanel->clearContent();
+            m_Pixels.clear();
+            qint32 y = 10;
+            qint32 xStep = 0;
 
-            });
-
-            m_pPixelPanel->addItem(pixel);
-            m_Pixels.append(pixel);
-            xStep++;
-            if (xStep * 22 + 60 + 5 > Settings::getWidth() - 100)
+            m_PixelsSelector = oxygine::spColorRectSprite::create();
+            m_PixelsSelector->setColor(QColor(32, 200, 32, 255));
+            m_PixelsSelector->setSize(20, 20);
+            m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
+            m_PixelsSelector->setPriority(-1);
+            m_pPixelPanel->addItem(m_PixelsSelector);
+            for (qint32 i = 0; i < m_maskTable.width(); i++)
             {
-                xStep = 0;
-                y += 22;
+                oxygine::spColorRectSprite pixel = oxygine::spColorRectSprite::create();
+                pixel->setSize(16, 16);
+                QColor color = m_maskTable.pixelColor(i, 0);
+                pixel->setColor(color.red(), color.green(), color.blue(), 255);
+                pixel->setPosition(xStep * 22 + 5, y);
+                pixel->addClickListener([=](oxygine::Event* pEvent)
+                {
+                    pEvent->stopPropagation();
+                    m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
+                    m_currentPixel = i;
+
+                });
+
+                m_pPixelPanel->addItem(pixel);
+                m_Pixels.append(pixel);
+                xStep++;
+                if (xStep * 22 + 60 + 5 > Settings::getWidth() - 100)
+                {
+                    xStep = 0;
+                    y += 22;
+                }
+                m_pPixelPanel->setContentHeigth(y + 40);
             }
         }
-        m_pPixelPanel->setContentHeigth(y + 40);
-        
     }
 }
 
