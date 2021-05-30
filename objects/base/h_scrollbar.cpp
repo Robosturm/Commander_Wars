@@ -261,8 +261,7 @@ void H_Scrollbar::changeScrollValue(float value)
 }
 
 void H_Scrollbar::setScrollvalue(float Scrollvalue)
-{
-    
+{    
     m_Scrollvalue = Scrollvalue;
     if (m_Scrollvalue < 0)
     {

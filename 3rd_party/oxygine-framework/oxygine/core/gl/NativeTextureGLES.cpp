@@ -87,8 +87,8 @@ namespace oxygine
             {
                 qCritical("status != GL_FRAMEBUFFER_COMPLETE_OES");
             }
-
-            window->glViewport(0, 0, w, h);
+            qreal ratio = window->devicePixelRatio();
+            window->glViewport(0, 0, w * ratio, h * ratio);
             window->glClearColor(0, 0, 0, 0);
             window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

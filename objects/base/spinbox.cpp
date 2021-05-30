@@ -152,6 +152,16 @@ void SpinBox::focusedLost()
     }
 }
 
+void SpinBox::looseFocusInternal()
+{
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
+    Tooltip::looseFocusInternal();
+}
+
 void SpinBox::setEnabled(bool value)
 {    
     oxygine::Actor::setEnabled(value);

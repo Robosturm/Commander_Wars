@@ -68,6 +68,16 @@ void Textbox::focusedLost()
     }
 }
 
+void Textbox::looseFocusInternal()
+{
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
+    Tooltip::looseFocusInternal();
+}
+
 void Textbox::focused()
 {
     Tooltip::disableTooltip();

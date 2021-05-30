@@ -46,9 +46,9 @@ namespace oxygine
 
     protected:
         void destroy();
-        void handleEvent(Event* event) override;
-        void sizeChanged(const Vector2& size)  override;
-        void doUpdate(const UpdateState& us)  override;
+        virtual void handleEvent(Event* event) override;
+        virtual void sizeChanged(const Vector2& size) override;
+        virtual void doUpdate(const UpdateState& us) override;
         void updateDragBounds();
         void _newEvent(Event* event);
 

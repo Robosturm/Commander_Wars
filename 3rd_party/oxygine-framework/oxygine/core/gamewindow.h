@@ -127,6 +127,7 @@ namespace oxygine
         QBasicTimer m_Timer;
         QElapsedTimer m_pressDownTime;
         bool m_pressDownTimeRunning{false};
+        bool m_touchMousePressSent{false};
 
         QMutex m_pauseMutex;
         qint32 m_pausedCounter{0};

@@ -35,11 +35,10 @@ namespace oxygine
         : m_dispatcher(spEventDispatcher::create())
     {
         setObjectName("GameWindow");
-        QSurfaceFormat format = QWindow::format();
-        format.setProfile(QSurfaceFormat::CoreProfile);
-        format.setDepthBufferSize(24);
-        format.setRenderableType(QSurfaceFormat::OpenGLES);
-        setFormat(format);
+        QSurfaceFormat newFormat = format();
+        newFormat.setProfile(QSurfaceFormat::CoreProfile);
+        newFormat.setSamples(2);    // Set the number of samples used for multisampling
+        setFormat(newFormat);
 
         _window = this;
         m_mainHandle = QThread::currentThreadId();
@@ -331,6 +330,16 @@ namespace oxygine
         switch (event->type())
         {
             case QEvent::TouchBegin:
+            {
+                if (touchPoints.count() == 1 )
+                {
+                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                    emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                    m_pressDownTime.start();
+                    m_pressDownTimeRunning = true;
+                    m_touchMousePressSent = true;
+                }
+            }
             case QEvent::TouchUpdate:
             {
                 if (touchPoints.count() == 2)
@@ -345,19 +354,7 @@ namespace oxygine
                 else if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (touchPoint0.position() != touchPoint0.lastPosition())
-                    {
-                        emit sigTouchScrollEvent(touchPoint0.position().x() - touchPoint0.lastPosition().x(),
-                                                 touchPoint0.position().y() - touchPoint0.lastPosition().y());
-                    }
-                    else
-                    {
-                        if (!m_pressDownTimeRunning)
-                        {
-                             m_pressDownTime.start();
-                             m_pressDownTimeRunning = true;
-                        }
-                    }
+                    emit sigMouseMoveEvent(touchPoint0.position().x(), touchPoint0.position().y());
                 }
                 break;
             }
@@ -377,12 +374,16 @@ namespace oxygine
                             }
                             else
                             {
-                                emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                                 emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                             }
                         }
                     }
                     m_pressDownTimeRunning = false;
+                }
+                else if (m_touchMousePressSent)
+                {
+                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+                    emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                 }
             }
             default:

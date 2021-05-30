@@ -122,7 +122,8 @@ namespace oxygine
     void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
+        qreal ratio = window->devicePixelRatio();
+        window->glViewport(viewport.getX() * ratio, viewport.getY() * ratio, viewport.getWidth() * ratio, viewport.getHeight() * ratio);
         window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {

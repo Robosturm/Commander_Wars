@@ -49,6 +49,7 @@ public slots:
     virtual void focusedLost() override;
 protected:
     virtual void focused() override;
+    virtual void looseFocusInternal() override;
 protected:
 
     oxygine::spBox9Sprite m_Textbox;

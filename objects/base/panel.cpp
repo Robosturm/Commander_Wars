@@ -44,8 +44,11 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
                             size.height() - m_VScrollbar->getHeight());
     }
     m_ContentRect = oxygine::spActor::create();
+    m_SlidingActor = oxygine::spSlidingActor::create();
+    m_SlidingActor->setSize(contentSize.width(), contentSize.height());
     m_ContentRect->setSize(contentSize.width(), contentSize.height());
-    m_ClipRect->addChild(m_ContentRect);
+    m_SlidingActor->setContent(m_ContentRect);
+    m_ClipRect->addChild(m_SlidingActor);
 
     setSize(size.width(), size.height());
     setContentWidth(contentSize.width());
@@ -68,9 +71,60 @@ void Panel::scrolledY(float value)
     
     if (m_HScrollbar->getVisible() && getVisible())
     {
-        m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
+        oxygine::RectF bounds = m_SlidingActor->getDragBounds();
+        qint32 newY = -(m_ContentRect->getHeight() - m_SlidingActor->getHeight()) * value;
+        if (newY < bounds.getTop())
+        {
+            newY = bounds.getTop();
+        }
+        else if (newY > bounds.getBottom())
+        {
+            newY = bounds.getBottom();
+        }
+        m_ContentRect->setY(newY);
     }
     hideItems();
+}
+
+void Panel::scrolledX(float value)
+{
+    if (m_VScrollbar->getVisible() && getVisible())
+    {
+        oxygine::RectF bounds = m_SlidingActor->getDragBounds();
+        qint32 newX = -(m_ContentRect->getWidth() - m_SlidingActor->getWidth()) * value;
+        if (newX < bounds.getLeft())
+        {
+            newX = bounds.getLeft();
+        }
+        else if (newX > bounds.getRight())
+        {
+            newX = bounds.getRight();
+        }
+        m_ContentRect->setX(newX);
+    }
+    hideItems();
+}
+
+void Panel::doUpdate(const oxygine::UpdateState& us)
+{
+    if (m_VScrollbar->getVisible())
+    {
+        float value = m_ContentRect->getX() / -(m_ContentRect->getWidth() - m_SlidingActor->getWidth());
+        m_VScrollbar->setScrollvalue(value);
+    }
+    else
+    {
+        m_ContentRect->setX(0);
+    }
+    if (m_HScrollbar->getVisible())
+    {
+        float value = m_ContentRect->getY() / -(m_ContentRect->getHeight() - m_SlidingActor->getHeight());
+        m_HScrollbar->setScrollvalue(value);
+    }
+    else
+    {
+        m_ContentRect->setY(0);
+    }
 }
 
 bool Panel::getSubComponent() const
@@ -84,8 +138,7 @@ void Panel::setSubComponent(bool subComponent)
 }
 
 void Panel::hideItems()
-{
-    
+{    
     oxygine::spActor child =  m_ContentRect->getFirstChild();
     while (child)
     {
@@ -127,20 +180,8 @@ void Panel::hideItems(oxygine::spActor parent)
     
 }
 
-void Panel::scrolledX(float value)
-{
-    
-    if (m_VScrollbar->getVisible() && getVisible())
-    {
-        m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
-    }
-    hideItems();
-    
-}
-
 void Panel::setContentHeigth(qint32 heigth)
-{
-    
+{    
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (heigth <= getHeight())
@@ -164,20 +205,19 @@ void Panel::setContentHeigth(qint32 heigth)
             m_Panelbox->setWidth(m_Panelbox->getWidth() - m_HScrollbar->getWidth());
         }
         m_ClipRect->setWidth(m_ClipRect->getWidth() - m_HScrollbar->getWidth());
+
         m_HScrollbar->setVisible(true);
         m_VScrollbar->setWidth(m_VScrollbar->getWidth() - m_HScrollbar->getWidth());
     }
-
+    m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setHeight(heigth);
+    m_SlidingActor->setContent(m_ContentRect);
     m_HScrollbar->setContentHeigth(heigth);
-    m_ContentRect->setY(0);
-    m_HScrollbar->setScrollvalue(0);
-    
+    m_HScrollbar->setScrollvalue(0);    
 }
 
 void Panel::setContentWidth(qint32 width)
-{
-    
+{    
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (width <= getWidth())
@@ -204,11 +244,11 @@ void Panel::setContentWidth(qint32 width)
         m_VScrollbar->setVisible(true);
         m_HScrollbar->setHeight(m_HScrollbar->getHeight() - m_VScrollbar->getHeight());
     }
+    m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setWidth(width);
+    m_SlidingActor->setContent(m_ContentRect);
     m_VScrollbar->setContentWidth(width);
-    m_ContentRect->setX(0);
-    m_VScrollbar->setScrollvalue(0);
-    
+    m_VScrollbar->setScrollvalue(0);    
 }
 
 qint32 Panel::getContentHeigth()

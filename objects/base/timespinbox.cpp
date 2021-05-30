@@ -142,6 +142,16 @@ void TimeSpinBox::focusedLost()
     }
 }
 
+void TimeSpinBox::looseFocusInternal()
+{
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
+    Tooltip::looseFocusInternal();
+}
+
 void TimeSpinBox::setEnabled(bool value)
 {    
     oxygine::Actor::setEnabled(value);

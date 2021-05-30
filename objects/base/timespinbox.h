@@ -58,6 +58,7 @@ protected:
      * @brief focused
      */
     virtual void focused() override;
+    virtual void looseFocusInternal() override;
 private:
     oxygine::spBox9Sprite m_pSpinBox;
     oxygine::spBox9Sprite m_Textbox;

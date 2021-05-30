@@ -322,8 +322,7 @@ float V_Scrollbar::getScrollvalue() const
 }
 
 void V_Scrollbar::setScrollvalue(float Scrollvalue)
-{
-    
+{    
     m_Scrollvalue = Scrollvalue;
     if (m_Scrollvalue < 0)
     {
@@ -337,8 +336,7 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
     {
         // all fine do nothing
     }
-    m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
-    
+    m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));    
 }
 
 void V_Scrollbar::setWidth(float w)
