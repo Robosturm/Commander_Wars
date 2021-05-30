@@ -406,6 +406,10 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     {
         Settings::setSimpleDeselect(value);
     });
+    if (Settings::getsmallScreenDevice())
+    {
+        pCheckbox->setEnabled(false);
+    }
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
     y += 40;
