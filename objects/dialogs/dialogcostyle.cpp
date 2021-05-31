@@ -58,6 +58,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
         detach();
     });
     qint32 heigth = Settings::getHeight() - 320;
+    if (Settings::getSmallScreenDevice())
+    {
+        heigth = Settings::getHeight() - 100;
+    }
     qint32 width = Settings::getWidth() / 2 - 80;
     qint32 pixelSize = width;
     if (pixelSize > heigth)
@@ -70,7 +74,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         pixelSize = 2;
     }
     qint32 colorSelectorWidth = 0;
-    if (!Settings::getsmallScreenDevice())
+    if (!Settings::getSmallScreenDevice())
     {
         m_pColorSelector = spColorSelector::create(Qt::white, pixelSize);
         m_pColorSelector->setPosition(30, 30);
@@ -109,23 +113,25 @@ DialogCOStyle::DialogCOStyle(QString coid)
         }
     }
 
-    oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    textField->setStyle(style);
-    textField->setHtmlText(tr("Predefined Styles"));
-    textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight() - 70);
-    textField->attachTo(m_pSpriteBox);
-
+    if (!Settings::getSmallScreenDevice())
+    {
+        oxygine::spTextField textField = oxygine::spTextField::create();
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::getFontColor();
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Predefined Styles"));
+        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight() - 70);
+        textField->attachTo(m_pSpriteBox);
+    }
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
 
     QSize size2(Settings::getWidth() - 60, 100);
     m_pPixelPanel = spPanel::create(true, size2, size2);
     m_pPixelPanel->setPosition(30, Settings::getHeight() - 175);
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         m_pPixelPanel->setVisible(false);
     }
@@ -195,7 +201,14 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 items.append(tr("CO Style ") + QString::number(i));
             }
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
+            if (Settings::getSmallScreenDevice())
+            {
+                m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 70);
+            }
+            else
+            {
+                m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
+            }
             m_pSpriteBox->addChild(m_pPredefinedStyles);
         }
         else
@@ -222,14 +235,17 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {
             m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
-            for (qint32 i = 0; i < m_maskTable.width(); i++)
+            if (!Settings::getSmallScreenDevice())
             {
-                QColor color = m_maskTable.pixelColor(i, 0);
-                m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+                for (qint32 i = 0; i < m_maskTable.width(); i++)
+                {
+                    QColor color = m_maskTable.pixelColor(i, 0);
+                    m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+                }
             }
             updateSprites();
         });
-        if (Settings::getsmallScreenDevice())
+        if (!Settings::getSmallScreenDevice())
         {
             m_pPixelPanel->clearContent();
             m_Pixels.clear();

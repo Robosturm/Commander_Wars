@@ -57,12 +57,12 @@ void WorkerThread::start()
     UiFactory::getInstance();
     // load General-Base Scripts
     QStringList searchPaths;
-    searchPaths.append(":/resources/scripts/general");
-    searchPaths.append("/resources/scripts/general");
+    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/general");
+    searchPaths.append("resources/scripts/general");
     // make sure to overwrite existing js stuff
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append("/" + Settings::getMods().at(i) + "/scripts/general");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/general");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {

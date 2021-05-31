@@ -152,6 +152,10 @@ public slots:
      */
     void logActions(bool log);
     /**
+     * @brief extractResources
+     */
+    void extractResources();
+    /**
      * @brief update
      * @param us
      */

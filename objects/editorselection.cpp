@@ -207,7 +207,7 @@ EditorSelection::EditorSelection()
     // select terrains view
     updateTerrainView();
 
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         setX(Settings::getWidth() - 1);
         addChild(spMoveInButton::create(this, getScaledWidth()));

@@ -8,6 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #include <qfile.h>
 #include <qtextstream.h>
@@ -37,37 +38,62 @@ namespace oxygine
         QString fs_blur;
         QString vs_blit;
         QString fs_blit;
-        if (QFile::exists(":/system/pp_hblur_vs.glsl"))
+        QString filepath = "system/pp_hblur_vs.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/pp_hblur_vs.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_h = stream.readAll();
         }
-        if (QFile::exists(":/system/pp_vblur_vs.glsl"))
+        filepath = "system/pp_vblur_vs.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/pp_vblur_vs.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_v = stream.readAll();
         }
-        if (QFile::exists(":/system/pp_rast_fs.glsl"))
+        filepath = "system/pp_rast_fs.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/pp_rast_fs.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fs_blur = stream.readAll();
         }
-        if (QFile::exists(":/system/pp_blit_vs.glsl"))
+        filepath = "system/pp_blit_vs.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/pp_blit_vs.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_blit = stream.readAll();
         }
-        if (QFile::exists(":/system/pp_blit_fs.glsl"))
+        filepath = "system/pp_blit_fs.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/pp_blit_fs.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fs_blit = stream.readAll();

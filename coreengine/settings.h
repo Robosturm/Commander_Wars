@@ -37,7 +37,7 @@ class Settings : public QObject, public oxygine::ref_counter
         static void setUsername(const QString &Username);
 
     public slots:
-        static bool getsmallScreenDevice();
+        static bool getSmallScreenDevice();
         static void setSmallScreenDevice(bool newSmallScreenDevice);
 
         static qint32 getMenuItemRowCount();

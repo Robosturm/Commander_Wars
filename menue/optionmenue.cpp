@@ -100,13 +100,23 @@ OptionMenue::OptionMenue()
                Settings::getHeight() - static_cast<qint32>(20 + pButtonMods->getHeight()) * 2);
     m_pOptions = spPanel::create(true,  size, size);
     m_pOptions->setPosition(10, 20 + pButtonMods->getHeight());
+    if (size.width() < 750)
+    {
+        m_pOptions->setContentWidth(750);
+    }
     addChild(m_pOptions);
 
     m_pGameplayAndKeys = spGameplayAndKeys::create(size.height());
     m_pGameplayAndKeys->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pGameplayAndKeys);
-
-    size.setWidth(Settings::getWidth() / 2 - 50);
+    if (Settings::getSmallScreenDevice())
+    {
+        size.setWidth(Settings::getWidth() - 50);
+    }
+    else
+    {
+        size.setWidth(Settings::getWidth() / 2 - 50);
+    }
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 50);
     addChild(m_pMods);
@@ -345,7 +355,7 @@ void OptionMenue::showSettings()
         Settings::setHeight(heigth);
         emit sigChangeScreenSize(width, heigth);
     });
-    pScreenResolution->setEnabled(!Settings::getsmallScreenDevice());
+    pScreenResolution->setEnabled(!Settings::getSmallScreenDevice());
     y += 40;    
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -358,7 +368,7 @@ void OptionMenue::showSettings()
     pScreenModes->setTooltipText(tr("Selects the screen mode for the game"));
     pScreenModes->setPosition(sliderOffset - 130, y);
     pScreenModes->setCurrentItem(pApp->getScreenMode());
-    pScreenModes->setEnabled(!Settings::getsmallScreenDevice());
+    pScreenModes->setEnabled(!Settings::getSmallScreenDevice());
     m_pOptions->addItem(pScreenModes);
     connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, &Mainapp::changeScreenMode, Qt::QueuedConnection);
     y += 40;
@@ -404,7 +414,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("If checked several ui elements are hidden and get shown with an additional button.\nWarning disabling this on a smaller screen may lead to unplayable game experience."));
-    pCheckbox->setChecked(Settings::getsmallScreenDevice());
+    pCheckbox->setChecked(Settings::getSmallScreenDevice());
     pCheckbox->setPosition(sliderOffset - 130, y);
     pCheckbox->setEnabled(false);
     m_pOptions->addItem(pCheckbox);
@@ -707,12 +717,19 @@ void OptionMenue::showMods()
 
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
-    m_pModDescription->setVisible(true);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_pModDescription->setVisible(false);
+    }
+    else
+    {
+        m_pModDescription->setVisible(true);
+    }
     m_ModSelector->setVisible(true);
     m_pGameplayAndKeys->setVisible(false);
     m_ModSelector->removeChildren();
 
-    QFileInfoList rccinfoList = QDir(":/mods").entryInfoList(QDir::Dirs);
+    QFileInfoList rccinfoList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "mods").entryInfoList(QDir::Dirs);
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
     infoList.append(rccinfoList);
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -26,7 +26,7 @@ NormalAi::NormalAi(QString configurationFile)
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    loadIni(":/normal/" + configurationFile);
+    loadIni(QString(oxygine::Resource::RCC_PREFIX_PATH) + "normal/" + configurationFile);
     loadIni("normal/" + configurationFile);
 }
 

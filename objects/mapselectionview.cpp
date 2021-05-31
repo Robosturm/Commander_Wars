@@ -51,7 +51,7 @@ MapSelectionView::MapSelectionView()
     constexpr qint32 buildingInfoHeight = 135;
     QSize size(Settings::getWidth() - width - 80,
                Settings::getHeight() / 2 - buildingInfoHeight);
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         size.setHeight(Settings::getHeight() - buildingInfoHeight - 15);
     }
@@ -65,7 +65,7 @@ MapSelectionView::MapSelectionView()
                                 QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     addChild(m_MapInfo);
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         m_MapInfo->setVisible(false);
     }

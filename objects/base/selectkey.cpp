@@ -15,7 +15,7 @@ SelectKey::SelectKey(Qt::Key code)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
 
-    m_Button = ObjectManager::createButton("");
+    m_Button = ObjectManager::createButton("", 180);
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());

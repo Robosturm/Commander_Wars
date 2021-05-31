@@ -28,7 +28,7 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    loadIni(":/very_easy/very_easy.ini");
+    loadIni(QString(oxygine::Resource::RCC_PREFIX_PATH) + "very_easy/very_easy.ini");
     loadIni("very_easy/very_easy.ini");
 }
 

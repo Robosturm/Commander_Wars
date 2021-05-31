@@ -27,7 +27,11 @@ void MovementTableManager::loadAll()
     dir.removeRecursively();
     dir.mkpath(".");
     QStringList data;
-    QFile file(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/movementtables/movement_csv_import.txt");
+    QFile file("resources/scripts/movementtables/movement_csv_import.txt");
+    if (!file.exists())
+    {
+        file.setFileName(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/movementtables/movement_csv_import.txt");
+    }
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString jsHeader = stream.readAll();

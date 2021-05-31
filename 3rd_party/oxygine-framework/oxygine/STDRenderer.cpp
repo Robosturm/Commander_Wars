@@ -9,6 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 #include "qfile.h"
 #include "qtextstream.h"
@@ -197,24 +198,38 @@ namespace oxygine
         }
 
         maxVertices = indices16.size() / 3 * 2;
-
-        if (QFile::exists(":/system/frac_shader.glsl"))
+        QString filepath = "system/frac_shader.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/frac_shader.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fracShaderBody = stream.readAll();
         }
-        if (QFile::exists(":/system/vertex_shader.glsl"))
+        filepath = "system/vertex_shader.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/vertex_shader.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vertexShaderBody = stream.readAll();
         }
-        if (QFile::exists(":/system/frac_table_shader.glsl"))
+        filepath = "system/frac_table_shader.glsl";
+        if (!QFile::exists(filepath))
         {
-            QFile file(":/system/frac_table_shader.glsl");
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             fracTableShaderBody = stream.readAll();

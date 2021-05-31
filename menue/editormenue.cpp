@@ -111,7 +111,7 @@ EditorMenue::EditorMenue()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    if (!Settings::getsmallScreenDevice())
+    if (!Settings::getSmallScreenDevice())
     {
         m_xyTextInfo = spLabel::create(180);
         m_xyTextInfo->setStyle(style);

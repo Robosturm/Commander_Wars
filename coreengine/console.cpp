@@ -61,6 +61,7 @@ const QString Console::functions[] =
     QString("logActions"),
     QString("version"),
     QString("setDeveloperMode"),
+    QString("extractResources"),
     QString("")
 };
 const char* const Console::compileTime = __TIME__;
@@ -341,6 +342,36 @@ void Console::version()
 void Console::logActions(bool log)
 {
     Settings::setLogActions(log);
+}
+
+void Console::extractResources()
+{
+    QString targetDir = "extractedResources/";
+    QDir target(targetDir);
+    if (target.exists())
+    {
+        target.removeRecursively();
+    }
+    QStringList filter;
+    filter << "*.*";
+    QDirIterator dirIter(oxygine::Resource::RCC_PREFIX_PATH, filter, QDir::Files, QDirIterator::Subdirectories);
+    qint32 count = 0;
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        count++;
+        QFile file(dirIter.fileInfo().absoluteFilePath());
+        QString relativePath = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
+        QString dir = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteDir().absolutePath());
+        QDir newDir(targetDir + dir);
+        newDir.mkpath(".");
+        file.copy(targetDir + relativePath);
+        if (count % 40 == 0)
+        {
+            Console::print("Extracted files " + QString::number(count) + "...", Console::eINFO);
+        }
+    }
+    Console::print("Extracting files done. Extracted: " + QString::number(count) + " files", Console::eINFO);
 }
 
 void Console::createfunnymessage(qint32 message){

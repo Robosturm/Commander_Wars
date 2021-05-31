@@ -18,6 +18,10 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     QSize size(Settings::getWidth() - 20,
                heigth);
     m_pOptions = spPanel::create(true,  size, size);
+    if (size.width() < 750)
+    {
+        m_pOptions->setContentWidth(750);
+    }
     addChild(m_pOptions);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -406,7 +410,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     {
         Settings::setSimpleDeselect(value);
     });
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         pCheckbox->setEnabled(false);
     }

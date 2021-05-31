@@ -71,7 +71,11 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     m_CoFieldPanel->setY(m_ArmyBannerPanel->getScaledHeight());
     addChild(m_CoFieldPanel);
 
-    qint32 width = (maxSize.width() - m_CoFieldPanel->getScaledWidth()) / 2;
+    qint32 width = (maxSize.width() - m_CoFieldPanel->getScaledWidth());
+    if (!Settings::getSmallScreenDevice())
+    {
+        width /= 2;
+    }
     m_CoDescription = spPanel::create(true, QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()), QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()));
     m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
     addChild(m_CoDescription);
@@ -122,6 +126,10 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     }
     m_pCurrentCO->setScale(scale);
     pPanelbox->addChild(m_pCurrentCO);
+    if (Settings::getSmallScreenDevice())
+    {
+        pPanelbox->setVisible(false);
+    }
     addChild(pPanelbox);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);

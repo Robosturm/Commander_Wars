@@ -66,7 +66,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("graph");
     m_pGraphBackground->setResAnim(pAnim);
     qint32 widthCount = (Settings::getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
-    qint32 heigthCount = (Settings::getHeight() - 40 - 105 - 100 - 20) / static_cast<qint32>(pAnim->getHeight());
+    qint32 heigthCount = (Settings::getHeight() - 210) / static_cast<qint32>(pAnim->getHeight());
     m_pGraphBackground->setSize(widthCount * pAnim->getWidth(), heigthCount * pAnim->getHeight());
     m_pGraphBackground->setVerticalMode(oxygine::Box9Sprite::TILING);
     m_pGraphBackground->setHorizontalMode(oxygine::Box9Sprite::TILING);

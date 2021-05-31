@@ -236,7 +236,7 @@ Mainwindow::Mainwindow()
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
 
-    if (!Settings::getsmallScreenDevice())
+    if (!Settings::getSmallScreenDevice())
     {
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));

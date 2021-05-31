@@ -338,7 +338,7 @@ void GameMenue::loadGameMenue()
     m_IngameInfoBar = spIngameInfoBar::create();
     m_IngameInfoBar->updateMinimap();
     addChild(m_IngameInfoBar);
-    if (Settings::getsmallScreenDevice())
+    if (Settings::getSmallScreenDevice())
     {
         m_IngameInfoBar->setX(Settings::getWidth() - 1);
         auto moveButton = spMoveInButton::create(m_IngameInfoBar.get(), m_IngameInfoBar->getScaledWidth());
@@ -456,7 +456,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     m_XYButtonBox = pButtonBox;
-    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getsmallScreenDevice());
+    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates() && !Settings::getSmallScreenDevice());
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
