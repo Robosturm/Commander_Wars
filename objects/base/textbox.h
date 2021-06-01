@@ -41,7 +41,7 @@ public:
      * @param value
      */
     virtual void setEnabled(bool value) override;
-    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const override;
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) override;
 signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);
@@ -51,6 +51,7 @@ public slots:
 protected:
     virtual void focused() override;
     virtual void looseFocusInternal() override;
+    void handleTouchInput(oxygine::KeyEvent event);
 protected:
 
     oxygine::spBox9Sprite m_Textbox;
@@ -58,6 +59,8 @@ protected:
     QString m_Text;
     QElapsedTimer m_toggle;
     qint32 m_curmsgpos{0};
+    qint32 m_preeditSize{0};
+    qint32 m_editPos{0};
 };
 
 #endif // TEXTBOX_H

@@ -97,6 +97,18 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     }
 }
 
+void GameMap::setPosition(float x, float y)
+{
+    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(x),
+                                                 static_cast<qint32>(y)));
+}
+
+void GameMap::setPosition(const oxygine::Vector2& pos)
+{
+    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(pos.x),
+                                                 static_cast<qint32>(pos.y)));
+}
+
 void GameMap::setMapNameFromFilename(QString filename)
 {
     if (m_mapName.isEmpty())
@@ -848,6 +860,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
         // draw point
         setPosition(Settings::getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f,
                     Settings::getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f);
+
         if (updateMinimapPosition)
         {
             emit sigMovedMap();

@@ -28,10 +28,6 @@ namespace oxygine
         void sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps);
         void sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps);
         void sendPointerWheelEvent(spStage stage, const Vector2& dir, PointerState* ps);
-        void sendPointerZoomEvent(spStage stage, const Vector2& dir, PointerState* ps);
-        void sendPointerTouchScrollEvent(spStage stage, float x, float y, PointerState* ps);
-
-
     public:
         PointerState m_pointers[MAX_TOUCHES];
         PointerState m_pointerMouse;

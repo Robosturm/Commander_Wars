@@ -274,7 +274,14 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             if (!m_noUi)
             {
-                m_Timer.start(1, this);
+                if (Settings::getSmallScreenDevice())
+                {
+                    m_Timer.start(33, this);
+                }
+                else
+                {
+                    m_Timer.start(1, this);
+                }
             }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)
@@ -516,20 +523,7 @@ bool Mainapp::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 
 bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
 {
-    QString text = event->preeditString();
-    oxygine::KeyEvent keyEvent;
-    if (text.isEmpty())
-    {
-        text = event->commitString();
-        keyEvent.setCommit(true);
-    }
-    if (!text.isEmpty())
-    {
-
-        keyEvent.setText(text);
-        keyEvent.setInputEvent(true);
-        emit sigKeyDown(keyEvent);
-    }
+    emit sigKeyDown(oxygine::KeyEvent(event));
     return true;
 }
 

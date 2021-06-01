@@ -335,49 +335,76 @@ namespace oxygine
             }
             case QEvent::TouchUpdate:
             {
-                if (touchPoints.count() == 2)
-                {
-                    // determine scale factor
-                    const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
-                    qreal scale = QLineF(touchPoint0.position(), touchPoint1.position()).length() /
-                                  QLineF(touchPoint0.pressPosition(), touchPoint1.pressPosition()).length();
-                    emit sigTouchZoomEvent(scale, scale);
-                }
-                else if (touchPoints.count() == 1 )
+                handleZoomGesture(touchPoints);
+                if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    emit sigMouseMoveEvent(touchPoint0.position().x(), touchPoint0.position().y());
+                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
+                    if (m_pressDownTimeRunning &&
+                        touchPoint0.pressPosition() == touchPoint0.position() &&
+                        time > std::chrono::milliseconds(500))
+                    {
+                        emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                        m_longPressSent = true;
+                    }
+                    else
+                    {
+                        emit sigMouseMoveEvent(touchPoint0.position().x(), touchPoint0.position().y());
+                    }
                 }
                 break;
             }
             case QEvent::TouchEnd:
             {
-                if (touchPoints.count() == 1 )
+                if (touchPoints.count() == 1)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
-                    if (touchPoint0.state() == QEventPoint::Released)
+                    if (!m_longPressSent)
                     {
-                        if (time > std::chrono::milliseconds(500))
+                        if (time > std::chrono::milliseconds(500) && m_pressDownTimeRunning)
                         {
                             emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                         }
-                        else
-                        {
-                            emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                        }
                     }
-                    m_pressDownTimeRunning = false;
                 }
-                else if (m_touchMousePressSent)
+                if (m_touchMousePressSent)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+
                 }
+                m_pressDownTimeRunning = false;
+                m_touchMousePressSent = false;
+                m_longPressSent = false;
+                m_lastZoomValue = 1.0f;
             }
             default:
                 break;
+        }
+    }
+
+    void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)
+    {
+        if (touchPoints.count() == 2)
+        {
+            constexpr float minZoomOutGesture = 0.3f;
+            constexpr float minZoomInGesture = 0.3f;
+            // determine scale factor
+            const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
+            const QTouchEvent::TouchPoint &touchPoint1 = touchPoints.last();
+            qreal scale = QLineF(touchPoint0.position(), touchPoint1.position()).length() /
+                          QLineF(touchPoint0.pressPosition(), touchPoint1.pressPosition()).length();
+            if (scale > m_lastZoomValue + 1 / (1 - minZoomInGesture))
+            {
+                m_lastZoomValue = scale;
+                emit sigWheelEvent(1, 1);
+            }
+            else if (scale < m_lastZoomValue - minZoomOutGesture)
+            {
+                m_lastZoomValue = scale;
+                emit sigWheelEvent(-1, -1);
+            }
         }
     }
 

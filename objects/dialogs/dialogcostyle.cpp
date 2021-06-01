@@ -201,14 +201,6 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 items.append(tr("CO Style ") + QString::number(i));
             }
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            if (Settings::getSmallScreenDevice())
-            {
-                m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 70);
-            }
-            else
-            {
-                m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
-            }
             m_pSpriteBox->addChild(m_pPredefinedStyles);
         }
         else
@@ -229,8 +221,15 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             QVector<QString> items;
             items.append(tr("CO Style ") + QString::number(0));
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
             m_pSpriteBox->addChild(m_pPredefinedStyles);
+        }
+        if (Settings::getSmallScreenDevice())
+        {
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 70);
+        }
+        else
+        {
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
         }
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {

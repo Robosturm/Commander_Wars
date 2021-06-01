@@ -86,18 +86,6 @@ void InGameMenue::loadHandling()
                 }
             }
         });
-        addEventListener(oxygine::TouchEvent::TOUCH_SCROLL, [=](oxygine::Event *pEvent )->void
-        {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
-            {
-                if (m_Focused)
-                {
-                    pEvent->stopPropagation();
-                    emit sigMouseWheel(pTouchEvent->wheelDirection.y);
-                }
-            }
-        });
         connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);

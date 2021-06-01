@@ -82,6 +82,7 @@ void Textbox::focused()
 {
     Tooltip::disableTooltip();
     m_curmsgpos = m_Text.size();
+    m_preeditSize = 0;
     auto virtualKeyboard = QGuiApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {
@@ -145,13 +146,52 @@ void Textbox::update(const oxygine::UpdateState& us)
     {
         m_Textfield->setHtmlText(m_Text);
     }
-    m_Textfield->setWidth( m_Textfield->getTextRect().getWidth());
+    qint32 width = m_Textfield->getTextRect().getWidth();
+    if (width != m_Textfield->getWidth())
+    {
+        m_Textfield->setWidth(m_Textfield->getTextRect().getWidth());
+    }
     oxygine::Actor::update(us);
 }
 
-void Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const
+void Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
-    event->setValue(Qt::ImTextBeforeCursor, m_Text);
+    if (event->queries() == Qt::ImTextBeforeCursor)
+    {
+        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
+        m_editPos = m_curmsgpos;
+        event->setValue(Qt::ImTextBeforeCursor, textBefore);
+    }
+}
+
+void Textbox::handleTouchInput(oxygine::KeyEvent event)
+{
+    for (const auto & action : qAsConst(event.getAttributeList()))
+    {
+        if (action.type == QInputMethodEvent::AttributeType::TextFormat)
+        {
+            QString msg = event.getText();
+            if (m_preeditSize > 0)
+            {
+                m_Text.remove(m_editPos + event.getStart(), m_preeditSize);
+            }
+            m_preeditSize = msg.size();
+            m_Text.insert(m_editPos + action.start, msg);
+        }
+        else if (action.type == QInputMethodEvent::AttributeType::Cursor)
+        {
+            m_curmsgpos = m_editPos + action.start;
+        }
+        else if (action.type == QInputMethodEvent::AttributeType::Selection)
+        {
+            if (!event.getText().isEmpty())
+            {
+                m_preeditSize = 0;
+                m_curmsgpos = m_editPos + action.start;
+                m_editPos = m_curmsgpos;
+            }
+        }
+    }
 }
 
 void Textbox::KeyInput(oxygine::KeyEvent event)
@@ -163,15 +203,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
         restartTooltiptimer();
         if (event.getInputEvent())
         {
-            QString msg = event.getText();
-            m_Text = msg;
-            if (event.getCommit())
-            {
-                looseFocusInternal();
-                Tooltip::setEnabled(true);
-                emit sigTextChanged(m_Text);
-                emit sigEnterPressed(m_Text);
-            }
+            handleTouchInput(event);
         }
         else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
@@ -252,6 +284,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                     if(m_curmsgpos > 0){
                         m_Text.remove(m_curmsgpos - 1,1);
                         m_curmsgpos--;
+                        m_editPos--;
                     }
                     break;
                 }

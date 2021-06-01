@@ -57,8 +57,17 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         detach();
     });
 
+    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_ExitButton->getHeight());
+    pSave->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowSaveBannlist();
+    });
+    pSpriteBox->addChild(pSave);
+    connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
+
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -72,18 +81,10 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     auto items = getNameList();
     m_PredefinedLists = spDropDownmenu::create(300, items);
 
-    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
-    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 75 - m_ToggleAll->getHeight());
-    pSave->addClickListener([=](oxygine::Event*)
-    {
-        emit sigShowSaveBannlist();
-    });
-    pSpriteBox->addChild(pSave);
-    connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
 
 
     oxygine::TextStyle style = FontManager::getMainFont24();

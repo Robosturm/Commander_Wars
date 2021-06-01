@@ -43,13 +43,14 @@ namespace oxygine
         void snap();
         /**stop if sliding*/
         void stop();
+        void updateDragBounds();
 
     protected:
         void destroy();
         virtual void handleEvent(Event* event) override;
         virtual void sizeChanged(const Vector2& size) override;
         virtual void doUpdate(const UpdateState& us) override;
-        void updateDragBounds();
+
         void _newEvent(Event* event);
 
     protected:

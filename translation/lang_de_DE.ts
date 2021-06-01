@@ -800,22 +800,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="68"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="78"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="59"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="106"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="107"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="206"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="207"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1530,47 +1530,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="60"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="69"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="79"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="60"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="107"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="108"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="232"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="233"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="240"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="241"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="241"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="242"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="242"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="243"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="243"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="244"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="244"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="245"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1596,12 +1596,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="68"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="78"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="59"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2587,7 +2587,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="201"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="230"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="222"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3942,9 +3942,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="440"/>
-        <location filename="../game/gamemap.cpp" line="487"/>
-        <location filename="../game/gamemap.cpp" line="1152"/>
+        <location filename="../game/gamemap.cpp" line="452"/>
+        <location filename="../game/gamemap.cpp" line="499"/>
+        <location filename="../game/gamemap.cpp" line="1165"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3970,43 +3970,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="440"/>
-        <location filename="../game/gamemap.cpp" line="1152"/>
+        <location filename="../game/gamemap.cpp" line="452"/>
+        <location filename="../game/gamemap.cpp" line="1165"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="487"/>
+        <location filename="../game/gamemap.cpp" line="499"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="497"/>
+        <location filename="../game/gamemap.cpp" line="509"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1130"/>
+        <location filename="../game/gamemap.cpp" line="1143"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1179"/>
+        <location filename="../game/gamemap.cpp" line="1192"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1189"/>
+        <location filename="../game/gamemap.cpp" line="1202"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1197"/>
+        <location filename="../game/gamemap.cpp" line="1210"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1209"/>
+        <location filename="../game/gamemap.cpp" line="1222"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5461,18 +5461,18 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="562"/>
+        <location filename="../coreengine/mainapp.cpp" line="556"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="568"/>
+        <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="570"/>
+        <location filename="../coreengine/mainapp.cpp" line="564"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -6949,12 +6949,12 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="128"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="137"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="144"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="128"/>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="157"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
@@ -10901,88 +10901,88 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="98"/>
+        <location filename="../menue/victorymenue.cpp" line="123"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="183"/>
-        <location filename="../menue/victorymenue.cpp" line="554"/>
+        <location filename="../menue/victorymenue.cpp" line="208"/>
+        <location filename="../menue/victorymenue.cpp" line="598"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="192"/>
-        <location filename="../menue/victorymenue.cpp" line="559"/>
+        <location filename="../menue/victorymenue.cpp" line="217"/>
+        <location filename="../menue/victorymenue.cpp" line="603"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="201"/>
-        <location filename="../menue/victorymenue.cpp" line="564"/>
+        <location filename="../menue/victorymenue.cpp" line="226"/>
+        <location filename="../menue/victorymenue.cpp" line="608"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="210"/>
-        <location filename="../menue/victorymenue.cpp" line="569"/>
+        <location filename="../menue/victorymenue.cpp" line="235"/>
+        <location filename="../menue/victorymenue.cpp" line="613"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="219"/>
-        <location filename="../menue/victorymenue.cpp" line="574"/>
+        <location filename="../menue/victorymenue.cpp" line="244"/>
+        <location filename="../menue/victorymenue.cpp" line="618"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="228"/>
-        <location filename="../menue/victorymenue.cpp" line="642"/>
+        <location filename="../menue/victorymenue.cpp" line="253"/>
+        <location filename="../menue/victorymenue.cpp" line="686"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="239"/>
+        <location filename="../menue/victorymenue.cpp" line="264"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="270"/>
+        <location filename="../menue/victorymenue.cpp" line="303"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="303"/>
+        <location filename="../menue/victorymenue.cpp" line="336"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="308"/>
+        <location filename="../menue/victorymenue.cpp" line="341"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="313"/>
+        <location filename="../menue/victorymenue.cpp" line="346"/>
         <source>Tech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="318"/>
+        <location filename="../menue/victorymenue.cpp" line="351"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="478"/>
+        <location filename="../menue/victorymenue.cpp" line="519"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="481"/>
+        <location filename="../menue/victorymenue.cpp" line="522"/>
         <source>The player for which the statistics should be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="630"/>
+        <location filename="../menue/victorymenue.cpp" line="674"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

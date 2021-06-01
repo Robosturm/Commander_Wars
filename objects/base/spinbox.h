@@ -49,7 +49,7 @@ public:
     virtual void setEnabled(bool value) override;
     QString getUnit() const;
     void setUnit(const QString &unit);
-    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) const override;
+    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) override;
 signals:
     void sigValueChanged(qreal value);
 public slots:
@@ -68,6 +68,7 @@ protected:
     void setValue(qreal value);
     virtual void focused() override;
     virtual void looseFocusInternal() override;
+    void handleTouchInput(oxygine::KeyEvent event);
 private:
     oxygine::spBox9Sprite m_pSpinBox;
     oxygine::spBox9Sprite m_Textbox;
@@ -84,6 +85,8 @@ private:
     qreal m_spinDirection{0.0};
     qreal m_SpinSpeed{1.0};
     Mode m_Mode{Mode::Int};
+    qint32 m_preeditSize{0};
+    qint32 m_editPos{0};
 };
 
 #endif // SPINBOX_H

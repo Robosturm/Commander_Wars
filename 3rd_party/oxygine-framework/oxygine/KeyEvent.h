@@ -9,7 +9,6 @@ namespace oxygine
     class KeyEvent
     {
         public:
-            KeyEvent() = default;
             KeyEvent(qint32 k, QString text, Qt::KeyboardModifiers modifiers)
                 : m_key(static_cast<Qt::Key>(k)),
                   m_text(text),
@@ -24,6 +23,20 @@ namespace oxygine
                   m_continousPress(event->isAutoRepeat())
             {
             }
+
+            KeyEvent(QInputMethodEvent* event)
+                : m_text(event->commitString()),
+                  m_inputEvent(true),
+                  m_Length(event->replacementLength()),
+                  m_start(event->replacementStart()),
+                  m_AttributeList(event->attributes())
+            {
+                if (m_text.isEmpty())
+                {
+                    m_text = event->preeditString();
+                }
+            }
+
             inline Qt::Key getKey()
             {
                 return m_key;
@@ -55,23 +68,31 @@ namespace oxygine
             {
                 m_inputEvent = newInputEvent;
             }
-
-            inline bool getCommit() const
+            const QList<QInputMethodEvent::Attribute> & getAttributeList()
             {
-                return m_Commit;
+                return m_AttributeList;
             }
 
-            inline void setCommit(bool newCommit)
+            inline qint32 getStart() const
             {
-                m_Commit = newCommit;
+                return m_start;
             }
 
+            inline qint32 getLength() const
+            {
+                return m_Length;
+            }
         private:
             Qt::Key m_key{static_cast<Qt::Key>(0)};
             QString m_text;
             Qt::KeyboardModifiers m_modifiers{Qt::KeyboardModifier::NoModifier};
             bool m_continousPress{false};
+
             bool m_inputEvent{false};
-            bool m_Commit;
+            qint32 m_Length{0};
+            qint32 m_start{0};
+            const QList<QInputMethodEvent::Attribute> m_AttributeList;
     };
+
+
 }

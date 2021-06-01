@@ -76,8 +76,7 @@ namespace oxygine
         void sigMouseLongPressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
         void sigMouseMoveEvent(qint32 x, qint32 y);
-        void sigTouchZoomEvent(qint32 x, qint32 y);
-        void sigTouchScrollEvent(qint32 x, qint32 y);
+
     public slots:
         /**
          * @brief getBrightness
@@ -119,15 +118,21 @@ namespace oxygine
         void updateData();
         bool beginRendering();
         void swapDisplayBuffers();
+
+        void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
     protected:
         bool m_renderEnabled = true;
         spEventDispatcher m_dispatcher;
 
         bool m_quit{false};
         QBasicTimer m_Timer;
+
+        // touch handling
         QElapsedTimer m_pressDownTime;
         bool m_pressDownTimeRunning{false};
         bool m_touchMousePressSent{false};
+        bool m_longPressSent{false};
+        float m_lastZoomValue{1.0f};
 
         QMutex m_pauseMutex;
         qint32 m_pausedCounter{0};

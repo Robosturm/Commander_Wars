@@ -125,8 +125,17 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
             detach();
         });
 
+        oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+        pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 30 - m_CancelButton->getHeight());
+        pSave->addClickListener([=](oxygine::Event*)
+        {
+            emit sigShowSavePerklist();
+        });
+        pSpriteBox->addChild(pSave);
+        connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
+
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
-        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
+        m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
         pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
@@ -137,18 +146,9 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         auto items = getNameList("data/perkbannlist/");
         m_PredefinedLists = spDropDownmenu::create(260, items);
 
-        m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
+        m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 75 - m_ToggleAll->getHeight());
         pSpriteBox->addChild(m_PredefinedLists);
         connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
-
-        oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-        pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 75 - m_ToggleAll->getHeight());
-        pSave->addClickListener([=](oxygine::Event*)
-        {
-            emit sigShowSavePerklist();
-        });
-        pSpriteBox->addChild(pSave);
-        connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
     }
     else
     {

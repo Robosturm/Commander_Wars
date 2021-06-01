@@ -220,6 +220,14 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 pBack->setAlpha(128);
             }
             qint32 scaleFactor = 2.0f;
+            if (scaleFactor * (pRet->getHeight() - 30) > Settings::getHeight())
+            {
+                scaleFactor = 1.0f;
+                while (scaleFactor * (pRet->getHeight() - 30) > Settings::getHeight())
+                {
+                    scaleFactor /= 2;
+                }
+            }
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
             {
@@ -229,8 +237,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 {
                     scale = widthScale;
                 }
-                qint32 newScale = 2;
-                qint32 lastScale = 2;
+                qint32 newScale = scaleFactor;
+                qint32 lastScale = scaleFactor;
                 while (newScale < scale)
                 {
                     lastScale = newScale;

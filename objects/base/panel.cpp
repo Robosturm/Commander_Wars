@@ -211,7 +211,7 @@ void Panel::setContentHeigth(qint32 heigth)
     }
     m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setHeight(heigth);
-    m_SlidingActor->setContent(m_ContentRect);
+    m_SlidingActor->updateDragBounds();
     m_HScrollbar->setContentHeigth(heigth);
     m_HScrollbar->setScrollvalue(0);    
 }
@@ -246,7 +246,7 @@ void Panel::setContentWidth(qint32 width)
     }
     m_SlidingActor->setSize(m_ClipRect->getSize());
     m_ContentRect->setWidth(width);
-    m_SlidingActor->setContent(m_ContentRect);
+    m_SlidingActor->updateDragBounds();
     m_VScrollbar->setContentWidth(width);
     m_VScrollbar->setScrollvalue(0);    
 }

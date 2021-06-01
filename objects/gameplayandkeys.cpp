@@ -18,9 +18,9 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     QSize size(Settings::getWidth() - 20,
                heigth);
     m_pOptions = spPanel::create(true,  size, size);
-    if (size.width() < 750)
+    if (size.width() < 780)
     {
-        m_pOptions->setContentWidth(750);
+        m_pOptions->setContentWidth(780);
     }
     addChild(m_pOptions);
 

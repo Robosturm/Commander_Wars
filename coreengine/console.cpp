@@ -350,6 +350,7 @@ void Console::extractResources()
     QDir target(targetDir);
     if (target.exists())
     {
+        Console::print("Deleting old extracted files.", Console::eINFO);
         target.removeRecursively();
     }
     QStringList filter;

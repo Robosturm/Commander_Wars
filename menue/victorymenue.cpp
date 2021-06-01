@@ -65,14 +65,39 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     m_pGraphBackground = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("graph");
     m_pGraphBackground->setResAnim(pAnim);
-    qint32 widthCount = (Settings::getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
-    qint32 heigthCount = (Settings::getHeight() - 210) / static_cast<qint32>(pAnim->getHeight());
+    qint32 widthCount = 0;
+    if (Settings::getSmallScreenDevice())
+    {
+        widthCount = (Settings::getWidth() - 110) / static_cast<qint32>(pAnim->getWidth());
+    }
+    else
+    {
+        widthCount = (Settings::getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
+    }
+    qint32 heigthCount = 0;
+    if (Settings::getSmallScreenDevice())
+    {
+        heigthCount = (Settings::getHeight() - 120) / static_cast<qint32>(pAnim->getHeight());
+    }
+    else
+    {
+        heigthCount = (Settings::getHeight() - 215) / static_cast<qint32>(pAnim->getHeight());
+    }
+
     m_pGraphBackground->setSize(widthCount * pAnim->getWidth(), heigthCount * pAnim->getHeight());
     m_pGraphBackground->setVerticalMode(oxygine::Box9Sprite::TILING);
     m_pGraphBackground->setHorizontalMode(oxygine::Box9Sprite::TILING);
     m_pGraphBackground->setColor(255, 255, 255, 200);
     m_pGraphBackground->setGuides(0, pAnim->getWidth(), 0, pAnim->getHeight());
-    m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 110);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 10);
+    }
+    else
+    {
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 110);
+    }
+
     addChild(m_pGraphBackground);
     qint32 graphDays = m_pGraphBackground->getWidth() / 100;
     for (qint32 i = 0; i < graphDays; i++)
@@ -255,10 +280,18 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     m_Textfield = oxygine::spTextField::create();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     m_Textfield->setStyle(headerStyle);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_Textfield->setVisible(false);
+    }
     addChild(m_Textfield);
 
     m_PlayerSelectPanel = spPanel::create(true, QSize(200, m_pGraphBackground->getHeight()), QSize(200, 100));
     m_PlayerSelectPanel->setPosition(5, m_pGraphBackground->getY());
+    if (Settings::getSmallScreenDevice())
+    {
+        m_PlayerSelectPanel->setVisible(false);
+    }
     addChild(m_PlayerSelectPanel);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -464,12 +497,20 @@ void VictoryMenue::createStatisticsView()
     spGameMap pMap = GameMap::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_statisticsBox = oxygine::spBox9Sprite::create();
-    m_statisticsBox->setSize(Settings::getWidth() - 10, Settings::getHeight() - 210);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_statisticsBox->setSize(Settings::getWidth() - 10, Settings::getHeight() - 110);
+        m_statisticsBox->setPosition(5, 10);
+    }
+    else
+    {
+        m_statisticsBox->setSize(Settings::getWidth() - 10, Settings::getHeight() - 210);
+        m_statisticsBox->setPosition(5, 100);
+    }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     m_statisticsBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_statisticsBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_statisticsBox->setResAnim(pAnim);
-    m_statisticsBox->setPosition(5, 100);
     m_statisticsBox->setVisible(false);
     addChild(m_statisticsBox);
     QVector<QString> items;
@@ -533,7 +574,10 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     {
         m_ProgressTimer.stop();
         m_ProgressTimer.start(getStepTime());
-        m_PlayerSelectPanel->setVisible(true);
+        if (!Settings::getSmallScreenDevice())
+        {
+            m_PlayerSelectPanel->setVisible(true);
+        }
         m_pGraphBackground->setVisible(true);
         m_statisticsBox->setVisible(false);
         if (m_VictoryPanel.get() != nullptr)
@@ -1004,7 +1048,14 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
     }
     spGameMap pMap = GameMap::getInstance();
     const auto & playerdata = pMap->getGameRecorder()->getPlayerDataRecords()[player];
-    m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+    if (Settings::getSmallScreenDevice())
+    {
+        m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, pMap->getPlayer(player));
+    }
+    else
+    {
+        m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+    }
     m_statisticsView->setPosition(10, 60);
     m_statisticsBox->addChild(m_statisticsView);
 }

@@ -356,7 +356,17 @@ public:
      * @return
      */
     bool getSavegame() const;
-
+    /**
+     * @brief setPosition
+     * @param x
+     * @param y
+     */
+    virtual void setPosition(float x, float y) override;
+    /**
+     * @brief setPosition
+     * @param pos
+     */
+    virtual void setPosition(const oxygine::Vector2& pos) override;
 signals:
     void signalExitGame();
     void signalSaveGame();
