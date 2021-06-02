@@ -19,9 +19,7 @@ public:
     virtual ~MapMover();
 public slots:
     void mouseWheel(float direction);
-    void MoveMap(qint32 x, qint32 y);
     virtual void keyInput(oxygine::KeyEvent event);
-//    virtual void keyUp(oxygine::KeyEvent event);
     void autoScroll();
 
 private:

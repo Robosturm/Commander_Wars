@@ -45,13 +45,14 @@ EditorMenue::EditorMenue()
 {
     setObjectName("EditorMenue");
     Mainapp* pApp = Mainapp::getInstance();
-    oxygine::Actor::addChild(GameMap::getInstance());
+    m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
+    initSlidingActor(50, 50, Settings::getWidth() * 3 / 4 - 100, Settings::getHeight() - 100);
+    m_mapSlidingActor->addChild(GameMap::getInstance());
     loadHandling();
     changeBackground("editormenu");
     moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
-    m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
 
     m_EditorSelection = spEditorSelection::create();
     addChild(m_EditorSelection);

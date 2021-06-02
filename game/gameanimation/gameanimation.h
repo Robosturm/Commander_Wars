@@ -24,8 +24,6 @@ class GameAnimation : public QObject, public oxygine::Sprite
         virtual void restart();
         virtual void stop();
 
-        virtual void setPosition(float x, float y) override;
-        virtual void setPosition(const oxygine::Vector2& pos) override;
     signals:
         void sigFinished(bool skipping);
         void sigStart();

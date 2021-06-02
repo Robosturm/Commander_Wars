@@ -25,6 +25,7 @@
 #include "oxygine/RenderState.h"
 #include "oxygine/actor/Stage.h"
 #include "oxygine/actor/SlidingActor.h"
+#include "oxygine/actor/SlidingActorNoClipRect.h"
 #include "oxygine/actor/Sprite.h"
 #include "oxygine/actor/MaskedSprite.h"
 #include "oxygine/actor/TextField.h"

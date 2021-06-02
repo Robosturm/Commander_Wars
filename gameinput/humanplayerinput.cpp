@@ -844,8 +844,9 @@ void HumanPlayerInput::createMarkedMoveFields()
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
+    spGameMenue pMenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    auto mapPos = pMap->getPosition();
+    auto mapPos = pMenu->getMapSlidingActor()->getPosition();
     m_lastMapView = QPoint(mapPos.x, mapPos.y);
     if ((pMap->getCurrentPlayer() == m_pPlayer ||
          m_pPlayer == nullptr) &&
@@ -965,7 +966,6 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
         }
         
     }
-
 }
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
@@ -1718,8 +1718,11 @@ void HumanPlayerInput::deserializeObject(QDataStream& stream)
 
 void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
 {
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
-        m_pPlayer == nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pMap.get() != nullptr && pGameMenue.get() != nullptr &&
+        (pMap->getCurrentPlayer() == m_pPlayer ||
+         m_pPlayer == nullptr))
     {
         if (Settings::getAutoCamera() && pAction == nullptr &&
             m_lastMapView.x() != std::numeric_limits<qint32>::min())
@@ -1733,7 +1736,7 @@ void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
                 }
                 case GameEnums::AutoFocusing_LastPos:
                 {
-                    GameMap::getInstance()->setPosition(m_lastMapView.x(), m_lastMapView.y());
+                    pGameMenue->getMapSlidingActor()->setPosition(m_lastMapView.x(), m_lastMapView.y());
                     break;
                 }
             }

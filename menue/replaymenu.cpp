@@ -36,11 +36,10 @@ ReplayMenu::ReplayMenu(QString filename)
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         spGameMap pMap = GameMap::getInstance();
-        pMap->registerMapAtInterpreter();
-        oxygine::Actor::addChild(pMap);
-        pMap->updateSprites();
         loadHandling();
         loadGameMenue();
+        pMap->registerMapAtInterpreter();
+        pMap->updateSprites();
         loadUIButtons();
         m_HumanInput = spHumanPlayerInput::create();
         m_HumanInput->init();
@@ -329,12 +328,10 @@ void ReplayMenu::seekToDay(qint32 day)
         Console::print("Seeking to day " + QString::number(day), Console::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
         spGameMap pMap = GameMap::getInstance();
-        auto pos = pMap->getPosition();
         m_ReplayRecorder.seekToDay(day);
         pMap = GameMap::getInstance();
         pMap->registerMapAtInterpreter();
-        addChild(pMap);
-        pMap->setPosition(pos);
+        m_mapSlidingActor->addChild(pMap);
         pMap->updateSprites();
         pMap->getGameRules()->createFogVision();
         updatePlayerinfo();

@@ -25,7 +25,9 @@ public:
 
     void updateTerrainInfo(qint32 x, qint32 y, bool update);
 
-public slots:
+    oxygine::spBox9Sprite getDetailedViewBox() const;
+
+    public slots:
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);
@@ -39,6 +41,7 @@ private:
     oxygine::spSlidingActor m_pMinimapSlider;
     oxygine::spBox9Sprite m_pGameInfoBox;
     oxygine::spBox9Sprite m_pCursorInfoBox;
+    oxygine::spBox9Sprite m_pDetailedViewBox;
     qint32 m_LastX{-1};
     qint32 m_LastY{-1};
 };

@@ -30,18 +30,6 @@ GameAnimation::GameAnimation(quint32 frameTime)
     m_buffer.open(QIODevice::ReadWrite);
 }
 
-void GameAnimation::setPosition(float x, float y)
-{
-    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(x),
-                                                 static_cast<qint32>(y)));
-}
-
-void GameAnimation::setPosition(const oxygine::Vector2& pos)
-{
-    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(pos.x),
-                                                 static_cast<qint32>(pos.y)));
-}
-
 void GameAnimation::restart()
 {
     m_stopped = false;

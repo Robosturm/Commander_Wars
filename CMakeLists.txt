@@ -52,7 +52,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        set(DEPLOY_RESOURCES_AS_FOLDER 1)
     endif()
     find_package(Qt6 COMPONENTS QmlDebug REQUIRED)
 else("Release")
@@ -154,6 +154,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/Polygon.cpp
     3rd_party/oxygine-framework/oxygine/actor/ProgressBar.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
+    3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp
     3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp
     3rd_party/oxygine-framework/oxygine/actor/Stage.cpp
     3rd_party/oxygine-framework/oxygine/actor/TextField.cpp

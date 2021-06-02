@@ -27,6 +27,9 @@ typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class GameMap;
 typedef oxygine::intrusive_ptr<GameMap> spGameMap;
 
+class InGameMenue;
+typedef oxygine::intrusive_ptr<InGameMenue> spInGameMenue;
+
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
     Q_OBJECT
@@ -356,17 +359,6 @@ public:
      * @return
      */
     bool getSavegame() const;
-    /**
-     * @brief setPosition
-     * @param x
-     * @param y
-     */
-    virtual void setPosition(float x, float y) override;
-    /**
-     * @brief setPosition
-     * @param pos
-     */
-    virtual void setPosition(const oxygine::Vector2& pos) override;
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -834,7 +826,7 @@ public slots:
     void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
     void loadMapData();
-
+    void limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY);
 private:
     static spGameMap m_pInstance;
     QString m_mapName;

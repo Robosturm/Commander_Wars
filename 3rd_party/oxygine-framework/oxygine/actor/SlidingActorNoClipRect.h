@@ -7,8 +7,8 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(SlidingActor, spSlidingActor);
-    class SlidingActor: public Actor
+    DECLARE_SMART(SlidingActorNoClipRect, spSlidingActorNoClipRect);
+    class SlidingActorNoClipRect: public Actor
     {
     public:
         static void setDefaultTouchThreshold(float val);
@@ -27,8 +27,8 @@ namespace oxygine
             Vector2 speed;
         };
 
-        SlidingActor();
-        ~SlidingActor();
+        SlidingActorNoClipRect();
+        ~SlidingActorNoClipRect();
 
         spActor         getContent() const {return m_content;}
         const RectF&    getDragBounds() const {return m_drag.getDragBounds();}
@@ -61,7 +61,6 @@ namespace oxygine
         Vector2 m_speed;
         Draggable m_drag;
         spActor m_content;
-        spClipRectActor m_clip;
         spEventDispatcher m_holded;
         struct  iter
         {
@@ -73,6 +72,10 @@ namespace oxygine
         qint32 m_current;
         timeMS m_lastIterTime;
         pointer_index m_finger;
+
+        qint32 m_touchDownId{-1};
+        qint32 m_touchUpId{-1};
+        qint32 m_touchMoveId{-1};
         static float m_defaultTouchThreshold;
     };
 }

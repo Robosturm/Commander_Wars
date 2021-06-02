@@ -5,6 +5,8 @@
 #include "game/cursor.h"
 #include "game/createoutline.h"
 
+#include "menue/ingamemenue.h"
+
 #include "resource_management/objectmanager.h"
 
 Cursor::Cursor()
@@ -51,10 +53,12 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    spInGameMenue pMenu = InGameMenue::getMenuInstance();
+    if (pMap.get() != nullptr && pMenu.get() != nullptr)
     {
-        qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::getImageSize() * pMap->getZoom());
-        qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::getImageSize() * pMap->getZoom());
+        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition();
+        qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * pMap->getZoom());
+        qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * pMap->getZoom());
         m_onMap = pMap->onMap(x, y);
         if (m_onMap)
         {

@@ -31,11 +31,6 @@ void MapMover::autoScroll()
     m_pOwner->autoScroll();
 }
 
-void MapMover::MoveMap(qint32 x, qint32 y)
-{
-    m_pOwner->MoveMap(x, y);
-}
-
 void MapMover::keyInput(oxygine::KeyEvent event)
 {
     if (m_pOwner->getFocused())

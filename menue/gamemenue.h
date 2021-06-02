@@ -43,7 +43,7 @@ public:
     virtual ~GameMenue();
     static GameMenue* getInstance()
     {
-        return m_pInstance.get();
+        return m_pGameMenuInstance.get();
     }
     /**
      * @brief attachInterface
@@ -302,7 +302,7 @@ protected:
     spIngameInfoBar m_IngameInfoBar;
     spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
-    static spGameMenue m_pInstance;
+    static spGameMenue m_pGameMenuInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};

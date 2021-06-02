@@ -381,7 +381,8 @@ namespace oxygine
         {
             return;
         }
-        m_pos = pos;
+        m_pos.x = static_cast<qint32>(pos.x);
+        m_pos.y = static_cast<qint32>(pos.y);
         markTranformDirty();
     }
 
@@ -396,7 +397,7 @@ namespace oxygine
         {
             return;
         }
-        m_pos.x = x;
+        m_pos.x = static_cast<qint32>(x);
         markTranformDirty();
     }
 
@@ -406,7 +407,7 @@ namespace oxygine
         {
             return;
         }
-        m_pos.y = y;
+        m_pos.y = static_cast<qint32>(y);
         markTranformDirty();
     }
 

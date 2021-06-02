@@ -1,5 +1,4 @@
-#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
@@ -8,55 +7,44 @@
 
 namespace oxygine
 {
-    float SlidingActor::m_defaultTouchThreshold = 15.0f;
-    void SlidingActor::setDefaultTouchThreshold(float val)
+    float SlidingActorNoClipRect::m_defaultTouchThreshold = 15.0f;
+    void SlidingActorNoClipRect::setDefaultTouchThreshold(float val)
     {
         m_defaultTouchThreshold = val;
     }
 
-    SlidingActor::SlidingActor():
+    SlidingActorNoClipRect::SlidingActorNoClipRect():
         m_sliding(false),
         m_rad(m_defaultTouchThreshold),
         m_ignoreTouchUp(false),
         m_current(0), m_lastIterTime(0),
         m_finger(0)
     {
-        m_clip = spClipRectActor::create();
-        m_clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
-        m_clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
-        m_clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));
-
-        addChild(m_clip);
     }
 
-    void SlidingActor::destroy()
+    void SlidingActorNoClipRect::destroy()
     {
-        m_clip->removeChildren();
-
+        removeChildren();
         m_drag.destroy();
         m_content = nullptr;
     }
 
-    SlidingActor::~SlidingActor()
+    SlidingActorNoClipRect::~SlidingActorNoClipRect()
     {
         destroy();
     }
 
-    void SlidingActor::setTouchThreshold(float rad)
+    void SlidingActorNoClipRect::setTouchThreshold(float rad)
     {
         m_rad = rad;
     }
 
-    void SlidingActor::sizeChanged(const Vector2& size)
+    void SlidingActorNoClipRect::sizeChanged(const Vector2& size)
     {
-        if (m_clip)
-        {
-            m_clip->setSize(size);
-        }
         updateDragBounds();
     }
 
-    void SlidingActor::snap()
+    void SlidingActorNoClipRect::snap()
     {
         if (!m_content)
         {
@@ -67,18 +55,24 @@ namespace oxygine
         m_sliding = false;
     }
 
-    void SlidingActor::stop()
+    void SlidingActorNoClipRect::stop()
     {
         m_speed = Vector2(0, 0);
     }
 
-    void SlidingActor::setContent(spActor content)
+    void SlidingActorNoClipRect::setContent(spActor content)
     {
-        if (m_content)
+        if (m_content.get() != nullptr)
         {
+            m_content->removeEventListener(m_touchDownId);
+            m_content->removeEventListener(m_touchUpId);
+            m_content->removeEventListener(m_touchMoveId);
             m_drag.destroy();
             m_content->detach();
         }
+        m_touchDownId = content->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchUpId = content->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
+        m_touchMoveId = content->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActorNoClipRect::_newEvent));
 
         m_current = 0;
         m_lastIterTime = timeMS(0);
@@ -93,26 +87,24 @@ namespace oxygine
         m_speed = Vector2(0, 0);
 
         m_content = content;
-        m_drag.init(content.get());
-
-        m_clip->addChild(m_content);
-
+        m_drag.init(m_content.get());
+        addChild(m_content);
         updateDragBounds();
     }
 
-    void SlidingActor::setLocked(bool locked)
+    void SlidingActorNoClipRect::setLocked(bool locked)
     {
         m_drag.setDragEnabled(!locked);
     }
 
-    void SlidingActor::updateDragBounds()
+    void SlidingActorNoClipRect::updateDragBounds()
     {
         if (!m_content)
         {
             return;
         }
-        float w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - m_clip->getWidth());
-        float h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - m_clip->getHeight());
+        float w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - getWidth());
+        float h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - getHeight());
         RectF bounds(-w, -h, w, h);
 
         m_drag.setDragBounds(bounds);
@@ -120,7 +112,7 @@ namespace oxygine
 
     const timeMS fdt = timeMS(1000 / 60);
 
-    void SlidingActor::doUpdate(const UpdateState&)
+    void SlidingActorNoClipRect::doUpdate(const UpdateState&)
     {
         if (!m_content)
         {
@@ -192,12 +184,12 @@ namespace oxygine
 
     }
 
-    void SlidingActor::handleEvent(Event* event)
+    void SlidingActorNoClipRect::handleEvent(Event* event)
     {
         Actor::handleEvent(event);
     }
 
-    void SlidingActor::_newEvent(Event* event)
+    void SlidingActorNoClipRect::_newEvent(Event* event)
     {
         if (!m_content)
         {

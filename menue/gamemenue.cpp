@@ -53,7 +53,7 @@
 
 #include "ui_reader/uifactory.h"
 
-spGameMenue GameMenue::m_pInstance = nullptr;
+spGameMenue GameMenue::m_pGameMenuInstance = nullptr;
 
 GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
@@ -61,8 +61,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pInstance = this;
-    oxygine::Actor::addChild(GameMap::getInstance());
+    m_pGameMenuInstance = this;
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
     loadGameMenue();
@@ -112,8 +111,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pInstance = this;
-    oxygine::Actor::addChild(GameMap::getInstance());
+    m_pGameMenuInstance = this;
     loadHandling();
     loadGameMenue();
     loadUIButtons();
@@ -126,7 +124,7 @@ GameMenue::GameMenue()
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pInstance = this;
+    m_pGameMenuInstance = this;
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
 }
@@ -346,7 +344,12 @@ void GameMenue::loadGameMenue()
         m_IngameInfoBar->addChild(moveButton);
     }
 
-    m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getWidth(), 50);
+    float scale = m_IngameInfoBar->getScaleX();
+    m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getScaledWidth(), 50);
+    initSlidingActor(50, 50,
+                     Settings::getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth() * scale - 100,
+                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getHeight() * scale - 100);
+    m_mapSlidingActor->addChild(GameMap::getInstance());
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);
@@ -517,7 +520,7 @@ bool GameMenue::getGameStarted() const
 GameMenue::~GameMenue()
 {
     Console::print("Deleting game menu singleton", Console::eDEBUG);
-    m_pInstance = nullptr;
+    m_pGameMenuInstance = nullptr;
 }
 
 void GameMenue::editFinishedCanceled()
@@ -1241,7 +1244,7 @@ void GameMenue::updateMinimap()
 
 void GameMenue::victory(qint32 team)
 {
-    if (m_pInstance.get() != nullptr)
+    if (m_pGameMenuInstance.get() != nullptr)
     {
         Console::print("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
@@ -1292,7 +1295,7 @@ void GameMenue::victory(qint32 team)
             AchievementManager::getInstance()->onVictory(team, humanWin);
             Console::print("Leaving Game Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
-            m_pInstance = nullptr;
+            m_pGameMenuInstance = nullptr;
             oxygine::Actor::detach();
         }
     }

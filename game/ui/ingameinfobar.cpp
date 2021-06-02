@@ -76,6 +76,14 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
+    m_pDetailedViewBox = oxygine::spBox9Sprite::create();
+    m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pAnim = pObjectManager->getResAnim("panel_transparent");
+    m_pDetailedViewBox->setResAnim(pAnim);
+    m_pDetailedViewBox->setSize(136, 200);
+    m_pDetailedViewBox->setPosition(-spriteWidth - 8, m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getHeight());
+
     setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
 }
@@ -371,7 +379,6 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     bool HpHidden = false;
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
     spBuilding pBuilding = pTerrain->getBuilding();
     spUnit pUnit = pTerrain->getUnit();
@@ -385,14 +392,8 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
     }
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent");
-    pBox->setResAnim(pAnim);
-    pBox->setSize(136, 200);
-    pBox->setPosition(-spriteWidth - 8, m_pCursorInfoBox->getHeight() - pBox->getHeight());
-    m_pCursorInfoBox->addChild(pBox);
+    m_pDetailedViewBox->removeChildren();
+    m_pCursorInfoBox->addChild(m_pDetailedViewBox);
 
     oxygine::ResAnim* pAnimBase = nullptr;
     oxygine::ResAnim* pAnimFore = nullptr;
@@ -424,19 +425,19 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     pTerrainSprite->setResAnim(pAnimBase);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
-    pBox->addChild(pTerrainSprite);
+    m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(6, 3);
     pTerrainSprite->setResAnim(pAnimBack);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
-    pBox->addChild(pTerrainSprite);
+    m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(6, 3);
     pTerrainSprite->setResAnim(pAnimFore);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
-    pBox->addChild(pTerrainSprite);
+    m_pDetailedViewBox->addChild(pTerrainSprite);
     if (pUnit.get() != nullptr)
     {
         qint32 hp = -1;
@@ -447,7 +448,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, hp, false);
         pBattleAnimationSprite->setPosition(6, 3);
         pBattleAnimationSprite->setPriority(3);
-        pBox->addChild(pBattleAnimationSprite);
+        m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }
     qint32 TerrainDefense = 0;
     if (pUnit.get() != nullptr)
@@ -461,7 +462,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     float defenseY = pTerrainSprite->getY() + 5;
     float startDefenseX = pTerrainSprite->getX() + 5;
     float defenseX = startDefenseX;
-    pAnim = pGameManager->getResAnim("defenseStar");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
     for (qint32 i = 1; i <= TerrainDefense; i++)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -469,7 +470,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         pSprite->setResAnim(pAnim);
         pSprite->setScale(1.5f);
         pSprite->setPriority(4);
-        pBox->addChild(pSprite);
+        m_pDetailedViewBox->addChild(pSprite);
         if (pAnim != nullptr)
         {
             if (i % 4 == 0)
@@ -896,4 +897,9 @@ void IngameInfoBar::syncMinimapPosition()
         }
         m_pMinimapSlider->getContent()->setPosition(newX, newY);
     }
+}
+
+oxygine::spBox9Sprite IngameInfoBar::getDetailedViewBox() const
+{
+    return m_pDetailedViewBox;
 }

@@ -117,8 +117,8 @@ namespace oxygine
         void setAnchorX(float x);
         void setAnchorY(float y);
 
-        virtual void setPosition(const Vector2& pos);
-        virtual void setPosition(float x, float y);
+        void setPosition(const Vector2& pos);
+        void setPosition(float x, float y);
         void setX(float x);
         void setY(float y);
 

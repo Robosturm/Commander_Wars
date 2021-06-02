@@ -62,6 +62,7 @@ namespace oxygine
     DECLARE_SMART(Resource, spResource);
     DECLARE_SMART(STDRenderDelegate, spSTDRenderDelegate);
     DECLARE_SMART(SlidingActor, spSlidingActor);
+    DECLARE_SMART(SlidingActorNoClipRect, spSlidingActorNoClipRect);
     DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(Stage, spStage);
     DECLARE_SMART(TextField, spTextField);

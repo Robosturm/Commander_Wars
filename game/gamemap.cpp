@@ -30,6 +30,7 @@
 #include "gameinput/humanplayerinput.h"
 
 #include "menue/gamemenue.h"
+#include "menue/ingamemenue.h"
 
 #include "objects/loadingscreen.h"
 
@@ -97,18 +98,6 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     }
 }
 
-void GameMap::setPosition(float x, float y)
-{
-    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(x),
-                                                 static_cast<qint32>(y)));
-}
-
-void GameMap::setPosition(const oxygine::Vector2& pos)
-{
-    oxygine::Actor::setPosition(oxygine::Vector2(static_cast<qint32>(pos.x),
-                                                 static_cast<qint32>(pos.y)));
-}
-
 void GameMap::setMapNameFromFilename(QString filename)
 {
     if (m_mapName.isEmpty())
@@ -131,8 +120,7 @@ void GameMap::loadMapData()
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    m_zoom = 2.0f;
-    setScale(m_zoom);
+    setZoom(1);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 }
 
@@ -858,8 +846,13 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        setPosition(Settings::getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f,
-                    Settings::getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f);
+        spInGameMenue pMenu = InGameMenue::getMenuInstance();
+        if (pMenu.get())
+        {
+            //setPosition(Settings::getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f,
+            //             Settings::getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f);
+
+        }
 
         if (updateMinimapPosition)
         {
@@ -877,30 +870,38 @@ QPoint GameMap::getCenteredPosition()
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();
-    // draw point
-    float resX = getPosition().x + x;
-    float resY = getPosition().y + y;
-    float minVisible = 16.0f / m_zoom;
-    if (resX > Settings::getWidth()  - minVisible * m_zoom * m_imagesize)
+    spInGameMenue pMenu = InGameMenue::getMenuInstance();
+    if (pMenu.get())
     {
-        resX = Settings::getWidth() - minVisible * m_zoom * m_imagesize;
+        // draw point
+        oxygine::spActor pActor = pMenu->getMapSlidingActor();
+        qint32 newX = pActor->getX() + x;
+        qint32 newY = pActor->getY() + y;
+        limitPosition(pMenu, newX, newY);
+        pActor->setPosition(newX, newY);
+        emit sigMovedMap();
     }
-    if (resX < -m_zoom * m_imagesize * width + minVisible * m_zoom * m_imagesize)
+}
+
+void GameMap::limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY)
+{
+    oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
+    if (newX < bounds.getLeft())
     {
-        resX = -m_zoom * m_imagesize * width + minVisible * m_zoom * m_imagesize;
+        newX = bounds.getLeft();
     }
-    if (resY > Settings::getHeight() - minVisible * m_zoom * m_imagesize)
+    else if (newX > bounds.getRight())
     {
-        resY = Settings::getHeight() - minVisible * m_zoom * m_imagesize;
+        newX = bounds.getRight();
     }
-    if (resY < -m_zoom * m_imagesize * heigth + minVisible * m_zoom * m_imagesize)
+    if (newY < bounds.getTop())
     {
-        resY = -m_zoom * m_imagesize * heigth + minVisible * m_zoom * m_imagesize;
+        newY = bounds.getTop();
     }
-    setPosition(resX, resY);
-    emit sigMovedMap();
+    else if (newY > bounds.getBottom())
+    {
+        newY = bounds.getBottom();
+    }
 }
 
 void GameMap::setZoom(float zoom)
@@ -927,6 +928,11 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(m_zoom);
+    spInGameMenue pMenu = InGameMenue::getMenuInstance();
+    if (pMenu.get() != nullptr)
+    {
+        pMenu->updateSlidingActorSize();
+    }
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
