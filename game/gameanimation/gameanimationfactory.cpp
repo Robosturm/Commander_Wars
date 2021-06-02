@@ -195,7 +195,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
 
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
-                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
+                battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent)
             {
                 oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("fullscreen_battlebackground", oxygine::ep_ignore_error);
                 if (pAnim != nullptr)
