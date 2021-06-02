@@ -23,15 +23,25 @@ var Constructor = function()
         ret = ret.concat(maps);
         return ret;
     };
-	
-	this.mapFinished = function(campaign, map, result)
+
+    this.mapFinished = function(campaign, map, result)
     {
         // do nothing here
     };
 
     this.getSelectableCOs = function(campaign, map, player, coIndex)
     {
-        return [];
+        var coIds = coSpriteManager. getCoIds();
+        var notBought = userdata.getShopItemsList(GameEnums.ShopItemType_CO, false);
+        var ret = [];
+        for (var i = 0; i < coIds.length; ++i)
+        {
+            if (!notBought.includes(coIds[i]))
+            {
+                ret.push(coIds[i]);
+            }
+        }
+        return ret;
     };
 
     this.getCampaignFinished = function(campaign)
