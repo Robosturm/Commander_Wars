@@ -43,12 +43,12 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     m_pointsAddedLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
     m_pointsAddedLabel->setStyle(style);
-    m_pointsAddedLabel->setText("Score: " + QString::number(m_pointsToAdd));
+    m_pointsAddedLabel->setHtmlText("Score: " + QString::number(m_pointsToAdd));
     m_pointsAddedLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 - 50);
     pSpriteBox->addChild(m_pointsAddedLabel);
     m_totalPointsLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
     m_totalPointsLabel->setStyle(style);
-    m_totalPointsLabel->setText("Total: " + QString::number(m_totalPoints));
+    m_totalPointsLabel->setHtmlText("Total: " + QString::number(m_totalPoints));
     m_totalPointsLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 + 10);
     pSpriteBox->addChild(m_totalPointsLabel);
 
@@ -74,6 +74,6 @@ void DialogValueCounter::updateData()
     {
         m_updateTimer.stop();
     }
-    m_pointsAddedLabel->setText("Score: " + QString::number(m_pointsToAdd));
-    m_totalPointsLabel->setText("Total: " + QString::number(m_totalPoints));
+    m_pointsAddedLabel->setHtmlText("Score: " + QString::number(m_pointsToAdd));
+    m_totalPointsLabel->setHtmlText("Total: " + QString::number(m_totalPoints));
 }

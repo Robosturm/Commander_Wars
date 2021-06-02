@@ -21,13 +21,13 @@ ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, floa
     style.multiline = false;
     m_Label = spLabel::create(width);
     m_Label->setStyle(style);
-    m_Label->setText(text);
+    m_Label->setHtmlText(text);
     addChild(m_Label);
 }
 
 void ProgressInfoBar::setText(QString text)
 {
-    m_Label->setText(text);
+    m_Label->setHtmlText(text);
 }
 
 void ProgressInfoBar::setProgress(qint32 progress)

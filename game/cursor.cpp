@@ -56,7 +56,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
     spInGameMenue pMenu = InGameMenue::getMenuInstance();
     if (pMap.get() != nullptr && pMenu.get() != nullptr)
     {
-        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition();
+        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + pMap->getPosition();
         qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * pMap->getZoom());
         qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * pMap->getZoom());
         m_onMap = pMap->onMap(x, y);

@@ -36,7 +36,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     style.multiline = false;
     spLabel pTextfield = spLabel::create(bannerWidth - 20 - GameMap::defaultImageSize * 2);
     pTextfield->setStyle(style);
-    pTextfield->setText(achievement.name);
+    pTextfield->setHtmlText(achievement.name);
     pTextfield->setPosition(bannerWidth - 5 - pTextfield->getWidth(), 5);
     pButtonBox->addChild(pTextfield);
 

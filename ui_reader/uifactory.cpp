@@ -170,14 +170,14 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
-        pLabel->setText(text);
+        pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
         QString onUpdateLine = getAttribute(childs, attrOnUpdate);
         if (!onUpdateLine.isEmpty())
         {
             connect(pMenu, &Basemenu::sigOnUpdate, pLabel.get(), [=]()
             {
-                pLabel->setText(onUpdate<QString>(onUpdateLine));
+                pLabel->setHtmlText(onUpdate<QString>(onUpdateLine));
             });
         }
         parent->addChild(pLabel);

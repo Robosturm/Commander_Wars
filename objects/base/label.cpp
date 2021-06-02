@@ -38,8 +38,7 @@ void Label::setHeight(float height)
 
 void Label::setText(QString str)
 {    
-    m_textField->setHtmlText(str);
-    setTooltipText(str);    
+    m_textField->setText(str);
 }
 
 void Label::setHtmlText(QString str)

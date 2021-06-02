@@ -52,7 +52,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     {
         spLabel pLabel = spLabel::create(200);
         pLabel->setStyle(style);
-        pLabel->setText("Perk's of CO:");
+        pLabel->setHtmlText("Perk's of CO:");
         pLabel->setPosition(30, 30);
         pSpriteBox->addChild(pLabel);
         QVector<QString> list;
@@ -79,7 +79,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
 
         pLabel = spLabel::create(100);
         pLabel->setStyle(style);
-        pLabel->setText("Fill:");
+        pLabel->setHtmlText("Fill:");
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getWidth() + 10, 30);
         pSpriteBox->addChild(pLabel);
         m_randomFillCheckbox = spCheckbox::create();

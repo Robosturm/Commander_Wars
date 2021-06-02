@@ -66,7 +66,11 @@ namespace oxygine
                 m_pauseMutex.unlock();
             }
         }
-
+        /**
+         * @brief hasCursor
+         * @return
+         */
+        bool hasCursor();
 
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);

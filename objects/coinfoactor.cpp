@@ -508,7 +508,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             perkActor->addChild(pSprite);
             spLabel pLabel = spLabel::create(250);
             pLabel->setStyle(style);
-            pLabel->setText(name);
+            pLabel->setHtmlText(name);
             pLabel->setPosition(GameMap::getImageSize() * 2 + 10, 10);
             perkActor->addChild(pLabel);
             perkActor->setPosition(x, y);

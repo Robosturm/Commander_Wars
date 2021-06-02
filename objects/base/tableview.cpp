@@ -126,7 +126,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
     }
     spLabel pTextfield = spLabel::create(m_widths[i2] - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(m_data[i][i2]);
+    pTextfield->setText(m_data[i][i2]);
     pTextfield->setPosition(x + 5, 13 + (i + 1) * 40);
     addChild(pTextfield);
     if (selectable)

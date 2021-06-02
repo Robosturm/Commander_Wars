@@ -359,6 +359,13 @@ public:
      * @return
      */
     bool getSavegame() const;
+    /**
+     * @brief limitPosition
+     * @param pMenu
+     * @param newX
+     * @param newY
+     */
+    void limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY);
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -826,7 +833,6 @@ public slots:
     void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
     void loadMapData();
-    void limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY);
 private:
     static spGameMap m_pInstance;
     QString m_mapName;

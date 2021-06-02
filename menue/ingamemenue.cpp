@@ -334,7 +334,7 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr && pMap->onMap(x, y))
+    if (pMap.get() != nullptr && pMap->onMap(x, y) && pApp->hasCursor())
     {
         QPoint mousePos = getMousePos(x, y);
         qint32 MousePosX = mousePos.x();
@@ -423,4 +423,8 @@ void InGameMenue::updateSlidingActorSize()
         m_mapSlidingActor->setHeight(mapHeight);
     }
     m_mapSliding->updateDragBounds();
+    qint32 x = m_mapSlidingActor->getX();
+    qint32 y = m_mapSlidingActor->getY();
+    pMap->limitPosition(this, x, y);
+    m_mapSlidingActor->setPosition(x, y);
 }

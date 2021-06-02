@@ -62,7 +62,7 @@ Achievementmenu::Achievementmenu()
     qint32 width = 150;
     spLabel pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Search: "));
+    pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_SearchString = spTextbox::create(Settings::getWidth() - 380);
@@ -98,7 +98,7 @@ Achievementmenu::Achievementmenu()
     }
     pTextfield = spLabel::create(singleWidth);
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
+    pTextfield->setHtmlText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
     pTextfield->setPosition(10, 50);
     addChild(pTextfield);
 
@@ -168,7 +168,7 @@ void Achievementmenu::searchChanged(QString text)
                     //                    m_MainPanel->addItem(pIcon);
                     spLabel pTextfield = spLabel::create(50);
                     pTextfield->setStyle(styleLarge);
-                    pTextfield->setText("?");
+                    pTextfield->setHtmlText("?");
                     pTextfield->setPosition(x, y + 8);
                     m_MainPanel->addItem(pTextfield);
                 }
@@ -177,11 +177,11 @@ void Achievementmenu::searchChanged(QString text)
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
-                    pTextfield->setText("?");
+                    pTextfield->setHtmlText("?");
                 }
                 else
                 {
-                    pTextfield->setText(achievement.name);
+                    pTextfield->setHtmlText(achievement.name);
                 }
                 pTextfield->setPosition(x + 60, y);
                 m_MainPanel->addItem(pTextfield);
@@ -190,11 +190,11 @@ void Achievementmenu::searchChanged(QString text)
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
-                    pTextfield->setText("?");
+                    pTextfield->setHtmlText("?");
                 }
                 else
                 {
-                    pTextfield->setText(achievement.description);
+                    pTextfield->setHtmlText(achievement.description);
                 }
                 pTextfield->setPosition(x + 60, y + 40);
                 m_MainPanel->addItem(pTextfield);

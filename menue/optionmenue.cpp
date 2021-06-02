@@ -746,7 +746,7 @@ void OptionMenue::showMods()
     spLabel pLabel = spLabel::create(250);
     style.multiline = false;
     pLabel->setStyle(style);
-    pLabel->setText(tr("Advance Wars Game:"));
+    pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
     QVector<QString> versions = {tr("Unkown"),
                                  tr("Commander Wars"),

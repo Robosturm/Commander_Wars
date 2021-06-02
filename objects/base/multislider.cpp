@@ -56,8 +56,11 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
         addChild(m_Slider[i]);
         char unlockChar = FontManager::SpecialChars::unlockChar;
         char lockChar = FontManager::SpecialChars::lockChar;
-        oxygine::spButton pLockButton = pObjectManager->createButton(QString(unlockChar), 40, "Locks this slider. So the value can't be changed.", "button_square");
+        oxygine::spButton pLockButton = pObjectManager->createButton("", 40, "Locks this slider. So the value can't be changed.", "button_square");
+        Label* pLabel = static_cast<Label*>(pLockButton->getFirstChild()->getFirstChild().get());
+        pLabel->setText(QString(unlockChar));
         pLockButton->getFirstChild()->setY(-5);
+        pLockButton->getFirstChild()->setX(-8);
         qint32 x = m_Slider[i]->getX() + m_Slider[i]->getWidth() + 10;
         pLockButton->setPosition(x, i * 40);
         pLockButton->addClickListener([=](oxygine::Event*)

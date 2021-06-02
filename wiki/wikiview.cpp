@@ -22,7 +22,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     qint32 width = 150;
     spLabel pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Search: "));
+    pTextfield->setHtmlText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_SearchString = spTextbox::create(viewWidth - 380);
@@ -42,7 +42,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Tags: "));
+    pTextfield->setHtmlText(tr("Tags: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_Tags = spDropDownmenu::create(300, WikiDatabase::getInstance()->getTags());

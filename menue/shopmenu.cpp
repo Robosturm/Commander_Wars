@@ -74,7 +74,7 @@ Shopmenu::Shopmenu()
 
     const qint32 width = 150;
     spLabel pLabel = spLabel::create(width);
-    pLabel->setText(tr("Filter:"));
+    pLabel->setHtmlText(tr("Filter:"));
     pLabel->setPosition(10, 10);
     addChild(pLabel);
     QVector<QString> list = {tr("All"), tr("CO's"), tr("CO Skins"), tr("Maps"), tr("Units"), tr("Perks")};
@@ -96,22 +96,22 @@ Shopmenu::Shopmenu()
     connect(this, &Shopmenu::sigShowWikipage, this, &Shopmenu::showWikipage, Qt::QueuedConnection);
 
     pLabel = spLabel::create(width - 30);
-    pLabel->setText(tr("Points:"));
+    pLabel->setHtmlText(tr("Points:"));
     pLabel->setPosition(10, 10);
     pButtonBox->addChild(pLabel);
 
     qint32 pointsSize = Settings::getWidth() - 10 * 7 - m_buyButton->getWidth() - pButtonExit->getWidth() - width * 2;
     m_points = spLabel::create(pointsSize / 2);
-    m_points->setText(QString::number(Userdata::getInstance()->getCredtis()));
+    m_points->setHtmlText(QString::number(Userdata::getInstance()->getCredtis()));
     m_points->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
     pButtonBox->addChild(m_points);
 
     pLabel = spLabel::create(width + 30);
-    pLabel->setText(tr("Total Price:"));
+    pLabel->setHtmlText(tr("Total Price:"));
     pLabel->setPosition(m_points->getX() + m_points->getWidth() + 10, 10);
     pButtonBox->addChild(pLabel);
     m_costs = spLabel::create(pointsSize / 2);
-    m_costs->setText(QString::number(0));
+    m_costs->setHtmlText(QString::number(0));
     m_costs->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
     pButtonBox->addChild(m_costs);
 
@@ -170,7 +170,7 @@ void Shopmenu::filterChanged(qint32 item)
         m_pPanel->addItem(pButton);
         spLabel pLabel = spLabel::create(width);
         pLabel->setPosition(95, y);
-        pLabel->setText(QString::number(costs) + " " + item.name);
+        pLabel->setHtmlText(QString::number(costs) + " " + item.name);
         m_pPanel->addItem(pLabel);
         y += 40;
     }
@@ -188,7 +188,7 @@ QVector<Userdata::ShopItem> Shopmenu::getItems(qint32 itemType)
 void Shopmenu::updateItemCosts(qint32 costChange)
 {
     m_pointCosts += costChange;
-    m_costs->setText(QString::number(m_pointCosts));
+    m_costs->setHtmlText(QString::number(m_pointCosts));
     if (m_pointCosts > Userdata::getInstance()->getCredtis() || m_pointCosts <= 0)
     {
         m_buyButton->setEnabled(false);
@@ -215,7 +215,7 @@ void Shopmenu::buy()
         }
     }
     pUserdata->addCredtis(-m_pointCosts);
-    m_points->setText(QString::number(Userdata::getInstance()->getCredtis()));
+    m_points->setHtmlText(QString::number(Userdata::getInstance()->getCredtis()));
     pUserdata->storeUser();
     filterChanged(0);
     updateItemCosts(0);

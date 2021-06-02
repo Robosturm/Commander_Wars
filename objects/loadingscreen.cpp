@@ -66,8 +66,8 @@ void LoadingScreen::show()
     m_loadingProgress->setStyle(style);
     m_loadingProgress->setPosition(Settings::getWidth() / 2 - 40, Settings::getHeight() - 50);
     addChild(m_loadingProgress);
-    m_workText->setText("Loading...");
-    m_loadingProgress->setText("0 %");
+    m_workText->setHtmlText("Loading...");
+    m_loadingProgress->setHtmlText("0 %");
     m_LoadingBar->setWidth(1);
     setVisible(true);
     
@@ -76,16 +76,15 @@ void LoadingScreen::show()
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
-    m_workText->setText(workText);
-    m_loadingProgress->setText(QString::number(value) + " %");
+    m_workText->setHtmlText(workText);
+    m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
 
 }
 
 void LoadingScreen::setWorktext(QString workText)
 {
-    m_workText->setText(workText);
-
+    m_workText->setHtmlText(workText);
 }
 
 
