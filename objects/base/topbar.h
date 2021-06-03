@@ -5,6 +5,8 @@
 #include <QVector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "objects/base/tooltip.h"
+#include "objects/base/panel.h"
 
 class Topbar;
 typedef oxygine::intrusive_ptr<Topbar> spTopbar;
@@ -28,6 +30,10 @@ public:
      */
     void addGroup(QString text);
     /**
+     * @brief finishCreation
+     */
+    void finishCreation();
+    /**
      * @brief hide
      */
     void hide();
@@ -40,8 +46,9 @@ signals:
 public slots:
     virtual void focusedLost() override;
 private:
-    QVector<QVector<oxygine::spBox9Sprite>> m_Items;
+    QVector<QVector<spTooltip>> m_Items;
     QVector<oxygine::spButton> m_Buttons;    
+    QVector<spPanel> m_ItemPanels;
     oxygine::spBox9Sprite m_pSpriteBox;
 };
 

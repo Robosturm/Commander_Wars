@@ -46,20 +46,34 @@ EditorMenue::EditorMenue()
     setObjectName("EditorMenue");
     Mainapp* pApp = Mainapp::getInstance();
     qint32 selectionWidth = Settings::getWidth() / 4;
+    bool smallScreen = Settings::getSmallScreenDevice();
+    if (smallScreen)
+    {
+        selectionWidth = Settings::getWidth() * 3 / 4;
+    }
     if (selectionWidth < 200)
     {
         selectionWidth = 200;
     }
-    m_autoScrollBorder = QRect(50, 125, selectionWidth, 50);
-    initSlidingActor(50, 100, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
+    if (smallScreen)
+    {
+        m_autoScrollBorder = QRect(50, 125, 50, 50);
+        initSlidingActor(50, 100, Settings::getWidth() - 100, Settings::getHeight() - 175);
+    }
+    else
+    {
+        m_autoScrollBorder = QRect(50, 125, selectionWidth, 50);
+        initSlidingActor(50, 100, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
+    }
     m_mapSlidingActor->addChild(GameMap::getInstance());
+    m_mapSliding->setLocked(true);
     loadHandling();
     changeBackground("editormenu");
     moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
 
-    m_EditorSelection = spEditorSelection::create(selectionWidth);
+    m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen);
     addChild(m_EditorSelection);
 
     m_Topbar = spTopbar::create(0, Settings::getWidth());
@@ -71,7 +85,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0, tr("Saves a map to a give file."));
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0, tr("Loads a map to a give file."));
-    if (Settings::getSmallScreenDevice())
+    if (!Settings::getSmallScreenDevice())
     {
         m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
         m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
@@ -108,6 +122,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
+    m_Topbar->finishCreation();
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

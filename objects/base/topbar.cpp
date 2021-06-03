@@ -3,8 +3,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/base/tooltip.h"
-
 Topbar::Topbar(qint32 x, qint32 width)
 {
     setObjectName("Topbar");
@@ -34,12 +32,8 @@ void Topbar::hide()
 {    
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
-        for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
-        {
-            m_Items.at(i).at(i2)->setVisible(false);
-        }
-    }
-    
+        m_ItemPanels[i]->setVisible(false);
+    }    
 }
 
 void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip)
@@ -64,16 +58,14 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
-    textField->attachTo(clipRect);
-    clipRect->attachTo(pBox);
+    clipRect->addChild(textField);
+    pBox->addChild(clipRect);
     textField->setY(5);
     pBox->setSize(300, 40);
     textField->setSize(pBox->getSize());
-    pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group).size());
-    m_Items[group].append(pBox);
-    pBox->setVisible(false);
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pTooltip->addChild(pBox);
+    pTooltip->setPosition(0, 40 * m_Items.at(group).size());
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -87,17 +79,12 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     {
         for (qint32 i = 0; i < m_Items.size(); i++)
         {
-            for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
-            {
-                m_Items.at(i).at(i2)->setVisible(false);
-            }
+            m_ItemPanels[i]->setVisible(false);
         }
         emit pTooltip->sigHideTooltip();
         emit sigItemClicked(itemID);
     });
-    addChild(pTooltip);
-
-    
+    m_Items[group].append(pTooltip);
 }
 
 void Topbar::addGroup(QString text)
@@ -126,22 +113,38 @@ void Topbar::addGroup(QString text)
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         // hide selection
-        for (qint32 i = 0; i < m_Items.size(); i++)
+        for (qint32 i = 0; i < m_ItemPanels.size(); i++)
         {
-            for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
-            {
-                m_Items.at(i).at(i2)->setVisible(false);
-            }
+            m_ItemPanels[i]->setVisible(false);
         }
         // show selected selection
-        for (qint32 i = 0; i < m_Items.at(groupID).size(); i++)
-        {
-            m_Items.at(groupID).at(i)->setVisible(true);
-        }
+        m_ItemPanels[groupID]->setVisible(true);
         emit sigFocused();
     });
     m_Buttons.append(pButton);
-    m_Items.append(QVector<oxygine::spBox9Sprite>());
+    m_Items.append(QVector<spTooltip>());
+}
 
-    
+void Topbar::finishCreation()
+{
+    qint32 maxHeight = Settings::getHeight() / 2;
+    for (qint32 i = 0; i < m_Items.size(); ++i)
+    {
+        qint32 panelHeight = m_Items[i].size() + 1 * 40;
+        if (maxHeight > (m_Items[i].size() + 1 * 40))
+        {
+            panelHeight = maxHeight;
+        }
+        QSize size(333, panelHeight);
+        spPanel pPanel = spPanel::create(false, size, QSize(size.width(), m_Items[i].size() * 40));
+        pPanel->setSubComponent(true);
+        pPanel->setVisible(false);
+        for (auto & item : m_Items[i])
+        {
+            pPanel->addItem(item);
+        }
+        addChild(pPanel);
+        pPanel->setPosition(m_Buttons.at(i)->getX(), 65);
+        m_ItemPanels.append(pPanel);
+    }
 }

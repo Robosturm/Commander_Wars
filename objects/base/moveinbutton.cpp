@@ -9,29 +9,29 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
       m_moveInSize(moveInSize),
       m_direction(direction)
 {
-    oxygine::spButton pButton = oxygine::spButton::create();
-    pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
-    pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    oxygine::Sprite* ptr = pButton.get();
-    pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pButton = oxygine::spButton::create();
+    m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    oxygine::Sprite* ptr = m_pButton.get();
+    m_pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         addMoveTween();
     });
-    pButton->setFlippedX(true);
-    pButton->setScale(2.0f);
-    addChild(pButton);
-    setX(m_direction * (pButton->getScaledWidth() + 5));
+    m_pButton->setFlippedX(true);
+    m_pButton->setScale(2.0f);
+    addChild(m_pButton);
+    setX(m_direction * (m_pButton->getScaledWidth() + 5));
     if (startY < 0)
     {
-        setY(pParent->getHeight() / 2 - pButton->getHeight() / 2);
+        setY(pParent->getHeight() / 2 - m_pButton->getHeight() / 2);
     }
     pParent->addChild(this);
 }
@@ -54,6 +54,7 @@ void MoveInButton::addMoveTween()
         pTween->addDoneCallback([=](oxygine::Event*)
         {
             m_movedOut = !m_movedOut;
+            m_pButton->setFlippedX(!m_movedOut);
             m_finished = true;
             emit sigMoved();
         });

@@ -17,7 +17,7 @@
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;
 
-EditorSelection::EditorSelection(qint32 width)
+EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     : QObject()
 {
     setObjectName("EditorSelection");
@@ -28,18 +28,29 @@ EditorSelection::EditorSelection(qint32 width)
     setWidth(width);
     setHeight(Settings::getHeight() - 80);
     setPosition(Settings::getWidth() - width, 80);
-    m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
-    m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
-    m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight);
-    m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);
-    m_PlacementSelectionClip = oxygine::spClipRectActor::create();
+    if (smallScreen)
+    {
+        m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width / 2, m_selectionHeight);
+        m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width / 2, m_selectionHeight);
+        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width / 2, m_selectionHeight);
+        m_BoxPlacementSelection = createV9Box(width / 2, m_startHPlacementSize, width / 2, Settings::getHeight() -  80);
+    }
+    else
+    {
+        m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
+        m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
+        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight);
+        m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);
+    }
+
+    m_PlacementSelectionClip = oxygine::spSlidingActor::create();
     m_PlacementSelectionClip->setPosition(10, 50);
     m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getWidth() - 20,
                                         m_BoxPlacementSelection->getHeight() - 100);
     m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = oxygine::spActor::create();
     m_PlacementActor->setY(-GameMap::getImageSize());
-    m_PlacementSelectionClip->addChild(m_PlacementActor);
+    m_PlacementSelectionClip->setContent(m_PlacementActor);
 
     m_labelWidth = m_PlacementSelectionClip->getWidth() - GameMap::getImageSize() - m_frameSize - m_frameSize;
     m_xCount = m_labelWidth / (GameMap::getImageSize() * m_xFactor) + 1;
@@ -257,7 +268,7 @@ void EditorSelection::createBoxPlacementSize()
         m_CurrentSelectorSize->setResAnim(pAnimMarker);
     }
     m_BoxPlacementSize->addChild(m_CurrentSelectorSize);
-    m_CurrentSelectorSize->setPosition(m_frameSize, yStartPos);
+    m_CurrentSelectorSize->setPosition(m_frameSize + xChange, yStartPos);
 
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+none");
     oxygine::spSprite pSpriteNone = oxygine::spSprite::create();
@@ -574,6 +585,7 @@ void EditorSelection::updateTerrainView()
     }
     m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
+    m_PlacementSelectionClip->updateDragBounds();
     selectTerrain(0);
     
 }
@@ -588,6 +600,7 @@ void EditorSelection::updateBuildingView()
     }
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
+    m_PlacementSelectionClip->updateDragBounds();
     selectBuilding(0);
     
 }
@@ -606,6 +619,7 @@ void EditorSelection::updateUnitView()
     }
     m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
+    m_PlacementSelectionClip->updateDragBounds();
     selectUnit(0);
     
 }

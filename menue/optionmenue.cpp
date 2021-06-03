@@ -416,6 +416,7 @@ void OptionMenue::showSettings()
     pCheckbox->setTooltipText(tr("If checked several ui elements are hidden and get shown with an additional button.\nWarning disabling this on a smaller screen may lead to unplayable game experience."));
     pCheckbox->setChecked(Settings::getSmallScreenDevice());
     pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setSmallScreenDevice, Qt::QueuedConnection);
     if (Settings::hasSmallScreen())
     {
         pCheckbox->setEnabled(false);

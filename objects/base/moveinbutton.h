@@ -24,5 +24,6 @@ class MoveInButton : public QObject, public oxygine::Actor
         qint32 m_direction{-1};
         bool m_finished{true};
         bool m_movedOut{false};
+        oxygine::spButton m_pButton;
 };
 
