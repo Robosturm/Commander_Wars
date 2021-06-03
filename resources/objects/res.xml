@@ -20,6 +20,7 @@
 		<image file="editor+fill.png"/>
 		<image file="editor+medium.png"/>
 		<image file="editor+small.png"/>
+		<image file="editor+none.png"/>
 		<image file="editor+special.png"/>
 		<image file="editor+terrain.png"/>
 		<image file="editor+unit.png"/>

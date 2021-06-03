@@ -30,7 +30,9 @@ namespace oxygine
         bool m_loadCompletely;
         bool m_useLoadCounter;
         bool m_shortenIDS;
+        bool m_addTransparentBorder{false};
         QString m_prebuilFolder;
+
     };
 
     class Resources: public Resource

@@ -39,7 +39,6 @@ namespace oxygine
         void _load(LoadResourcesContext*) override;
         void _unload() override;
 
-        //void loadAtlas(CreateResourceContext& context);
         spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
         static void init_resAnim(spResAnim rs, QString file, QDomElement node);
         void loadBase(QDomElement node);

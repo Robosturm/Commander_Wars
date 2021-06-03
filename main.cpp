@@ -172,6 +172,7 @@ QQmlDebuggingEnabler enabler;
     app.setApplicationVersion(Mainapp::getGameVersion());
     Settings::loadSettings();
 
+
     Mainapp window;
     window.setTitle("Commander Wars");
     QStringList args = app.arguments();

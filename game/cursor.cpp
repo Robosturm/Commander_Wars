@@ -53,15 +53,15 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
     spGameMap pMap = GameMap::getInstance();
-    spInGameMenue pMenu = InGameMenue::getMenuInstance();
-    if (pMap.get() != nullptr && pMenu.get() != nullptr)
+    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    if (pMap.get() != nullptr && pMenu != nullptr)
     {
         auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + pMap->getPosition();
         qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * pMap->getZoom());
         qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * pMap->getZoom());
         m_onMap = pMap->onMap(x, y);
         if (m_onMap)
-        {
+        {            
             // play tick sound when changing the field
             if ((x != m_MapPointX) ||
                 (y != m_MapPointY))

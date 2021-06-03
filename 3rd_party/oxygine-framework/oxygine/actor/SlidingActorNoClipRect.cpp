@@ -191,7 +191,7 @@ namespace oxygine
 
     void SlidingActorNoClipRect::_newEvent(Event* event)
     {
-        if (!m_content)
+        if (!m_content || !m_enabled)
         {
             return;
         }

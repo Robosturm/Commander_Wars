@@ -846,17 +846,20 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
     if (onMap(x, y))
     {
         // draw point
-        spInGameMenue pMenu = InGameMenue::getMenuInstance();
-        if (pMenu.get())
+        InGameMenue* pMenu = InGameMenue::getMenuInstance();
+        if (pMenu != nullptr)
         {
             oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
             oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
-            qint32 newX = Settings::getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f - pMapSliding->getX();
-            qint32 newY = Settings::getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f - pMapSliding->getY();
-            limitPosition(pMenu, newX, newY);
-            pMapSlidingActor->setPosition(newX, newY);
+            if (pMapSliding.get() != nullptr &&
+                pMapSlidingActor.get() != nullptr)
+            {
+                qint32 newX = pMapSliding->getWidth() / 2.0f - x * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                qint32 newY = pMapSliding->getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
+                limitPosition(pMenu, newX, newY);
+                pMapSlidingActor->setPosition(newX, newY);
+            }
         }
-
         if (updateMinimapPosition)
         {
             emit sigMovedMap();
@@ -866,23 +869,23 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
 
 QPoint GameMap::getCenteredPosition()
 {
-    spInGameMenue pMenu = InGameMenue::getMenuInstance();
+    InGameMenue* pMenu = InGameMenue::getMenuInstance();
     qint32 x = 0;
     qint32 y = 0;
-    if (pMenu.get())
+    if (pMenu != nullptr)
     {
         oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
         oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
-        x = -(pMapSlidingActor->getX() - Settings::getWidth() / 2.0f + m_imagesize / 2.0f + pMapSliding->getX()) / (getZoom() * m_imagesize);
-        y = -(pMapSlidingActor->getY() - Settings::getHeight() / 2.0f + m_imagesize / 2.0f + pMapSliding->getY()) / (getZoom() * m_imagesize);
+        x = -(pMapSlidingActor->getX() - pMapSliding->getWidth() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
+        y = -(pMapSlidingActor->getY() - pMapSliding->getHeight() / 2.0f + m_imagesize / 2.0f) / (getZoom() * m_imagesize);
     }
     return QPoint(x, y);
 }
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
-    spInGameMenue pMenu = InGameMenue::getMenuInstance();
-    if (pMenu.get())
+    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    if (pMenu != nullptr)
     {
         // draw point
         oxygine::spActor pActor = pMenu->getMapSlidingActor();
@@ -894,7 +897,7 @@ void GameMap::moveMap(qint32 x, qint32 y)
     }
 }
 
-void GameMap::limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY)
+void GameMap::limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY)
 {
     oxygine::RectF bounds = pMenu->getMapSliding()->getDragBounds();
     if (newX < bounds.getLeft())
@@ -939,8 +942,8 @@ void GameMap::setZoom(float zoom)
         // all fine
     }
     setScale(m_zoom);
-    spInGameMenue pMenu = InGameMenue::getMenuInstance();
-    if (pMenu.get() != nullptr)
+    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    if (pMenu != nullptr)
     {
         pMenu->updateSlidingActorSize();
     }

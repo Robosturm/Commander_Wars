@@ -365,7 +365,7 @@ public:
      * @param newX
      * @param newY
      */
-    void limitPosition(spInGameMenue pMenu, qint32 & newX, qint32 & newY);
+    void limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY);
 signals:
     void signalExitGame();
     void signalSaveGame();

@@ -36,14 +36,14 @@ public:
      */
     ENUM_CLASS PlacementSize
     {
-        Small = 0,
+        None = 0,
+        Small,
         Medium,
         Big,
         Fill
     };
 
-    explicit EditorSelection();
-
+    explicit EditorSelection(qint32 width);
 
     inline EditorMode getCurrentMode() const
     {
@@ -174,8 +174,8 @@ private:
 
 private:
     // small hints for the ui
-    static const qint32 m_frameSize = 30;
-    static const qint32 m_selectionHeight = 80;
+    static const qint32 m_frameSize = 10;
+    static const qint32 m_selectionHeight = 60;
     static const qint32 m_startHPlacementSize = 0;
     static const qint32 m_startHSelectionType = m_startHPlacementSize + m_selectionHeight;
     static const qint32 m_startHSelectedPlayer = m_startHSelectionType + m_startHPlacementSize + m_selectionHeight;

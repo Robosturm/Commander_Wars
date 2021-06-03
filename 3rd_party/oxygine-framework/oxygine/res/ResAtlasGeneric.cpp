@@ -332,7 +332,10 @@ namespace oxygine
             {
                 columns = 1;
             }
-            SpriteCreator::addTransparentBorder(img, columns, rows);
+            if (context.m_options->m_addTransparentBorder)
+            {
+                SpriteCreator::addTransparentBorder(img, columns, rows);
+            }
             if (frame_width > 0)
             {
                 columns = img.width() / frame_width;
@@ -354,12 +357,14 @@ namespace oxygine
             frames.reserve(frames_count);
             qint32 width = frame_width;
             qint32 height = frame_height;
-            if (rows > 1 || columns > 1)
+            if (context.m_options->m_addTransparentBorder)
             {
-                frame_width -= 1;
-                frame_height -= 1;
+                if (rows > 1 || columns > 1)
+                {
+                    frame_width -= 1;
+                    frame_height -= 1;
+                }
             }
-
             mt.init(img, true);
             im = mt.lock();
 

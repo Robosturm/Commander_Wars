@@ -1750,7 +1750,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     oxygine::spResAnim pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
-        pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), true);
         if (pCOAnim.get() != nullptr)
         {
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
@@ -1760,7 +1760,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
-        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
         if (pCOAnim.get() != nullptr)
         {
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
@@ -1770,7 +1770,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
-        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
         if (pCOAnim.get() != nullptr)
         {
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));

@@ -45,8 +45,13 @@ EditorMenue::EditorMenue()
 {
     setObjectName("EditorMenue");
     Mainapp* pApp = Mainapp::getInstance();
-    m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
-    initSlidingActor(50, 50, Settings::getWidth() * 3 / 4 - 100, Settings::getHeight() - 100);
+    qint32 selectionWidth = Settings::getWidth() / 4;
+    if (selectionWidth < 200)
+    {
+        selectionWidth = 200;
+    }
+    m_autoScrollBorder = QRect(50, 125, selectionWidth, 50);
+    initSlidingActor(50, 100, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
     m_mapSlidingActor->addChild(GameMap::getInstance());
     loadHandling();
     changeBackground("editormenu");
@@ -54,7 +59,7 @@ EditorMenue::EditorMenue()
     m_pInstance = this;
 
 
-    m_EditorSelection = spEditorSelection::create();
+    m_EditorSelection = spEditorSelection::create(selectionWidth);
     addChild(m_EditorSelection);
 
     m_Topbar = spTopbar::create(0, Settings::getWidth());
@@ -66,8 +71,11 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0, tr("Saves a map to a give file."));
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0, tr("Loads a map to a give file."));
-    m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
-    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+    if (Settings::getSmallScreenDevice())
+    {
+        m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
+        m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+    }
     m_Topbar->addItem(tr("Undo Ctrl+Z"), "UNDO", 0, tr("Undo the last map modification."));
     m_Topbar->addItem(tr("Redo Ctrl+Y"), "REDO", 0, tr("Redo the last undo command."));
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0, tr("Exits the editor"));
@@ -1184,6 +1192,10 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     spGameMap pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
     {
+        case EditorSelection::PlacementSize::None:
+        {
+            break;
+        }
         case EditorSelection::PlacementSize::Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
@@ -1245,6 +1257,10 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
+        case EditorSelection::PlacementSize::None:
+        {
+            break;
+        }
         case EditorSelection::PlacementSize::Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
@@ -1319,6 +1335,10 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
+        case EditorSelection::PlacementSize::None:
+        {
+            break;
+        }
         case EditorSelection::PlacementSize::Small:
         {
             points = PathFindingSystem::getFields(x, y, 0, 0);
@@ -1519,6 +1539,7 @@ void EditorMenue::selectionChanged()
     Console::print("EditorMenue::selectionChanged", Console::eDEBUG);
     if (m_EditorMode == EditorModes::PlaceEditorSelection)
     {
+        m_mapSliding->setLocked(true);
         if (m_EditorSelection->getCurrentMode() == EditorSelection::EditorMode::Building)
         {
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
@@ -1531,6 +1552,12 @@ void EditorMenue::selectionChanged()
         }
         switch (m_EditorSelection->getSizeMode())
         {
+            case EditorSelection::PlacementSize::None:
+            {
+                m_mapSliding->setLocked(false);
+                createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
+                break;
+            }
             case EditorSelection::PlacementSize::Medium:
             {
                 createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
@@ -1551,6 +1578,7 @@ void EditorMenue::selectionChanged()
     }
     else if (m_EditorMode == EditorModes::CopySelection)
     {
+        m_mapSliding->setLocked(false);
         createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(m_copyRect.width() - 1, m_copyRect.height() - 1), CursorModes::Rect);
     }
 }

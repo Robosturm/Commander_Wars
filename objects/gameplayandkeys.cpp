@@ -410,7 +410,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     {
         Settings::setSimpleDeselect(value);
     });
-    if (Settings::getSmallScreenDevice())
+    if (Settings::hasSmallScreen())
     {
         pCheckbox->setEnabled(false);
     }

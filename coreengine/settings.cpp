@@ -785,11 +785,14 @@ void Settings::loadSettings()
     m_borderless = settings.value("borderless", true).toBool();
     m_fullscreen = settings.value("fullscreen", false).toBool();
     m_record = settings.value("recordgames", false).toBool();
-#ifdef Q_OS_ANDROID
-    m_smallScreenDevice = settings.value("SmallScreenDevice", true).toBool();
-#else
-    m_smallScreenDevice = settings.value("SmallScreenDevice", false).toBool();
-#endif
+    if (hasSmallScreen())
+    {
+        m_smallScreenDevice = true;
+    }
+    else
+    {
+        m_smallScreenDevice = settings.value("SmallScreenDevice", false).toBool();
+    }
 
     settings.endGroup();
 
@@ -1264,11 +1267,14 @@ void Settings::loadSettings()
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
-#ifdef Q_OS_ANDROID
-    m_simpleDeselect = settings.value("SimpleDeselect", true).toBool();
-#else
-    m_simpleDeselect = settings.value("SimpleDeselect", false).toBool();
-#endif
+    if (Settings::hasSmallScreen())
+    {
+        m_simpleDeselect = true;
+    }
+    else
+    {
+        m_simpleDeselect = settings.value("SimpleDeselect", false).toBool();
+    }
 
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
@@ -1982,4 +1988,16 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
             }
         }
     }
+}
+
+bool Settings::hasSmallScreen()
+{
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QRect screenSize = screen->availableGeometry();
+    if (screenSize.width() < 800 ||
+        screenSize.height() < 600)
+    {
+        return true;
+    }
+    return false;
 }

@@ -683,7 +683,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
     if (pMenu.get() != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
-        float posX = x * GameMap::getImageSize() * pMap->getZoom() + pMap->getX();
+        oxygine::spSlidingActorNoClipRect pMapSliding = pMenu->getMapSliding();
+        oxygine::spActor pMapSlidingActor = pMenu->getMapSlidingActor();
+        float posX = x * GameMap::getImageSize() * pMap->getZoom() + pMap->getX() + pMapSliding->getX() + pMapSlidingActor->getX();
         if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - pMenu->getGameInfoBar()->getWidth())
         {
             posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - pMenu->getGameInfoBar()->getWidth();
@@ -692,7 +694,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         {
             posX = 10;
         }
-        float posY = y * GameMap::getImageSize() * pMap->getZoom() + pMap->getY();
+        float posY = y * GameMap::getImageSize() * pMap->getZoom() + pMap->getY() + pMapSliding->getY() + pMapSlidingActor->getY();
         if (posY < 10)
         {
             posY = 10;

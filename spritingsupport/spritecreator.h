@@ -53,7 +53,7 @@ public:
      * @return
      */
     static oxygine::spResAnim createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
-                                        qint32 columns, qint32  rows, float scaleFactor);
+                                        qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
     /**
      * @brief createAnim
      * @param input
@@ -65,7 +65,7 @@ public:
      * @return
      */
     static oxygine::spResAnim createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
-                                        bool useColorBox, qint32 columns, qint32  rows, float scaleFactor);
+                                        bool useColorBox, qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
     /**
      * @brief createSprite
      * @param input

@@ -20,13 +20,16 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     m_Colorfield = oxygine::spColorRectSprite::create();
-    m_Colorfield->addClickListener([=](oxygine::Event* event)
+    if (Settings::getSmallScreenDevice())
     {
-        event->stopPropagation();
-        looseFocusInternal();
-        emit sigHideDropDown();
-        emit sigShowColorDialog();
-    });
+        m_Colorfield->addClickListener([=](oxygine::Event* event)
+        {
+            event->stopPropagation();
+            looseFocusInternal();
+            emit sigHideDropDown();
+            emit sigShowColorDialog();
+        });
+    }
     connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);
     m_Colorfield->setWidth(m_Box->getWidth() - 20 - 45);
     m_Colorfield->setHeight(m_Box->getHeight() - 20);

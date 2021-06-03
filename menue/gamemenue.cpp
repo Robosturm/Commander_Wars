@@ -326,8 +326,6 @@ void GameMenue::loadGameMenue()
     {
         pMap->getPlayer(i)->getBaseGameInput()->init();
     }
-    pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
-
     // back to normal code
     m_pPlayerinfo = spPlayerInfo::create();
     m_pPlayerinfo->updateData();
@@ -346,10 +344,11 @@ void GameMenue::loadGameMenue()
 
     float scale = m_IngameInfoBar->getScaleX();
     m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getScaledWidth(), 50);
-    initSlidingActor(50, 50,
+    initSlidingActor(50, 75,
                      Settings::getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth() * scale - 100,
-                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getHeight() * scale - 100);
-    m_mapSlidingActor->addChild(GameMap::getInstance());
+                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getHeight() * scale - 125);
+    m_mapSlidingActor->addChild(pMap);
+    pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);

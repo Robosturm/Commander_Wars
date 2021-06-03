@@ -32,7 +32,7 @@ namespace oxygine
         {
             m_quit = true;
         }
-        void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns = 1, qint32  rows = 1, float scaleFactor = 1.0f);
+        void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
 
         virtual bool isWorker() = 0;
         /**
@@ -73,7 +73,7 @@ namespace oxygine
         bool hasCursor();
 
     signals:
-        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
+        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void sigLoadRessources();
         void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
@@ -104,7 +104,7 @@ namespace oxygine
         void setGamma(float gamma);
         virtual void initializeGL() override;
     protected slots:
-        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
+        void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void loadRessources(){}
     protected:
         virtual void registerResourceTypes();

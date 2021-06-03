@@ -312,7 +312,7 @@ void GameAnimationDialog::loadBackground(QString file)
         img = QImage(oxygine::Resource::RCC_PREFIX_PATH + file);
     }
     oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-    Mainapp::getInstance()->loadResAnim(pAnim, img);
+    Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
     m_BackgroundAnim = pAnim;
     m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
     if (pAnim.get() != nullptr)

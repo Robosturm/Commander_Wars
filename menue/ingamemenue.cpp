@@ -14,7 +14,6 @@ InGameMenue* InGameMenue::m_pInstance = nullptr;
 
 InGameMenue::InGameMenue()
 {
-    setObjectName("InGameMenue");
     m_MapMoveThread.setObjectName("MapMoveThread");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
@@ -29,7 +28,6 @@ InGameMenue::InGameMenue()
 
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame)
 {
-    setObjectName("InGameMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
@@ -218,33 +216,40 @@ void InGameMenue::autoScroll()
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
         m_Focused &&
-        Settings::getAutoScrolling())
+        Settings::getAutoScrolling() &&
+        pApp->hasCursor())
     {
         QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
         spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr)
+        if (pMap.get() != nullptr &&
+            m_mapSliding.get() != nullptr &&
+            m_mapSlidingActor.get() != nullptr)
         {
             qint32 moveX = 0;
             qint32 moveY = 0;
+            qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
+            qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
+            Console::print("InGameMenue::autoScroll() x " + QString::number(mapX) + " y " + QString::number(mapY), Console::eDEBUG);
+
             if ((curPos.x() < m_autoScrollBorder.x()) &&
-                (pMap->getX() < m_autoScrollBorder.x()))
+                (mapX < m_autoScrollBorder.x()))
             {
                 moveX = GameMap::getImageSize() * pMap->getZoom();
             }
             else if ((curPos.x() < Settings::getWidth() - m_autoScrollBorder.width()) &&
                      (curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - 50) &&
-                     (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
+                     (mapX + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
             {
                 moveX = -GameMap::getImageSize() * pMap->getZoom();
             }
 
             if ((curPos.y() < m_autoScrollBorder.y()) &&
-                (pMap->getY() < m_autoScrollBorder.y()))
+                (mapY < m_autoScrollBorder.y()))
             {
                 moveY = GameMap::getImageSize() * pMap->getZoom();
             }
             else if ((curPos.y() > Settings::getHeight() - m_autoScrollBorder.height()) &&
-                     (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
+                     (mapY + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
             {
                 moveY = -GameMap::getImageSize() * pMap->getZoom();
             }
@@ -323,8 +328,11 @@ QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        qint32 MousePosX = x * (GameMap::getImageSize() * pMap->getZoom()) + pMap->getPosition().x + (GameMap::getImageSize() * pMap->getZoom()) / 2;
-        qint32 MousePosY = y * (GameMap::getImageSize() * pMap->getZoom()) + pMap->getPosition().y + (GameMap::getImageSize() * pMap->getZoom()) / 2;
+        qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
+        qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
+
+        qint32 MousePosX = x * (GameMap::getImageSize() * pMap->getZoom()) + mapX + (GameMap::getImageSize() * pMap->getZoom()) / 2;
+        qint32 MousePosY = y * (GameMap::getImageSize() * pMap->getZoom()) + mapY + (GameMap::getImageSize() * pMap->getZoom()) / 2;
         return QPoint(MousePosX, MousePosY);
     }
     return QPoint(0, 0);
@@ -398,33 +406,37 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
 
 void InGameMenue::updateSlidingActorSize()
 {
-    spGameMap pMap = GameMap::getInstance();
-    qint32 mapWidth = pMap->getScaledWidth();
-    qint32 mapHeight = pMap->getScaledHeight();
-    Console::print("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
-    if (mapWidth < m_mapSliding->getWidth())
+    if (m_mapSlidingActor.get() != nullptr &&
+        m_mapSliding.get() != nullptr)
     {
-        m_mapSlidingActor->setWidth(m_mapSliding->getWidth());
-        pMap->setX((m_mapSliding->getWidth() -  mapWidth) / 2);
+        spGameMap pMap = GameMap::getInstance();
+        qint32 mapWidth = pMap->getScaledWidth();
+        qint32 mapHeight = pMap->getScaledHeight();
+        Console::print("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
+        if (mapWidth < m_mapSliding->getWidth())
+        {
+            m_mapSlidingActor->setWidth(m_mapSliding->getWidth());
+            pMap->setX((m_mapSliding->getWidth() -  mapWidth) / 2);
+        }
+        else
+        {
+            pMap->setX(0);
+            m_mapSlidingActor->setWidth(mapWidth);
+        }
+        if (mapHeight < m_mapSliding->getHeight())
+        {
+            pMap->setY((m_mapSliding->getHeight() -  mapHeight) / 2);
+            m_mapSlidingActor->setHeight(m_mapSliding->getHeight());
+        }
+        else
+        {
+            pMap->setY(0);
+            m_mapSlidingActor->setHeight(mapHeight);
+        }
+        m_mapSliding->updateDragBounds();
+        qint32 x = m_mapSlidingActor->getX();
+        qint32 y = m_mapSlidingActor->getY();
+        pMap->limitPosition(this, x, y);
+        m_mapSlidingActor->setPosition(x, y);
     }
-    else
-    {
-        pMap->setX(0);
-        m_mapSlidingActor->setWidth(mapWidth);
-    }
-    if (mapHeight < m_mapSliding->getHeight())
-    {
-        pMap->setY((m_mapSliding->getHeight() -  mapHeight) / 2);
-        m_mapSlidingActor->setHeight(m_mapSliding->getHeight());
-    }
-    else
-    {
-        pMap->setY(0);
-        m_mapSlidingActor->setHeight(mapHeight);
-    }
-    m_mapSliding->updateDragBounds();
-    qint32 x = m_mapSlidingActor->getX();
-    qint32 y = m_mapSlidingActor->getY();
-    pMap->limitPosition(this, x, y);
-    m_mapSlidingActor->setPosition(x, y);
 }

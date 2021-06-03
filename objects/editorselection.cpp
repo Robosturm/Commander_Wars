@@ -17,7 +17,7 @@
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;
 
-EditorSelection::EditorSelection()
+EditorSelection::EditorSelection(qint32 width)
     : QObject()
 {
     setObjectName("EditorSelection");
@@ -25,13 +25,13 @@ EditorSelection::EditorSelection()
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    setWidth(Settings::getWidth() / 4.0f);
+    setWidth(width);
     setHeight(Settings::getHeight() - 80);
-    setPosition(Settings::getWidth() - Settings::getWidth() / 4.0f, 80);
-    m_BoxSelectionType = createV9Box(0, m_startHSelectionType, Settings::getWidth() / 4.0f, m_selectionHeight);
-    m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, Settings::getWidth() / 4.0f, m_selectionHeight);
-    m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, Settings::getWidth() / 4.0f, m_selectionHeight);
-    m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, Settings::getWidth() / 4.0f, Settings::getHeight() - m_startHTerrain - 80);
+    setPosition(Settings::getWidth() - width, 80);
+    m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
+    m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
+    m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight);
+    m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);
     m_PlacementSelectionClip = oxygine::spClipRectActor::create();
     m_PlacementSelectionClip->setPosition(10, 50);
     m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getWidth() - 20,
@@ -240,7 +240,7 @@ void EditorSelection::changeScrollValue(qint32 dir)
 
 void EditorSelection::createBoxPlacementSize()
 {
-    qint32 yStartPos = 20;
+    qint32 yStartPos = 10;
     qint32 xChange = 40;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
@@ -257,18 +257,31 @@ void EditorSelection::createBoxPlacementSize()
         m_CurrentSelectorSize->setResAnim(pAnimMarker);
     }
     m_BoxPlacementSize->addChild(m_CurrentSelectorSize);
+    m_CurrentSelectorSize->setPosition(m_frameSize, yStartPos);
+
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+none");
+    oxygine::spSprite pSpriteNone = oxygine::spSprite::create();
+    pSpriteNone->setResAnim(pAnim);
+    pSpriteNone->setPosition(m_frameSize, yStartPos);
+    m_BoxPlacementSize->addChild(pSpriteNone);
+    pSpriteNone->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    {
+        m_SizeMode = PlacementSize::None;
+        m_CurrentSelectorSize->setPosition(m_frameSize, yStartPos);
+        emit sigSelectionChanged();
+    });
+    // scale marker to correct size if needed
+    m_CurrentSelectorSize->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
 
     oxygine::spSprite pSpriteSmall = oxygine::spSprite::create();
-
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+small");
+    pAnim = pObjectManager->getResAnim("editor+small");
     pSpriteSmall->setResAnim(pAnim);
-    pSpriteSmall->setPosition(m_frameSize, yStartPos);
-    m_CurrentSelectorSize->setPosition(m_frameSize, yStartPos);
+    pSpriteSmall->setPosition(m_frameSize + xChange, yStartPos);
     m_BoxPlacementSize->addChild(pSpriteSmall);
     pSpriteSmall->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_SizeMode = PlacementSize::Small;
-        m_CurrentSelectorSize->setPosition(m_frameSize, yStartPos);
+        m_CurrentSelectorSize->setPosition(m_frameSize + xChange, yStartPos);
         emit sigSelectionChanged();
     });
     // scale marker to correct size if needed
@@ -277,36 +290,36 @@ void EditorSelection::createBoxPlacementSize()
     oxygine::spSprite pSpriteMedium = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+medium");
     pSpriteMedium->setResAnim(pAnim);
-    pSpriteMedium->setPosition(m_frameSize + xChange, yStartPos);
+    pSpriteMedium->setPosition(m_frameSize + xChange * 2, yStartPos);
     m_BoxPlacementSize->addChild(pSpriteMedium);
     pSpriteMedium->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_SizeMode = PlacementSize::Medium;
-        m_CurrentSelectorSize->setPosition(m_frameSize + xChange, yStartPos);
+        m_CurrentSelectorSize->setPosition(m_frameSize + xChange * 2, yStartPos);
         emit sigSelectionChanged();
     });
 
     oxygine::spSprite pSpriteBig = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+big");
     pSpriteBig->setResAnim(pAnim);
-    pSpriteBig->setPosition(m_frameSize + xChange * 2, yStartPos );
+    pSpriteBig->setPosition(m_frameSize + xChange * 3, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteBig);
     pSpriteBig->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_SizeMode = PlacementSize::Big;
-        m_CurrentSelectorSize->setPosition(m_frameSize + xChange * 2, yStartPos);
+        m_CurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
         emit sigSelectionChanged();
     });
 
     oxygine::spSprite pSpriteFill = oxygine::spSprite::create();
     pAnim = pObjectManager->getResAnim("editor+fill");
     pSpriteFill->setResAnim(pAnim);
-    pSpriteFill->setPosition(m_frameSize + xChange * 3, yStartPos );
+    pSpriteFill->setPosition(m_frameSize + xChange * 4, yStartPos );
     m_BoxPlacementSize->addChild(pSpriteFill);
     pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_SizeMode = PlacementSize::Fill;
-        m_CurrentSelectorSize->setPosition(m_frameSize + xChange * 3, yStartPos);
+        m_CurrentSelectorSize->setPosition(m_frameSize + xChange * 4, yStartPos);
         emit sigSelectionChanged();
     });
 }
@@ -340,7 +353,7 @@ void EditorSelection::createPlayerSelection()
         }
         emit sigUpdateSelectedPlayer();
     });
-    pButtonLeft->setPosition(20, 20);
+    pButtonLeft->setPosition(10, 10);
     m_BoxSelectedPlayer->addChild(pButtonLeft);
 
     oxygine::spButton pButtonRight = oxygine::spButton::create();
@@ -369,7 +382,7 @@ void EditorSelection::createPlayerSelection()
         }
         emit sigUpdateSelectedPlayer();
     });
-    pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 40, 20);
+    pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 30, 10);
     m_BoxSelectedPlayer->addChild(pButtonRight);
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = -1; i < GameMap::getInstance()->getPlayerCount(); i++)
@@ -380,6 +393,7 @@ void EditorSelection::createPlayerSelection()
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
         pSprite->setScale(pAnim->getWidth() / GameMap::getImageSize());
+        pSprite->setWidth(GameMap::getImageSize());
         pBuilding->addChild(pSprite);
         m_Players.append(pBuilding);
         if (i >= 0)
@@ -392,7 +406,7 @@ void EditorSelection::createPlayerSelection()
         }
         m_BoxSelectedPlayer->addChild(pBuilding);
         pBuilding->setVisible(true);
-        pBuilding->setPosition(25 * i, 32);
+        pBuilding->setPosition(25 * i, 27);
         pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigChangeSelectedPlayer(i);
@@ -453,19 +467,19 @@ void EditorSelection::updateSelectedPlayer()
         if (i < m_Players.size())
         {
             m_Players[i]->setVisible(true);
-            m_Players[i]->setPosition(50 + m_frameSize * (i - m_playerStartIndex), 32);
+            m_Players[i]->setPosition(40 + (m_Players[i]->getWidth() + 5)  * (i - m_playerStartIndex), 28);
         }
     }
 }
 
 qint32 EditorSelection::calcMaxPlayerSelection()
 {
-    return (m_BoxSelectedPlayer->getScaledWidth() - 100) / m_frameSize;
+    return (m_BoxSelectedPlayer->getScaledWidth() - 80) / (m_Players[0]->getWidth() + 5);
 }
 
 void EditorSelection::createBoxSelectionMode()
 {
-    qint32 yStartPos = 20;
+    qint32 yStartPos = 10;
     qint32 xChange = 40;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
@@ -537,7 +551,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     pSprite->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pSprite->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     addChild(pSprite);
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editorselection");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSprite->setResAnim(pAnim);
     pSprite->setSize(width, heigth);
     pSprite->setPosition(x, y);

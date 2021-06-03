@@ -58,23 +58,28 @@ namespace oxygine
                 frames.push_back(frame);
             }
         }
-
         init(frames, columns, scaleFactor);
     }
 
-    void ResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor)
+    void ResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         QImage img(file);
-        SpriteCreator::addTransparentBorder(img, columns, rows);
+        if (addTransparentBorder)
+        {
+            SpriteCreator::addTransparentBorder(img, columns, rows);
+        }
         Image mt;
         mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(QImage & img, qint32 columns, qint32 rows, float scaleFactor)
+    void ResAnim::init(QImage & img, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         Image mt;
-        SpriteCreator::addTransparentBorder(img, columns, rows);
+        if (addTransparentBorder)
+        {
+            SpriteCreator::addTransparentBorder(img, columns, rows);
+        }
         mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
     }

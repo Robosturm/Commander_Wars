@@ -15,12 +15,12 @@ namespace oxygine
         ResAnim(Resource* atlas = 0);
         ~ResAnim();
 
-        void init(QString file, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
-        void init(QImage & img, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
-        virtual void init(Image* original, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
-        void init(animationFrames& frames, qint32 columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
+        void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        void init(QImage & img, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        virtual void init(Image* original, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1);
+        void init(animationFrames& frames, qint32 columns = 1, float scaleFactor = 1, float appliedScale = 1);
         /**creates animation frames from NativeTexture*/
-        void init(spNativeTexture texture, const Point& originalSize, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
+        void init(spNativeTexture texture, const Point& originalSize, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1);
 
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);

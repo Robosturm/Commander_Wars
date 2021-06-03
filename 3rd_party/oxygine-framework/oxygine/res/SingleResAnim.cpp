@@ -17,9 +17,9 @@ namespace oxygine
         setObjectName("SingleResAnim");
     }
 
-    void SingleResAnim::init(QString file, qint32 columns /* = 1 */, qint32 rows /* = 1 */, float scaleFactor /* = 1.0f */)
+    void SingleResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-        ResAnim::init(file, columns, rows, scaleFactor);
+        ResAnim::init(file, columns, rows, scaleFactor, addTransparentBorder);
     }
 
     void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
@@ -36,9 +36,6 @@ namespace oxygine
         texture->init(original->lock(), false);
         texture->apply();
         ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor);
-
-
-
         Point originalSize = original->getSize();
 
         qint32 frame_width = originalSize.x / columns;

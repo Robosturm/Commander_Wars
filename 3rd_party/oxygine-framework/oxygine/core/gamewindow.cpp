@@ -224,23 +224,23 @@ namespace oxygine
         Console::print("core::restore() done", Console::eDEBUG);
     }
 
-    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         if (QThread::currentThreadId() == m_mainHandle)
         {
-            loadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
+            loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
         }
         else
         {
-            emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
+            emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         if (pAnim.get() != nullptr)
         {
-            pAnim->init(image, columns, rows, scaleFactor);
+            pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
         }
     }
 
@@ -438,8 +438,8 @@ namespace oxygine
     bool GameWindow::hasCursor()
     {
         QPoint position = cursor().pos();
-        if (position.x() < 0 || position.y() < 0 ||
-            position.x() > width() || position.y() > height())
+        if (position.x() < x() || position.y() < y() ||
+            position.x() > x() + width() || position.y() > y() + height())
         {
             return false;
         }
