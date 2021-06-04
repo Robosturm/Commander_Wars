@@ -1957,7 +1957,6 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
                         {
                             qint32 score = 0;
                             score += pUnit->getUnitValue() * m_coUnitScoreMultiplier * getAiCoUnitMultiplier(pCO, pUnit);
-                            score += pUnit->getUnitValue();
                             if (pUnit->getUnitValue() >= m_coUnitValue)
                             {
                                 expensive = true;
