@@ -29,7 +29,7 @@ VeryEasyAI::VeryEasyAI()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadIni(QString(oxygine::Resource::RCC_PREFIX_PATH) + "very_easy/very_easy.ini");
-    loadIni("very_easy/very_easy.ini");
+    loadIni(Settings::getUserPath() + "very_easy/very_easy.ini");
 }
 
 void VeryEasyAI::readIni(QString name)

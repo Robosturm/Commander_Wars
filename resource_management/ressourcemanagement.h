@@ -208,7 +208,7 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
             searchPaths.append(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/" + m_scriptPath);
-            searchPaths.append(Settings::getMods().at(i) + "/" + m_scriptPath);
+            searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/" + m_scriptPath);
         }
     }
     return searchPaths;

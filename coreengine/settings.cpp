@@ -10,6 +10,7 @@
 #include <qguiapplication.h>
 #include <qscreen.h>
 #include <qlocale.h>
+#include <QStandardPaths>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -117,6 +118,7 @@ GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastP
 bool Settings::m_centerOnMarkedField = false;
 bool Settings::m_syncAnimations = false;
 bool Settings::m_simpleDeselect = false;
+QString Settings::m_userPath = "";
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -141,6 +143,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+const QString &Settings::getUserPath()
+{
+    return m_userPath;
+}
+
+void Settings::setUserPath(const QString &newUserPath)
+{
+    m_userPath = newUserPath;
 }
 
 bool Settings::getSmallScreenDevice()
@@ -724,7 +736,7 @@ void Settings::setRecord(bool record)
 void Settings::loadSettings()
 {
     bool ok = false;
-    QSettings settings(m_settingFile, QSettings::IniFormat);
+    QSettings settings(Settings::getUserPath() + m_settingFile, QSettings::IniFormat);
 
     settings.beginGroup("general");
     setLanguage(settings.value("language","en").toString());
@@ -1336,6 +1348,19 @@ void Settings::loadSettings()
     settings.beginGroup("Logging");
     m_LogActions  = settings.value("LogActions", false).toBool();
     settings.endGroup();
+
+    // general
+    settings.beginGroup("General");
+    if (Settings::getSmallScreenDevice())
+    {
+        QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+        m_userPath = settings.value("UserPath", defaultPath).toString();
+    }
+    else
+    {
+        m_userPath = settings.value("UserPath", "").toString();
+    }
+    settings.endGroup();
 }
 
 void Settings::saveSettings()
@@ -1343,7 +1368,7 @@ void Settings::saveSettings()
     Mainapp* pApp = Mainapp::getInstance();
     if (!pApp->getSlave())
     {
-        QSettings settings(m_settingFile, QSettings::IniFormat);
+        QSettings settings(Settings::getUserPath() + m_settingFile, QSettings::IniFormat);
 
         settings.beginGroup("general");
         settings.setValue("language",                   m_language);
@@ -1466,12 +1491,16 @@ void Settings::saveSettings()
 
         // mods
         settings.beginGroup("Mods");
-        settings.setValue("Mods",                    getModConfigString());
+        settings.setValue("Mods",                     getModConfigString());
         settings.endGroup();
 
         // logging
         settings.beginGroup("Logging");
         settings.setValue("LogActions",               m_LogActions);
+        settings.endGroup();
+
+        settings.beginGroup("General");
+        settings.setValue("UserPath",                 m_userPath);
         settings.endGroup();
     }
 }
@@ -1937,7 +1966,7 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
                            QStringList & requiredMods, bool & isCosmetic)
 {
     name = mod;
-    QFile file(mod + "/mod.txt");
+    QFile file(Settings::getUserPath() + mod + "/mod.txt");
     if (!file.exists())
     {
         file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + mod + "/mod.txt");

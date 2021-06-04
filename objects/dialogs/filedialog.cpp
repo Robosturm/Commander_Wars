@@ -10,7 +10,8 @@
 const char* const ROOT = "::::";
 
 FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile, bool preview)
-    : m_preview(preview)
+    : m_preview(preview),
+      m_pathPrefix(Settings::getUserPath())
 {
     setObjectName("FileDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -50,7 +51,6 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         QString file = m_pathPrefix + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText();
-
         QStringList items = m_DropDownmenu->getCurrentItemText().split((";"));
         for (qint32 i = 0; i < items.size(); i++)
         {
@@ -69,10 +69,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
         {
             file += items[0];
         }
-        if (QFile::exists(file))
-        {
-            emit sigFileSelected(file);
-        }
+        emit sigFileSelected(file);
         detach();
     });
     // drop down menu
@@ -275,7 +272,7 @@ void FileDialog::showFolder(QString folder)
                 }
                 else
                 {
-                    m_pathPrefix = "";
+                    m_pathPrefix = Settings::getUserPath();
                 }
                 m_CurrentFile->setCurrentText(file);
             });

@@ -31,7 +31,7 @@ HeavyAi::HeavyAi(QString type)
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni(QString(oxygine::Resource::RCC_PREFIX_PATH) + "heavy/" + m_aiName.toLower() + ".ini");
-    loadIni("heavy/" + m_aiName.toLower() + ".ini");
+    loadIni(Settings::getUserPath() + "heavy/" + m_aiName.toLower() + ".ini");
 }
 
 void HeavyAi::readIni(QString name)

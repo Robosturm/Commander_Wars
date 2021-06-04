@@ -240,7 +240,7 @@ public slots:
     QStringList getShopItemsList(GameEnums::ShopItemType type, bool bought);
 private:
     void showAchieved();
-
+    void reset();
 private:
     friend class oxygine::intrusive_ptr<Userdata>;
     explicit Userdata();

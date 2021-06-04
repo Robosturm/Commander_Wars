@@ -78,9 +78,9 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
         files.removeAt(0);
         for (qint32 i = 0; i < files.size(); ++i)
         {
-            if (QFile::exists(folder + files[i]))
+            if (QFile::exists(Settings::getUserPath() + folder + files[i]))
             {
-                files[i] = folder + files[i];
+                files[i] = Settings::getUserPath() + folder + files[i];
             }
             else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
             {

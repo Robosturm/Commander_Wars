@@ -27,7 +27,7 @@ NormalAi::NormalAi(QString configurationFile)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadIni(QString(oxygine::Resource::RCC_PREFIX_PATH) + "normal/" + configurationFile);
-    loadIni("normal/" + configurationFile);
+    loadIni(Settings::getUserPath() + "normal/" + configurationFile);
 }
 
 

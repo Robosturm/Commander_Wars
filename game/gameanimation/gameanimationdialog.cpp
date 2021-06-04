@@ -303,9 +303,9 @@ void GameAnimationDialog::restart()
 void GameAnimationDialog::loadBackground(QString file)
 {
     QImage img;
-    if (QFile::exists(file))
+    if (QFile::exists(Settings::getUserPath() + file))
     {
-        img = QImage(file);
+        img = QImage(Settings::getUserPath() + file);
     }
     else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + file))
     {

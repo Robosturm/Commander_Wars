@@ -646,7 +646,13 @@ QString Mainapp::qsTr(const char* const text)
 
 void Mainapp::createBaseDirs()
 {
-    QDir dir("temp/");
+    QString userPath = Settings::getUserPath();
+    if (!userPath.isEmpty())
+    {
+        QDir newDir(userPath);
+        newDir.mkpath(".");
+    }
+    QDir dir(userPath + "temp/");
     dir.removeRecursively();
     QStringList dirs =
     {
@@ -666,7 +672,7 @@ void Mainapp::createBaseDirs()
     };
     for (const auto & path : qAsConst(dirs))
     {
-        QDir newDir(path);
+        QDir newDir(userPath + path);
         newDir.mkpath(".");
     }
     auto virtList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "maps").entryInfoList(QDir::Dirs);
@@ -675,7 +681,7 @@ void Mainapp::createBaseDirs()
         QString path = GlobalUtils::makePathRelative(item.absoluteFilePath());
         if (!path.endsWith(".camp"))
         {
-            QDir newDir(path);
+            QDir newDir(userPath + path);
             newDir.mkpath(".");
         }
     }

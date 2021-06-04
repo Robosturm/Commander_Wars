@@ -113,7 +113,10 @@ void DropDownmenuBase::showDropDown()
 
 void DropDownmenuBase::hideDropDown()
 {
-    
+    for (auto & item : m_Items)
+    {
+        item->setAddColor(QColor(0, 0, 0, 0));
+    }
     if (m_OriginalOwner.get() != nullptr &&
         m_OriginalOwner->getParent() == nullptr)
     {

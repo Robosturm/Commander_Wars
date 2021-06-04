@@ -8,6 +8,7 @@
 #include "coreengine/console.h"
 
 #include "resource_management/cospritemanager.h"
+#include "resource_management/shoploader.h"
 
 #include "objects/achievementbanner.h"
 
@@ -27,7 +28,6 @@ Userdata::Userdata()
 {
     setObjectName("Userdata");
     Interpreter::setCppOwnerShip(this);
-    changeUser();
 }
 
 qint32 Userdata::getCredtis() const
@@ -55,10 +55,10 @@ void Userdata::storeUser()
         if (!Settings::getUsername().isEmpty())
         {
             Console::print("Userdata::storeUser", Console::eDEBUG);
-            QFile user(Settings::getUsername() + ".dat");
+            QFile user(Settings::getUserPath() + Settings::getUsername() + ".dat");
             user.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream pStream(&user);
-            serializeObject(pStream);
+            Userdata::serializeObject(pStream);
             user.close();
         }
     }
@@ -66,8 +66,8 @@ void Userdata::storeUser()
 
 void Userdata::changeUser()
 {
-    m_customCOStyles.clear();
-    QFile user(Settings::getUsername() + ".dat");
+    reset();
+    QFile user(Settings::getUserPath() + Settings::getUsername() + ".dat");
     if (user.exists())
     {
         Console::print("Userdata::changeUser", Console::eDEBUG);
@@ -76,6 +76,23 @@ void Userdata::changeUser()
         Userdata::deserializeObject(pStream);
         user.close();
     }
+    else
+    {
+        storeUser();
+    }
+}
+
+void Userdata::reset()
+{
+    m_customCOStyles.clear();
+    m_mapVictoryInfo.clear();
+    for (auto achievement : m_achievements)
+    {
+        achievement.progress = 0;
+    }
+    m_shopItems.clear();
+    ShopLoader::getInstance()->loadAll();
+    m_credtis = 0;
 }
 
 void Userdata::addCOStyle(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)

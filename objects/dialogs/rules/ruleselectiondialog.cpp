@@ -71,7 +71,7 @@ void RuleSelectionDialog::showLoadRules()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
-    QString path = "data/gamerules";
+    QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::loadRules, Qt::QueuedConnection);
@@ -81,7 +81,7 @@ void RuleSelectionDialog::showSaveRules()
 {
     QVector<QString> wildcards;
     wildcards.append("*.grl");
-    QString path = "data/gamerules";
+    QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::saveRules, Qt::QueuedConnection);

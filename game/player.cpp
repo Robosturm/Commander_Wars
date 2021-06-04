@@ -181,7 +181,7 @@ bool Player::loadTableFromFile(QString tablename)
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
+        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
         searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getMods().at(i) + "/images/colortables/");
     }
     searchPaths.append("resources/images/colortables/");
@@ -380,7 +380,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
         QStringList searchPaths;
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
-            searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
+            searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
             searchPaths.append(oxygine::Resource::RCC_PREFIX_PATH + Settings::getMods().at(i) + "/images/colortables/");
         }
         searchPaths.append("resources/images/colortables/");

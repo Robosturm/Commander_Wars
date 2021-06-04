@@ -348,7 +348,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.map");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
@@ -360,7 +360,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.map");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
@@ -393,7 +393,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.txt");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
@@ -404,7 +404,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aws");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
@@ -415,7 +415,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aws");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
@@ -426,7 +426,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.aw4");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
@@ -437,7 +437,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         QVector<QString> wildcards;
         wildcards.append("*.txt");
-        QString path = "maps";
+        QString path = Settings::getUserPath() + "maps";
         spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
@@ -1402,6 +1402,10 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
 void EditorMenue::saveMap(QString filename)
 {
     Console::print("EditorMenue::saveMap", Console::eDEBUG);
+    if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
+    {
+        filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath());
+    }
     if (filename.endsWith(".map"))
     {
         QFile file(filename);

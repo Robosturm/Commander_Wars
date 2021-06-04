@@ -450,7 +450,6 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
                 {
                     m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
                 }
-                
             }
         }
     }
@@ -472,7 +471,15 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
                     {
                         m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
                     }
-                    
+                }
+            }
+            for (qint32 x = xInput + 2; x < width; x++)
+            {
+                if (onMap(x, y))
+                {
+                    spTerrain pTerrain = m_fields[y][x];
+                    pTerrain->detach();
+                    addChild(pTerrain);
                 }
             }
         }
@@ -987,6 +994,14 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             if (!removeUnit)
             {
                 pTerrain->setUnit(pUnit);
+            }
+            // force consistent rendering order for terrains
+            qint32 mapWidth = getMapWidth();
+            for (qint32 xPos = x + 1; xPos < mapWidth; xPos++)
+            {
+                spTerrain pTerrain = m_fields[y][xPos];
+                pTerrain->detach();
+                addChild(pTerrain);
             }
         }
         else

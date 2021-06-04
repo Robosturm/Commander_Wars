@@ -17,7 +17,7 @@ QByteArray Filesupport::getHash(QStringList filter, const QStringList & folders)
     for (const auto & folder : qAsConst(folders))
     {
         fullList.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
-        fullList.append(folder);
+        fullList.append(Settings::getUserPath() + folder);
     }
     for (const auto & folder : qAsConst(fullList))
     {

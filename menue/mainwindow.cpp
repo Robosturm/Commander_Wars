@@ -41,6 +41,7 @@ Mainwindow::Mainwindow()
     setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    Userdata::getInstance()->changeUser();
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -260,7 +261,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::import()
 {
-    QString path = "";
+    QString path = Settings::getUserPath();
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
     connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
@@ -400,7 +401,7 @@ void Mainwindow::enterLoadGame()
     
     QVector<QString> wildcards;
     wildcards.append("*.sav");
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
@@ -411,7 +412,7 @@ void Mainwindow::enterLoadCampaign()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
@@ -442,7 +443,7 @@ void Mainwindow::enterReplayGame()
     Mainapp::getInstance()->pauseRendering();
     QVector<QString> wildcards;
     wildcards.append("*.rec");
-    QString path = "data/records";
+    QString path = Settings::getUserPath() + "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);

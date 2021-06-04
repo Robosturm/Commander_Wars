@@ -36,6 +36,9 @@ class Settings : public QObject, public oxygine::ref_counter
 
         static void setUsername(const QString &Username);
 
+        static const QString &getUserPath();
+        static void setUserPath(const QString &newUserPath);
+
     public slots:
         static bool hasSmallScreen();
         static bool getSmallScreenDevice();
@@ -521,7 +524,7 @@ class Settings : public QObject, public oxygine::ref_counter
         static const QString m_settingFile;
         static QStringList m_activeMods;
         static QStringList m_activeModVersions;
-
+        static QString m_userPath;
         static QTranslator m_Translator;
 
         // logging

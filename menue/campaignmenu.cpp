@@ -99,7 +99,7 @@ void CampaignMenu::exitMenue()
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
 {    
-    QFileInfo info = QFileInfo(item);
+    QFileInfo info = QFileInfo(Settings::getUserPath() + item);
     if (!info.exists())
     {
         info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
@@ -112,7 +112,7 @@ void CampaignMenu::mapSelectionItemClicked(QString item)
 
 void CampaignMenu::mapSelectionItemChanged(QString item)
 {    
-    QFileInfo info = QFileInfo(item);
+    QFileInfo info = QFileInfo(Settings::getUserPath() + item);
     if (!info.exists())
     {
         info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
@@ -151,7 +151,7 @@ void CampaignMenu::showSaveCampaign()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);    

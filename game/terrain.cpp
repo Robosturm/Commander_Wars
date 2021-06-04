@@ -348,16 +348,16 @@ void Terrain::loadBaseSprite(QString spriteID)
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
-    else if (QFile::exists(m_terrainSpriteName) || QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
+    else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName) || QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         QImage img;
-        if (QFile::exists(m_terrainSpriteName))
+        if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName))
         {
-            img = QImage(m_terrainSpriteName);
+            img = QImage(Settings::getUserPath() + m_terrainSpriteName);
         }
         else
         {

@@ -1533,7 +1533,7 @@ void GameMenue::saveGame()
 {    
     QVector<QString> wildcards;
     wildcards.append("*" + getSaveFileEnding());
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
@@ -1567,7 +1567,7 @@ void GameMenue::showSaveAndExitGame()
     {
         wildcards.append("*.sav");
     }
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);

@@ -185,11 +185,11 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
 }
 
-void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox)
+void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QString currentFile, spTextbox pTextbox)
 {    
     QVector<QString> wildcards;
     wildcards.append(filter);
-    QString path = startFolder;
+    QString path = Settings::getUserPath() + startFolder;
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
     {

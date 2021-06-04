@@ -373,6 +373,9 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     QString path = dir.absolutePath();
     file = file.replace(path + "/", "");
     file = file.replace(path, "");
+    QString userPath = Settings::getUserPath();
+    file = file.replace(userPath + "/", "");
+    file = file.replace(userPath, "");
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH) && full)
     {
         file.remove(0, QString(oxygine::Resource::RCC_PREFIX_PATH).length());
@@ -383,7 +386,7 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
 QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
 {
     QFileInfoList infoList;
-    infoList.append(QDir(folder).entryInfoList(QDir::Dirs));
+    infoList.append(QDir(Settings::getUserPath() + folder).entryInfoList(QDir::Dirs));
     auto virtList = QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(QDir::Dirs);
     for (const auto & item : qAsConst(virtList))
     {
@@ -403,7 +406,7 @@ QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
     }
     if (list.length() > 0)
     {
-        infoList.append(QDir(folder).entryInfoList(list, QDir::Files));
+        infoList.append(QDir(Settings::getUserPath() + folder).entryInfoList(list, QDir::Files));
         infoList.append(QDir(oxygine::Resource::RCC_PREFIX_PATH + folder).entryInfoList(list, QDir::Files));
     }
     return infoList;

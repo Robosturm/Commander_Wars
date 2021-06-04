@@ -200,9 +200,16 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     m_ProgressTimer.setSingleShot(false);
     m_ProgressTimer.setInterval(getStepTime());
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
-
     spPanel panel = spPanel::create(true, QSize(Settings::getWidth() - pButtonExit->getWidth() - 30, 105), QSize(Settings::getWidth() - pButtonExit->getX() - 20, 40));
-    panel->setPosition(10, Settings::getHeight() - 105);
+
+    if (Settings::getSmallScreenDevice())
+    {
+        panel->setPosition(10, Settings::getHeight() - 72);
+    }
+    else
+    {
+        panel->setPosition(10, Settings::getHeight() - 105);
+    }
     addChild(panel);
 
     oxygine::spButton pButtonFunds = ObjectManager::createButton(tr("Funds"));

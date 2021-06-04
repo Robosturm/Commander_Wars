@@ -12,7 +12,7 @@
 
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     : QObject(),
-      m_currentFolder("maps")
+      m_currentFolder(Settings::getUserPath() + "maps")
 {
     setObjectName("MapSelection");
     Mainapp* pApp = Mainapp::getInstance();
@@ -200,7 +200,7 @@ void MapSelection::changeFolder(QString folder)
     QString newFolder = folder;
     if (folder == "")
     {
-        newFolder = "maps";
+        newFolder = Settings::getUserPath() + "maps";
     }
     if (folder == "..")
     {

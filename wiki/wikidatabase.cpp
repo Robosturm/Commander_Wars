@@ -75,7 +75,7 @@ void WikiDatabase::load()
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(Settings::getMods().at(i) + "/scripts/wiki");
+        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/wiki");
     }
     searchPaths.append("resources/scripts/wiki");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/wiki");

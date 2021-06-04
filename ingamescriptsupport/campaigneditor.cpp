@@ -186,7 +186,7 @@ void CampaignEditor::showAddCampaign()
     
     QVector<QString> wildcards;
     wildcards.append("*.map");
-    QString path = m_CampaignFolder->getCurrentText();
+    QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
@@ -198,7 +198,7 @@ void CampaignEditor::showSaveCampaign()
     
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
-    QString path = "maps/";
+    QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
@@ -209,7 +209,7 @@ void CampaignEditor::showLoadCampaign()
 {    
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
-    QString path = "maps/";
+    QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);    
@@ -243,7 +243,7 @@ QString CampaignEditor::getMapName(QString filename)
 void CampaignEditor::showSelectFolder()
 {
     
-    QString path = "maps";
+    QString path = Settings::getUserPath() + "maps";
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);

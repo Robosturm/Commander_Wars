@@ -152,7 +152,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     // dummy impl for loading
     QVector<QString> wildcards;
     wildcards.append("*.msav");
-    QString path = "savegames";
+    QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
@@ -900,7 +900,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
 {
-    QString path = "maps";
+    QString path = Settings::getUserPath() + "maps";
     QStringList filter;
     filter << "*" + fileName;
     QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
@@ -917,9 +917,9 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             QFile scriptFile;
             QByteArray myHashArray;
             // check real drive and virt drive for script
-            if (QFile::exists(scriptFileName))
+            if (QFile::exists(Settings::getUserPath() + scriptFileName))
             {
-                scriptFile.setFileName(scriptFileName);
+                scriptFile.setFileName(Settings::getUserPath() + scriptFileName);
                 scriptFile.open(QIODevice::ReadOnly);
                 QCryptographicHash myHash(QCryptographicHash::Sha3_512);
                 myHash.addData(&scriptFile);

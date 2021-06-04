@@ -183,7 +183,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         QString style = m_Styles[index];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
-        QFile file(m_ResFilePath + "+table.png");
+        QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
         if (!file.exists())
         {
             m_ResFilePath = oxygine::Resource::RCC_PREFIX_PATH +  m_ResFilePath;
@@ -207,9 +207,9 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         {
             m_useColorBox = true;
             QImage src;
-            if (QFile::exists(m_ResFilePath + "+nrm.png"))
+            if (QFile::exists(Settings::getUserPath() + m_ResFilePath + "+nrm.png"))
             {
-                src = QImage(m_ResFilePath + "+nrm.png");
+                src = QImage(Settings::getUserPath() + m_ResFilePath + "+nrm.png");
             }
             else
             {

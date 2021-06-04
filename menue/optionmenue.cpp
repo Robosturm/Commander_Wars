@@ -13,6 +13,7 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 
@@ -738,7 +739,7 @@ void OptionMenue::showMods()
     m_ModSelector->removeChildren();
 
     QFileInfoList rccinfoList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "mods").entryInfoList(QDir::Dirs);
-    QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
+    QFileInfoList infoList = QDir(Settings::getUserPath() + "mods").entryInfoList(QDir::Dirs);
     infoList.append(rccinfoList);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -772,7 +773,7 @@ void OptionMenue::showMods()
     style.multiline = false;
     for (const auto & info : infoList)
     {
-        QString folder = info.filePath();
+        QString folder = GlobalUtils::makePathRelative(info.filePath());
         if (!folder.endsWith("."))
         {
             QString name;
@@ -953,7 +954,7 @@ void OptionMenue::updateModCheckboxes()
     qint32 i = 0;
     for (const auto & info : infoList)
     {
-        QString mod = info.filePath();
+        QString mod = GlobalUtils::makePathRelative(info.filePath());
         if (!mod.endsWith("."))
         {
             QString name;

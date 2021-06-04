@@ -49,7 +49,7 @@ class FileDialog : public QObject, public oxygine::Actor
         oxygine::spButton m_OkButton;
         spDropDownmenu m_DropDownmenu;
         oxygine::spButton m_CancelButton;
-        QString m_pathPrefix = "";
+        QString m_pathPrefix;
         /**
           * @brief m_Items items directories or folders
         */

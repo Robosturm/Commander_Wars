@@ -1525,7 +1525,7 @@ void Console::KeyInput(oxygine::KeyEvent event)
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    static QFile file("console.log");
+    static QFile file(Settings::getUserPath() + "console.log");
     if (!file.isOpen())
     {
         QStringList args = QCoreApplication::arguments();
@@ -1536,7 +1536,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             {
                 slaveName = args[args.indexOf("-slaveServer") + 1];
             }
-            file.setFileName(slaveName + ".log");
+            file.setFileName(Settings::getUserPath() + slaveName + ".log");
         }
         file.open(QIODevice::WriteOnly);
     }

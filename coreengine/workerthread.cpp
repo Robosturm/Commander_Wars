@@ -62,7 +62,8 @@ void WorkerThread::start()
     // make sure to overwrite existing js stuff
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(Settings::getMods().at(i) + "/scripts/general");
+        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/scripts/general");
+        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/general");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {

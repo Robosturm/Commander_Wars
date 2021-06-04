@@ -666,7 +666,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
     for(const QString & mod : qAsConst(mods))
     {
         fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
-        fullMods.append(mod);
+        fullMods.append(Settings::getUserPath() + mod);
     }
     for (qint32 i = 0; i < fullMods.size(); i++)
     {
@@ -1967,7 +1967,6 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
                         {
                             qint32 score = 0;
                             score += pUnit->getUnitValue() * m_coUnitScoreMultiplier * getAiCoUnitMultiplier(pCO, pUnit);
-                            score += pUnit->getUnitValue();
                             if (pUnit->getUnitValue() >= m_coUnitValue)
                             {
                                 expensive = true;
