@@ -221,7 +221,7 @@ namespace oxygine
     spResAnim ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
         spResAnim ra = spResAnim::create(this);
-        ra->init(nullptr, 0, 0, walker.getScaleFactor());
+        ra->init(nullptr, 0, 0, walker.getScaleFactor(), context.m_options->m_addTransparentBorder);
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);
         context.m_resources->add(ra);

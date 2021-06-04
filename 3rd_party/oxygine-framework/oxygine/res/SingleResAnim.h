@@ -14,7 +14,7 @@ namespace oxygine
         explicit SingleResAnim();
         ~SingleResAnim() = default;
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
-        void init(Image* original, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1) override;
+        virtual void init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder) override;
 
         spNativeTexture getTexture() const;
 

@@ -189,7 +189,6 @@ QQmlDebuggingEnabler enabler;
     window.setPosition(Settings::getX(), Settings::getY());
     qint32 returncode = app.exec();
     /*************************************************************************************************/
-
     // shhutting down
     Settings::setX(window.x());
     Settings::setY(window.y());

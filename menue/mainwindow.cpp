@@ -333,60 +333,66 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spMapSelectionMapsMenue::create());
     leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterMultiplayer()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spLobbyMenu::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterEditor()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spEditorMenue::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterOptionmenue()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spOptionMenue::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterWikimenue()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spWikimenu::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterCreditsmenue()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spCreditsMenue::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterAchievementmenue()
 {    
+     Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spAchievementmenu::create());
     leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterShopMenu()
 {
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spShopmenu::create());
     leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterLoadGame()
@@ -433,14 +439,14 @@ void Mainwindow::loadCampaign(QString filename)
 
 void Mainwindow::enterReplayGame()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     QVector<QString> wildcards;
     wildcards.append("*.rec");
     QString path = "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::lastSaveGame()
@@ -495,10 +501,10 @@ void Mainwindow::leaveMenue()
 
 void Mainwindow::enterCOStyleMenu()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spCOStyleMenu::create());
     leaveMenue();
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::quitGame()

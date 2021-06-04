@@ -21,7 +21,7 @@ namespace oxygine
     {
     }
 
-    void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor)
+    void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         m_scaleFactor = scaleFactor;
         if (!texture)
@@ -32,8 +32,16 @@ namespace oxygine
         qint32 frame_height = originalSize.y / rows;
         if (rows > 1 || columns > 1)
         {
-            frame_height -= 1;
-            frame_width -= 1;
+            if (addTransparentBorder)
+            {
+                frame_height -= 1;
+                frame_width -= 1;
+            }
+            else
+            {
+                frame_height -= 2;
+                frame_width -= 2;
+            }
         }
         float iw = 1.0f / static_cast<float>(columns);
         float ih = 1.0f / static_cast<float>(rows);
@@ -64,27 +72,21 @@ namespace oxygine
     void ResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         QImage img(file);
-        if (addTransparentBorder)
-        {
-            SpriteCreator::addTransparentBorder(img, columns, rows);
-        }
+        SpriteCreator::addFrameBorders(img, columns, rows, addTransparentBorder);
         Image mt;
         mt.init(img, true);
-        init(&mt, columns, rows, scaleFactor);
+        init(&mt, columns, rows, scaleFactor, addTransparentBorder);
     }
 
     void ResAnim::init(QImage & img, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         Image mt;
-        if (addTransparentBorder)
-        {
-            SpriteCreator::addTransparentBorder(img, columns, rows);
-        }
+        SpriteCreator::addFrameBorders(img, columns, rows, addTransparentBorder);
         mt.init(img, true);
-        init(&mt, columns, rows, scaleFactor);
+        init(&mt, columns, rows, scaleFactor, addTransparentBorder);
     }
 
-    void ResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
+    void ResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         m_scaleFactor = scaleFactor;
         if (!original)
@@ -95,7 +97,7 @@ namespace oxygine
         spNativeTexture texture = IVideoDriver::instance->createTexture();
         texture->init(original->lock(), false);
         texture->apply();
-        init(texture, original->getSize(), columns, rows, scaleFactor);
+        init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
     }
 
     void ResAnim::init(animationFrames& frames, qint32 columns, float scaleFactor, float appliedScale)

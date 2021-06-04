@@ -22,7 +22,7 @@ namespace oxygine
         ResAnim::init(file, columns, rows, scaleFactor, addTransparentBorder);
     }
 
-    void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
+    void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
 
         m_scaleFactor = scaleFactor;
@@ -35,7 +35,7 @@ namespace oxygine
 
         texture->init(original->lock(), false);
         texture->apply();
-        ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor);
+        ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
         Point originalSize = original->getSize();
 
         qint32 frame_width = originalSize.x / columns;

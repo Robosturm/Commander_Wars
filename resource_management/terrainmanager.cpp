@@ -2,7 +2,7 @@
 
 TerrainManager::TerrainManager()
     : RessourceManagement<TerrainManager>("/images/terrain/res.xml",
-                                          "/scripts/terrain")
+                                          "/scripts/terrain", false)
 {
     setObjectName("TerrainManager");
 }

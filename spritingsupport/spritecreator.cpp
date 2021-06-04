@@ -253,7 +253,7 @@ void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskT
 }
 
 oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
-                                            qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
+                                             qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
@@ -276,7 +276,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, 
 }
 
 oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg, bool useColorBox,
-                                            qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
+                                             qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder)
 {
     QFileInfo inputInfo(input);
     if (!inputInfo.exists())
@@ -589,7 +589,7 @@ void SpriteCreator::extendMaskImage(QString& file)
                     newPicture.setPixelColor(x, y, color);
                 }
                 else if (x + 1 < picture.width() &&
-                    picture.pixelColor(x + 1, y).alpha() != alpha)
+                         picture.pixelColor(x + 1, y).alpha() != alpha)
                 {
                     QColor color = picture.pixelColor(x + 1, y);
                     newPicture.setPixelColor(x, y, color);
@@ -617,12 +617,21 @@ void SpriteCreator::extendMaskImage(QString& file)
     newPicture.save(file);
 }
 
-void SpriteCreator::addTransparentBorder(QImage & image, qint32 columns, qint32 rows)
+void SpriteCreator::addFrameBorders(QImage & image, qint32 columns, qint32 rows, bool addOnlyTransparentBorder)
 {
     if ((columns > 1) || (rows > 1))
     {
-        QImage newImg(image.width() + columns,
-                     image.height() + rows, image.format());
+        QImage newImg;
+        if (addOnlyTransparentBorder)
+        {
+            newImg = QImage(image.width() + columns,
+                            image.height() + rows, image.format());
+        }
+        else
+        {
+            newImg = QImage(image.width() + columns * 2,
+                            image.height() + rows * 2, image.format());
+        }
         qint32 frameWidth = image.width() / columns;
         qint32 frameHeigth = image.height() / rows;
 
@@ -634,20 +643,63 @@ void SpriteCreator::addTransparentBorder(QImage & image, qint32 columns, qint32 
                 {
                     for (qint32 y = 0; y < frameHeigth; ++y)
                     {
-                        qint32 posX = x + column * frameWidth;
-                        qint32 posY = y + row * frameHeigth;
-                        newImg.setPixel(posX + column, posY + row, image.pixel(posX, posY));
+                        if (addOnlyTransparentBorder)
+                        {
+                            qint32 posX = x + column * frameWidth;
+                            qint32 posY = y + row * frameHeigth;
+                            newImg.setPixel(posX + column, posY + row, image.pixel(posX, posY));
+                        }
+                        else
+                        {
+                            qint32 posX = x + column * frameWidth;
+                            qint32 posY = y + row * frameHeigth;
+                            newImg.setPixel(posX + column * 2, posY + row * 2, image.pixel(posX, posY));
+                        }
                     }
                 }
-                qint32 posX = (column + 1) * frameWidth + column;
-                for (qint32 y = 0; y < frameHeigth; ++y)
+
+                if (addOnlyTransparentBorder)
                 {
-                    newImg.setPixel(posX, row * frameHeigth + y + row, Qt::transparent);
+                    // right border
+                    qint32 posX = (column + 1) * frameWidth + column;
+                    for (qint32 y = 0; y < frameHeigth; ++y)
+                    {
+
+                        newImg.setPixel(posX, row * frameHeigth + y + row, Qt::transparent);
+                    }
+                    // bottom border
+                    qint32 posY = (row + 1) * frameHeigth + row;
+                    for (qint32 x = 0; x <= frameWidth; ++x)
+                    {
+                        newImg.setPixel(column * frameWidth + x + column, posY, Qt::transparent);
+                    }
                 }
-                qint32 posY = (row + 1) * frameHeigth + row;
-                for (qint32 x = 0; x <= frameWidth; ++x)
+                else
                 {
-                    newImg.setPixel(column * frameWidth + x + column, posY, Qt::transparent);
+                    // right border
+                    qint32 posX = (column + 1) * frameWidth + column * 2;
+                    for (qint32 y = 0; y < frameHeigth; ++y)
+                    {
+                        newImg.setPixel(posX, row * frameHeigth + y + row * 2, image.pixel((column + 1) * frameWidth - 1, y + row * frameHeigth));
+                        newImg.setPixel(posX + 1, row * frameHeigth + y + row * 2, Qt::transparent);
+                    }
+                    // bottom border
+                    qint32 posY = (row + 1) * frameHeigth + row * 2;
+                    for (qint32 x = 0; x <= frameWidth; ++x)
+                    {
+                        if (frameWidth == x)
+                        {
+                            newImg.setPixel(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
+                            newImg.setPixel(column * frameWidth + x + column * 2 + 1, posY, Qt::transparent);
+                            newImg.setPixel(column * frameWidth + x + column * 2 + 1, posY + 1, Qt::transparent);
+                            newImg.setPixel(column * frameWidth + x + column * 2, posY, image.pixel((column + 1) * frameWidth - 1, (row + 1) * frameHeigth - 1));
+                        }
+                        else
+                        {
+                            newImg.setPixel(column * frameWidth + x + column * 2, posY, image.pixel(x + column * frameWidth, (row + 1) * frameHeigth - 1));
+                            newImg.setPixel(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
+                        }
+                    }
                 }
             }
         }

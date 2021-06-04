@@ -146,12 +146,12 @@ public:
      */
     static void extendMaskImage(QString& file);
     /**
-     * @brief addTransparentBorder
+     * @brief addFrameBorders
      * @param image
      * @param columns
      * @param rows
      */
-    static void addTransparentBorder(QImage & image, qint32 columns, qint32 rows);
+    static void addFrameBorders(QImage & image, qint32 columns, qint32 rows, bool addOnlyTransparentBorder);
 };
 
 #endif // SPRITECREATOR_H

@@ -16,7 +16,6 @@
 spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)
 {
     spTerrain pTerrain = spTerrain::create(terrainID, x, y);
-    pTerrain->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {
@@ -379,6 +378,10 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         Console::print("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
+    if (m_pTerrainSprite.get() && m_x >= 0 && m_y >= 0)
+    {
+        m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+    }
 }
 
 QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)
@@ -558,6 +561,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+    pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

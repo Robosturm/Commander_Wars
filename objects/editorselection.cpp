@@ -49,6 +49,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
                                         m_BoxPlacementSelection->getHeight() - 100);
     m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = oxygine::spActor::create();
+    m_PlacementActor->setWidth(m_PlacementSelectionClip->getWidth());
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->setContent(m_PlacementActor);
 
