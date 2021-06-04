@@ -35,7 +35,10 @@ bool GameAnimationWalk::onFinished(bool skipping)
     if (m_movePath.size() > 0)
     {
         QPoint pos = m_movePath[0];
-        pMap->getTerrain(pos.x(), pos.y())->setUnit(m_pUnit);
+        if (pMap->getTerrain(pos.x(), pos.y())->getUnit() == nullptr)
+        {
+            pMap->getTerrain(pos.x(), pos.y())->setUnit(m_pUnit);
+        }
     }
     bool ret = GameAnimation::onFinished(skipping);
     return ret;

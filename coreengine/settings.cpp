@@ -1271,7 +1271,14 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_showCoCount = 0;
     }
-    m_showCoCount = settings.value("ShowCoCount", 0).toInt(&ok);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_showCoCount = settings.value("ShowCoCount", 1).toInt(&ok);
+    }
+    else
+    {
+        m_showCoCount = settings.value("ShowCoCount", 0).toInt(&ok);
+    }
     if(!ok || m_showCoCount < 0)
     {
         QString error = "Error in the Ini File: [Game] Setting: ShowCoCount";

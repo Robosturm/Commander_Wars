@@ -734,19 +734,18 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     rect->setColor(color);
     rect->setPosition(0, 0);
     rect->setSize(lineWidth, lineWidth);
+    rect->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     pRet->addChild(rect);
     double angle = 0;
 
     rect = oxygine::spColorRectSprite::create();
+    rect->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     rect->setColor(color);
-
-
     qint32 x = end.x() - width;
     if (x > 0)
     {
         angle = qAtan(end.y() / x);
     }
-
     qint32 y = end.y();
     if (angle >= 0.0)
     {
@@ -768,6 +767,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     rect->setColor(color);
     rect->setPosition(end.x() - lineWidth, end.y());
     rect->setSize(lineWidth, lineWidth);
+    rect->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     pRet->addChild(rect);
     return pRet;
 }

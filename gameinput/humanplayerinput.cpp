@@ -407,7 +407,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     else
                     {
                         std::chrono::milliseconds time = std::chrono::milliseconds(m_doubleClickTime.elapsed());
-                        if ((time < std::chrono::milliseconds(500) && m_doubleClickTime.isValid())
+                        if ((time < std::chrono::milliseconds(1000) && m_doubleClickTime.isValid())
                             || !Settings::getSmallScreenDevice())
                         {
                             actions = getEmptyActionList();
@@ -428,10 +428,12 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                             {
                                 cleanUpInput();
                             }
+                            m_doubleClickTime.invalidate();
                         }
                         else
                         {
                             m_doubleClickTime.start();
+                            m_pGameAction = nullptr;
                         }
                     }
                 }

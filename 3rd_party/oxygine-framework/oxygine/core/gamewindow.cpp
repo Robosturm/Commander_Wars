@@ -365,7 +365,6 @@ namespace oxygine
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-
                 }
                 m_pressDownTime.invalidate();
                 m_touchMousePressSent = false;
