@@ -113,11 +113,13 @@ void CoreAI::loadIni(QString file)
     QStringList searchFiles;
     if (!file.isEmpty())
     {
+        searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/aidata/" + file);
         searchFiles.append("resources/aidata/" + file);
         // make sure to overwrite existing js stuff
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
-            searchFiles.append(Settings::getMods().at(i) + "/aidata/" + file);
+            searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/aidata/" + file);
+            searchFiles.append(Settings::getUserPath() + Settings::getMods().at(i) + "/aidata/" + file);
         }
     }
     for (qint32 i = 0; i < searchFiles.size(); i++)

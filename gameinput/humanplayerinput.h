@@ -195,6 +195,9 @@ private:
 
     QPoint m_lastMapView{std::numeric_limits<qint32>::min(),
                 std::numeric_limits<qint32>::min()};
+    QElapsedTimer m_doubleClickTime;
+
+
 };
 
 #endif // HUMANPLAYERINPUT_H

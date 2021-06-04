@@ -736,18 +736,7 @@ void Settings::setRecord(bool record)
 void Settings::loadSettings()
 {
     bool ok = false;
-    QSettings settings(Settings::getUserPath() + m_settingFile, QSettings::IniFormat);
-
-    settings.beginGroup("general");
-    setLanguage(settings.value("language","en").toString());
-    m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
-    if(!ok){
-        QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
-        Console::print(error, Console::eERROR);
-        m_mouseSensitivity = -0.75f;
-    }
-    settings.endGroup();
-
+    QSettings settings(m_settingFile, QSettings::IniFormat);
     // Resolution
     settings.beginGroup("Resolution");
     m_x = settings.value("x", 0).toInt(&ok);
@@ -805,8 +794,29 @@ void Settings::loadSettings()
     {
         m_smallScreenDevice = settings.value("SmallScreenDevice", false).toBool();
     }
-
     settings.endGroup();
+
+    // general
+    settings.beginGroup("General");
+    setLanguage(settings.value("language","en").toString());
+    m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
+    if(!ok)
+    {
+        QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
+        Console::print(error, Console::eERROR);
+        m_mouseSensitivity = -0.75f;
+    }
+    if (Settings::getSmallScreenDevice())
+    {
+        QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
+        m_userPath = settings.value("UserPath", defaultPath).toString();
+    }
+    else
+    {
+        m_userPath = settings.value("UserPath", "").toString();
+    }
+    settings.endGroup();
+    Console::print("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
 
     // Keys
     settings.beginGroup("Keys");
@@ -1178,7 +1188,6 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_SoundVolume = 100;
     }
-
     settings.endGroup();
 
     // game
@@ -1320,7 +1329,7 @@ void Settings::loadSettings()
     m_Server  = settings.value("Server", false).toBool();
     settings.endGroup();
 
-    // sounds
+    // auto saving
     settings.beginGroup("Autosaving");
     autoSavingCylceTime = std::chrono::seconds(settings.value("AutoSavingTime", 0).toUInt(&ok));
     if (!ok)
@@ -1348,31 +1357,20 @@ void Settings::loadSettings()
     settings.beginGroup("Logging");
     m_LogActions  = settings.value("LogActions", false).toBool();
     settings.endGroup();
-
-    // general
-    settings.beginGroup("General");
-    if (Settings::getSmallScreenDevice())
-    {
-        QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/commander_wars/";
-        m_userPath = settings.value("UserPath", defaultPath).toString();
-    }
-    else
-    {
-        m_userPath = settings.value("UserPath", "").toString();
-    }
-    settings.endGroup();
 }
 
 void Settings::saveSettings()
 {
+    Console::print("Settings::saveSettings()", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     if (!pApp->getSlave())
     {
-        QSettings settings(Settings::getUserPath() + m_settingFile, QSettings::IniFormat);
+        QSettings settings(m_settingFile, QSettings::IniFormat);
 
-        settings.beginGroup("general");
+        settings.beginGroup("General");
         settings.setValue("language",                   m_language);
         settings.setValue("MouseSensitivity",           m_mouseSensitivity);
+        settings.setValue("UserPath",                   m_userPath);
         settings.endGroup();
 
         settings.beginGroup("Resolution");
@@ -1497,10 +1495,6 @@ void Settings::saveSettings()
         // logging
         settings.beginGroup("Logging");
         settings.setValue("LogActions",               m_LogActions);
-        settings.endGroup();
-
-        settings.beginGroup("General");
-        settings.setValue("UserPath",                 m_userPath);
         settings.endGroup();
     }
 }

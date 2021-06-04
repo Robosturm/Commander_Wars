@@ -77,7 +77,6 @@ namespace oxygine
         void sigLoadRessources();
         void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
-        void sigMouseLongPressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
         void sigMouseMoveEvent(qint32 x, qint32 y);
 
@@ -133,7 +132,6 @@ namespace oxygine
 
         // touch handling
         QElapsedTimer m_pressDownTime;
-        bool m_pressDownTimeRunning{false};
         bool m_touchMousePressSent{false};
         bool m_longPressSent{false};
         float m_lastZoomValue{1.0f};

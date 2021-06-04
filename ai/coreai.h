@@ -496,7 +496,7 @@ protected:
     float m_ammoResupply{0.25f};
 
     float m_minCoUnitScore{5000.0f};
-    qint32 m_coUnitValue{1000};
+    qint32 m_coUnitValue{6000};
     float m_coUnitRankReduction{1000.0f};
     float m_coUnitScoreMultiplier{1.1f};
     qint32 m_minCoUnitCount{5};

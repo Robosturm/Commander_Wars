@@ -13,7 +13,6 @@ namespace oxygine
             OVER,
             MOVE,
             TOUCH_DOWN,
-            TOUCH_DOWN_LONG,
             TOUCH_UP,
             WHEEL_DIR,
             OUTX,       //OUT, X - avoid conflicts with WinAPI

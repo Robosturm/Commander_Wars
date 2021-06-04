@@ -234,7 +234,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         coSuperpower = pCO->getSuperPowerName();
     }
     m_COBio->setHtmlText(coBio);
-    m_COBio->setHeight(m_COBio->getHeight());
+    m_COBio->setHeight(m_COBio->getTextRect().getHeight());
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
     m_HitText->setHtmlText(coHits);
     m_HitText->setY(m_HitSprite->getY() + 5);

@@ -406,23 +406,32 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     }
                     else
                     {
-                        actions = getEmptyActionList();
-                        possibleActions.clear();
-                        for (qint32 i = 0; i < actions.size(); i++)
+                        std::chrono::milliseconds time = std::chrono::milliseconds(m_doubleClickTime.elapsed());
+                        if ((time < std::chrono::milliseconds(500) && m_doubleClickTime.isValid())
+                            || !Settings::getSmallScreenDevice())
                         {
-                            if (m_pGameAction->canBePerformed(actions[i], true))
+                            actions = getEmptyActionList();
+                            possibleActions.clear();
+                            for (qint32 i = 0; i < actions.size(); i++)
                             {
-                                possibleActions.append(actions[i]);
+                                if (m_pGameAction->canBePerformed(actions[i], true))
+                                {
+                                    possibleActions.append(actions[i]);
+                                }
                             }
-                        }
-                        if (possibleActions.size() > 0)
-                        {
-                            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-                            createActionMenu(possibleActions, x, y);
+                            if (possibleActions.size() > 0)
+                            {
+                                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                                createActionMenu(possibleActions, x, y);
+                            }
+                            else
+                            {
+                                cleanUpInput();
+                            }
                         }
                         else
                         {
-                            cleanUpInput();
+                            m_doubleClickTime.start();
                         }
                     }
                 }

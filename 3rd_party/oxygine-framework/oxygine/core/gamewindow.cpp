@@ -270,8 +270,6 @@ namespace oxygine
             }
         }
         emit sigMousePressEvent(b, event->position().x(), event->position().y());
-        m_pressDownTime.start();
-        m_pressDownTimeRunning = true;
     }
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -300,12 +298,6 @@ namespace oxygine
             }
         }
         emit sigMouseReleaseEvent(b, event->position().x(), event->position().y());
-        std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
-        if (time > std::chrono::milliseconds(500))
-        {
-            emit sigMouseLongPressEvent(b, event->position().x(), event->position().y());
-        }
-        m_pressDownTimeRunning = false;
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
@@ -329,7 +321,6 @@ namespace oxygine
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                     m_pressDownTime.start();
-                    m_pressDownTimeRunning = true;
                     m_touchMousePressSent = true;
                 }
             }
@@ -340,11 +331,12 @@ namespace oxygine
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
-                    if (m_pressDownTimeRunning &&
-                        touchPoint0.pressPosition() == touchPoint0.position() &&
-                        time > std::chrono::milliseconds(500))
+                    if (touchPoint0.pressPosition() == touchPoint0.position() &&
+                        time > std::chrono::milliseconds(500) &&
+                        m_pressDownTime.isValid())
                     {
-                        emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                        emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
+                        emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                         m_longPressSent = true;
                     }
                     else
@@ -362,9 +354,10 @@ namespace oxygine
                     std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                     if (!m_longPressSent)
                     {
-                        if (time > std::chrono::milliseconds(500) && m_pressDownTimeRunning)
+                        if (time > std::chrono::milliseconds(500) && m_pressDownTime.isValid())
                         {
-                            emit sigMouseLongPressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
+                            emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
+                            emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                         }
                     }
                 }
@@ -374,7 +367,7 @@ namespace oxygine
                     emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
 
                 }
-                m_pressDownTimeRunning = false;
+                m_pressDownTime.invalidate();
                 m_touchMousePressSent = false;
                 m_longPressSent = false;
                 m_lastZoomValue = 1.0f;

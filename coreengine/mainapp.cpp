@@ -647,6 +647,7 @@ QString Mainapp::qsTr(const char* const text)
 void Mainapp::createBaseDirs()
 {
     QString userPath = Settings::getUserPath();
+    Console::print("Creating base dirs in " + userPath, Console::eDEBUG);
     if (!userPath.isEmpty())
     {
         QDir newDir(userPath);

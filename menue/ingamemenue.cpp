@@ -149,7 +149,6 @@ void InGameMenue::connectMapCursor()
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            //pEvent->stopPropagation();
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
                 emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
@@ -160,21 +159,11 @@ void InGameMenue::connectMapCursor()
             }
         }
     });
-    pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN_LONG, [=](oxygine::Event *pEvent )->void
-    {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr && Settings::getSimpleDeselect())
-        {
-            pEvent->stopPropagation();
-            emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-        }
-    });
     pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            //pEvent->stopPropagation();
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
                 emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());

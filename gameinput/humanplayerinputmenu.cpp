@@ -289,7 +289,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
                 {                        emit sigCanceled(0, 0);
                 }
             }
-
         });
     }
     else

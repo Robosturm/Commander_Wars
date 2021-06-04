@@ -374,8 +374,11 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     file = file.replace(path + "/", "");
     file = file.replace(path, "");
     QString userPath = Settings::getUserPath();
-    file = file.replace(userPath + "/", "");
-    file = file.replace(userPath, "");
+    if (!userPath.isEmpty())
+    {
+        file = file.replace(userPath + "/", "");
+        file = file.replace(userPath, "");
+    }
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH) && full)
     {
         file.remove(0, QString(oxygine::Resource::RCC_PREFIX_PATH).length());

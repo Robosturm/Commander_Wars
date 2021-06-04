@@ -78,6 +78,7 @@ void Userdata::changeUser()
     }
     else
     {
+        Console::print("no userdata found creating new one", Console::eDEBUG);
         storeUser();
     }
 }

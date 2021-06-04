@@ -1,4 +1,5 @@
 #include <QFile>
+#include <QGuiApplication>
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -120,7 +121,10 @@ void GameMap::loadMapData()
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
-    setZoom(1);
+    if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
+    {
+        setZoom(1);
+    }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 }
 
