@@ -12,6 +12,7 @@
 #include "qtextstream.h"
 
 #include "coreengine/console.h"
+#include "coreengine/settings.h"
 
 namespace oxygine
 {
@@ -122,9 +123,9 @@ namespace oxygine
         spImage mt = spImage::create();
 
         QImage img;
-        if (QFile::exists(p.file))
+        if (QFile::exists(Settings::getUserPath() +p.file))
         {
-           img = QImage(p.file);
+           img = QImage(Settings::getUserPath() +p.file);
         }
         else if (QFile::exists(RCC_PREFIX_PATH + p.file))
         {
@@ -255,7 +256,7 @@ namespace oxygine
         }
 
         QString path = m_file;
-        QFile file(path);
+        QFile file(Settings::getUserPath() + path);
         if (!file.exists())
         {
             file.setFileName(QString(RCC_PREFIX_PATH) + path);

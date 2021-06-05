@@ -77,7 +77,7 @@ void WikiDatabase::load()
     {
         searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/scripts/wiki");
     }
-    searchPaths.append("resources/scripts/wiki");
+    searchPaths.append(Settings::getUserPath() + "resources/scripts/wiki");
     searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/scripts/wiki");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {

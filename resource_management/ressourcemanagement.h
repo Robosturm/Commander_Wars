@@ -125,9 +125,9 @@ void RessourceManagement<TClass>::loadRessources(QString resPath, bool addTransp
         {
             oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + "resources/" + resPath, options);
         }
-        if (QFile::exists("resources/" + resPath))
+        if (QFile::exists(Settings::getUserPath() + "resources/" + resPath))
         {
-            oxygine::Resources::loadXML("resources/" + resPath, options);
+            oxygine::Resources::loadXML(Settings::getUserPath() + "resources/" + resPath, options);
         }
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
@@ -135,9 +135,9 @@ void RessourceManagement<TClass>::loadRessources(QString resPath, bool addTransp
             {
                 oxygine::Resources::loadXML(QString(RCC_PREFIX_PATH) + Settings::getMods().at(i) + resPath, options);
             }
-            if (QFile::exists(Settings::getMods().at(i) + resPath))
+            if (QFile::exists(Settings::getUserPath() + Settings::getMods().at(i) + resPath))
             {
-                oxygine::Resources::loadXML(Settings::getMods().at(i) + resPath, options);
+                oxygine::Resources::loadXML(Settings::getUserPath() + Settings::getMods().at(i) + resPath, options);
             }
         }
     }
@@ -203,7 +203,7 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
     if (!m_scriptPath.isEmpty())
     {
         searchPaths.append(QString(RCC_PREFIX_PATH) + "resources/" + m_scriptPath);
-        searchPaths.append("resources/" + m_scriptPath);
+        searchPaths.append(Settings::getUserPath() + "resources/" + m_scriptPath);
         // make sure to overwrite existing js stuff
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {

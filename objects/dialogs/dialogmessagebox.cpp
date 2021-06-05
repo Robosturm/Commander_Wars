@@ -32,7 +32,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
     style.multiline = true;
 
     m_Text = oxygine::spTextField::create();
-    m_Text->setSize(Settings::getWidth() / 3, Settings::getHeight());
+    m_Text->setSize(Settings::getWidth() / 2, Settings::getHeight());
     m_Text->setHtmlText(text);
     m_Text->setStyle(style);
     m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - m_Text->getTextRect().getHeight());

@@ -7,6 +7,7 @@
 
 #include "spritingsupport/spritecreator.h"
 #include "coreengine/console.h"
+#include "coreengine/settings.h"
 
 #include <qvariant.h>
 #include <qfile.h>
@@ -301,9 +302,9 @@ namespace oxygine
             qint32 frame_height = 0;
 
             QImage img;
-            if (QFile::exists(walker.getPath("file")))
+            if (QFile::exists(Settings::getUserPath() + walker.getPath("file")))
             {
-                img = QImage(walker.getPath("file"));
+                img = QImage(Settings::getUserPath() + walker.getPath("file"));
             }
             else if (QFile::exists(RCC_PREFIX_PATH + walker.getPath("file")))
             {
