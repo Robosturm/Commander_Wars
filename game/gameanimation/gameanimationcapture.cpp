@@ -33,6 +33,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
+        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
         float endPoints = m_endPoints;
         if (m_endPoints == 0)
         {
@@ -175,6 +176,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints);
         float startPosition = unitOffsetY + (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints)) * buildingHigh;
         oxygine::spSprite pSprite = oxygine::spSprite::create();
+        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
         if (pAnim->getTotalFrames() > 1)
         {
             // jumping

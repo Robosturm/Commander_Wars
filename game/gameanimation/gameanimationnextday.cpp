@@ -52,7 +52,14 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         if (pAnim != nullptr)
         {
             m_CO->setResAnim(pAnim);
-            m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+            if (Settings::getSmallScreenDevice())
+            {
+                m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+            }
+            else
+            {
+                m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+            }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
             m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);
@@ -67,7 +74,14 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         {
             m_CO = oxygine::spSprite::create();
             m_CO->setResAnim(pAnim);
-            m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+            if (Settings::getSmallScreenDevice())
+            {
+                m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+            }
+            else
+            {
+                m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+            }
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
             m_CO->setPosition(20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);

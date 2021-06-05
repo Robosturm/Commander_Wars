@@ -14,7 +14,7 @@ namespace oxygine
 
         void doRender(const RenderState&) override;
 
-        RectF getDestRect() const override { return Actor::getDestRect(); }
+        RectF getDestRect() const override;
 
     protected:
         void sizeChanged(const Vector2& size) override;

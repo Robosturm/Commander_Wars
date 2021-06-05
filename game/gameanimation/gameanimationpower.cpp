@@ -80,7 +80,14 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     if (pAnim != nullptr)
     {
         m_CO->setResAnim(pAnim);
-        m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
+        if (Settings::getSmallScreenDevice())
+        {
+            m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+        }
+        else
+        {
+            m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+        }
         m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
         m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
         oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
@@ -117,7 +124,14 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
             if (pAnim != nullptr)
             {
                 m_CO->setResAnim(pAnim);
-                m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
+                if (Settings::getSmallScreenDevice())
+                {
+                    m_CO->setScale((Settings::getHeight() - 60) / pAnim->getHeight());
+                }
+                else
+                {
+                    m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
+                }
                 m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
                 m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() * 2 - 40, Settings::getHeight());
                 oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
