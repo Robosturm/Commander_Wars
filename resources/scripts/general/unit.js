@@ -308,6 +308,10 @@ var UNIT =
         animation.seekBuffer();
         var x = animation.readDataInt32();
         var y = animation.readDataInt32();
-        map.getTerrain(x, y).getUnit().removeUnit();
+        var unit = map.getTerrain(x, y).getUnit();
+        if (unit !== null)
+        {
+            unit.removeUnit();
+        }
     },
 };
