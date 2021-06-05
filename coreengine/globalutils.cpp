@@ -261,16 +261,20 @@ void GlobalUtils::setUseSeed(bool useSeed)
 QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
 {
     QStringList ret;
-    QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
-    while (dirIter.hasNext())
+
+    QStringList paths = {oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath()};
+    for (const auto & path : qAsConst(paths))
     {
-        dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
-        file.replace(QCoreApplication::applicationDirPath() + "/", "");
-        file.replace(QCoreApplication::applicationDirPath(), "");
-        file.replace(folder + "/", "");
-        file.replace(folder, "");
-        ret.append(file);
+        QDirIterator dirIter(path + folder, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString file = dirIter.fileInfo().absoluteFilePath();
+            file = GlobalUtils::makePathRelative(file);
+            file.replace(folder + "/", "");
+            file.replace(folder, "");
+            ret.append(file);
+        }
     }
     return ret;
 }

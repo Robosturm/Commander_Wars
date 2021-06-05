@@ -320,7 +320,7 @@ namespace oxygine
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
-                    m_pressDownTime.start();
+                    m_longPressSent = false;
                     m_touchMousePressSent = true;
                 }
             }
@@ -330,10 +330,8 @@ namespace oxygine
                 if (touchPoints.count() == 1 )
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                     if (touchPoint0.pressPosition() == touchPoint0.position() &&
-                        time > std::chrono::milliseconds(500) &&
-                        m_pressDownTime.isValid())
+                        touchPoint0.timeHeld() >= 0.5)
                     {
                         emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                         emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
@@ -351,10 +349,9 @@ namespace oxygine
                 if (touchPoints.count() == 1)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    std::chrono::milliseconds time = std::chrono::milliseconds(m_pressDownTime.elapsed());
                     if (!m_longPressSent)
                     {
-                        if (time > std::chrono::milliseconds(500) && m_pressDownTime.isValid())
+                        if (touchPoint0.timeHeld() >= 0.5)
                         {
                             emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                             emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
@@ -366,7 +363,6 @@ namespace oxygine
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
                 }
-                m_pressDownTime.invalidate();
                 m_touchMousePressSent = false;
                 m_longPressSent = false;
                 m_lastZoomValue = 1.0f;

@@ -48,6 +48,7 @@ public slots:
     void changeFolder(QString folder);
     void updateSelection(qint32 startIndex);
     void itemChangeTimerExpired();
+    void createItemContainer(qint32 y, qint32 width, qint32 height);
 private:
     QString m_currentFolder;
     QString m_currentItem;
@@ -63,6 +64,11 @@ private:
     QElapsedTimer m_timer;
     QTimer m_itemChangedTimer;
     bool m_itemClicked{false};
+    oxygine::spActor m_ItemContainer;
+    bool m_moveScrolling{false};
+    bool m_wasMoveScrolling{false};
+    oxygine::Vector2 m_lastScrollPoint;
+
 };
 
 #endif // MAPSELECTION_H

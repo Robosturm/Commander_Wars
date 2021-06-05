@@ -183,6 +183,47 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     setWidth(width * xCount + scrollbarWidth);
     m_columnCount = xCount;
     updateItemPositionAndVisibility();
+
+
+}
+
+void HumanPlayerInputMenu::addTouchMoveEvents()
+{
+    addTouchDownListener([=](oxygine::Event* event)
+    {
+        oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
+        m_lastScrollPoint = te->localPosition;
+        m_moveScrolling = true;
+    });
+    addTouchUpListener([=](oxygine::Event* event)
+    {
+        if (m_moveScrolling)
+        {
+            m_moveScrolling = false;
+        }
+    });
+    addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event* event)
+    {
+        if (m_moveScrolling)
+        {
+            m_moveScrolling = false;
+        }
+    });
+    addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
+    {
+        if (m_moveScrolling)
+        {
+            event->stopPropagation();
+            oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
+            oxygine::Vector2 newPos = te->localPosition;
+            qint32 speed = -(newPos.y - m_lastScrollPoint.y);
+            if (speed != 0)
+            {
+                emit m_scrollbar->sigChangeScrollValue(speed / m_scrollbar->getContentHeigth());
+                m_lastScrollPoint = newPos;
+            }
+        }
+    });
 }
 
 void HumanPlayerInputMenu::scroll(qint32 count)
@@ -277,7 +318,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
         {
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            pTouchEvent->stopPropagation();
             if (pTouchEvent != nullptr)
             {
                 if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
@@ -286,7 +326,8 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
                     emit sigItemSelected(action, costs);
                 }
                 else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-                {                        emit sigCanceled(0, 0);
+                {
+                    emit sigCanceled(0, 0);
                 }
             }
         });
@@ -296,7 +337,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
         pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
         {
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            pTouchEvent->stopPropagation();
             if (pTouchEvent != nullptr)
             {
                 if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)

@@ -365,7 +365,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         QString value = getStringValue(getAttribute(childs,attrStartValue));
-        spTextbox pTextbox = new Textbox(width, height);
+        spTextbox pTextbox = spTextbox::create(width, height);
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);

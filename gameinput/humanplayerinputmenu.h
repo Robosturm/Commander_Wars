@@ -40,6 +40,7 @@ private:
                                          QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item);
     void updateItemPositionAndVisibility();
     void scroll(qint32 count);
+    void addTouchMoveEvents();
 private:
     oxygine::spSprite m_Cursor;
     qint32 m_startY{0};
@@ -57,6 +58,10 @@ private:
     qint32 m_rowCount{0};
     qint32 m_columnCount{0};
     qint32 m_startItem{0};
+
+
+    bool m_moveScrolling{false};
+    oxygine::Vector2 m_lastScrollPoint;
 };
 
 #endif // HUMANPLAYERINPUTMENU_H

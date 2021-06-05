@@ -131,9 +131,8 @@ namespace oxygine
         QBasicTimer m_Timer;
 
         // touch handling
-        QElapsedTimer m_pressDownTime;
-        bool m_touchMousePressSent{false};
         bool m_longPressSent{false};
+        bool m_touchMousePressSent{false};
         float m_lastZoomValue{1.0f};
 
         QMutex m_pauseMutex;

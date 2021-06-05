@@ -99,10 +99,14 @@ void CampaignMenu::exitMenue()
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
 {    
-    QFileInfo info = QFileInfo(Settings::getUserPath() + item);
+    QFileInfo info = QFileInfo(item);
     if (!info.exists())
     {
-        info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+        info = QFileInfo(Settings::getUserPath() + item);
+        if (!info.exists())
+        {
+            info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+        }
     }
     if (info.isFile())
     {
@@ -112,10 +116,14 @@ void CampaignMenu::mapSelectionItemClicked(QString item)
 
 void CampaignMenu::mapSelectionItemChanged(QString item)
 {    
-    QFileInfo info = QFileInfo(Settings::getUserPath() + item);
+    QFileInfo info = QFileInfo(item);
     if (!info.exists())
     {
-        info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+        info = QFileInfo(Settings::getUserPath() + item);
+        if (!info.exists())
+        {
+            info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + item);
+        }
     }
     m_pMapSelectionView->loadMap(info);    
 }
