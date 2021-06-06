@@ -69,6 +69,7 @@ IngameInfoBar::IngameInfoBar()
 
 
     m_pCursorInfoBox = oxygine::spBox9Sprite::create();
+
     m_pCursorInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pCursorInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pCursorInfoBox->setResAnim(pAnim);
@@ -77,12 +78,20 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     m_pDetailedViewBox = oxygine::spBox9Sprite::create();
+    if (getScaleX() < 0.75f)
+    {
+        m_pDetailedViewBox->setScale(1 / getScaleX() * 0.5f);
+    }
+    else if (getScaleX() < 1.0f)
+    {
+        m_pDetailedViewBox->setScale(1 / getScaleX());
+    }
     m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pAnim = pObjectManager->getResAnim("panel_transparent");
     m_pDetailedViewBox->setResAnim(pAnim);
     m_pDetailedViewBox->setSize(136, 200);
-    m_pDetailedViewBox->setPosition(-spriteWidth - 8, m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getHeight());
+    m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
