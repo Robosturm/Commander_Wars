@@ -3586,6 +3586,38 @@ void Unit::updateCustomRangeActors()
     }
 }
 
+void Unit::transformUnit(QString unitID)
+{
+    for (auto & sprite : m_pUnitWaitSprites)
+    {
+        sprite->detach();
+    }
+    for (auto & sprite : m_pUnitSprites)
+    {
+        sprite->detach();
+    }
+    for (auto & sprite : m_pIconSprites)
+    {
+        sprite->detach();
+    }
+    while (m_customRangeInfo.size() > 0)
+    {
+        removeCustomRange(m_customRangeInfo[0].id);
+    }
+    m_pIconSprites.clear();
+    m_pUnitWaitSprites.clear();
+    m_pUnitSprites.clear();
+    qint32 fuel = m_fuel;
+    qint32 ammo1 = m_ammo1;
+    qint32 ammo2 = m_ammo2;
+    m_UnitID = unitID;
+    initUnit();
+    setFuel(fuel);
+    setAmmo1(ammo1);
+    setAmmo2(ammo2);
+    updateSprites(false);
+}
+
 qint32 Unit::getCursorInfoRange() const
 {
     return m_cursorInfoRange;

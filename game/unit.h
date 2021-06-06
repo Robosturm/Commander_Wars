@@ -158,6 +158,11 @@ public:
 
 public slots:
     /**
+     * @brief transformUnit
+     * @param unitID
+     */
+    void transformUnit(QString unitID);
+    /**
      * @brief getCursorInfoRange
      * @return
      */
