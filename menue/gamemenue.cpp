@@ -1588,7 +1588,7 @@ void GameMenue::victoryInfo()
 void GameMenue::autoSaveMap()
 {
     Console::print("autoSaveMap()", Console::eDEBUG);
-    saveMap("savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding());
+    saveMap(Settings::getUserPath() + "savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding());
     m_autoSaveCounter++;
     if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
     {

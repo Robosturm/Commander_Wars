@@ -11,6 +11,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
+#include "coreengine/scriptvariablefile.h"
 #include "game/GameEnums.h"
 
 class Userdata;
@@ -238,6 +239,12 @@ public slots:
      * @return
      */
     QStringList getShopItemsList(GameEnums::ShopItemType type, bool bought);
+    /**
+     * @brief readFile
+     * @param filename
+     * @return
+     */
+    ScriptVariableFile* readFile(QString filename);
 private:
     void showAchieved();
     void reset();
