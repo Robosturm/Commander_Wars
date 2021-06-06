@@ -135,9 +135,9 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                 pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
                 {
                     oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-                    pTouchEvent->stopPropagation();
                     if (pTouchEvent != nullptr)
                     {
+                        pTouchEvent->stopPropagation();
                         if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
                         {
                             emit sigCanceled(0, 0);
@@ -174,7 +174,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
-                emit m_scrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / m_scrollbar->getContentHeigth());
+                emit m_scrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(m_scrollbar->getContentHeigth()));
                 pTouchEvent->stopPropagation();
             }
         });
@@ -183,47 +183,53 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     setWidth(width * xCount + scrollbarWidth);
     m_columnCount = xCount;
     updateItemPositionAndVisibility();
-
-
+    addTouchMoveEvents();
 }
 
 void HumanPlayerInputMenu::addTouchMoveEvents()
 {
-    addTouchDownListener([=](oxygine::Event* event)
+    if (m_scrollbar.get() != nullptr)
     {
-        oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-        m_lastScrollPoint = te->localPosition;
-        m_moveScrolling = true;
-    });
-    addTouchUpListener([=](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
+        addTouchDownListener([=](oxygine::Event* event)
         {
-            m_moveScrolling = false;
-        }
-    });
-    addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
-        {
-            m_moveScrolling = false;
-        }
-    });
-    addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
-    {
-        if (m_moveScrolling)
-        {
-            event->stopPropagation();
             oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
-            oxygine::Vector2 newPos = te->localPosition;
-            qint32 speed = -(newPos.y - m_lastScrollPoint.y);
-            if (speed != 0)
+            m_lastScrollPoint = te->localPosition;
+            m_moveScrolling = true;
+            event->stopPropagation();
+        });
+        addTouchUpListener([=](oxygine::Event* event)
+        {
+            if (m_moveScrolling)
             {
-                emit m_scrollbar->sigChangeScrollValue(speed / m_scrollbar->getContentHeigth());
-                m_lastScrollPoint = newPos;
+                m_moveScrolling = false;
             }
-        }
-    });
+            event->stopPropagation();
+        });
+        addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event* event)
+        {
+            if (m_moveScrolling)
+            {
+                m_moveScrolling = false;
+            }
+            event->stopPropagation();
+        });
+        addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
+        {
+            if (m_moveScrolling)
+            {
+                event->stopPropagation();
+                oxygine::TouchEvent* te = oxygine::safeCast<oxygine::TouchEvent*>(event);
+                oxygine::Vector2 newPos = te->localPosition;
+                float speed = -(newPos.y - m_lastScrollPoint.y);
+                if (speed != 0.0f)
+                {
+                    emit m_scrollbar->sigChangeScrollValue(speed / static_cast<float>(m_scrollbar->getContentHeigth()));
+                    m_lastScrollPoint = newPos;
+                }
+            }
+            event->stopPropagation();
+        });
+    }
 }
 
 void HumanPlayerInputMenu::scroll(qint32 count)
@@ -320,6 +326,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
+                pEvent->stopPropagation();
                 if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
                 {
                     Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
@@ -339,6 +346,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
+                pEvent->stopPropagation();
                 if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
                 {
                     emit sigCanceled(0, 0);

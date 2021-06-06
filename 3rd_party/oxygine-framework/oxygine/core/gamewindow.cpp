@@ -349,7 +349,8 @@ namespace oxygine
                 if (touchPoints.count() == 1)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (!m_longPressSent)
+                    if (touchPoint0.pressPosition() == touchPoint0.position() &&
+                        !m_longPressSent)
                     {
                         if (touchPoint0.timeHeld() >= 0.5)
                         {
