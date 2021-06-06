@@ -23,6 +23,7 @@
 #include "objects/dialogs/dialogconnecting.h"
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/base/moveinbutton.h"
 
 #include "ingamescriptsupport/genericbox.h"
 
@@ -31,7 +32,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
-    : MapSelectionMapsMenue(Settings::getHeight() - 380),
+    : MapSelectionMapsMenue(Settings::getSmallScreenDevice() ? Settings::getHeight() - 80 : Settings::getHeight() - 380),
       m_Host(host),
       m_local(true),
       m_password(password)
@@ -1092,11 +1093,23 @@ void Multiplayermenu::startGameOnServer()
 
 void Multiplayermenu::createChat()
 {
-    
-    m_Chat = spChat::create(m_NetworkInterface,
-                            QSize(Settings::getWidth() - 20, 300),
-                            NetworkInterface::NetworkSerives::GameChat);
-    m_Chat->setPosition(10, Settings::getHeight() - 360);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_Chat = spChat::create(m_NetworkInterface,
+                                QSize(Settings::getWidth() - 60, 300),
+                                NetworkInterface::NetworkSerives::GameChat);
+        m_Chat->setPosition(10, Settings::getHeight() - 80);
+        m_Chat->setX(-m_Chat->getWidth() + 1);
+        auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1);
+        m_Chat->addChild(moveButton);
+    }
+    else
+    {
+        m_Chat = spChat::create(m_NetworkInterface,
+                                QSize(Settings::getWidth() - 20, 300),
+                                NetworkInterface::NetworkSerives::GameChat);
+        m_Chat->setPosition(10, Settings::getHeight() - 360);
+    }
     addChild(m_Chat);
     
 }

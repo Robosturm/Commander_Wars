@@ -25,7 +25,10 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     {
         addMoveTween();
     });
-    m_pButton->setFlippedX(true);
+    if (direction < 0)
+    {
+        m_pButton->setFlippedX(true);
+    }
     m_pButton->setScale(2.0f);
     addChild(m_pButton);
     setX(m_direction * (m_pButton->getScaledWidth() + 5));
@@ -54,7 +57,14 @@ void MoveInButton::addMoveTween()
         pTween->addDoneCallback([=](oxygine::Event*)
         {
             m_movedOut = !m_movedOut;
-            m_pButton->setFlippedX(!m_movedOut);
+            if (m_direction < 0)
+            {
+                m_pButton->setFlippedX(!m_movedOut);
+            }
+            else
+            {
+                m_pButton->setFlippedX(m_movedOut);
+            }
             m_finished = true;
             emit sigMoved();
         });

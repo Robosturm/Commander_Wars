@@ -94,9 +94,14 @@ LobbyMenu::LobbyMenu()
         emit sigJoinAdress();
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
+    qint32 height = Settings::getHeight() - 420;
+    if (Settings::getSmallScreenDevice())
+    {
+        height = Settings::getHeight() - 120;
+    }
 
-    m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 420),
-                              QSize(Settings::getWidth() - 20, Settings::getHeight() - 420));
+    m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, height),
+                              QSize(Settings::getWidth() - 20, height));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
@@ -105,9 +110,16 @@ LobbyMenu::LobbyMenu()
     {
         pInterface = MainServer::getInstance()->getGameServer();
     }
-
-    spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
+    if (!Settings::getSmallScreenDevice())
+    {
+        height = 300;
+    }
+    spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, height), NetworkInterface::NetworkSerives::LobbyChat);
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
+    if (Settings::getSmallScreenDevice())
+    {
+        pChat->setVisible(false);
+    }
     addChild(pChat);
 
     connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
