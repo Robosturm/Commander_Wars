@@ -422,7 +422,7 @@ void GameMenue::loadUIButtons()
     {
         pButtonBox->setSize(286, 50);
     }
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
@@ -440,6 +440,7 @@ void GameMenue::loadUIButtons()
         emit sigShowExitGame();
     });
     pButtonBox->addChild(exitGame);
+
 
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
