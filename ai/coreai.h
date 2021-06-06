@@ -509,7 +509,7 @@ private:
         qint32 unfogRange{0};
     };
     FlareInfo m_flareInfo;
-    QStringList m_files;
+    QStringList m_iniFiles;
 };
 
 #endif // COREAI_H

@@ -53,6 +53,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 
 spBaseGameInputIF BaseGameInputIF::deserializeInterface(QDataStream& pStream, qint32 version)
 {
+    Console::print("reading ai", Console::eDEBUG);
     spBaseGameInputIF ret = nullptr;
     if (version > 7)
     {

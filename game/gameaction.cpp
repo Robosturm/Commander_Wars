@@ -451,6 +451,7 @@ void GameAction::setInputStep(const qint32 &value)
 
 void GameAction::serializeObject(QDataStream& stream) const
 {
+    Console::print("storing game action", Console::eDEBUG);
     stream << getVersion();
     stream << m_actionID;
     stream << m_target;
@@ -480,6 +481,7 @@ void GameAction::serializeObject(QDataStream& stream) const
 
 void GameAction::deserializeObject(QDataStream& stream)
 {
+    Console::print("reading game action", Console::eDEBUG);
     qint32 version;
     stream >> version;
     stream >> m_actionID;

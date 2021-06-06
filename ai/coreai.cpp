@@ -109,7 +109,8 @@ void CoreAI::init()
 
 void CoreAI::loadIni(QString file)
 {
-    m_files.append(file);
+    Console::print("CoreAI::loadIni " + file, Console::eDEBUG);
+    m_iniFiles.append(file);
     QStringList searchFiles;
     if (!file.isEmpty())
     {
@@ -1996,7 +1997,8 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
 }
 
 void CoreAI::serializeObject(QDataStream& stream) const
-{
+{    
+    Console::print("storing core ai", Console::eDEBUG);
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
@@ -2005,25 +2007,27 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << std::get<0>(m_BuildingChanceModifier[i]);
         stream << std::get<1>(m_BuildingChanceModifier[i]);
     }
-    stream << m_MoveCostMap.size();
+    stream << static_cast<qint32>(m_MoveCostMap.size());
     for (qint32 x = 0; x < m_MoveCostMap.size(); x++)
     {
-        stream << m_MoveCostMap[x].size();
+        stream << static_cast<qint32>(m_MoveCostMap[x].size());
         for (qint32 y = 0; y < m_MoveCostMap[x].size(); y++)
         {
             stream << std::get<0>(m_MoveCostMap[x][y]);
             stream << std::get<1>(m_MoveCostMap[x][y]);
         }
     }
-    stream << m_files.size();
-    for (qint32 i = 0; i < m_files.size(); i++)
+    stream << static_cast<qint32>(m_iniFiles.size());
+    for (qint32 i = 0; i < m_iniFiles.size(); i++)
     {
-        stream << m_files[i];
+        QString file =  m_iniFiles[i];
+        stream << file;
     }
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
 {
+    Console::print("reading core ai", Console::eDEBUG);
     qint32 version;
     stream >> version;
     if (version > 1)
@@ -2064,7 +2068,7 @@ void CoreAI::deserializeObject(QDataStream& stream)
     }
     if (version > 4)
     {
-        m_files.clear();
+        m_iniFiles.clear();
         qint32 size = 0;
         stream >> size;
         for (qint32 i = 0; i < size; i++)

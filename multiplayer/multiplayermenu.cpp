@@ -457,6 +457,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         }
         else
         {
+
             bool campaign = false;
             stream >> campaign;
             if (campaign)
@@ -464,6 +465,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 m_pMapSelectionView->getCurrentMap()->setCampaign(spCampaign::create());
                 m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
             }
+            Console::print(("Reading players count: " + QString::number(m_pMapSelectionView->getCurrentMap()->getPlayerCount())), Console::eDEBUG);
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 QString name;
@@ -535,6 +537,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 QString scriptFile;
                 stream >> scriptFile;
                 QByteArray scriptHash;
+                Console::print("Checking for map " + fileName + " and script " + scriptFile , Console::eDEBUG);
                 if (!scriptFile.isEmpty())
                 {
                     stream >> scriptHash;
@@ -900,10 +903,10 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
 {
-    QString path = Settings::getUserPath() + "maps";
+    QString path = "maps";
     QStringList filter;
     filter << "*" + fileName;
-    QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator dirIter(Settings::getUserPath() + path, filter, QDir::Files, QDirIterator::Subdirectories);
     bool found = findAndLoadMap(dirIter, hash, m_saveGame);
     if (!found)
     {

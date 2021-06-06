@@ -1080,6 +1080,7 @@ bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
+    Console::print("storing map", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
@@ -1181,6 +1182,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
+    Console::print("Loading players count: " + QString::number(playerCount), Console::eDEBUG);
     for (qint32 i = 0; i < playerCount; i++)
     {
         // create player

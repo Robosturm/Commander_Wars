@@ -1545,6 +1545,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
 
 void CO::serializeObject(QDataStream& pStream) const
 {
+    Console::print("storing co", Console::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
     pStream << m_powerStars;
@@ -1569,6 +1570,7 @@ void CO::deserializeObject(QDataStream& pStream)
 
 void CO::deserializer(QDataStream& pStream, bool fast)
 {
+    Console::print("reading game co", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_coID;
@@ -1654,6 +1656,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 {
     qint32 size = 0;
     pStream >> size;
+    Console::print("reading co styles " + QString::number(size), Console::eDEBUG);
     m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {

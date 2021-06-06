@@ -72,6 +72,7 @@ float Player::getUnitBuildValue(QString unitID)
 
 void Player::loadVisionFields()
 {
+    Console::print("Player::loadVisionFields()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -1629,6 +1630,7 @@ qint32 Player::calculatePlayerStrength()
 
 void Player::serializeObject(QDataStream& pStream) const
 {
+    Console::print("storing player", Console::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
@@ -1694,6 +1696,7 @@ void Player::deserializeObject(QDataStream& pStream)
 
 void Player::deserializer(QDataStream& pStream, bool fast)
 {
+    Console::print("reading player", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     quint32 color;
@@ -1756,6 +1759,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             qint32 heigth = 0;
             pStream >> width;
             pStream >> heigth;
+            Console::print("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
             for (qint32 x = 0; x < width; x++)
             {
                 m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());

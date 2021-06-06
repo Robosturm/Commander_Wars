@@ -191,6 +191,7 @@ QString Campaign::getDescription()
 }
 void Campaign::serializeObject(QDataStream& pStream) const
 {
+    Console::print("storing campaign", Console::eDEBUG);
     pStream << getVersion();
     pStream << m_script;
     pStream << m_scriptFile;
@@ -199,6 +200,7 @@ void Campaign::serializeObject(QDataStream& pStream) const
 
 void Campaign::deserializeObject(QDataStream& pStream)
 {
+    Console::print("reading campaign", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_script;

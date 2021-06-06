@@ -1007,6 +1007,7 @@ void GameRules::setAiAttackTerrain(bool AiAttackTerrain)
 
 void GameRules::serializeObject(QDataStream& pStream) const
 {
+    Console::print("storing game rules", Console::eDEBUG);
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -1080,6 +1081,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
 
 void GameRules::deserializer(QDataStream& pStream, bool)
 {
+    Console::print("reading game rules", Console::eDEBUG);
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     m_VictoryRules.clear();
     qint32 version = 0;
