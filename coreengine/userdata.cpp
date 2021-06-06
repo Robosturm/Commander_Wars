@@ -397,6 +397,19 @@ void Userdata::unlockAllShopItems(bool bought)
     storeUser();
 }
 
+ScriptVariableFile* Userdata::readFile(QString filename)
+{
+    ScriptVariableFile* pScriptVariableFile = new ScriptVariableFile(filename);
+    QFile file(filename);
+    if (file.exists())
+    {
+        file.open(QIODevice::ReadOnly);
+        QDataStream pStream(&file);
+        pScriptVariableFile->deserializeObject(pStream);
+    }
+    return pScriptVariableFile;
+}
+
 void Userdata::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
