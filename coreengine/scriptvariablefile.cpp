@@ -1,5 +1,6 @@
 #include "coreengine/scriptvariablefile.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 ScriptVariableFile::ScriptVariableFile(QString filename)
     : QObject(),
@@ -7,7 +8,8 @@ ScriptVariableFile::ScriptVariableFile(QString filename)
 {
     setObjectName("ScriptVariableFile");
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 }
 
 void ScriptVariableFile::writeFile()
