@@ -240,11 +240,11 @@ public slots:
      */
     QStringList getShopItemsList(GameEnums::ShopItemType type, bool bought);
     /**
-     * @brief readFile
+     * @brief getScriptVariableFile
      * @param filename
      * @return
      */
-    ScriptVariableFile* readFile(QString filename);
+    ScriptVariableFile* getScriptVariableFile(QString filename);
 private:
     void showAchieved();
     void reset();
@@ -261,6 +261,7 @@ private:
      * @brief m_credtis money available to spend in the shop
      */
     qint32 m_credtis{0};
+    QVector<spScriptVariableFile> m_scriptVariableFiles;
 };
 
 #endif // USERDATA_H

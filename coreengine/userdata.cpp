@@ -415,9 +415,16 @@ void Userdata::unlockAllShopItems(bool bought)
     storeUser();
 }
 
-ScriptVariableFile* Userdata::readFile(QString filename)
+ScriptVariableFile* Userdata::getScriptVariableFile(QString filename)
 {
-    ScriptVariableFile* pScriptVariableFile = new ScriptVariableFile(filename);
+    for (const auto & variableFile : m_scriptVariableFiles)
+    {
+        if (variableFile->getFilename() == filename)
+        {
+           return variableFile.get();
+        }
+    }
+    spScriptVariableFile pScriptVariableFile = spScriptVariableFile::create(filename);
     QFile file(Settings::getUserPath() + filename);
     if (file.exists())
     {
@@ -425,7 +432,8 @@ ScriptVariableFile* Userdata::readFile(QString filename)
         QDataStream pStream(&file);
         pScriptVariableFile->deserializeObject(pStream);
     }
-    return pScriptVariableFile;
+    m_scriptVariableFiles.append(pScriptVariableFile);
+    return pScriptVariableFile.get();
 }
 
 void Userdata::serializeObject(QDataStream& pStream) const

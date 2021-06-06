@@ -15,6 +15,7 @@
 #include "coreengine/console.h"
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/scriptvariablefile.h"
 #include "coreengine/crashreporter.h"
 
 #include "menue/ingamemenue.h"
@@ -135,6 +136,7 @@ void registerInterfaceData()
     qmlRegisterInterface<GameRule>("GameRule", 1);
     qmlRegisterInterface<ScriptVariable>("ScriptVariable", 1);
     qmlRegisterInterface<ScriptVariables>("ScriptVariables", 1);
+    qmlRegisterInterface<ScriptVariableFile>("ScriptVariableFile", 1);
     qmlRegisterInterface<Weather>("Weather", 1);
     qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem", 1);
     qmlRegisterInterface<GameRecorder>("GameRecorder", 1);
