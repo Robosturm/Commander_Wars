@@ -306,6 +306,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
     Console::print("humanplayer input leftClick() with X " + QString::number(x) + " Y " + QString::number(y), Console::eDEBUG);
     spGameMenue pMenu = GameMenue::getInstance();
+    Cursor* pCursor = pMenu->getCursor();
     if (pMenu.get() != nullptr &&
         GameAnimationFactory::getAnimationCount() == 0)
     {
@@ -326,7 +327,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         else if (pMap->getCurrentPlayer() == m_pPlayer ||
                  m_pPlayer == nullptr)
         {
-            if (m_pMarkedFieldData.get() != nullptr)
+            if (m_pMarkedFieldData.get() != nullptr &&
+                (!m_pMarkedFieldData->getShowZData() ||
+                (!Settings::getTouchScreen() ||
+                 (m_lastClickPoint.x() == x &&
+                  m_lastClickPoint.y() == y))))
             {
                 // did we select a marked field?
                 if (m_pMarkedFieldData->getAllFields())
@@ -408,7 +413,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     {
                         std::chrono::milliseconds time = std::chrono::milliseconds(m_doubleClickTime.elapsed());
                         if ((time < std::chrono::milliseconds(1000) && m_doubleClickTime.isValid())
-                            || !Settings::getSmallScreenDevice())
+                            || !Settings::getTouchScreen())
                         {
                             actions = getEmptyActionList();
                             possibleActions.clear();
@@ -522,6 +527,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             // do nothing
         }
+        m_lastClickPoint = QPoint(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
 }
 

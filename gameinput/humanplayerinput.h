@@ -197,7 +197,7 @@ private:
                 std::numeric_limits<qint32>::min()};
     QElapsedTimer m_doubleClickTime;
 
-
+    QPoint m_lastClickPoint;
 };
 
 #endif // HUMANPLAYERINPUT_H

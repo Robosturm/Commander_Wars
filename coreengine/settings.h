@@ -36,10 +36,14 @@ class Settings : public QObject, public oxygine::ref_counter
 
         static void setUsername(const QString &Username);
 
+
+    public slots:
         static const QString &getUserPath();
         static void setUserPath(const QString &newUserPath);
 
-    public slots:
+        static bool getTouchScreen();
+        static void setTouchScreen(bool newTouchScreen);
+
         static bool hasSmallScreen();
         static bool getSmallScreenDevice();
         static void setSmallScreenDevice(bool newSmallScreenDevice);
@@ -417,6 +421,7 @@ class Settings : public QObject, public oxygine::ref_counter
         static float m_brightness;
         static float m_gamma;
         static bool m_smallScreenDevice;
+        static bool m_touchScreen;
 
         static bool m_borderless;
         static bool m_fullscreen;

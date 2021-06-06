@@ -11,6 +11,7 @@
 #include <qscreen.h>
 #include <qlocale.h>
 #include <QStandardPaths>
+#include <QInputDevice>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -25,6 +26,7 @@ bool Settings::m_fullscreen         = false;
 float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
 bool Settings::m_smallScreenDevice  = false;
+bool Settings::m_touchScreen = false;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
@@ -143,6 +145,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getTouchScreen()
+{
+    return m_touchScreen;
+}
+
+void Settings::setTouchScreen(bool newTouchScreen)
+{
+    m_touchScreen = newTouchScreen;
 }
 
 const QString &Settings::getUserPath()
@@ -815,6 +827,17 @@ void Settings::loadSettings()
     {
         m_userPath = settings.value("UserPath", "").toString();
     }
+    auto devices = QInputDevice::devices();
+    bool hasTouch = false;
+    for (const auto & device: qAsConst(devices))
+    {
+        if (device->type() == QInputDevice::DeviceType::TouchScreen)
+        {
+            hasTouch = true;
+            break;
+        }
+    }
+    m_touchScreen = settings.value("TouchScreen", hasTouch).toBool();
     settings.endGroup();
     Console::print("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
 
@@ -1378,6 +1401,8 @@ void Settings::saveSettings()
         settings.setValue("language",                   m_language);
         settings.setValue("MouseSensitivity",           m_mouseSensitivity);
         settings.setValue("UserPath",                   m_userPath);
+        settings.setValue("TouchScreen",                m_touchScreen);
+
         settings.endGroup();
 
         settings.beginGroup("Resolution");

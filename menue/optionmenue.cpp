@@ -431,6 +431,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Touch screen: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked some ingame inputs require double clicks or other gestures. This is automatically detected and changing it isn't recommended."));
+    pCheckbox->setChecked(Settings::getTouchScreen());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setTouchScreen, Qt::QueuedConnection);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sprite Aliasing: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
