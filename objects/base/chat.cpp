@@ -24,6 +24,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
       m_pInterface(pInterface),
       m_serviceMode(serviceMode)
 {
+    setSize(size.width(), size.height());
     setObjectName("Chat");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());

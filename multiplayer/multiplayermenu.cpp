@@ -1096,11 +1096,10 @@ void Multiplayermenu::createChat()
     if (Settings::getSmallScreenDevice())
     {
         m_Chat = spChat::create(m_NetworkInterface,
-                                QSize(Settings::getWidth() - 60, 300),
+                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 90),
                                 NetworkInterface::NetworkSerives::GameChat);
-        m_Chat->setPosition(10, Settings::getHeight() - 80);
-        m_Chat->setX(-m_Chat->getWidth() + 1);
-        auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1);
+        m_Chat->setPosition(-m_Chat->getWidth() + 1, 10);
+        auto moveButton = spMoveInButton::create(m_Chat.get(), m_Chat->getScaledWidth(), 1, -1, 1.0f);
         m_Chat->addChild(moveButton);
     }
     else
@@ -1110,8 +1109,7 @@ void Multiplayermenu::createChat()
                                 NetworkInterface::NetworkSerives::GameChat);
         m_Chat->setPosition(10, Settings::getHeight() - 360);
     }
-    addChild(m_Chat);
-    
+    addChild(m_Chat);    
 }
 
 void Multiplayermenu::disconnectNetwork()

@@ -10,7 +10,7 @@ class MoveInButton : public QObject, public oxygine::Actor
 {
         Q_OBJECT
     public:
-        explicit MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction = -1, qint32 startY = -1);
+        explicit MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction = -1, qint32 startY = -1, float buttonScale = 2.0f);
 
         bool getMovedOut() const;
     signals:

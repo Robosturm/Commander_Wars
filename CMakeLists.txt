@@ -52,7 +52,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER 1)
+        set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
     find_package(Qt6 COMPONENTS QmlDebug REQUIRED)
 else("Release")
@@ -77,12 +77,10 @@ add_definitions(
 ###################################################################################
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(CMAKE_CXX_FLAGS "-g -Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-g -Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
+    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
+    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
     find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
     set(ADDR_2_LINE "")
 else()  # this branch works at least for linux
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

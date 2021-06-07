@@ -2049,8 +2049,8 @@ bool Settings::hasSmallScreen()
 {
     QScreen* screen = QGuiApplication::primaryScreen();
     QRect screenSize = screen->availableGeometry();
-    if (screenSize.width() < 800 ||
-        screenSize.height() < 600)
+    if (screenSize.width() < 960 ||
+        screenSize.height() < 640)
     {
         return true;
     }

@@ -210,22 +210,16 @@ void LobbyMenu::joinGamePassword(QString password)
 
 void LobbyMenu::joinAdress()
 {
-    
-
     spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host Adress"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
-
-    
 }
 
 void LobbyMenu::join(QString adress, QString password)
-{
-    
+{    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMultiplayermenu::create(adress, password, false));
-    oxygine::Actor::detach();
-    
+    oxygine::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, false));
+    oxygine::Actor::detach();    
 }
 
 void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)

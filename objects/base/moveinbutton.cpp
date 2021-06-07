@@ -4,7 +4,7 @@
 
 #include "coreengine/mainapp.h"
 
-MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction, qint32 startY)
+MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction, qint32 startY, float buttonScale)
     : m_pParent(pParent),
       m_moveInSize(moveInSize),
       m_direction(direction)
@@ -28,13 +28,18 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     if (direction < 0)
     {
         m_pButton->setFlippedX(true);
+        setX(-m_pButton->getScaledWidth() - 5);
     }
-    m_pButton->setScale(2.0f);
+    else
+    {
+        setX(pParent->getScaledWidth() + 5);
+    }
+    m_pButton->setScale(buttonScale);
     addChild(m_pButton);
-    setX(m_direction * (m_pButton->getScaledWidth() + 5));
+
     if (startY < 0)
     {
-        setY(pParent->getHeight() / 2 - m_pButton->getHeight() / 2);
+        setY(pParent->getScaledHeight() / 2 - m_pButton->getScaledHeight() / 2);
     }
     pParent->addChild(this);
 }

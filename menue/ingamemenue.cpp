@@ -218,8 +218,6 @@ void InGameMenue::autoScroll()
             qint32 moveY = 0;
             qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
             qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
-            Console::print("InGameMenue::autoScroll() x " + QString::number(mapX) + " y " + QString::number(mapY), Console::eDEBUG);
-
             if ((curPos.x() < m_autoScrollBorder.x()) &&
                 (mapX < m_autoScrollBorder.x()))
             {
