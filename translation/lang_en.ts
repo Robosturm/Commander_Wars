@@ -1084,7 +1084,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Andy).js" line="124"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Andy).js" line="124"/>
@@ -1361,7 +1361,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Sami).js" line="136"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Sami).js" line="136"/>
@@ -2016,7 +2016,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Captain Drake (Andy).js" line="108"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Captain Drake (Andy).js" line="108"/>
@@ -5090,7 +5090,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/It's War.js" line="88"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/It's War.js" line="88"/>
@@ -6077,7 +6077,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Andy).js" line="101"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Andy).js" line="101"/>
@@ -6170,7 +6170,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Max).js" line="92"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Max).js" line="92"/>
@@ -6283,7 +6283,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Sami).js" line="102"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Sami).js" line="102"/>
@@ -6381,7 +6381,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Navy.js" line="69"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Navy.js" line="69"/>
@@ -6569,7 +6569,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Sea Strike.js" line="114"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Sea Strike.js" line="114"/>
@@ -8005,7 +8005,7 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Sami Marches On.js" line="101"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Sami Marches On.js" line="101"/>
@@ -23494,7 +23494,17 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
@@ -27987,7 +27997,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/fear_experiment.js" line="124"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/fear_experiment.js" line="125"/>
@@ -29610,7 +29620,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="110"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="111"/>
@@ -29675,6 +29685,11 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="123"/>
         <source>One wrong move, and the Lazurians will be all over us. Greyfield sent only a handful of units, and this force is formidable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="124"/>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29745,6 +29760,11 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="180"/>
         <source>Good chowder, man! That is enough! I will hear no more talk of this! Weapons of that ilk are banned by international and military law.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="181"/>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>

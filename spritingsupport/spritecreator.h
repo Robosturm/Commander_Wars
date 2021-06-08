@@ -152,6 +152,14 @@ public:
      * @param rows
      */
     static void addFrameBorders(QImage & image, qint32 columns, qint32 rows, bool addOnlyTransparentBorder);
+    /**
+     * @brief preProcessMask
+     * @param mask
+     * @param overlay
+     * @param columns
+     * @param rows
+     */
+    static void preProcessMask(QImage & mask, const QImage & overlay, qint32 columns, qint32 rows);
 };
 
 #endif // SPRITECREATOR_H
