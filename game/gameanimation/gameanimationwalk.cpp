@@ -208,6 +208,10 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
         {
             pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim());
         }
+        else
+        {
+            pSprite->setPriority(1);
+        }
 
         this->addChild(pSprite);
     }

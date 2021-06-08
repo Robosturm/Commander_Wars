@@ -201,7 +201,7 @@ public slots:
      * @brief saveMap
      * @param file
      */
-    void saveMap(QString filename);
+    void saveMap(QString filename, bool skipAnimations = true);
     /**
      * @brief autoSaveMap
      */
@@ -315,12 +315,12 @@ protected:
     bool m_Multiplayer{false};
 
     QTimer m_UpdateTimer;
-    QTimer m_AutoSavingTimer;
     spGameAction m_pStoredAction{nullptr};
     spGameAction m_pCurrentAction{nullptr};
 
     qint64 m_syncCounter{0};
     qint32 m_autoSaveCounter{0};
+    bool m_enabledAutosaving{false};
 
     QString m_saveFile;
     bool m_saveMap{false};

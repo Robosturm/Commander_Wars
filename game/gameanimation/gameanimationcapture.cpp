@@ -150,6 +150,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
                 pSprite->setColorTable(startPlayer->getColorTableAnim());
             }
         }
+        else
+        {
+            pSprite->setPriority(1);
+        }
 
 
         pSprite->setPriority(10);
@@ -234,6 +238,10 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         else if (mode == GameEnums::Recoloring_Table)
         {
             pSprite->setColorTable(pPlayer->getColorTableAnim());
+        }
+        else
+        {
+            pSprite->setPriority(1);
         }
         pSprite->setPosition(12, startPosition);
         pSprite->setPriority(20);

@@ -710,5 +710,4 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
         }
     }
     mask = newPicture;
-    newPicture.save("test.png");
 }

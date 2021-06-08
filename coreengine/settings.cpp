@@ -1289,15 +1289,15 @@ void Settings::loadSettings()
 
     // sounds
     settings.beginGroup("Autosaving");
-    autoSavingCylceTime = std::chrono::seconds(settings.value("AutoSavingTime", 0).toUInt(&ok));
+    autoSavingCylceTime = std::chrono::seconds(settings.value("AutoSavingTime", 60 * 5).toUInt(&ok));
     if (!ok)
     {
-        autoSavingCylceTime = std::chrono::seconds(0);
+        autoSavingCylceTime = std::chrono::seconds(60 * 5);
     }
-    autoSavingCycle = settings.value("AutoSavingCycle", 0).toUInt(&ok);
+    autoSavingCycle = settings.value("AutoSavingCycle", 3).toUInt(&ok);
     if (!ok)
     {
-        autoSavingCycle = 0;
+        autoSavingCycle = 3;
     }
     settings.endGroup();
 
