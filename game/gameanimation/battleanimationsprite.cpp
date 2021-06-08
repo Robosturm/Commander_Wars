@@ -526,6 +526,8 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
         {
             pSprite->setResAnim(pAnim);
         }
+        constexpr qint32 multiplier = 2;
+        qint32 finalPriority = priority * multiplier;
         // repaint the unit?
         if (mode == GameEnums::Recoloring_Mask)
         {
@@ -536,7 +538,11 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
         {
             pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim());
         }
-        pSprite->setPriority(priority);
+        else
+        {
+            finalPriority += 1;
+        }
+        pSprite->setPriority(finalPriority);
         pSprite->setScale(scale);
         pSprite->setSize(pAnim->getSize());
         pSprite->setInvertFlipX(_invertFlipX);

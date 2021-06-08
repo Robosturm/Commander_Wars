@@ -99,6 +99,10 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     {
         startGame();
     }
+    if (Settings::getAutoSavingCycle() > 0)
+    {
+        m_enabledAutosaving = true;
+    }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
 }
@@ -115,6 +119,10 @@ GameMenue::GameMenue(QString map, bool saveGame)
     loadHandling();
     loadGameMenue();
     loadUIButtons();
+    if (Settings::getAutoSavingCycle() > 0)
+    {
+        m_enabledAutosaving = true;
+    }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
 }
@@ -351,7 +359,6 @@ void GameMenue::loadGameMenue()
     pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
-    connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);
     connectMap();
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -464,16 +471,6 @@ void GameMenue::loadUIButtons()
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
-
-    std::chrono::seconds time = Settings::getAutoSavingCylceTime();
-    qint32 cycles = Settings::getAutoSavingCycle();
-    if (cycles > 0 && time.count() > 0)
-    {
-        m_AutoSavingTimer.setSingleShot(false);
-        m_AutoSavingTimer.setInterval(time);
-        m_AutoSavingTimer.start();
-    }
-
     if (m_pNetworkInterface.get() != nullptr)
     {
         pButtonBox = oxygine::spBox9Sprite::create();
@@ -610,6 +607,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
                            m_gameStarted;
+        spPlayer currentPlayer = pMap->getCurrentPlayer();
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
@@ -681,6 +679,13 @@ void GameMenue::performAction(spGameAction pGameAction)
                 spGameAction pAction = spGameAction::create();
                 pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
+            }
+        }
+        if (currentPlayer != pMap->getCurrentPlayer())
+        {
+            if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                autoSaveMap();
             }
         }
         Mainapp::getInstance()->continueRendering();
@@ -1043,7 +1048,7 @@ void GameMenue::finishActionPerformed()
         {
             pUnit->postAction(m_pCurrentAction);
         }
-        pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
+        pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());        
         m_pCurrentAction = nullptr;
     }
     pMap->killDeadUnits();
@@ -1537,7 +1542,10 @@ void GameMenue::saveGame()
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
     addChild(saveDialog);
-    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, [=](QString filename)
+    {
+        saveMap(filename);
+    }, Qt::QueuedConnection);
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
 }
@@ -1587,16 +1595,19 @@ void GameMenue::victoryInfo()
 
 void GameMenue::autoSaveMap()
 {
-    Console::print("autoSaveMap()", Console::eDEBUG);
-    saveMap(Settings::getUserPath() + "savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding());
-    m_autoSaveCounter++;
-    if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
+    if (Settings::getAutoSavingCycle() > 0)
     {
-        m_autoSaveCounter = 0;
+        Console::print("GameMenue::autoSaveMap()", Console::eDEBUG);
+        saveMap(Settings::getUserPath() + "savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding(), false);
+        m_autoSaveCounter++;
+        if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
+        {
+            m_autoSaveCounter = 0;
+        }
     }
 }
 
-void GameMenue::saveMap(QString filename)
+void GameMenue::saveMap(QString filename, bool skipAnimations)
 {
     m_saveFile = filename;
     m_saveMap = true;
@@ -1604,7 +1615,7 @@ void GameMenue::saveMap(QString filename)
     {
         doSaveMap();
     }
-    else
+    else if (skipAnimations)
     {
         skipAllAnimations();
     }

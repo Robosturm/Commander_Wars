@@ -139,6 +139,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
             {
                 pSprite->setColor(startPlayer->getColor());
             }
+            pSprite->setPriority(10);
         }
         else if (mode == GameEnums::Recoloring_Table)
         {
@@ -150,12 +151,12 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
             {
                 pSprite->setColorTable(startPlayer->getColorTableAnim());
             }
+            pSprite->setPriority(10);
         }
-
-
-        pSprite->setPriority(10);
-
-
+        else
+        {
+            pSprite->setPriority(11);
+        }
         addChild(pSprite);
     }
 }
@@ -232,13 +233,18 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         if (mode == GameEnums::Recoloring_Mask)
         {
             pSprite->setColor(pPlayer->getColor());
+            pSprite->setPriority(20);
         }
         else if (mode == GameEnums::Recoloring_Table)
         {
             pSprite->setColorTable(pPlayer->getColorTableAnim());
+            pSprite->setPriority(20);
+        }
+        else
+        {
+            pSprite->setPriority(21);
         }
         pSprite->setPosition(12, startPosition);
-        pSprite->setPriority(20);
         addChild(pSprite);
     }
     else
