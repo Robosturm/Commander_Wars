@@ -1,6 +1,7 @@
 
 #include <QFileInfo>
 #include <QDirIterator>
+#include <QDateTime>
 
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
@@ -366,4 +367,36 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
         Console::print("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
     }
     return ret;
+}
+
+QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & ending, qint32 max)
+{
+    QString finalPath = path + QString::number(1) + ending;
+    QDateTime oldestDate = QFileInfo(finalPath).lastModified();
+    for (qint32 i = 2; i <= max; ++i)
+    {
+        if (oldestDate.isValid())
+        {
+            QString test = path + QString::number(i) + ending;
+            QFileInfo info(test);
+            if (info.exists())
+            {
+                if (info.lastModified() < oldestDate)
+                {
+                    finalPath = test;
+                    oldestDate = info.lastModified();
+                }
+            }
+            else
+            {
+                finalPath = test;
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+    return finalPath;
 }

@@ -319,7 +319,6 @@ protected:
     spGameAction m_pCurrentAction{nullptr};
 
     qint64 m_syncCounter{0};
-    qint32 m_autoSaveCounter{0};
     bool m_enabledAutosaving{false};
 
     QString m_saveFile;

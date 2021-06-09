@@ -127,6 +127,14 @@ public slots:
      * @return
      */
     static QVector<qint32> getRandomizedArray(qint32 min, qint32 max);
+    /**
+     * @brief getNextAutosavePath
+     * @param path
+     * @param ending
+     * @param max
+     * @return
+     */
+    static QString getNextAutosavePath(const QString & path, const QString & ending, qint32 max);
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;

@@ -1831,6 +1831,5 @@ void EditorMenue::autosave()
         spGameMap pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
-    }
-    
+    }    
 }

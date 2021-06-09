@@ -9,6 +9,7 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 #include "game/gamescript.h"
@@ -20,7 +21,7 @@
 
 #include "ui_reader/uifactory.h"
 
-CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
+CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveCampaign)
     : Basemenu(),
       m_Multiplayer(multiplayer)
 {
@@ -83,6 +84,10 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
     m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));
 
+    if (autosaveCampaign)
+    {
+        autosave();
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
@@ -156,8 +161,7 @@ void CampaignMenu::showSaveCampaign()
 }
 
 void CampaignMenu::saveCampaign(QString filename)
-{
-    
+{    
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -165,6 +169,19 @@ void CampaignMenu::saveCampaign(QString filename)
         QDataStream stream(&file);
         m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
         file.close();
+    }   
+}
+
+void CampaignMenu::autosave()
+{
+    if (Settings::getAutoSavingCycle() > 0)
+    {
+        Console::print("CampaignMenu::autosave()", Console::eDEBUG);
+        QString path = GlobalUtils::getNextAutosavePath("savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
+        QFile file(path);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
+        file.close();
     }
-    
 }
