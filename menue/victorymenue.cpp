@@ -710,7 +710,7 @@ void VictoryMenue::exitMenue()
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
-        oxygine::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer));
+        oxygine::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {

@@ -1598,12 +1598,8 @@ void GameMenue::autoSaveMap()
     if (Settings::getAutoSavingCycle() > 0)
     {
         Console::print("GameMenue::autoSaveMap()", Console::eDEBUG);
-        saveMap(Settings::getUserPath() + "savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding(), false);
-        m_autoSaveCounter++;
-        if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
-        {
-            m_autoSaveCounter = 0;
-        }
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + GameMap::getInstance()->getMapName() + "_autosave_", getSaveFileEnding(), Settings::getAutoSavingCycle());
+        saveMap(path, false);
     }
 }
 
