@@ -340,9 +340,8 @@ void GameAnimationFactory::finishAllAnimations()
     while (i < m_Animations.size())
     {
         spGameAnimation spAnimation = m_Animations[i];
-        if (!spAnimation->onFinished(true))
+        while (!spAnimation->onFinished(true))
         {
-            ++i;
         }
     }
 }
