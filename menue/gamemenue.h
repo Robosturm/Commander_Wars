@@ -83,7 +83,7 @@ public:
     /**
      * @brief autoScroll
      */
-    virtual void autoScroll() override;
+    virtual void autoScroll(QPoint cursorPosition) override;
     /**
      * @brief doTrapping
      * @param pGameAction

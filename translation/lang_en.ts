@@ -1084,7 +1084,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Andy).js" line="124"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Andy).js" line="124"/>
@@ -1361,7 +1361,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Sami).js" line="136"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Sami).js" line="136"/>
@@ -1936,17 +1936,17 @@
 <context>
     <name>CampaignMenu</name>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="48"/>
+        <location filename="../menue/campaignmenu.cpp" line="49"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="58"/>
+        <location filename="../menue/campaignmenu.cpp" line="59"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="67"/>
+        <location filename="../menue/campaignmenu.cpp" line="68"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2016,7 +2016,7 @@
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Captain Drake (Andy).js" line="108"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Captain Drake (Andy).js" line="108"/>
@@ -4019,92 +4019,92 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="295"/>
+        <location filename="../menue/gamemenue.cpp" line="303"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="428"/>
+        <location filename="../menue/gamemenue.cpp" line="435"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="436"/>
+        <location filename="../menue/gamemenue.cpp" line="443"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="487"/>
+        <location filename="../menue/gamemenue.cpp" line="484"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="618"/>
+        <location filename="../menue/gamemenue.cpp" line="616"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1400"/>
+        <location filename="../menue/gamemenue.cpp" line="1402"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1401"/>
+        <location filename="../menue/gamemenue.cpp" line="1403"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1402"/>
+        <location filename="../menue/gamemenue.cpp" line="1404"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1403"/>
+        <location filename="../menue/gamemenue.cpp" line="1405"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1404"/>
+        <location filename="../menue/gamemenue.cpp" line="1406"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1405"/>
+        <location filename="../menue/gamemenue.cpp" line="1407"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1406"/>
+        <location filename="../menue/gamemenue.cpp" line="1408"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1407"/>
+        <location filename="../menue/gamemenue.cpp" line="1409"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1429"/>
+        <location filename="../menue/gamemenue.cpp" line="1431"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1439"/>
+        <location filename="../menue/gamemenue.cpp" line="1441"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1804"/>
+        <location filename="../menue/gamemenue.cpp" line="1808"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1835"/>
+        <location filename="../menue/gamemenue.cpp" line="1839"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1861"/>
+        <location filename="../menue/gamemenue.cpp" line="1865"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5090,7 +5090,7 @@ Fullscreen  - Animations are upscaled based on the resolution
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/It's War.js" line="88"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/It's War.js" line="88"/>
@@ -6077,7 +6077,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Andy).js" line="101"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Andy).js" line="101"/>
@@ -6170,7 +6170,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Max).js" line="92"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Max).js" line="92"/>
@@ -6283,7 +6283,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Sami).js" line="102"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Sami).js" line="102"/>
@@ -6381,7 +6381,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Navy.js" line="69"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Navy.js" line="69"/>
@@ -6569,7 +6569,7 @@ Host mods: </source>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Sea Strike.js" line="114"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Sea Strike.js" line="114"/>
@@ -8005,7 +8005,7 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Sami Marches On.js" line="101"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/Sami Marches On.js" line="101"/>
@@ -23494,17 +23494,7 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
-        <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
@@ -27997,7 +27987,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/fear_experiment.js" line="124"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/fear_experiment.js" line="125"/>
@@ -29620,7 +29610,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="110"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="111"/>
@@ -29685,11 +29675,6 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="123"/>
         <source>One wrong move, and the Lazurians will be all over us. Greyfield sent only a handful of units, and this force is formidable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="124"/>
-        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29760,11 +29745,6 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="180"/>
         <source>Good chowder, man! That is enough! I will hear no more talk of this! Weapons of that ilk are banned by international and military law.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="181"/>
-        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>

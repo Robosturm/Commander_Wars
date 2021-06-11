@@ -200,15 +200,13 @@ oxygine::spActor InGameMenue::getMapSlidingActor() const
     return m_mapSlidingActor;
 }
 
-void InGameMenue::autoScroll()
+void InGameMenue::autoScroll(QPoint cursorPosition)
 {
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
         m_Focused &&
-        Settings::getAutoScrolling() &&
-        pApp->hasCursor())
+        Settings::getAutoScrolling())
     {
-        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
         spGameMap pMap = GameMap::getInstance();
         if (pMap.get() != nullptr &&
             m_mapSliding.get() != nullptr &&
@@ -218,24 +216,24 @@ void InGameMenue::autoScroll()
             qint32 moveY = 0;
             qint32 mapX = pMap->getX() + m_mapSliding->getX() + m_mapSlidingActor->getX();
             qint32 mapY = pMap->getY() + m_mapSliding->getY() + m_mapSlidingActor->getY();
-            if ((curPos.x() < m_autoScrollBorder.x()) &&
+            if ((cursorPosition.x() < m_autoScrollBorder.x()) &&
                 (mapX < m_autoScrollBorder.x()))
             {
                 moveX = GameMap::getImageSize() * pMap->getZoom();
             }
-            else if ((curPos.x() < Settings::getWidth() - m_autoScrollBorder.width()) &&
-                     (curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - 50) &&
+            else if ((cursorPosition.x() < Settings::getWidth() - m_autoScrollBorder.width()) &&
+                     (cursorPosition.x() > Settings::getWidth() - m_autoScrollBorder.width() - 50) &&
                      (mapX + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width() - 50))
             {
                 moveX = -GameMap::getImageSize() * pMap->getZoom();
             }
 
-            if ((curPos.y() < m_autoScrollBorder.y()) &&
+            if ((cursorPosition.y() < m_autoScrollBorder.y()) &&
                 (mapY < m_autoScrollBorder.y()))
             {
                 moveY = GameMap::getImageSize() * pMap->getZoom();
             }
-            else if ((curPos.y() > Settings::getHeight() - m_autoScrollBorder.height()) &&
+            else if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height()) &&
                      (mapY + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height()))
             {
                 moveY = -GameMap::getImageSize() * pMap->getZoom();

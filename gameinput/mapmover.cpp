@@ -28,7 +28,33 @@ void MapMover::mouseWheel(float direction)
 
 void MapMover::autoScroll()
 {
-    m_pOwner->autoScroll();
+    Mainapp* pApp = Mainapp::getInstance();
+    QPoint curPos;
+    bool posValid = false;
+    if (pApp->hasCursor())
+    {
+        curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        posValid = true;
+    }
+    else
+    {
+        auto sliding = m_pOwner->getMapSliding();
+        auto slidingActor = m_pOwner->getMapSlidingActor();
+        if (sliding.get() != nullptr &&
+            slidingActor.get() != nullptr)
+        {
+            spGameMap pMap = GameMap::getInstance();
+            auto position = sliding->getPosition() + slidingActor->getPosition() + pMap->getPosition();
+            auto* pCursor = m_pOwner->getCursor();
+            curPos.setX(position.x + pCursor->getMapPointX() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
+            curPos.setY(position.y + pCursor->getMapPointY() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
+            posValid = true;
+        }
+    }
+    if (posValid)
+    {
+        m_pOwner->autoScroll(curPos);
+    }
 }
 
 void MapMover::keyInput(oxygine::KeyEvent event)

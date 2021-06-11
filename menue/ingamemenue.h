@@ -29,7 +29,7 @@ class InGameMenue : public Basemenu
         void calcNewMousePosition(qint32 x, qint32 y);
         QPoint getMousePos(qint32 x, qint32 y);
         void MoveMap(qint32 x, qint32 y);
-        virtual void autoScroll();
+        virtual void autoScroll(QPoint cursorPosition);
         void initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 height);
         void updateSlidingActorSize();
         oxygine::spActor getMapSlidingActor() const;
