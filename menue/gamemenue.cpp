@@ -1121,14 +1121,14 @@ void GameMenue::autoScroll(QPoint cursorPosition)
         Settings::getAutoScrolling())
     {
         spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr)
+        if (pMap.get() != nullptr && pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             qint32 moveX = 0;
             qint32 moveY = 0;
             auto bottomRightUi = m_IngameInfoBar->getDetailedViewBox()->getScaledSize() * m_IngameInfoBar->getScaleX();
-            if ((cursorPosition.x() < Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x &&
-                 (cursorPosition.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x - 50) &&
-                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width()- bottomRightUi.x - 50)) &&
+            if ((cursorPosition.x() < m_IngameInfoBar->getX() - bottomRightUi.x &&
+                 (cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.x - 50) &&
+                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > m_IngameInfoBar->getX() - bottomRightUi.x - 50)) &&
                 cursorPosition.y() > Settings::getHeight() - bottomRightUi.y)
             {
 
@@ -1136,7 +1136,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             }
             if ((cursorPosition.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y) &&
                 (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y) &&
-                cursorPosition.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x)
+                cursorPosition.x() > m_IngameInfoBar->getX() - bottomRightUi.x)
             {
                 moveY = -GameMap::getImageSize() * pMap->getZoom();
             }
@@ -1146,6 +1146,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
             }
             else
             {
+                m_autoScrollBorder.setWidth(Settings::getWidth() - m_IngameInfoBar->getX());
                 InGameMenue::autoScroll(cursorPosition);
             }
         }
