@@ -603,7 +603,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                           m_gameStarted;
+                                                        m_gameStarted;
         spPlayer currentPlayer = pMap->getCurrentPlayer();
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
@@ -1045,11 +1045,11 @@ void GameMenue::finishActionPerformed()
         {
             pUnit->postAction(m_pCurrentAction);
         }
-        pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());        
+        pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
+        pMap->getGameScript()->actionDone(m_pCurrentAction);
         m_pCurrentAction = nullptr;
     }
     pMap->killDeadUnits();
-    pMap->getGameScript()->actionDone(m_pCurrentAction);
     pMap->getGameRules()->checkVictory();
     skipAnimations(true);
     pMap->getGameRules()->createFogVision();
@@ -1600,15 +1600,23 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename, bool skipAnimations)
 {
-    m_saveFile = filename;
-    m_saveMap = true;
-    if (m_saveAllowed)
+    Console::print("GameMenue::saveMap()", Console::eDEBUG);
+    if (!m_saveFile.isEmpty())
     {
-        doSaveMap();
+        m_saveFile = filename;
+        m_saveMap = true;
+        if (m_saveAllowed)
+        {
+            doSaveMap();
+        }
+        else if (skipAnimations)
+        {
+            skipAllAnimations();
+        }
     }
-    else if (skipAnimations)
+    else
     {
-        skipAllAnimations();
+        Console::print("Trying to save empty map name saving ignored.", Console::eWARNING);
     }
     setFocused(true);
 }
