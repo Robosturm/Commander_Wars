@@ -299,34 +299,44 @@ void GameAnimationDialog::restart()
 
 void GameAnimationDialog::loadBackground(QString file)
 {
-    QImage img;
-    if (QFile::exists(Settings::getUserPath() + file))
+    if (!file.isEmpty())
     {
-        img = QImage(Settings::getUserPath() + file);
+        QImage img;
+        if (QFile::exists(Settings::getUserPath() + file))
+        {
+            img = QImage(Settings::getUserPath() + file);
+        }
+        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + file))
+        {
+            img = QImage(oxygine::Resource::RCC_PREFIX_PATH + file);
+        }
+        oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
+        m_BackgroundAnim = pAnim;
+        m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
+        if (pAnim.get() != nullptr)
+        {
+            m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
+            m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+        }
     }
-    else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + file))
+    else
     {
-        img = QImage(oxygine::Resource::RCC_PREFIX_PATH + file);
-    }
-    oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-    Mainapp::getInstance()->loadResAnim(pAnim, img, 1, 1, 1, false);
-    m_BackgroundAnim = pAnim;
-    m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
-    if (pAnim.get() != nullptr)
-    {
-        m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
-        m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+        Console::print("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
     }
 }
 
 void GameAnimationDialog::loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale)
 {
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
-    oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
-    pSprite->setSize(pAnim->getSize());
-    pSprite->setFlippedX(flippedX);
-    pSprite->setScale(scale);
-    pSprite->setResAnim(pAnim);
-    pSprite->setPosition(offsetX, offsetY);
-    addChild(pSprite);
+    if (!coid.isEmpty())
+    {
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
+        pSprite->setSize(pAnim->getSize());
+        pSprite->setFlippedX(flippedX);
+        pSprite->setScale(scale);
+        pSprite->setResAnim(pAnim);
+        pSprite->setPosition(offsetX, offsetY);
+        addChild(pSprite);
+    }
 }

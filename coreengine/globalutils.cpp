@@ -282,6 +282,7 @@ QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
 
 void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders)
 {
+    Console::print("GlobalUtils::importFilesFromDirectory", Console::eDEBUG);
     QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
     while (dirIter.hasNext())
     {
@@ -374,6 +375,7 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
 
 QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & ending, qint32 max)
 {
+    Console::print("GlobalUtils::getNextAutosavePath", Console::eDEBUG);
     QString finalPath = path + QString::number(1) + ending;
     QDateTime oldestDate = QFileInfo(finalPath).lastModified();
     for (qint32 i = 2; i <= max; ++i)
