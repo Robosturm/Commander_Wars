@@ -1,5 +1,6 @@
-#include "spinbox.h"
+#include "objects/base/spinbox.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -65,12 +66,15 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = -1 * m_SpinSpeed;
-        qreal value = getCurrentValue();
-        value += m_spinDirection;
-        setCurrentValue(value);
-        m_toggle.start();
-        emit sigValueChanged(getCurrentValue());
+        if (m_spinDirection == 0)
+        {
+            m_spinDirection = -1 * m_SpinSpeed;
+            qreal value = getCurrentValue();
+            value += m_spinDirection;
+            setCurrentValue(value);
+            m_toggle.start();
+            emit sigValueChanged(getCurrentValue());
+        }
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -94,12 +98,15 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     });
     m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = 1 * m_SpinSpeed;
-        qreal value = getCurrentValue();
-        value += m_spinDirection;
-        setCurrentValue(value);
-        m_toggle.start();
-        emit sigValueChanged(getCurrentValue());
+        if (m_spinDirection == 0)
+        {
+            m_spinDirection = 1 * m_SpinSpeed;
+            qreal value = getCurrentValue();
+            value += m_spinDirection;
+            setCurrentValue(value);
+            m_toggle.start();
+            emit sigValueChanged(getCurrentValue());
+        }
     });
     m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -255,6 +262,7 @@ qreal SpinBox::getCurrentValue()
 
 qreal SpinBox::checkInput()
 {
+    Console::print("SpinBox::checkInput", Console::eDEBUG);
     bool ok = false;
     qreal value = m_Text.toDouble(&ok);
     if (m_Text == "∞")

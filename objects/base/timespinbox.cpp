@@ -64,12 +64,15 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = -1 * m_SpinSpeed;
-        qint32 value = getCurrentValue();
-        value += m_spinDirection;
-        setCurrentValue(value);
-        m_toggle.start();
-        emit sigValueChanged(getCurrentValue());
+        if (m_spinDirection == 0)
+        {
+            m_spinDirection = -1 * m_SpinSpeed;
+            qint32 value = getCurrentValue();
+            value += m_spinDirection;
+            setCurrentValue(value);
+            m_toggle.start();
+            emit sigValueChanged(getCurrentValue());
+        }
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -93,12 +96,15 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     });
     m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = 1 * m_SpinSpeed;
-        qint32 value = getCurrentValue();
-        value += m_spinDirection;
-        setCurrentValue(value);
-        m_toggle.start();
-        emit sigValueChanged(getCurrentValue());
+        if (m_spinDirection == 0)
+        {
+            m_spinDirection = 1 * m_SpinSpeed;
+            qint32 value = getCurrentValue();
+            value += m_spinDirection;
+            setCurrentValue(value);
+            m_toggle.start();
+            emit sigValueChanged(getCurrentValue());
+        }
     });
     m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -149,7 +155,7 @@ void TimeSpinBox::setEnabled(bool value)
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
     m_pSpinBox->setEnabled(value);
-    m_focused = false;    
+    m_focused = false;
 }
 
 void TimeSpinBox::setCurrentValue(qint32 value)
@@ -323,7 +329,7 @@ void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
                 }
                 case Qt::Key_Enter:
                 case Qt::Key_Return:
-               {
+                {
                     looseFocusInternal();
                     qint32 value = checkInput();
                     emit sigValueChanged(value);
