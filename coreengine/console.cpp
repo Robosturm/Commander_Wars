@@ -80,10 +80,11 @@ Console::Console()
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
     m_text = oxygine::spTextField::create();
+    m_text->setPosition(1, 1);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).withColor(QColor(255,127,39)).alignLeft();
     m_text->setStyle(style);
+    addChild(m_text);
 
-    m_text->attachTo(this);
     // we're hidden to begin with
     oxygine::Actor::setVisible(false);
 }
@@ -220,6 +221,7 @@ void Console::print(QString message, eLogLevels MsgLogLevel)
             default:
                 break;
         }
+        msg.replace("&", "&amp;");
         m_output.append(prefix + msg);
         while (m_output.size() > m_outputSize)
         {
@@ -260,7 +262,9 @@ void Console::update(const oxygine::UpdateState& us)
         if (m_toggle.elapsed() < BLINKFREQG)
         {
             curprintmsg.insert(m_curmsgpos,"|");
-        }else{
+        }
+        else
+        {
             curprintmsg.insert(m_curmsgpos," ");
         }
         if (m_toggle.elapsed() > BLINKFREQG * 2)
@@ -269,6 +273,7 @@ void Console::update(const oxygine::UpdateState& us)
         }
         drawText += "> " + curprintmsg;
         m_text->setHtmlText(drawText);
+        m_text->setSize(m_text->getTextRect().size);
     }
     oxygine::Actor::update(us);
 }

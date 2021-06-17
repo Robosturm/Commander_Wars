@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -19,7 +20,9 @@ ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed()
 
 void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionBuildingDestroyed", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if ((map.getTerrain(", "")
                             .replace(", ", ",")
                             .replace(").getBuilding() === ", ",")

@@ -7,6 +7,7 @@
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -59,7 +60,9 @@ void ScriptConditionPlayerReachedArea::setHeigth(const qint32 &heigth)
 
 void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionPlayerReachedArea", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
 
     QStringList list = line.split("//");
     if (list.size() >= 2)

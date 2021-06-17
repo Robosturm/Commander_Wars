@@ -6,6 +6,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -38,10 +39,12 @@ void ScriptConditionStartOfTurn::setPlayer(const qint32 &value)
 
 void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (turn === ", "")
                             .replace(" && player === ", ",")
                             .replace(") { // ", ",").split(",");
+    Console::print("Reading ConditionStartOfTurn " + line, Console::eDEBUG);
     if (items.size() >= 2)
     {
         day = items[0].toInt();
@@ -50,12 +53,17 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
         {
             if (readSubCondition(rStream, ConditionStartOfTurn))
             {
+                Console::print("Read ConditionStartOfTurn", Console::eDEBUG);
                 break;
             }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream);
             if (event.get() != nullptr)
             {
                 events.append(event);
+            }
+            else
+            {
+                Console::print("unable to determine event", Console::eWARNING);
             }
         }
     }
@@ -64,7 +72,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
 void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // "
-            << QString::number(getVersion()) << " " << ConditionStartOfTurn +"\n";
+            << QString::number(getVersion()) << " " << ConditionStartOfTurn + "\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);

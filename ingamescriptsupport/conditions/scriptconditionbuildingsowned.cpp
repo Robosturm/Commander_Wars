@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -39,7 +40,9 @@ void ScriptConditionBuildingsOwned::setPlayer(const qint32 &player)
 
 void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionBuildingsOwned", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getBuildingCount() >= ", ",")
                             .replace(" && ", ",").split(",");

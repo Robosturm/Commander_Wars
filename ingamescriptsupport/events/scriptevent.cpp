@@ -19,6 +19,8 @@
 #include "ingamescriptsupport/events/scripteventcentermap.h"
 #include "ingamescriptsupport/events/scripteventplaysound.h"
 
+#include "coreengine/console.h"
+
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
 const QString ScriptEvent::EventDefeatPlayer = "Defeat Player";
@@ -49,8 +51,13 @@ ScriptEvent::ScriptEvent(EventType type)
 spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
 {
     qint64 pos = rStream.pos();
-    QString line = rStream.readLine().simplified();
-    rStream.seek(pos);
+    QString line = rStream.readLine();
+    line = line.simplified();
+    if (!rStream.seek(pos))
+    {
+        Console::print("Error predicting line: " + line, Console::eERROR);
+        Console::print("Error while seeking to pos " + QString::number(pos) + QString::number(rStream.status()), Console::eERROR);
+    }
     spScriptEvent ret = nullptr;
     if (line.endsWith(EventDialog))
     {

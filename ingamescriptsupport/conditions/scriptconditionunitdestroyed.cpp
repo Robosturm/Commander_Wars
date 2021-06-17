@@ -6,6 +6,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -19,7 +20,8 @@ ScriptConditionUnitDestroyed::ScriptConditionUnitDestroyed()
 
 void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList list = line.split("//")[1].split(" ");
     if (list.size() > 2)
     {
@@ -42,6 +44,7 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
 
 void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 {
+    Console::print("Reading ConditionUnitDestroyed", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     m_unitID = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";

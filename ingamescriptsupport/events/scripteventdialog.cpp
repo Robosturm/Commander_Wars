@@ -3,6 +3,8 @@
 #include "ingamescriptsupport/scriptdialogdialog.h"
 #include "ingamescriptsupport/scripteditor.h"
 
+#include "coreengine/console.h"
+
 const QString ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";
 const QString ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().getCO(1).getCoID()";
 
@@ -50,12 +52,16 @@ spDialogEntry ScriptEventDialog::getDialog(qint32 index)
 
 void ScriptEventDialog::readEvent(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading EventDialog", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     while (!rStream.atEnd())
     {
-        line = rStream.readLine().simplified();
+        line = rStream.readLine();
+        line = line.simplified();
         if (line.endsWith(EventDialog))
         {
+            Console::print("Read EventDialog", Console::eDEBUG);
             break;
         }
         else if (line.endsWith(ScriptEventDialogItem))

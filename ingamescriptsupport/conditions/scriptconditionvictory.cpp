@@ -6,6 +6,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -28,7 +29,9 @@ void ScriptConditionVictory::setTeam(const qint32 &value)
 
 void ScriptConditionVictory::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionVictory", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (team === ", "").replace(") { // ", ",").split(",");
     if (items.size() > 0)
     {

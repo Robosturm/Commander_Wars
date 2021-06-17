@@ -24,7 +24,8 @@ ScriptEventGeneric::ScriptEventGeneric(EventType type, QString eventIdentifier)
 
 void ScriptEventGeneric::readEvent(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     removeCustomStart(line);
     for (auto & item : m_Items)
     {
