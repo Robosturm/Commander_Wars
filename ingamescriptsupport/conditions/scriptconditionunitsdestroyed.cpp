@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -39,7 +40,9 @@ void ScriptConditionUnitsDestroyed::setCount(const qint32 &count)
 
 void ScriptConditionUnitsDestroyed::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionUnitsDestroyed", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (map.getGameRecorder().getDestroyedUnits(", "")
                             .replace(") >= ", ",")
                             .replace(" && ", ",").split(",");

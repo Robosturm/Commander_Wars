@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -14,7 +15,6 @@
 ScriptConditionBuildingCaptured::ScriptConditionBuildingCaptured()
     : ScriptCondition (ConditionType::buildingCaptured)
 {
-
 }
 
 qint32 ScriptConditionBuildingCaptured::getX() const
@@ -49,7 +49,9 @@ void ScriptConditionBuildingCaptured::setPlayer(const qint32 &player)
 
 void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionBuildingCaptured", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
                             .replace(").getBuilding().getOwner() === null && map.getTerrain(", ",")

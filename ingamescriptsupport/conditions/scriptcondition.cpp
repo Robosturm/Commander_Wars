@@ -13,6 +13,8 @@
 #include "ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h"
 #include "ingamescriptsupport/conditions/scriptconditioncheckvariable.h"
 
+#include "coreengine/console.h"
+
 const QString ScriptCondition::ConditionVictory = "Victory";
 const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
 const QString ScriptCondition::ConditionEachDay = "Each Day";
@@ -60,12 +62,17 @@ void ScriptCondition::setSubCondition(const spScriptCondition &value)
 bool ScriptCondition::readSubCondition(QTextStream& rStream, QString id)
 {
     qint64 pos = rStream.pos();
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     if (line.endsWith(id + " End"))
     {
         return true;
     }
-    rStream.seek(pos);
+    if (!rStream.seek(pos))
+    {
+        Console::print("Error predicting line: " + line, Console::eERROR);
+        Console::print("Error while seeking to pos " + QString::number(pos) + " status=" + QString::number(rStream.status()), Console::eERROR);
+    }
     if (subCondition.get() == nullptr)
     {
         setSubCondition(createReadCondition(rStream));
@@ -73,12 +80,17 @@ bool ScriptCondition::readSubCondition(QTextStream& rStream, QString id)
     if (subCondition.get() != nullptr)
     {
         pos = rStream.pos();
-        line = rStream.readLine().simplified();
+        line = rStream.readLine();
+        line = line.simplified();
         if (line.endsWith(id + " End"))
         {
             return true;
         }
-        rStream.seek(pos);
+        if (!rStream.seek(pos))
+        {
+           Console::print("Error predicting line: " + line, Console::eERROR);
+           Console::print("Error while seeking to pos " + QString::number(pos) + QString::number(rStream.status()), Console::eERROR);
+        }
     }
     return false;
 }
@@ -152,8 +164,13 @@ spScriptCondition ScriptCondition::createCondition(ConditionType type)
 spScriptCondition ScriptCondition::createReadCondition(QTextStream& rStream)
 {
     qint64 pos = rStream.pos();
-    QString line = rStream.readLine().simplified();
-    rStream.seek(pos);
+    QString line = rStream.readLine();
+    line = line.simplified();
+    if (!rStream.seek(pos))
+    {
+        Console::print("Error predicting line: " + line, Console::eERROR);
+        Console::print("Error while seeking to pos " + QString::number(pos) + QString::number(rStream.status()), Console::eERROR);
+    }
     spScriptCondition ret = nullptr;
     if (line.endsWith(ConditionEachDay))
     {

@@ -6,6 +6,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/textbox.h"
@@ -20,7 +21,9 @@ ScriptConditionCheckVariable::ScriptConditionCheckVariable()
 
 void ScriptConditionCheckVariable::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionCheckVariable", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     line = line.replace("if (", "");
     if (line.startsWith(ScriptData::variables))
     {

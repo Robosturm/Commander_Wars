@@ -26,7 +26,8 @@ ScriptEventAnimation::ScriptEventAnimation()
 
 void ScriptEventAnimation::readEvent(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("var animation = GameAnimationFactory.createAnimation(", "")
                         .replace("\", ", ",")
                         .replace(", \"", ",")

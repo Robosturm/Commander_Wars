@@ -6,6 +6,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -48,7 +49,9 @@ void ScriptConditionEachDay::setPlayer(const qint32 &value)
 
 void ScriptConditionEachDay::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionEachDay", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if ((turn - ", "")
                             .replace(") % ", ",")
                             .replace(" === 0 && player === ", ",")

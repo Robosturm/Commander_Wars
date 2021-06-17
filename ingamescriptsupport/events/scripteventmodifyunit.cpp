@@ -30,7 +30,8 @@ void ScriptEventModifyUnit::writeEvent(QTextStream& rStream)
 
 void ScriptEventModifyUnit::readEvent(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if(map.getTerrain(", "")
                             .replace(").getUnit() !== null){map.getTerrain(", ",")
                             .replace(").getUnit().modifyUnit(", ",")

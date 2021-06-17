@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
@@ -29,7 +30,9 @@ void ScriptConditionPlayerDefeated::setPlayer(const qint32 &player)
 
 void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream)
 {
-    QString line = rStream.readLine().simplified();
+    Console::print("Reading ConditionPlayerDefeated", Console::eDEBUG);
+    QString line = rStream.readLine();
+    line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getIsDefeated() === true", ",").split(",");
     if (items.size() >= 1)
