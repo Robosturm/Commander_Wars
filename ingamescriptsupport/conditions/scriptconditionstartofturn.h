@@ -35,7 +35,7 @@ public:
      * @brief readCondition
      * @param rStream
      */
-    virtual void readCondition(QTextStream& rStream) override;
+    virtual void readCondition(QTextStream& rStream, QString line) override;
     /**
      * @brief writeCondition
      * @param rStream

@@ -19,9 +19,8 @@ ScriptEventModifyVariable::ScriptEventModifyVariable()
 
 }
 
-void ScriptEventModifyVariable::readEvent(QTextStream& rStream)
+void ScriptEventModifyVariable::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QString variableName;
     if (line.startsWith(ScriptData::variables))

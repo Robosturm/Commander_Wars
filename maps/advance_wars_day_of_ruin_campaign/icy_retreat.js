@@ -120,7 +120,7 @@ var Constructor = function() { // scriptStart
             dialog44.queueAnimation(dialog45);
             // Dialog
         } // Start Of Turn End
-        if (turn === 1 && player === 0) { // 0 Start Of Turn
+        if (turn === 2 && player === 0) { // 0 Start Of Turn
             // Dialog
             var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("Captain Brenner! Come on! You have to go now!"), "CO_WILL", GameEnums.COMood_Normal, "#ff0000"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(qsTr("Brother man, I don't think this little bird's flyin' anywhere. We got some business to settle... Ain't that right, Brenner?"), "CO_WAYLON", GameEnums.COMood_Normal, "#d08000"); dialog1.loadBackground(""); // 1 ScriptEventDialogItem

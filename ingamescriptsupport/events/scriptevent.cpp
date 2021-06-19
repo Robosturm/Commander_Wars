@@ -48,16 +48,9 @@ ScriptEvent::ScriptEvent(EventType type)
 {
 }
 
-spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
+spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream, QString line)
 {
-    qint64 pos = rStream.pos();
-    QString line = rStream.readLine();
     line = line.simplified();
-    if (!rStream.seek(pos))
-    {
-        Console::print("Error predicting line: " + line, Console::eERROR);
-        Console::print("Error while seeking to pos " + QString::number(pos) + QString::number(rStream.status()), Console::eERROR);
-    }
     spScriptEvent ret = nullptr;
     if (line.endsWith(EventDialog))
     {
@@ -137,12 +130,10 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     }
     if (ret.get() != nullptr)
     {
-        ret->readEvent(rStream);
+        ret->readEvent(rStream, line);
     }
     else
     {
-        // skip line
-        rStream.readLine();
     }
     return ret;
 }

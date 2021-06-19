@@ -38,10 +38,9 @@ void ScriptConditionBuildingsOwned::setPlayer(const qint32 &player)
     m_player = player;
 }
 
-void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream)
+void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream, QString line)
 {
     Console::print("Reading ConditionBuildingsOwned", Console::eDEBUG);
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getBuildingCount() >= ", ",")
@@ -53,11 +52,11 @@ void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionBuildingsOwned))
+        if (readSubCondition(rStream, ConditionBuildingsOwned, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);
@@ -67,6 +66,7 @@ void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingsOwned::writePreCondition(QTextStream& rStream)
 {
+    Console::print("Writing ConditionBuildingsOwned", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)

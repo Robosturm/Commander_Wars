@@ -23,9 +23,8 @@ ScriptEventAnimation::ScriptEventAnimation()
     connect(this, &ScriptEventAnimation::sigShowLoadDialog, this, &ScriptEventAnimation::showLoadDialog, Qt::QueuedConnection);
 }
 
-void ScriptEventAnimation::readEvent(QTextStream& rStream)
+void ScriptEventAnimation::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("var animation = GameAnimationFactory.createAnimation(", "")
                         .replace("\", ", ",")

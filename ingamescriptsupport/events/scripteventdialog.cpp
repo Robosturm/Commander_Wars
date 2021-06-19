@@ -50,10 +50,9 @@ spDialogEntry ScriptEventDialog::getDialog(qint32 index)
     return nullptr;
 }
 
-void ScriptEventDialog::readEvent(QTextStream& rStream)
+void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
 {
     Console::print("Reading EventDialog", Console::eDEBUG);
-    QString line = rStream.readLine();
     line = line.simplified();
     while (!rStream.atEnd())
     {

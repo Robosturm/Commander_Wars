@@ -40,9 +40,8 @@ void ScriptEventChangeBuildlist::setRemove(bool value)
 }
 
 
-void ScriptEventChangeBuildlist::readEvent(QTextStream& rStream)
+void ScriptEventChangeBuildlist::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("map.getPlayer(", "")
                             .replace(").changeBuildlist(\"", ",")

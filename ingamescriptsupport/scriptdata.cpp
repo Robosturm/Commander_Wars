@@ -134,7 +134,6 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
 {
     while (!rStream.atEnd())
     {
-        qint64 pos = rStream.pos();
         QString line = rStream.readLine();
         QString trimmedLine = line.simplified();
         if (trimmedLine.endsWith(id))
@@ -142,18 +141,13 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             Console::print("Read end for " + id, Console::eDEBUG);
             break;
         }
-        if (!rStream.seek(pos))
-        {
-            Console::print("Error predicting line: " + line, Console::eERROR);
-            Console::print("Error while seeking to pos " + QString::number(pos) + QString::number(rStream.status()), Console::eERROR);
-        }
         if (line.endsWith("precondition"))
         {
             Console::print("Reading precondition", Console::eDEBUG);
             while (!rStream.atEnd())
             {
                 QString line = rStream.readLine();
-    line = line.simplified();
+                line = line.simplified();
                 if (line.endsWith("preconditionend"))
                 {
                     Console::print("Read precondition", Console::eDEBUG);
@@ -162,15 +156,13 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             }
             continue;
         }
-        spScriptCondition pCondition = ScriptCondition::createReadCondition(rStream);
+        spScriptCondition pCondition = ScriptCondition::createReadCondition(rStream, line);
         if (pCondition.get() != nullptr)
         {
             rVector->append(pCondition);
         }
         else
         {
-            Console::print("Read custom line", Console::eDEBUG);
-            line = rStream.readLine();
             customCode += line + "\n";
         }
     }

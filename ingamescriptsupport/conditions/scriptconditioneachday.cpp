@@ -47,10 +47,9 @@ void ScriptConditionEachDay::setPlayer(const qint32 &value)
     player = value;
 }
 
-void ScriptConditionEachDay::readCondition(QTextStream& rStream)
+void ScriptConditionEachDay::readCondition(QTextStream& rStream, QString line)
 {
     Console::print("Reading ConditionEachDay", Console::eDEBUG);
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("if ((turn - ", "")
                             .replace(") % ", ",")
@@ -63,11 +62,11 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
         player = items[2].toInt();
         while (!rStream.atEnd())
         {
-            if (readSubCondition(rStream, ConditionEachDay))
+            if (readSubCondition(rStream, ConditionEachDay, line))
             {
                 break;
             }
-            spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+            spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
             if (event.get() != nullptr)
             {
                 events.append(event);
@@ -78,6 +77,7 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
 
 void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
 {
+    Console::print("Writing ConditionEachDay", Console::eDEBUG);
     rStream << "        if ((turn - " + QString::number(day)  +  ") % " + QString::number(intervall) +  " === 0 && player === " + QString::number(player) + ") { // "
             << QString::number(getVersion()) << " " << ConditionEachDay +"\n";
     for (qint32 i = 0; i < events.size(); i++)
