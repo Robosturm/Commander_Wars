@@ -16,9 +16,8 @@ ScriptEventDefeatPlayer::ScriptEventDefeatPlayer()
 
 }
 
-void ScriptEventDefeatPlayer::readEvent(QTextStream& rStream)
+void ScriptEventDefeatPlayer::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList item = line.replace("map.getPlayer(", "")
                     .replace(").defeatPlayer(null); // ", ",").split(",");

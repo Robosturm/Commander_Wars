@@ -28,10 +28,9 @@ void ScriptConditionPlayerDefeated::setPlayer(const qint32 &player)
     m_player = player;
 }
 
-void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream)
+void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream, QString line)
 {
     Console::print("Reading ConditionPlayerDefeated", Console::eDEBUG);
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("if (map.getPlayer(", "")
                             .replace(").getIsDefeated() === true", ",").split(",");
@@ -41,11 +40,11 @@ void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionPlayerDefeated))
+        if (readSubCondition(rStream, ConditionPlayerDefeated, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);
@@ -55,6 +54,7 @@ void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream)
 
 void ScriptConditionPlayerDefeated::writePreCondition(QTextStream& rStream)
 {
+    Console::print("Writing ConditionPlayerDefeated", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)

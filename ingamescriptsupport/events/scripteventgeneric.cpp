@@ -23,9 +23,8 @@ ScriptEventGeneric::ScriptEventGeneric(EventType type, QString eventIdentifier)
     connect(this, &ScriptEventGeneric::sigShowSelectFile, this, &ScriptEventGeneric::showSelectFile, Qt::QueuedConnection);
 }
 
-void ScriptEventGeneric::readEvent(QTextStream& rStream)
+void ScriptEventGeneric::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     removeCustomStart(line);
     for (auto & item : m_Items)

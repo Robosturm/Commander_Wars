@@ -18,9 +18,8 @@ ScriptEventModifyTerrain::ScriptEventModifyTerrain()
 
 }
 
-void ScriptEventModifyTerrain::readEvent(QTextStream& rStream)
+void ScriptEventModifyTerrain::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("map.replaceTerrain(\"", "")
                             .replace(", ", ",")

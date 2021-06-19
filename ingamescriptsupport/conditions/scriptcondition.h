@@ -62,12 +62,12 @@ public:
      * @param rStream
      * @return
      */
-    static spScriptCondition createReadCondition(QTextStream& rStream);
+    static spScriptCondition createReadCondition(QTextStream& rStream, QString & line);
     /**
      * @brief readCondition
      * @param rStream
      */
-    virtual void readCondition(QTextStream& rStream) = 0;
+    virtual void readCondition(QTextStream& rStream, QString line) = 0;
     /**
      * @brief writeCondition
      * @param rStream
@@ -159,7 +159,7 @@ public:
      * @param id
      * @return
      */
-    bool readSubCondition(QTextStream& rStream, QString id);
+    bool readSubCondition(QTextStream& rStream, QString id, QString & line);
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;

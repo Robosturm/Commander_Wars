@@ -27,9 +27,8 @@ void ScriptEventAddFunds::setFunds(const qint32 &value)
 }
 
 
-void ScriptEventAddFunds::readEvent(QTextStream& rStream)
+void ScriptEventAddFunds::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("map.getPlayer(", "")
                             .replace(").addFunds(", ",")

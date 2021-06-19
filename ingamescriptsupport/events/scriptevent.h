@@ -68,12 +68,12 @@ public:
      * @param rStream
      * @return
      */
-    static spScriptEvent createReadEvent(QTextStream& rStream);
+    static spScriptEvent createReadEvent(QTextStream& rStream, QString line);
     /**
      * @brief readEvent
      * @param rStream
      */
-    virtual void readEvent(QTextStream& rStream) = 0;
+    virtual void readEvent(QTextStream& rStream, QString line) = 0;
     /**
      * @brief writeEvent
      * @param rStream

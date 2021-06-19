@@ -470,7 +470,8 @@ void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
     pEvent->writeEvent(stream);
     spScriptEvent pNewEvent = ScriptEvent::createEvent(pEvent->getEventType());
     stream.seek(0);
-    pNewEvent->readEvent(stream);
+    QString line = stream.readLine();
+    pNewEvent->readEvent(stream, line);
     m_CurrentCondition->addEvent(pNewEvent);
     updateEvents();
 }
@@ -484,7 +485,8 @@ void ScriptEditor::duplicateCondition()
         m_CurrentCondition->writeCondition(stream);
         spScriptCondition pNewCondition = ScriptCondition::createCondition(m_CurrentCondition->getType());
         stream.seek(0);
-        pNewCondition->readCondition(stream);
+        QString line = stream.readLine();
+        pNewCondition->readCondition(stream, line);
         addConditionToData(pNewCondition);
         updateConditios();
     }

@@ -18,10 +18,9 @@ ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed()
 
 }
 
-void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream)
+void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream, QString line)
 {
     Console::print("Reading ConditionBuildingDestroyed", Console::eDEBUG);
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList items = line.replace("if ((map.getTerrain(", "")
                             .replace(", ", ",")
@@ -34,11 +33,11 @@ void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionBuildingDestroyed))
+        if (readSubCondition(rStream, ConditionBuildingDestroyed, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);
@@ -58,6 +57,7 @@ void ScriptConditionBuildingDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingDestroyed::writeCondition(QTextStream& rStream)
 {
+    Console::print("Writing ConditionBuildingDestroyed", Console::eDEBUG);
     rStream << "        if ((map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding() === null || "
             << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getHp() <= 0) && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionBuildingDestroyed << "\n";

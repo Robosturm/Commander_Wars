@@ -18,9 +18,8 @@ ScriptConditionUnitDestroyed::ScriptConditionUnitDestroyed()
 }
 
 
-void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
+void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     QStringList list = line.split("//")[1].split(" ");
     if (list.size() > 2)
@@ -30,11 +29,11 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionUnitDestroyed))
+        if (readSubCondition(rStream, ConditionUnitDestroyed, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);
@@ -60,6 +59,7 @@ void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
 {
+    Console::print("Writing ConditionUnitDestroyed", Console::eDEBUG);
     rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
             << "// " << m_x << " " << m_y << " " << QString::number(getVersion()) << " " << ConditionUnitDestroyed << "\n";
     if (subCondition.get() != nullptr)

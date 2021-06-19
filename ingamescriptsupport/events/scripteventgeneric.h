@@ -50,7 +50,7 @@ public:
      * @brief readEvent
      * @param rStream
      */
-    virtual void readEvent(QTextStream& rStream) override;
+    virtual void readEvent(QTextStream& rStream, QString line) override;
     /**
      * @brief removeCustomStart
      * @param text

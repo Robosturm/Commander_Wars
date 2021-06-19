@@ -37,9 +37,8 @@ void ScriptEventChangeCOBar::setStars(float value)
 }
 
 
-void ScriptEventChangeCOBar::readEvent(QTextStream& rStream)
+void ScriptEventChangeCOBar::readEvent(QTextStream& rStream, QString line)
 {
-    QString line = rStream.readLine();
     line = line.simplified();
     line = rStream.readLine();
     line = line.simplified();
