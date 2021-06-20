@@ -197,6 +197,7 @@ var Constructor = function() { // scriptStart
             dialog42.queueAnimation(dialog43);
             dialog43.queueAnimation(dialog44);
             dialog44.queueAnimation(dialog45);
+            map.getTerrain(0, 4).addTerrainOverlay("map_marker", 0, 0, "#ffffff", -1 , 0.8);
             // Dialog
         } // Start Of Turn End
         if (turn === 2 && player === 0) { // 0 Start Of Turn
@@ -218,6 +219,10 @@ var Constructor = function() { // scriptStart
             dialog6.queueAnimation(dialog7);
             // Dialog
         } // Start Of Turn End
+        if (player === 0)
+        {
+            map.getTerrain(17, 5).getUnit().setHasMoved(true);
+        }
     }; // turnStart
     this.actionDone = function(action) { // actionConditions
     // precondition
@@ -257,6 +262,14 @@ var Constructor = function() { // scriptStart
             map.getPlayer(2).defeatPlayer(null); // 0 Defeat Player
             variable3.writeDataBool(true);
         } // Player in Area End
+        if (map.getPlayer(1).getIsDefeated() === true && variable1.readDataBool() === false) {// 0 Player Defeated
+            map.getPlayer(0).defeatPlayer(null); // 0 Defeat Player
+            variable1.writeDataBool(true);
+        } // Player Defeated End
+        if (map.getPlayer(0).getIsDefeated() === true && variable1.readDataBool() === false) {// 0 Player Defeated
+            map.getPlayer(1).defeatPlayer(null); // 0 Defeat Player
+            variable1.writeDataBool(true);
+        } // Player Defeated End
     }; // actionConditions
 // scriptEnd
 };

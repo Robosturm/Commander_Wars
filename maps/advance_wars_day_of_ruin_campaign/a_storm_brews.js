@@ -148,6 +148,14 @@ var Constructor = function() { // scriptStart
             var campaignVariables = map.getCampaign().getVariables();
         }
     // preconditionend
+        if (map.getPlayer(2).getIsDefeated() === true && variable1.readDataBool() === false) {// 0 Player Defeated
+            map.getPlayer(0).defeatPlayer(null); // 0 Defeat Player
+            variable1.writeDataBool(true);
+        } // Player Defeated End
+        if (map.getPlayer(0).getIsDefeated() === true && variable1.readDataBool() === false) {// 0 Player Defeated
+            map.getPlayer(2).defeatPlayer(null); // 0 Defeat Player
+            variable1.writeDataBool(true);
+        } // Player Defeated End
     }; // actionConditions
 // scriptEnd
 };
