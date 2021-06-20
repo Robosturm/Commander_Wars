@@ -28,6 +28,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
     connect(this, &GameAnimation::sigFinished, this, &GameAnimation::onFinished, Qt::QueuedConnection);
     connect(this, &GameAnimation::sigStart, this, &GameAnimation::start, Qt::QueuedConnection);
     m_buffer.open(QIODevice::ReadWrite);
+    setVisible(false);
 }
 
 void GameAnimation::restart()
@@ -47,6 +48,7 @@ void GameAnimation::start()
     if (!m_started)
     {
         m_started = true;
+        setVisible(true);
         m_previousAnimation = nullptr;
         doPreAnimationCall();
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
@@ -77,6 +79,7 @@ void GameAnimation::stop()
         tween->complete();
     }
     m_stopped = true;
+    setVisible(false);
 }
 
 void GameAnimation::setRotation(float angle)

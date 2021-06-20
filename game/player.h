@@ -405,7 +405,7 @@ public slots:
      * @param pPLayer none nullptr will give all buildings to the selected player
      * @param units if units is true the player will also get the controll of the given player
      */
-    void defeatPlayer(Player* pPLayer, bool units = false);
+    void defeatPlayer(Player* pPlayer, bool units = false);
     /**
      * @brief postBattleActions
      * @param pAttacker
