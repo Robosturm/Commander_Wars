@@ -47,7 +47,7 @@ void NormalAi::readIni(QString name)
         {
             m_minAttackFunds = 0;
         }
-        m_minAttackFunds = settings.value("MinSuicideDamage", 0.75f).toFloat(&ok);
+        m_minSuicideDamage = settings.value("MinSuicideDamage", 0.75f).toFloat(&ok);
         if(!ok)
         {
             m_minSuicideDamage = 0.75f;
