@@ -1370,11 +1370,7 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            Unit* pUnit = m_fields[y][x]->getUnit();
-            if (pUnit != nullptr)
-            {
-                pUnit->detach();
-            }
+            m_fields[y][x]->setUnit(nullptr);
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();

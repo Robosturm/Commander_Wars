@@ -73,17 +73,30 @@ var Constructor = function()
     {
         var building = action.getTargetBuilding();
         var units = building.getConstructionList();
-        var funds = map.getCurrentPlayer().getFunds();
+        var unitData = [];
         for (i = 0; i < units.length; i++)
         {
-            var name = Global[units[i]].getName();
-            var costs = map.getCurrentPlayer().getCosts(units[i]);
+            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            unitData.push([cost, units[i]]);
+        }
+        if (typeof map !== 'undefined')
+        {
+            // only sort for humans player to maintain ai speed
+            if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            {
+                unitData = Global.sortDataArray(unitData);
+            }
+        }
+        var funds = map.getCurrentPlayer().getFunds();
+        for (i = 0; i < unitData.length; i++)
+        {
+            var name = Global[unitData[i][1]].getName();
             var enabled = false;
-            if (costs <= funds)
+            if (unitData[i][0] <= funds)
             {
                 enabled = true;
             }
-            data.addData(name + " " + costs.toString(), units[i], units[i], costs, enabled);
+            data.addData(name + " " + unitData[i][0].toString(), unitData[i][1], unitData[i][1], unitData[i][0], enabled);
         }
     };
 }

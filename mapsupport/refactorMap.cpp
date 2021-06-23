@@ -15,7 +15,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString ba
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain(baseTerrain, x, y, "");
-            this->addChild(pTerrain);
+            addChild(pTerrain);
             m_fields[y].append(pTerrain);
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
@@ -139,10 +139,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    if (m_fields[y][0]->getUnit() != nullptr)
-                    {
-                        m_fields[y][0]->getUnit()->detach();
-                    }
+                    m_fields[y][0]->setUnit(nullptr);
                     m_fields[y][0]->detach();                    
                     m_fields[y].pop_front();
                 }
@@ -169,10 +166,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    if (m_fields[y].back()->getUnit() != nullptr)
-                    {
-                        m_fields[y].back()->getUnit()->detach();
-                    }
+                    m_fields[y].back()->setUnit(nullptr);
                     m_fields[y].back()->detach();
                     m_fields[y].pop_back();
                 }
@@ -201,10 +195,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    if (m_fields[0][x]->getUnit() != nullptr)
-                    {
-                        m_fields[0][x]->getUnit()->detach();
-                    }
+                    m_fields[0][x]->setUnit(nullptr);
                     m_fields[0][x]->detach();
                 }
                 m_fields.pop_front();
@@ -232,10 +223,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    if (m_fields.back()[x]->getUnit() != nullptr)
-                    {
-                        m_fields.back()[x]->getUnit()->detach();
-                    }
+                    m_fields.back()[x]->setUnit(nullptr);
                     m_fields.back()[x]->detach();
                 }
                 m_fields.pop_back();
@@ -286,10 +274,7 @@ void GameMap::flipX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            if (currentTerrain->getUnit() != nullptr)
-            {
-                currentTerrain->getUnit()->detach();
-            }
+            currentTerrain->setUnit(nullptr);
             spTerrain flipTerrain = m_fields.at(y)[currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -329,10 +314,7 @@ void GameMap::rotateX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            if (currentTerrain->getUnit() != nullptr)
-            {
-                currentTerrain->getUnit()->detach();
-            }
+            currentTerrain->setUnit(nullptr);
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -372,10 +354,7 @@ void GameMap::flipY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            if (currentTerrain->getUnit() != nullptr)
-            {
-                currentTerrain->getUnit()->detach();
-            }
+            currentTerrain->setUnit(nullptr);
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][x];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -415,10 +394,7 @@ void GameMap::rotateY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            if (currentTerrain->getUnit() != nullptr)
-            {
-                currentTerrain->getUnit()->detach();
-            }
+            currentTerrain->setUnit(nullptr);
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
