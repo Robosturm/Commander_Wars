@@ -141,7 +141,7 @@ void OptionMenue::exitMenue()
         Console::print("Leaving Option Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(spMainwindow::create());
         oxygine::Actor::detach();
-    }    
+    }
 }
 
 
@@ -164,7 +164,7 @@ void OptionMenue::reloadSettings()
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
     oxygine::getStage()->addChild(newMenu);
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void OptionMenue::showSettings()
@@ -347,7 +347,7 @@ void OptionMenue::showSettings()
         emit sigChangeScreenSize(width, heigth);
     });
     pScreenResolution->setEnabled(!Settings::getsmallScreenDevice());
-    y += 40;    
+    y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
@@ -924,43 +924,67 @@ void OptionMenue::updateModCheckboxes()
 {
     const auto mods = Settings::getActiveMods();
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
-
+    QString name;
+    QString description;
+    QString version;
+    QStringList compatibleMods;
+    QStringList incompatibleMods;
+    QStringList requiredMods;
+    bool isComsetic = false;
+    for (auto & checkbox : m_ModCheckboxes)
+    {
+        checkbox->setEnabled(true);
+    }
+    for (const auto & mod : mods)
+    {
+        Settings::getModInfos(mod, name, description, version,
+                              compatibleMods, incompatibleMods, requiredMods, isComsetic);
+        qint32 i2 = 0;
+        for (const auto & info : qAsConst(infoList))
+        {
+            QString mod = info.filePath().replace(QCoreApplication::applicationDirPath(), "");
+            if (!mod.endsWith("."))
+            {
+                if (incompatibleMods.contains(mod))
+                {
+                    m_ModCheckboxes[i2]->setEnabled(false);
+                }
+                ++i2;
+            }
+        }
+    }
     qint32 i = 0;
-    for (const auto & info : infoList)
+    for (const auto & info : qAsConst(infoList))
     {
         QString mod = info.filePath();
         if (!mod.endsWith("."))
         {
-            QString name;
-            QString description;
-            QString version;
-            QStringList compatibleMods;
-            QStringList incompatibleMods;
-            QStringList requiredMods;
-            bool isComsetic = false;
             Settings::getModInfos(mod, name, description, version,
                                   compatibleMods, incompatibleMods, requiredMods, isComsetic);
-            bool enabled = true;
             for (const auto & incompatibleMod : qAsConst(incompatibleMods))
             {
                 if (mods.contains(incompatibleMod))
                 {
-                    enabled = false;
+                    m_ModCheckboxes[i]->setEnabled(false);
                     break;
                 }
             }
-            if (enabled)
+            if (m_ModCheckboxes[i]->getEnabled())
             {
                 for (const auto & requiredMod : qAsConst(requiredMods))
                 {
                     if (!mods.contains(requiredMod))
                     {
-                        enabled = false;
+                        if (m_ModCheckboxes[i]->getChecked())
+                        {
+                            m_ModCheckboxes[i]->setChecked(false);
+                            Settings::removeMod(mod);
+                        }
+                        m_ModCheckboxes[i]->setEnabled(false);
                         break;
                     }
                 }
             }
-            m_ModCheckboxes[i]->setEnabled(enabled);
             ++i;
         }
     }

@@ -63,8 +63,7 @@ bool Checkbox::getChecked() const
 }
 
 void Checkbox::setChecked(bool Checked)
-{
-    
+{    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
     m_Checked = Checked;
@@ -75,6 +74,5 @@ void Checkbox::setChecked(bool Checked)
     else
     {
         setAnimFrame(pAnim, 0);
-    }
-    
+    }    
 }
