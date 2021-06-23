@@ -47,6 +47,34 @@ Math.random = function()
     console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)
 }
 
+
+sortDataArray = function(data)
+{
+    var sortedData = [];
+    var dataSize = data.length;
+    if (dataSize > 0)
+    {
+        sortedData.push(data[0]);
+        for (var i = 1; i < dataSize; i++)
+        {
+            var currentLength = sortedData.length;
+            for (var i2 = 0; i2 < currentLength; i2++)
+            {
+                if (data[i][0] < sortedData[i2][0])
+                {
+                    sortedData.splice(i2, 0, data[i]);
+                    break;
+                }
+                else if (i2 === currentLength - 1)
+                {
+                    sortedData.push(data[i]);
+                }
+            }
+        }
+    }
+    return sortedData;
+}
+
 bresenhamFromTerrain = function(terrain1, terrain2, includeStartEnd, asTerrainArray)
 {
     return Global.bresenhamLine(terrain1.getX(), terrain1.getY(), terrain2.getX(), terrain2.getY(), includeStartEnd, asTerrainArray);
