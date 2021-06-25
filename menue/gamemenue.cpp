@@ -578,12 +578,15 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
                             multiTurnMovement->setMultiTurnPath(multiTurnPath);
                             return multiTurnMovement;
                         }
-                        else if (pUnit->getCapturePoints() > 0 && pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
+                        else if (pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
                         {
-                            m_pStoredAction = pGameAction;
                             spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_CAPTURE);
                             multiTurnMovement->setTarget(pUnit->getPosition());
-                            return multiTurnMovement;
+                            if (multiTurnMovement->canBePerformed())
+                            {
+                                m_pStoredAction = pGameAction;
+                                return multiTurnMovement;
+                            }
                         }
                     }
                 }
