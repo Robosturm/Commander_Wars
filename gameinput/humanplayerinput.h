@@ -180,12 +180,12 @@ protected:
      * @brief createSimpleZInformation
      * @param pData
      */
-    void createSimpleZInformation(const MarkedFieldData::ZInformation* pData);
+    void createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData);
     /**
      * @brief createComplexZInformation
      * @param pData
      */
-    void createComplexZInformation(const MarkedFieldData::ZInformation* pData);
+    void createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData);
 private:
     spGameAction m_pGameAction{nullptr};
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};

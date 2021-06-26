@@ -873,11 +873,11 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     }
                     if (pData->valueNames.size() == 0)
                     {
-                        createSimpleZInformation(pData);
+                        createSimpleZInformation(x, y, pData);
                     }
                     else
                     {
-                        createComplexZInformation(pData);
+                        createComplexZInformation(x, y, pData);
                     }
                 }
                 else
@@ -915,8 +915,9 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
     }
 }
 
-void HumanPlayerInput::createSimpleZInformation(const MarkedFieldData::ZInformation* pData)
+void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
+    spGameMap pMap = GameMap::getInstance();
     QString labelText = "";
     labelText = QString::number(pData->singleValue) + " %";
     m_ZInformationLabel = oxygine::spActor::create();
@@ -979,7 +980,7 @@ void HumanPlayerInput::createSimpleZInformation(const MarkedFieldData::ZInformat
     pMap->addChild(m_ZInformationLabel);
 }
 
-void HumanPlayerInput::createComplexZInformation(const MarkedFieldData::ZInformation* pData)
+void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
 
 }

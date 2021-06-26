@@ -317,7 +317,7 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     if (COArmy == army)
     {
         QString resAnim = coid.toLower() + "+face";
-        pAnim = pCOSpriteManager->getResAnim(resAnim);
+        pAnim = pCOSpriteManager->getResAnim(resAnim);        
         pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);
