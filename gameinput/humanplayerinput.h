@@ -176,6 +176,16 @@ protected:
      * @return
      */
     oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
+    /**
+     * @brief createSimpleZInformation
+     * @param pData
+     */
+    void createSimpleZInformation(const MarkedFieldData::ZInformation* pData);
+    /**
+     * @brief createComplexZInformation
+     * @param pData
+     */
+    void createComplexZInformation(const MarkedFieldData::ZInformation* pData);
 private:
     spGameAction m_pGameAction{nullptr};
     spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
