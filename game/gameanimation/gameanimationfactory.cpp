@@ -345,3 +345,13 @@ void GameAnimationFactory::finishAllAnimations()
         }
     }
 }
+
+void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
+{
+    GameAnimationFactory::finishAllAnimations();
+    if (m_Animations.size() == 0)
+    {
+        Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
+        emit GameAnimationFactory::getInstance()->animationsFinished();
+    }
+}
