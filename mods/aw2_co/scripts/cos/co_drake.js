@@ -41,4 +41,5 @@ CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY)
             return 1;
         }
     }
+    return 0;
 };

@@ -34,7 +34,7 @@ namespace oxygine
             default:
                 break;
         }
-        Q_ASSERT(!"unknown primitive type");
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriverGL::getPT unknown primitive type");
         return PT_POINTS;
     }
 
@@ -63,7 +63,7 @@ namespace oxygine
             case BT_ONE_MINUS_DST_COLOR:
                 return GL_ONE_MINUS_DST_COLOR;
         }
-        Q_ASSERT(!"unknown blend");
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriverGL::getBT unknown blend");
         return GL_ONE;
     }
 
@@ -174,7 +174,7 @@ namespace oxygine
                 }
                 break;
             default:
-                Q_ASSERT(!"unknown state");
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriverGL::setState unknown state");
         }
     }
 }

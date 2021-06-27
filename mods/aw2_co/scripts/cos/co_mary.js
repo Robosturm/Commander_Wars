@@ -153,6 +153,7 @@ CO_MARY.getAdditionalBuildingActions = function(co, building)
     switch (co.getPowerMode())
     {
     case GameEnums.PowerMode_Superpower:
+    case GameEnums.PowerMode_Tagpower:
         return ""
     case GameEnums.PowerMode_Power:
         // disable enemy production line

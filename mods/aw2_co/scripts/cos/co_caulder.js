@@ -14,7 +14,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return 30;
         default:
-            return 20;
+            return CO_CAULDER.coGlobalBonus;
         }
     }
 };
@@ -32,7 +32,7 @@ CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return 30;
         default:
-            return 20;
+            return CO_CAULDER.coGlobalBonus;
         }
     }
 };

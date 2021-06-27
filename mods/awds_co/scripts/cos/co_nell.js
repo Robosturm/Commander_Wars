@@ -4,6 +4,7 @@ CO_NELL.getBonusLuck = function(co, unit, posX, posY)
     {
         switch (co.getPowerMode())
         {
+        case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
             return 100;
         case GameEnums.PowerMode_Power:

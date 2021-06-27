@@ -27,7 +27,10 @@ namespace oxygine
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
         dest cast = dynamic_cast<dest>(ptr);
-        Q_ASSERT(cast && "can't cast pointer");
+        if (cast == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeCast can't cast pointer");
+        }
         return cast;
 #else
         return static_cast<dest>(ptr);
@@ -43,7 +46,10 @@ namespace oxygine
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
         intrusive_ptr<T> t = dynamic_cast<T*>(p.get());
-        Q_ASSERT(t && "can't cast pointer");
+        if (t.get() == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeSpCast can't cast pointer");
+        }
 #endif
         return static_cast<T*>(p.get());
     }

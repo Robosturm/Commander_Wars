@@ -14,9 +14,9 @@ CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             else if (attacker.getBaseMaxRange() > 1)
             {
-                return 0;
+                return -10;
             }
-            return 10;
+            return 0;
         case GameEnums.PowerMode_Power:
             if (attacker.getBaseMaxRange() === 1 &&
                 attacker.getUnitType() !== GameEnums.UnitType_Infantry)
@@ -25,9 +25,9 @@ CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             else if (attacker.getBaseMaxRange() > 1)
             {
-                return 0;
+                return -10;
             }
-            return 10;
+            return 0;
         default:
             if (attacker.getBaseMaxRange() === 1 &&
                 attacker.getUnitType() !== GameEnums.UnitType_Infantry)

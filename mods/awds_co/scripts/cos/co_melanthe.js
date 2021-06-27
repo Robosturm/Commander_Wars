@@ -8,7 +8,6 @@ CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY)
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 2;
             case GameEnums.PowerMode_Power:
                 return 2;
             default:
@@ -39,11 +38,6 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
-                    {
-                        return 30;
-                    }
-                    return 10;
                 case GameEnums.PowerMode_Power:
                     if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                     {

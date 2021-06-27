@@ -9,6 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/math/OBBox.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include <qmath.h>
 
@@ -54,7 +55,6 @@ namespace oxygine
             actor->added2stage(stage);
             actor = next;
         }
-
         onAdded2Stage();
     }
 
@@ -450,14 +450,11 @@ namespace oxygine
         m_zOrder = zorder;
         if (m_parent)
         {
+            QMutexLocker lock(&m_Locked);
             Actor* parent = m_parent;
-
             spActor me = this;
-
             parent->m_children.removeItem(me);
-
             Actor* sibling = parent->m_children._last.get();
-
             //try to insert at the end of list first
             if (sibling && sibling->getPriority() > m_zOrder)
             {
@@ -773,15 +770,18 @@ namespace oxygine
 
     void Actor::addChild(Actor* actor)
     {
-        Q_ASSERT(actor);
-        if (!actor)
+        if (!GameWindow::getWindow()->isWorker())
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread");
+        }
+        else if (!actor)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add empty actor");
             return;
         }
-
         Q_ASSERT(actor != this);
-
         actor->detach();
+        QMutexLocker lock(&m_Locked);
 
         qint32 z = actor->getPriority();
 
@@ -825,6 +825,7 @@ namespace oxygine
         }
         if (getFirstChild())
         {
+            QMutexLocker lock(&m_Locked);
             getFirstChild()->insertSiblingBefore(actor);
         }
         else
@@ -840,16 +841,26 @@ namespace oxygine
 
     void Actor::removeChild(spActor actor)
     {
-        Q_ASSERT(actor);
-        if (actor)
+        if (!GameWindow::getWindow()->isWorker())
         {
-            Q_ASSERT(actor->m_parent == this);
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove actor from wrong thread");
+        }
+        else if (actor)
+        {
+            if (actor->m_parent != this)
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
+            }
             if (actor->m_parent == this)
             {
                 QMutexLocker lock(&m_Locked);
                 setParent(actor.get(), nullptr);
                 m_children.removeItem(actor);
             }
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove empty actor");
         }
     }
 

@@ -11,7 +11,7 @@ namespace oxygine
             case TF_UNDEFINED:
                 return 0;
             default:
-                Q_ASSERT(!"unknown type");
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "ImageData::getBytesPerPixel unknown type");
         }
         return 0;
     }

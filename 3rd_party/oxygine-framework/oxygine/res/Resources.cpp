@@ -27,7 +27,7 @@ namespace oxygine
         {
             if (it->id == resTypeID)
             {
-                Q_ASSERT(!"resource already registered");
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "resource already registered");
                 return;
             }
         }
@@ -45,7 +45,7 @@ namespace oxygine
                 return;
             }
         }
-        Q_ASSERT(!"can't find resource type");
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "can't find resource type");
     }
 
     void Resources::setDefaultMissingResAnim(ResAnim* rs)

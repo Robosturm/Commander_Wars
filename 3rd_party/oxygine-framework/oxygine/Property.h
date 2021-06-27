@@ -47,7 +47,7 @@ namespace oxygine
             return _src;
         }
 
-        void update(type& t, float p, const UpdateState& us)
+        void update(type& t, float p, const oxygine::UpdateState& us)
         {
             Q_ASSERT(_initialized);
             value v = lerp(_src, _dest, p);
