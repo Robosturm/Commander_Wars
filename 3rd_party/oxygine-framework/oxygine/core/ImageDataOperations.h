@@ -133,7 +133,7 @@ namespace oxygine
                 }
                     break;
                 default:
-                    Q_ASSERT(!"unknown format");
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "SwitchSrcDestT unknown format");
             }
         }
 
@@ -149,7 +149,7 @@ namespace oxygine
                 }
                     break;
                 default:
-                    Q_ASSERT(!"unknown format");
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "applyOperation unknown format");
             }
         }
 
@@ -165,7 +165,7 @@ namespace oxygine
                     break;
                 }
                 default:
-                    Q_ASSERT(!"unknown format");
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "applyOperation unknown format");
             }
         }
     }

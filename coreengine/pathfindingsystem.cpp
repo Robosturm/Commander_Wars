@@ -63,7 +63,7 @@ void PathFindingSystem::setFinishNode(qint32 x, qint32 y)
 void PathFindingSystem::explore()
 {
     if (m_StartPoint.x() < 0 || m_StartPoint.y() < 0
-             && m_StartPoint.x() >= m_width && m_StartPoint.y() >= m_heigth)
+        || m_StartPoint.x() >= m_width || m_StartPoint.y() >= m_heigth)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore invalid start point");
     }

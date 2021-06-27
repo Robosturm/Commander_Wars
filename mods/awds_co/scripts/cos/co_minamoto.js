@@ -25,14 +25,6 @@ CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (nearMountains === true)
-            {
-                return 50;
-            }
-            else
-            {
-                return 10;
-            }
         case GameEnums.PowerMode_Power:
             if (nearMountains === true)
             {

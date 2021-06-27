@@ -9,15 +9,6 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    // apply sandstorm buff :)
-                    return 40;
-                }
-                else
-                {
-                    return 10;
-                }
             case GameEnums.PowerMode_Power:
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
@@ -66,7 +57,6 @@ CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY)
                 {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    return 1;
                 case GameEnums.PowerMode_Power:
                     return 1;
                 default:

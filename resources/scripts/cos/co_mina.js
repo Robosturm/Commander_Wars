@@ -182,6 +182,14 @@ var Constructor = function()
                 {
                     return 25;
                 }
+                else if (luckMode === GameEnums.LuckDamageMode_Min)
+                {
+                    return 0;
+                }
+                else if (luckMode === GameEnums.LuckDamageMode_Max)
+                {
+                    return 50;
+                }
                 return 0;
             default:
                 break;

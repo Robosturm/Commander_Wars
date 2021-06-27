@@ -5,7 +5,7 @@ CO_ALEXIS.init = function(co)
 };
 CO_ALEXIS.activateSuperpower = function(co, powerMode)
 {
-	CO_ALEXIS.activatePower(co, powerMode);
+    CO_ALEXIS.activatePower(co, powerMode);
 };
 CO_ALEXIS.getSuperPowerDescription = function()
 {
@@ -16,7 +16,7 @@ CO_ALEXIS.getSuperPowerName = function()
     return CO_ALEXIS.getPowerName();
 };
 CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action)
 {
     var nearBuildings = false;
     var fields = globals.getCircle(0, 2);
@@ -53,4 +53,5 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             return CO_ALEXIS.coZoneBonus;
         }
     }
+    return 0;
 };

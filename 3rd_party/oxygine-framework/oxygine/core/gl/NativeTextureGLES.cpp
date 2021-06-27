@@ -28,8 +28,7 @@ namespace oxygine
                 pixel.type = GL_UNSIGNED_BYTE;
                 break;
             default:
-                qCritical("unknown format: %d\n", format);
-                Q_ASSERT(!"unknown format");
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "unknown format: " + QString::number(format));
         }
         return pixel;
     }
@@ -227,7 +226,7 @@ namespace oxygine
 
         if (m_lockRect.isEmpty())
         {
-            Q_ASSERT(!"_lockRect.IsEmpty()");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "NativeTextureGLES::lock _lockRect.IsEmpty()");
             return ImageData();
         }
 

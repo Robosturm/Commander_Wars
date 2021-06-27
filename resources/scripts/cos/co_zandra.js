@@ -138,7 +138,7 @@ var Constructor = function()
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (map.getGameRules().getCurrentWeather() !== null &&
-                            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                        map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
                         // apply sandstorm buff :)
                         return 70;

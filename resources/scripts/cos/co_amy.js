@@ -136,11 +136,6 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-            {
-                return 80;
-            }
-            return 10;
         case GameEnums.PowerMode_Power:
             if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
             {

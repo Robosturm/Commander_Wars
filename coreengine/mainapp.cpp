@@ -276,12 +276,9 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             {
                 if (Settings::getSmallScreenDevice())
                 {
-                    m_Timer.start(33, this);
+                    m_timerCycle = 33;
                 }
-                else
-                {
-                    m_Timer.start(1, this);
-                }
+                m_Timer.start(m_timerCycle, this);
             }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)

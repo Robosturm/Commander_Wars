@@ -1,0 +1,58 @@
+CO_CASSIDY.init = function(co)
+{
+    co.setPowerStars(0);
+    co.setSuperpowerStars(3);
+};
+CO_CASSIDY.activateSuperpower = function(co, powerMode)
+{
+    CO_CASSIDY.activatePower(co, powerMode);
+};
+CO_CASSIDY.getSuperPowerDescription = function()
+{
+    return CO_CASSIDY.getPowerDescription();
+};
+CO_CASSIDY.getSuperPowerName = function()
+{
+    return CO_CASSIDY.getPowerName();
+};
+CO_CASSIDY.coZoneBonus = 0;
+CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                        defender, defPosX, defPosY, isDefender, action)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (defender !== null)
+        {
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                if (attacker.getHp() >= defender.getHp())
+                {
+                    return 50;
+                }
+                return 20;
+            default:
+                if (attacker.getHp() >= defender.getHp())
+                {
+                    return 20;
+                }
+            }
+        }
+    }
+    return 0;
+};
+
+CO_CASSIDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender, action)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};

@@ -103,7 +103,9 @@ public:
     {
         LuckDamageMode_Off,
         LuckDamageMode_On,
-        LuckDamageMode_Average
+        LuckDamageMode_Average,
+        LuckDamageMode_Min,
+        LuckDamageMode_Max,
     };
     Q_ENUM(LuckDamageMode)
 

@@ -14,11 +14,11 @@ CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
                 {
-                    return 20;
+                    return 30;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             case GameEnums.PowerMode_Power:
                 return 0;
@@ -50,11 +50,11 @@ CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (builded === true)
             {
-                return modifier + 50;
+                return modifier + 40;
             }
             else
             {
-                return modifier + 10;
+                return modifier;
             }
         case GameEnums.PowerMode_Power:
             return modifier + 10;

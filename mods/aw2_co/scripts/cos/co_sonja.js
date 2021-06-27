@@ -56,7 +56,6 @@ CO_SONJA.getPerfectVision = function(co)
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return true;
         case GameEnums.PowerMode_Power:
             return true;
         default:

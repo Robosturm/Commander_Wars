@@ -62,6 +62,8 @@ void GameEnums::registerEnums()
     value.setProperty("LuckDamageMode_Off", LuckDamageMode_Off);
     value.setProperty("LuckDamageMode_On", LuckDamageMode_On);
     value.setProperty("LuckDamageMode_Average", LuckDamageMode_Average);
+    value.setProperty("LuckDamageMode_Min", LuckDamageMode_Min);
+    value.setProperty("LuckDamageMode_Max", LuckDamageMode_Max);
 
     value.setProperty("GameRecord_SpecialEvents_Power", GameRecord_SpecialEvents_Power);
     value.setProperty("GameRecord_SpecialEvents_SuperPower", GameRecord_SpecialEvents_SuperPower);

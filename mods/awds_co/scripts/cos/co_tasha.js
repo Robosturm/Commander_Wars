@@ -38,6 +38,7 @@ CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     {
         switch (co.getPowerMode())
         {
+        case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
             if (defender.getUnitType() === GameEnums.UnitType_Air)
             {

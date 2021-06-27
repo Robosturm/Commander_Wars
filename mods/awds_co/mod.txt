@@ -2,6 +2,6 @@ name=Advance Wars Dual Strike CO Mod
 description=This mod changes all CO's so that they don't have a CO-Zone or CO-Unit. It also brings back the Advance Wars Dual Strike Tagpower-System. It also makes only the first CO apply effects. Created  by Robosturm
 version=1.0.1
 compatible_mods=
-incompatible_mods=mods/awdc_co;mods/aw2_co
+incompatible_mods=mods/awdc_co;mods/aw2_co;mods/aw_co
 required_mods=
 cosmetic=false

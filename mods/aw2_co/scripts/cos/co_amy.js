@@ -8,11 +8,6 @@ CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-            {
-                return 30;
-            }
-            return 0;
         case GameEnums.PowerMode_Power:
             if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
             {

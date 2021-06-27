@@ -15,11 +15,7 @@ CO_BEAST.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             break;
         default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) && !isDefender)
-            {
-                return CO_BEAST.coZoneBonus;
-            }
-            break;
+            return CO_BEAST.coZoneBonus;
         }
     }
     return 0;
