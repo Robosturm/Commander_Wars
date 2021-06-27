@@ -8,7 +8,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setVisionHigh(2);
-        terrain.setTerrainName(WELD.getName());
+        terrain.setTerrainName(WEAK_WALL.getName());
         terrain.setHp(100);
     };
     this.getName = function()

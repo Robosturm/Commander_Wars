@@ -92,7 +92,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
             pTouchEvent->stopPropagation();
         }
     });
-    connect(this, &GameAnimationDialog::sigRightClick, GameAnimationFactory::getInstance(), &GameAnimationFactory::finishAllAnimations, Qt::QueuedConnection);
+    connect(this, &GameAnimationDialog::sigRightClick, GameAnimationFactory::getInstance(), &GameAnimationFactory::finishAllAnimationsWithEmitFinished, Qt::QueuedConnection);
     connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::nextDialogStep, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
 }

@@ -9,7 +9,7 @@ CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             return 40;
         case GameEnums.PowerMode_Power:
-            return 20;
+            return 30;
         default:
             break;
         }

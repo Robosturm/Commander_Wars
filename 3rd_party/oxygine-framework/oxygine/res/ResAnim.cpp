@@ -179,7 +179,10 @@ namespace oxygine
 
     const Vector2&  ResAnim::getSize() const
     {
-        Q_ASSERT(!m_frames.empty());
+        if (m_frames.empty())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResAnim::getSize no frames found");
+        }
         return m_frames[0].getSize();
     }
     float   ResAnim::getWidth() const

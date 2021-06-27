@@ -435,7 +435,10 @@ namespace oxygine
 
                         nextAtlas(w, h, tf, ad);
                         s = ad.atlas.add(&ad.mt, src, dest, offset);
-                        Q_ASSERT(s);
+                        if (s == false)
+                        {
+                            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResAtlasGeneric::loadAtlas2 adding to atlas failed");
+                        }
                     }
 
                     //extend = false;

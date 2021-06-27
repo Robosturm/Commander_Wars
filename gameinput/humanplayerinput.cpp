@@ -885,73 +885,25 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                         m_ZInformationLabel->detach();
                         m_ZInformationLabel = nullptr;
                     }
-                    m_ZInformationLabel = oxygine::spActor::create();
-                    GameManager* pGameManager = GameManager::getInstance();
-                    oxygine::spSprite pSprite = oxygine::spSprite::create();
-                    oxygine::ResAnim* pAnim = pGameManager->getResAnim("z_information_label");
-                    if (pAnim->getTotalFrames() > 1)
-                    {
-                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-                        pSprite->addTween(tween);
-                    }
-                    else
-                    {
-                        pSprite->setResAnim(pAnim);
-                    }
-                    oxygine::spSprite pSprite2 = oxygine::spSprite::create();
-                    oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
-                    if (pAnim2->getTotalFrames() > 1)
-                    {
-                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
-                        pSprite2->addTween(tween);
-                    }
-                    else
-                    {
-                        pSprite2->setResAnim(pAnim2);
-                    }
-                    QColor color = m_pMarkedFieldData->getZLabelColor();
-                    pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
-                    pSprite->setScale(2.0f);
-                    pSprite2->setScale(2.0f);
-                    m_ZInformationLabel->addChild(pSprite2);
-                    m_ZInformationLabel->addChild(pSprite);
-                    // add text to the label
-                    oxygine::spClipRectActor clipRec = oxygine::spClipRectActor::create();
-                    clipRec->setX(2);
-                    clipRec->setY(0);
-                    clipRec->setSize(28 * 2, 20);
-                    oxygine::spTextField textField = oxygine::spTextField::create();
-                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72()).
-                                               withColor(FontManager::getFontColor()).
-                                               alignLeft().
-                                               alignTop();
-                    textField->setStyle(style);
-                    textField->setScale(16.0f / 72.0f);
-                    textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
-                    textField->attachTo(clipRec);
-                    clipRec->attachTo(m_ZInformationLabel);
-
-                    oxygine::spTextField textField2 = oxygine::spTextField::create();
-                    textField2->setStyle(style);
-                    textField2->setY(22);
-                    textField2->setX(5);
-                    QString labelText = "";
                     QPoint field(x, y);
+                    const MarkedFieldData::ZInformation* pData;
                     for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
                     {
                         if (m_pMarkedFieldData->getPoints()->at(i) == field)
                         {
-                            labelText = QString::number(m_pMarkedFieldData->getZInformation()->at(i)) + " %";
+                            const auto* info = m_pMarkedFieldData->getZInformation();
+                            pData = &info->at(i);
                             break;
                         }
                     }
-                    textField2->setScale(16.0f / 72.0f);
-                    textField2->setHtmlText(labelText);
-                    textField2->attachTo(m_ZInformationLabel);
-                    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,
-                                                     y * GameMap::getImageSize() - GameMap::getImageSize() * 2.0f);
-                    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
-                    pMap->addChild(m_ZInformationLabel);
+                    if (pData->valueNames.size() == 0)
+                    {
+                        createSimpleZInformation(x, y, pData);
+                    }
+                    else
+                    {
+                        createComplexZInformation(x, y, pData);
+                    }
                 }
                 else
                 {
@@ -986,6 +938,76 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
         }
         
     }
+}
+
+void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
+{
+    spGameMap pMap = GameMap::getInstance();
+    QString labelText = "";
+    labelText = QString::number(pData->singleValue) + " %";
+    m_ZInformationLabel = oxygine::spActor::create();
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("z_information_label");
+    if (pAnim->getTotalFrames() > 1)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+        pSprite->addTween(tween);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    oxygine::spSprite pSprite2 = oxygine::spSprite::create();
+    oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
+    if (pAnim2->getTotalFrames() > 1)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
+        pSprite2->addTween(tween);
+    }
+    else
+    {
+        pSprite2->setResAnim(pAnim2);
+    }
+    QColor color = m_pMarkedFieldData->getZLabelColor();
+    pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
+    pSprite->setScale(2.0f);
+    pSprite2->setScale(2.0f);
+    m_ZInformationLabel->addChild(pSprite2);
+    m_ZInformationLabel->addChild(pSprite);
+    // add text to the label
+    oxygine::spClipRectActor clipRec = oxygine::spClipRectActor::create();
+    clipRec->setX(2);
+    clipRec->setY(0);
+    clipRec->setSize(28 * 2, 20);
+    oxygine::spTextField textField = oxygine::spTextField::create();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72()).
+                               withColor(FontManager::getFontColor()).
+                               alignLeft().
+                               alignTop();
+    textField->setStyle(style);
+    textField->setScale(16.0f / 72.0f);
+    textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
+    textField->attachTo(clipRec);
+    clipRec->attachTo(m_ZInformationLabel);
+
+    oxygine::spTextField textField2 = oxygine::spTextField::create();
+    textField2->setStyle(style);
+    textField2->setY(22);
+    textField2->setX(5);
+
+    textField2->setScale(16.0f / 72.0f);
+    textField2->setHtmlText(labelText);
+    textField2->attachTo(m_ZInformationLabel);
+    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,
+                                     y * GameMap::getImageSize() - GameMap::getImageSize() * 2.0f);
+    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
+    pMap->addChild(m_ZInformationLabel);
+}
+
+void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
+{
+
 }
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)

@@ -135,6 +135,10 @@ public slots:
      * @brief removeAllAnimations removes all animations and calls onFinished of them
      */
     static void finishAllAnimations();
+    /**
+     * @brief removeAllAnimations removes all animations and calls onFinished of them and emits animationFinished
+     */
+    static void finishAllAnimationsWithEmitFinished();
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();

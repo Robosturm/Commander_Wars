@@ -503,7 +503,7 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, FunctionTy
             }
             default:
             {
-                Q_ASSERT(false);
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "HeavyAi::mutateAction invalid calculation type");
             }
         }
         ret = true;

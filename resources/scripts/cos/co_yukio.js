@@ -163,7 +163,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 10;
             case GameEnums.PowerMode_Power:
                 return 10;
             default:
@@ -194,11 +193,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (damage >= CO_YUKIO.mintrueDamage)
-                {
-                    return 15
-                }
-                break;
             case GameEnums.PowerMode_Power:
                 if (damage >= CO_YUKIO.mintrueDamage)
                 {
@@ -226,7 +220,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 15;
             case GameEnums.PowerMode_Power:
                 return 15;
             default:

@@ -15,11 +15,69 @@ CO_TASHA.getSuperPowerName = function()
 {
     return CO_TASHA.getPowerName();
 };
+CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                             defender, defPosX, defPosY, isDefender, action)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
+            {
+                return 50;
+            }
+            else
+            {
+                return 10;
+            }
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return 50;
+                }
+                return 10;
+            }
+            break;
+    }
+    return 0;
+};
+
+CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                             defender, defPosX, defPosY, isDefender, action)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
+            {
+                return 30;
+            }
+            else
+            {
+                return 10;
+            }
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+            {
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return 30;
+                }
+                return 10;
+            }
+            break;
+    }
+    return 0;
+};
+
 CO_TASHA.getMovementpointModifier = function(co, unit, posX, posY)
 {
-    if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-        co.getPowerMode() === GameEnums.PowerMode_Tagpower ||
-		co.getPowerMode() === GameEnums.PowerMode_Power)
+    if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {
         return 2;
     }

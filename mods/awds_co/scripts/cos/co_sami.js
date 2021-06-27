@@ -9,7 +9,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 80;
+                return 90;
             }
             else if (attacker.getBaseMaxRange() === 1)
             {
@@ -19,7 +19,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 50;
+                return 60;
             }
             else if (attacker.getBaseMaxRange() === 1)
             {
@@ -75,7 +75,7 @@ CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (unit.isTransporter())
         {
-            return 1;
+            return 0;
         }
         if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {

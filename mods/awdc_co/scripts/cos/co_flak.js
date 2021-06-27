@@ -15,3 +15,38 @@ CO_FLAK.getSuperPowerName = function()
 {
     return CO_FLAK.getPowerName();
 };
+CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            return 55;
+        default:
+            if (co.inCORange(Qt.point(posX, posY), unit))
+            {
+                return 25;
+            }
+            break;
+    }
+    return 10;
+};
+
+CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            return 20;
+        default:
+            if (co.inCORange(Qt.point(posX, posY), unit))
+            {
+                return 10;
+            }
+            break;
+    }
+    return 5;
+};

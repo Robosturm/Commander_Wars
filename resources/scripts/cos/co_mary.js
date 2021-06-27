@@ -174,7 +174,7 @@ var Constructor = function()
 
     this.canBeRepaired = function(co, unit, posX, posY)
     {
-        // disanle enemy repairs
+        // disable enemy repairs
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Power:

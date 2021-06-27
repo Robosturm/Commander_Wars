@@ -35,7 +35,7 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
-                return -40;
+                return -45;
             }
             else
             {

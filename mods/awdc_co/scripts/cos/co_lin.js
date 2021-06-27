@@ -27,3 +27,61 @@ CO_LIN.getVisionrangeModifier = function(co, unit, posX, posY)
             return 0;
     }
 };
+
+CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                             defender, defPosX, defPosY, isDefender, action)
+{
+    var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                     (attacker.getUnitType() === GameEnums.UnitType_Naval);
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (!seaAirUnit)
+            {
+                return 30;
+            }
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                if (!seaAirUnit)
+                {
+                    return 30;
+                }
+                return 10;
+            }
+            break;
+    }
+    return 0;
+};
+
+CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                             defender, defPosX, defPosY, isDefender, action)
+{
+    var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
+                     (defender.getUnitType() === GameEnums.UnitType_Naval);
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (!seaAirUnit)
+            {
+                return 30;
+            }
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
+            {
+                if (!seaAirUnit)
+                {
+                    return 30;
+                }
+                return 10;
+            }
+            break;
+    }
+    return 0;
+};

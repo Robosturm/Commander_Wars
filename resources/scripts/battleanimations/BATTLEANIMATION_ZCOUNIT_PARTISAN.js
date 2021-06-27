@@ -90,8 +90,8 @@ var Constructor = function()
         if (weapon === 1)
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 650);
-            sprite.addSpriteScreenshake(8, 0.95, 1000, 500);
+                              1, 1.0, 0, 600);
+            sprite.addSpriteScreenshake(8, 0.95, 1000, 600);
             sprite.loadMovingSprite("firebomb", false, sprite.getMaxUnitCount(), Qt.point(127, 64),
                                     Qt.point(-127, -40), 600, true,
                                     1, 1, 0, 0, true);

@@ -76,7 +76,7 @@ namespace oxygine
         {
             fn->m_glyphs.insert(gl);
             g = findGlyph(code, opt);
-            Q_ASSERT(g);
+            handleErrorPolicy(ep_show_error, "unable to find glyph Font::getGlyph");
         }
 
         return g;

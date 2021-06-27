@@ -15,3 +15,6 @@ CO_SASHA.getSuperPowerName = function()
 {
     return CO_SASHA.getPowerName();
 };
+CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+{
+};

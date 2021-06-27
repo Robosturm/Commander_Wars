@@ -90,7 +90,7 @@ void WikiView::search(bool onlyTag)
         style.multiline = false;
         textField->setStyle(style);
 
-        textField->attachTo(pBox);
+        pBox->addChild(textField);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         textField->setHeight(40);
         textField->setWidth(pBox->getWidth() - 18);

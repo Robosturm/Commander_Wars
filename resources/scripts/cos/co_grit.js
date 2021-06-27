@@ -143,7 +143,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() > 1)
                 {
-                    return 70;
+                    return 50;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
                 {

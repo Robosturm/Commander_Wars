@@ -15,3 +15,27 @@ CO_ROBOANDY.getSuperPowerName = function()
 {
     return CO_ROBOANDY.getPowerName();
 };
+
+CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (gotAttacked && defender.getOwner() === co.getOwner())
+            {
+                if (defender.getHp() <= 0)
+                {
+                    attacker.setHp(attacker.getHp() - 1);
+                }
+            }
+            else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
+            {
+                attacker.setHp(attacker.getHp() + 1);
+            }
+            break;
+        default:
+            break;
+    }
+};

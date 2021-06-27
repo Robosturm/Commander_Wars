@@ -143,7 +143,10 @@ namespace oxygine
 
     void ResFontBM::_load(LoadResourcesContext* load_context)
     {
-        Q_ASSERT(!m_pages.empty());
+        if (m_pages.empty())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResFontBM::_load loading empty pages");
+        }
         if (m_pages.empty())
         {
             return;
@@ -408,7 +411,10 @@ namespace oxygine
 
     void ResFontBM::_unload()
     {
-        Q_ASSERT(!m_pages.empty());
+        if (m_pages.empty())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResFontBM::_unload unloading empty pages");
+        }
         for (pages::iterator i = m_pages.begin(); i != m_pages.end(); ++i)
         {
             const page& p = *i;

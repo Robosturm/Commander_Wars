@@ -8,7 +8,10 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
       m_Creator(creator)
 {
     setObjectName("DropDownmenuSprite");
-    Q_ASSERT(items.size() != 0);
+    if (items.size() < 0)
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "DropDownmenuSprite item count is below 0");
+    }
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

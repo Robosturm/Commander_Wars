@@ -55,9 +55,9 @@ namespace oxygine
 
     spTween TweenQueue::add(spTween t)
     {
-        Q_ASSERT(t);
         if (!t)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenQueue::add adding empty item");
             return 0;
         }
         m_tweens.append(t);

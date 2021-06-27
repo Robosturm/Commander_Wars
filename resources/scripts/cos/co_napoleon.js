@@ -11,18 +11,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/napoleon.mp3", 40388, 83068);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/napoleon.mp3", 40388, 83068);
+            break;
         }
     };
 
@@ -146,75 +146,75 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 4;
-            case GameEnums.PowerMode_Power:
-                return 0;
-            default:
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 4;
+        case GameEnums.PowerMode_Power:
+            return 0;
+        default:
+            break;
         }
         return 0;
     };
 
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, luckMode)
+                                       defender, defPosX, defPosY, isDefender, luckMode)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 0;
-            case GameEnums.PowerMode_Power:
-                var defHp = defender.getHp() * 10;
-                if (damage  > defHp / 2)
-                {
-                    return damage - defHp / 2;
-                }
-                return 0;
-            default:
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 0;
+        case GameEnums.PowerMode_Power:
+            var defHp = defender.getHp() * 10;
+            if (damage  > defHp / 2)
+            {
+                return damage - defHp / 2;
+            }
+            return 0;
+        default:
+            break;
         }
         return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            {
+                return 65;
+            }
+            else
+            {
+                return 45;
+            }
+        case GameEnums.PowerMode_Power:
+            if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            {
+                return 45;
+            }
+            else
+            {
+                return 25;
+            }
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return 65;
+                    return 60;
                 }
                 else
                 {
-                    return 45;
+                    return 40;
                 }
-            case GameEnums.PowerMode_Power:
-                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                {
-                    return 45;
-                }
-                else
-                {
-                    return 25;
-                }
-            default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                {
-                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                    {
-                        return 60;
-                    }
-                    else
-                    {
-                        return 40;
-                    }
-                }
-                break;
+            }
+            break;
         }
     };
     this.getAiCoUnitBonus = function(co, unit)
@@ -230,8 +230,8 @@ var Constructor = function()
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ")
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
         {
             return ["ZCOUNIT_IRON_SHIELD_GENERATOR"];
         }
@@ -258,7 +258,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDefense is increased, even more against indirect units.");
+                qsTr("\n\nCO Zone Effect: \nDefense is increased, even more against indirect units.");
     };
     this.getPowerDescription = function(co)
     {

@@ -165,9 +165,8 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 10;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return 20;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {

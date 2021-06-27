@@ -80,7 +80,7 @@ void DialogModifyUnit::updateData()
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(sliderOffset - 140);    
+    spLabel pLabel = spLabel::create(m_pPanel->getWidth() - 80);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
     pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);

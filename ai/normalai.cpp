@@ -1509,7 +1509,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
                 }
                 else
                 {
-                    Q_ASSERT(false);
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "NormalAi::moveUnit invalid action calculated");
                 }
             }
         }

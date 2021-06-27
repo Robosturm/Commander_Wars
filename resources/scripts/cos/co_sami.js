@@ -234,7 +234,7 @@ var Constructor = function()
     {
         if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
-            return 3;
+            return 4;
         }
         else if (unit.getBaseMaxRange() === 1)
         {

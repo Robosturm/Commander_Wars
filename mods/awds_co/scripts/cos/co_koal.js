@@ -19,13 +19,13 @@ CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     {
                         return 40;
                     }
-                    break;
+                    return 10;
                 case GameEnums.PowerMode_Power:
                     if (isStreet)
                     {
                         return 30;
                     }
-                    break;
+                    return 10;
                 default:
                     if (isStreet)
                     {

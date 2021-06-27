@@ -15,3 +15,25 @@ CO_MINA.getSuperPowerName = function()
 {
     return CO_MINA.getPowerName();
 };
+CO_MINA.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
+                              defender, defPosX, defPosY, isDefender, luckMode)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            if (luckMode === GameEnums.LuckDamageMode_On)
+            {
+                return globals.randInt(0, 50);
+            }
+            else if (luckMode === GameEnums.LuckDamageMode_Average)
+            {
+                return 25;
+            }
+            return 0;
+        default:
+            break;
+    }
+    return 0;
+};

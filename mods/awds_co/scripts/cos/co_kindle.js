@@ -15,7 +15,7 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     var ret = 0;
                     if (building !== null)
                     {
-                        ret = 130;
+                        ret = 120;
                     }
                     ret += co.getOwner().getBuildingCount() * 3 + 10;
                     return ret;

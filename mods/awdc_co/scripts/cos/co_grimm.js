@@ -15,3 +15,21 @@ CO_GRIMM.getSuperPowerName = function()
 {
     return CO_GRIMM.getPowerName();
 };
+CO_GRIMM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                             defender, defPosX, defPosY, isDefender, action)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            return 60;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return 50;
+            }
+            break;
+    }
+    return 30;
+};

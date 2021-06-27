@@ -15,3 +15,15 @@ CO_LASH.getSuperPowerName = function()
 {
     return CO_LASH.getPowerName();
 };
+CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            return 0;
+        default:
+            return 0;
+    }
+};

@@ -7,7 +7,7 @@ CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            return 20;
+            return 30;
         }
         else if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
