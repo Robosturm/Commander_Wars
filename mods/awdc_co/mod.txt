@@ -2,6 +2,6 @@ name=Advance Wars Darc Conflict CO Mod
 description=This mod changes all CO's so that they can't use a power or tagpower. All CO's get a 6 Star Power bar. CO's present in Advance Wars Darc Conflict work like in that game. All other CO's get their Power as Superpower. Created  by Robosturm
 version=1.0.0
 compatible_mods=
-incompatible_mods=mods/awds_co
+incompatible_mods=mods/awds_co;mods/aw2_co
 required_mods=
 cosmetic=false

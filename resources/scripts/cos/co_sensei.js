@@ -107,20 +107,14 @@ var Constructor = function()
         return "YC";
     };
 
-    this.getInfantryIDS = function()
-    {
-        return  ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-    }
-
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action)
     {
-        var unitInfantryIDs = CO_SENSEI.getInfantryIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return 30;
                 }
@@ -134,7 +128,7 @@ var Constructor = function()
                 }
                 return 10
             case GameEnums.PowerMode_Power:
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return 30;
                 }
@@ -150,7 +144,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
                         return 40;
                     }

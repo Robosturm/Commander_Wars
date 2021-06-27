@@ -15,3 +15,7 @@ CO_WALTER.getSuperPowerName = function()
 {
     return CO_ADAM.getPowerName();
 };
+CO_WALTER.getHpHidden = function(co, unit, posX, posY)
+{
+    return false;
+};

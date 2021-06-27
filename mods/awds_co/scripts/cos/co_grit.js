@@ -9,7 +9,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (attacker.getBaseMaxRange() > 1)
             {
-                return 70;
+                return 60;
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
             {
@@ -19,7 +19,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             if (attacker.getBaseMaxRange() > 1)
             {
-                return 50;
+                return 60;
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
             {

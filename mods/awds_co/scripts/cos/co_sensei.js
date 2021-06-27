@@ -3,18 +3,17 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var unitInfantryIDs = CO_SENSEI.getInfantryIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 30;
+                return 20;
             }
             else if (attacker.getUnitID() === "K_HELI")
             {
-                return 80;
+                return 90;
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
@@ -22,13 +21,13 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 30;
+                return 20;
             }
             else if (attacker.getUnitID() === "K_HELI")
             {
-                return 80;
+                return 90;
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
@@ -36,9 +35,9 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         default:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
-                return 20;
+                return 10;
             }
             else if (attacker.getUnitID() === "K_HELI")
             {

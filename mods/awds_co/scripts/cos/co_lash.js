@@ -12,9 +12,9 @@ CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
                     if (co.getPowerMode() > GameEnums.PowerMode_Off)
                     {
-                        return terrainDefense * 10 + 10;
+                        return terrainDefense * 5 + 10;
                     }
-                    return terrainDefense * 10;
+                    return terrainDefense * 5;
                 }
                 else if (co.getPowerMode() > GameEnums.PowerMode_Off)
                 {

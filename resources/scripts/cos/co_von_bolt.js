@@ -122,7 +122,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 40;
             case GameEnums.PowerMode_Power:
                 return 40;
             default:
@@ -141,7 +140,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 40;
             case GameEnums.PowerMode_Power:
                 return 40;
             default:

@@ -185,12 +185,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (unit.getBaseMaxRange() > 1 &&
-                    unit.getUnitType() === GameEnums.UnitType_Ground)
-                {
-                    return 1;
-                }
-                break;
             case GameEnums.PowerMode_Power:
                 if (unit.getBaseMaxRange() > 1 &&
                     unit.getUnitType() === GameEnums.UnitType_Ground)

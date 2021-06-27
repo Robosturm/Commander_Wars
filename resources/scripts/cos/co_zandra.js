@@ -127,12 +127,6 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    // apply sandstorm buff :)
-                    return 55;
-                }
-                return 10;
             case GameEnums.PowerMode_Power:
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
@@ -183,7 +177,6 @@ var Constructor = function()
                     {
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
-                        return 2;
                     case GameEnums.PowerMode_Power:
                         return 2;
                     default:

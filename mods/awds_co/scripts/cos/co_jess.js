@@ -8,26 +8,28 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
             if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
+                    (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                    (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 70;
             }
-            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
+            else if (((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                      (attacker.getUnitType() === GameEnums.UnitType_Naval)) &&
+                       attacker.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 return 0;
             }
             return 10;
         case GameEnums.PowerMode_Power:
             if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
+                    (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                    (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 50;
             }
-            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
+            else if (((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                      (attacker.getUnitType() === GameEnums.UnitType_Naval)) &&
+                       attacker.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 return 0;
             }
@@ -41,8 +43,9 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             break;
         }
-        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-            (attacker.getUnitType() === GameEnums.UnitType_Naval))
+        if (((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+             (attacker.getUnitType() === GameEnums.UnitType_Naval)) &&
+              attacker.getUnitType() !== GameEnums.UnitType_Infantry)
         {
             return -10;
         }
@@ -51,7 +54,7 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_JESS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -70,8 +73,8 @@ CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
             if ((unit.getUnitType() !== GameEnums.UnitType_Air) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Infantry))
+                    (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
+                    (unit.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 1;
             }
@@ -80,8 +83,8 @@ CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
                  co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if ((unit.getUnitType() !== GameEnums.UnitType_Air) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
-                (unit.getUnitType() !== GameEnums.UnitType_Infantry))
+                    (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
+                    (unit.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 2;
             }

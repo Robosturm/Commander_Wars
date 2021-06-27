@@ -48,18 +48,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/penny.mp3", 56308, 108812);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0 , 0);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/penny.mp3", 56308, 108812);
+            break;
         }
     };
 
@@ -72,33 +72,33 @@ var Constructor = function()
         return "DM";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action)
     {
         if (typeof map !== 'undefined')
         {
             switch (co.getPowerMode())
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                    {
-                        return 45;
-                    }
-                    return 30;
-                case GameEnums.PowerMode_Power:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                    {
-                        // apply sandstorm buff :)
-                        return 25;
-                    }
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                {
+                    return 45;
+                }
+                return 30;
+            case GameEnums.PowerMode_Power:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                {
+                    // apply sandstorm buff :)
+                    return 25;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                        co.getPowerMode() > GameEnums.PowerMode_Off)
+                {
                     return 10;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                            co.getPowerMode() > GameEnums.PowerMode_Off)
-                    {
-                        return 10;
-                    }
-                    break;
+                }
+                break;
             }
         }
         else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
@@ -122,8 +122,8 @@ var Constructor = function()
         if (typeof map !== 'undefined')
         {
             if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-                unit.getBaseMaxRange() > 1)
+                    map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
+                    unit.getBaseMaxRange() > 1)
             {
                 if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
                 {
@@ -142,7 +142,7 @@ var Constructor = function()
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
@@ -157,7 +157,7 @@ var Constructor = function()
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return 3;
             }
@@ -168,10 +168,10 @@ var Constructor = function()
     this.getPerfectVision = function(co)
     {
         if (map.getGameRules().getCurrentWeather() !== null &&
-            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return true;
             }
@@ -202,7 +202,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects.") +
-               qsTr("\n\nCO Zone Effect: \n10% increased firepower and defense.");
+                qsTr("\n\nCO Zone Effect: \n10% increased firepower and defense.");
     };
     this.getPowerDescription = function(co)
     {

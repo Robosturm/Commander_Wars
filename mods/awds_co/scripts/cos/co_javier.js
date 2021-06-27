@@ -12,7 +12,7 @@ CO_JAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return towers * 15 + 10;
         default:
-            return towers * 5 + 10;
+            return towers * 5;
         }
     }
     return 0;

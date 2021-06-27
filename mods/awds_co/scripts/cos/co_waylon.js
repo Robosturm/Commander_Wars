@@ -17,7 +17,7 @@ CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 20;
             }
-                return 10;
+            return 10;
         default:
             break;
         }

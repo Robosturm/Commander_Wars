@@ -15,3 +15,29 @@ CO_ADDER.getSuperPowerName = function()
 {
     return CO_ADDER.getPowerName();
 };
+CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender, action)
+{
+    switch (co.getPowerMode())
+    {
+    case GameEnums.PowerMode_Tagpower:
+    case GameEnums.PowerMode_Superpower:
+    case GameEnums.PowerMode_Power:
+        return 10;
+    default:
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return CO_ADDER.coZoneBonus;
+        }
+        break;
+    }
+    return 0;
+};
+CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY)
+{
+    if (co.getPowerMode() > GameEnums.PowerMode_Off)
+    {
+        return 1;
+    }
+    return 0;
+};

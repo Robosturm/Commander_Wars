@@ -9,21 +9,21 @@ CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
-                return 20;
+                return 30;
             }
             else if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
-                return -5;
+                return 0;
             }
             return 10;
         case GameEnums.PowerMode_Power:
             if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
-                return 20;
+                return 30;
             }
             else if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
-                return -5;
+                return 0;
             }
             return 10;
         default:
@@ -35,7 +35,7 @@ CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         }
         if (attacker.getUnitType() === GameEnums.UnitType_Air)
         {
-            return -15;
+            return -10;
         }
     }
     return 0;
@@ -56,11 +56,5 @@ CO_DRAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 
 CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY)
 {
-    if (co.getIsCO0() === true)
-    {
-        if (unit.getUnitType() === GameEnums.UnitType_Naval)
-        {
-            return 1;
-        }
-    }
+    return 0;
 };

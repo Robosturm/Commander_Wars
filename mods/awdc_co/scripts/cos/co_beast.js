@@ -15,3 +15,8 @@ CO_BEAST.getSuperPowerName = function()
 {
     return CO_BEAST.getPowerName();
 };
+CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY)
+{
+    return 0;
+};
+

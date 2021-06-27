@@ -8,7 +8,7 @@ CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
         case GameEnums.PowerMode_Superpower:
             return 90;
         case GameEnums.PowerMode_Power:
-            return 55;
+            return 50;
         default:
             return 25;
         }

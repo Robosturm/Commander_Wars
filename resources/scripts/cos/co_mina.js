@@ -145,7 +145,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 20;
             case GameEnums.PowerMode_Power:
                 return 20;
             default:

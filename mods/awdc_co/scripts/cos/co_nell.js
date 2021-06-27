@@ -15,3 +15,19 @@ CO_NELL.getSuperPowerName = function()
 {
     return CO_NELL.getPowerName();
 };
+CO_NELL.getBonusLuck = function(co, unit, posX, posY)
+{
+    switch (co.getPowerMode())
+    {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Power:
+            return 60;
+        default:
+            if (co.inCORange(Qt.point(posX, posY), unit))
+            {
+                return 15;
+            }
+            break;
+    }
+};

@@ -133,7 +133,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return true;
             case GameEnums.PowerMode_Power:
                 // are the hp hidden of this unit?
                 return true;

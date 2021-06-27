@@ -90,14 +90,14 @@ void WikiView::search(bool onlyTag)
         style.multiline = false;
         textField->setStyle(style);
 
-        textField->attachTo(pBox);
+        pBox->addChild(textField);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         textField->setHeight(40);
         textField->setWidth(pBox->getWidth() - 18);
         textField->setX(13);
         textField->setY(5);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-        this->m_MainPanel->addItem(pBox);
+        m_MainPanel->addItem(pBox);
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
         {

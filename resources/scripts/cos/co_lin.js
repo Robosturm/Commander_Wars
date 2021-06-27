@@ -204,7 +204,6 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return true;
             case GameEnums.PowerMode_Power:
                 return true;
             default:
