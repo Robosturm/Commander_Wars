@@ -192,6 +192,7 @@ QQmlDebuggingEnabler enabler;
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shhutting down
+    window.setShuttingDown();
     Settings::setX(window.x());
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);

@@ -28,6 +28,7 @@
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 #include "objects/base/timespinbox.h"
+#include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
 
 OptionMenue::OptionMenue()
@@ -122,7 +123,15 @@ OptionMenue::OptionMenue()
     m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 50);
     addChild(m_pMods);
     m_pModDescription = spPanel::create(true,  size - QSize(0, 40), size);
-    m_pModDescription->setPosition(Settings::getWidth() / 2 + 10, 20 + pButtonMods->getHeight() + 50);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_pModDescription->setX(Settings::getWidth() - 1);
+        m_pModDescription->addChild(spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth()));
+    }
+    else
+    {
+        m_pModDescription->setPosition(Settings::getWidth() / 2 + 10, 20 + pButtonMods->getHeight() + 50);
+    }
     addChild(m_pModDescription);
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
@@ -739,15 +748,8 @@ void OptionMenue::showMods()
 
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
-    if (Settings::getSmallScreenDevice())
-    {
-        m_pModDescription->setVisible(false);
-    }
-    else
-    {
-        m_pModDescription->setVisible(true);
-    }
     m_ModSelector->setVisible(true);
+    m_pModDescription->setVisible(true);
     m_pGameplayAndKeys->setVisible(false);
     m_ModSelector->removeChildren();
 

@@ -67,8 +67,6 @@ namespace oxygine
         {
             Stage::instance->cleanup();
         }
-        Stage::instance = nullptr;
-
         Resources::unregisterResourceType("atlas");
         Resources::unregisterResourceType("buffer");
         Resources::unregisterResourceType("font");

@@ -78,7 +78,8 @@ Mainapp::~Mainapp()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-            QThread::currentThread() == m_pMainThread;
+           QThread::currentThread() == m_pMainThread ||
+           m_shuttingDown;
 }
 
 void Mainapp::loadRessources()
@@ -683,4 +684,11 @@ void Mainapp::createBaseDirs()
             newDir.mkpath(".");
         }
     }
+}
+
+void Mainapp::setShuttingDown()
+{
+    m_shuttingDown = true;
+    m_timerCycle = -1;
+    m_Timer.stop();
 }

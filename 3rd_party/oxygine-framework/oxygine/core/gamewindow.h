@@ -65,7 +65,10 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.unlock();
-                m_Timer.start(m_timerCycle, this);
+                if (m_timerCycle > 0)
+                {
+                    m_Timer.start(m_timerCycle, this);
+                }
             }
         }
         /**
