@@ -51,6 +51,7 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.lock();
+                m_Timer.stop();
             }
             ++m_pausedCounter;
         }
@@ -64,6 +65,7 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.unlock();
+                m_Timer.start(m_timerCycle, this);
             }
         }
 
@@ -125,6 +127,7 @@ namespace oxygine
 
         bool m_quit{false};
         QBasicTimer m_Timer;
+        qint32 m_timerCycle{1};
         QElapsedTimer m_pressDownTime;
         bool m_pressDownTimeRunning{false};
 

@@ -273,7 +273,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             if (!m_noUi)
             {
-                m_Timer.start(1, this);
+                m_Timer.start(m_timerCycle, this);
             }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)
