@@ -47,6 +47,16 @@ class MarkedFieldData : public QObject, public oxygine::ref_counter
             infoStruct.singleValue = info;
             m_ZInformation.append(infoStruct);
         }
+        void addComplexZInformation(QVector<QString> valueNames,
+                                    QVector<qint32> ownUnitValues,
+                                    QVector<qint32> enemyUnitValues)
+        {
+            ZInformation infoStruct;
+            infoStruct.ownUnitValues = ownUnitValues;
+            infoStruct.enemyUnitValues = enemyUnitValues;
+            infoStruct.valueNames = valueNames;
+            m_ZInformation.append(infoStruct);
+        }
         bool getShowZData() const;
         void setShowZData(bool value);
 

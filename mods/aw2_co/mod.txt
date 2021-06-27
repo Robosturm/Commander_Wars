@@ -1,5 +1,5 @@
-name=Advance Wars 1 CO Mod
-description=This mod changes all CO's so that they don't have a CO-Zone or CO-Unit and bring them to their Advance Wars 1 power level if present. It also changes the Tagpower-System to that of Adavance Wars Dual Strike. It also makes only the first CO apply effects. Created  by Robosturm
+name=Advance Wars 2 CO Mod
+description=This mod changes all CO's so that they don't have a CO-Zone or CO-Unit and bring them to their Advance Wars 2 power level if present. It also changes the Tagpower-System to that of Adavance Wars Dual Strike. It also makes only the first CO apply effects. Created  by Robosturm
 version=1.0.0
 compatible_mods=
 incompatible_mods=mods/awdc_co;mods/awds_co;mods/aw_co

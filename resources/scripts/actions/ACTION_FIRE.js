@@ -153,6 +153,14 @@ var Constructor = function()
                     {
                         luckDamage += (-misfortune + luck) / 2;
                     }
+                    else if (luckMode === GameEnums.LuckDamageMode_Min)
+                    {
+                        luckDamage -= misfortune;
+                    }
+                    else if (luckMode === GameEnums.LuckDamageMode_Max)
+                    {
+                        luckDamage += luck;
+                    }
                 }
             }
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage);
@@ -225,6 +233,11 @@ var Constructor = function()
 
     this.calcBattleDamage3 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
     {
+        return ACTION_FIRE.calcBattleDamage4(action, attacker, 0, atkPosX, atkPosY, null, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
+    }
+
+    this.calcBattleDamage4 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false)
+    {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
         {
@@ -260,17 +273,17 @@ var Constructor = function()
                     {
                         if (baseDamage1 >= baseDamage2)
                         {
-                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField ,defUnit, luckMode);;
+                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);;
                             result.y = 0;
                         }
                         else
                         {
-                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
+                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
                             result.y = 1;
                         }
                     }
                     if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1 &&
-                        defUnit.isAttackable(unit, true, actionTargetField, true))
+                            defUnit.isAttackable(unit, true, actionTargetField, true))
                     {
                         baseDamage1 = -1;
                         baseDamage2 = -1;
@@ -283,18 +296,18 @@ var Constructor = function()
                         }
                         weaponID2 = defUnit.getWeapon2ID();
                         if (defUnit.hasAmmo2() && weaponID2 !== "" &&
-                            defUnit.canAttackWithWeapon(1, x, y, atkPosX, atkPosY))
+                                defUnit.canAttackWithWeapon(1, x, y, atkPosX, atkPosY))
                         {
                             baseDamage2 = Global[weaponID2].getBaseDamage(unit);
                         }
                         if (baseDamage1 >= baseDamage2)
                         {
-                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, result.x + defenderTakenDamage, luckMode);
+                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, result.x + defenderTakenDamage, luckModeDefender);
                             result.height = 0;
                         }
                         else
                         {
-                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, result.x + defenderTakenDamage, luckMode);
+                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, result.x + defenderTakenDamage, luckModeDefender);
                             result.height = 1;
                         }
                     }
@@ -353,11 +366,24 @@ var Constructor = function()
             // generally attacks on shrouded fields are forbidden
             if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
-                if (result.x >= 0.0)
+                var defUnit = map.getUnit(x, y);
+                if (defUnit !== null)
                 {
-                    data.addPoint(Qt.point(x, y));
-                    data.addZInformation(result.x);
+                    var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+                    if (result.x >= 0.0)
+                    {
+                        data.addPoint(Qt.point(x, y));
+                        data.addZInformation(result.x);
+                    }
+                }
+                else
+                {
+                    var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+                    if (result.x >= 0.0)
+                    {
+                        data.addPoint(Qt.point(x, y));
+                        data.addZInformation(result.x);
+                    }
                 }
             }
         }
@@ -409,7 +435,7 @@ var Constructor = function()
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
-            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+                currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 1.5, 0, 2);
