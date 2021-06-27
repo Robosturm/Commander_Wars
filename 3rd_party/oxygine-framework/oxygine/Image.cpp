@@ -115,10 +115,13 @@ namespace oxygine
         if (pRect)
         {
             rect = *pRect;
-            Q_ASSERT(rect.getX() >= 0);
-            Q_ASSERT(rect.getY() >= 0);
-            Q_ASSERT(rect.getX() + rect.getWidth() <= m_image.m_w);
-            Q_ASSERT(rect.getY() + rect.getHeight() <= m_image.m_h);
+            if (rect.getX() < 0 ||
+                rect.getY() < 0 ||
+                rect.getX() + rect.getWidth() > m_image.m_w ||
+                rect.getY() + rect.getHeight() > m_image.m_h)
+            {
+                handleErrorPolicy(ep_show_error, "Image::lock border error");
+            }
         }
 
         ImageData im = m_image;
@@ -154,14 +157,6 @@ namespace oxygine
     void Image::unlock()
     {
 
-    }
-
-    void Image::toPOT(Image& dest)
-    {
-        Q_ASSERT(this != &dest);
-        dest.init(nextPOT(m_image.m_w), nextPOT(m_image.m_h), m_image.m_format);
-        dest.fillZero();
-        dest.updateRegion(0, 0, m_image);
     }
 
     void Image::updateRegion(qint32 x, qint32 y, const ImageData& src)

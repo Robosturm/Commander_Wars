@@ -46,8 +46,7 @@ void RxTask::recieveData()
         }
         else if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
         {
-            // don't send an event :)
-            Q_ASSERT(false);
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "RxTask::recieveData received unknown service");
         }
         else
         {

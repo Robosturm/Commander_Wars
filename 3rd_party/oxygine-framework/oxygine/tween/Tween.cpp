@@ -45,7 +45,7 @@ namespace oxygine
 
         if (m_duration <= timeMS(0))
         {
-            Q_ASSERT(!"Tweener duration should be more than ZERO");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::init Tweener duration should be more than ZERO");
             m_duration = timeMS(1);
         }
     }
@@ -67,7 +67,7 @@ namespace oxygine
         }
         else if (m_duration < timeMS(0))
         {
-            Q_ASSERT(!"Tweener duration should be more than ZERO");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::init Tweener duration should be more than ZERO");
             m_duration = timeMS(1);
         }
     }
@@ -138,11 +138,17 @@ namespace oxygine
             m_status = status_started;
         }
 
-        Q_ASSERT(m_status == status_started);
+        if (m_status != status_started)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::complete finishing none started tween");
+        }
         UpdateState us;
         us.dt = deltaTime;
         update(*m_client, us);
-        Q_ASSERT(m_status == status_done);
+        if (m_status != status_done)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::complete tween not done after completion");
+        }
     }
 
     void Tween::start(Actor& actor)

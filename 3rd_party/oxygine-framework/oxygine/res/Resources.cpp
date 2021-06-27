@@ -127,7 +127,7 @@ namespace oxygine
         if (!file.exists() || file.size() == 0)
         {
             Console::print("can't load xml file: '" + xmlFile + "'", Console::eDEBUG);
-            Q_ASSERT(!"can't find xml file");
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML can't find xml file");
             return false;
         }
         file.open(QIODevice::ReadOnly);
@@ -157,9 +157,8 @@ namespace oxygine
                 registeredResources::iterator i = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), type);
                 if (i == m_registeredResources.end() || (i->id != type))
                 {
-                    qCritical("unknown resource. type: '%s' id: '%s'", type.toStdString().c_str(),
-                              Resource::extractID(context.m_walker.getNode(), "", "").toStdString().c_str());
-                    Q_ASSERT(!"unknown resource type");
+                    Console::print("unknown resource. type: " + type + " id: " + Resource::extractID(context.m_walker.getNode(), "", ""), Console::eERROR);
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML unable to determine ressource type");
                     continue;
                 }
 
@@ -171,7 +170,10 @@ namespace oxygine
 
                 Console::print("resource: " + context.m_xml_name, Console::eDEBUG);
                 spResource res = r.cb(context);
-                Q_ASSERT(res);
+                if (res.get() == nullptr)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML unable to load ressource");
+                }
                 res->setUseLoadCounter(opt.m_useLoadCounter);
 
                 if (res)
@@ -205,9 +207,9 @@ namespace oxygine
 
     void Resources::add(spResource r, bool accessByShortenID)
     {
-        Q_ASSERT(r);
         if (!r)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::add adding empty ressource");
             return;
         }
         QString name = r->getName().toLower();

@@ -62,8 +62,11 @@ void PathFindingSystem::setFinishNode(qint32 x, qint32 y)
 
 void PathFindingSystem::explore()
 {
-    Q_ASSERT(m_StartPoint.x() >= 0 && m_StartPoint.y() >= 0
-             && m_StartPoint.x() < m_width && m_StartPoint.y() < m_heigth);
+    if (m_StartPoint.x() < 0 || m_StartPoint.y() < 0
+             && m_StartPoint.x() >= m_width && m_StartPoint.y() >= m_heigth)
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore invalid start point");
+    }
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
     m_OpenList.append(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
                            m_StartPoint.x(), m_StartPoint.y(), 0));
@@ -79,7 +82,10 @@ void PathFindingSystem::explore()
         Node pCurrent = m_OpenList.takeFirst();
         if (pCurrent.index < 0 || m_costs[pCurrent.index] != infinite)
         {
-            Q_ASSERT(pCurrent.index >= 0);
+            if (pCurrent.index < 0)
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "PathFindingSystem::explore unknown search error");
+            }
             // already searched item
             continue;
         }

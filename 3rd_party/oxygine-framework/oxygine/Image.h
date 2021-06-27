@@ -36,7 +36,6 @@ namespace oxygine
         ImageData   lock(qint32 x, qint32 y);
 
         void        unlock();
-        void        toPOT(Image& dest);
 
         void        updateRegion(qint32 x, qint32 y, const ImageData& data);
         void        apply(const Rect*);
