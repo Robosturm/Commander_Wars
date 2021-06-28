@@ -76,7 +76,7 @@ namespace oxygine
          * @return
          */
         bool hasCursor();
-
+        void shutdown();
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void sigLoadRessources();
@@ -150,6 +150,8 @@ namespace oxygine
         float m_brightness{0.0f};
         float m_gamma{1.0f};
         Qt::HANDLE m_mainHandle{nullptr};
+
+        bool m_shuttingDown{false};
     };
 }
 

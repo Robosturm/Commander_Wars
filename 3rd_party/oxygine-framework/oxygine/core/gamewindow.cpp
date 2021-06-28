@@ -47,8 +47,15 @@ namespace oxygine
 
     GameWindow::~GameWindow()
     {
-        m_dispatcher->removeAllEventListeners();
 
+    }
+
+    void GameWindow::shutdown()
+    {
+        m_shuttingDown = true;
+        m_timerCycle = -1;
+        m_Timer.stop();
+        m_dispatcher->removeAllEventListeners();
         rsCache().reset();
         rsCache().setDriver(nullptr);
 
@@ -67,6 +74,7 @@ namespace oxygine
         {
             Stage::instance->cleanup();
         }
+        Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
         Resources::unregisterResourceType("buffer");
         Resources::unregisterResourceType("font");

@@ -11,6 +11,8 @@
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
 
+#include "objects/base/moveinbutton.h"
+
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
@@ -60,15 +62,26 @@ MapSelectionView::MapSelectionView()
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
 
-    // map info text
-    m_MapInfo = spPanel::create(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
-                                QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
-    m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
-    addChild(m_MapInfo);
     if (Settings::getSmallScreenDevice())
     {
-        m_MapInfo->setVisible(false);
+        size = QSize(Settings::getWidth() - 100, Settings::getHeight() - 60);
     }
+    else
+    {
+        size = QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60);
+    }
+    // map info text
+    m_MapInfo = spPanel::create(true, size, size);
+    if (Settings::getSmallScreenDevice())
+    {
+        m_MapInfo->setPosition(Settings::getWidth() - 1, 10);
+        m_MapInfo->addChild(spMoveInButton::create(m_MapInfo.get(), m_MapInfo->getScaledWidth()));
+    }
+    else
+    {
+        m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
+    }
+    addChild(m_MapInfo);
     qint32 y = 10;
 
     oxygine::spTextField pTextfield = oxygine::spTextField::create();

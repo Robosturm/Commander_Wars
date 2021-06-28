@@ -91,4 +91,5 @@ void LoadingScreen::setWorktext(QString workText)
 void LoadingScreen::hide()
 {
     m_pLoadingScreen->detach();
+    m_pLoadingScreen = nullptr;
 }

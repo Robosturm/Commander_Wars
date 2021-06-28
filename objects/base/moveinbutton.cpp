@@ -11,6 +11,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
 {
     m_pButton = oxygine::spButton::create();
     m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    m_pButton->setSize(m_pButton->getResAnim()->getSize());
     m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = m_pButton.get();
     m_pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
@@ -25,6 +26,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     {
         addMoveTween();
     });
+    m_pButton->setScale(buttonScale);
     if (direction < 0)
     {
         m_pButton->setFlippedX(true);
@@ -34,9 +36,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     {
         setX(pParent->getScaledWidth() + 5);
     }
-    m_pButton->setScale(buttonScale);
     addChild(m_pButton);
-
     if (startY < 0)
     {
         setY(pParent->getScaledHeight() / 2 - m_pButton->getScaledHeight() / 2);

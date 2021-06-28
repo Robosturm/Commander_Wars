@@ -133,8 +133,6 @@ public:
 
     bool getNoUi() const;
 
-    void setShuttingDown();
-
     public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -213,7 +211,6 @@ private:
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
     bool m_noUi{false};
-    bool m_shuttingDown{false};
 };
 
 #endif // MAINAPP_H

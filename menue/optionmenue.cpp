@@ -122,10 +122,14 @@ OptionMenue::OptionMenue()
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
     m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 50);
     addChild(m_pMods);
+    if (Settings::getSmallScreenDevice())
+    {
+        size.setHeight(Settings::getHeight() - 50);
+    }
     m_pModDescription = spPanel::create(true,  size - QSize(0, 40), size);
     if (Settings::getSmallScreenDevice())
     {
-        m_pModDescription->setX(Settings::getWidth() - 1);
+        m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
         m_pModDescription->addChild(spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth()));
     }
     else

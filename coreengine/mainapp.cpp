@@ -685,10 +685,3 @@ void Mainapp::createBaseDirs()
         }
     }
 }
-
-void Mainapp::setShuttingDown()
-{
-    m_shuttingDown = true;
-    m_timerCycle = -1;
-    m_Timer.stop();
-}

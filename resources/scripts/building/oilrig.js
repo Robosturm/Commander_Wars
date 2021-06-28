@@ -17,7 +17,7 @@ var Constructor = function()
     };
     this.getBaseTerrain = function(building)
     {
-        return ["SEA"];
+        return ["SEA", "PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
     };
 	this.canBuildingBePlaced = function(terrain, building)
     {
