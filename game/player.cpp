@@ -637,6 +637,7 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
     spGameMap pMap = GameMap::getInstance();
     QVector<GameAnimation*> pAnimations;
     qint32 counter = 0;
+    m_isDefeated = true;
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
@@ -692,7 +693,6 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
             }
         }
     }
-    m_isDefeated = true;
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
