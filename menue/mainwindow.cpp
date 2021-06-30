@@ -33,7 +33,6 @@
 #include "objects/dialogs/folderdialog.h"
 #include "objects/loadingscreen.h"
 
-
 #include "ui_reader/uifactory.h"
 
 Mainwindow::Mainwindow()
@@ -41,7 +40,6 @@ Mainwindow::Mainwindow()
     setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    Userdata::getInstance()->changeUser();
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

@@ -117,7 +117,7 @@ public:
      * @brief getAchievements
      * @return
      */
-    QVector<Achievement>* getAchievements();
+    const QVector<Achievement>* getAchievements();
     /**
      * @brief addVictoryForMap
      * @param mapPath

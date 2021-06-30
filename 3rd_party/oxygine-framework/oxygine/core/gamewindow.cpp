@@ -406,6 +406,11 @@ namespace oxygine
         }
     }
 
+    qint32 GameWindow::getTimerCycle() const
+    {
+        return m_timerCycle;
+    }
+
     spEventDispatcher GameWindow::getDispatcher()
     {
         return m_dispatcher;

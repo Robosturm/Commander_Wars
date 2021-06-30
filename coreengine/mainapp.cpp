@@ -94,6 +94,10 @@ void Mainapp::loadRessources()
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    if (Settings::getSmallScreenDevice())
+    {
+        m_timerCycle = 33;
+    }
     switch (step)
     {
         case StartupPhase::General:
@@ -274,11 +278,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::Finalizing:
         {
             if (!m_noUi)
-            {
-                if (Settings::getSmallScreenDevice())
-                {
-                    m_timerCycle = 33;
-                }
+            {                
                 m_Timer.start(m_timerCycle, this);
             }
             // only launch the server if the rest is ready for it ;)

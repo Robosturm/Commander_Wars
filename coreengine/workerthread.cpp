@@ -5,6 +5,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/workerthread.h"
 #include "coreengine/console.h"
+#include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
 
@@ -113,6 +114,7 @@ void WorkerThread::start()
     pLoadingScreen->setProgress(tr("Loading Shop items..."), Mainapp::SCRIPT_PROCESS + 22);
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     pShopLoader->loadAll();
+    Userdata::getInstance()->changeUser();
     pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 24);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();

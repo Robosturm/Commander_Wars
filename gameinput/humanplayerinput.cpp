@@ -108,10 +108,6 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 showAttackableFields(x, y);
             }
-            else
-            {
-                cancelActionInput();
-            }
         }
     }
     else if (isViewPlayer)

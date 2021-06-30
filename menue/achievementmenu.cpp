@@ -87,13 +87,16 @@ Achievementmenu::Achievementmenu()
 
     qint32 singleWidth = Settings::getWidth() - 80;
     Userdata* pUserdata = Userdata::getInstance();
-    auto achievements = pUserdata->getAchievements();
+    const auto achievements = pUserdata->getAchievements();
     qint32 achieveCount = 0;
     for (const auto & achievement : qAsConst(*achievements))
     {
-        if (achievement.progress >= achievement.targetValue)
+        if (achievement.loaded)
         {
-            achieveCount += 1;
+            if (achievement.progress >= achievement.targetValue)
+            {
+                achieveCount += 1;
+            }
         }
     }
     pTextfield = spLabel::create(singleWidth);
@@ -136,7 +139,7 @@ void Achievementmenu::searchChanged(QString text)
     text = text.toLower();
 
     Userdata* pUserdata = Userdata::getInstance();
-    auto achievements = pUserdata->getAchievements();
+    const auto achievements = pUserdata->getAchievements();
     qint32 x = 10;
     qint32 y = 10;
     qint32 singleWidth = Settings::getWidth() - 80;

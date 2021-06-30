@@ -228,7 +228,7 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
     }
 }
 
-QVector<Userdata::Achievement>* Userdata::getAchievements()
+const QVector<Userdata::Achievement>* Userdata::getAchievements()
 {
     return &m_achievements;
 }
