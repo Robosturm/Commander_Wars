@@ -43,6 +43,9 @@ namespace oxygine
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
+
+        connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
+        connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
     }
 
     GameWindow::~GameWindow()

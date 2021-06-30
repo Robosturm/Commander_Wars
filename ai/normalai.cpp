@@ -2768,7 +2768,9 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     unitBuildData.loadingPlace = dummy.getLoadingPlace();
     unitBuildData.transportCount = transporterUnits.size();
     unitBuildData.loadingCount = loadingUnits.size();
-    unitBuildData.flying = !dummy.useTerrainDefense();
+    auto actions = dummy.getActionList();
+    unitBuildData.utilityTransporter = !dummy.useTerrainDefense() ||
+                                       actions.contains(CoreAI::ACTION_SUPPORTALL_RATION);
 }
 
 float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit pUnits, QVector<float>& data)
@@ -2787,7 +2789,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVector
             score += m_smallTransporterBonus;
         }
         // give a bonus to t-heli's or similar units cause they are mostlikly much faster
-        if (unitBuildData.flying && score > m_minFlyingTransportScoreForBonus)
+        if (unitBuildData.utilityTransporter && score > m_minFlyingTransportScoreForBonus)
         {
             score += m_flyingTransporterBonus;
         }

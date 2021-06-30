@@ -191,8 +191,6 @@ void GameRules::init()
 
 void GameRules::checkVictory()
 {
-    
-
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
@@ -220,6 +218,23 @@ void GameRules::checkVictory()
                 emit signalVictory(teamsAlive[0]);
             }
             else
+            {
+                emit signalVictory(-1);
+            }
+        }
+        if (pMap->getIsHumanMatch())
+        {
+            bool humanAlive = false;
+            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+            {
+                Player* pPlayer = pMap->getPlayer(i);
+                if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human && !pPlayer->getIsDefeated())
+                {
+                    humanAlive = true;
+                    break;
+                }
+            }
+            if (!humanAlive)
             {
                 emit signalVictory(-1);
             }

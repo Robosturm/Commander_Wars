@@ -20,6 +20,7 @@ class MarkedFieldData : public QObject, public oxygine::ref_counter
                 QVector<qint32> ownUnitValues;
                 QVector<qint32> enemyUnitValues;
                 QVector<QString> valueNames;
+                QColor enemyColor;
         };
         explicit MarkedFieldData();
         virtual ~MarkedFieldData() = default;
@@ -49,12 +50,14 @@ class MarkedFieldData : public QObject, public oxygine::ref_counter
         }
         void addComplexZInformation(QVector<QString> valueNames,
                                     QVector<qint32> ownUnitValues,
-                                    QVector<qint32> enemyUnitValues)
+                                    QVector<qint32> enemyUnitValues,
+                                    QColor enemyColor)
         {
             ZInformation infoStruct;
             infoStruct.ownUnitValues = ownUnitValues;
             infoStruct.enemyUnitValues = enemyUnitValues;
             infoStruct.valueNames = valueNames;
+            infoStruct.enemyColor = enemyColor;
             m_ZInformation.append(infoStruct);
         }
         bool getShowZData() const;

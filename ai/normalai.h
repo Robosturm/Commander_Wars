@@ -40,7 +40,7 @@ class NormalAi : public CoreAI
         qint32 noTransporterBonus{0};
         qint32 transportCount{0};
         qint32 loadingCount{0};
-        bool flying{false};
+        bool utilityTransporter{false};
         bool isSmallTransporter{false};
     };
     struct ProductionData

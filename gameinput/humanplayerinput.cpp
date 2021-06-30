@@ -11,6 +11,7 @@
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -115,7 +116,18 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     }
     else if (isViewPlayer)
     {
-        cancelActionInput();
+        if (GameAnimationFactory::getAnimationCount() > 0)
+        {
+            GameAnimationFactory::finishAllAnimations();
+            if (GameAnimationFactory::getAnimationCount() == 0)
+            {
+                emit GameAnimationFactory::getInstance()->animationsFinished();
+            }
+        }
+        else
+        {
+            cancelActionInput();
+        }
     }
     else
     {
@@ -329,9 +341,9 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             if (m_pMarkedFieldData.get() != nullptr &&
                 (!m_pMarkedFieldData->getShowZData() ||
-                (!Settings::getTouchScreen() ||
-                 (m_lastClickPoint.x() == x &&
-                  m_lastClickPoint.y() == y))))
+                 (!Settings::getTouchScreen() ||
+                  (m_lastClickPoint.x() == x &&
+                   m_lastClickPoint.y() == y))))
             {
                 // did we select a marked field?
                 if (m_pMarkedFieldData->getAllFields())
@@ -598,6 +610,7 @@ void HumanPlayerInput::getNextStepData()
         QString stepType = m_pGameAction->getStepInputType();
         if (stepType.toUpper() == "MENU")
         {
+            Console::print("HumanPlayerInput::getNextStepData show menu", Console::eDEBUG);
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
             {
@@ -607,6 +620,7 @@ void HumanPlayerInput::getNextStepData()
         }
         else if (stepType.toUpper() == "FIELD")
         {
+            Console::print("HumanPlayerInput::getNextStepData show fields", Console::eDEBUG);
             spMarkedFieldData pData = m_pGameAction->getMarkedFieldStepData();
             QVector<QPoint>* pFields = pData->getPoints();
             for (qint32 i = 0; i < pFields->size(); i++)
@@ -872,7 +886,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
          m_pPlayer == nullptr) &&
         pMap->onMap(x, y))
     {
-
+        Console::print("HumanPlayerInput::cursorMoved" , Console::eDEBUG);
         if (m_pMarkedFieldData.get() != nullptr)
         {
             if (m_pMarkedFieldData->getShowZData())
@@ -886,7 +900,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                         m_ZInformationLabel = nullptr;
                     }
                     QPoint field(x, y);
-                    const MarkedFieldData::ZInformation* pData;
+                    const MarkedFieldData::ZInformation* pData = nullptr;
                     for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
                     {
                         if (m_pMarkedFieldData->getPoints()->at(i) == field)
@@ -896,13 +910,16 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                             break;
                         }
                     }
-                    if (pData->valueNames.size() == 0)
+                    if (pData != nullptr)
                     {
-                        createSimpleZInformation(x, y, pData);
-                    }
-                    else
-                    {
-                        createComplexZInformation(x, y, pData);
+                        if (pData->valueNames.size() == 0)
+                        {
+                            createSimpleZInformation(x, y, pData);
+                        }
+                        else
+                        {
+                            createComplexZInformation(x, y, pData);
+                        }
                     }
                 }
                 else
@@ -942,6 +959,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 
 void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
+    Console::print("HumanPlayerInput::createSimpleZInformation " + QString::number(pData->singleValue) , Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QString labelText = "";
     labelText = QString::number(pData->singleValue) + " %";
@@ -1007,7 +1025,95 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
 {
-
+    spGameMap pMap = GameMap::getInstance();
+    QString attackInfo = "Info: ";
+    for (qint32 i = 0; i < pData->valueNames.size(); ++i)
+    {
+        attackInfo += " " + pData->valueNames[i] + " ";
+        if (i <pData->ownUnitValues.size())
+        {
+            attackInfo += " own: " + QString::number(pData->ownUnitValues[i]);
+        }
+        if (i <pData->enemyUnitValues.size())
+        {
+            attackInfo += " enemy: " + QString::number(pData->enemyUnitValues[i]);
+        }
+    }
+    Console::print("HumanPlayerInput::createComplexZInformation " + attackInfo, Console::eDEBUG);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setResAnim(pAnim);
+    constexpr qint32 baseWidth = 100;
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24()).
+                               withColor(FontManager::getFontColor()).
+                               alignMiddle().
+                               alignTop();
+    pBox->setSize(baseWidth * 3, 10 + 30 * pData->valueNames.size());
+    for (qint32 i = 0; i < pData->valueNames.size(); ++i)
+    {
+        spLabel pLabel = new Label(baseWidth);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(pData->valueNames[i]);
+        pLabel->setPosition(baseWidth + 7, 30 * i + 5);
+        pBox->addChild(pLabel);
+    }
+    if (pData->ownUnitValues.size() > 0)
+    {
+        oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
+        pRect->setPosition(7, 4);
+        pRect->setSize(baseWidth, pBox->getHeight() - 10);
+        pRect->setColor(m_pPlayer->getColor());
+        pRect->setAlpha(200);
+        pBox->addChild(pRect);
+        for (qint32 i = 0; i < pData->valueNames.size(); ++i)
+        {
+            spLabel pLabel = new Label(baseWidth);
+            pLabel->setStyle(style);
+            if (pData->ownUnitValues[i] < 0)
+            {
+                pLabel->setHtmlText("-");
+            }
+            else
+            {
+                pLabel->setHtmlText(QString::number(pData->ownUnitValues[i]) + " %");
+            }
+            pLabel->setPosition(7, 30 * i + 5);
+            pBox->addChild(pLabel);
+        }
+    }
+    if (pData->enemyUnitValues.size() > 0)
+    {
+        oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
+        pRect->setSize(baseWidth, pBox->getHeight() - 10);
+        pRect->setPosition(pBox->getWidth() - 4 - pRect->getWidth(), 4);
+        pRect->setColor(pData->enemyColor);
+        pRect->setAlpha(200);
+        pBox->addChild(pRect);
+        for (qint32 i = 0; i < pData->enemyUnitValues.size(); ++i)
+        {
+            spLabel pLabel = new Label(baseWidth);
+            pLabel->setStyle(style);
+            if (pData->enemyUnitValues[i] < 0)
+            {
+                pLabel->setHtmlText("-");
+            }
+            else
+            {
+                pLabel->setHtmlText(QString::number(pData->enemyUnitValues[i]) + " %");
+            }
+            pLabel->setPosition(pRect->getX(), 30 * i + 5);
+            pBox->addChild(pLabel);
+        }
+    }
+    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
+    m_ZInformationLabel = pBox;
+    pBox->setScale(1 / pMap->getScaleX());
+    pMap->addChild(m_ZInformationLabel);
+    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() + GameMap::getImageSize() / 2 - pBox->getScaledWidth() / 2,
+                                     y * GameMap::getImageSize() - 5 - pBox->getScaledHeight());
 }
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)

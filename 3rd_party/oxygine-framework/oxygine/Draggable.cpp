@@ -51,11 +51,9 @@ namespace oxygine
 
     Draggable::Draggable(): m_bounds(0, 0, -1, -1),
         m_dragClient(0),
-        m_actor(0),
         m_startTm(0),
         m_dragEnabled(true),
         m_pressed(false),
-        m_singleDrag(false),
         m_ignoreTouchUp(false)
     {
 
@@ -68,44 +66,23 @@ namespace oxygine
 
     void Draggable::destroy()
     {
-        if (m_actor && !m_singleDrag)
+        if (m_dragClient.get() != nullptr)
         {
-            if (m_actor->__getStage())
-            {
-                m_actor->__getStage()->removeEventListeners(this);
-            }
-            m_actor->removeEventListeners(this);
-            m_actor = 0;
+            oxygine::getStage()->removeEventListeners(this);
+            m_dragClient->removeEventListeners(this);
+            m_dragClient->detach();
+            m_dragClient = nullptr;
         }
 
         m_pressed = false;
     }
 
-    void Draggable::init(Actor* actor)
+    void Draggable::init(spActor actor)
     {
         destroy();
-
-        m_singleDrag = false;
-        m_actor = actor;
         m_dragClient = actor;
-
         actor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
         actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
-    }
-
-    void Draggable::start(const PointerState* pointer, Actor* actor, const Vector2& localPosition)
-    {
-        m_singleDrag = true;
-        m_actor = actor;
-        m_dragClient = actor;
-
-        m_actor->__getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
-
-        Vector2 src = pointer->getPosition().cast<Vector2>();
-        Vector2 pos = actor->getParent()->stage2local(src);
-        actor->setPosition(pos - localPosition);
-
-        startDrag(localPosition);
     }
 
     void Draggable::startDrag(const Vector2& localCenter)
@@ -114,17 +91,17 @@ namespace oxygine
         m_pressed = true;
         m_dragPos = localCenter;
         m_clientPos = m_dragClient->getPosition();
-        m_actor->__getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
+        oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::onMove(const Vector2& position)
     {
-        if (m_pressed && m_dragEnabled)
+        if (m_pressed && m_dragEnabled &&
+            m_dragClient.get() != nullptr)
         {
-            Actor* client = m_dragClient;
-            Vector2 localPos = client->stage2local(position);
+            Vector2 localPos = m_dragClient->stage2local(position);
             Vector2 dragOffset = localPos - m_dragPos;
-            Vector2 converted = convertPosUp(client, client->getParent(), dragOffset, true);
+            Vector2 converted = convertPosUp(m_dragClient.get(), m_dragClient->getParent(), dragOffset, true);
             Vector2 np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
@@ -133,9 +110,9 @@ namespace oxygine
             }
             else
             {
-                np = client->getPosition() + converted;
+                np = m_dragClient->getPosition() + converted;
             }
-            client->setPosition(np);
+            m_dragClient->setPosition(np);
             snapClient2Bounds();
         }
     }
@@ -148,33 +125,29 @@ namespace oxygine
             case TouchEvent::TOUCH_DOWN:
             {
                 startDrag(te->localPosition);
-            }
                 break;
+            }
             case TouchEvent::TOUCH_UP:
             {
-                if (!m_ignoreTouchUp)
+                if (!m_ignoreTouchUp &&
+                    m_dragClient.get() != nullptr)
                 {
                     m_pressed = false;
-                    m_actor->__getStage()->removeEventListeners(this);
+                    oxygine::getStage()->removeEventListeners(this);
                     if (Clock::getTimeMS() - m_startTm < timeMS(2))
                     {
-                        m_actor->setPosition(m_clientPos);
+                        m_dragClient->setPosition(m_clientPos);
                     }
                 }
-            }
                 break;
+            }
 
             case TouchEvent::MOVE:
             {
                 onMove(te->localPosition);
-            }
                 break;
+            }
         }
-    }
-
-    void Draggable::setDragClient(Actor* actor)
-    {
-        m_dragClient = actor;
     }
 
     void Draggable::setDragBounds(const RectF& r)
@@ -197,16 +170,14 @@ namespace oxygine
 
     Actor* Draggable::getClient()
     {
-        Actor* actor = m_dragClient ? m_dragClient : m_actor;
-        return actor;
+        return m_dragClient.get();
     }
 
     void Draggable::snapClient2Bounds()
     {
-        Actor* client = getClient();
-        if (client != nullptr)
+        if (m_dragClient.get() != nullptr)
         {
-            Vector2 np = client->getPosition();
+            Vector2 np = m_dragClient->getPosition();
             if (m_bounds.getWidth() != -1 && m_bounds.getHeight() != -1)
             {
                 np.x = std::max(np.x, (float)m_bounds.getX());
@@ -215,7 +186,7 @@ namespace oxygine
                 np.x = std::min(np.x, (float)m_bounds.getRight());
                 np.y = std::min(np.y, (float)m_bounds.getBottom());
             }
-            client->setPosition(np);
+            m_dragClient->setPosition(np);
         }
     }
 

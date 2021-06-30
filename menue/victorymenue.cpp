@@ -81,7 +81,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     else
     {
-        heigthCount = (Settings::getHeight() - 215) / static_cast<qint32>(pAnim->getHeight());
+        heigthCount = (Settings::getHeight() - 225) / static_cast<qint32>(pAnim->getHeight());
     }
 
     m_pGraphBackground->setSize(widthCount * pAnim->getWidth(), heigthCount * pAnim->getHeight());
@@ -95,7 +95,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     else
     {
-        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 110);
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 100);
     }
 
     addChild(m_pGraphBackground);

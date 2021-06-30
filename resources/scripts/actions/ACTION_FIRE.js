@@ -219,7 +219,6 @@ var Constructor = function()
         units.remove();
     };
 
-
     this.calcBattleDamage = function(action, x, y, luckMode)
     {
         return ACTION_FIRE.calcBattleDamage2(action, action.getTargetUnit(), action.getActionTarget(),
@@ -367,13 +366,27 @@ var Constructor = function()
             if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
                 var defUnit = map.getUnit(x, y);
-                if (defUnit !== null)
+                if (defUnit !== null &&
+                    typeof map !== 'undefined' &&
+                    map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
                 {
-                    var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
-                    if (result.x >= 0.0)
+                    var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                                                                        actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                        GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
+                    if (resultNoLuckDmg.x >= 0.0)
                     {
+                        var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                                                                         actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                         GameEnums.LuckDamageMode_Max, GameEnums.LuckDamageMode_Min);
+                        var resultMinDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                                                                         actionTargetField.x, actionTargetField.y, null, x, y, 0,
+                                                                         GameEnums.LuckDamageMode_Min, GameEnums.LuckDamageMode_Max);
+
+                        var names       = [qsTr("Dmg"),             qsTr("Min"),        qsTr("Max")];
+                        var ownData     = [resultNoLuckDmg.x,       resultMinDmg.x,     resultMaxDmg.x];
+                        var enemyData   = [resultNoLuckDmg.width,   resultMaxDmg.width, resultMinDmg.width];
                         data.addPoint(Qt.point(x, y));
-                        data.addZInformation(result.x);
+                        data.addComplexZInformation(names, ownData, enemyData, defUnit.getOwner().getColor());
                     }
                 }
                 else

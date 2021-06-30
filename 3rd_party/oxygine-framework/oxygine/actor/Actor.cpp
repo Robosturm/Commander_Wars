@@ -64,7 +64,7 @@ namespace oxygine
 
         onRemovedFromStage();
         m_stage->removeEventListeners(this);
-        m_stage = 0;
+        m_stage = nullptr;
 
         m_pressedOvered = 0;
 
@@ -181,7 +181,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, __getStage());
+        up.localPosition = stage2local(te->localPosition, oxygine::getStage().get());
         dispatchEvent(&up);
     }
 
@@ -199,10 +199,10 @@ namespace oxygine
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, __getStage());
+        up.localPosition = stage2local(te->localPosition, oxygine::getStage().get());
         dispatchEvent(&up);
         updateStateOvered();
-        __getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
+        oxygine::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
         m_onGlobalTouchMoveEvent = -1;
     }
@@ -222,7 +222,7 @@ namespace oxygine
                 over.type = TouchEvent::OVER;
                 over.bubbles = false;
                 dispatchEvent(&over);
-                m_onGlobalTouchMoveEvent = __getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                m_onGlobalTouchMoveEvent = oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
         }
 
@@ -233,7 +233,7 @@ namespace oxygine
             {
                 if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
                 {
-                    m_onGlobalTouchUpEvent = __getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                    m_onGlobalTouchUpEvent = oxygine::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                 }
                 m_pressedButton[te->mouseButton] = te->index;
                 updateStatePressed();

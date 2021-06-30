@@ -1,7 +1,7 @@
 CO_GRIT.init = function(co)
 {
     co.setPowerStars(0);
-    co.setSuperpowerStars(3);
+    co.setSuperpowerStars(5);
 };
 CO_GRIT.activateSuperpower = function(co, powerMode)
 {

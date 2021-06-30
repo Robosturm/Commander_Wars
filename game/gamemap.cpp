@@ -128,6 +128,16 @@ void GameMap::loadMapData()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 }
 
+void GameMap::setIsHumanMatch(bool newIsHumanMatch)
+{
+    m_isHumanMatch = newIsHumanMatch;
+}
+
+bool GameMap::getIsHumanMatch() const
+{
+    return m_isHumanMatch;
+}
+
 void GameMap::registerMapAtInterpreter()
 {
 
@@ -1130,6 +1140,7 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << m_mapMusic;
     pStream << m_startLoopMs;
     pStream << m_endLoopMs;
+    pStream << m_isHumanMatch;
 }
 
 void GameMap::readMapHeader(QDataStream& pStream,
@@ -1281,6 +1292,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> m_mapMusic;
             pStream >> m_startLoopMs;
             pStream >> m_endLoopMs;
+        }
+        if (version > 10)
+        {
+            pStream >> m_isHumanMatch;
         }
     }
     if (showLoadingScreen)

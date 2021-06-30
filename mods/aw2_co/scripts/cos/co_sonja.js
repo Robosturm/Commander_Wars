@@ -1,6 +1,13 @@
 CO_SONJA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
 {
+    if (co.getIsCO0() === true)
+    {
+        if (isDefender)
+        {
+            return 50;
+        }
+    }
     return 0;
 };
 

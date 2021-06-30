@@ -13,12 +13,11 @@ namespace oxygine
         Draggable();
         ~Draggable();
 
-        void init(Actor* actor);
-        void start(const PointerState* pointer, Actor* actor, const Vector2& localCenter);
+        void init(spActor actor);
 
         void destroy();
 
-        Actor*          getDragClient() const {return m_dragClient;}
+        Actor*          getDragClient() const {return m_dragClient.get();}
         const RectF&    getDragBounds() const {return m_bounds;}
         const Vector2&  getClientPos() const {return m_clientPos;}
         bool            getDragEnabled() const { return m_dragEnabled; }
@@ -27,8 +26,6 @@ namespace oxygine
         void setDragEnabled(bool en) {m_dragEnabled = en;}
         /**sets bounds position for dragged actor*/
         void setDragBounds(const RectF& bounds);
-        /**sets destination drag client. Default value is Actor attached to DragHandler*/
-        void setDragClient(Actor* actor);
         void setIgnoreTouchUp(bool ignore) { m_ignoreTouchUp = ignore; }
         void snapClient2Bounds();
 
@@ -45,13 +42,11 @@ namespace oxygine
         Vector2 m_dragPos;
         Vector2 m_clientPos;
 
-        Actor* m_dragClient;
-        Actor* m_actor;
+        spActor m_dragClient;
         timeMS m_startTm;
 
         bool m_dragEnabled;
         bool m_pressed;
-        bool m_singleDrag;
         bool m_ignoreTouchUp;
     };
 }

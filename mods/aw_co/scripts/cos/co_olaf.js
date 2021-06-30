@@ -45,3 +45,27 @@ CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
+CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (typeof map !== 'undefined')
+        {
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+            {
+                var terrain = map.getTerrain(posX, posY);
+                var id = terrain.getID();
+                if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
+                    (id !== "STREET" &&
+                     id !== "BRIDGE" &&
+                    id !== "DESERT_PATH" &&
+                    id !== "TELEPORTTILE" &&
+                    terrain.getBuilding() === null))
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+};

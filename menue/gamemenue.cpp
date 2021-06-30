@@ -1681,6 +1681,21 @@ void GameMenue::startGame()
     {
         pMap->startGame();
         pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
+        if (m_pNetworkInterface.get() == nullptr)
+        {
+            qint32 count = pMap->getPlayerCount();
+            bool humanAlive = false;
+            for (qint32 i = 0; i < count; i++)
+            {
+                Player* pPlayer = pMap->getPlayer(i);
+                if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human && !pPlayer->getIsDefeated())
+                {
+                    humanAlive = true;
+                    break;
+                }
+            }
+            pMap->setIsHumanMatch(humanAlive);
+        }
         GameRules* pRules = pMap->getGameRules();
         pRules->init();
         updatePlayerinfo();

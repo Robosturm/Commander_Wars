@@ -293,7 +293,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 10;
+        return 11;
     }
     /**
      * @brief clearMap
@@ -366,6 +366,12 @@ public:
      * @param newY
      */
     void limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY);
+    /**
+     * @brief setIsHumanMatch
+     * @param newIsHumanMatch
+     */
+    void setIsHumanMatch(bool newIsHumanMatch);
+
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -384,6 +390,11 @@ signals:
     void sigShowUnitStatistics();
     void sigMovedMap();
 public slots:
+    /**
+     * @brief getIsHumanMatch
+     * @return
+     */
+    bool getIsHumanMatch() const;
     /**
      * @brief getMapMusic
      * @return
@@ -857,6 +868,7 @@ private:
     qint32 m_startLoopMs{-1};
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
+    bool m_isHumanMatch{false};
     static qint32 m_imagesize;
 };
 

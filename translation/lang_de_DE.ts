@@ -57,6 +57,8 @@
     <name>ACTION_ACTIVATE_TAGPOWER</name>
     <message>
         <location filename="../mods/awds_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
+        <location filename="../mods/aw_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
+        <location filename="../mods/aw2_co/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
@@ -288,12 +290,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="346"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="358"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="652"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="385"/>
+        <source>Dmg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="385"/>
+        <source>Min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="385"/>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="691"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -433,6 +450,8 @@
     <name>ACTION_NEXT_PLAYER</name>
     <message>
         <location filename="../mods/awds_co/scripts/actions/ACTION_NEXT_PLAYER.js" line="19"/>
+        <location filename="../mods/aw_co/scripts/actions/ACTION_NEXT_PLAYER.js" line="19"/>
+        <location filename="../mods/aw2_co/scripts/actions/ACTION_NEXT_PLAYER.js" line="19"/>
         <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
         <source>Next Player</source>
         <translation type="unfinished"></translation>
@@ -666,6 +685,8 @@
     <name>ACTION_SWAP_COS</name>
     <message>
         <location filename="../mods/awds_co/scripts/actions/ACTION_SWAP_COS.js" line="22"/>
+        <location filename="../mods/aw_co/scripts/actions/ACTION_SWAP_COS.js" line="22"/>
+        <location filename="../mods/aw2_co/scripts/actions/ACTION_SWAP_COS.js" line="22"/>
         <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="11"/>
         <source>Swap CO&apos;s</source>
         <translation type="unfinished"></translation>
@@ -3942,9 +3963,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="444"/>
-        <location filename="../game/gamemap.cpp" line="498"/>
-        <location filename="../game/gamemap.cpp" line="1206"/>
+        <location filename="../game/gamemap.cpp" line="454"/>
+        <location filename="../game/gamemap.cpp" line="508"/>
+        <location filename="../game/gamemap.cpp" line="1217"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3970,43 +3991,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="444"/>
-        <location filename="../game/gamemap.cpp" line="1206"/>
+        <location filename="../game/gamemap.cpp" line="454"/>
+        <location filename="../game/gamemap.cpp" line="1217"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="498"/>
+        <location filename="../game/gamemap.cpp" line="508"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="508"/>
+        <location filename="../game/gamemap.cpp" line="518"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1183"/>
+        <location filename="../game/gamemap.cpp" line="1194"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1233"/>
+        <location filename="../game/gamemap.cpp" line="1244"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1243"/>
+        <location filename="../game/gamemap.cpp" line="1254"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1251"/>
+        <location filename="../game/gamemap.cpp" line="1262"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1263"/>
+        <location filename="../game/gamemap.cpp" line="1274"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4039,72 +4060,72 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="616"/>
+        <location filename="../menue/gamemenue.cpp" line="619"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1402"/>
+        <location filename="../menue/gamemenue.cpp" line="1406"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1403"/>
+        <location filename="../menue/gamemenue.cpp" line="1407"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1404"/>
+        <location filename="../menue/gamemenue.cpp" line="1408"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1405"/>
+        <location filename="../menue/gamemenue.cpp" line="1409"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1406"/>
+        <location filename="../menue/gamemenue.cpp" line="1410"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1407"/>
+        <location filename="../menue/gamemenue.cpp" line="1411"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1408"/>
+        <location filename="../menue/gamemenue.cpp" line="1412"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1409"/>
+        <location filename="../menue/gamemenue.cpp" line="1413"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1431"/>
+        <location filename="../menue/gamemenue.cpp" line="1435"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1441"/>
+        <location filename="../menue/gamemenue.cpp" line="1445"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1808"/>
+        <location filename="../menue/gamemenue.cpp" line="1835"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1839"/>
+        <location filename="../menue/gamemenue.cpp" line="1866"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1865"/>
+        <location filename="../menue/gamemenue.cpp" line="1892"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5381,98 +5402,98 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="113"/>
+        <location filename="../coreengine/mainapp.cpp" line="114"/>
         <source>Start Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="122"/>
+        <location filename="../coreengine/mainapp.cpp" line="123"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="132"/>
+        <location filename="../coreengine/mainapp.cpp" line="133"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="142"/>
+        <location filename="../coreengine/mainapp.cpp" line="143"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="152"/>
+        <location filename="../coreengine/mainapp.cpp" line="153"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="162"/>
+        <location filename="../coreengine/mainapp.cpp" line="163"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="172"/>
+        <location filename="../coreengine/mainapp.cpp" line="173"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="182"/>
+        <location filename="../coreengine/mainapp.cpp" line="183"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="192"/>
+        <location filename="../coreengine/mainapp.cpp" line="193"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="202"/>
+        <location filename="../coreengine/mainapp.cpp" line="203"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="212"/>
+        <location filename="../coreengine/mainapp.cpp" line="213"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="219"/>
+        <location filename="../coreengine/mainapp.cpp" line="220"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="229"/>
+        <location filename="../coreengine/mainapp.cpp" line="230"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="239"/>
+        <location filename="../coreengine/mainapp.cpp" line="240"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="249"/>
+        <location filename="../coreengine/mainapp.cpp" line="250"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="259"/>
+        <location filename="../coreengine/mainapp.cpp" line="260"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="556"/>
+        <location filename="../coreengine/mainapp.cpp" line="554"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="562"/>
+        <location filename="../coreengine/mainapp.cpp" line="560"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="564"/>
+        <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -5715,22 +5736,22 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="77"/>
+        <location filename="../objects/mapselectionview.cpp" line="90"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="88"/>
+        <location filename="../objects/mapselectionview.cpp" line="101"/>
         <source>Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="99"/>
+        <location filename="../objects/mapselectionview.cpp" line="112"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="110"/>
+        <location filename="../objects/mapselectionview.cpp" line="123"/>
         <source>Description </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6585,301 +6606,301 @@ Host mods: </source>
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="57"/>
+        <location filename="../menue/optionmenue.cpp" line="58"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="69"/>
+        <location filename="../menue/optionmenue.cpp" line="70"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="78"/>
+        <location filename="../menue/optionmenue.cpp" line="79"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="90"/>
+        <location filename="../menue/optionmenue.cpp" line="91"/>
         <source>Gameplay &amp;amp; Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="334"/>
+        <location filename="../menue/optionmenue.cpp" line="347"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="342"/>
+        <location filename="../menue/optionmenue.cpp" line="355"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="348"/>
+        <location filename="../menue/optionmenue.cpp" line="361"/>
         <source>Selects the screen resolution for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="364"/>
+        <location filename="../menue/optionmenue.cpp" line="377"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="367"/>
+        <location filename="../menue/optionmenue.cpp" line="380"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="367"/>
+        <location filename="../menue/optionmenue.cpp" line="380"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="367"/>
+        <location filename="../menue/optionmenue.cpp" line="380"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="369"/>
+        <location filename="../menue/optionmenue.cpp" line="382"/>
         <source>Selects the screen mode for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="379"/>
+        <location filename="../menue/optionmenue.cpp" line="392"/>
         <source>Brightness: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="383"/>
+        <location filename="../menue/optionmenue.cpp" line="396"/>
         <source>Selects the brightness for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="396"/>
+        <location filename="../menue/optionmenue.cpp" line="409"/>
         <source>Gamma: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="400"/>
+        <location filename="../menue/optionmenue.cpp" line="413"/>
         <source>Selects the gamma factor for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="413"/>
+        <location filename="../menue/optionmenue.cpp" line="426"/>
         <source>Small screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="417"/>
+        <location filename="../menue/optionmenue.cpp" line="430"/>
         <source>If checked several ui elements are hidden and get shown with an additional button.
 Warning disabling this on a smaller screen may lead to unplayable game experience.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="434"/>
+        <location filename="../menue/optionmenue.cpp" line="447"/>
         <source>Touch screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="438"/>
+        <location filename="../menue/optionmenue.cpp" line="451"/>
         <source>If checked some ingame inputs require double clicks or other gestures. This is automatically detected and changing it isn&apos;t recommended.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="447"/>
+        <location filename="../menue/optionmenue.cpp" line="460"/>
         <source>Sprite Aliasing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="451"/>
+        <location filename="../menue/optionmenue.cpp" line="464"/>
         <source>If checked ingame sprites will be aliased smoother.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="474"/>
+        <location filename="../menue/optionmenue.cpp" line="487"/>
         <source>Language: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="505"/>
+        <location filename="../menue/optionmenue.cpp" line="518"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="521"/>
+        <location filename="../menue/optionmenue.cpp" line="534"/>
         <source>Auto Saving Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="525"/>
+        <location filename="../menue/optionmenue.cpp" line="538"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="537"/>
+        <location filename="../menue/optionmenue.cpp" line="550"/>
         <source>Auto Saving Cycle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="541"/>
+        <location filename="../menue/optionmenue.cpp" line="554"/>
         <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="551"/>
+        <location filename="../menue/optionmenue.cpp" line="564"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="555"/>
+        <location filename="../menue/optionmenue.cpp" line="568"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="564"/>
+        <location filename="../menue/optionmenue.cpp" line="577"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="571"/>
+        <location filename="../menue/optionmenue.cpp" line="584"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="575"/>
+        <location filename="../menue/optionmenue.cpp" line="588"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="599"/>
+        <location filename="../menue/optionmenue.cpp" line="612"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="603"/>
+        <location filename="../menue/optionmenue.cpp" line="616"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="615"/>
+        <location filename="../menue/optionmenue.cpp" line="628"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="619"/>
+        <location filename="../menue/optionmenue.cpp" line="632"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="631"/>
+        <location filename="../menue/optionmenue.cpp" line="644"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="635"/>
+        <location filename="../menue/optionmenue.cpp" line="648"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="649"/>
+        <location filename="../menue/optionmenue.cpp" line="662"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="653"/>
+        <location filename="../menue/optionmenue.cpp" line="666"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="677"/>
+        <location filename="../menue/optionmenue.cpp" line="690"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="683"/>
+        <location filename="../menue/optionmenue.cpp" line="696"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="687"/>
+        <location filename="../menue/optionmenue.cpp" line="700"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="700"/>
+        <location filename="../menue/optionmenue.cpp" line="713"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="704"/>
+        <location filename="../menue/optionmenue.cpp" line="717"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="717"/>
+        <location filename="../menue/optionmenue.cpp" line="730"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="721"/>
+        <location filename="../menue/optionmenue.cpp" line="734"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="771"/>
+        <location filename="../menue/optionmenue.cpp" line="777"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="773"/>
+        <location filename="../menue/optionmenue.cpp" line="779"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="774"/>
+        <location filename="../menue/optionmenue.cpp" line="780"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="775"/>
+        <location filename="../menue/optionmenue.cpp" line="781"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="776"/>
+        <location filename="../menue/optionmenue.cpp" line="782"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="778"/>
+        <location filename="../menue/optionmenue.cpp" line="784"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="853"/>
+        <location filename="../menue/optionmenue.cpp" line="859"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="855"/>
+        <location filename="../menue/optionmenue.cpp" line="861"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="860"/>
+        <location filename="../menue/optionmenue.cpp" line="866"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="865"/>
+        <location filename="../menue/optionmenue.cpp" line="871"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="870"/>
+        <location filename="../menue/optionmenue.cpp" line="876"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8290,32 +8311,32 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionBuildingCaptured</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="147"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="149"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="153"/>
         <source>X Location of the Building that has to be captured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="163"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="165"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="167"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="169"/>
         <source>Y Location of the Building that has to be captured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="179"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="181"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="185"/>
         <source>Player that has to capture the building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8323,22 +8344,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionBuildingDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="112"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="116"/>
         <source>X Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="128"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="132"/>
         <source>Y Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8346,22 +8367,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionBuildingsOwned</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="131"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="132"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="135"/>
         <source>Amount of Buildings that has to be owned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="144"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="147"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="151"/>
         <source>Player that has to own the given amount of buildings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8369,42 +8390,42 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionCheckVariable</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="117"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="121"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="133"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="138"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="146"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="149"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="153"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="162"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="165"/>
         <source>Campaign Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="166"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="169"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8412,28 +8433,28 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="107"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="111"/>
         <source>Periodic cycle in which this condition is executing it&apos;s events.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="119"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="120"/>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="132"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="135"/>
         <source>The first day at which the events get executed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="131"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8441,12 +8462,12 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionPlayerDefeated</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="119"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="123"/>
         <source>The player that has to be defeated in order to executed the events.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8454,67 +8475,67 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionPlayerReachedArea</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="186"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="188"/>
         <source>Target X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="190"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="192"/>
         <source>Target Area X Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="203"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="205"/>
         <source>Target Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="209"/>
         <source>Target Area Y Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="220"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="222"/>
         <source>Target Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="224"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="226"/>
         <source>Target Area width which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="237"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="239"/>
         <source>Target Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="241"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="243"/>
         <source>Target Area heigth which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="261"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="263"/>
         <source>Add Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="265"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="267"/>
         <source>Player to add to the Player reached Area list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="271"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="273"/>
         <source>Add Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="283"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="285"/>
         <source>Remove last Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="301"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="303"/>
         <source>Players: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8522,22 +8543,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="93"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="101"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="97"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="105"/>
         <source>Day at which the events get executed at the start of this turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="113"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="117"/>
         <source>Player at which the events get executed at the start of this turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8545,22 +8566,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionTerrainDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="111"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="115"/>
         <source>X Location of the Terrain that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="124"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="127"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="131"/>
         <source>Y Location of the Terrain that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8568,22 +8589,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="133"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="137"/>
         <source>X Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="146"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="149"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="153"/>
         <source>Y Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8591,62 +8612,62 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionUnitReachedArea</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="185"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="187"/>
         <source>Unit X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="189"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="191"/>
         <source>Start X of the unit that should reach the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="201"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="203"/>
         <source>Unit Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="205"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="207"/>
         <source>Start Y of the unit that should reach the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="217"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="219"/>
         <source>Target X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="221"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="223"/>
         <source>Target Area X Position which the unit needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="233"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="235"/>
         <source>Target Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="237"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="239"/>
         <source>Target Area Y Position which the unit needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="249"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="251"/>
         <source>Target Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="253"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="255"/>
         <source>Target Area width which the unit needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="265"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="267"/>
         <source>Target Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="269"/>
+        <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="271"/>
         <source>Target Area heigth which the unit needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8654,22 +8675,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionUnitsDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="131"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="132"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="135"/>
         <source>Amount of units that has to be killed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="144"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="147"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="148"/>
         <source>Player who has to kill the units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8677,12 +8698,12 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="80"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="83"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="84"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="87"/>
         <source>Team that has to win the game to executed the events.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9065,32 +9086,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventChangeCOBar</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="90"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="92"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="96"/>
         <source>Player who earns CO-Power Stars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="106"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="108"/>
         <source>CO: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="110"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="112"/>
         <source>CO who earns CO-Power Stars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="125"/>
         <source>Stars: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="129"/>
         <source>The amount of Stars that will be changed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11850,6 +11871,364 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../maps/advance_wars_2_campaign.camp/a mirror darkly.js" line="153"/>
         <source>Yay! A game! A game! Tee hee hee! </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>a_hero&apos;s_farewell</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="21"/>
+        <source>What an extraordinary display. You are too much for this old soldier. The war is over for me...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="22"/>
+        <source>Finally, the war is over.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="23"/>
+        <source>Tasha. Gage. I&apos;m leaving you in command Protect our troops and our people. But, General--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="24"/>
+        <source>We have no choice. We must surrender or face annihilation. I&apos;ll tell them I started this war and that it was my responsibility. I&apos;ll tell them that I forced our people to arms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="25"/>
+        <source>Never! You fought to protect us all! You can&apos;t take the blame for a war you didn&apos;t want!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="26"/>
+        <source>Stand down! That&apos;s an order, Flight Lieutenant. My final order...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="27"/>
+        <source>General, we can&apos;t--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="28"/>
+        <source>Do not despair. This Captain Brenner is a man of honor. I shall speak to him and stop this madness. Gage? Do you hear what I&apos;m saying?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="29"/>
+        <source>It is an order, sir. And we will carry it out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="30"/>
+        <source>I would ask that you accept defeat and bring this war to an end. There is no need for further bloodshed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="31"/>
+        <source>You are correct, sir. And I will surrender my forces to you on one condition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="32"/>
+        <source>What is that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="33"/>
+        <source>Responsibility and blame for this war rests with me alone. I ask that you show mercy to all troops who served under my banner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="34"/>
+        <source>...A fair request. I accept your terms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="35"/>
+        <source>I&apos;m grateful to you, Captain. I had heard about you, you know? Of the battalion know as Brenner&apos;s Wolves. ...And now I know that everything I heard was true. You are a man of unimpeachable honor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="36"/>
+        <source>Please, do not praise me. I wish only to end this idiotic war and return to helping survivors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="37"/>
+        <source> And, Captain? I am grateful that my last opponent was you. Your father would be proud.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="38"/>
+        <source>All right, Rube! I&apos;m ready! Now you&apos;ll see how a Lazurian faces death!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="39"/>
+        <source>Um... I&apos;m sorry, what?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="40"/>
+        <source>Do it! Pull the trigger! I know how cold blooded you Rubes are! What, do you want to shoot me in the back? Fine! I&apos;ll turn around! Now do it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="41"/>
+        <source>Um... Look, I don&apos;t know what you think I&apos;m like, but the war is over. You surrendered to Captain Brenner, and he&apos;s going to honor that. We&apos;re not going to shoot unarmed prisoners. That would be horrible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="42"/>
+        <source>Ha! Where were your noble thoughts after the meteor strike?! You started this war! You offered peace and then stabbed us in the back! You killed CIVILIANS! You and all the other Rubes! I saw it with my own eyes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="43"/>
+        <source>What? No! No, we would... Rubinelle would never attack civilian targets!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="44"/>
+        <source>Tell that to your beloved Greyfield! He spared no one. Women, children...even my own brother John.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="45"/>
+        <source>That&apos;s...that&apos;s not...possible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="46"/>
+        <source>Oh, really? It&apos;s not? You don&apos;t sound very convinced of that, kid. Listen to me. Greyfield is evil. There is nothing he won&apos;t do to seize power. I can&apos;t forgive him, and I can&apos;t forgive you for fighting at his side. That&apos;s why we fought you. To avenge the deaths of the Lazurian innocents!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="47"/>
+        <source>Captain Brenner? Admiral Greyfield has arrived.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="48"/>
+        <source>...Too late to help us...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="49"/>
+        <source>Brenner. ...I suppose you did passably well.Hear me! The New Rubinelle Army has won a decisive and historic victory! And now I, Admiral Greyfield, would speak to the leader of this Lazurian rabble!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="50"/>
+        <source>I am General Forsythe, commander of the Lazurian-- AAAAAAARRGGH!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="51"/>
+        <source>You and your wretched army are a pathetic spectacle! A disgrace!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="52"/>
+        <source>Enough! General Forsythe has surrendered honorably and brought the war to an end. Striking a prisoner is against all rules of military law!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="53"/>
+        <source>Military law? Meaningless pieces of paper! We are the victors! We have crushed our enemies likes flies! The only law of this land is the law of Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="54"/>
+        <source>...What?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="55"/>
+        <source>Now, Captain Brenner! I will usher in the rule of King Greyfield the Mighty! Waylon! Dispose of this trash.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="56"/>
+        <source>Aaargh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="57"/>
+        <source>General Forsythe!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="58"/>
+        <source>Captain Brenner.. R-remember... Your p-promise...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="59"/>
+        <source>Damn you, Greyfield! He had surrendered! He was unarmed! Why did you shoot him?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="60"/>
+        <source>He was a Lazurian, and death is all he deserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="61"/>
+        <source>You&apos;re no leader ...you&apos;re a coward! Anf if no one elese will stand up, I&apos;ll stop you--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="62"/>
+        <source>Aw, shucks. I hate to be the bad guy and all, but you&apos;re gonna have to stop right there. Don&apos;t make me shoot you, now! It&apos;s been a long day, and I&apos;m tuckered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="63"/>
+        <source>You will pay for this, Greyfield...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="64"/>
+        <source>Listen to you! Squawkin&apos; away like a crow on a wire. This is Greyfield&apos;s world now, brother! Ain&apos;t no one going to help you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="65"/>
+        <source>Take the Lazurian dogs to the internment center for execution. My great victory is almost complete!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="123"/>
+        <source>We are approaching the main Lazurian base. This will not be easy. Their forces are led by General Forsythe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="124"/>
+        <source>I learned about him the academy. He was the hero of the Lazurian Seige! But that was twenty years ago... Is he really still fighting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="125"/>
+        <source>Forsythe... What are the chances I would be facing him? And here of all places...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="126"/>
+        <source>What do you mean, Captain? ...Captain?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="127"/>
+        <source>Lin, have we heard anything from Greyfield?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="128"/>
+        <source>He&apos;s on his way here with the main force of the NRA. We have been ordered to carry out...active surveillance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="129"/>
+        <source>Um...what&apos;s active surveillance?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="130"/>
+        <source>It means we push directly into the enemy to assess their strength.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="131"/>
+        <source>That doesn&apos;t sound like a very good strategy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="132"/>
+        <source>It&apos;s a horrible strategy. At least for us. It would be better to wait for Greyfield to arrive before attacking. I can&apos;t figure out if he&apos;s a coward or he wants us to die. Perhaps it&apos;s both.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="133"/>
+        <source> I don&apos;t think we can rely on his forces anyway. Lin? I&apos;m going to need you at your best. Look sharp and think of a plan.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="148"/>
+        <source>Ah, General Forsythe. How goes your little battle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="149"/>
+        <source>You again, Caulder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="150"/>
+        <source>Are you still not tempted to try my exotic weapons? You could alter the course of this war with the touch of a button.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="151"/>
+        <source>Now see here! I told you already--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="152"/>
+        <source>Of course, if you used my weapons now, you would kill scores of your own men. But I&apos;m sure that is a sacrifice they would gladly make.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="153"/>
+        <source>Twenty years ago, I faced Rubinelle in this very spot. Though the battle was long and bloody, it was fought with honor on all sides. No prisoners were killed. No unlawful weapons were used. And when the enemy surrendered, we treated them with dignity! War is cruel and pitiless, but soldiers are still men. Your suggestion is an insult to all who lay their lives down on this soil.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="154"/>
+        <source>...You are a strange old man. But it seems clear your mind is made up. Farewell, General.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="165"/>
+        <source>General Forsythe, can you hear me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="166"/>
+        <source>I say! Am I speaking to the Rubinelle commander?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="167"/>
+        <source>You are. I want to talk to you about the battle that took place twenty years ago. Do you remember who was leading the Rubinelle forces?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="168"/>
+        <source>I never knew his name, but he was a truly great soldier. The battle raged for a hundred days, with neither side willing to yield. Our only pause came when we declared a cease-fire to bury our dead. He was a man of honor and courage. I feel I almost knew him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="169"/>
+        <source>He was my father.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="170"/>
+        <source> I see... Please know I took no pleasure in his death.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="171"/>
+        <source>You have nothing to apologize for. He understood the path he walked. After he died here, our government blamed him for the defeat. It seems only his enemies saw him for the good man he was. Thank you for your words, General Forsythe. May luck be with you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js" line="172"/>
+        <source>I wish it had not come to this. But it cannot be helped now. If you are truly your father&apos;s son, I&quot;m proud to face you in my final battle.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17165,34 +17544,34 @@ Units gain %0% firepower and defence.</source>
 <context>
     <name>co_amy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="226"/>
         <source>The Commander in Chief of Pink Frontier. A former physicist who was thrust into war emerging as a hardened naval commander.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
         <source>Quantum Theory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="234"/>
         <source>Hawke</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="238"/>
         <source>She can command hovercraft units at optimal level. Reefs pose no problem for Amy&apos;s units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="242"/>
         <source>
 Global Effect: 
 Reaf costs are always 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="243"/>
         <source>
 
 CO Zone Effect: 
@@ -17200,82 +17579,82 @@ Hovercrafts gain %0% firepower boost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
         <source>Hovercraft units are strengthened, they gain one extra movement and get cheaper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="253"/>
         <source>Fluid Dynamics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="257"/>
         <source>Her defence raises extremly. Her troops get nearly invincible when attacking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="261"/>
         <source>Photon Discharge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="265"/>
         <source>EMP? Why, it stands for Electromagnetic Pulse? You&apos;ll soon understand.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="266"/>
         <source>Quantum... you probably don&apos;t even know what it means.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="267"/>
         <source>Do you know how much energy splitting of the atom produces? Let&apos;s see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="268"/>
         <source>Allow me demonstrate how flimsy hovercrafts are not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="269"/>
         <source>For your sake, I hope your machines are magnetically shielded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="270"/>
         <source>Without science we wouldn&apos;t be doing what we are now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="274"/>
         <source>That one was for you Lara.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="275"/>
         <source>Theoretically speaking, it appears you lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="276"/>
         <source>For lack of a better word, I feel fully ionised!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="280"/>
         <source>My theory didn&apos;t work in practice!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="281"/>
         <source>Ok, I&apos;ll need to put more effort to put my theory into practice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="285"/>
         <source>Amy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18978,27 +19357,27 @@ Air units have increased firepower.</source>
 <context>
     <name>co_epoch</name>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="251"/>
         <source>The first prototype for the Robot Commanding Officer Series invented by Lash.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="255"/>
         <source>Tests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="259"/>
         <source>Upgrades</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="263"/>
         <source>Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="267"/>
         <source>
 Special Unit:
 Auto Tank
@@ -19006,14 +19385,14 @@ Auto Tank
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="268"/>
         <source>
 Global Effect: 
 No effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="269"/>
         <source>
 
 CO Zone Effect: 
@@ -19021,77 +19400,77 @@ Units have increased firepower and luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="273"/>
         <source>Firepower is increased and unit HP is hidden from opponents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="277"/>
         <source>Short Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="281"/>
         <source>Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="285"/>
         <source>Shocker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="289"/>
         <source>Error: Overcharged. Initiate safety mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="290"/>
         <source>Power surge detected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="291"/>
         <source>Overload! Release energy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="292"/>
         <source>System Over. Overload equals very yes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="293"/>
         <source>Blackout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="294"/>
         <source>Register your firmware for continued use!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="298"/>
         <source>Epoch Succesful. Upgrade irrelevant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="299"/>
         <source>Test Completed. Anaylsing battle log...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="300"/>
         <source>Victory recorded in database and filed under category &apos;insulting&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="304"/>
         <source>Noooo... No upgrade please.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="308"/>
         <source>Epoch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20401,27 +20780,27 @@ Units have 20% firepower and defense bonus.</source>
 <context>
     <name>co_jake</name>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="232"/>
         <source>A young, energetic Orange Star CO who is a top-notch tank commander.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="236"/>
         <source>Clubbin&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="240"/>
         <source>Easy listening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="244"/>
         <source>Fights well in the open. Firepower of all units increased on plains.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="248"/>
         <source>
 Special Unit:
 Tank Hunter
@@ -20429,14 +20808,14 @@ Tank Hunter
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="249"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="250"/>
         <source>
 
 CO Zone Effect: 
@@ -20444,82 +20823,82 @@ Units have increased defense and firepower and high firepower on plains.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="254"/>
         <source>Firepower is increased on plains. Firing range of indirect-combat units is increased by one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="258"/>
         <source>Beat Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="262"/>
         <source>Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="266"/>
         <source>Block Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="270"/>
         <source>Give it up, fool!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="271"/>
         <source>Prepare to get served.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="272"/>
         <source>Prepare for a subpoena of pain! Yeah, that&apos;s lawyer style!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="273"/>
         <source>This is how I roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="274"/>
         <source>Wassup now?!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="275"/>
         <source>Here...have a taste!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="279"/>
         <source>Get the plates, &apos;cause you just got served!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="280"/>
         <source>Owned!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="281"/>
         <source>You got dropped like a phat beat!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="285"/>
         <source>I got spanked out there! This combat is the real deal...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="286"/>
         <source>Dude, we so don&apos;t have time for this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="290"/>
         <source>Jake</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21532,27 +21911,27 @@ Units gain increased firepower on street.</source>
 <context>
     <name>co_lash</name>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="215"/>
         <source>The wunderkind of the Black Hole forces. She&apos;s small but fierce. Designed most of Black Hole&apos;s recent weaponry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="219"/>
         <source>Getting her way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="223"/>
         <source>Not getting it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="227"/>
         <source>Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="231"/>
         <source>
 Special Unit:
 Neo Spider Tank
@@ -21562,7 +21941,7 @@ No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="232"/>
         <source>
 
 CO Zone Effect: 
@@ -21570,82 +21949,82 @@ Units gain increased firepower per defense star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="236"/>
         <source>All units&apos; movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="240"/>
         <source>Terrain Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="244"/>
         <source>Terrain effects are doubled and used to increase firepower. Additionally, all units movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="248"/>
         <source>Prime Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="252"/>
         <source>Ooh!  You&apos;re so annoying!  I&apos;m gonna have to get rid of you now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="253"/>
         <source>You&apos;re no fun... I don&apos;t like you at all!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="254"/>
         <source>I&apos;ve had enough!  I&apos;m bored now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="255"/>
         <source>Oooo, you&apos;re driving me nuts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="256"/>
         <source>You want to match wits with me? You&apos;re so silly!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="257"/>
         <source>Tee hee! C&apos;mon! Let&apos;s play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="261"/>
         <source>Hee hee hee... Hm? Broken already?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="262"/>
         <source>Tee hee hee! You&apos;re a loser!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="263"/>
         <source>Huh? That&apos;s all you got? Wow, you&apos;re no fun!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="267"/>
         <source>Boo! Nothing&apos;s going right! That&apos;s enough. I&apos;m going home!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="268"/>
         <source>Oh, well. I guess I&apos;ll have to find someplace new to play. Toodles!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="272"/>
         <source>Lash</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21653,27 +22032,27 @@ Units gain increased firepower per defense star.</source>
 <context>
     <name>co_lin</name>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="240"/>
         <source>In battle the clearest thinker wins. A calm commander of Amber Corona.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="244"/>
         <source>Teasing Will</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="248"/>
         <source>Flying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="252"/>
         <source>Her ground units are very strong. Other units have normal power.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="256"/>
         <source>
 Special Unit:
 Intel truck
@@ -21681,14 +22060,14 @@ Intel truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="257"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="258"/>
         <source>
 
 CO Zone Effect: 
@@ -21696,67 +22075,67 @@ Ground Units gain 30% firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="262"/>
         <source>Increases vision range by 1 and allows her to view into hidden places. Also increases the power of her ground units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="266"/>
         <source>Enhanced Vision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="270"/>
         <source>Increases vision range by 2 and allows her to view into hidden places. Also increases the power of her ground units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="274"/>
         <source>Night Vision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="278"/>
         <source>Begin search and destroy operations. Bring the fight to them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="279"/>
         <source>It&apos;s not about firepower. The force with the most information wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="280"/>
         <source>I see enemies in the vicinity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="281"/>
         <source>All units move out. Discipline must be maintain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="285"/>
         <source>Now we have some breathing space...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="286"/>
         <source>I predicted this outcome...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="290"/>
         <source>We had not enough intel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="291"/>
         <source>Next time I am better prepared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lin.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_lin.js" line="295"/>
         <source>Lin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22124,27 +22503,27 @@ Unit Ranks are way more effective.</source>
 <context>
     <name>co_melanthe</name>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="262"/>
         <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="266"/>
         <source>Botany</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="270"/>
         <source>Bovines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="274"/>
         <source>Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="278"/>
         <source>
 Special Unit:
 Neo Spider Tank
@@ -22152,14 +22531,14 @@ Neo Spider Tank
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="279"/>
         <source>
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="280"/>
         <source>
 
 CO Zone Effect: 
@@ -22167,82 +22546,82 @@ Units gain an additional firepower on natural terrain and increased terrain defe
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="284"/>
         <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="288"/>
         <source>Synthetic Seedlings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="292"/>
         <source>Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="296"/>
         <source>Agent Dreadroot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="300"/>
         <source>Biological warfare is overrated; botanical warfare is supreme.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="301"/>
         <source>The power of nature is on my side!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="302"/>
         <source>&apos;Blades of grass&apos; has a new meaning now, doesn&apos;t it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="303"/>
         <source>Don&apos;t breathe in... heh heh heh.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="304"/>
         <source>Ground up the enemy into fertilizer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="305"/>
         <source>Don&apos;t have allergies? You will now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="309"/>
         <source>The seeds of success have been sown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="310"/>
         <source>The enemy was a lawn, and I its mower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="311"/>
         <source>Now that... that was fun.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="315"/>
         <source>What? Humans have defeated the almighty Nature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="316"/>
         <source>Nobody destroys the Nature. Next time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="320"/>
         <source>Melanthe</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22250,34 +22629,34 @@ Units gain an additional firepower on natural terrain and increased terrain defe
 <context>
     <name>co_mina</name>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="215"/>
         <source>A young enigmatic girl who serves Pink Frontier. Deceptively dangerous.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="219"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="223"/>
         <source>Uncertainty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="227"/>
         <source>Mina&apos;s troops have no real strength or weakness.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="231"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="232"/>
         <source>
 
 CO Zone Effect: 
@@ -22285,87 +22664,87 @@ Units gain additional firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="236"/>
         <source>Unit&apos;s defenses may unexpectedly rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="240"/>
         <source>Potent of Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="244"/>
         <source>Most expensive enemy units suffer five HP of damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="248"/>
         <source>Dark Lightning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="252"/>
         <source>Enemy is in range. Activating counter-measures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="253"/>
         <source>Please stop fighting! I don&apos;t want to do this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="254"/>
         <source>Stop! ... ... Ignore that outburst, activate the weapons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="255"/>
         <source>The target will be eliminated shortly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="256"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="257"/>
         <source>Your defeat is now certain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="258"/>
         <source>I&apos;m sorry...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="262"/>
         <source>No... What... ... ... The battle is over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="263"/>
         <source>What have I done?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="264"/>
         <source>The enemy has been routed. It is done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="268"/>
         <source>I hate losing like this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="269"/>
         <source>This result is wrong.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_mina.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_mina.js" line="273"/>
         <source>Mina</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22869,34 +23248,34 @@ Units have more luck.</source>
 <context>
     <name>co_olaf</name>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="185"/>
         <source>He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="189"/>
         <source>Warm boots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="193"/>
         <source>Rain clouds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="197"/>
         <source>Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="201"/>
         <source>
 Global Effect: 
 Winter poses no problem for Olaf or his troops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="202"/>
         <source>
 
 CO Zone Effect: 
@@ -22904,82 +23283,82 @@ Firepower is increased by during Snow.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="206"/>
         <source>Causes snow to fall for two days, causing his firepower to rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="210"/>
         <source>Blizzard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="214"/>
         <source>A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for two days.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="218"/>
         <source>Winter Fury</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="222"/>
         <source>Oho ho ho.  Do you think your pitiful troops can stand the cold?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="223"/>
         <source>Neither man nor machine can withstand the fury of nature!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="224"/>
         <source>You&apos;re going to regret challenging me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="225"/>
         <source>Let the winds of war bring snow!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="226"/>
         <source>I&apos;ll bury you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="227"/>
         <source>Your weapons are powerless before the might of nature!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="231"/>
         <source>Olaf&apos;s troops know no match!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="232"/>
         <source>I won! ...That is...we won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="233"/>
         <source>In the end, Olaf stands victorious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="237"/>
         <source>Unbelievable! We&apos;ve been forced to withdraw? What&apos;s going on?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="238"/>
         <source>Next time, I will give them a display of true might! Mark my words!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_olaf.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_olaf.js" line="242"/>
         <source>Olaf</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23338,34 +23717,34 @@ Direct Units have increased firepower.</source>
 <context>
     <name>co_rachel</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="215"/>
         <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="219"/>
         <source>Hard Work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="223"/>
         <source>Excuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="227"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="231"/>
         <source>
 Global Effect: 
 Units have increased repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="232"/>
         <source>
 
 CO Zone Effect: 
@@ -23373,82 +23752,82 @@ Units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="236"/>
         <source>Has a chance to strike with more damage than expected. Lucky!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="240"/>
         <source>Lucky Lass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="244"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="248"/>
         <source>Covering Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="252"/>
         <source>I will protect this land to the end!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="253"/>
         <source>This time, I&apos;m serious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="254"/>
         <source>You don&apos;t have a chance!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="255"/>
         <source>I&apos;m going to send you packing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="256"/>
         <source>Don&apos;t pick a fight with me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="257"/>
         <source>Finally, some real competition!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="261"/>
         <source>Another one down... Who&apos;s next?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="262"/>
         <source>I never give up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="267"/>
         <source>You beat me! Hmmm... Not bad!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="268"/>
         <source>You&apos;ve got to be kidding me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="272"/>
         <source>Rachel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23631,27 +24010,27 @@ Units have increased firepower against large regiments of units.</source>
 <context>
     <name>co_roboandy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="216"/>
         <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="220"/>
         <source>Puppet Shows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="224"/>
         <source>Housework</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="228"/>
         <source>He gets firepower for his powermeter, but his firepower may also drop drastically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="232"/>
         <source>
 Special Unit:
 AT Cycle
@@ -23659,14 +24038,14 @@ AT Cycle
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="233"/>
         <source>
 Global Effect: 
 Units gain firepower and misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="234"/>
         <source>
 
 CO Zone Effect: 
@@ -23674,82 +24053,82 @@ Units gain even more firepower and misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="238"/>
         <source>His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="242"/>
         <source>Cooldown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="246"/>
         <source>His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="250"/>
         <source>Critical Mass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="254"/>
         <source>DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="255"/>
         <source>ERROR DETECTED. PREPARE TO BE ELIMINATED!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="256"/>
         <source>YOU&apos;RE A RUDE ONE! EAT HEAVY METAL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="257"/>
         <source>KYAAA! SUCH A JERK! TIME TO DIE!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="258"/>
         <source>WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="259"/>
         <source>YOU&apos;RE SO DISAPPOINTING. WITNESS MY POWER!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="263"/>
         <source>USELESS CREATURE!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="264"/>
         <source>THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="265"/>
         <source>FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="269"/>
         <source>HOW MAY I SERVE YOU, INFERIOR BEING?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="270"/>
         <source>ALT+TAB! ALT+TAB! ALT+TAB!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="274"/>
         <source>Robo-Andy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -23757,27 +24136,27 @@ Units gain even more firepower and misfortune per star.</source>
 <context>
     <name>co_robosturm</name>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="246"/>
         <source>Black Hole was in need of new strong CO&apos;s so Lash invented a second Sturm. But he doesn&apos;t accept any orders and formed his own Army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="250"/>
         <source>Robots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="254"/>
         <source>Livings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="258"/>
         <source>His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="262"/>
         <source>
 Special Unit:
 Tank Hunter
@@ -23785,14 +24164,14 @@ Tank Hunter
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="263"/>
         <source>
 Global Effect: 
 Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="264"/>
         <source>
 
 CO Zone Effect: 
@@ -23800,82 +24179,82 @@ Units gain defense and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="268"/>
         <source>Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="272"/>
         <source>Machinized Storm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="276"/>
         <source>Enemy loses half of their ammo, take 2 HP damage ,his troops can move 2 points more and their defense rises extremly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="280"/>
         <source>Machinized Destruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="284"/>
         <source>System Runtime. Error! No more enemies found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="285"/>
         <source>...Sturm is coming...you have no chance...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="286"/>
         <source>Order analyzed! Destroy enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="287"/>
         <source>Nobody can kill a Robot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="288"/>
         <source>This is a war of a new time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="289"/>
         <source>Humans beware the power of machines coming to your country.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="293"/>
         <source>..........</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="294"/>
         <source>...Enemy destroyed! Country conquered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="295"/>
         <source>Robots are stronger than human beings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="299"/>
         <source>No Program found for this Situation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="300"/>
         <source>Inaccurate attack! This situation is impossible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="304"/>
         <source>Robo-Sturm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24382,27 +24761,27 @@ Units gain additional firepower and defense.</source>
 <context>
     <name>co_sensei</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="215"/>
         <source>A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="219"/>
         <source>Lazy, rainy days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="223"/>
         <source>Busy malls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="227"/>
         <source>Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="231"/>
         <source>
 Special Unit:
 Commando
@@ -24410,14 +24789,14 @@ Commando
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="232"/>
         <source>
 Global Effect: 
 Copters have increased firepower and Naval Units are weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="233"/>
         <source>
 
 CO Zone Effect: 
@@ -24425,82 +24804,82 @@ Copters have way more firepower and infantries higher firepower as well.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="237"/>
         <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="241"/>
         <source>Copter Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="245"/>
         <source>Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="249"/>
         <source>Airborne Assault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="253"/>
         <source>Nothing good ever comes from war... when this is done, let&apos;s go home.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="254"/>
         <source>I&apos;ve still got what it takes to defeat you youngsters!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="255"/>
         <source>Paratroopers! Prepare to jump!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="256"/>
         <source>Ha ha hah!  This will be a crushing victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="257"/>
         <source>See what experience can do for you!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="258"/>
         <source>Ha ha! I didn&apos;t get old for nothing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="262"/>
         <source>Hm hm hmmm... I&apos;ve still got what it takes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="263"/>
         <source>Ah, time for a nap.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="264"/>
         <source>Now we can take things nice and slow again...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="268"/>
         <source>Hah ha! We were defeated fair and square. Score one for the young &apos;uns.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="269"/>
         <source>Eh? The battle&apos;s over? When did that happen?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="273"/>
         <source>Sensei</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24629,27 +25008,27 @@ Direct Units gain additional firepower for each indirect unit that can attack th
 <context>
     <name>co_sonja</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="176"/>
         <source>Kanbei&apos;s cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="180"/>
         <source>Computers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="184"/>
         <source>Bugs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="188"/>
         <source>Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="192"/>
         <source>
 Special Unit:
 Intel truck
@@ -24657,14 +25036,14 @@ Intel truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="193"/>
         <source>
 Global Effect: 
 Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="194"/>
         <source>
 
 CO Zone Effect: 
@@ -24672,82 +25051,82 @@ Units gain firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="198"/>
         <source>Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="202"/>
         <source>Enhanced Vision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="206"/>
         <source>Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="210"/>
         <source>Counter Break</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="214"/>
         <source>I see right through your plans!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="215"/>
         <source>I&apos;ll show you there&apos;s more to combat than power alone!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="216"/>
         <source>Number of enemy troops...location... Got it! This is so easy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="217"/>
         <source>Get me some fresh intel, stat!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="218"/>
         <source>You can&apos;t hide from me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="219"/>
         <source>Just like I planned...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="223"/>
         <source>My strategy was merely better... That is all.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="224"/>
         <source>I must review my strategy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="225"/>
         <source>Perfect planning wins the day!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="229"/>
         <source>... I&apos;m sorry, Father... I&apos;ve broken my promise...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="230"/>
         <source>I have learned much from this...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sonja.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_sonja.js" line="234"/>
         <source>Sonja</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25345,27 +25724,27 @@ Units have increased firepower and defense.</source>
 <context>
     <name>co_von_bolt</name>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="173"/>
         <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="177"/>
         <source>Long life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="181"/>
         <source>Young &apos;uns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="185"/>
         <source>All units have superior firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="189"/>
         <source>
 Special Unit:
 Crystal Tanks
@@ -25375,7 +25754,7 @@ No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="190"/>
         <source>
 
 CO Zone Effect: 
@@ -25383,82 +25762,82 @@ Units have increased firepower and increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="194"/>
         <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="198"/>
         <source>Shockwave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="202"/>
         <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="206"/>
         <source>Deus Ex Machina</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="210"/>
         <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="211"/>
         <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
         <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
         <source>Hheh heh heh. The darkness rises...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
         <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
         <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
         <source>Predator...prey...hhh... I hunt them all...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
         <source>Hehh hhh hhh... Pathetic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
         <source>Even death...hhh...fears me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
         <source>What? Why are you Youth so strong?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
         <source>Nooo...I want to live forever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="230"/>
         <source>Von Bolt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25466,27 +25845,27 @@ Units have increased firepower and increased defense.</source>
 <context>
     <name>co_walter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="306"/>
         <source>Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="310"/>
         <source>Tongue Twisters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="316"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="314"/>
         <source>Colloquialisms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="318"/>
         <source>Using Teal Isles intelligence division, Walter can view units&apos; HP more accurately than other COs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="322"/>
         <source>
 Special Unit:
 Intel truck
@@ -25494,14 +25873,14 @@ Intel truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="323"/>
         <source>
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="326"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="324"/>
         <source>
 
 CO Zone Effect: 
@@ -25509,82 +25888,82 @@ Units gain additional firepower and defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="330"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="328"/>
         <source>Enemies take additional damage when they attack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="332"/>
         <source>Memento</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="336"/>
         <source>Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="342"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="340"/>
         <source>Magnum Opus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="346"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="344"/>
         <source>Greater opponents have burnt out against me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="347"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="345"/>
         <source>For the Isles sake, I will endure you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="348"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="346"/>
         <source>I am the most stalwart foe that you will ever face!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="347"/>
         <source>Morale is the key to victory, but you seem rather....ill equipped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="348"/>
         <source>A battle does not determine who is right. It determines who is left. Me, of course.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="351"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="349"/>
         <source>The spirit of Teal Isles will carry us for eternity!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="355"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="353"/>
         <source>Another battle has been won. Teal Isles is safe for now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="354"/>
         <source>You have been outwitted, outmatched and outmaneuvered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="357"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="355"/>
         <source>Hah, yet again I have stood the test of time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="361"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="359"/>
         <source>That wasn&apos;t the best idea to take fight.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="360"/>
         <source>I got detected too early..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="364"/>
         <source>Walter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25925,27 +26304,27 @@ Units have increased firepower.</source>
 <context>
     <name>co_yukio</name>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="256"/>
         <source>Astronomic gains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="267"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="260"/>
         <source>Any losses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="264"/>
         <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="268"/>
         <source>
 Special Unit:
 Logistic Truck
@@ -25953,14 +26332,14 @@ Logistic Truck
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="269"/>
         <source>
 Global Effect: 
 None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="270"/>
         <source>
 
 CO Zone Effect: 
@@ -25968,82 +26347,82 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
         <source>A small army spawns and fights for Yukio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="280"/>
         <source>Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="284"/>
         <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
         <source>Ground-Air-Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="299"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="292"/>
         <source>I show you, what true power means.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="293"/>
         <source>I&apos;m the evil that destroys you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="294"/>
         <source>Your weapons are the rubbish of my factories.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="295"/>
         <source>The victory is mine!  Alea iacta est!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="296"/>
         <source>My troops are behind you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="297"/>
         <source>I&apos;ll become the ruler of the world.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="301"/>
         <source>Investment...Profits...great. Continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="302"/>
         <source>War is just another tool to make profit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="303"/>
         <source>Give me all your money and your lifes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="307"/>
         <source>Even with this loss I made profit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="308"/>
         <source>I lost but I got your money to build a new army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="312"/>
         <source>Yukio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26051,34 +26430,34 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
 <context>
     <name>co_zandra</name>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="206"/>
         <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="210"/>
         <source>Coconuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="214"/>
         <source>Seafood</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="218"/>
         <source>Zandra&apos;s units are unaffected by sandstorms and are fighting better during them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="222"/>
         <source>
 Global Effect: 
 Units are unaffected by sandstorms and have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="223"/>
         <source>
 
 CO Zone Effect: 
@@ -26086,82 +26465,82 @@ Units have increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="227"/>
         <source>Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="231"/>
         <source>Sand Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="235"/>
         <source>Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="239"/>
         <source>Desert Gale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="243"/>
         <source>It&apos;s high time that you felt the wrath of the desert winds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="244"/>
         <source>I feel the power coming in, on the far winds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="245"/>
         <source>You&apos;ll regret challenging me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="246"/>
         <source>Come, father of the four winds!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="247"/>
         <source>Your eyes will fill with sand, as you scan this wasted land...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="248"/>
         <source>Troops, attack now, before the winds halt their blessing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="252"/>
         <source>Everyone, hurry back to the village. Our job here is done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="253"/>
         <source>These sacred lands will be protected for as long as I stand.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="254"/>
         <source>Thank you, Uncle, for giving me the strength I needed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="258"/>
         <source>I only lost because of the Snow around here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="259"/>
         <source>What? I can&apos;t lose. We have a Global Heating.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="263"/>
         <source>Zandra</source>
         <translation type="unfinished"></translation>
     </message>
@@ -29170,6 +29549,377 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>greyfield_strikes</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="21"/>
+        <source>Clearly the enemy had a method to their madness. We have no choise we must retreat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="22"/>
+        <source>Tell Greyfield what happened here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="23"/>
+        <source>Admiral Greyfield! Brenner&apos;s Wolves have won the day! Er...I mean... It was probably due to your leadership, s-sir!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="24"/>
+        <source>...I see.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="25"/>
+        <source>A-Admiral? You&apos;re not...upset at our victory, are you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="26"/>
+        <source>No! Of course not! How dare you! I am merely displeased Brenner allowed the Lazurians to escape. Until they are wiped from the face of the planet, we will know no peace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="27"/>
+        <source>Oh! Oh, golly, it&apos;s you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="28"/>
+        <source>I&apos;m... I&apos;m sorry. Do you know me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="29"/>
+        <source>Oh, I doubt you&apos;d be remembering me. I used to run the bakery in this city, don&apos;cha know!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="30"/>
+        <source>Oh... I&apos;m...I&apos;m sorry. I can&apos;t really remember anything.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="31"/>
+        <source>Wait! You know Isabella? She&apos;s lost her memory. Anything you can tell us about her would be a big help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="32"/>
+        <source>Well, that&apos;s just a shame, it is! But I&apos;m afraid I won&apos;t be of much use t&apos;ya. I only saw this young lady and her family a few times. Never bought m&apos;pies, don&apos;cha know!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="33"/>
+        <source>She has a family?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="34"/>
+        <source>Oh yah! Had herself a couple&apos;a sisters and a brother, if I&apos;m rememberin&apos; rightly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="35"/>
+        <source>...I had a family?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="36"/>
+        <source>Do you know their names? Or where they are now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="37"/>
+        <source>Oh no! I don&apos;t think anyone here will be tellin&apos; ya any of that. Not quite sure the best way to tell ya this, but... Ya had a bit of a creepy family, if I remember rightly. Folks were scared of &apos;em.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="38"/>
+        <source>Why?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="39"/>
+        <source>Oh, I don&apos;t wanna be talkin&apos; poorly about someone&apos;s family! Wouldn&apos;t be right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="40"/>
+        <source>No! Please tell me! I want to know!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="41"/>
+        <source>Yah well, we had all kinds of strange rumors flying about! Folks said your family wasn&apos;t human! Said they were monsters and the like! ...Don&apos;cha know.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="42"/>
+        <source>That&apos;s...horrible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="43"/>
+        <source>Oh golly, now I gone and done it! But yah, there were a buncha rumors! Folks said that a buncha tough guys caused ya trouble and then died all mysterious-like! And some folks said that if ya got near weapons, they&apos;d explode and such!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="44"/>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="170"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="45"/>
+        <source>But they&apos;re just rumors, yah? Don&apos;cha be payin&apos; these things no mind.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="46"/>
+        <source>Will...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="47"/>
+        <source>Listen, Isabella, I&apos;m sure that--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="48"/>
+        <source>Who am I? What am I? What if I did terrible things and don&apos;t remember it...?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="99"/>
+        <source>WELL! Don&apos;t just stand there, fool! Give me your report!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="100"/>
+        <source>Th-thanks to the brave effort of all our units, we crushed the hated Lazurians. Brenner&apos;s Wolves fought particularly well. It was only due to their--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="101"/>
+        <source>SILENCE! I did not summon you before me to hear you sing that damn fool&apos;s praises! Where is the 12th Battalion now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="102"/>
+        <source>On...on the coast, Admiral Greyfield. L-l-looking for the enemy...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="103"/>
+        <source>Send units to assist them. Make it clear that Admiral Greyfield is in command! Brenner will obey my orders to the letter during the next battle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="104"/>
+        <source>B-but, Admiral...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="105"/>
+        <source>Do you question me, Davis? Armies need discipline and leadership, and I provide these things! Rogue elements like these...Wolves of Brenner&apos;s...must be brought to heel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="106"/>
+        <source>Y-yes, sir! Absolutely right, Admiral. I&apos;ll... I&apos;ll get right on it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="107"/>
+        <source>Captain, we have completed the capture of the port. We can now produce naval units!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="108"/>
+        <source>Well done, Will. But the enemy possesses ports also. This may be a long battle. No it won&apos;t.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="109"/>
+        <source>Greyfield has sent a token amount of funds and military support. But I think it&apos;s mostly for show. I doubt he really supports the 12th Battalion. We&apos;d better make plans to secure our own source of funds and materials.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="110"/>
+        <source>Got it. Thanks, Lin. All units! Spread out and capture as many neutral bases as you can!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="126"/>
+        <source>Advance, my New Rubinelle Army! Failure will not be tolerated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="133"/>
+        <source>Report on the units in Brenner&apos;s group. Where does their strength lie? </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="133"/>
+        <source>? Understood. Ensure you relay my orders tomorrow!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="139"/>
+        <source>Captain Brenner! We&apos;re receiving orders from Admiral Greyfield! He says they must be obeyed under penalty of death, sir!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="140"/>
+        <source>What?! This is our battle! What does that idiot think he&apos;s doing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="141"/>
+        <source>Sorry, sir! But I&apos;m just the messenger! Please do what he says, sir! I have a wife and kids!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="142"/>
+        <source>Wait...the penalty of death applies to you? An enlisted man?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="143"/>
+        <source>I think it applies to all of us, Will. There&apos;s no choice. The admiral clearly doesn&apos;t like me very much.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="144"/>
+        <source>This is my fault, Captain. I was disrespectful to the admiral...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="145"/>
+        <source>Don&apos;t blame yourself, Will. Things can&apos;t be changed now. I could risk my own neck, but I won&apos;t endanger the lives of my men. We&apos;ll follow his orders. ...No matter how crazy they are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="146"/>
+        <source>Yes, sir!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="147"/>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="205"/>
+        <source>All </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="147"/>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="205"/>
+        <source>, halt! Don&apos;t move an inch without my leave!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="160"/>
+        <source>The enemy units are behaving oddly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="161"/>
+        <source>Great! Maybe there&apos;s a problem in the ranks!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="162"/>
+        <source>I wouldn&apos;t want to speculate. Let&apos;s just finish the job at hand.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="169"/>
+        <source>Attention, Lazurian commanders! Can anyone hear me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="171"/>
+        <source>I just hear static... Is this dumb thing broken?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="172"/>
+        <source>...What do you want?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="173"/>
+        <source>Hey! You heard me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="174"/>
+        <source>I&apos;m switching the intercom off now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="175"/>
+        <source>Wait! Please, hold on! I have to talk to you! I need to know why the Lazurians started this war again!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="176"/>
+        <source>I obey orders. I don&apos;t engage in policy discussions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="177"/>
+        <source>Orders? But Lazuria is destroyed! Both of our nations are in ruins, and yet we&apos;re still at war! Orders don&apos;t matter We don&apos;t have a reason to fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="178"/>
+        <source>... ... ... ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="179"/>
+        <source>Surely you thought about this! You must know this war is pointless!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="180"/>
+        <source>That&apos;s not my concern. Soldiers follow orders, not their hearts. If soldiers acted as they pleased, armies would collapse. We&apos;re tools of the government. They tell us what to do, and we--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="181"/>
+        <source>But there IS no government now! I mean, not a real one!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="182"/>
+        <source>Not my problem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="201"/>
+        <source>Captain? I have more orders from Admiral Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="202"/>
+        <source>...Not again! This idiot is risking all of our lives!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="203"/>
+        <source>Captain, we can do it anyway! Brenner&apos;s Wolves won&apos;t be beaten by the Lazurians OR Greyfield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js" line="204"/>
+        <source>Captain, he&apos;s right! We can win this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gunfighter</name>
     <message>
         <location filename="../maps/advance_wars_1_campaign.camp/gunfighter.js" line="17"/>
@@ -29857,6 +30607,584 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>hope_rising</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="21"/>
+        <source>AW, man! No! No, don&apos;t do that! Aaaawwww...crud. We gotta retreat! We need reinforcements!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="22"/>
+        <source>Bah! Unacceptable! You weak-minded, cowardly, pathetic simpletons! I took care of that traitor Brenner and yet you cannot finish the job?! I&apos;ll see you hanged for this! All of you! No one fails Admiral Greyfield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="23"/>
+        <source>Shuot up, Greyfield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="24"/>
+        <source>WHAT?! How dare you address me like that!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="25"/>
+        <source>You&apos;ll never defeat us, you bloated gasbag! You hear me? Never! And you&apos;re going to pay for what you did to Captain Brenner!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="26"/>
+        <source>What an insolent whelp you are! Davis! Gather all of my forces! I want these worms crushed NOW!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="27"/>
+        <source>Hey, Lin. Um...I mean, sir.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="28"/>
+        <source>At ease, Will. I&apos;m glad to see that you&apos;re looking better.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="29"/>
+        <source>Yeah. I know I&apos;ve been pretty pathetic lately, but I&apos;m pulling it together. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="30"/>
+        <source>Don&apos;t be too hard on yourself. This is a rough patch for everyone. It has only been a few days since Captain Brenner... Well, since...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="31"/>
+        <source>It&apos;s OK, Lin. Really.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="32"/>
+        <source>I know you took his death harder than most. To be honest, I wondered if you would be able to fight for us again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="33"/>
+        <source>Yeah, I was in a bad way. But I thought about what the captain would say if he was here, and... Well, that turned it around. I guess I kind of idolized him, huh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="34"/>
+        <source>You could do much worse in that department.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="35"/>
+        <source>He would have told me to stop being such a big baby and get to work! Of course, he would have been nice about it... Anyway, that&apos;s why I decided to fight. I&apos;ll make time to mourn the captain later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="36"/>
+        <source>I may have misjudged you, Will. You&apos;re stronger than I thought.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="37"/>
+        <source>Not as strong as you! I saw how you pulled us together after we lost Captain Brenner. I know people say you&apos;re kind of coldhearted... Well, never mind. Whatever they say, you&apos;re a great leader.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="38"/>
+        <source>Actually, Will, that brings me to my point. I have something to ask of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="39"/>
+        <source>Yeah, OK. What is it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="40"/>
+        <source>Let&apos;s go inside. I don&apos;t want any little birds overhearing this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="41"/>
+        <source>YOU WHAT?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="42"/>
+        <source>...You&apos;re not filling me with confidence here, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="43"/>
+        <source>B-but, Lin! You can&apos;t be serious! I can&apos;t lead an army!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="44"/>
+        <source>Brenner&apos;s Wolves has lost its commander. We need to find a successor. After considering various options, I feel that you are the best choice for the job.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="45"/>
+        <source>That&apos;s crazy, Lin! YOU should be the leader, not me! I&apos;m an idiot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="46"/>
+        <source>Will, are you aware of how many people are currently in this camp?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="47"/>
+        <source>You mean exactly? Um... Well, let me think...OK, there are 259 men in the Wolves and 232 civilians in training. Let&apos;s see... Oh, we&apos;ve also got 709 noncombatants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="48"/>
+        <source>There&apos;s also 613 Lazurian troops waiting to be integrated. Add them up, and we&apos;re actually larger than a standard battalion. But putting all these people together is going to require a delicate touch. And a young man like you is more likely to be accepted by the Lazurians.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="49"/>
+        <source>Yeah, but...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="50"/>
+        <source>And there are civilians to think of. They like and trust you.  ...They don&apos;t like me. I left some of them behind. They think I did it out of spite or malice. They think I&apos;d leave them all if it was in the best interest of the Wolves.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="51"/>
+        <source>But that&apos;s wrong! Listen, I&apos;ll talk to them, I&apos;ll tell them--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="52"/>
+        <source>No, it&apos;s not, Will. It&apos;s not wrong. If I had to, I&apos;d leave every single one of them behind. Brenner didn&apos;t abandon anyone, but he wasn&apos;t a typical soldier.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="53"/>
+        <source>Lin, I can&apos;t believe...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="54"/>
+        <source>Do you think me harsh, Will? If so, you should become our leader.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="55"/>
+        <source>No one will understand why I&apos;m in command instead of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="56"/>
+        <source>I&apos;ll talk to the Rubinelle soldiers. You can talk to the Lazurians. A few civilians may gripe, but they&apos;ll follow you in the end.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="57"/>
+        <source>...I don&apos;t know, Lin. This seems like a bad idea. I&apos;m just a kid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="58"/>
+        <source>That&apos;s right. You&apos;re a kid. You&apos;re a wholesome, likeable kid, and that&apos;s what we need. We need someone that all of us can rally around. That&apos;s all a good leader really is.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="59"/>
+        <source>Sooooo... I&apos;m in charge, but you&apos;re really in charge. Is that it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="60"/>
+        <source>Precisely. I know you lack military knowledge and all but the most basic tactical awareness. Right now, I&apos;d only trust you with low-level military tasks. Like cleaning.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="61"/>
+        <source>Ouch! Geez, Lin, don&apos;t sugarcoat it for me or anything.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="62"/>
+        <source>...What? Too harsh? OK, hold on a second. OK, imagine that I&apos;m a big car, and you&apos;re a little car. Now, when the big car--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="63"/>
+        <source>Stop. Please stop right now. I get it. Please don&apos;t talk to me like a little kid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="64"/>
+        <source>We have to tread carefully. Between the civilians and the Lazurians and the lack of food... Our force should be on the verge of collapsing from the inside out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="65"/>
+        <source>Really?! You think they might...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="66"/>
+        <source>Mutiny? Yes, I think they might. That&apos;s why you need to hold them together. At least until we can deal with Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="67"/>
+        <source>If it helps to keep our forces together, I&apos;ll do whatever I can.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="68"/>
+        <source>Good. Thank you, Commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="69"/>
+        <source>Commander...? Huh. It&apos;s going to take a bit for me to get used to that, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="70"/>
+        <source>You&apos;ll get used to it, Commander. You have to. Commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="71"/>
+        <source>OK, OK! I&apos;ll get used to it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="72"/>
+        <source>I&apos;m glad, Commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="137"/>
+        <source>What&apos;s our status?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="138"/>
+        <source>Sir, following our escape, some troops have deserted. Also, some of the civilians are struggling to keep up with us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="139"/>
+        <source>They&apos;ll have to be abandoned. Our priority is to keep moving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="140"/>
+        <source>Sir?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="141"/>
+        <source>Now see here! I know I&apos;m not a tactician like you, but we can&apos;t simply--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="142"/>
+        <source>Yes. We can. We can and we will. A commander makes difficult decisions, Doctor. That&apos;s part of the job. If you don&apos;t like it, you&apos;re free to leave.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="143"/>
+        <source>...So it&apos;s like that, is it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="144"/>
+        <source>We have Lazurian troops, but no time to assimilate them. We have civilians and wounded in our ranks, and no way to keep them safe. We&apos;re in a bad spot, Doctor. This is far from an optimal fighting force. Right now we need time and space to hunker down and reorganize.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="145"/>
+        <source>Lin, I know you&apos;re in a difficult position, but I just can&apos;t stomach abandoning people. Why, if Captain Brenner were here, I think he would find a way to...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="146"/>
+        <source>...Go on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="147"/>
+        <source>I&apos;m sorry. That was toughtless of me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="148"/>
+        <source>We&apos;re all tired, Doctor. Manners are the least of my concerns. Talk to me. How are the civilians coping?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="149"/>
+        <source>They&apos;re scared and restless. All of this running has worn them down to the last nerve. I understand their fear. That Greyfield fellow is a complete madman.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="150"/>
+        <source>Yet you don&apos;t seem frightened, Doctor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="151"/>
+        <source>Me? I didn&apos;t realize I was that good of an actor! Oh ho ho ho! No, I&apos;m afraid I&apos;m as scared as I&apos;ve ever been. But it would do no good to panic. As the civilians&apos; representative, I must maintain an air of calm at all times. I think they just want to know what is going on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="152"/>
+        <source>...All right. I&apos;ll tell them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="153"/>
+        <source>With Greyfield&apos;s men on our heels, the slightest shock could send them into a full panic. Yes, but... Please, Lin. I know that soft speech is not your forte, but do try to tread lightly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="154"/>
+        <source>With Greyfield&apos;s men on our heels, the slightest shock could send them into a full panic. Until we get through this crisis, things will be difficult for us all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="155"/>
+        <source>Please, good people! We must listen to Lieutenant Lin and pull together. This is our darkest hour since the meteors, but we can get through it if we work as one!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="156"/>
+        <source>Your key to survival is following orders. Do what you&apos;re told when you&apos;re told. Your main task is providing support to the combat units. Is that clear?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="157"/>
+        <source>We ain&apos;t soldiers! We&apos;re victims! Why we gotta follow your orders?! Bah! This isn&apos;t our war! Why ya have to involve us in your fight?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="158"/>
+        <source>I blame this on Captain Brenner! His ego got in the way of his judgement, and now we&apos;re on the run! That Greyfield is a lunatic! He&apos;ll track us down and kill us all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="159"/>
+        <source>Let me ask you a question. Do you value your lives? </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="160"/>
+        <source>What? What kind of question--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="161"/>
+        <source>This is not a camp of slaves. This is a camp of free men who can live or die as they please. Anyone who doesn&apos;t wish to obey my orders can take their chances with Greyfield. But know this... I am not Captain Brenner. If you can&apos;t cut it out there, you&apos;re on your own. I won&apos;t come back for anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="162"/>
+        <source>Lin, please! Must you be so harsh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="163"/>
+        <source>That&apos;s reality, Doctor. I won&apos;t temper it for them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="164"/>
+        <source>Well, yes, but pehraps you could be less confrontational? You know, throw in some jokes, like I do?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="165"/>
+        <source>...Perhaps you&apos;re right. How would you suggest I go about being more... gentle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="166"/>
+        <source>I think it&apos;s a bit late for that!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="167"/>
+        <source>I-I...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="168"/>
+        <source>What is it, Isabella?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="169"/>
+        <source>Listen, everyone... Lin is right. We have to work together. We have to help each other.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="170"/>
+        <source>Oh ho! Now that&apos;s the attitude we need! Come on, everyone! Let&apos;s pull together!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="171"/>
+        <source>I think we just prevented a rebellion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="172"/>
+        <source>The danger&apos;s clear to us all, Doctor. It&apos;s only a matter of time before this all blows up. Will?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="173"/>
+        <source>...Mmm?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="174"/>
+        <source>Will! Snap out of it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="175"/>
+        <source>B-but...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="176"/>
+        <source>I know how you feel about Brenner, but we&apos;ve no time to grieve. The enemy is closing in. We need a plan to evade them for a little while longer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="177"/>
+        <source>Y-you&apos;re right. I&apos;m sorry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="178"/>
+        <source>Sir! We have an emergency!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="179"/>
+        <source>Oh, what now?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="180"/>
+        <source>Some of our rear-guard units have been captured by the enemy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="181"/>
+        <source>...Damn. I hoped we had more time. We can&apos;t worry about them now. We have to break camp and get out of here. I want--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="182"/>
+        <source>Too late, sir. We&apos;re under attack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="183"/>
+        <source>This is bad. The vanguard&apos;s srrounded. All right. First, we need to pull our infantry back to a safe position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="234"/>
+        <source>You treacherous swine are about to get your punishment. Prepare to meet your precious Captain Brenner...in hell!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="239"/>
+        <source>We can&apos;t give up. We can&apos;t! Captain... Why aren&apos;t you here? I can&apos;t do this without you..,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="240"/>
+        <source>Will?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="241"/>
+        <source>Isabella: Oh, Isabella. Hi.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="242"/>
+        <source>Will, I&apos;m worried about you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="243"/>
+        <source>I&apos;m sorry, Isabella. I didn&apos;t mean to worry you. I&apos;ll pull myself together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="244"/>
+        <source>It&apos;s OK...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="245"/>
+        <source>No, it&apos;s not. Dr. Morris is right. I can&apos;t afford to act like this. It&apos;s just that... When Captain Brenner saved my life, everything seemed so clear.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="246"/>
+        <source>What do you mean?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="247"/>
+        <source>I owed my life to him. I knew my role was to help him however I could. But now he&apos;s dead, and I&apos;m just...lost. I don&apos;t know what to do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="248"/>
+        <source>Will, I... I don&apos;t know what you should do either. All I know is that... I&apos;m sad. I&apos;m sad because you are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="249"/>
+        <source>Isabella, look--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="250"/>
+        <source>I don&apos;t know why I feel this way! I don&apos;t know anything, and I HATE IT! But when you&apos;re happy, I am too. And I don&apos;t want to be sad anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="251"/>
+        <source>...Thanks, Isabella. You&apos;ve made everything clear. I have to go.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="252"/>
+        <source>Where?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/hope_rising.js" line="253"/>
+        <source>Captain Brenner saved my life. Now I must use it to save others. Lin! Everyone! Hold on! I&apos;m coming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>hot pursuit</name>
     <message>
         <location filename="../maps/advance_wars_2_campaign.camp/hot pursuit.js" line="12"/>
@@ -30185,6 +31513,509 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/hq.js" line="89"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>icy_retreat</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="21"/>
+        <source>We&apos;re clear! Now move! Get out across that ice!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="22"/>
+        <source>Move it! We can&apos;t let Brenner&apos;s sacrifice go to waste!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="23"/>
+        <source>Will! Take command of the left flank! We&apos;re getting out of here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="24"/>
+        <source>But, Captain Brenner--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="25"/>
+        <source>Brenner made his choice. Now move!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="26"/>
+        <source>Keep moving! I&apos;ll buy you time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="27"/>
+        <source>I think we list them. But they&apos;re going to be looking for us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="28"/>
+        <source>Probably.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="29"/>
+        <source>Any word from Captain Brenner?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="30"/>
+        <source>No. Will is trying to establish radio contact, but so far, nothing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="31"/>
+        <source>Captain! Captain Come in! Can you hear me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="32"/>
+        <source>... ... ... ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="33"/>
+        <source>Captain Brenner, this is Will! Please respond! Please!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="34"/>
+        <source>... ... ... ... ...Will, come... Capt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="35"/>
+        <source>Lin! I got him! I got him! Captain, where are you?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="36"/>
+        <source>...126...272... Derelict building in... ...south of ...ice field...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="37"/>
+        <source>...I&apos;m surrounded by...enemies... ...They shot me...couple of times... ...Things didn&apos;t go...quite according to plan...eh, Will...?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="38"/>
+        <source>Idiots! Mule-brained bumblers! Pathetic, useless, lack-willed imbeciles! Brenner cannot be allowed to live! I want him found if you have to search every inch of this country!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="39"/>
+        <source>W-we think he&apos;s somewhere in the ruined city south of the ice, sir! We...we&apos;re getting close to--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="40"/>
+        <source>I didn&apos;t ask for excuses! I asked for results! Bring me Brenner! King Greyfield will brook no disobedience to his supreme rule! If he is not found within the hour, I will begin executing commanders! Is that clear?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="41"/>
+        <source>If i may, Admiral... This seems to be a perfect opportunity to test the device we discussed earlier...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="42"/>
+        <source>Yes.. Yes! YES! That is the key! Get me your device! Let nothing live! I want not so much as a blade of grass left in that area!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="43"/>
+        <source>You will not be disappointed, Admiral. I look forward to seeing the results.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="44"/>
+        <source> B-but, Admiral... Our forces are surrounding the city. Your...your men are there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="45"/>
+        <source>...And your point is?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="46"/>
+        <source>It&apos;s just that... Well, if we set the device off with all of...your troops...they&apos;re... Nothing, sir. Nothing. No problem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="47"/>
+        <source>Tabitha, can you hear me? Are you ready to play with Daddy&apos;s new toy?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="48"/>
+        <source>I can&apos;t wait! Do it! Raze the entire area to the ground!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="49"/>
+        <source>Captain, we&apos;re heading to your position now! You have to hold on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="50"/>
+        <source>...No, Will... Don&apos;t come...back for me... ...Stay...away... ...Greyfield...wants me... I can... ...buy you time... ...That&apos;s... an order...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="51"/>
+        <source>We&apos;re not leaving you, Captain!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="52"/>
+        <source>...I&apos;ll...join you later... ...Just need to...rest here... ...for a while...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="53"/>
+        <source>Captain!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="54"/>
+        <source>...Never wanted you to...see me like this... ...It&apos;s... up to you...Will...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="55"/>
+        <source>NO! Captain, please! Don&apos;t give up! There&apos;s still hope, Captain! There&apos;s still hope!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="56"/>
+        <source>BATHE HIM IN FIRE!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="57"/>
+        <source>...Look at that... It&apos;s...beautiful... ...It looks...like the sun...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="58"/>
+        <source>Captain! Captain Brenner!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="109"/>
+        <source>...General Forsythe has been executed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="110"/>
+        <source>Yes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="111"/>
+        <source>Those dogs! We must avenge his death!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="112"/>
+        <source>I hear that Greyfield has ordered us all to be executed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="113"/>
+        <source>Rubinelle filth! They were planning this eve as they accepted the general&apos;s surrender.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="114"/>
+        <source>You&apos;re wrong! Captain Brenner would never allow that! He promised to protect you, and that&apos;s what he&apos;s going to do. I&apos;m sure of it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="115"/>
+        <source>Like he protected General Forsythe? Ha! You Rubes were killers before the meteors, and now your true colors shine again...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="116"/>
+        <source>You&apos;re...you&apos;re wrong!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="117"/>
+        <source>What do you know, kid? No one tells you squat. ...Stupid. I should have seen this coming.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="118"/>
+        <source>OK, yeah. You&apos;re right. There&apos;s a lot of stuff that I don&apos;t know. But I do know Captain Brenner, and I know he would never betray you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="119"/>
+        <source>Regardless, General Forsythe is still dead. Whatever your feelings for Captain Brenner, he&apos;s a soldier, and soldiers follow orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="120"/>
+        <source>You&apos;re wrong! Both of you! The captain... Th-the captain...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="121"/>
+        <source>That&apos;s enough, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="122"/>
+        <source>Captain Brenner! These people are saying that--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="123"/>
+        <source>I&apos;m only going to ask you this once. If you can&apos;t give me a straight answer, you might as well shoot me now. Is it true that General Forsythe was executed?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="124"/>
+        <source>...Yes. It&apos;s true.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="125"/>
+        <source>I&apos;ll kill you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="126"/>
+        <source>Tasha! Stand down! Who was responsible?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="127"/>
+        <source>Greyfield gave the order, and Waylon pulled the trigger. But the final responsibility for his death lies with me. I underestimated Greyfield. I didn&apos;t think he would kill an unarmed man. But I accepted your general&apos;s surrender, and now he is dead. I can make no excuse. I&apos;m sorry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="128"/>
+        <source>How do we know you&apos;re telling the truth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="129"/>
+        <source>Believe me or not. I don&apos;t care. I&apos;m not here to justify myself. We&apos;re out of time. The 12th Battalion is leaving, and we&apos;re taking the Lazurians with us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="130"/>
+        <source>..You&apos;re doing what?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="131"/>
+        <source>Greyfield is going to execute all of you in about six hours. But I&apos;ve had enough. I&apos;m not going to sit around and wait for his orders to be carried out. You need to escape. Now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="132"/>
+        <source>Why should we trust you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="133"/>
+        <source>Because if you don&apos;t, you&apos;ll die. General Forsythe entrusted you with the safety of your fellow troops, right?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="134"/>
+        <source>...I still don&apos;t trust you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="135"/>
+        <source>What&apos;s your plan?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="136"/>
+        <source>This place is surrounded by Greyfield&apos;s men. My battalion can&apos;t possibly take them all on. We&apos;re going to make a break and smash through their rear defenses. Once we clear the Northern Ice Plains, you&apos;re on your own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="137"/>
+        <source>That&apos;s a risky plan. Who&apos;s going to provide covering fire?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="138"/>
+        <source>We will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="139"/>
+        <source>You&apos;re going to fire on Greyfield&apos;s men? Aren&apos;t they your own people?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="140"/>
+        <source>I promised your general that i would protect his troops, and i keep my word. Besides, Greyfield is mad. I can&apos;t accept his command anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="141"/>
+        <source>I... I don&apos;t know...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="142"/>
+        <source>Well, you&apos;ve got about ten minutes to make up your mind. Prepare your men.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="143"/>
+        <source>Hey... HEY! Escape! The prisoners are escaping! And Brenner&apos;s Wolves are with them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="144"/>
+        <source>BRENNER! What in the name of Rubinelle do you think you&apos;re doing?! I order you to turn around and--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="145"/>
+        <source>The 12th Battalion doesn&apos;t take orders from you anymore, Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="146"/>
+        <source>This is high treason, and the reward shall be death! Death for you and every member of your pathetic battalion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="147"/>
+        <source>You&apos;re a coward, Greyfield. And you don&apos;t frighten me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="148"/>
+        <source>How dare you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="149"/>
+        <source>You&apos;re a strongman who seized power on the backs of others. I&apos;ll die before I serve you for another second.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="150"/>
+        <source>Dog! Prepare for your final hour!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="151"/>
+        <source>All units! Make for the city to the west! Once you clear it, push hard and don&apos;t look back!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="152"/>
+        <source>I... I...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="153"/>
+        <source>Understood, Captain. Tasha! Let&apos;s go! Come on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="154"/>
+        <source>Don&apos;t worry about me. Save yourself! I&apos;ll keep Greyfield busy. Now make for the city! Go!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="205"/>
+        <source>Captain Brenner! Come on! You have to go now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="206"/>
+        <source>Brother man, I don&apos;t think this little bird&apos;s flyin&apos; anywhere. We got some business to settle... Ain&apos;t that right, Brenner?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="207"/>
+        <source>Why don&apos;t you come down here so we can talk it over, Waylon?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="208"/>
+        <source>No thanks, brother man. My mama didn&apos;t raise no dummies. Why are you sticking your neck out like this anyway, Brenner? You think any of this makes a difference? I just don&apos;t get it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="209"/>
+        <source>And you never will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="210"/>
+        <source>Fine by me, brother man. Fine by me. Say, you remember what I said the first time we met? I TOLD you this responsibility gig would lead to an early grave.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="211"/>
+        <source>Better early to the grave than to your own humanity, Waylon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="212"/>
+        <source>Ain&apos;t that a thing. Almost makes me feel bad about what I&apos;m gonna do. All units! Target Captain Brenner! Time to bag ourselves a hero!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="243"/>
+        <source>Will! Lin! I&apos;m abandonning the tank and continuing on foot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="244"/>
+        <source>Captain! Come on! This way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="245"/>
+        <source>I told you to run, Will, and that&apos;s a damn order!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="246"/>
+        <source>But, Captain--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="247"/>
+        <source>Lin! Get him the hell out of here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="248"/>
+        <source>Brenner!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="249"/>
+        <source>Listen, Lin. There&apos;s...there&apos;s a lot of things I never got a chance to say... But I know you. And I know you understand what I&apos;m about to do... Now move! MOVE!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/icy_retreat.js" line="250"/>
+        <source>...Understood, Captain. We&apos;re gone. ...Good-bye</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -33050,6 +34881,614 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>panic_in_the_ranks</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="21"/>
+        <source>Enemy reinforcements will be here in thirty seconds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="22"/>
+        <source>All units, regroup! Regroup! We&apos;re not going to surrender!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="23"/>
+        <source>Wait! Commander...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="24"/>
+        <source>What is it...?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="25"/>
+        <source>The enemy appears to be retreating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="26"/>
+        <source>Traitors! I ordered you to fight to the death! Advance ADVANCE!! You spineless cowards! You dishonor the proud name of Greyfield! I&apos;ll see you all hanged for this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="27"/>
+        <source>...What the heck happened? I thought we were done for.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="28"/>
+        <source>I may have an idea. We intercepted some enemy communications as they were retreating. It seems there was some unforeseen event that demanded their full attention. We captured a number of retreating soldiers. Let me talk to them. ...And if that doesn&apos;t work, I&apos;ll have Gage talk to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="29"/>
+        <source>I don&apos;t know what happened. Some urgent order came in and told everyone to pull back. Bush league if ask me. We were about to steamroll you guys.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="30"/>
+        <source>Save the commentary. Why did you pull back?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="31"/>
+        <source>Not sure. I heard rumors that the rear guard had rebelled against the admiral. My guess? They sent frontline units back to put down the uprising. Last I heard, things were getting out of hand pretty fast.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="32"/>
+        <source>You were on the verge of destroying us. That&apos;s an odd time for an uprising. Your troops seemed to be in high spirits, and their health was good--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="33"/>
+        <source>Ha! What, you ain&apos;t heard about the disease?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="34"/>
+        <source>Are you referring to Endoflorescens terribilis?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="35"/>
+        <source>We call it the Creeper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="36"/>
+        <source>Yeah? Well we call it the Green Thumb, and it&apos;s spreading like wildfire. Folks are scared. Panicking. They were starting to desert even before that last battle. Greyfield is executing anyone who catches it. He says they&apos;re weak and they deserve it. High spirits? Ha! We don&apos;t know if we&apos;re gonna get shot or have plants explode outta our heads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="37"/>
+        <source>That must be why they withdrew... This shows there is always hope, even in the worst situations!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="38"/>
+        <source>The same virus that almost caused rebellion in our ranks ended up saving us. ...Huh. You know what? Life&apos;s a funny thing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="39"/>
+        <source>I have the final test results. I think it&apos;s best to tell evertyone at once. The infected will be quarantined while we look for a cure. Those who aren&apos;t infected yet are free to stay or go as they see fit. I hope this doesn&apos;t plant a ...SEED of dissent! Oh ho! Oh ho ho ho ho... What? You&apos;re not laughing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="40"/>
+        <source>...Thank you, Doctor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="41"/>
+        <source>But seriously, I am concerned that this could cause much unrest among your troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="42"/>
+        <source>We have to take the risk. We can&apos;t force healthy people to stay with us against their will. Well, I guess I should know. Do I have it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="43"/>
+        <source>Let&apos;s see... Nope! You&apos;re as healthy as a horse. Maybe I should get you some hay! Oh ho ho ho!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="44"/>
+        <source>Er...yes. Thanks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="45"/>
+        <source>What is your plan, Will? If you stay here, you will most likely contract this disease.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="46"/>
+        <source>I&apos;m not going anywhere, Doctor. I command this unit, if in name only. I will face the risk along with the troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="47"/>
+        <source>Blast! I thought you were going to say that! Under normal circumstances, a doctor would never allow a patient to take such risks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="48"/>
+        <source>But these are not normal circumstances. We will stick together. Whatever problems face us, we will overcome them as one. The clock is ticking, Doctor. You must find a cure for the virus. There&apos;s no point in my survival if I lose all of my friends.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="49"/>
+        <source>Are you scared?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="50"/>
+        <source>Lin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="51"/>
+        <source>Are you scared of the Creeper taking over your body? Of those flowers blooming? What if there is no cure? What if we all suffer that fate? I know a lot of ways to die, but having flowers burst out of you... If you aren&apos;t scared, Will, you&apos;re a fool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="52"/>
+        <source>Of course I&apos;m scared! But that&apos;s why I need to find a cure. So no one else has to suffer like that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="53"/>
+        <source>Will, I... I talked to Dr. Morris. I have the virus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="54"/>
+        <source>Oh, Lin! No!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="55"/>
+        <source>Are you sure you don&apos;t want to leave? No one would think less of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="56"/>
+        <source>No. I won&apos;t run away. We will find a cure. I have hope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="105"/>
+        <source>Greyfield has found us. Recon units report a large enemy force approaching from the southeast.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="106"/>
+        <source>This is a long way to come just to wipe out our merry little band. Will must have really ticked him off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="107"/>
+        <source>He won&apos;t stop until he&apos;s destroyed every last Lazurian. I think he&apos;s kinda crazy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="108"/>
+        <source>Any farther north and we&apos;ll be swimming. We&apos;re out of places to hide. Commander? What are your orders?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="109"/>
+        <source>What can we do? We make a stand here and hope for the best.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="110"/>
+        <source>They have more troops, more experience, and better weaponry. I don&apos;t think we can win this fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="111"/>
+        <source>I know, Lin. But we don&apos;t have a choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="112"/>
+        <source>No. There is a choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="113"/>
+        <source>What is it, Tasha?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="114"/>
+        <source>Hand us over to Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="115"/>
+        <source>Out of the question! You&apos;re our allies. Our friends. We would never do that!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="116"/>
+        <source>It&apos;s your best option. Greyfield is obsessed with Lazuria. Once he has us, he&apos;ll likely back down.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="117"/>
+        <source>What about it, Lieutenant? I bet you thought of this a while ago, huh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="118"/>
+        <source>I considered it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="119"/>
+        <source>Lin!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="120"/>
+        <source>Look, Will... I mean, Commander. We&apos;re grateful for all that you&apos;ve done for us. You taught me that every nation has its flaws. And you taught me that there is some good in Rubinelle. Don&apos;t worry. I&apos;ve had a good run.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="121"/>
+        <source>I&apos;m ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="122"/>
+        <source>Tasha! Gage! No! This is madness!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="123"/>
+        <source>Will, listen--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="124"/>
+        <source>No! I won&apos;t listen! We&apos;re not doing this! Captain Brenner saved your lives. He would never hand you over to Greyfield, and I won&apos;t do it either. We live together and we fight together. And if we die together, so be it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="125"/>
+        <source>Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="126"/>
+        <source>I&apos;m sure. But that&apos;s not going to happen. Greyfield isn&apos;t going to beat us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="127"/>
+        <source>If that is your decision Commander... Then we will follow you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="128"/>
+        <source>Oh ho! Sorry to interrupt, but I have to speak to you right now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="129"/>
+        <source>This can&apos;t be good.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="130"/>
+        <source>I&apos;ve finished screening people for the Creeper, and the results are disheartening...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="131"/>
+        <source>...Half of us are already infected?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="132"/>
+        <source>I&apos;m afraid so. The virus has spread to civilian, Rubinelle, and Lazurian alike. I think the infection started before we even entered the trading outpost. ...I can&apos;t even think of a joke for this. And I&apos;ve been trying for a while.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="133"/>
+        <source>But everyone seems fine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="134"/>
+        <source>It seems the disease now spreads without detectable symptoms until it is too late. If we don&apos;t find a cure soon, it&apos;s going to kill us all! Oh ho ho... Wait, that isn&apos;t funny.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="135"/>
+        <source>This is not what we needed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="136"/>
+        <source>Sir, the enemy has mobilized. We are awaiting your orders!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="137"/>
+        <source>Ho! What a splendid sight! Look at those treacherous dogs who dared to betray me! This will be fun! Give my regards to Brenner, swine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="138"/>
+        <source> ...I knew we were outgunned, but this is absurd. First the meteors, then the virus, and now this. I&apos;ve had better years, I&apos;ll tell you that much.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="139"/>
+        <source>At least Greyfield&apos;s guns will be quick and painless. Unlike the Creeper...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="140"/>
+        <source>No! What&apos;s wrong with you! Stop talking like that! We still have hope. We will find a way to win.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="180"/>
+        <source>Commander! We&apos;ve got a problem. Our western front is in chaos. The units are ignoring our orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="181"/>
+        <source>What are they thinking?! We&apos;re in the middle of a battle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="182"/>
+        <source>Word of the virus has spread, sir. The people are terrified. I think they&apos;re looking for someone to blame...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="183"/>
+        <source>Open a channel! We have to talk to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="184"/>
+        <source>I already tried, Commander. There is no response. It&apos;s utter chaos out there. I think they&apos;ve lost the will to fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="185"/>
+        <source>No! This isn&apos;t happening!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="186"/>
+        <source>Aaaaaah! It&apos;s over, man! It&apos;s all over! We&apos;re dead meat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="187"/>
+        <source>If Greyfield don&apos;t get us, that virus will!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="188"/>
+        <source>I heard the Creeper turns you into a plant! A freakin&apos; plant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="189"/>
+        <source>My eye itches! I think I got it! Noooooo! NOOOOOOOO!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="190"/>
+        <source>We got no chance! We&apos;re all gonna die! We&apos;re all gonna die!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="191"/>
+        <source>We&apos;ve been tricked! Someone has done this to us!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="192"/>
+        <source>It&apos;s your fault! You civilians! You brought the Creeper into camp!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="193"/>
+        <source>No way! It was you soldiers! You brought it from the battlefield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="194"/>
+        <source>I heard you gave it to us to try and keep us in line!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="195"/>
+        <source>Our allies are in complete disarray. Our orders can&apos;t get through to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="215"/>
+        <source>Our western front won&apos;t even fight. I... I&apos;m not sure what to do, sir.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="216"/>
+        <source>There must be something... Wait! That communications tower! If I can get to it, I can convince them to fight!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="245"/>
+        <source>My eye! It&apos;s watering! I&apos;m gonna turn into a plant any second now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="246"/>
+        <source>I&apos;d rather get shot than have that thing take me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="247"/>
+        <source>It must be the Lazurians! We never should have trusted them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="248"/>
+        <source>Ha! You blame us when your own leader is trying to kill you? We should never have joined you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="249"/>
+        <source>That&apos;s right! You never should have joined us, losers! It was bad enough when we had these useless civilians to deal with!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="250"/>
+        <source>Don&apos;t call us useless, you gun-toting warmongers! You&apos;re the ones who dragged us into your stupid battles! You should have left us in peace! Now I&apos;m gonna catch the Creeper and die!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="251"/>
+        <source>Listen to me! Everyone! Stop arguing. Stop looking for people to blame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="252"/>
+        <source>...Huh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="253"/>
+        <source>It&apos;s him! It&apos;s the commander! He&apos;s responsible for this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="254"/>
+        <source>Who put that kid in charge anyway? No wonder we&apos;re all gonna die!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="255"/>
+        <source> I... Wait, listen, just... Just hold on one second...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="256"/>
+        <source>Forget this, man! I&apos;m outta here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="257"/>
+        <source>What do you mean?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="258"/>
+        <source>I mean that I&apos;m gone! I quit! Presto! Poof! See ya later, chumps! I ain&apos;t letting some kid send me to die. I&apos;ll take my chances on my own!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="259"/>
+        <source>Really? What&apos;s your plan? Are you going to walk over to Greyfield and tell him how sorry you are?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="260"/>
+        <source>...It&apos;s better than staying here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="261"/>
+        <source>If you want to leave, that&apos;s your choice. Good luck. But I won&apos;t abandon anyone. I&apos;m tired of running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="262"/>
+        <source>Big words from a small man! You think you&apos;re noble? Is that it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="263"/>
+        <source>This isn&apos;t about sounding noble. It&apos;s about survival. We either pull together and make a stand, or we die here and now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="264"/>
+        <source>...I don&apos;t wanna die!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="265"/>
+        <source>Look, I won&apos;t lie. Greyfield has us outnumbered, and this won&apos;t be easy. But if we fight among ourselves, we don&apos;t have any chance. Fight for yourself or fight for your friends. I don&apos;t really care. Just fight! Don&apos;t lie down and die!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="266"/>
+        <source>I dunno...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="267"/>
+        <source>It doesn&apos;t matter where you&apos;re from or what has happened in the past. We&apos;re done talking. It&apos;s time to stand together and fight!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="268"/>
+        <source>I... I guess...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="269"/>
+        <source>Er... Sorry, Commander. Got a little freaked out there for a second... Let&apos;s do it! Let&apos;s get Greyfield!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="270"/>
+        <source>Yeah! Let&apos;s do it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="271"/>
+        <source>Yeah! We&apos;re with you too! Let&apos;s take him down!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="272"/>
+        <source>...My throat hurts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="273"/>
+        <source>Well done, Commander. ...A bit crazed, but well done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="274"/>
+        <source>Sorry. I got a bit carried away there. This would never have happened if Captain Brenner was still here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js" line="275"/>
+        <source>Believe it or not, emotion has a place on the battlefield. But that time has passed. Your men are ready. Let&apos;s finish this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>piperunner</name>
     <message>
         <location filename="../resources/scripts/units/piperunner.js" line="47"/>
@@ -33530,6 +35969,972 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/rocketthrower.js" line="56"/>
         <source>Indirect attack unit. Powerful with a wide attack range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>sacrificial_lamb</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="21"/>
+        <source>No no no! This is so unfair! I let my guard down for an instant, and you go and smash all my nice soldiers! Poo! If I had reinforcements, I would squash you like bugs! But Father wants me to spare you. So I guess I will this time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="22"/>
+        <source>What do you mean, she&apos;s gone?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="23"/>
+        <source>I&apos;m sorry, Will. I guess I should have kept an eye on her.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="24"/>
+        <source>There is no evidence that our camp has been infiltrated. It looks like she left of her own volition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="25"/>
+        <source>But why?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="26"/>
+        <source>Perhaps she thought she was saving us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="27"/>
+        <source>Dammit! This isn&apos;t the way it was supposed to happen! I didn&apos;t want to abandon anyone, and now Isabella abandoned us!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="28"/>
+        <source>You! You are to blame for all of this! It&apos;s all your fault!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="29"/>
+        <source>You again?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="30"/>
+        <source>Look around you! Look at the wounded and dead! Look at the civilians on the brink of starvation! No one had to fight. No one had to die. If you had just surrendered and handed that girl over, this would never have happened!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="31"/>
+        <source>... ... ... ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="32"/>
+        <source>You are a sad little man with no idea what he is talking about.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="33"/>
+        <source>Save your words! All I know is that we can&apos;t trust this brat with our troops anymore! Why, if I had been in command, none of this would have happened! Even without training, I would be a far superior commander to this one! No one wants you in command, Will. I speak with the voice of all the people on this matter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="34"/>
+        <source>...Packing up, huh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="35"/>
+        <source>That&apos;s right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="36"/>
+        <source>...I see. You know, a long time ago, I advised you to walk away and not look back. So I guess it would be hypocritical of me to make you stay now, huh? Just tell me you&apos;re doing this for the right reasons. Tell me it isn&apos;t because of that idiot who calls himself a mayor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="37"/>
+        <source>No, it&apos;s not that. It&apos;s just... I&apos;ve learned some things about me, Lin. I don&apos;t think I&quot;m the kind of person who should be in charge. I want everyone to be safe, but I&apos;m unwilling to sacrifice even a single person. I fought a needless battle where many people were hurt and killed, and... And I think it was wrong. I should have sided with the group instead of the individual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="38"/>
+        <source>...I never expected to hear that from you, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="39"/>
+        <source>I wanted to be like Captain Brenner, you know? Strong and generous and...well, perfect. But I kinda made a mess of the whole thing. I&apos;m appointing you as our new commander, Lin. These people need your logic and good sense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="40"/>
+        <source>Where will you go?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="41"/>
+        <source>I&apos;m going to go save Isabella.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="42"/>
+        <source>By yourself? I thought you had seen enough needless deaths. Are you really so eager to check out?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="43"/>
+        <source>No, Lin. I&apos;m not. But I know it&apos;s a possibility. But at least this time, I&apos;m the only one being put at risk.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="44"/>
+        <source>OK. I won&apos;t get in your way. You&apos;re free to decide your own path. But for what it&apos;s worth... I&apos;m sad to see you go, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="45"/>
+        <source>Father...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="46"/>
+        <source>Please don&apos;t call me that. I regard you as an object, not as family.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="47"/>
+        <source>So I am a clone?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="48"/>
+        <source>Yes, you are. And you served your purpose well. I am satisfied with what I have been able to learn from you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="49"/>
+        <source>But... Why did you create me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="50"/>
+        <source>I needed someone to experiment on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="51"/>
+        <source>Th-that&apos;s the only reason?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="52"/>
+        <source>That isn&apos;t enough?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="53"/>
+        <source>So that&apos;s... That&apos;s all I am.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="54"/>
+        <source>OK... If I was Isabella, where would I be?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="55"/>
+        <source>Where are you going?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="56"/>
+        <source>Gyaaa! Who are you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="57"/>
+        <source>You should be careful. What if the enemy were to find you here? You are William. You are their commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="58"/>
+        <source>OK, let me ask this again. Who are you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="59"/>
+        <source>I was given the name Cyrus. I am a creation of Dr. Caulder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="60"/>
+        <source>You&apos;re one of his clones?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="61"/>
+        <source>Wait! Please do not be afraid! I want to help you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="62"/>
+        <source>...Why would you want to do that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="63"/>
+        <source>The girl you call Isabella... I don&apos;t know her, but she is my sister. I know how you can save her.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="119"/>
+        <source>...She&apos;s a clone?! </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="120"/>
+        <source>According to Caulder, yes. She&apos;s one of group of mass-produced clones. And his daughter. I guess that makes her a clone of Caulder...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="121"/>
+        <source>Hmmm... I&apos;m not sure that is completely accurate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="122"/>
+        <source>What do you mean?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="123"/>
+        <source>Technically, it is possible to create human clones. But even if you duplicate the DNA... The clones are not perfect copies. They&apos;re more like a set of twins. We don&apos;t know if he used recombinant DNA or an extra chromosomal--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="124"/>
+        <source>Wait, stop. Small words, please.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="125"/>
+        <source>Well, if I were to make a clone of myself, I would have a baby with my DNA. But we would have different ages, different environmental influences, and so on. It would not be possible to engineer a perfect copy of my adult self. That&apos;s why I think each Isabella is a unique, individual person.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="126"/>
+        <source>But Caulder talked about them like they were interchangeable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="127"/>
+        <source>There is another possibility. What if you took those cloned babies you were talking about and isolated them? Completely cut them off from the outside world, like rats in a maze. By eliminating all outside influence, you could theoretically mass-produce identical clones.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="128"/>
+        <source>Well... I suppose... In theory, that might work, yes. But such an existence would likely shatter the mind of anyone who had to undergo it! Only an unethical monster would think of doing such a thing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="129"/>
+        <source>We&apos;re talking about Caulder, Dr. Morris. I don&apos;t think he&apos;s ever been concerned with ethics.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="130"/>
+        <source>Yes, but...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="131"/>
+        <source>Never mind. We&apos;re getting distracted. Isabella is what she is. That&apos;s not the problem requiring our attention right now. We need to figure out how we&apos;re going to survive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="132"/>
+        <source>Caulder is threatening to bomb us again. If we don&apos;t hand over the girl by tomorrow, they will launch an all-out assault.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="133"/>
+        <source>I know I&apos;m not a military man, but I don&apos;t see how we can survive another assault!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="134"/>
+        <source>As long as the Great Owl flies, we have no chance of victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="135"/>
+        <source>But we won the last battle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="136"/>
+        <source>True, but in that battle, bombs were dropped on a fixed area only. They weren&apos;t trying to win. They just wanted to display their power. If they decide to start bombing our forces directly... Well, like I said. Victory would be impossible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="137"/>
+        <source>I can&apos;t stand this! That man is simply toying with us! He can just bide his time until we surrender Isabella to him!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="138"/>
+        <source>Commander? What are we going to do?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="139"/>
+        <source>Isabella stays with us. We aren&apos;t going to abandon anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="140"/>
+        <source>Perhaps you think it is noble to die for your principles, but i disagree.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="141"/>
+        <source>Gage!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="142"/>
+        <source>I am not going to lead my people on a suicide mission. The life of one girl against the lives of all of us seems an easy choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="143"/>
+        <source>What&apos;s wrong with you, Gage? How can you think of handing her over to that monster?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="144"/>
+        <source>General Forsythe ordered us to protect the lives of his troops. That is our only duty. Or has your newfound love of Rubinelle clouded your judgement?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="145"/>
+        <source>You&apos;re a jerk. You know that? And did you forget what happened to Forsythe? He surrendered with honor and got a bullet in the back for his troubles. Caulder isn&apos;t going to take the girl and just walk away to let us live in peace! He&apos;ll take her and then bomb us all into the ground! I say we fight to the last man!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="146"/>
+        <source>Commander? We need a decision.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="147"/>
+        <source>I made my decision. She stays. We all stay. Things looked bleak before, and yet we managed to come around. Right? As long as there is life, there&apos;s hope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="148"/>
+        <source>That&apos;s enough! The civilians are tired of your fighting and your lies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="149"/>
+        <source>...Who let him in here?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="150"/>
+        <source>The civilians are agreed! We should hand over that stupid girl and end this! Then all our problems will be over!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="151"/>
+        <source>Get him out of here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="152"/>
+        <source>What?! Hey now, stop... Get your hands off me! Don&apos;t you know who I am?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="153"/>
+        <source>Ready yourselves. I think Caulder is coming.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="154"/>
+        <source>...It&apos;s her.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="155"/>
+        <source> ...Mary? Why are you looking at me like that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="156"/>
+        <source>Like you don&apos;t know.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="157"/>
+        <source>There she is! Gi! Get out of here! Shoo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="158"/>
+        <source>Wh-what?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="159"/>
+        <source>You heard me! You&apos;re not wanted here anymore! You&apos;re going to get us all killed! Now get out of our sight!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="160"/>
+        <source>But... I don&apos;t understand!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="161"/>
+        <source>Everyone agrees with me! You&apos;re useless baggage! What are you still doing here?! Get out of here! We can&apos;t stand the sight of you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="162"/>
+        <source>But I... I didn&apos;t...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="163"/>
+        <source>The Great Owl is approaching.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="164"/>
+        <source>I know. I can hear it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="214"/>
+        <source>Oh, this is so exciting! I can&apos;t wait!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="219"/>
+        <source>The Great Owl will be in attack range within minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="224"/>
+        <source>The Great Owl is starting its bombing run. ...It&apos;s targeting our troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="225"/>
+        <source>All units, disperse! Large groups are an easy target!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="244"/>
+        <source>I... I am here. Can you hear me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="245"/>
+        <source>Ah! It&apos;s you! So you remembered how to make emergency communications! Don&apos;t push yourself too hard, dear. You know how fragile you are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="246"/>
+        <source>Promise me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="247"/>
+        <source>Hmmm? Promise you what, sweetie?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="248"/>
+        <source>I don&apos;t care what you do to me... I just want you to leave them alone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="249"/>
+        <source>You&apos;re a curious specimen aren&apos;t you? Your sisters love chaos and death, whereas you embrace mercy. This is a worse design flaw than I anticipated...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="250"/>
+        <source>I&apos;m... I&apos;m not like them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="251"/>
+        <source>Listen to me, Isabella. ...Bah! What an absurd name... I want you to join us on the Great Owl. I&apos;m sure we can find something for you to do. Some experiment or other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="252"/>
+        <source>What?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="253"/>
+        <source>You seem confused.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="254"/>
+        <source>You said you wanted to dissect me! To analyze my malfunction! ...Isn&apos;t that why you want me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="255"/>
+        <source>Hmmmm... I did say that, didn&apos;t I? Well, I&apos;m afraid that was a lie. You are not important to me in the least. I have countless identical copies of you! What&apos;s another, more or less?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="256"/>
+        <source>Th-then why...?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="257"/>
+        <source>Dear girl... I was interested in THEM! I contrived a moral dilemma to make those people fight among themselves. I was curious how they would react. That is all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="258"/>
+        <source>You&apos;re terrible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="259"/>
+        <source>Don&apos;t take that tone with your father, young lady! ...You&apos;re an odd one, aren&apos;t you? What did those people do to you? But we can experiment on such things later! Cyrus! Turn about! Secure the product and fly to the nearest base.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="260"/>
+        <source>Father... When will your madness end?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="261"/>
+        <source>Eh? Do you have something to say, Son?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="262"/>
+        <source>I know I am not human. I know that you made me in a lab. But I will no longer stand idly by and let you do this! You treat us like puppets! Toys to be used and broken and then discarded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="263"/>
+        <source>My my, Cyrus, you are a perceptive boy. That&apos;s exactly what you are to me! A puppet! A plaything!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="264"/>
+        <source>No! I am a person! I am real!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="265"/>
+        <source>Hmmm... I don&apos;t much care for this line of reasoning. I may need to get another model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="266"/>
+        <source>I don&apos;t understand why, but it seems the Great Owl is retreating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js" line="267"/>
+        <source>Who cares why! Let&apos;s take our chance and finish this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>salvation</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="21"/>
+        <source>Nooooooooooooooooooooo!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="22"/>
+        <source>The rest of the mob has lost the will to fight. And we have located this worm that they claimed would save them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="23"/>
+        <source>Is he the one behind all of this?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="24"/>
+        <source>Actually, it&apos;s... It&apos;s... Just come with me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="25"/>
+        <source>...There&apos;s no one here. Where is he? Where is the Worm?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="26"/>
+        <source>Right there. In the corner.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="27"/>
+        <source>Wait, but that&apos;s...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="28"/>
+        <source>According to the villagers, this is the one and only Worm. The one that was supposed to save them from the Creeper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="29"/>
+        <source>But it&apos;s... It&apos;s just...It&apos;s an earthworm.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="30"/>
+        <source>Yep.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="31"/>
+        <source>They were prepared to kill for that?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="32"/>
+        <source>Once people lose all hope, they become willing to believe anything. Let&apos;s go. There&apos;s nothing here for us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="33"/>
+        <source>It was a lie... All a lie...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="34"/>
+        <source>Who will save us now? Who can we believe in? What&apos;s the use of going on?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="35"/>
+        <source>Oh ho ho! My friends, please! You mustn&apos;t give up so easily! After all, there&apos;s no &apos;you&apos; in surrender! Oh ho! Oh ho ho ho!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="36"/>
+        <source>What&apos;s that supposed to mean? You were lied to! The mark has appeared on skin, and now the flowers will blossom!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="37"/>
+        <source>Wait! Wait, listen to me! I&apos;m a doctor! I will find a cure for this plague! I need you to hold on to your hope!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="38"/>
+        <source>You&apos;re a doctor...?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="39"/>
+        <source>He can cure us!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="40"/>
+        <source>Hurry up! Cure me! Cure me! I don&apos;t want to die! Cure me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="41"/>
+        <source>I&apos;m sorry, but it&apos;s not that simple. I am looking for a cure. I haven&apos;t found one yet. You&apos;ll have to be patient.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="42"/>
+        <source>How can we be patient?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="43"/>
+        <source>I am just a human being. I don&apos;t perform magic, and I can&apos;t cure you instantly. I won&apos;t tell you what you want to hear or make false promises I can&apos;t keep. I offer no guarantees. Only hope. In truth, some of you will perish before I am able to find a cure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="44"/>
+        <source>That&apos;s no good!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="45"/>
+        <source>But I do promise you this! I promise that I will never give up. As long as there is breath in my body, I will work to heal as many as I can.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="46"/>
+        <source>But...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="47"/>
+        <source>Trust me. Be patient. Try to hold on until I can find a care.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="48"/>
+        <source>It&apos;s OK, Doctor. Go to your work. I&apos;ll make sure these people are comfortable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="49"/>
+        <source>Say... Will? You remember when Davis talked about &apos;the mark&apos;? I think I know what he was talking about.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="50"/>
+        <source>Oh yeah?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="51"/>
+        <source>There&apos;s a diamond-shaped mark on my left shoulder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="52"/>
+        <source>...What?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="53"/>
+        <source>I think this mark is the only visible symptom of the virus. And if I&apos;m right, my flowers will bloom soon. Not very comforting, huh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="54"/>
+        <source>Oh, Lin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="55"/>
+        <source>We&apos;ll find this mark on some of the infected. But it probably doesn&apos;t appear until late... I&apos;m running out of time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="56"/>
+        <source>OK, so we work harder! We help Dr. Morris, and we work to--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="57"/>
+        <source>Why won&apos;t you leave, Will? Why won&apos;t you go? Are you trying to prove something? I know I asked you to be our commander, but this is beyond duty. It&apos;s suicide. No one doubts your commitment or your courage. Go, Will. Go. Walk away and don&apos;t look back. We&apos;ll be OK.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="58"/>
+        <source>No. Not after all this. I&apos;m not staying here to sacrifice myself, Lin, or to be...noble or make a point or something. I&apos;m staying here to help. Where there&apos;s life, there&apos;s hope. I believe that. And if I run, I... I take that hope from everyone. Does that make sense?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="59"/>
+        <source>...Brenner had you pegged from the start. OK, Will. I get it. I won&apos;t ask again. And I&apos;ll try to pretend that there&apos;s still hope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="111"/>
+        <source>Pssst! Hey, listen! I have some more info for you. The guys that deserted Greyfield&apos;s army were heading to a town called Salvation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="112"/>
+        <source>That&apos;s a weird name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="113"/>
+        <source>Yeah, well, this place is special. Seems that someone there has learned how to cure the Green Thumb. Someone MAGICAL!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="114"/>
+        <source>What rubbish! What unscientific balderdash! Who would ever believe such nonsense?! Our hope lies in science, not some snake-oil-peddling witch doctor! Only slow, painstaking researching can hope to present us with a cure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="115"/>
+        <source>Easy for you to say, sawbones! You ain&apos;t got the Green Thumb! And what if ya did have it? Huh? I suppose you&apos;d just sit in your lab and run tests, yeah? Maybe read some books or somethin&apos;? Well, nuts to that! I&apos;d do anything I could to get cured, even if it sounded crazy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="116"/>
+        <source>I wonder if someone here really can cure the virus?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="117"/>
+        <source>Doubtful.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="118"/>
+        <source>Yes, I am afraid that this is simply a refuge for desperate, gullible people... There is no scientific explanation for this. ...Magical cures. What rubbish!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="119"/>
+        <source>Worship him, my children! Praise him, my children! Worship him! Worship the Worm!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="120"/>
+        <source>Where&apos;s that voice coming from?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="121"/>
+        <source>There are loudspeakers set up around the village. Although I have no idea how they are getting power...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="122"/>
+        <source>Do you believe in magic, my children? Do you seek a cure for your illness? The Worm demands sacrifice! Only then will you be cured! You must spill blood in the name of the Worm! Only then will you be free!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="123"/>
+        <source>...Ooooookay. I could be wrong, but I think this guy&apos;s crazy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="124"/>
+        <source>I don&apos;t like this one bit. This kind of fanaticism is completely outside my field of expertise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="125"/>
+        <source>There&apos;s something on the radar... Something big. It&apos;s coming this way.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="126"/>
+        <source>I&apos;ll deal with this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="127"/>
+        <source>What&apos;s wrong, Gage? Feeling jealous of my awesome commanding skills?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="128"/>
+        <source>I think that mob is going to attack us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="129"/>
+        <source>Poor guys. That disease is driving them insane. This is going to be a weird battle. Is that why you want command?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="130"/>
+        <source>We can&apos;t afford to hesitate. It could give the enemy a chance. Will and his men may have concerns about fighting armed civilians. But I do not. I am a soldier, and I will do what is necessary. Brenner&apos;s Wolves saved us. I will take command to repay my debt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="154"/>
+        <source>There&apos;s no hope for me now! I dont&apos;t wanna die! I don&apos;t wanna die! I always sided with the winning team! I did my best to protect myself! But look at me now! LOOK AT ME!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="155"/>
+        <source>Davis?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="156"/>
+        <source>I&apos;ve seen what the Green Thumb does to people! I&apos;ve seen the flowers! I got the mark, man! I got the damn mark!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="157"/>
+        <source>Wait! What mark?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="158"/>
+        <source>I saw it! With my own eyes! Once the mark appears on your flesh, the flowers start to blossom... They&apos;re gonna burst, man! Gonna burst right outta me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="159"/>
+        <source>Davis! Calm down! We&apos;re here to help you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="160"/>
+        <source>I don&apos;t wanna die! I don&apos;t wanna die! Dontwannadiedontwannadieddont wanna dieddontwannadie GYYAYAAGGHHAA!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="171"/>
+        <source>Go, my children! Destroy the intruders! The Worm demands it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="172"/>
+        <source>Stop it! You&apos;re insane! None of this will cure the virus!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="173"/>
+        <source>You say it will do nothing... But who will believe you? NO ONE! My children need a cure! They need their precious hope! Would you steal that from them? My children need hope to live! They need my lies to live!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="174"/>
+        <source>...Wait. So you don&apos;t believe what you&apos;re saying? Why would you fool people?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="175"/>
+        <source> I fool no one! They want to believe! This world is cold and hard! I give them peace! In truth, they cannot be cured. But if I told them that, they would despair. So I gave them hope! I gave them... Salvation! Who would not choose to live in a dream over this cruel world?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="176"/>
+        <source>B-but...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="177"/>
+        <source>Without my Worm, all these people would have perished from grief. I give them hope! Without hope, there is nothing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="178"/>
+        <source>But it&apos;s wrong!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/salvation.js" line="179"/>
+        <source> No! It is YOU who are wrong! You demand that people face reality! That&apos;s why you must be wiped out... You know the truth. Take up your weapons, my children! The Worm demands it!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -36190,6 +39595,762 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>the_creeper</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="21"/>
+        <source>Sir, the Talon Gun has been destroyed! ...Please don&apos;t hurt me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="22"/>
+        <source>Drat! They looked so pitifully weak, and yet they broke my toy! Hmph! I clearly was going too easy on them. I&apos;ll teach them to be so mean! Initiate plan Ultra! Let&apos;s hit them with something harder!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="23"/>
+        <source>That&apos;s enough, Tabitha. Today&apos;s experiment is complete. We must retreat so I can analyze these new numbers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="24"/>
+        <source>But, Faaaaaather! I wanted to crush them like flies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="25"/>
+        <source>Commander, we should return to base camp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="26"/>
+        <source>Where&apos;s Dr. Morris?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="27"/>
+        <source>He&apos;s in one of those buildings, looking for survivors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="28"/>
+        <source>He really is a good person. Though you wouldn&apos;t think so from his jokes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="29"/>
+        <source>Agreed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="30"/>
+        <source>Everyone! Listen up!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="31"/>
+        <source>Dr. Morris? What&apos;s wrong?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="32"/>
+        <source>We have an emergency! Come to my mobile laboratory now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="33"/>
+        <source>Why?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="34"/>
+        <source>Come on! Come on! There isn&apos;t time for this! Don&apos;t just stand around!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="35"/>
+        <source>Doctor, please! What&apos;s going on?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="36"/>
+        <source>This better not be one of your jokes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="37"/>
+        <source>Look at this picture...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="38"/>
+        <source>Oh... Oh no.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="39"/>
+        <source>I found it in the village&apos;s medical center. I think it was taken recently.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="40"/>
+        <source>It&apos;s the Creeper. But it looks different...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="41"/>
+        <source>Viruses are capable of mutation, so that&apos;s what I thought this was. But this is a dramatic change. It&apos;s too perfect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="42"/>
+        <source>Explain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="43"/>
+        <source>I think it&apos;s a biological weapon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="44"/>
+        <source>No, that&apos;s... That&apos;s impossible! Who would do such a thing?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="45"/>
+        <source>I haven&apos;t even told you the worst part.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="46"/>
+        <source>There&apos;s a worst part?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="47"/>
+        <source>This victim was twenry or thirty years old. He was an adult.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="48"/>
+        <source>...That&apos;s bad.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="49"/>
+        <source>So the new disease is no longer restricted to children.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="50"/>
+        <source>This is a very serious problem. I&apos;ll start working on a cure right now. But first we should see if anyone else has been infected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="93"/>
+        <source>Commander, this is our present position. We&apos;re heading toward this village in the north.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="94"/>
+        <source>Do you know the village?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="95"/>
+        <source>It&apos;s a small trading post. The community has always been friendly toward us. We should be able to resupply there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="96"/>
+        <source>I don&apos;t get it. There&apos;s no one here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="97"/>
+        <source>...I don&apos;t like this. Something&apos;s wrong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="98"/>
+        <source>Do you think they were attacked? Maybe Greyfield beat us here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="99"/>
+        <source>Blast it all! Well, whatever happened, we need to look for survivors. Let&apos;s split up and search the village.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="100"/>
+        <source>I can help too.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="101"/>
+        <source>Anything?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="102"/>
+        <source>All we found are bodies and traces of small-arms fire. It looks like these people tore themselves apart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="103"/>
+        <source>Why would they do that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="104"/>
+        <source>Who knows why these kinds of civil wars start? It could have been hunger or disease. Or mybe they just couldn&apos;t stand each other anymore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="105"/>
+        <source>This is terrible...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="106"/>
+        <source>They&apos;re all dead. I&apos;m sorry, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="107"/>
+        <source>Father! How long must we stay in this wretched place? I&apos;m growing weary of all this muck and dust. And my shoes are in a terrible state!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="108"/>
+        <source>My dear, be patient. There is a wealth of information for us to discover here. By the way, it seems that we have visitors. They are standing in the central square. Tabitha, would you like to test out that new toy of yours?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="109"/>
+        <source>Oh, Father! Can I really?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="110"/>
+        <source>May I, Tabitha! May I! Good grammar is important for a little girl. And yes, you may. Nothing is too good for my little Tabitha. But remember, this is serious work! I must watch and record the results. I am fascinated to see how they will react to this little weapon of mine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="111"/>
+        <source>You never tire of your research, do you, Father?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="112"/>
+        <source>Commander, come in! Commander! ...Dammit, Will, talk to me?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="113"/>
+        <source>Tasha! What&apos;s wrong?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="114"/>
+        <source>Someone&apos;s trying to kill me, that&apos;s what&apos;s wrong! I hate it when people do that! I&apos;m going to take command and make &apos;em pay! Oh, and Will?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="115"/>
+        <source>Yes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="116"/>
+        <source>I was... I mean... Look, this ain&apos;t easy for me, but... I... I said a lot of bad things about Captain Brenner, and I was wrong. You were right. He was a good man. ...Sorry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="117"/>
+        <source>You don&apos;t have to apologize, Tasha. I&apos;m just happy that you know.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="118"/>
+        <source>The captain gave his life for us, so now I&apos;ll fight with you. You may be Rubinelle, but we&apos;re all on the same side now. I will find the people who killed your captain, and I will have revenge! All right, you devils! I&apos;m gonna come in there and blast every last... ...The hell is THAT thing?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="119"/>
+        <source>It looks like a weapon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="120"/>
+        <source>I&apos;ve never seen anything like it before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="121"/>
+        <source>It is a Talon Gun. It was developed by the private defense contractor IDS:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="122"/>
+        <source>Isabella?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="123"/>
+        <source>Development began six years ago at the request of the Lazurian government. However, the cost of the project quickly spiraled out of control. Work has halted after only a few prototypes were constructed. That is one such prototype.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="124"/>
+        <source>How the heck do you know that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="125"/>
+        <source> I...I don&apos;t know.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="126"/>
+        <source>It is odd that you know about both Rubinelle and Lazurian weaponry. Very odd.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="127"/>
+        <source>I-I&apos;m sorry, Lin. I&apos;m sorry. I don&apos;t know why I know all these things...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="166"/>
+        <source>That&apos;s all the enemy has? Pssh! This is too easy! I feel insulted! But Father must be obeyed! I will swat them like the puny flies they are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="171"/>
+        <source>This weapon is huge, but structurally similar to regular cannons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="172"/>
+        <source>Great! If it bleeds, we can hurt it! I mean...if it bleeds oil. Or something. Never mind! Can we check its attack range?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="173"/>
+        <source>We learned how to check attack ranges in the military academy. Um...hold on. Lemme get my textbook here... Darn, where is it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="174"/>
+        <source>Ahem. Try page ten, Commander. It was a basic lesson. Of course, I&apos;m not suggesting that our commander has forgotten this...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_creeper.js" line="175"/>
+        <source>No, of course not! No, I was just... seeing what the textbook said...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>the_great_owl</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="21"/>
+        <source>Reinforcements have been sighted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="22"/>
+        <source> Pull back! Pull back! We need more time to prepare our forces!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="23"/>
+        <source>Yes, you probably do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="24"/>
+        <source>You...!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="25"/>
+        <source>We are readying another attack, but I will ask you once more... Will you give me the girl? In exchange for the safety of your troops?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="26"/>
+        <source>Why do you want her?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="27"/>
+        <source>I don&apos;t want her. I own her. She is one of my products, and I need her back.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="28"/>
+        <source>One of your products?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="29"/>
+        <source>Why, yes. Surely you sensed something strange about her? That girl is my daughter, though not in the sense that you imagine. I built her. I created her.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="30"/>
+        <source>Oh no...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="31"/>
+        <source>My daughters are clones. I created them in laboratory. They were the final step in building an army of low-cost, cloned soldiers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="32"/>
+        <source>IDS specializes in products that give generals control during battle. Armies have long been ungainly things with many communication problems. Even modern armies suffer from late or misunderstood communications. But my products--my children--can control entire armies single-handedly. Like a giant with a hundred arms, they can wield innumerable weapons! ...Although I must admit, they have been anject failures as humans.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="33"/>
+        <source>Isabella is a clone...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="34"/>
+        <source>Whyever did you give her that insufferable name? And yes, she is a clone. A mere doll designed and controlled by me. But one day she went... haywire and fled my laboratory. This was highly unusual, and I must discover its cause. I need to disassemble her and locate the source of the malfunction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="35"/>
+        <source>...You can&apos;t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="36"/>
+        <source>I can and will, and you will give her to me, or I will take her by force. It seems you have developed a certain attachment to my daughter. You are being too emotional. She is a product! An experiment! A nothing. And she belongs to me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="37"/>
+        <source>Enough!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="38"/>
+        <source>I await your answer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="69"/>
+        <source>How odd. The war is over.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="70"/>
+        <source>Who wins, Daddy?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="71"/>
+        <source>The side that lacked military might but had superior tactics. I am surprised. They may prove worthy specimens for further research.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="72"/>
+        <source>May I play with them, Father? Please? I promise to be ever so good.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="73"/>
+        <source>Oh, Tabitha. You know I can&apos;t say no to you. Of course you can play with them! Cyrus, Tabitha, Penny... Daddy has a present for you! It&apos;s a new toy. I think you will enjoy it very much.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="74"/>
+        <source>Oh, Father! I do love you so! I just hope it doesn&apos;t break like the last one...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="75"/>
+        <source>You must treat this one more carefully than you do your other toys. I want you to take your time and really enjoy it! Have fun!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="76"/>
+        <source>Tee hee hee! BOOOOOM!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="77"/>
+        <source>... ... ... ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="78"/>
+        <source>Now, my children, let us prepare the next experiment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="79"/>
+        <source>Unidentified plane inbound!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="80"/>
+        <source>I say! Is it one of ours?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="81"/>
+        <source>I don&apos;t think so. It looks like a bomber, but... This is impossible... No plane is this big.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="82"/>
+        <source>The plane is parachuting troops! They&apos;ve taken up battle positions. They have twice our numbers, sir. And they&apos;re still coming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="83"/>
+        <source>...I don&apos;t get it. Where did an army of this size come from?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="84"/>
+        <source>Why, from me, of course! My new automated troops are on the front line of military technology. With them, a single commander can give orders to every unit at once!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="85"/>
+        <source>You!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="86"/>
+        <source> I took the liberty of recording your previous battle. It was a fierce fight, and you sustained a great deal of damage. Now I wish to see if your decimatd forces can rally.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="87"/>
+        <source>No! You can&apos;t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="88"/>
+        <source>But first, I hoped to have a talk with you, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="89"/>
+        <source>...A talk? Are you serious?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="90"/>
+        <source>Oh, yes. I have something important that I need to discuss with you. I will tell you the location now, and you will come to me. Alone. If you do not agree to meet me, I will attack immediately.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="91"/>
+        <source>I&apos;m going.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="92"/>
+        <source>Caulder isn&apos;t a man you can reason with. Or one that you can trust. This meeting of his is all wrong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="93"/>
+        <source>I know. But I&apos;m going anyway.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="94"/>
+        <source>I thought you&apos;d say that. But I&apos;m afraid I can&apos;t allow it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="95"/>
+        <source>Well, I don&apos;t think it&apos;s up to you. If I go, it buys us time to prepare our troops. It gives us hope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="96"/>
+        <source>It does that, yes. But I don&apos;t think it matters. He&apos;s toying with us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="97"/>
+        <source>Probably. But it&apos;s still going to buy us time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="98"/>
+        <source>Will, if he takes you hostage, if he starts demands... I won&apos;t rescue you. You know that. Right?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="99"/>
+        <source> I know. But I&apos;ve made up my mind. I&apos;m going.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="100"/>
+        <source>Ah, Will! Please, come. Sit down.You truly are a wonder. I don&apos;t know how you managed to defeat Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="101"/>
+        <source>What do you want?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="102"/>
+        <source>Patience, Will, patience. I just have a favor to ask of you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="103"/>
+        <source>Really.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="104"/>
+        <source>I need to observe your troops, but my current equipment is somewhat lacking. Would you mind if I attach these small devices to your men? They allow me to monitor heart rates, perspiration, and fear levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="105"/>
+        <source>...You can&apos;t be serious.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="106"/>
+        <source>They won&apos;t affect your fighting capability in any way, I assure you. Doing so would compromise my position as an impartial observer. I will attack you regardless, but this way science can benefit. Do you see?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="107"/>
+        <source>That&apos;s a great offer, but I think we&apos;ll have to pass.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="108"/>
+        <source>Lin!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="109"/>
+        <source>I thought we agreed that you would come alone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="110"/>
+        <source>I don&apos;t give a damn what you thought. Will, this man is a psychopath. Don&apos;t listen to another word he says.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="111"/>
+        <source>Please! I am a scientist! I seek only to learn! But it seems you don&apos;t want to cooperate. Very well.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="112"/>
+        <source>Are you really just walking away?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="113"/>
+        <source>That was my intention, yes. Will and I had an arrangement.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="114"/>
+        <source>I&apos;m not Will. And I&apos;m not letting you leave this mountain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="115"/>
+        <source>Ah, yes. I figured that something like this might happen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="116"/>
+        <source>Hello, Father.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="117"/>
+        <source>Um... Who are you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="118"/>
+        <source>This is Tabitha, my first daughter. ...First daughter? Third? I&apos;ve lost track. Her reflexes are far superior to yours. If you reach for your weapon, she will kill you. Oh! I almost forgot. I have one more request... The girl you call Isabella. I want you to give her to me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="119"/>
+        <source>I don&apos;t believe this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="120"/>
+        <source>Will you hand her over to me? Yes or no? It&apos;s a simple question. If you give her to me, I will guarantee the survival of your people.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="121"/>
+        <source>How&apos;s that?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="122"/>
+        <source>I will call off my forces. I can also provide a cure for the virus you call the Creeper. All at the cost of a small girl who can&apos;t even lift a rifle. It is a very generous offer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="123"/>
+        <source>Isabella stays with us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="124"/>
+        <source>Such a fascinating little man... I thought you might say something like that. But I think you will reconsider once I introduce you to the Great Owl.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="125"/>
+        <source>All units prepare for battle. We still don&apos;t know the size of the enemy forces, so be careful.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="126"/>
+        <source>The Great Owl is ready... Let the bombing commence!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="127"/>
+        <source>Sir! That huge plane is bombing the hell out of us! The entire center of the battlefield was devastated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="128"/>
+        <source>Proceed with caution! All units, avoid the impact area!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/the_great_owl.js" line="197"/>
+        <source>We bom now? BOOOOOOOOM Tee hee hee!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>to the rescue</name>
     <message>
         <location filename="../maps/advance_wars_2_campaign.camp/to the rescue.js" line="12"/>
@@ -37224,6 +41385,479 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="100"/>
         <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>waylon_flies_again</name>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="21"/>
+        <source>I just don&apos;t get it! I just don&apos;t get people like you! The world&apos;s gone, brother! Ain&apos;t nothing out there worth fighting for! And yet here you are with your friends and your...hope! I don&apos;t get it! You oughta worry about YOU! Just like me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="22"/>
+        <source>We&apos;ll need our hope when we rebuild this world. That&apos;s what you&apos;ll never understand.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="23"/>
+        <source>We got wounded off the battlefield... Is everyone accounted for?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="24"/>
+        <source>Um...Will?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="25"/>
+        <source>What is it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="26"/>
+        <source>Over there... There&apos;s someone in that building...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="27"/>
+        <source>OK. Let&apos;s check it out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="28"/>
+        <source>...Sorry, Isabella, but I just don&apos;t see anybody. And I can&apos;t imagine anyone would be here during a battle--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="29"/>
+        <source>Good day. Please, don&apos;t mind me. I&apos;m just conducting a little research.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="30"/>
+        <source>Um... Hi there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="31"/>
+        <source>Ah, Will. It is so very good to finally meet you. I believe you are the new commander of Brenner&apos;s Wolves. Congratulations are in order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="32"/>
+        <source>What in the... How do you know that? Who are you? And why are you taking notes in the middle of a war?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="33"/>
+        <source>My name is Dr. Caulder. And as for my copious note taking... Well, I am researching the effects of warfare of the human spirit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="34"/>
+        <source>You&apos;re doing what now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="35"/>
+        <source>Ever since the meteors, I have traveled this world observing and recording. Those falling stars were a true boon for men of science like myself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="36"/>
+        <source>You&apos;re...researching us?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="37"/>
+        <source> I have been able to witness and documents the true nature of humankind! I have watched people fight among themselves as their food supplies ran dry... I have seen villages panic at mere rumors of disease and famine... I have observed it all. And I have found it to be FASCINATING!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="38"/>
+        <source>You&apos;re disgusting!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="39"/>
+        <source>No! Merely curious. At first, I allied myself with the Lazurian Army. I wanted to see how war would be conducted in a world without law. But that Forsythe had a misplaced chivalrous spirit and was of little use to me. I offered him all manner of terrible new weapons, but he denied me at every turn. Little men such as he have always stood in the way of human progress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="40"/>
+        <source>General Forsythe was a decent, honorable man.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="41"/>
+        <source>Qualities that I hope will no longer be respected in this new world of ours! At any rate, I had no use for him. So I turned instead to one devoid of all morality...Admiral Greyfield. He embraced my weapons! Even now, he prepares to use my masterpiece!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="42"/>
+        <source>You... You&apos;re evil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="43"/>
+        <source>Eh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="44"/>
+        <source>Dr. Morris once asked me if I believed in evil. In people who felt glad the world was destroyed. Now I know they exist. I&apos;m looking at one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="45"/>
+        <source>Were I a more emotional man, I might be hurt by such words! I have done nothing wrong, Will. I am the very model of an objective, scientific observer. Like all men of science, I have merely followed my heart and studied what interested me. But I see you will never understand that. A pity!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="46"/>
+        <source>Wait!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="47"/>
+        <source> Oh, before I forget... I must recognize all the hard work my daughters have been putting in...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="48"/>
+        <source>... ... ... ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="49"/>
+        <source>We are making steady progress. Do carry on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="50"/>
+        <source>Aah... AAAAAAAAAAA!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="51"/>
+        <source>Isabella! What did you do to her?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="52"/>
+        <source>I suggest you speak to her instead of me. She doesn&apos;t have much time left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="53"/>
+        <source>You!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="54"/>
+        <source>Greyfield is on his way with my masterpiece in his hands. Whatever will happen...? Hmmm... I think I will need more notepads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="55"/>
+        <source>...UNgh...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="56"/>
+        <source>Isabella! Can you hear me! Are you OK?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="57"/>
+        <source>Y-yes... I&apos;m s-sorry, Will.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="58"/>
+        <source>I was so worried.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="59"/>
+        <source>That man... I&apos;ve seen him before.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="60"/>
+        <source>Where?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="61"/>
+        <source>I don&apos;t know. I don&apos;t know who he is or where I met him. But I know him. He is a very, very frightening man...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="62"/>
+        <source>Good heavens! Dr. Caulder is alive?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="63"/>
+        <source>You know him?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="64"/>
+        <source>I know of him! And more than I&apos;d like... Caulder is an infamous figure in the medical world. A mad genius despised by all his contemporaries. He was thrown out of the medical academy for conducting bizarre, unethical experiments. A year later, he sustained terrible injuries in a suspicious plane crash. But this is only emboldened him to continue his horrible research. This world is a much more dangerous place with him in it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="65"/>
+        <source>Wait. Are we talking about the same Caulder? The one in charge of IDS?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="66"/>
+        <source>IDS?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="67"/>
+        <source>IDS stands for Intelligend Defense System. Before the meteors, they were the world&apos;s largest military contractor. They had connections at the highest levels of Rubinelle government, with contracts in everything from weapons to medicine to food. The war between Rubinelle and Lazuria was especially profitable for them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="68"/>
+        <source>Why, he&apos;s nothing more than a common war profiteer!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="69"/>
+        <source>Caulder said he gave Greyfield all of his new weapons. He was happy too. Like a kid with a new toy. He said he wanted to study the results when Greyfield used his masterpiece.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="70"/>
+        <source>Oh dear! I don&apos;t even want to know what that is.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="71"/>
+        <source>Isabella? Something tells me you know about this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="72"/>
+        <source>HIs masterpiece... It must be the Caulder Missile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="73"/>
+        <source>That doesn&apos;t sound good.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="74"/>
+        <source>Both nations possessed enough missiles to destroy the other ten times over. Caulder Missiles were developed by IDS and located in Rubinelle and Lazuria. They were designed to launch at the same time. All of them. In theory, they functioned as deterrents. But now...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="75"/>
+        <source>Greyfield, you madman...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="76"/>
+        <source>If those missiles launch, it&apos;s going to make the meteors look like... like FUN.teors! ...Sorry. Even I thought that was bad.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="77"/>
+        <source>We have to stop him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="147"/>
+        <source>We have made a small breakthrough and slowed the progress of the virus. By using a few common materials, we&apos;ve managed to create a vaccine of sorts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="148"/>
+        <source>That&apos;s great news, Doctor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="149"/>
+        <source>Unfortunately, we are running low on materials to create more of it. The nearby medical facilities have all been looted, most likely by raiders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="150"/>
+        <source>Greyfield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="151"/>
+        <source>Hmmm? What do you mean?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="152"/>
+        <source>Admiral Greyfield&apos;s number-one priority is his own safety and well-being. I&apos;m sure he is behind the looting of those facilities you mentioned. And I have no doubt he possesses huge quantities of the vaccine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="153"/>
+        <source>First Captain Brenner, and now this?! I&apos;ll kill him!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="154"/>
+        <source>Remember how I said emotion had a time a place, Will? This isn&apos;t it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="155"/>
+        <source>Sorry! Sorry. You&apos;re right. Let&apos;s just track down Greyfield and finish this once and for all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="156"/>
+        <source>Keep it simple--never give up. If you can do that, anything is possible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="157"/>
+        <source>Got it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="158"/>
+        <source>That&apos;s the spirit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="159"/>
+        <source>I understand, Captain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="160"/>
+        <source>Will? Are you all right? You seem distant.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="161"/>
+        <source> ...Huh? Oh, sorry, Isabella. I was just remembering what Captain Brenner said after he rescued me. Whenever things are at their darkest, I try to think about those words. I owe my life to Captain Brenner, so it&apos;s just... It&apos;s my way of remembering him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="162"/>
+        <source>Can I... Can I help, Will?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="163"/>
+        <source>No. Don&apos;t worry about me. I know what I need to do. Greyfield and Waylon are responsible for Captain Brenner&apos;s death, and it&apos;s time for them to pay. I&apos;m going to end this war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="164"/>
+        <source>Lazurian recon units... I mean, OUR recon units have spotted the enemy. ...Wow, that&apos;s going to take a little getting used to... Commander! Enemy units are attacking from the rear.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="165"/>
+        <source>Ground or aerial?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="166"/>
+        <source>Aerial.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="167"/>
+        <source>Is it Waylon?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="168"/>
+        <source>Looks like it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="169"/>
+        <source>Let&apos;s go! All units, move out! And show no mercy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="196"/>
+        <source>One more mission and I can retire to my burned-out mansion! Life of luxury, here I come! Now hit me! Whooooo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="201"/>
+        <source>Well, I&apos;ll be dipped in nacho cheese... Someone put the damn kid in charge! You think you got a chance against me, brother man? Think again! I&apos;m gonna get you like I got Brenner! Whoooooo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="202"/>
+        <source>Keep talking, Waylon! It&apos;ll be the last thing you ever do!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="203"/>
+        <source>Aw, don&apos;t sound so hostile, kid! I know you missed me! You gotta live my life, brother man! Food, drink, girls... I got it all! I&apos;m living the high life while you&apos;re out there eatin&apos; bugs and whatnot. So how about it? Make things easy on your old selves... Just hand over the Lazurians, and I&apos;ll see that Greyfield rewards you. What do you say, brother man?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="204"/>
+        <source>Save it, Waylon! We&apos;re going to fight and we&apos;re going to win!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="205"/>
+        <source>Aw, hell! You&apos;re as bad as ol&apos; Brenner! All ready to die just to defend a buncha damn Lazurians. Well, nothing for it! Looks like I&apos;m gonna have to teach you a lesson!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="206"/>
+        <source>I don&apos;t need your lessons, Waylon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="207"/>
+        <source>Stuff it junior! You and your little toy soldiers make me sick! All self-righteous... Struttin&apos; around like you own the damn joint... You ain&apos;t helpin&apos; people because you care! You do it to feel important! You&apos;re a hypocrite, and you ain&apos;t better than me! Least I&apos;m honest! Least ol&apos; Waylon&apos;s honest about who and what I am.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="208"/>
+        <source>...Maybe you&apos;re right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="209"/>
+        <source>Praise Greyfield! The boy sees the light!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="210"/>
+        <source>Waylon...Maybe we are the same. You do what you want to do, and so do I. You fly around and act like a jerk because it&apos;s what you want to do. And I help people because it&apos;s what I want to do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="211"/>
+        <source>...Why, you little sack of crap.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="212"/>
+        <source>Does that make me a hypocrite? If I do nothing, people will suffer. People will die. You say I do this to feel important, and maybe you&apos;re right. But if that saves even one life, then it&apos;s worth it. Understand?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js" line="213"/>
+        <source>Aw, nuts! I heard enough! Folks like you never live very long, anyway. I&apos;m gonna bury you, kid. Give my regards to Captain Courageous!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

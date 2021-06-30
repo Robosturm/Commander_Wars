@@ -51,7 +51,7 @@ namespace oxygine
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.lock();
-                m_Timer.stop();
+                emit sigStopUpdateTimer();
             }
             ++m_pausedCounter;
         }
@@ -67,7 +67,7 @@ namespace oxygine
                 m_pauseMutex.unlock();
                 if (m_timerCycle > 0)
                 {
-                    m_Timer.start(m_timerCycle, this);
+                    emit sigStartUpdateTimer();
                 }
             }
         }
@@ -84,7 +84,8 @@ namespace oxygine
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
         void sigMouseMoveEvent(qint32 x, qint32 y);
-
+        void sigStopUpdateTimer();
+        void sigStartUpdateTimer();
     public slots:
         /**
          * @brief getBrightness
@@ -110,6 +111,14 @@ namespace oxygine
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void loadRessources(){}
+        void stopUpdateTimer()
+        {
+            m_Timer.stop();
+        }
+        void startUpdateTimer()
+        {
+             m_Timer.start(m_timerCycle, this);
+        }
     protected:
         virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;
