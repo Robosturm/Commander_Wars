@@ -47,7 +47,6 @@ WorkerThread::~WorkerThread()
 void WorkerThread::start()
 {
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
-
     Mainapp* pApp = Mainapp::getInstance();
     Console* pConsole = Console::getInstance();
     // create the initial menue no need to store the object
@@ -130,6 +129,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
+    pLoadingScreen->hide();
     m_started = true;
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }

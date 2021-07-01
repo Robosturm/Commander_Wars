@@ -341,8 +341,12 @@ GameMap::~GameMap()
         pInterpreter->deleteObject(m_JavascriptName);
     }
     // clean up session
-    for (qint32 y = 0; y < m_fields.size(); y++)
+    for (qint32 y = 0; y < m_fields.size(); ++y)
     {
+        for (qint32 x = 0; x < m_fields[y].size(); ++x)
+        {
+            m_fields[y].at(x)->detach();
+        }
         m_fields[y].clear();
     }
     m_fields.clear();

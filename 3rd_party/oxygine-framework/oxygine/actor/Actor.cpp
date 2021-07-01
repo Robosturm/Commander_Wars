@@ -45,7 +45,10 @@ namespace oxygine
 
     void Actor::added2stage(Stage* stage)
     {
-        Q_ASSERT(m_stage == nullptr);
+        if (m_stage != nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::added2stage trying to add to stage while on a stage");
+        }
         m_stage = stage;
 
         spActor actor = m_children._first;
@@ -60,8 +63,10 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
-        Q_ASSERT(m_stage);
-
+        if (m_stage == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removedFromStage trying to remove from stage while not on a stage");
+        }
         onRemovedFromStage();
         m_stage->removeEventListeners(this);
         m_stage = nullptr;
@@ -310,7 +315,7 @@ namespace oxygine
             me->__localScale *= m_transform.a;
             if (me->__localScale == NAN)
             {
-                Q_ASSERT(0);
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::handleEvent locale scale is NAN");
             }
         }
 
@@ -723,11 +728,17 @@ namespace oxygine
 
     void Actor::insertSiblingBefore(spActor actor)
     {
-        Q_ASSERT(actor != this);
-        Q_ASSERT(actor);
-        Q_ASSERT(m_parent);
-        if (!m_parent)
+        if (actor == this)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor is self");
+        }
+        else if (actor.get() == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor is nullptr");
+        }
+        else if (m_parent != nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor has already a parent");
             return;
         }
         actor->detach();
@@ -738,12 +749,18 @@ namespace oxygine
 
     void Actor::insertSiblingAfter(spActor actor)
     {
-        Q_ASSERT(actor != this);
-        Q_ASSERT(actor);
-        Q_ASSERT(m_parent);
         if (!m_parent)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter parent is nullptr");
             return;
+        }
+        else if (actor.get() == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter actor is nullptr");
+        }
+        else if (actor == this)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter actor is self");
         }
         actor->detach();
         spActor t = this;
@@ -753,17 +770,19 @@ namespace oxygine
 
     void Actor::attachTo(spActor parent)
     {
-        Q_ASSERT(parent != this);
         attachTo(parent.get());
     }
 
     void Actor::attachTo(Actor* parent)
     {
-        Q_ASSERT(parent != this);
-        Q_ASSERT(parent);
         if (!parent)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::attachTo parent is nullptr");
             return;
+        }
+        else if (parent == this)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::attachTo parent is self");
         }
         parent->addChild(this);
     }
@@ -779,7 +798,10 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add empty actor");
             return;
         }
-        Q_ASSERT(actor != this);
+        else if (actor == this)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
+        }
         actor->detach();
         QMutexLocker lock(&m_Locked);
 
@@ -851,7 +873,7 @@ namespace oxygine
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
             }
-            if (actor->m_parent == this)
+            else
             {
                 QMutexLocker lock(&m_Locked);
                 setParent(actor.get(), nullptr);
@@ -1094,10 +1116,10 @@ namespace oxygine
 
     spTween Actor::__addTween(spTween tween, bool)
     {
-        Q_ASSERT(tween);
         QMutexLocker lock(&m_Locked);
         if (!tween)
         {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
             return nullptr;
         }
         tween->start(*this);

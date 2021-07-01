@@ -78,8 +78,7 @@ Mainapp::~Mainapp()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-           QThread::currentThread() == m_pMainThread ||
-           m_shuttingDown;
+           (QThread::currentThread() == m_pMainThread && (m_shuttingDown || !m_Worker->getStarted()));
 }
 
 void Mainapp::loadRessources()
@@ -94,6 +93,7 @@ void Mainapp::loadRessources()
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->moveToThread(&m_Workerthread);
     if (Settings::getSmallScreenDevice())
     {
         m_timerCycle = 33;
@@ -287,7 +287,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 MainServer::getInstance();
                 m_GameServerThread.start(QThread::Priority::HighestPriority);
             }
-            pLoadingScreen->hide();
             if (!m_slave)
             {
                 emit m_Worker->sigShowMainwindow();
