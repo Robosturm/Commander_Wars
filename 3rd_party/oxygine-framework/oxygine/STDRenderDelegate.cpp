@@ -28,13 +28,13 @@ namespace oxygine
         {
             return;
         }
-        spActor actor = parent->getFirstChild();
-        while (actor.get() != nullptr)
+        Actor* actor = parent->getFirstChildActor();
+        while (actor != nullptr)
         {
             if (actor->getParent())
             {
                 actor->render(rs);
-                actor = actor->getNextSibling().get();
+                actor = actor->getNextSiblingActor();
             }
             else
             {
@@ -100,7 +100,7 @@ namespace oxygine
 
     void STDRenderDelegate::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
-        spSprite maskSprite = sprite->getMask();
+        Sprite* maskSprite = sprite->getMask();
         if (!maskSprite)
         {
             sprite->Sprite::render(parentRS);

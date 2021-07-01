@@ -47,7 +47,10 @@ namespace oxygine
          */
         void pauseRendering()
         {
-            Q_ASSERT(isWorker());
+            if (!isWorker())
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "pauseRendering not started by worker thread");
+            }
             if (m_pausedCounter == 0)
             {
                 m_pauseMutex.lock();
@@ -60,7 +63,10 @@ namespace oxygine
          */
         void continueRendering()
         {
-            Q_ASSERT(isWorker());
+            if (!isWorker())
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "continueRendering not started by worker thread");
+            }
             --m_pausedCounter;
             if (m_pausedCounter == 0)
             {

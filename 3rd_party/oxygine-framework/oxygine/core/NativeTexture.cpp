@@ -14,7 +14,7 @@ namespace oxygine
 
     }
 
-    void NativeTextureNull::init(const ImageData&, bool)
+    void NativeTextureNull::init(const ImageData&)
     {
 
     }

@@ -47,10 +47,14 @@ namespace oxygine
 
         /**returns first child*/
         spActor             getFirstChild() const {return m_children._first;}
+        /**returns first child*/
+        Actor*              getFirstChildActor() const {return m_children._first.get();}
         /**returns last child*/
         spActor             getLastChild() const {return m_children._last;}
         /**returns next sibling*/
         spActor             getNextSibling()const {return intr_list::_next;}
+        /**returns next sibling*/
+        Actor*              getNextSiblingActor()const {return intr_list::_next.get();}
         /**returns previous sibling*/
         spActor             getPrevSibling()const {return intr_list::_prev;}
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
-#include "closure/closure.h"
-#include "core/Object.h"
-#include <list>
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include <QVector>
 
 namespace oxygine
 {

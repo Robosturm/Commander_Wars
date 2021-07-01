@@ -40,7 +40,7 @@ namespace oxygine
     public:
         virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) override;
         virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) override;
-        virtual void init(const ImageData& src, bool sysMemCopy) override;
+        virtual void init(const ImageData& src) override;
         virtual void release() override;
 
         virtual ImageData lock(lock_flags, const Rect* src) override;

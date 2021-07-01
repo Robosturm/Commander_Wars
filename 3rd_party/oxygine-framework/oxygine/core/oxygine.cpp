@@ -21,7 +21,6 @@
 
 namespace oxygine
 {
-
     namespace core
     {
 

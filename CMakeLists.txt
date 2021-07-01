@@ -136,6 +136,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
     3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
+    3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp
     # core gl
     3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.cpp
     3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.cpp

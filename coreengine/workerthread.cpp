@@ -131,6 +131,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     pLoadingScreen->hide();
     m_started = true;
+    Console::print("WorkerThread::start Finalizing", Console::eDEBUG);
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }
 

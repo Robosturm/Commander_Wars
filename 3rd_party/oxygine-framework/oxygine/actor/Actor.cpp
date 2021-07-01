@@ -879,6 +879,7 @@ namespace oxygine
             else
             {
                 QMutexLocker lock(&m_Locked);
+                QMutexLocker lockActor(&(actor->m_Locked));
                 setParent(actor.get(), nullptr);
                 m_children.removeItem(actor);
             }

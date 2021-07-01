@@ -13,9 +13,9 @@ namespace oxygine
     {
     }
 
-    spSprite MaskedSprite::getMask() const
+    Sprite* MaskedSprite::getMask() const
     {
-        return m_mask;
+        return m_mask.get();
     }
 
     bool    MaskedSprite::getUseRChannel() const

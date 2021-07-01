@@ -1,7 +1,4 @@
 #pragma once
-#ifndef OXYGINE_SCALARMATH
-#define OXYGINE_SCALARMATH
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
 #include <qcolor.h>
 
 namespace oxygine
@@ -112,5 +109,3 @@ namespace oxygine
         return out;
     }
 }
-
-#endif // OXYGINE_SCALARMATH

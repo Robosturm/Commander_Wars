@@ -95,7 +95,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     else
     {
-        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 100);
+        m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 90);
     }
 
     addChild(m_pGraphBackground);

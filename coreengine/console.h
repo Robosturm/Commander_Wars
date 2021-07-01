@@ -4,11 +4,10 @@
 #include <QVector>
 #include <QObject>
 #include <QElapsedTimer>
+#include <QKeyEvent>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
-#include "QKeyEvent"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 class QString;
 class QMutex;

@@ -21,8 +21,6 @@
 
 #include "spritingsupport/spritecreator.h"
 
-#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
-
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;

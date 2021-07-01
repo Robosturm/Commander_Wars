@@ -1,12 +1,10 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
-
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <atomic>
-#include <qobject.h>
-#include <qthread.h>
 
 namespace oxygine
 {
+    class ResAnim;
     /** RefCounter **/
     class ref_counter
     {
@@ -25,26 +23,7 @@ namespace oxygine
         {
             ++m_ref_counter;
         }
-
-        inline void releaseRef()
-        {
-            if (0 == --m_ref_counter)
-            {
-                QObject* pObj = dynamic_cast<QObject*>(this);
-                if (pObj == nullptr)
-                {
-                    delete this;
-                }
-                else if (pObj->thread() == QThread::currentThread())
-                {
-                    delete this;
-                }
-                else
-                {
-                    pObj->deleteLater();
-                }
-            }
-        }
+        void releaseRef();
     private:
         std::atomic<qint32> m_ref_counter{0};
     private:

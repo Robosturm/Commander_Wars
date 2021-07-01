@@ -16,16 +16,6 @@ namespace pugi
 
 namespace oxygine
 {
-    enum error_policy
-    {
-        ep_show_error,//shows assert and prints error to log
-        ep_show_warning,//prints warning to log
-        ep_ignore_error//doesn't show any errors
-    };
-
-
-    void handleErrorPolicy(error_policy ep, QString message);
-
     typedef std::chrono::milliseconds timeMS;
     typedef unsigned char pointer_index;
 

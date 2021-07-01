@@ -1,6 +1,8 @@
-#include "loadingscreen.h"
+#include "objects/loadingscreen.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -90,6 +92,7 @@ void LoadingScreen::setWorktext(QString workText)
 
 void LoadingScreen::hide()
 {
+    Console::print("LoadingScreen::hide", Console::eDEBUG);
     m_pLoadingScreen->detach();
     m_pLoadingScreen = nullptr;
 }
