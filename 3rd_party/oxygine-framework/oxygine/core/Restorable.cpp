@@ -77,13 +77,19 @@ namespace oxygine
         }
         QMutexLocker al(&m_mutex);
 
-        Q_ASSERT(m_restoring == false);
+        if (m_restoring != false)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Restorable::reg error while restoring");
+        }
         m_cb = cb;
 
         m_registered = true;
 
         restorable::const_iterator i = findRestorable(this);
-        Q_ASSERT(i == m_restorable.end());
+        if (i != m_restorable.end())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Restorable::reg iterator error");
+        }
         m_restorable.push_back(this);
     }
 
@@ -94,7 +100,10 @@ namespace oxygine
             return;
         }
         QMutexLocker al(&m_mutex);
-        Q_ASSERT(m_restoring == false);
+        if (m_restoring != false)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Restorable::unreg error while unregistering");
+        }
         restorable::const_iterator i = findRestorable(this);
         if (i != m_restorable.end())
         {

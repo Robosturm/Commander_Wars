@@ -112,7 +112,7 @@ namespace oxygine
         m_format = tf;
     }
 
-    void NativeTextureGLES::init(const ImageData& src, bool sysMemCopy)
+    void NativeTextureGLES::init(const ImageData& src)
     {
         GLuint id = createTexture();
 
@@ -127,9 +127,6 @@ namespace oxygine
         {
             window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.m_w, src.m_h, 0, p.format, p.type, src.m_data);
         }
-
-        Q_ASSERT(sysMemCopy == false);
-
         init(id, src.m_w, src.m_h, src.m_format);
     }
 
@@ -207,7 +204,7 @@ namespace oxygine
 
     ImageData NativeTextureGLES::lock(lock_flags flags, const Rect* src)
     {
-        assert(m_lockFlags == 0);
+        Q_ASSERT(m_lockFlags == 0);
 
 
         m_lockFlags = flags;
@@ -222,7 +219,7 @@ namespace oxygine
 
         m_lockRect = r;
 
-        assert(m_lockFlags != 0);
+        Q_ASSERT(m_lockFlags != 0);
 
         if (m_lockRect.isEmpty())
         {

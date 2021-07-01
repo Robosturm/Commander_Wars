@@ -95,7 +95,10 @@ namespace oxygine
 
     PointerState* Input::getTouchByIndex(pointer_index index_)
     {
-        Q_ASSERT(index_ != 0);
+        if (index_ == 0)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Input::getTouchByIndex index is 0");
+        }
 
         qint32 index = index_;
         if (index == MAX_TOUCHES + 1)
@@ -103,7 +106,10 @@ namespace oxygine
             return &m_pointerMouse;
         }
         index -= 1;
-        Q_ASSERT(index >= 0 && index < MAX_TOUCHES);
+        if (index < 0 || index >= MAX_TOUCHES)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Input::getTouchByIndex index is out of valid range");
+        }
         index = std::min(std::max(index, 0), MAX_TOUCHES);
         return &m_pointers[index];
     }

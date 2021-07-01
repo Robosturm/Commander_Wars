@@ -63,8 +63,14 @@ namespace oxygine
         m_end = end;
 
         qint32 num = m_row == -1 ? m_resAnim->getTotalFrames() : m_resAnim->getColumns();
-        Q_ASSERT(m_start >= 0 && m_start < num);
-        Q_ASSERT(m_end >= 0 && m_end < num);
+        if (m_start < 0 || m_start >= num)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenAnim::setInterval invalid start");
+        }
+        if (m_end < 0 || m_end >= num)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenAnim::setInterval invalid end");
+        }
     }
 
     void TweenAnim::_setAnimFrame(Sprite& actor, const AnimationFrame& frame)

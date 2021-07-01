@@ -52,26 +52,6 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         pSprite->setPosition(0, startPosition);
         pSprite->setScaleY(1.0f - startPercent);
         float width = pAnim->getWidth();
-        bool on = false;
-        for (qint32 i = 0; i < pAnim->getHeight(); i++)
-        {
-            bool testErg = pSprite->isOn(oxygine::Vector2(width / 2.0f, i), 1.0f);
-            if (!testErg)
-            {
-                if (on)
-                {
-                    m_BuildingEndPos = i - 3;
-                }
-                else
-                {
-                    m_BuildingStartPos = i;
-                }
-            }
-            else
-            {
-                on = true;
-            }
-        }
 
         // going down of the building
         oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * m_jumpSprites * m_jumpingCount + m_frameTime * m_ayeAyeSprites);

@@ -33,7 +33,7 @@ namespace oxygine
         spNativeTexture texture = IVideoDriver::instance->createTexture();
         m_texture = texture;
 
-        texture->init(original->lock(), false);
+        texture->init(original->lock());
         texture->apply();
         ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
         Point originalSize = original->getSize();

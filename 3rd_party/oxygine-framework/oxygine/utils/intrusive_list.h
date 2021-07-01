@@ -41,7 +41,10 @@ namespace oxygine
 
         void insert_after(intrusive_ptr<T>& child, intrusive_ptr<T>& after)
         {
-            Q_ASSERT(after->_list == this);
+            if (after->_list != this)
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::insert_after after->_list != this");
+            }
             child->_list = this;
 
             if (after->_next)
@@ -114,29 +117,44 @@ namespace oxygine
 
         void removeItem(intrusive_ptr<T>& child)
         {
-            Q_ASSERT(child->_list == this);
+            if (child->_list != this)
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::removeItem child->_list != this");
+            }
             child->_list = nullptr;
 
             if (child->_next)
             {
-                Q_ASSERT(child->_next->_prev == child);
+                if (child->_next->_prev != child)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::removeItem child->_next->_prev != child");
+                }
                 child->_next->_prev = child->_prev;
             }
             else
             {
-                Q_ASSERT(child == _last);
+                if (child != _last)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::removeItem child != _last");
+                }
                 _last = child->_prev;
             }
 
 
             if (child->_prev)
             {
-                Q_ASSERT(child->_prev->_next == child);
+                if (child->_prev->_next != child)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::removeItem child->_prev->_next != child");
+                }
                 child->_prev->_next = child->_next;
             }
             else
             {
-                Q_ASSERT(child == _first);
+                if (child != _first)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "intrusive_list::removeItem child != first");
+                }
                 _first = child->_next;
             }
 

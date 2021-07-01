@@ -220,7 +220,10 @@ namespace oxygine
             if (m_overred == 0)
             {
                 m_overred = te->index;
-                Q_ASSERT(m_overred > 0);
+                if (m_overred == 0)
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
+                }
                 updateStateOvered();
 
                 TouchEvent over = *te;

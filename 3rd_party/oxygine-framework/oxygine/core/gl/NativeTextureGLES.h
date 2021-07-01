@@ -15,7 +15,7 @@ namespace oxygine
 
         virtual void init(GLuint id, qint32 w, qint32 h, ImageData::TextureFormat tf) override;
         virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget) override;
-        virtual void init(const ImageData& src, bool sysMemCopy) override;
+        virtual void init(const ImageData& src) override;
         virtual void release() override;
         virtual void swap(NativeTexture*)  override;
 

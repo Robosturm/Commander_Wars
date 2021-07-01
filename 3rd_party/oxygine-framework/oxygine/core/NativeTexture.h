@@ -14,7 +14,7 @@ namespace oxygine
         NativeTexture() {}
         virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) = 0;
         virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) = 0;
-        virtual void init(const ImageData& src, bool sysMemCopy = false) = 0;
+        virtual void init(const ImageData& src) = 0;
         //virtual void release() = 0;
         virtual GLuint getId() = 0;
 

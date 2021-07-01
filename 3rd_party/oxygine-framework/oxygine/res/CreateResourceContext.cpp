@@ -117,7 +117,7 @@ namespace oxygine
     RestoreResourcesContext RestoreResourcesContext::m_instance;
     void RestoreResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        opt.dest->init(opt.src->lock(), false);
+        opt.dest->init(opt.src->lock());
         opt.ready();
     }
 
@@ -130,7 +130,7 @@ namespace oxygine
 
     void SingleThreadResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        opt.dest->init(opt.src->lock(), false);
+        opt.dest->init(opt.src->lock());
         opt.ready();
     }
 

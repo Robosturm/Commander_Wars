@@ -75,7 +75,10 @@ namespace oxygine
 
     void RenderStateCache::setTexture(qint32 sampler, const spNativeTexture& t)
     {
-        Q_ASSERT(sampler < MAX_TEXTURES);
+        if (sampler >= MAX_TEXTURES)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "RenderStateCache::setTexture texture error");
+        }
 
         if (_textures[sampler] == t)
         {
@@ -293,14 +296,14 @@ namespace oxygine
         oxygine::operations::applyOperation(fill, im);
 
         white = IVideoDriver::instance->createTexture();
-        white->init(im, false);
+        white->init(im);
         white->setLinearFilter(GL_LINEAR);
         white->setClamp2Edge(false);
 
 
         memwhite.fillZero();
         invisible = IVideoDriver::instance->createTexture();
-        invisible->init(im, false);
+        invisible->init(im);
         invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
 
@@ -392,7 +395,10 @@ namespace oxygine
 
     void STDRenderer::begin()
     {
-        Q_ASSERT(m_verticesData.empty() == true);
+        if (m_verticesData.empty() == false)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "STDRenderer::begin wasn't cleared");
+        }
         m_verticesData.clear();
         m_transform.identity();
 
@@ -566,7 +572,10 @@ namespace oxygine
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
     {
-        Q_ASSERT(m_prevRT == 0);
+        if (m_prevRT != 0)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "STDRenderer::begin render target wasn't reseted");
+        }
         m_prevRT = m_driver->getRenderTarget();
         m_driver->setRenderTarget(nt);
 
