@@ -406,6 +406,11 @@ namespace oxygine
         }
     }
 
+    bool GameWindow::getShuttingDown() const
+    {
+        return m_shuttingDown;
+    }
+
     qint32 GameWindow::getTimerCycle() const
     {
         return m_timerCycle;

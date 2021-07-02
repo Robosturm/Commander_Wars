@@ -1,5 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "gameinput/mapmover.h"
 
@@ -25,10 +26,13 @@ namespace oxygine
             {
                 oxygine::ResAnim* pObj1 = dynamic_cast<oxygine::ResAnim*>(this);
                 MapMover* pObj2 = dynamic_cast<MapMover*>(this);
-                if (pObj1 == nullptr &&
-                    pObj2 == nullptr)
+                if (!GameWindow::getWindow()->getShuttingDown())
                 {
-                    handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
+                    if (pObj1 == nullptr &&
+                        pObj2 == nullptr)
+                    {
+                        handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
+                    }
                 }
                 pObj->deleteLater();
             }
