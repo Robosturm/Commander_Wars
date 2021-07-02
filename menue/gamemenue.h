@@ -41,6 +41,7 @@ public:
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue();
     virtual ~GameMenue();
+    void deleteMenu();
     static GameMenue* getInstance()
     {
         return m_pGameMenuInstance.get();

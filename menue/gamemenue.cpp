@@ -1306,10 +1306,15 @@ void GameMenue::victory(qint32 team)
             AchievementManager::getInstance()->onVictory(team, humanWin);
             Console::print("Leaving Game Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
-            m_pGameMenuInstance = nullptr;
-            oxygine::Actor::detach();
+            deleteMenu();
         }
     }
+}
+
+void GameMenue::deleteMenu()
+{
+    m_pGameMenuInstance = nullptr;
+    oxygine::Actor::detach();
 }
 
 void GameMenue::showAttackLog(qint32 player)

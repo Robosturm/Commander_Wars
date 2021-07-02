@@ -407,6 +407,11 @@ namespace oxygine
         }
     }
 
+    void GameWindow::setShuttingDown(bool newShuttingDown)
+    {
+        m_shuttingDown = newShuttingDown;
+    }
+
     bool GameWindow::getShuttingDown() const
     {
         return m_shuttingDown;

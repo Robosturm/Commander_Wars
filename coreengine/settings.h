@@ -37,8 +37,10 @@ class Settings : public QObject, public oxygine::ref_counter
 
         static void setUsername(const QString &Username);
 
+public slots:
+        static bool getShowDetailedBattleForcast();
+        static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
 
-    public slots:
         static const QString &getUserPath();
         static void setUserPath(const QString &newUserPath);
 
@@ -524,6 +526,7 @@ class Settings : public QObject, public oxygine::ref_counter
         static bool m_centerOnMarkedField;
         static bool m_syncAnimations;
         static bool m_simpleDeselect;
+        static bool m_showDetailedBattleForcast;
 
         // internal members
         static spSettings m_pInstance;

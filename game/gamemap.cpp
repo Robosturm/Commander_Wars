@@ -350,6 +350,7 @@ GameMap::~GameMap()
         m_fields[y].clear();
     }
     m_fields.clear();
+    Console::print("map was deleted", Console::eDEBUG);
 }
 
 QStringList GameMap::getAllUnitIDs()

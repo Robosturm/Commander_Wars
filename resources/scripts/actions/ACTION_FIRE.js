@@ -366,7 +366,8 @@ var Constructor = function()
             if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
                 if (typeof map !== 'undefined' &&
-                    map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                    map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human &&
+                    settings.getShowDetailedBattleForcast())
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)

@@ -120,6 +120,7 @@ GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastP
 bool Settings::m_centerOnMarkedField = false;
 bool Settings::m_syncAnimations = false;
 bool Settings::m_simpleDeselect = false;
+bool Settings::m_showDetailedBattleForcast = true;
 QString Settings::m_userPath = "";
 
 // add mod path
@@ -150,6 +151,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getShowDetailedBattleForcast()
+{
+    return m_showDetailedBattleForcast;
+}
+
+void Settings::setShowDetailedBattleForcast(bool newShowDetailedBattleForcast)
+{
+    m_showDetailedBattleForcast = newShowDetailedBattleForcast;
 }
 
 bool Settings::getTouchScreen()
@@ -1326,9 +1337,11 @@ void Settings::loadSettings()
     if (Settings::hasSmallScreen())
     {
         m_simpleDeselect = true;
+        m_showDetailedBattleForcast = false;
     }
     else
     {
+        m_showDetailedBattleForcast = settings.value("ShowDetailedBattleForcast", true).toBool();
         m_simpleDeselect = settings.value("SimpleDeselect", false).toBool();
     }
 
@@ -1509,6 +1522,7 @@ void Settings::saveSettings()
         settings.setValue("CenterOnMarkedField",            m_centerOnMarkedField);
         settings.setValue("SyncAnimations",                 m_syncAnimations);
         settings.setValue("SimpleDeselect",                 m_simpleDeselect);
+        settings.setValue("ShowDetailedBattleForcast",      m_showDetailedBattleForcast);
         settings.endGroup();
 
         // network

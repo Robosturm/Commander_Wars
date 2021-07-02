@@ -214,6 +214,26 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Detailed Battle Info: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If active the game will show a detailed battle forecast info."));
+    pCheckbox->setChecked(Settings::getShowDetailedBattleForcast());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setShowDetailedBattleForcast(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    if (Settings::getSmallScreenDevice())
+    {
+        pCheckbox->setEnabled(false);
+    }
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Menu Heigth: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

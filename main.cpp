@@ -195,17 +195,27 @@ QQmlDebuggingEnabler enabler;
     Settings::setX(window.x());
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
+    window.setShuttingDown(true);
     Player::releaseStaticData();
-    window.getWorkerthread()->exit(0);
-    window.shutdown();
-    Settings::saveSettings();
-    Settings::shutdown();
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->deleteMenu();
+    }
     if (GameMap::getInstance() != nullptr)
     {
         GameMap::getInstance()->deleteMap();
     }
+    window.getWorkerthread()->quit();
+    window.getWorkerthread()->wait();
+    Console::print("Shutting down main window", Console::eDEBUG);
+    window.shutdown();
+    Console::print("Saving settings and shutting them down", Console::eDEBUG);
+    Settings::saveSettings();
+    Settings::shutdown();
+
     if (MainServer::getInstance() != nullptr)
     {
+        Console::print("Shutting game server", Console::eDEBUG);
         MainServer::getInstance()->deleteLater();
         window.getGameServerThread()->quit();
         window.getGameServerThread()->wait();
@@ -213,6 +223,7 @@ QQmlDebuggingEnabler enabler;
     //end
     if (returncode == 1)
     {
+        Console::print("Restarting application", Console::eDEBUG);
         QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
     }
     return returncode;
