@@ -165,7 +165,7 @@ namespace oxygine
         QMutex m_pauseMutex;
         qint32 m_pausedCounter{0};
 
-        static GameWindow* _window;
+        static GameWindow* m_window;
         float m_brightness{0.0f};
         float m_gamma{1.0f};
         Qt::HANDLE m_mainHandle{nullptr};

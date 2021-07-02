@@ -19,6 +19,7 @@ class Settings : public QObject, public oxygine::ref_counter
         Q_OBJECT
     public:
         static Settings* getInstance();
+        static void shutdown();
 
         static void loadSettings();
         static void saveSettings();

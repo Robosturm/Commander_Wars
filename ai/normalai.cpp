@@ -2805,7 +2805,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVector
     if (unitBuildData.loadingCount > 0 || unitBuildData.loadingCount == 1)
     {
         if (unitBuildData.transportCount <= 0 ||
-            static_cast<float>(unitBuildData.loadingCount) / static_cast<float>(unitBuildData.transportCount) < m_ProducingTransportMinLoadingTransportRatio ||
+            static_cast<float>(pUnits->size()) / static_cast<float>(unitBuildData.transportCount) > m_ProducingTransportMinLoadingTransportRatio ||
             unitBuildData.loadingCount == 1)
         {
             score += calcCostScore(data);

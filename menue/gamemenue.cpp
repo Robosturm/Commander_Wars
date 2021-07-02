@@ -924,7 +924,8 @@ void GameMenue::skipExceptBattle()
                         battleActive = true;
                         i++;
                     }
-                    else if (animMode == GameEnums::AnimationMode_OnlyBattleOwn)
+                    else if (animMode == GameEnums::AnimationMode_OnlyBattleOwn ||
+                             animMode == GameEnums::AnimationMode_Own)
                     {
                         // only show animation if at least one player is a human
                         if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
@@ -934,7 +935,8 @@ void GameMenue::skipExceptBattle()
                             i++;
                         }
                     }
-                    else if (animMode == GameEnums::AnimationMode_OnlyBattleAlly)
+                    else if (animMode == GameEnums::AnimationMode_OnlyBattleAlly ||
+                             animMode == GameEnums::AnimationMode_Ally)
                     {
                         Player* pPlayer2 = pMap->getCurrentViewPlayer();
                         // only show animation if at least one player is an ally
@@ -945,7 +947,8 @@ void GameMenue::skipExceptBattle()
                             i++;
                         }
                     }
-                    else if (animMode == GameEnums::AnimationMode_OnlyBattleEnemy)
+                    else if (animMode == GameEnums::AnimationMode_OnlyBattleEnemy ||
+                             animMode == GameEnums::AnimationMode_Enemy)
                     {
                         Player* pPlayer2 = pMap->getCurrentViewPlayer();
                         // only show animation if none of the players is human and all units are enemies of the current view player
@@ -1009,7 +1012,7 @@ GameMenue::AnimationSkipMode GameMenue::getSkipMode()
             // skip animations if the player isn't a human
             if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
             {
-                skipAnimations = AnimationSkipMode::All;
+                skipAnimations = AnimationSkipMode::Battle;
             }
             break;
         }
@@ -1020,7 +1023,7 @@ GameMenue::AnimationSkipMode GameMenue::getSkipMode()
             // skip animations if the current player is an enemy of the current view player
             if (pPlayer2->isEnemy(pPlayer1))
             {
-                skipAnimations = AnimationSkipMode::All;
+                skipAnimations = AnimationSkipMode::Battle;
             }
             break;
         }
@@ -1032,7 +1035,7 @@ GameMenue::AnimationSkipMode GameMenue::getSkipMode()
             if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
                 pPlayer2->isAlly(pPlayer1))
             {
-                skipAnimations = AnimationSkipMode::All;
+                skipAnimations = AnimationSkipMode::Battle;
             }
             break;
         }

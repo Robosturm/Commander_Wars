@@ -26,7 +26,8 @@ namespace oxygine
             {
                 oxygine::ResAnim* pObj1 = dynamic_cast<oxygine::ResAnim*>(this);
                 MapMover* pObj2 = dynamic_cast<MapMover*>(this);
-                if (!GameWindow::getWindow()->getShuttingDown())
+                if (GameWindow::getWindow() != nullptr &&
+                    !GameWindow::getWindow()->getShuttingDown())
                 {
                     if (pObj1 == nullptr &&
                         pObj2 == nullptr)

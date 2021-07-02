@@ -366,9 +366,9 @@ var Constructor = function()
             if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
                 if (typeof map !== 'undefined' &&
-                        map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                    map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
                 {
-                    var defUnit = map.getUnit(x, y);
+                    var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
                         var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,

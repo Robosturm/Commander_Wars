@@ -973,6 +973,7 @@ void GameMap::setZoom(float zoom)
         pMenu->updateSlidingActorSize();
     }
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
+    emit sigZoomChanged(m_zoom);
 }
 
 void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)

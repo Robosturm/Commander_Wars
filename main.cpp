@@ -195,14 +195,15 @@ QQmlDebuggingEnabler enabler;
     Settings::setX(window.x());
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
+    Player::releaseStaticData();
     window.getWorkerthread()->exit(0);
     window.shutdown();
     Settings::saveSettings();
+    Settings::shutdown();
     if (GameMap::getInstance() != nullptr)
     {
         GameMap::getInstance()->deleteMap();
     }
-    Player::releaseStaticData();
     if (MainServer::getInstance() != nullptr)
     {
         MainServer::getInstance()->deleteLater();

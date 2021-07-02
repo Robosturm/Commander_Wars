@@ -161,6 +161,8 @@ public slots:
     QStringList getViewplayerActionList();
     void autoEndTurn();
     void syncMarkedFields();
+protected slots:
+    void zoomChanged(float zoom);
 protected:
     void nextMarkedField();
     void previousMarkedField();

@@ -141,6 +141,11 @@ Settings* Settings::getInstance()
     return m_pInstance.get();
 }
 
+void Settings::shutdown()
+{
+    m_pInstance = nullptr;
+}
+
 Settings::Settings()
 {
     setObjectName("Settings");

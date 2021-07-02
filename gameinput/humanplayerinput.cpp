@@ -33,12 +33,14 @@ void HumanPlayerInput::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
     spGameMenue pMenu = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMenu.get() != nullptr)
     {
         connect(pMenu.get(), &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
         connect(pMenu.get(), &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
         connect(pMenu.get(), &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
         connect(pMenu.get(), &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+        connect(pMap.get(), &GameMap::sigZoomChanged, this, &HumanPlayerInput::zoomChanged, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
         connect(pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
         connect(this, &HumanPlayerInput::performAction, pMenu.get(), &GameMenue::performAction, Qt::QueuedConnection);
@@ -974,6 +976,7 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     }
     oxygine::spSprite pSprite2 = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
+
     if (pAnim2->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
@@ -985,38 +988,40 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     }
     QColor color = m_pMarkedFieldData->getZLabelColor();
     pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
-    pSprite->setScale(2.0f);
-    pSprite2->setScale(2.0f);
+    constexpr float baseScale = 4.0f;
+    pSprite->setScale(baseScale);
+    pSprite2->setScale(baseScale);
+    m_ZInformationLabel->setSize(pAnim->getSize() * baseScale);
     m_ZInformationLabel->addChild(pSprite2);
     m_ZInformationLabel->addChild(pSprite);
     // add text to the label
     oxygine::spClipRectActor clipRec = oxygine::spClipRectActor::create();
-    clipRec->setX(2);
+    clipRec->setX(4);
     clipRec->setY(0);
-    clipRec->setSize(28 * 2, 20);
+    clipRec->setSize(28 * 4, 40);
     oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72()).
                                withColor(FontManager::getFontColor()).
                                alignLeft().
                                alignTop();
     textField->setStyle(style);
-    textField->setScale(16.0f / 72.0f);
+    textField->setScale(32.0f / 72.0f);
     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
     textField->attachTo(clipRec);
     clipRec->attachTo(m_ZInformationLabel);
 
     oxygine::spTextField textField2 = oxygine::spTextField::create();
     textField2->setStyle(style);
-    textField2->setY(22);
-    textField2->setX(5);
+    textField2->setY(44);
+    textField2->setX(10);
 
-    textField2->setScale(16.0f / 72.0f);
+    textField2->setScale(32.0f / 72.0f);
     textField2->setHtmlText(labelText);
     textField2->attachTo(m_ZInformationLabel);
-    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,
-                                     y * GameMap::getImageSize() - GameMap::getImageSize() * 2.0f);
-    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
+
+    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     pMap->addChild(m_ZInformationLabel);
+    zoomChanged(pMap->getZoom());
 }
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)
@@ -1042,18 +1047,29 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
-    constexpr qint32 baseWidth = 100;
+    constexpr qint32 baseWidth = 90;
+    constexpr qint32 textWidth = 60;
+    qint32 itemWidth = textWidth;
+    if (pData->ownUnitValues.size() > 0)
+    {
+        itemWidth += baseWidth;
+    }
+    if (pData->enemyUnitValues.size() > 0)
+    {
+        itemWidth += baseWidth;
+    }
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24()).
                                withColor(FontManager::getFontColor()).
                                alignMiddle().
                                alignTop();
-    pBox->setSize(baseWidth * 3, 10 + 30 * pData->valueNames.size());
+
+    pBox->setSize(itemWidth, 10 + 30 * pData->valueNames.size());
     for (qint32 i = 0; i < pData->valueNames.size(); ++i)
     {
-        spLabel pLabel = new Label(baseWidth);
+        spLabel pLabel = new Label(textWidth);
         pLabel->setStyle(style);
         pLabel->setHtmlText(pData->valueNames[i]);
-        pLabel->setPosition(baseWidth + 7, 30 * i + 5);
+        pLabel->setPosition(baseWidth, 30 * i + 5);
         pBox->addChild(pLabel);
     }
     if (pData->ownUnitValues.size() > 0)
@@ -1104,12 +1120,23 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
             pBox->addChild(pLabel);
         }
     }
-    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     m_ZInformationLabel = pBox;
-    pBox->setScale(1 / pMap->getScaleX());
+    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     pMap->addChild(m_ZInformationLabel);
-    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() + GameMap::getImageSize() / 2 - pBox->getScaledWidth() / 2,
-                                     y * GameMap::getImageSize() - 5 - pBox->getScaledHeight());
+    zoomChanged(pMap->getZoom());
+}
+
+void HumanPlayerInput::zoomChanged(float zoom)
+{
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (m_ZInformationLabel.get() != nullptr &&
+        pMenu.get() != nullptr)
+    {
+        auto* pCursor = pMenu->getCursor();
+        m_ZInformationLabel->setScale(1.0f / zoom);
+        m_ZInformationLabel->setPosition(pCursor->getMapPointX() * GameMap::getImageSize() + GameMap::getImageSize() / 2 - m_ZInformationLabel->getScaledWidth() / 2,
+                                         pCursor->getMapPointY() * GameMap::getImageSize() - 5 - m_ZInformationLabel->getScaledHeight());
+    }
 }
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)

@@ -29,7 +29,7 @@
 
 namespace oxygine
 {
-    GameWindow* GameWindow::_window = nullptr;
+    GameWindow* GameWindow::m_window = nullptr;
 
     GameWindow::GameWindow()
         : m_dispatcher(spEventDispatcher::create())
@@ -39,7 +39,7 @@ namespace oxygine
         newFormat.setProfile(QSurfaceFormat::CoreProfile);
         newFormat.setSamples(2);    // Set the number of samples used for multisampling
         setFormat(newFormat);
-        _window = this;
+        m_window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
@@ -83,6 +83,7 @@ namespace oxygine
         Resources::unregisterResourceType("font");
         Resources::unregisterResourceType("bmfc_font");
         Resources::unregisterResourceType("sdfont");
+        m_window = nullptr;
     }
 
     void GameWindow::timerEvent(QTimerEvent *)
@@ -423,12 +424,12 @@ namespace oxygine
 
     QOpenGLContext* GameWindow::getGLContext()
     {
-        return _window->context();
+        return m_window->context();
     }
 
     GameWindow* GameWindow::getWindow()
     {
-        return _window;
+        return m_window;
     }
 
     bool GameWindow::isEvenScale(qint32 width1, qint32 width2)

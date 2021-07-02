@@ -389,6 +389,7 @@ signals:
     void sigShowRules();
     void sigShowUnitStatistics();
     void sigMovedMap();
+    void sigZoomChanged(float zoom);
 public slots:
     /**
      * @brief getIsHumanMatch
