@@ -29,6 +29,9 @@ namespace oxygine
         void setIgnoreTouchUp(bool ignore) { m_ignoreTouchUp = ignore; }
         void snapClient2Bounds();
 
+        bool getNoLockForMiddleButton() const;
+        void setNoLockForMiddleButton(bool newNoLockForMiddleButton);
+
     protected:
         Actor* getClient();
         void onEvent(Event* event);
@@ -46,6 +49,8 @@ namespace oxygine
         timeMS m_startTm;
 
         bool m_dragEnabled;
+        bool m_noLockForMiddleButton{false};
+        bool m_middleButton{false};
         bool m_pressed;
         bool m_ignoreTouchUp;
     };

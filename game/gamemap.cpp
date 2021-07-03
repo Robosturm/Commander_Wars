@@ -526,6 +526,11 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     {
         m_Rules->createWeatherSprites();
     }
+    InGameMenue* pMenu = InGameMenue::getMenuInstance();
+    if (pMenu != nullptr)
+    {
+        pMenu->updateSlidingActorSize();
+    }
     if (showLoadingScreen)
     {
         pLoadingScreen->hide();
@@ -884,6 +889,15 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
                 qint32 newY = pMapSliding->getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 limitPosition(pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
+
+                if (Settings::getAutoMoveCursor())
+                {
+                    pMenu->calcNewMousePosition(x, y);
+                }
+                else
+                {
+                    pMenu->getCursor()->setMapPoint(x, y);
+                }
             }
         }
         if (updateMinimapPosition)
@@ -1190,6 +1204,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                   width, heigth, playerCount, m_UniqueIdCounter);
     Console::print("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
     qint32 mapSize = width * heigth;
+    setSize(width * GameMap::getImageSize(), heigth * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {

@@ -40,6 +40,7 @@ public:
     {
         return m_MapPointY;
     }
+    void setMapPoint(qint32 x, qint32 y);
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
     void sigUpdatePosition(qint32 x, qint32 y);

@@ -38,6 +38,9 @@ class Settings : public QObject, public oxygine::ref_counter
         static void setUsername(const QString &Username);
 
 public slots:
+        static bool getAutoMoveCursor();
+        static void setAutoMoveCursor(bool newAutoMoveCursor);
+
         static bool getShowDetailedBattleForcast();
         static void setShowDetailedBattleForcast(bool newShowDetailedBattleForcast);
 
@@ -527,6 +530,7 @@ public slots:
         static bool m_syncAnimations;
         static bool m_simpleDeselect;
         static bool m_showDetailedBattleForcast;
+        static bool m_autoMoveCursor;
 
         // internal members
         static spSettings m_pInstance;

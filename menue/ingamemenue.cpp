@@ -22,7 +22,7 @@ InGameMenue::InGameMenue()
     m_pInstance = this;
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
-    m_MapMoveThread.start();    
+    m_MapMoveThread.start();
     loadBackground();
 }
 
@@ -119,7 +119,7 @@ void InGameMenue::connectMapCursor()
             if (m_Focused)
             {
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
-                qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);                
+                qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
                 emit m_Cursor->sigUpdatePosition(curX, curY);
             }
             else
@@ -357,8 +357,11 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
             pMap->moveMap(0, moveY);
             MousePosY += moveY;
         }
-        QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
-        pApp->cursor().setPos(curPos);
+        if (Settings::getAutoMoveCursor())
+        {
+            QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
+            pApp->cursor().setPos(curPos);
+        }
         emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
     }
 }

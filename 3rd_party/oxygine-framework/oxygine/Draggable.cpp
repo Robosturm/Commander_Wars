@@ -96,7 +96,7 @@ namespace oxygine
 
     void Draggable::onMove(const Vector2& position)
     {
-        if (m_pressed && m_dragEnabled &&
+        if (m_pressed && (m_dragEnabled || m_middleButton) &&
             m_dragClient.get() != nullptr)
         {
             Vector2 localPos = m_dragClient->stage2local(position);
@@ -117,13 +117,27 @@ namespace oxygine
         }
     }
 
+    bool Draggable::getNoLockForMiddleButton() const
+    {
+        return m_noLockForMiddleButton;
+    }
+
+    void Draggable::setNoLockForMiddleButton(bool newNoLockForMiddleButton)
+    {
+        m_noLockForMiddleButton = newNoLockForMiddleButton;
+    }
+
     void Draggable::onEvent(Event* event)
     {
-        TouchEvent* te = safeCast<TouchEvent*>(event);
+        TouchEvent* te = safeCast<TouchEvent*>(event);        
         switch (te->type)
         {
             case TouchEvent::TOUCH_DOWN:
             {
+                if (te->mouseButton == MouseButton_Middle && m_noLockForMiddleButton)
+                {
+                    m_middleButton = true;
+                }
                 startDrag(te->localPosition);
                 break;
             }
@@ -132,6 +146,7 @@ namespace oxygine
                 if (!m_ignoreTouchUp &&
                     m_dragClient.get() != nullptr)
                 {
+                    m_middleButton = false;
                     m_pressed = false;
                     oxygine::getStage()->removeEventListeners(this);
                     if (Clock::getTimeMS() - m_startTm < timeMS(2))

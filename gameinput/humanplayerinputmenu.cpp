@@ -570,7 +570,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->hasCursor())
+    if (pApp->hasCursor() && Settings::getAutoMoveCursor())
     {
         oxygine::Vector2 pos = local2stage();
         QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));

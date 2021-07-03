@@ -20,6 +20,7 @@ namespace oxygine
         m_current(0), m_lastIterTime(0),
         m_finger(0)
     {
+        m_drag.setNoLockForMiddleButton(true);
     }
 
     void SlidingActorNoClipRect::destroy()

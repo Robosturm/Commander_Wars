@@ -57,13 +57,13 @@ EditorMenue::EditorMenue()
     }
     if (smallScreen)
     {
-        m_autoScrollBorder = QRect(50, 125, 50, 50);
-        initSlidingActor(50, 100, Settings::getWidth() - 100, Settings::getHeight() - 175);
+        m_autoScrollBorder = QRect(50, 135, 50, 50);
+        initSlidingActor(50, 125, Settings::getWidth() - 100, Settings::getHeight() - 175);
     }
     else
     {
-        m_autoScrollBorder = QRect(50, 125, selectionWidth, 50);
-        initSlidingActor(50, 100, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
+        m_autoScrollBorder = QRect(50, 135, selectionWidth, 50);
+        initSlidingActor(50, 125, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
     }
     m_mapSlidingActor->addChild(GameMap::getInstance());
     m_mapSliding->setLocked(true);

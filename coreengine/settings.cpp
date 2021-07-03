@@ -121,6 +121,7 @@ bool Settings::m_centerOnMarkedField = false;
 bool Settings::m_syncAnimations = false;
 bool Settings::m_simpleDeselect = false;
 bool Settings::m_showDetailedBattleForcast = true;
+bool Settings::m_autoMoveCursor = false;
 QString Settings::m_userPath = "";
 
 // add mod path
@@ -151,6 +152,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getAutoMoveCursor()
+{
+    return m_autoMoveCursor;
+}
+
+void Settings::setAutoMoveCursor(bool newAutoMoveCursor)
+{
+    m_autoMoveCursor = newAutoMoveCursor;
 }
 
 bool Settings::getShowDetailedBattleForcast()
@@ -1334,6 +1345,7 @@ void Settings::loadSettings()
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
+    m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
     if (Settings::hasSmallScreen())
     {
         m_simpleDeselect = true;
@@ -1523,8 +1535,8 @@ void Settings::saveSettings()
         settings.setValue("SyncAnimations",                 m_syncAnimations);
         settings.setValue("SimpleDeselect",                 m_simpleDeselect);
         settings.setValue("ShowDetailedBattleForcast",      m_showDetailedBattleForcast);
+        settings.setValue("AutoMoveCursor",                 m_autoMoveCursor);
         settings.endGroup();
-
         // network
         settings.beginGroup("Network");
         settings.setValue("ServerAdress",              m_ServerAdress);
