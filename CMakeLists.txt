@@ -511,13 +511,39 @@ FILE(GLOB_RECURSE Maps RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.map")
 FILE(GLOB_RECURSE CampaignScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.jsm")
 FILE(GLOB_RECURSE MapImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.png")
 FILE(GLOB_RECURSE DataScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "data/*.js")
+FILE(GLOB_RECURSE Music RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/music/*.mp3")
+set(MAX_CO_THEME_FOLDERS 8)
+foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
+    FILE(GLOB_RECURSE MusicCOs${coFolder} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/co_themes/cos${coFolder}/*.mp3")
+endforeach()
+FILE(GLOB_RECURSE Sound RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.wav")
 
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE TemplateScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
 FILE(GLOB_RECURSE UiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
-add_custom_target(uiXml SOURCES ${UiXmls})
+add_custom_target(Resources SOURCES
+    ${UiXmls}
+    ${scripts}
+    ${images}
+    ${customImages}
+    ${xmls}
+    ${inis}
+    ${textFiles}
+    ${ShaderScripts}
+    ${modScripts}
+    ${modDescs}
+    ${modImages}
+    ${modXmls}
+    ${GameScripts}
+    ${Maps}
+    ${GameScripts}
+    ${CampaignScripts}
+    ${MapImages}
+    ${DataScripts}
+    "resources/credits/credits.cred"
+    ${QM_FILES})
 ##############################################################
 # end of this is just for the ide view nothing for execution #
 ##############################################################
@@ -632,6 +658,14 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             PROPERTIES QT_RESOURCE_ALIAS "resources/translation/${barename}"
             )
     endforeach()
+    foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
+        foreach(Music_FILE ${MusicCOs${coFolder}})
+            get_filename_component(barename ${Music_FILE} NAME)
+            set_source_files_properties(${Music_FILE}
+                PROPERTIES QT_RESOURCE_ALIAS "resources/music/cos/${barename}"
+                )
+        endforeach()
+    endforeach()
     qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
         PREFIX "/"
         FILES
@@ -653,7 +687,24 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
         ${DataScripts}
         "resources/credits/credits.cred"
         ${QM_FILES}
+    )
+    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_Sound"
+        PREFIX "/"
+        FILES
+        ${Sound}
+    )
+    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_Music"
+        PREFIX "/"
+        FILES
+        ${Music}
+    )
+    foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
+        qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_CoThemes${coFolder}"
+            PREFIX "/"
+            FILES
+            ${MusicCOs${coFolder}}
         )
+    endforeach()
 endif()
 ##############################################################
 # Install section                                            #

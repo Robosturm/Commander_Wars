@@ -143,7 +143,7 @@
 		<image file="black_building_destroyed.png" />		
 		<image file="talon+gun.png" cols = "2" />		
 		<image file="talon+gun+mask.png" cols = "2" />		
-		<image file="talon+gun+destroyed.png" cols = "2" />		
+		<image file="talon+gun+destroyed.png" />		
 		
 	</atlas>
 </resources>

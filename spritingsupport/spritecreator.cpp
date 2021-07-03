@@ -354,6 +354,39 @@ QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage 
     return mainImg;
 }
 
+QImage SpriteCreator::recolorImageWithTable(QImage & image, QImage & colorTable)
+{
+    for (qint32 x = 0; x < image.width(); x++)
+    {
+        for (qint32 y = 0; y < image.height(); y++)
+        {
+            QColor pixel = image.pixelColor(x, y);
+            if (pixel.alpha() == 255)
+            {
+                qint32 red = pixel.red();
+                image.setPixel(x, y, colorTable.pixel(red, 0));
+            }
+        }
+    }
+    return image;
+}
+
+QImage SpriteCreator::mergeImages(QImage & image, QImage & mask)
+{
+    for (qint32 x = 0; x < image.width(); x++)
+    {
+        for (qint32 y = 0; y < image.height(); y++)
+        {
+            QColor pixel = mask.pixelColor(x, y);
+            if (pixel.alpha() == 255)
+            {
+                image.setPixel(x, y, mask.pixel(x, y));
+            }
+        }
+    }
+    return image;
+}
+
 QImage SpriteCreator::createColorTable(QImage& image)
 {
     qint32 maxSize = 200;

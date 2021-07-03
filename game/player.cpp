@@ -18,6 +18,7 @@
 #include "resource_management/unitspritemanager.h"
 
 oxygine::spResAnim Player::m_neutralTableAnim = nullptr;
+QImage Player::m_neutralTableImage;
 
 void Player::releaseStaticData()
 {
@@ -390,8 +391,8 @@ oxygine::spResAnim Player::getNeutralTableAnim()
         {
             if (QFile::exists(path + "neutral.png"))
             {
-                QImage img(path + "neutral.png");
-                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), img, 1, 1, 1, false);
+                m_neutralTableImage = QImage(path + "neutral.png");
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), m_neutralTableImage, 1, 1, 1, false);
                 break;
             }
         }
@@ -922,6 +923,16 @@ void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool di
     {
         std::get<2>(m_FogVisionFields[x][y]) = directView;
     }
+}
+
+const QImage &Player::getNeutralTableImage()
+{
+    return m_neutralTableImage;
+}
+
+const QImage &Player::getColorTable() const
+{
+    return m_colorTable;
 }
 
 void Player::updatePlayerVision(bool reduceTimer)

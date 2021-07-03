@@ -41383,6 +41383,29 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>victoryrule_turnlimit_capture_race</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="7"/>
+        <source>The player with the most captured buildings wins after the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="11"/>
+        <source>If checked the Team with the most captured buildings wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="18"/>
+        <source>Turn capture race</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit_capture_race.js" line="22"/>
+        <source>Team Counter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>watermine</name>
     <message>
         <location filename="../resources/scripts/units/watermine.js" line="41"/>

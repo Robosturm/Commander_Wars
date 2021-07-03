@@ -38,15 +38,26 @@ public slots:
      */
     void addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode);
 private:
+    void createBuildingActor(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer);
+    void getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,
+                           QImage & preCaptureImage, QImage & captureImage);
+private:
     qint32 m_startPoints{0};
     qint32 m_endPoints{0};
     qint32 m_maxPoints{0};
     float m_BuildingStartPos{20.0f};
-    float m_BuildingEndPos{65.0f};
+    float m_BuildingEndPos{61.0f};
+    oxygine::spActor m_BuildingActor;
     static const qint32 m_capturingFactor;
     static const qint32 m_jumpSprites;
     static const qint32 m_ayeAyeSprites;
     static const qint32 m_jumpingCount;
+
+    oxygine::spSprite m_buildingSprites;
+    QImage m_buildingImage;
+    oxygine::spSingleResAnim m_buildingResAnim;
+    QImage m_captureBuildingImage;
+    oxygine::spSingleResAnim m_captureBuildingResAnim;
 };
 
 #endif // GAMEANIMATIONCAPTURE_H

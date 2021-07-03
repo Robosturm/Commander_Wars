@@ -112,6 +112,16 @@ public:
      * @return
      */
     static oxygine::spResAnim getNeutralTableAnim();
+    /**
+     * @brief getColorTable
+     * @return
+     */
+    const QImage &getColorTable() const;
+    /**
+     * @brief getNeutralTableImage
+     * @return
+     */
+    static const QImage &getNeutralTableImage();
 
 signals:
 
@@ -561,6 +571,7 @@ private:
     bool m_playerArmySelected{false};
     qint32 m_averageCosts{-1};
     static oxygine::spResAnim m_neutralTableAnim;
+    static QImage m_neutralTableImage;
 };
 
 #endif // PLAYER_H

@@ -7,6 +7,8 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
 
+#include "spritingsupport/spritecreator.h"
+
 const qint32 GameAnimationCapture::m_capturingFactor = 7;
 const qint32 GameAnimationCapture::m_jumpSprites = 3;
 const qint32 GameAnimationCapture::m_ayeAyeSprites = 2;
@@ -27,13 +29,70 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 
 void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
+    Mainapp* pApp = Mainapp::getInstance();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    GameMap* pMap = GameMap::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
+    if (mode == GameEnums::Recoloring_Mask)
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "GameAnimationCapture::addBuildingSprite " + spriteID + " recloring mode mask not supported!");
+    }
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+        createBuildingActor(pAnim, startPlayer, capturedPlayer);
+
+        if (m_buildingSprites.get() == nullptr)
+        {
+            m_buildingSprites = oxygine::spSprite::create();
+            m_buildingSprites->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+            m_BuildingActor->addChild(m_buildingSprites);
+            m_buildingResAnim = oxygine::spSingleResAnim::create();
+            m_captureBuildingResAnim = oxygine::spSingleResAnim::create();
+        }
+        QImage preCaptureImage(pAnim->getResPath());
+        QImage captureImage(pAnim->getResPath());
+        getRecoloredImage(startPlayer, capturedPlayer, mode,
+                          preCaptureImage, captureImage);
+        pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
+        pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
+        m_buildingSprites->setResAnim(m_buildingResAnim.get());
+    }
+}
+
+void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,
+                                             QImage & preCaptureImage, QImage & captureImage)
+{
+    if (mode == GameEnums::Recoloring_Table)
+    {
+        if (startPlayer == nullptr)
+        {
+            QImage table = Player::getNeutralTableImage();
+            m_buildingImage = SpriteCreator::recolorImageWithTable(preCaptureImage, table);
+        }
+        else
+        {
+            QImage table = startPlayer->getColorTable();
+            m_buildingImage = SpriteCreator::recolorImageWithTable(preCaptureImage, table);
+        }
+        if (capturedPlayer != nullptr)
+        {
+            QImage table = capturedPlayer->getColorTable();
+            m_captureBuildingImage = SpriteCreator::recolorImageWithTable(captureImage, table);
+        }
+    }
+    else if (mode == GameEnums::Recoloring_None)
+    {
+        m_buildingImage = SpriteCreator::mergeImages(m_buildingImage, preCaptureImage);
+        m_captureBuildingImage = SpriteCreator::mergeImages(m_captureBuildingImage, captureImage);
+    }
+}
+
+void GameAnimationCapture::createBuildingActor(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer)
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (m_BuildingActor.get() == nullptr &&
+        pMap.get() != nullptr)
+    {
+        m_BuildingActor = oxygine::spActor::create();
         float endPoints = m_endPoints;
         if (m_endPoints == 0)
         {
@@ -44,25 +103,17 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         float buildingOffsetY = -12;
         float movingHeight = pAnim->getHeight();
         float startPosition = buildingOffsetY + (startPercent) * movingHeight;
-
+        m_BuildingActor->setPosition(0, startPosition);
+        m_BuildingActor->setScaleY(1.0f - startPercent);
         oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
         oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
-        // hit test to get building heigth
-        pSprite->setResAnim(pAnim);
-        pSprite->setPosition(0, startPosition);
-        pSprite->setScaleY(1.0f - startPercent);
-        float width = pAnim->getWidth();
-
         // going down of the building
         oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * m_jumpSprites * m_jumpingCount + m_frameTime * m_ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - startPercent), jumpingDuration, 1);
         dummyTween->setDoneCallback([=](oxygine::Event *)
         {
-            if (mode == GameEnums::Recoloring_Table)
-            {
-                Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
-            }
+            Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
         });
         queueAnimating->add(dummyTween);
         oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
@@ -74,30 +125,16 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         queueMoving->add(tween2);
         if (m_endPoints == 0)
         {
-            QColor capturedColor = capturedPlayer->getColor();
-            if (mode != GameEnums::Recoloring_Mask)
+            tween2->addDoneCallback([=](oxygine::Event *)
             {
-                capturedColor.setRgb(255, 255, 255);
-            }
-            oxygine::Sprite::TweenColor tweenColor(capturedColor);
-            oxygine::Sprite::TweenColor tweenColor1(capturedColor);
-            oxygine::spTween tween5 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            oxygine::spTween tween6 = oxygine::createTween(tweenColor1, oxygine::timeMS(1));
-            queueAnimating->add(tween5);
-            queueMoving->add(tween6);
-            tween6->addDoneCallback([=](oxygine::Event *)
-            {
-                if (mode == GameEnums::Recoloring_Table)
+                m_buildingSprites->setResAnim(m_captureBuildingResAnim.get());
+                if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
                 {
-                    pSprite->setColorTable(capturedPlayer->getColorTableAnim());
-                    if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
-                    {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
-                    }
-                    else
-                    {
-                        Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
-                    }
+                    Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
+                }
+                else
+                {
+                    Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
                 }
             });
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(m_capturingFactor * m_frameTime), 1, false);
@@ -106,38 +143,9 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
             oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), oxygine::timeMS(m_capturingFactor * m_frameTime), 1, false);
             queueMoving->add(tween4);
         }
-        pSprite->addTween(queueAnimating);
-        pSprite->addTween(queueMoving);
-
-        if (mode == GameEnums::Recoloring_Mask)
-        {
-            if (startPlayer == nullptr)
-            {
-                pSprite->setColor(QColor(255, 255, 255));
-            }
-            else
-            {
-                pSprite->setColor(startPlayer->getColor());
-            }
-            pSprite->setPriority(10);
-        }
-        else if (mode == GameEnums::Recoloring_Table)
-        {
-            if (startPlayer == nullptr)
-            {
-                pSprite->setColorTable(Player::getNeutralTableAnim());
-            }
-            else
-            {
-                pSprite->setColorTable(startPlayer->getColorTableAnim());
-            }
-            pSprite->setPriority(10);
-        }
-        else
-        {
-            pSprite->setPriority(11);
-        }
-        addChild(pSprite);
+        m_BuildingActor->addTween(queueAnimating);
+        m_BuildingActor->addTween(queueMoving);
+        addChild(m_BuildingActor);
     }
 }
 
@@ -157,7 +165,6 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints);
         float startPosition = unitOffsetY + (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints)) * buildingHigh;
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
         if (pAnim->getTotalFrames() > 1)
         {
             // jumping

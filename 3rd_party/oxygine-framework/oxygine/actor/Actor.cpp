@@ -1076,6 +1076,8 @@ namespace oxygine
         {
             return false;
         }
+        rs.transform.x = floorf(rs.transform.x);
+        rs.transform.y = floorf(rs.transform.y);
         if (onScreen(rs))
         {
             doRender(rs);

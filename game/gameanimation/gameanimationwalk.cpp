@@ -91,8 +91,6 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
     {
         Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
         oxygine::spSprite pSprite = oxygine::spSprite::create();
-        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
-
         oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
         oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
         pSprite->setPosition(m_pUnit->Unit::getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),

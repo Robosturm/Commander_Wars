@@ -74,7 +74,20 @@ public:
      * @param useColorBox
      */
     static QImage createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save);
-
+    /**
+     * @brief recolorImageWithTable
+     * @param image
+     * @param colorTable
+     * @return
+     */
+    static QImage recolorImageWithTable(QImage & image, QImage & colorTable);
+    /**
+     * @brief mergeImages
+     * @param image
+     * @param mask
+     * @return
+     */
+    static QImage mergeImages(QImage & image, QImage & mask);
     /**
      * @brief createColorTable
      * @param image
