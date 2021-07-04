@@ -52,7 +52,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     else()
-        set(DEPLOY_RESOURCES_AS_FOLDER 1)
+        set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
     find_package(Qt6 COMPONENTS QmlDebug REQUIRED)
 else("Release")
@@ -492,61 +492,11 @@ set(${PROJECT_NAME}_SRCS
     ui_reader/uifactory.cpp
     )
 
-##############################################################################
-# This section finds all resources so they can be linked to a rcc file later #
-##############################################################################
-FILE(GLOB_RECURSE scripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.js")
-FILE(GLOB_RECURSE images RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.png" )
-FILE(GLOB_RECURSE customImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "customTerrainImages/*.png" )
-FILE(GLOB_RECURSE xmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.xml")
-FILE(GLOB_RECURSE inis RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.ini")
-FILE(GLOB_RECURSE textFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.txt")
-FILE(GLOB_RECURSE ShaderScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "system/*.glsl")
-FILE(GLOB_RECURSE modScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.js")
-FILE(GLOB_RECURSE modDescs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.txt")
-FILE(GLOB_RECURSE modImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.png")
-FILE(GLOB_RECURSE modXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mods/*.xml")
-FILE(GLOB_RECURSE GameScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.js")
-FILE(GLOB_RECURSE Maps RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.map")
-FILE(GLOB_RECURSE CampaignScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.jsm")
-FILE(GLOB_RECURSE MapImages RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "maps/*.png")
-FILE(GLOB_RECURSE DataScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "data/*.js")
-FILE(GLOB_RECURSE Music RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/music/*.mp3")
-set(MAX_CO_THEME_FOLDERS 8)
-foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
-    FILE(GLOB_RECURSE MusicCOs${coFolder} RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/co_themes/cos${coFolder}/*.mp3")
-endforeach()
-FILE(GLOB_RECURSE Sound RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/*.wav")
-
-# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
-FILE(GLOB_RECURSE TemplateScripts RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "templates/*.js")
-add_custom_target(templatescripts SOURCES ${TemplateScripts})
-
-FILE(GLOB_RECURSE UiXmls RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "resources/ui/*.xml")
-add_custom_target(Resources SOURCES
-    ${UiXmls}
-    ${scripts}
-    ${images}
-    ${customImages}
-    ${xmls}
-    ${inis}
-    ${textFiles}
-    ${ShaderScripts}
-    ${modScripts}
-    ${modDescs}
-    ${modImages}
-    ${modXmls}
-    ${GameScripts}
-    ${Maps}
-    ${GameScripts}
-    ${CampaignScripts}
-    ${MapImages}
-    ${DataScripts}
-    "resources/credits/credits.cred"
-    ${QM_FILES})
-##############################################################
-# end of this is just for the ide view nothing for execution #
-##############################################################
+qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+                     "general.qrc"
+                     "sound.qrc"
+                     "music.qrc"
+    )
 
 ##############################################################
 # Linking and executable section                             #
@@ -555,6 +505,7 @@ add_custom_target(Resources SOURCES
 qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OXYGINE_SRCS}
     ${${PROJECT_NAME}_SRCS}
+    ${${PROJECT_NAME}_Resource_SRCS}
     ICON.rc
     )
 
@@ -646,6 +597,21 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
     add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
 endif()
+
+##############################################################################
+# This section finds all resources so they can be linked to a rcc file later #
+##############################################################################
+# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
+FILE(GLOB_RECURSE ResourceFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.qrc")
+FILE(GLOB_RECURSE QM_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "translation*.ts")
+
+add_custom_target(Resources SOURCES
+    ${ResourceFiles}
+    ${TS_FILES})
+##############################################################
+# end of this is just for the ide view nothing for execution #
+##############################################################
+
 ##############################################################
 # Qt RCC Resource section                                    #
 ##############################################################
@@ -658,54 +624,13 @@ if (NOT DEPLOY_RESOURCES_AS_FOLDER)
             PROPERTIES QT_RESOURCE_ALIAS "resources/translation/${barename}"
             )
     endforeach()
-    foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
-        foreach(Music_FILE ${MusicCOs${coFolder}})
-            get_filename_component(barename ${Music_FILE} NAME)
-            set_source_files_properties(${Music_FILE}
-                PROPERTIES QT_RESOURCE_ALIAS "resources/music/cos/${barename}"
-                )
-        endforeach()
-    endforeach()
     qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}"
         PREFIX "/"
         FILES
-        ${images}
-        ${customImages}
-        ${ShaderScripts}
-        ${scripts}
-        ${xmls}
-        ${inis}
-        ${textFiles}
-        ${modScripts}
-        ${modImages}
-        ${modXmls}
-        ${modDescs}
-        ${Maps}
-        ${GameScripts}
-        ${CampaignScripts}
-        ${MapImages}
-        ${DataScripts}
-        "resources/credits/credits.cred"
         ${QM_FILES}
     )
-    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_Sound"
-        PREFIX "/"
-        FILES
-        ${Sound}
-    )
-    qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_Music"
-        PREFIX "/"
-        FILES
-        ${Music}
-    )
-    foreach(coFolder RANGE 1 ${MAX_CO_THEME_FOLDERS})
-        qt_add_resources(${PROJECT_NAME} "${PROJECT_NAME}_CoThemes${coFolder}"
-            PREFIX "/"
-            FILES
-            ${MusicCOs${coFolder}}
-        )
-    endforeach()
 endif()
+
 ##############################################################
 # Install section                                            #
 ##############################################################

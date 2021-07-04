@@ -4,20 +4,17 @@
 
 namespace oxygine
 {
-    Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction);
-    Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction);
-
     class Draggable : public IClosureOwner
     {
     public:
         Draggable();
         ~Draggable();
 
-        void init(spActor actor);
+        void init(Actor* actor);
 
         void destroy();
 
-        Actor*          getDragClient() const {return m_dragClient.get();}
+        Actor*          getDragClient() const {return m_dragClient;}
         const RectF&    getDragBounds() const {return m_bounds;}
         const Vector2&  getClientPos() const {return m_clientPos;}
         bool            getDragEnabled() const { return m_dragEnabled; }
@@ -40,12 +37,14 @@ namespace oxygine
         void onDrag(TouchEvent* es);
         void onMove(const Vector2& position);
 
+        Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction);
+        Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction);
     protected:
         RectF m_bounds;
         Vector2 m_dragPos;
         Vector2 m_clientPos;
 
-        spActor m_dragClient;
+        Actor* m_dragClient;
         timeMS m_startTm;
 
         bool m_dragEnabled;

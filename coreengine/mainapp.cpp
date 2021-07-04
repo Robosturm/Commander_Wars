@@ -4,6 +4,7 @@
 #include "qdir.h"
 #include "qmessagebox.h"
 #include "qthread.h"
+#include "qresource.h"
 
 #include "coreengine/userdata.h"
 #include "coreengine/mainapp.h"

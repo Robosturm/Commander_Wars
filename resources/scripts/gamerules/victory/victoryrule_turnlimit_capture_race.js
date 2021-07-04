@@ -15,7 +15,7 @@ var Constructor = function()
     {
         if (itemNumber === 0)
         {
-            return qsTr("Turn capture race");
+            return qsTr("Capture race");
         }
         else
         {

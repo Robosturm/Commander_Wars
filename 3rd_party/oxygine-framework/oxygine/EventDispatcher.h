@@ -34,7 +34,7 @@ namespace oxygine
         {
         }
         EventDispatcher();
-        ~EventDispatcher();
+        virtual ~EventDispatcher() = default;
 
         qint32 addEventListener(eventType, const EventCallback&);
 

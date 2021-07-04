@@ -6,48 +6,6 @@
 
 namespace oxygine
 {
-    Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction)
-    {
-        Vector2 locPos = pos;
-        AffineTransform t;
-        t.identity();
-        while (src != dest && src)
-        {
-            t = src->getTransform() * t;
-            src = src->getParent();
-        }
-        if (direction)
-        {
-            t.x = 0;
-            t.y = 0;
-        }
-
-        locPos = t.transform(locPos);
-        return locPos;
-    }
-
-    Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction)
-    {
-        Vector2 locPos = pos;
-        AffineTransform t;
-        t.identity();
-        t = src->getTransform();
-        while (src != dest && src)
-        {
-            t =  t * src->getTransform();
-            src = src->getParent();
-        }
-
-
-        if (direction)
-        {
-            t.x = 0;
-            t.y = 0;
-        }
-
-        locPos = t.transform(locPos);
-        return locPos;
-    }
 
     Draggable::Draggable(): m_bounds(0, 0, -1, -1),
         m_dragClient(0),
@@ -66,7 +24,7 @@ namespace oxygine
 
     void Draggable::destroy()
     {
-        if (m_dragClient.get() != nullptr)
+        if (m_dragClient != nullptr)
         {
             oxygine::getStage()->removeEventListeners(this);
             m_dragClient->removeEventListeners(this);
@@ -77,7 +35,7 @@ namespace oxygine
         m_pressed = false;
     }
 
-    void Draggable::init(spActor actor)
+    void Draggable::init(Actor* actor)
     {
         destroy();
         m_dragClient = actor;
@@ -97,11 +55,11 @@ namespace oxygine
     void Draggable::onMove(const Vector2& position)
     {
         if (m_pressed && (m_dragEnabled || m_middleButton) &&
-            m_dragClient.get() != nullptr)
+            m_dragClient != nullptr)
         {
             Vector2 localPos = m_dragClient->stage2local(position);
             Vector2 dragOffset = localPos - m_dragPos;
-            Vector2 converted = convertPosUp(m_dragClient.get(), m_dragClient->getParent(), dragOffset, true);
+            Vector2 converted = convertPosUp(m_dragClient, m_dragClient->getParent(), dragOffset, true);
             Vector2 np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
@@ -129,7 +87,7 @@ namespace oxygine
 
     void Draggable::onEvent(Event* event)
     {
-        TouchEvent* te = safeCast<TouchEvent*>(event);        
+        TouchEvent* te = safeCast<TouchEvent*>(event);
         switch (te->type)
         {
             case TouchEvent::TOUCH_DOWN:
@@ -144,7 +102,7 @@ namespace oxygine
             case TouchEvent::TOUCH_UP:
             {
                 if (!m_ignoreTouchUp &&
-                    m_dragClient.get() != nullptr)
+                    m_dragClient != nullptr)
                 {
                     m_middleButton = false;
                     m_pressed = false;
@@ -185,12 +143,12 @@ namespace oxygine
 
     Actor* Draggable::getClient()
     {
-        return m_dragClient.get();
+        return m_dragClient;
     }
 
     void Draggable::snapClient2Bounds()
     {
-        if (m_dragClient.get() != nullptr)
+        if (m_dragClient != nullptr)
         {
             Vector2 np = m_dragClient->getPosition();
             if (m_bounds.getWidth() != -1 && m_bounds.getHeight() != -1)
@@ -203,6 +161,49 @@ namespace oxygine
             }
             m_dragClient->setPosition(np);
         }
+    }
+
+    Vector2 Draggable::convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction)
+    {
+        Vector2 locPos = pos;
+        AffineTransform t;
+        t.identity();
+        while (src != dest && src)
+        {
+            t = src->getTransform() * t;
+            src = src->getParent();
+        }
+        if (direction)
+        {
+            t.x = 0;
+            t.y = 0;
+        }
+
+        locPos = t.transform(locPos);
+        return locPos;
+    }
+
+    Vector2 Draggable::convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction)
+    {
+        Vector2 locPos = pos;
+        AffineTransform t;
+        t.identity();
+        t = src->getTransform();
+        while (src != dest && src)
+        {
+            t =  t * src->getTransform();
+            src = src->getParent();
+        }
+
+
+        if (direction)
+        {
+            t.x = 0;
+            t.y = 0;
+        }
+
+        locPos = t.transform(locPos);
+        return locPos;
     }
 
 }

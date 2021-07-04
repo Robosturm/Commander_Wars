@@ -35,7 +35,7 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
     Q_OBJECT
 public:
     static const qint32 frameTime;
-    static constexpr qint32 defaultImageSize = 32;
+    static constexpr qint32 defaultImageSize = 24;
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width

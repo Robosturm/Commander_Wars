@@ -168,7 +168,7 @@ namespace oxygine
     class intrusive_list_item
     {
     public:
-
+        virtual ~intrusive_list_item() = default;
         intrusive_list<T>* getParentList() {return _list;}
 
     protected:

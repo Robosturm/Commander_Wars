@@ -43,7 +43,7 @@ namespace oxygine
 
     public:
         Actor();
-        virtual ~Actor() override;
+        virtual ~Actor();
 
         /**returns first child*/
         spActor             getFirstChild() const {return m_children._first;}

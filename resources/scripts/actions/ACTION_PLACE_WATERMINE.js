@@ -121,8 +121,7 @@ var Constructor = function()
                                  "WATERMINE", player);
         if (unit !== null)
         {
-            // pay for the unit
-            map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
+            map.getGameRecorder().buildUnit(player.getPlayerID(), unit.getUnitID());
             unit.setHasMoved(true);
         }
         player.buildedUnit(unit);

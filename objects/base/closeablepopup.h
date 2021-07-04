@@ -14,7 +14,7 @@ class CloseablePopUp : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit CloseablePopUp(qint32 width, qint32 heigth);
-
+    virtual ~CloseablePopUp() = default;
     void addItem(oxygine::spActor pActor);
     void removeItem(oxygine::spActor pActor);
     void setContentHeigth(qint32 heigth);

@@ -15,6 +15,7 @@ public:
     {
         return m_popUps.contains(rule);
     };
+
 public slots:
     void updateInfo();
 private:
