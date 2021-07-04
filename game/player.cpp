@@ -1131,9 +1131,16 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
         {
             if (m_FogVisionFields.size() > 0)
             {
-                if (pMap->onMap(x, y) && m_FogVisionFields.size() > 0)
+                if (pMap->onMap(x, y))
                 {
-                    return std::get<0>(m_FogVisionFields[x][y]);
+                    if (m_FogVisionFields.size() > 0)
+                    {
+                        return std::get<0>(m_FogVisionFields[x][y]);
+                    }
+                }
+                else
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Player::getFieldVisibleType trying to read not existing field");
                 }
                 return GameEnums::VisionType_Shrouded;
             }
@@ -1150,7 +1157,16 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 {
     if (m_FogVisionFields.size() > 0)
     {
-        return std::get<2>(m_FogVisionFields[x][y]);
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap->onMap(x, y))
+        {
+            return std::get<2>(m_FogVisionFields[x][y]);
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Player::getFieldDirectVisible trying to read not existing field");
+            return false;
+        }
     }
     else
     {

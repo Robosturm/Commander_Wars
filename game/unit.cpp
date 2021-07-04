@@ -1068,6 +1068,7 @@ void Unit::loadUnit(Unit* pUnit)
 
 void Unit::loadSpawnedUnit(QString unitId)
 {
+    Console::print("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
     if (canTransportUnit(pUnit.get()))
     {
@@ -1077,6 +1078,7 @@ void Unit::loadSpawnedUnit(QString unitId)
 
 Unit* Unit::spawnUnit(QString unitID)
 {
+    Console::print("Unit::spawnUnit " + unitID, Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
@@ -1327,12 +1329,20 @@ qint32 Unit::getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* p
     }
 }
 
-qint32 Unit::getTerrainDefense()
+qint32 Unit::getTerrainDefense(qint32 x, qint32 y)
 {
+    if (x < 0)
+    {
+        x = Unit::getX();
+    }
+    if (y < 0)
+    {
+        y = Unit::getY();
+    }
     spGameMap pMap = GameMap::getInstance();
     if (useTerrainDefense() && m_pTerrain != nullptr)
     {
-        return pMap->getTerrain(Unit::getX(), Unit::getY())->getDefense(this);
+        return pMap->getTerrain(x, y)->getDefense(this);
     }
     return 0;
 }
@@ -1453,7 +1463,7 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
     }
     if (useTerrainDefense())
     {
-        bonus += getTerrainDefense() * pMap->getGameRules()->getTerrainDefense();
+        bonus += getTerrainDefense(position.x(), position.y()) * pMap->getGameRules()->getTerrainDefense();
     }
     if (m_pTerrain != nullptr)
     {
@@ -1576,6 +1586,7 @@ void Unit::setUnitVisible(bool value)
 
 void Unit::makeCOUnit(quint8 co, bool force)
 {
+    Console::print("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
         (pCO->getCOUnit() == nullptr || force))

@@ -384,8 +384,12 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
             scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / pMap->getCurrentDay()));
         }
         // Force
-        qint32 power = (m_damageDealt[player] + (m_destroyedUnits[player] * 140));
-        if (m_attackNumbers[player] > 0)
+        qint32 power = 0;
+        if (m_damageDealt.size() > 0 && m_destroyedUnits.size() > 0)
+        {
+            power = (m_damageDealt[player] + (m_destroyedUnits[player] * 140));
+        }
+        if (m_attackNumbers.size() > 0 && m_attackNumbers[player] > 0)
         {
             power /= m_attackNumbers[player];
         }
@@ -419,7 +423,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
         float techScore1 = 0;
         float techScore2 = 0;
         float techScore3 = 0;
-        if (m_lostUnits[player] > 0)
+        if (m_damageDealt.size() > 0 && m_destroyedUnits.size() > 0 && m_lostUnits[player] > 0)
         {
             techScore1 = (m_destroyedUnits[player] / static_cast<float>(m_lostUnits[player])) * 0.75f;
         }
@@ -431,14 +435,22 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
         {
             techScore1 = 2.0f;
         }
-        quint32 deployed = m_deployedUnits[player];
-        quint32 startUnits = static_cast<quint32>(m_Record[0]->getPlayerRecord(player)->getUnits());
+        quint32 deployed = 0;
+        if (m_deployedUnits.size() > 0)
+        {
+            deployed = m_deployedUnits[player];
+        }
+        quint32 startUnits = 0;
+        if (m_Record.size() > 0)
+        {
+            startUnits = static_cast<quint32>(m_Record[0]->getPlayerRecord(player)->getUnits());
+        }
         if (m_Record.size() > 0 &&
             startUnits > 0)
         {
             deployed += startUnits;
         }
-        if (deployed > 0)
+        if (m_lostUnits.size() > 0 && deployed > 0)
         {
             techScore2 = (1.0f - (m_lostUnits[player] / static_cast<float>(deployed))) * 2.0f;
         }
@@ -454,7 +466,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
         {
             techScore2 = 0;
         }
-        if (m_deployedUnits[player] > 0)
+        if (m_deployedUnits.size() > 0 && m_deployedUnits[player] > 0)
         {
             techScore3 = deployLimit / static_cast<float>(m_deployedUnits[player]);
         }
@@ -490,6 +502,16 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     return getRank(score);
 }
 
+QRect GameRecorder::getScoreValues(qint32 player)
+{
+    QVector3D score;
+    QRect ret;
+    ret.setHeight(static_cast<qint32>(calculateRang(player, score)));
+    ret.setX(score.x());
+    ret.setY(score.y());
+    ret.setWidth(score.z());
+    return ret;
+}
 
 GameRecorder::Rang GameRecorder::getRank(qint32 score)
 {

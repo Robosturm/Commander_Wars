@@ -971,9 +971,9 @@ qint32 Terrain::getVision(Player* pPlayer)
     }
 }
 
-spTerrainFindingSystem Terrain::createTerrainFindingSystem()
+TerrainFindingSystem* Terrain::createTerrainFindingSystem()
 {
-    spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(getID(), Terrain::getX(), Terrain::getY());
+    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), Terrain::getX(), Terrain::getY());
     pPfs->explore();
     return pPfs;
 }

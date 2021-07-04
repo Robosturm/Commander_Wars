@@ -5182,5 +5182,8 @@
         <file>savegames/info.txt</file>
         <file>templates/gamescript.js</file>
         <file>templates/init.js</file>
+        <file>resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign/lin's_gambit.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign/final experiment.js</file>
     </qresource>
 </RCC>

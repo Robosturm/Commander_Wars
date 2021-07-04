@@ -143,13 +143,13 @@ public:
      * @return
      */
     bool isValid();
-    /**
-     * @brief createTerrainFindingSystem
-     * @return a path finding system that contains
-     */
-    spTerrainFindingSystem createTerrainFindingSystem();
 
 public slots:
+    /**
+     * @brief createTerrainFindingSystem Note: the path finding system needs to be deleted by the caller using killTerrainFindingSystem()
+     * @return a path finding system that contains all connect terrains of the same type
+     */
+    TerrainFindingSystem* createTerrainFindingSystem();
     /**
      * @brief addTerrainOverlay
      */

@@ -363,10 +363,9 @@ var Constructor = function()
             var x = fields.at(i).x + actionTargetField.x;
             var y = fields.at(i).y + actionTargetField.y;
             // generally attacks on shrouded fields are forbidden
-            if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
+            if (map.onMap(x, y) && unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                if (typeof map !== 'undefined' &&
-                    map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human &&
+                if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human &&
                     settings.getShowDetailedBattleForcast())
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();

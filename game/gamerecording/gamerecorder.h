@@ -152,6 +152,12 @@ signals:
 
 public slots:
     /**
+     * @brief getScoreValues
+     * @param player
+     * @return a vector containing the score values for the player. X = speed Y = power width = technique height = rang
+     */
+    QRect getScoreValues(qint32 player);
+    /**
      * @brief newDay
      */
     void newDay();

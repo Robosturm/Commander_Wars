@@ -723,7 +723,7 @@ public slots:
      * @brief getTerrainDefense
      * @return
      */
-    qint32 getTerrainDefense();
+    qint32 getTerrainDefense(qint32 x = -1, qint32 y = -1);
     /**
      * @brief getBonusDeffensive
      * @param position
