@@ -1138,10 +1138,6 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
                         return std::get<0>(m_FogVisionFields[x][y]);
                     }
                 }
-                else
-                {
-                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Player::getFieldVisibleType trying to read not existing field");
-                }
                 return GameEnums::VisionType_Shrouded;
             }
             else

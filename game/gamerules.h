@@ -85,9 +85,15 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getVictory
+     * @return
+     */
+    bool getVictory() const;
     /**
      * @brief getTerrainDefense
      * @return
@@ -508,6 +514,7 @@ private:
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
     quint8 m_terrainDefense{10};
+    bool m_victory{false};
 
     Password m_password;
     QString m_description;

@@ -609,7 +609,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                                                        m_gameStarted;
+                           m_gameStarted;
         spPlayer currentPlayer = pMap->getCurrentPlayer();
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
@@ -1077,9 +1077,10 @@ void GameMenue::actionPerformed()
         m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
         m_IngameInfoBar->updateMinimap();
         m_IngameInfoBar->updatePlayerInfo();
-        if (GameAnimationFactory::getAnimationCount() == 0)
+        spGameMap pMap = GameMap::getInstance();
+        if (GameAnimationFactory::getAnimationCount() == 0 &&
+            !pMap->getGameRules()->getVictory())
         {
-            spGameMap pMap = GameMap::getInstance();
             if (!pMap->anyPlayerAlive())
             {
                 Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);

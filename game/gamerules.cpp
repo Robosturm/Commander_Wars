@@ -212,6 +212,7 @@ void GameRules::checkVictory()
         }
         if (teamsAlive.size() <= 1)
         {
+            m_victory = true;
             // go to victory screen
             if (teamsAlive.size() == 1)
             {
@@ -845,6 +846,11 @@ bool GameRules::getCoUnits() const
 void GameRules::setCoUnits(bool coUnits)
 {
     m_coUnits = coUnits;
+}
+
+bool GameRules::getVictory() const
+{
+    return m_victory;
 }
 
 quint8 GameRules::getTerrainDefense() const
