@@ -530,9 +530,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # link libraries
 set(QT_LIBRARIES
     Qt6::Core
+    Qt6::Gui
     Qt6::Qml
     Qt6::Network
-    Qt6::Gui
     Qt6::Widgets
     Qt6::Xml
     #Qt6::Multimedia

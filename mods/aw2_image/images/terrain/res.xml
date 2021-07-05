@@ -50,6 +50,8 @@
 		<image file="sea+S+W.png" cols = "4" />
 		<image file="sea+W.png" cols = "4" />
 				
+		<image file="rough_sea+N+E+S+W.png" cols = "5" />
+		
 		<image file="reaf+N+E+S+W.png" cols = "4" />
 		<image file="reaf+1+N+E+S+W.png" cols = "4" />
 		<image file="reaf+2+N+E+S+W.png" cols = "4" />
@@ -128,6 +130,10 @@
 		<image file="sea+beach+W.png" />
 		<image file="sea+beach+S.png" />
 		<image file="sea+beach+N.png" />
+		
+		<image file="ruin+0.png" />
+		<image file="ruin+1.png" />
+		<image file="ruin+2.png" />
 		
 		<image file="forest.png" />
 		<image file="forest+E.png" />

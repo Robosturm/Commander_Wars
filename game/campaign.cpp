@@ -130,6 +130,22 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
     return ret;
 }
 
+bool Campaign::getAllowArmyCustomization(GameMap* pMap)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pMap);
+    args << obj1;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAllowArmyCustomization", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    return false;
+}
+
 bool Campaign::getCampaignFinished()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

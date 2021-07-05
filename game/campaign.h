@@ -64,6 +64,11 @@ signals:
 
 public slots:
     /**
+     * @brief getAllowArmyCustomization if true you can change the army style and color for each player
+     * @return
+     */
+    bool getAllowArmyCustomization(GameMap* pMap);
+    /**
      * @brief mapFiniished
      */
     void mapFinished(bool result);

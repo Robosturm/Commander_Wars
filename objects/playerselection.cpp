@@ -128,8 +128,7 @@ GameEnums::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 }
 
 void PlayerSelection::resetPlayerSelection()
-{
-    
+{    
     m_pPlayerSelection->setVisible(false);
     m_pPlayerSelection->clearContent();
     m_playerCO1.clear();
@@ -143,13 +142,11 @@ void PlayerSelection::resetPlayerSelection()
     m_PlayerSockets.clear();
     m_pReadyBoxes.clear();
     m_playerPerks.clear();
-    m_playerArmy.clear();
-    
+    m_playerArmy.clear();    
 }
 
 void PlayerSelection::showSelectCO(qint32 player, quint8 co)
-{
-    
+{    
     QString coid = "";
     spGameMap pMap = GameMap::getInstance();
     if (pMap->getPlayer(player)->getCO(co) != nullptr)
@@ -201,6 +198,12 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
 bool PlayerSelection::getIsCampaign()
 {
     return (m_pCampaign.get() != nullptr && !Console::getDeveloperMode());
+}
+
+bool PlayerSelection::getIsArmyCustomizationAllowed()
+{
+    spGameMap pMap = GameMap::getInstance();
+    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(pMap.get()) || Console::getDeveloperMode());
 }
 
 void PlayerSelection::showPlayerSelection()
@@ -288,6 +291,7 @@ void PlayerSelection::showPlayerSelection()
         pButtonCOs2->setEnabled(false);
     }
     bool isCampaign = getIsCampaign();
+    bool isArmyCustomizationAllowed = getIsArmyCustomizationAllowed();
 
     if (m_pNetworkInterface.get() != nullptr ||
         isCampaign)
@@ -533,7 +537,7 @@ void PlayerSelection::showPlayerSelection()
         });
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             m_saveGame ||
-            (ai > 0 && isCampaign))
+            (ai > 0 && !isArmyCustomizationAllowed))
         {
             pIconButton->setEnabled(false);
         }
@@ -555,7 +559,7 @@ void PlayerSelection::showPlayerSelection()
         m_playerColors.append(playerColor);
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             m_saveGame ||
-            isCampaign)
+            !isArmyCustomizationAllowed)
         {
             playerColor->setEnabled(false);
         }

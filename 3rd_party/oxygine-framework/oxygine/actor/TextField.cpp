@@ -272,13 +272,13 @@ namespace oxygine
 
     void TextField::rebuildText()
     {
+        QMutexLocker lock(&m_Locked);
         float scale = 1.0f;
         if (m_style.font != nullptr)
         {
             const Font* font = m_style.font->getClosestFont(scale, m_style.fontSize, scale);
             if (font)
             {
-                QMutexLocker lock(&m_Locked);
                 m_rtscale = scale;
                 m_root = nullptr;
                 if (m_htmlText)

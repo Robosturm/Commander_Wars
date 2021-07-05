@@ -50,4 +50,10 @@ var BASECAMPAIGN =
         // example for making three co's selectable
         // return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
     },
+
+    getAllowArmyCustomization : function(campaign, map)
+    {
+        // if true you can change the army style and color for each player
+        return false;
+    },
 };

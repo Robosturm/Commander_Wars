@@ -166,14 +166,12 @@ int main(qint32 argc, char* argv[])
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
-#ifdef GAMEDEBUG
-QQmlDebuggingEnabler enabler;
-#endif
+
     QGuiApplication app(argc, argv);
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
-    Settings::loadSettings();
 
+    Settings::loadSettings();
 
     Mainapp window;
     window.setTitle("Commander Wars");

@@ -455,11 +455,12 @@ namespace oxygine
         {
             return;
         }
-
         m_zOrder = zorder;
         if (m_parent)
         {
+            QMutexLocker lockParent(&m_parent->m_Locked);
             QMutexLocker lock(&m_Locked);
+
             Actor* parent = m_parent;
             spActor me = this;
             parent->m_children.removeItem(me);
@@ -716,7 +717,8 @@ namespace oxygine
     void Actor::setParent(Actor* actor, Actor* parent)
     {
         actor->m_parent = parent;
-        if (parent && parent->__getStage())
+        if (parent != nullptr &&
+            parent->__getStage())
         {
             actor->added2stage(parent->__getStage());
         }
@@ -727,48 +729,6 @@ namespace oxygine
                 actor->removedFromStage();
             }
         }
-    }
-
-    void Actor::insertSiblingBefore(spActor actor)
-    {
-        if (actor == this)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor is self");
-        }
-        else if (actor.get() == nullptr)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor is nullptr");
-        }
-        else if (m_parent != nullptr)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingBefore actor has already a parent");
-            return;
-        }
-        actor->detach();
-        spActor t = this;
-        m_parent->m_children.insert_before(actor, t);
-        setParent(actor.get(), m_parent);
-    }
-
-    void Actor::insertSiblingAfter(spActor actor)
-    {
-        if (!m_parent)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter parent is nullptr");
-            return;
-        }
-        else if (actor.get() == nullptr)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter actor is nullptr");
-        }
-        else if (actor == this)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::insertSiblingAfter actor is self");
-        }
-        actor->detach();
-        spActor t = this;
-        m_parent->m_children.insert_after(actor, t);
-        setParent(actor.get(), m_parent);
     }
 
     void Actor::attachTo(spActor parent)
@@ -807,11 +767,9 @@ namespace oxygine
         }
         actor->detach();
         QMutexLocker lock(&m_Locked);
-
+        QMutexLocker lockActor(&(actor->m_Locked));
         qint32 z = actor->getPriority();
-
         spActor sibling = m_children._last;
-
         //try to insert at the end of list first
         if (sibling && sibling->getPriority() > z)
         {
@@ -826,36 +784,16 @@ namespace oxygine
             }
         }
         if (sibling)
-        {
-            sibling->insertSiblingAfter(actor);
+        {            
+            spActor t = actor;
+            m_children.insert_after(t, sibling);
+            setParent(actor, this);
         }
         else
         {
             spActor t = actor;
             m_children.prepend(t);
             setParent(actor, this);
-        }
-    }
-
-    void Actor::prependChild(spActor actor)
-    {
-        prependChild(actor.get());
-    }
-
-    void Actor::prependChild(Actor* actor)
-    {
-        if (actor == getFirstChild().get())
-        {
-            return;
-        }
-        if (getFirstChild())
-        {
-            QMutexLocker lock(&m_Locked);
-            getFirstChild()->insertSiblingBefore(actor);
-        }
-        else
-        {
-            addChild(actor);
         }
     }
 
@@ -866,6 +804,8 @@ namespace oxygine
 
     void Actor::removeChild(spActor actor)
     {
+        QMutexLocker lock(&m_Locked);
+        QMutexLocker lockActor(&(actor->m_Locked));
         if (!GameWindow::getWindow()->isWorker())
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild trying to remove actor from wrong thread");
@@ -877,9 +817,7 @@ namespace oxygine
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removeChild wrong parent while removing a child");
             }
             else
-            {
-                QMutexLocker lock(&m_Locked);
-                QMutexLocker lockActor(&(actor->m_Locked));
+            {                
                 setParent(actor.get(), nullptr);
                 m_children.removeItem(actor);
             }

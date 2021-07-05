@@ -172,10 +172,6 @@ namespace oxygine
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
-        /**adds child first in list*/
-        void prependChild(spActor actor);
-        /**adds child first in list*/
-        void prependChild(Actor* actor);
         void addChild(spActor actor);
         void addChild(Actor* actor);//avoid conversion to spActor
         void attachTo(spActor parent);
@@ -325,11 +321,6 @@ namespace oxygine
             };
             int32_t m_pressedOvered;
         };
-    private:
-        /**inserts sibling before 'this' actor*/
-        void insertSiblingBefore(spActor);
-        /**inserts sibling after 'this' actor*/
-        void insertSiblingAfter(spActor);
     private:
         Vector2 m_pos;
         Vector2 m_anchor;

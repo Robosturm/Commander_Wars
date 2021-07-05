@@ -76,6 +76,7 @@ public:
     bool getIsServerGame() const;
     void setIsServerGame(bool isServerGame);
     bool getIsCampaign();
+    bool getIsArmyCustomizationAllowed();
 
 signals:
     void sigCOsRandom(qint32 mode);

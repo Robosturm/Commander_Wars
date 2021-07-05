@@ -2839,101 +2839,6 @@
         <file>maps/advance_wars_2_campaign.camp/Toy Box.map</file>
         <file>maps/advance_wars_2_campaign.camp/two week test.js</file>
         <file>maps/advance_wars_2_campaign.camp/Two Week Test.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/a_single_life_isabell.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_airport.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_base.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_beach.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_bunker_closed.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_bunker_open.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_camp_night_outside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_desert.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_desert_rock.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_dust_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_dust_road.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_flower_field.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_flowers.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_flowers2.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_flowers3.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_forest_dust.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_forest_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_glorious_tent_inside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_great_owl.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_great_owl_out.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_high_tech_base.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_ids.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_ids_clones.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_ids_family.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_isabella.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_missile_impact.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_mountain.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_normal_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_normal_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_normal_road.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_normal_ruins.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_parking_lot.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_road_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_ruins_dust_general.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_ruins_night.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_snow.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_snow_mountain.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_tech_labor.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_tent_inside.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_town.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_wasteland.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/brenners_death.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/intro_meteors.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/intro_ruins.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/intro_will.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/cutscenes/intro_world.png</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/A Hero's Farewell.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/A Kind of Home.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/A new Threat.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/A Single Life.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/A Storm Brews.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/a_hero's_farewell.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/a_kind_of_home.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/a_new_threat.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/a_single_life.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/a_storm_brews.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Almost Home.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/almost_home.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Crash Landing.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/crash_landing.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Days of Ruin.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/days_of_ruin.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Fear Experiment.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/fear_experiment.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Final Experiment.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/freehaven.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Freehaven.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Greyfield Strikes.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/greyfield_strikes.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/History of Hate.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/history_of_hate.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Hope Rising.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/hope_rising.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Icy Retreat.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/icy_retreat.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Lin's Gambit.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Moving On.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/moving_on.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/New Allies.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/new_allies.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Panic in the Ranks.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/panic_in_the_ranks.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Sacrificial Lamb.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/sacrificial_lamb.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/salvation.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Salvation.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/The Beast.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/The Creeper.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/The Great Owl.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/the_beast.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/the_creeper.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/the_great_owl.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/Waylon Flies Again.map</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/waylon_flies_again.js</file>
         <file>maps/advance_wars_dual_strike_campaign/Jake's Trial.map</file>
         <file>maps/advance_wars_dual_strike_campaign/Max Attacks!.map</file>
         <file>maps/advance_wars_dual_strike_campaign/Neverending War.map</file>
@@ -5183,7 +5088,109 @@
         <file>templates/gamescript.js</file>
         <file>templates/init.js</file>
         <file>resources/scripts/gamerules/victory/victoryrule_turnlimit_score_race.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/lin's_gambit.js</file>
-        <file>maps/advance_wars_day_of_ruin_campaign/final experiment.js</file>
+        <file>resources/images/terrain/wall.png</file>
+        <file>mods/aw2_image/images/terrain/desert_pipeline+E+S+W.png</file>
+        <file>mods/aw2_image/images/terrain/rough_sea+N+E+S+W.png</file>
+        <file>mods/aw2_image/images/terrain/ruin+0.png</file>
+        <file>mods/aw2_image/images/terrain/ruin+1.png</file>
+        <file>mods/aw2_image/images/terrain/ruin+2.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/a_single_life_isabell.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_airport.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_base.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_beach.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_closed.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_bunker_open.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_camp_night_outside.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_desert_rock.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_general.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_dust_road.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_factory.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flower_field.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers2.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_flowers3.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_dust.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_forest_night.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_glorious_tent_inside.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_great_owl_out.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_high_tech_base.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_clones.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ids_family.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_isabella.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_lin.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_missile_impact.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_mountain.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_general.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_night.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_road.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_normal_ruins.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_parking_lot.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_road_night.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_dust_general.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_ruins_night.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_snow_mountain.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tech_labor.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_tent_inside.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_town.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/bg_wasteland.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/brenners_death.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_meteors.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_ruins.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_will.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/cutscenes/intro_world.png</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/A Hero's Farewell.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/A Kind of Home.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/A new Threat.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/A Single Life.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/A Storm Brews.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/a_hero's_farewell.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/a_kind_of_home.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/a_new_threat.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/a_single_life.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/a_storm_brews.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Almost Home.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/almost_home.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Crash Landing.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/crash_landing.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Days of Ruin.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/days_of_ruin.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Fear Experiment.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/fear_experiment.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/final experiment.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Final Experiment.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/freehaven.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Freehaven.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Greyfield Strikes.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/greyfield_strikes.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/History of Hate.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/history_of_hate.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Hope Rising.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/hope_rising.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Icy Retreat.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/icy_retreat.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Lin's Gambit.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/lin's_gambit.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Moving On.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/moving_on.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/New Allies.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/new_allies.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Panic in the Ranks.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/panic_in_the_ranks.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Sacrificial Lamb.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/sacrificial_lamb.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/salvation.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Salvation.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/The Beast.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/The Creeper.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/The Great Owl.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/the_beast.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/the_creeper.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/the_great_owl.js</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/Waylon Flies Again.map</file>
+        <file>maps/advance_wars_day_of_ruin_campaign.camp/waylon_flies_again.js</file>
     </qresource>
 </RCC>

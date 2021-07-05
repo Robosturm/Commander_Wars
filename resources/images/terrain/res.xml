@@ -142,8 +142,7 @@
 		<image file="sea+beach+W.png" />
 		<image file="sea+beach+S.png" />
 		<image file="sea+beach+N.png" />
-		
-		
+				
 		<image file="ruin+0.png" />
 		<image file="ruin+1.png" />
 		<image file="ruin+2.png" />
@@ -239,6 +238,7 @@
 		<image file="pipeline+S+W.png" />
 		<image file="pipeline+W.png" />
 		
+		<image file="wall.png" />
 		<image file="wall+E.png" />
 		<image file="wall+E+S.png" />
 		<image file="wall+E+S+W.png" />
