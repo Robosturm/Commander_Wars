@@ -165,44 +165,36 @@ CampaignEditor::CampaignEditor()
 }
 
 void CampaignEditor::showExitBox()
-{
-    
+{    
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the campaign editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &CampaignEditor::exitEditor, Qt::QueuedConnection);
-    addChild(pExit);
-    
+    addChild(pExit);    
 }
 
 void CampaignEditor::exitEditor()
-{
-    
+{    
     emit sigFinished();
-    detach();
-    
+    detach();    
 }
 
 void CampaignEditor::showAddCampaign()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);    
 }
 
 void CampaignEditor::showSaveCampaign()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);    
 }
 
 void CampaignEditor::showLoadCampaign()
@@ -241,24 +233,18 @@ QString CampaignEditor::getMapName(QString filename)
 }
 
 void CampaignEditor::showSelectFolder()
-{
-    
+{    
     QString path = Settings::getUserPath() + "maps";
     spFolderDialog folderDialog = spFolderDialog::create(path);
     addChild(folderDialog);
-    connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
-    
+    connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);    
 }
 
 void CampaignEditor::selectFolder(QString folder)
 {
     folder = GlobalUtils::makePathRelative(folder);
-    QDir dir(folder);
-    if (dir.exists())
-    {
-        m_CampaignFolder->setCurrentText(folder);
-        clearCampaignData();
-    }
+    m_CampaignFolder->setCurrentText(folder);
+    clearCampaignData();
 }
 
 void CampaignEditor::clearCampaignData()

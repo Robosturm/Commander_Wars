@@ -3523,8 +3523,6 @@
         <file>mods/aw_co/scripts/general/co_perk.js</file>
         <file>mods/aw_co/scripts/general/tagpower.js</file>
         <file>mods/aw_co/mod.txt</file>
-        <file>mods/aw_styled_icons/images/units/game/arrow+unit.png</file>
-        <file>mods/aw_styled_icons/images/units/game/res.xml</file>
         <file>mods/aw_styled_icons/images/units/icons/1.png</file>
         <file>mods/aw_styled_icons/images/units/icons/2.png</file>
         <file>mods/aw_styled_icons/images/units/icons/3.png</file>
@@ -5192,5 +5190,7 @@
         <file>maps/advance_wars_day_of_ruin_campaign.camp/the_great_owl.js</file>
         <file>maps/advance_wars_day_of_ruin_campaign.camp/Waylon Flies Again.map</file>
         <file>maps/advance_wars_day_of_ruin_campaign.camp/waylon_flies_again.js</file>
+        <file>mods/aw_styled_icons/images/game/arrow+unit.png</file>
+        <file>mods/aw_styled_icons/images/game/res.xml</file>
     </qresource>
 </RCC>

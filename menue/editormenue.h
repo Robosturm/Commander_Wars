@@ -36,6 +36,7 @@ public:
 
     explicit EditorMenue();
     virtual ~EditorMenue();
+    void deleteMenu();
 
     static inline EditorMenue* getInstance()
     {

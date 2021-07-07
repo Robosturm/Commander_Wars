@@ -199,6 +199,10 @@ int main(qint32 argc, char* argv[])
     {
         GameMenue::getInstance()->deleteMenu();
     }
+    if (EditorMenue::getInstance() != nullptr)
+    {
+        EditorMenue::getInstance()->deleteMenu();
+    }
     if (GameMap::getInstance() != nullptr)
     {
         GameMap::getInstance()->deleteMap();

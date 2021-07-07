@@ -1884,3 +1884,9 @@ void EditorMenue::autosave()
         file.close();
     }    
 }
+
+void EditorMenue::deleteMenu()
+{
+    m_pInstance = nullptr;
+    oxygine::Actor::detach();
+}

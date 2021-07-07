@@ -343,6 +343,12 @@ void PlayerSelection::showPlayerSelection()
         emit sigChangeAllTeams(static_cast<qint32>(value));
     });
     m_pPlayerSelection->addItem(teamSpinBox);
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+        m_saveGame ||
+        isCampaign)
+    {
+        teamSpinBox->setEnabled(false);
+    }
 
     itemIndex = 6;
     oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 150);
@@ -537,7 +543,7 @@ void PlayerSelection::showPlayerSelection()
         });
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             m_saveGame ||
-            (ai > 0 && !isArmyCustomizationAllowed))
+            (ai > 0 && isCampaign))
         {
             pIconButton->setEnabled(false);
         }
@@ -753,7 +759,7 @@ void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPosition
     });
     if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         m_saveGame ||
-        (ai > 0 && getIsCampaign()))
+        (ai > 0 && !getIsArmyCustomizationAllowed()))
     {
         pArmy->setEnabled(false);
     }

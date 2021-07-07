@@ -674,7 +674,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
     for (qint32 i = 0; i < fullMods.size(); i++)
     {
         QString modFilename = file;
-        QFile modFile(modFilename.replace("resources/", mods[i] + "/"));
+        QFile modFile(modFilename.replace("resources/", fullMods[i] + "/"));
         if (modFile.exists())
         {
             modFile.open(QIODevice::ReadOnly | QIODevice::Truncate);

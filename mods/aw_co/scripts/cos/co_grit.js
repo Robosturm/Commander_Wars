@@ -35,10 +35,6 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 0;
         default:
-            if (attacker.getBaseMaxRange() > 1)
-            {
-                return 20;
-            }
             break;
         }
         if (attacker.getBaseMaxRange() === 1 &&

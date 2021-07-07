@@ -45,7 +45,8 @@ FolderDialog::FolderDialog(QString startFolder)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         QDir folder(m_CurrentFolder->getCurrentText());
-        if (folder.exists())
+        QDir virtFolder(oxygine::Resources::RCC_PREFIX_PATH + m_CurrentFolder->getCurrentText());
+        if (folder.exists() || virtFolder.exists())
         {
             emit sigFolderSelected(m_CurrentFolder->getCurrentText());
         }

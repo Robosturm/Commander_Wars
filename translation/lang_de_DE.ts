@@ -367,129 +367,129 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="170"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="169"/>
         <source>Do you want to exit the campaign editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="290"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="276"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="298"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="284"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="306"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="292"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="314"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="300"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="325"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="311"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="331"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="317"/>
         <source>All maps marked as last map need to be won in order to finish the campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="704"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="690"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="708"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="694"/>
         <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="730"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="716"/>
         <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="775"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="761"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="779"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="765"/>
         <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="799"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="785"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="851"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="837"/>
         <source>Enable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="860"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="936"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="846"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="922"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="864"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="940"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="850"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="926"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="877"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="953"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="863"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="939"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="883"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="957"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="869"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="943"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="895"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="969"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="881"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="955"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="899"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="973"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="885"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="959"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="912"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="986"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="898"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="972"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="916"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="902"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="929"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="990"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="976"/>
         <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1664,12 +1664,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="55"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="56"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="266"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="267"/>
         <source>Do you want to delete the folder </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3571,8 +3571,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="105"/>
-        <location filename="../objects/playerselection.cpp" line="377"/>
-        <location filename="../objects/playerselection.cpp" line="1200"/>
+        <location filename="../objects/playerselection.cpp" line="383"/>
+        <location filename="../objects/playerselection.cpp" line="1206"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3603,14 +3603,14 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="224"/>
-        <location filename="../objects/playerselection.cpp" line="366"/>
+        <location filename="../objects/playerselection.cpp" line="372"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="224"/>
-        <location filename="../objects/playerselection.cpp" line="348"/>
-        <location filename="../objects/playerselection.cpp" line="703"/>
+        <location filename="../objects/playerselection.cpp" line="354"/>
+        <location filename="../objects/playerselection.cpp" line="709"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3655,71 +3655,71 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="368"/>
-        <location filename="../objects/playerselection.cpp" line="382"/>
-        <location filename="../objects/playerselection.cpp" line="396"/>
+        <location filename="../objects/playerselection.cpp" line="374"/>
+        <location filename="../objects/playerselection.cpp" line="388"/>
+        <location filename="../objects/playerselection.cpp" line="402"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="368"/>
+        <location filename="../objects/playerselection.cpp" line="374"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="368"/>
+        <location filename="../objects/playerselection.cpp" line="374"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="368"/>
+        <location filename="../objects/playerselection.cpp" line="374"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="368"/>
+        <location filename="../objects/playerselection.cpp" line="374"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="385"/>
-        <location filename="../objects/playerselection.cpp" line="392"/>
-        <location filename="../objects/playerselection.cpp" line="396"/>
+        <location filename="../objects/playerselection.cpp" line="391"/>
+        <location filename="../objects/playerselection.cpp" line="398"/>
+        <location filename="../objects/playerselection.cpp" line="402"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="551"/>
+        <location filename="../objects/playerselection.cpp" line="557"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="569"/>
+        <location filename="../objects/playerselection.cpp" line="575"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="648"/>
+        <location filename="../objects/playerselection.cpp" line="654"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="667"/>
+        <location filename="../objects/playerselection.cpp" line="673"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="686"/>
+        <location filename="../objects/playerselection.cpp" line="692"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="722"/>
+        <location filename="../objects/playerselection.cpp" line="728"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="747"/>
+        <location filename="../objects/playerselection.cpp" line="753"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>

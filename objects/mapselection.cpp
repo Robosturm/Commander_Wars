@@ -65,7 +65,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     y += pAnim->getHeight();
     addChild(pBackground);
 
-    m_itemCount = (heigth - 10 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
+    m_itemCount = (heigth - 25 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
     createItemContainer(y, width, m_itemHeigth * m_itemCount);
 
     pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
