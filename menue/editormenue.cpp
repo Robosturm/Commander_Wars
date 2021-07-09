@@ -840,12 +840,12 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         }
         case EditorModes::EditUnits:
         {
-            m_Cursor->changeCursor("cursor+edit");
+            m_Cursor->changeCursor("cursor+edit", 0, 0, 2.0f);
             break;
         }
         case EditorModes::EditTerrain:
         {
-            m_Cursor->changeCursor("cursor+edit");
+            m_Cursor->changeCursor("cursor+edit", 0, 0, 2.0f);
             break;
         }
         case EditorModes::PlaceEditorSelection:

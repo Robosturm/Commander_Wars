@@ -52,12 +52,12 @@ var Constructor = function()
         if (ACTION_STEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
             ACTION_STEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
         {
-            animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+            animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
             animation.setSound("dive.wav", 1);
         }
         else
         {
-            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
             animation.setSound("stealth.wav", 1);
         }
         ACTION_STEALTH.postAnimationUnit.setHasMoved(true);

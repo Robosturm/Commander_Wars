@@ -42,8 +42,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2("smuggler+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("smuggler+walk", false, 1.5);
+        animation.loadSpriteV2("smuggler+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("smuggler+walk", false, 2);
         animation.setSound("movetire.wav", -2);
         return animation;
     };

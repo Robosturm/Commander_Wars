@@ -9,8 +9,8 @@ MECH.doWalkingAnimation = function(action)
 {
     var unit = action.getTargetUnit();
     var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-    animation.loadSpriteV2("mech+os+walk+mask", GameEnums.Recoloring_Table, 1);
-    animation.loadSprite("mech+os+walk", false, 1);
+    animation.loadSpriteV2("mech+os+walk+mask", GameEnums.Recoloring_Table, 1.33);
+    animation.loadSprite("mech+os+walk", false, 1.33);
     animation.setSound("moveboots.wav", -2);
     return animation;
 };

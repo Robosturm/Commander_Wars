@@ -47,8 +47,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite(unitID + "+walk", false, 1.5);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite(unitID + "+walk", false, 2);
         animation.setSound("hoellium_move.wav", -2);
         return animation;
     };
@@ -64,7 +64,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y, 200);
-        animation.addSpriteAnimTable("hoellium_die+mask", 0, 0, unit.getOwner(), 0, 1.5, 1.5);
+        animation.addSpriteAnimTable("hoellium_die+mask", 0, 0, unit.getOwner(), 0, 2, 2);
         animation.setSound("hoellium_explode.wav");
         return animation;
     };

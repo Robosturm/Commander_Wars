@@ -66,7 +66,7 @@ var Constructor = function()
                     animation.setSound("power4.wav");
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(0, 400));
                         if (animation2 !== null)
                         {
                             animation2.queueAnimation(animation);
@@ -75,7 +75,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

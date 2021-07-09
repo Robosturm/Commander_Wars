@@ -85,13 +85,13 @@ var Constructor = function()
                     animation.setSound("power4.wav");
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(0, 400));
                         animation2.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

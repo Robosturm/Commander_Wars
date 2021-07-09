@@ -5192,5 +5192,7 @@
         <file>maps/advance_wars_day_of_ruin_campaign.camp/waylon_flies_again.js</file>
         <file>mods/aw_styled_icons/images/game/arrow+unit.png</file>
         <file>mods/aw_styled_icons/images/game/res.xml</file>
+        <file>resources/fonts/main32.xml</file>
+        <file>resources/fonts/main32_0.png</file>
     </qresource>
 </RCC>

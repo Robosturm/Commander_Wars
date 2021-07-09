@@ -30,7 +30,7 @@ var Constructor = function()
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
-        cursorData.setScale(1.5);
+        cursorData.setScale(2);
     };
     this.getStepData = function(action, data)
     {
@@ -81,7 +81,7 @@ var Constructor = function()
                 {
                     unit.setCloaked(1);
                     var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("stealth.wav", 1);
                 }
             }

@@ -32,14 +32,14 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     {
         m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width / 2, m_selectionHeight);
         m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width / 2, m_selectionHeight);
-        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width / 2, m_selectionHeight);
+        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width / 2, m_selectionHeight + GameMap::getImageSize());
         m_BoxPlacementSelection = createV9Box(width / 2, m_startHPlacementSize, width / 2, Settings::getHeight() -  80);
     }
     else
     {
         m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
         m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
-        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight);
+        m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight + GameMap::getImageSize());
         m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);
     }
 
@@ -163,8 +163,8 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
         spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "");
         pSprite->loadSprites();
         pSprite->setPriority(-100);
-        pSprite->setScaleX(1 / building->getScaleX() * GameMap::getImageSize() / pAnim->getWidth());
-        pSprite->setScaleY(1 / building->getScaleY() * GameMap::getImageSize() / pAnim->getHeight());
+        pSprite->setScaleX(1 / building->getScaleX()); //  * GameMap::getImageSize() / pAnim->getWidth()
+        pSprite->setScaleY(1 / building->getScaleY()); //  * GameMap::getImageSize() / pAnim->getHeight()
         if (width > 1)
         {
             pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
@@ -404,7 +404,6 @@ void EditorSelection::createPlayerSelection()
         oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
-        pSprite->setScale(pAnim->getWidth() / GameMap::getImageSize());
         pSprite->setWidth(GameMap::getImageSize());
         pBuilding->addChild(pSprite);
         m_Players.append(pBuilding);
@@ -479,7 +478,7 @@ void EditorSelection::updateSelectedPlayer()
         if (i < m_Players.size())
         {
             m_Players[i]->setVisible(true);
-            m_Players[i]->setPosition(40 + (m_Players[i]->getWidth() + 5)  * (i - m_playerStartIndex), 28);
+            m_Players[i]->setPosition(40 + (m_Players[i]->getScaledWidth() + 5)  * (i - m_playerStartIndex), 40);
         }
     }
 }

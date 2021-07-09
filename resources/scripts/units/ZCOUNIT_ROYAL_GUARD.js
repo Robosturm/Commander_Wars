@@ -34,8 +34,8 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("royal_guard+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("royal_guard+walk", false, 1.5);
+        animation.loadSpriteV2("royal_guard+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("royal_guard+walk", false, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;
     };

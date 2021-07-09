@@ -3,13 +3,15 @@
 
 #include <QObject>
 #include <QVector>
-//#include <QSoundEffect>
-//#include <QMediaPlayer>
-//#include <QMediaPlaylist>
+#include <QSoundEffect>
+#include <QMediaPlayer>
+#include <QMediaDevices>
+#include <QAudioDevice>
+#include <QAudioOutput>
 #include <QTimer>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-class QMediaPlaylist;
+// #define EnableMultimedia
 
 class AudioThread : public QObject
 {
@@ -95,11 +97,11 @@ public slots:
     void stopAllSounds();
 protected slots:
     // stops current Music and launches another one.
-    void SlotPlayMusic(qint32 File);
+    void SlotPlayMusic(qint32 file);
     void SlotSetVolume(qint32 value);
-    void SlotAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
+    void SlotAddMusic(QString file, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void SlotClearPlayList();
-    //void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void SlotPlayRandom();
     void SlotLoadFolder(QString folder);
     void SlotCheckMusicEnded(qint64 duration);
@@ -115,22 +117,36 @@ protected slots:
      */
     void stopSecondPlayer();
     void bufferAudio();
-
-    //void reportReplayError(QMediaPlayer::Error error);
-    void reportPlaylistErros();
+    /**
+     * @brief reportReplayError
+     * @param error
+     * @param errorString
+     */
+    void reportReplayError(QMediaPlayer::Error error, const QString &errorString);
 protected:
+    /**
+     * @brief loadMusicFolder
+     * @param folder
+     * @param loadedSounds
+     */
     void loadMusicFolder(QString folder, QStringList& loadedSounds);
 private:
     // two players one is buffering the other one is actually playing
-    //QMediaPlayer m_Player;
-    //QMediaPlaylist m_playList;
-    //QMediaPlayer m_Player2;
-    //QMediaPlaylist m_playList2;
+    QMediaPlayer m_player;
+    QList<QUrl> m_playList;
+    qint32 m_playListPostiton{-1};
+    QMediaPlayer m_player2;
+    QList<QUrl> m_playList2;
+    qint32 m_playListPostiton2{-1};
     qint32 m_currentPlayer{-1};
     QVector<std::tuple<qint64, qint64>> m_PlayListdata;
     qint32 m_currentMedia{-1};
-    //QVector<QSoundEffect*> m_Sounds;
+    QVector<QSoundEffect*> m_Sounds;
     QVector<QTimer*> m_SoundTimers;
+    QAudioDevice m_audioDevice;
+#ifdef EnableMultimedia
+    QAudioOutput m_audioOutput;
+#endif
     QTimer m_doubleBufferTimer;
     bool m_loadBaseGameFolders{true};
 };

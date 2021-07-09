@@ -216,9 +216,8 @@ namespace oxygine
 
                 m_holded = event->target;
                 m_downPos = te->localPosition;
+                break;
             }
-            break;
-
             case TouchEvent::TOUCH_UP:
             {
                 if (m_ignoreTouchUp)
@@ -307,9 +306,8 @@ namespace oxygine
 
                     m_lastIterTime = tm;
                 }
+                break;
             }
-            break;
-
             case TouchEvent::MOVE:
             {
                 if (te->index == m_finger)
@@ -339,8 +337,8 @@ namespace oxygine
                         m_holded = nullptr;
                     }
                 }
+                break;
             }
-            break;
         }
     }
 }

@@ -63,22 +63,6 @@
     </message>
 </context>
 <context>
-    <name>Battle Mystery (Andy)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Andy).js" line="124"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Battle Mystery (Sami)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Battle Mystery (Sami).js" line="136"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>BuildListDialog</name>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="41"/>
@@ -510,14 +494,6 @@
         <location filename="../menue/campaignmenu.cpp" line="68"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Captain Drake (Andy)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Captain Drake (Andy).js" line="108"/>
-        <source></source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -1257,7 +1233,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="132"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="131"/>
         <source>Keep Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1707,9 +1683,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="459"/>
-        <location filename="../game/gamemap.cpp" line="513"/>
-        <location filename="../game/gamemap.cpp" line="1238"/>
+        <location filename="../game/gamemap.cpp" line="460"/>
+        <location filename="../game/gamemap.cpp" line="514"/>
+        <location filename="../game/gamemap.cpp" line="1231"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1735,43 +1711,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="459"/>
-        <location filename="../game/gamemap.cpp" line="1238"/>
+        <location filename="../game/gamemap.cpp" line="460"/>
+        <location filename="../game/gamemap.cpp" line="1231"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="513"/>
+        <location filename="../game/gamemap.cpp" line="514"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="523"/>
+        <location filename="../game/gamemap.cpp" line="524"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1215"/>
+        <location filename="../game/gamemap.cpp" line="1208"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1265"/>
+        <location filename="../game/gamemap.cpp" line="1258"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1275"/>
+        <location filename="../game/gamemap.cpp" line="1268"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1283"/>
+        <location filename="../game/gamemap.cpp" line="1276"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1295"/>
+        <location filename="../game/gamemap.cpp" line="1288"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2698,14 +2674,6 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
 </context>
 <context>
-    <name>It&apos;s War</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/It's War.js" line="88"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>LobbyMenu</name>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="53"/>
@@ -3184,46 +3152,6 @@ Host mods: </source>
         <location filename="../multiplayer/multiplayermenu.cpp" line="1203"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Naval Clash (Andy)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Andy).js" line="101"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Naval Clash (Max)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Max).js" line="92"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Naval Clash (Sami)</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Naval Clash (Sami).js" line="102"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Olaf&apos;s Navy</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Navy.js" line="69"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>Olaf&apos;s Sea Strike</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Olaf's Sea Strike.js" line="114"/>
-        <source></source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -4220,14 +4148,6 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="50"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Sami Marches On</name>
-    <message>
-        <location filename="../maps/advance_wars_1_campaign.camp/Sami Marches On.js" line="101"/>
-        <source></source>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -6025,30 +5945,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../coreengine/workerthread.cpp" line="117"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>co_random</name>
-    <message>
-        <location filename="../resources/scripts/cos/co_random.js" line="48"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>fear_experiment</name>
-    <message>
-        <location filename="../maps/advance_wars_day_of_ruin_campaign/fear_experiment.js" line="124"/>
-        <source></source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>history_of_hate</name>
-    <message>
-        <location filename="../maps/advance_wars_day_of_ruin_campaign/history_of_hate.js" line="110"/>
-        <source></source>
-        <translation></translation>
     </message>
 </context>
 </TS>

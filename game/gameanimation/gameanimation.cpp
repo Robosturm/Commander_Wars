@@ -28,7 +28,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
     connect(this, &GameAnimation::sigFinished, this, &GameAnimation::onFinished, Qt::QueuedConnection);
     connect(this, &GameAnimation::sigStart, this, &GameAnimation::start, Qt::QueuedConnection);
     m_buffer.open(QIODevice::ReadWrite);
-    setVisible(false);
+    oxygine::Sprite::setVisible(false);
 }
 
 void GameAnimation::restart()
@@ -336,6 +336,8 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     pTextfield->setPosition(offsetX, offsetY);
     pTextfield->setScale(scale * 16.0f / 72.0f);
     pTextfield->setPriority(priority);
+    pTextfield->setWidth(pTextfield->getTextRect().getWidth() * scale * 16.0f / 72.0f);
+    pTextfield->setHeight(72);
     addChild(pTextfield);
     return pTextfield->getTextRect().getWidth() * scale * 16.0f / 72.0f;
 }

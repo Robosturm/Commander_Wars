@@ -40,7 +40,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+air.wav");
         return animation;
     };
@@ -48,8 +48,8 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("zeppelin+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("zeppelin+walk", false, 1.5);
+        animation.loadSpriteV2("zeppelin+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("zeppelin+walk", false, 2);
         animation.setSound("movemassiveair.wav", -2);
         return animation;
     };

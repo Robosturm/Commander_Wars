@@ -50,8 +50,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2("intel_truck+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("intel_truck+walk", false, 1.5);
+        animation.loadSpriteV2("intel_truck+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("intel_truck+walk", false, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
     };

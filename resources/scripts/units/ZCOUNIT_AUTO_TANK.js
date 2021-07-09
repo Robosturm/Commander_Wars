@@ -33,8 +33,8 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("auto_tank+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("auto_tank+walk", false, 1.5);
+        animation.loadSpriteV2("auto_tank+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("auto_tank+walk", false, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;
     };

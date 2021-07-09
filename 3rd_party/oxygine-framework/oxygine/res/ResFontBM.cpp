@@ -182,7 +182,8 @@ namespace oxygine
     {
         QVariant value = QVariant(node.attribute("linearFilter"));
         if (value.typeId() == QMetaType::QString &&
-            !value.isNull())
+            !value.isNull() &&
+            node.hasAttribute("linearFilter"))
         {
             if (value.toBool())
             {
@@ -199,7 +200,8 @@ namespace oxygine
         }
         value = QVariant(node.attribute("clamp2edge"));
         if (value.typeId() == QMetaType::QString &&
-            !value.isNull())
+            !value.isNull() &&
+            node.hasAttribute("clamp2edge"))
         {
             m_clamp2edge = value.toBool();
         }

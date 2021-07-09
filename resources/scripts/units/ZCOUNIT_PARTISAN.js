@@ -47,8 +47,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyData);
-        animation.loadSpriteV2("partisan+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("partisan+walk", false, 1.5);
+        animation.loadSpriteV2("partisan+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("partisan+walk", false, 2);
         animation.setSound("movewalk.wav", -2);
         return animation;
     };

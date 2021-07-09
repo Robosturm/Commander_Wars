@@ -81,7 +81,7 @@ var Constructor = function()
         cursorData.setCursor("cursor+attack");
         cursorData.setXOffset(- map.getImageSize() / 3);
         cursorData.setYOffset(- map.getImageSize() / 3);
-        cursorData.setScale(1.5);
+        cursorData.setScale(2);
     };
     this.calcEnviromentDamage = function(action, attacker, attackerWeapon, attackerPosition, targetField, enviroment)
     {
@@ -462,7 +462,7 @@ var Constructor = function()
                 currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
-            animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 1.5, 0, 2);
+            animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 2, 0, 2);
             animation2.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
             animation.queueAnimation(animation2);
         }

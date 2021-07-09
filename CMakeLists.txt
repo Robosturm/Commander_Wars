@@ -31,7 +31,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
-#find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -54,7 +54,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
-    find_package(Qt6 COMPONENTS QmlDebug REQUIRED)
 else("Release")
     message("Compiling as Release")
     add_definitions(
@@ -535,35 +534,23 @@ set(QT_LIBRARIES
     Qt6::Network
     Qt6::Widgets
     Qt6::Xml
-    #Qt6::Multimedia
+    Qt6::Multimedia
     Qt6::OpenGL
     )
-
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    set(QT_DEBUG_LIBRARIES
-        Qt6::QmlDebug
-        )
-else()
-    set(QT_DEBUG_LIBRARIES
-        )
-endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
-        ${QT_DEBUG_LIBRARIES}
         # special linking of libs for windows
         Dbghelp
         )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
-        ${QT_DEBUG_LIBRARIES}
         )
 else() # this branch works at least for linux
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
-        ${QT_DEBUG_LIBRARIES}
         )
 endif()
 
@@ -645,7 +632,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/Qt6Qml.dll
         ${QT_BIN_DIR}/Qt6Core.dll
         ${QT_BIN_DIR}/Qt6Network.dll
-        #${QT_BIN_DIR}/Qt6Multimedia.dll
+        ${QT_BIN_DIR}/Qt6Multimedia.dll
         ${QT_BIN_DIR}/Qt6Gui.dll
         ${QT_BIN_DIR}/Qt6Widgets.dll
         ${QT_BIN_DIR}/Qt6Xml.dll
@@ -656,27 +643,12 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${ADDR_2_LINE}
         )
 
-    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-        ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
-        ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
-        )
-
-    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-        ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
-        )
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-        ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
-        )
-
-    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
-        ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
-        )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
         )
-    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-        ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
-        )
+#    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+#        ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
+#        )
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
 
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
@@ -690,22 +662,7 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../lib/libQt6OpenGL.so
         ${ADDR_2_LINE}
         )
-    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-        ${QT_BIN_DIR}/../plugins/mediaservice/libgstaudiodecoder.so
-        ${QT_BIN_DIR}/../plugins/mediaservice/libgstcamerabin.so
-        ${QT_BIN_DIR}/../plugins/mediaservice/libgstmediaplayer.so
-        ${QT_BIN_DIR}/../plugins/mediaservice/libgstmediacapture.so
-        )
-    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-        ${QT_BIN_DIR}/../plugins/bearer/libqgenericbearer.so
-        )
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-        ${QT_BIN_DIR}/../plugins/playlistformats/libqtmultimedia_m3u.so
-        )
-    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
-        ${QT_BIN_DIR}/../plugins/audio/libqtmedia_pulse.so
-        ${QT_BIN_DIR}/../plugins/audio/libqtaudio_alsa.so
-        )
+
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
         ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
@@ -719,37 +676,6 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
         )
-endif()
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-        set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_local.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_native.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_nativedebugger.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_preview.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_profiler.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_quickprofiler.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
-            )
-    else()
-        set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_debugger.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_inspector.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_local.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_messages.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_native.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_nativedebugger.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_preview.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_profiler.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_quickprofiler.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_server.so
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_tcp.so
-            )
-    endif()
 endif()
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
@@ -774,13 +700,6 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         install(DIRECTORY data DESTINATION                  "${CMAKE_BUILD_TYPE}")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "${CMAKE_BUILD_TYPE}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION         "${CMAKE_BUILD_TYPE}/mediaservice" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION              "${CMAKE_BUILD_TYPE}/audio" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION             "${CMAKE_BUILD_TYPE}/bearer" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${CMAKE_BUILD_TYPE}/platforms" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION    "${CMAKE_BUILD_TYPE}/playlistformats" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION             "${CMAKE_BUILD_TYPE}/styles" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION         "${CMAKE_BUILD_TYPE}/qmltooling" OPTIONAL)
 endif()

@@ -38,10 +38,10 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("laserray+center+start", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 1.5);
+        animation.addSprite("laserray+center+start", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 2);
 
         var animation2 = GameAnimationFactory.createAnimation(x, y);
-        animation2.addSprite("laserray+center", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 1.5);
+        animation2.addSprite("laserray+center", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 2);
         animation.queueAnimation(animation2);
         animation2.setEndOfAnimationCall("ACTION_LASER_FIRE", "performPostAnimation");
         var size = fields.size();
@@ -55,14 +55,14 @@ var Constructor = function()
                     if (point.y > 1)
                     {
                         animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                        animation2.addSprite("laserray", -map.getImageSize() * 0.4 , -map.getImageSize() * 1.45, 0, 1.5);
+                        animation2.addSprite("laserray", -map.getImageSize() * 0.4 , -map.getImageSize() * 1.45, 0, 2);
                         animation2.setRotation(90);
                         animation.queueAnimation(animation2);
                     }
                     else if (point.y < -1)
                     {
                         animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                        animation2.addSprite("laserray", 0, -map.getImageSize() * 1.45, 0, 1.5);
+                        animation2.addSprite("laserray", 0, -map.getImageSize() * 1.45, 0, 2);
                         animation2.setRotation(90);
                         animation.queueAnimation(animation2);
                     }
@@ -72,13 +72,13 @@ var Constructor = function()
                     if (point.x > 1)
                     {
                         animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                        animation2.addSprite("laserray", -map.getImageSize() * 0.15, -map.getImageSize() * 0.6, 0, 1.5);
+                        animation2.addSprite("laserray", -map.getImageSize() * 0.15, -map.getImageSize() * 0.6, 0, 2);
                         animation.queueAnimation(animation2);
                     }
                     else if (point.x < -1)
                     {
                         animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                        animation2.addSprite("laserray", 0, -map.getImageSize() * 0.6, 0, 1.5);
+                        animation2.addSprite("laserray", 0, -map.getImageSize() * 0.6, 0, 2);
                         animation.queueAnimation(animation2);
                     }
                 }

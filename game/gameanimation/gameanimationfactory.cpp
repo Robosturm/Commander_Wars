@@ -161,10 +161,10 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         {
             // attacking unit
             GameAnimation* pAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
-            pAtk->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
+            pAtk->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
             pAtk->setSound("talongunhit.wav", 1);
             GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY());
-            pDmgTextAtk->addText(QString::number(atkDamage) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+            pDmgTextAtk->addText(QString::number(atkDamage) + " Hp", -8, 0, 2.0f, Qt::GlobalColor::red);
             pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->Terrain::getX() * GameMap::getImageSize(), (pDefTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
             pDmgTextAtk->addTweenWait(1500);
             pAtk->queueAnimation(pDmgTextAtk);
@@ -172,11 +172,11 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             {
                 // counter damage
                 pRet = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), 70);
-                pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
+                pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
                 pRet->setSound("talongunhit.wav", 1);
                 pDmgTextAtk->queueAnimation(pRet.get());
                 spGameAnimation pDmgTextDef = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY());
-                pDmgTextDef->addText(QString::number(defDamage) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+                pDmgTextDef->addText(QString::number(defDamage) + " Hp", -8, 0, 2.0f, Qt::GlobalColor::red);
                 pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->Terrain::getX() * GameMap::getImageSize(), (pAtkTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
                 pDmgTextDef->addTweenWait(1500);
                 pRet->queueAnimation(pDmgTextDef.get());
@@ -270,7 +270,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
     {
         // attacking building or terrain
         pRet = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
-        pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
+        pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
         pRet->setSound("talongunhit.wav", 1);
     }
 

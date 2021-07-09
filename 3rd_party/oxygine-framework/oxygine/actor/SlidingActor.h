@@ -13,20 +13,6 @@ namespace oxygine
     public:
         static void setDefaultTouchThreshold(float val);
 
-        class SlidingEvent: public Event
-        {
-        public:
-            enum SEvent
-            {
-                BEGIN = sysEventID('S', 'B', 'G'),
-                SLIDING = sysEventID('S', 'S', 'L'),
-                END = sysEventID('S', 'E', 'N')
-            };
-
-            SlidingEvent(SEvent ev) : Event(ev) {}
-            Vector2 speed;
-        };
-
         SlidingActor();
         ~SlidingActor();
 

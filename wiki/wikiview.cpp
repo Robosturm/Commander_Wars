@@ -82,20 +82,19 @@ void WikiView::search(bool onlyTag)
         pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = FontManager::getMainFont24();
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
+        spLabel textField = spLabel::create(pBox->getWidth() - 18);
         textField->setStyle(style);
-
-        pBox->addChild(textField);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         textField->setHeight(40);
-        textField->setWidth(pBox->getWidth() - 18);
         textField->setX(13);
         textField->setY(5);
+        pBox->addChild(textField);
+        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         m_MainPanel->addItem(pBox);
         // add some event handling :)

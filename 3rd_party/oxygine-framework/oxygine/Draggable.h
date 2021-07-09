@@ -7,6 +7,8 @@ namespace oxygine
     class Draggable : public IClosureOwner
     {
     public:
+        enum { DragMoveEvent = sysEventID('D', 'M', 'E') };
+
         Draggable();
         ~Draggable();
 

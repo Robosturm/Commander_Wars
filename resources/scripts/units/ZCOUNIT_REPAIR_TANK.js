@@ -50,8 +50,8 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("repair_tank+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite("repair_tank+walk", false, 1.5);
+        animation.loadSpriteV2("repair_tank+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("repair_tank+walk", false, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
     };

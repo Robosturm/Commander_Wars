@@ -110,7 +110,6 @@ DialogVictoryConditions::DialogVictoryConditions()
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
                 spBuilding building = spBuilding::create("HQ");
-                // building->setScale(1.5f);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 pPanel->addItem(building);

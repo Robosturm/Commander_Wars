@@ -10,7 +10,6 @@
 #include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"

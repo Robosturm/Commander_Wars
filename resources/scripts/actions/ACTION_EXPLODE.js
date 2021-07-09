@@ -38,7 +38,7 @@ var Constructor = function()
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
-        cursorData.setScale(1.5);
+        cursorData.setScale(2);
     };
     this.getStepData = function(action, data)
     {

@@ -2,7 +2,7 @@
 <resources>
 	<set path = "resources/cursor/" />
 	<atlas linearFilter="false">
-		<image file="cursor+border+bottom.png" />
+		<image file="cursor+border+bottom.png"  />
 		<image file="cursor+border+left.png" />
 		<image file="cursor+border+right.png" />
 		<image file="cursor+border+top.png" />
@@ -11,9 +11,9 @@
 		<image file="cursor+fill.png" cols = "4" />
 		<image file="cursor+unable.png" cols = "4" />
 		<image file="cursor+delete.png" cols = "4" />
-		<image file="cursor+missile.png" cols = "3" ScaleFactor = "1.5" />
-		<image file="cursor+radius_3.png" cols = "3" ScaleFactor = "1.5" />
-		<image file="cursor+edit.png" cols = "3" ScaleFactor = "1.5" />
+		<image file="cursor+missile.png" cols = "3" />
+		<image file="cursor+radius_3.png" cols = "3" />
+        <image file="cursor+edit.png" cols = "3" />
 		<image file="co+range+marker+bottom.png" cols = "4" />
 		<image file="co+range+marker+top.png" cols = "4" />
 		<image file="co+range+marker+right.png" cols = "4" />

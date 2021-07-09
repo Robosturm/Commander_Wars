@@ -324,14 +324,17 @@ namespace oxygine
             frame_width = child_node.attribute("frame_width").toInt();
             columns = child_node.attribute("cols").toInt();
             frame_height = child_node.attribute("frame_height").toInt();
-            QVariant varMaskExtend = QVariant(child_node.attribute("maskExtend"));
             bool maskExtend = true;
-            if (varMaskExtend.typeId() == QMetaType::QString &&
-                !value.isNull())
+            if (child_node.hasAttribute("maskExtend"))
             {
-                maskExtend = value.toBool();
+                QVariant varMaskExtend = QVariant(child_node.attribute("maskExtend"));
+                if (varMaskExtend.typeId() == QMetaType::QString &&
+                    !varMaskExtend.isNull() &&
+                    child_node.hasAttribute("maskExtend"))
+                {
+                    maskExtend = value.toBool();
+                }
             }
-
             if (rows <= 0)
             {
                 rows = 1;
@@ -343,17 +346,19 @@ namespace oxygine
             QString path = walker.getPath("file");
             if (path.endsWith("+mask.png") && maskExtend)
             {
-                QString overlayPath = Settings::getUserPath() + path.replace("+mask.png", ".png");
-                if (QFile::exists(Settings::getUserPath() + overlayPath))
+                QString basePath = path.replace("+mask.png", ".png");
+                QString overlayPath = basePath;
+                if (QFile::exists(Settings::getUserPath() + basePath))
                 {
-                    overlayPath = Settings::getUserPath() + overlayPath;
+                    overlayPath = Settings::getUserPath() + basePath;
                 }
                 else
                 {
-                    overlayPath = oxygine::Resource::RCC_PREFIX_PATH + overlayPath;
+                    overlayPath = oxygine::Resource::RCC_PREFIX_PATH + basePath;
                 }
                 if (QFile::exists(overlayPath))
                 {
+                    Console::print("SpriteCreator::preProcessMask for file " + path, Console::eDEBUG);
                     QImage overlay(overlayPath);
                     SpriteCreator::preProcessMask(img, overlay, columns, rows);
                 }

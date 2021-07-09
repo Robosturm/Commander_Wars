@@ -85,6 +85,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                     if (m_Items[item].terrainId != "||SHROUDED||")
                     {
                         oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+                        pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
                         pSprite->setColor(Qt::black);
                         pSprite->setPosition(x * IMAGE_SIZE, y * IMAGE_SIZE);
                         pSprite->setSize(IMAGE_SIZE, IMAGE_SIZE);
@@ -129,6 +130,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             if (pAnim != nullptr)
                             {
                                 oxygine::spSprite pSprite = oxygine::spSprite::create();
+                                pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
                                 if (pAnim->getTotalFrames() > 1)
                                 {
                                     oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -162,6 +164,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                         if (pAnim != nullptr)
                         {
                             oxygine::spSprite pSprite = oxygine::spSprite::create();
+                            pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
                             if (pAnim->getTotalFrames() > 1)
                             {
                                 oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -197,6 +200,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                 if (pAnim != nullptr)
                                 {
                                     oxygine::spSprite pSprite = oxygine::spSprite::create();
+                                    pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
                                     if (pAnim->getTotalFrames() > 1)
                                     {
                                         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);

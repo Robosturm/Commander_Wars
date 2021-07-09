@@ -27,7 +27,7 @@ public:
 
     oxygine::spBox9Sprite getDetailedViewBox() const;
 
-    public slots:
+public slots:
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);

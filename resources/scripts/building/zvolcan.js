@@ -88,7 +88,7 @@ var Constructor = function()
         var x = building.getX() + targetOffset.x;
         var y = building.getY() + targetOffset.y;
         var animation = GameAnimationFactory.createAnimation(x, y - 4);
-        animation.addSprite("volcan_eruption", 0, 0, 0, 1.5);
+        animation.addSprite("volcan_eruption", 0, 0, 0, 2);
         animation.setSound("volcan_eruption.wav");
         if (animationCount > 0)
         {
@@ -102,7 +102,7 @@ var Constructor = function()
             if (map.onMap(target.x, target.y))
             {
                 animation2 = GameAnimationFactory.createAnimation(target.x, target.y - 3);
-                animation2.addSprite("volcan_fireball", 0, -map.getImageSize() * 1, 400, 1.5);
+                animation2.addSprite("volcan_fireball", 0, -map.getImageSize() * 1, 400, 2);
                 animation2.addTweenPosition(Qt.point(target.x * map.getImageSize(), target.y * map.getImageSize()), 400);
                 if (animation3 === null)
                 {
@@ -113,7 +113,7 @@ var Constructor = function()
                     animation3.queueAnimation(animation2);
                 }
                 animation3 = GameAnimationFactory.createAnimation(target.x, target.y);
-                animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 1.5);
+                animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 2);
                 animation3.setSound("volcan_hit.wav");
                 animation2.queueAnimation(animation3);
                 animation3.writeDataInt32(target.x);

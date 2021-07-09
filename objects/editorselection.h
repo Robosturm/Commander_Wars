@@ -179,7 +179,7 @@ private:
     static const qint32 m_startHPlacementSize = 0;
     static const qint32 m_startHSelectionType = m_startHPlacementSize + m_selectionHeight;
     static const qint32 m_startHSelectedPlayer = m_startHSelectionType + m_startHPlacementSize + m_selectionHeight;
-    static const qint32 m_startHTerrain = m_startHSelectedPlayer + m_selectionHeight;
+    static const qint32 m_startHTerrain = m_startHSelectedPlayer + m_selectionHeight + GameMap::defaultImageSize;
     const qint32 m_startH = GameMap::getImageSize() * 2;
     static const float m_xFactor;
     static const float m_yFactor;

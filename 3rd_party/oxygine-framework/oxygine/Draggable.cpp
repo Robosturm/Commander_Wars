@@ -70,8 +70,14 @@ namespace oxygine
             {
                 np = m_dragClient->getPosition() + converted;
             }
+            auto startPos = m_dragClient->getPosition();
             m_dragClient->setPosition(np);
             snapClient2Bounds();
+            if (startPos != m_dragClient->getPosition())
+            {
+                oxygine::Event pEvent(DragMoveEvent);
+                m_dragClient->dispatchEvent(&pEvent);
+            }
         }
     }
 

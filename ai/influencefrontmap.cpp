@@ -10,6 +10,7 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "objects/base/label.h"
 
 InfluenceFrontMap::InfluenceFrontMap(const QVector<spIslandMap> & islands)
     : m_islands(islands)
@@ -249,7 +250,7 @@ void InfluenceFrontMap::showFrontlines()
                 pMap->addChild(sprite);
                 m_info.append(sprite);
             }
-            oxygine::spTextField pTextfield = oxygine::spTextField::create();
+            spLabel pTextfield = spLabel::create(GameMap::getImageSize());
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(QString::number(count));
             pTextfield->setPosition(field.x() * GameMap::getImageSize(), field.y() * GameMap::getImageSize());

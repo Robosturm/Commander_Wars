@@ -48,10 +48,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
             m_buildingResAnim = oxygine::spSingleResAnim::create();
             m_captureBuildingResAnim = oxygine::spSingleResAnim::create();
         }
-        QString path = Settings::getUserPath() +  pAnim->getResPath();
+        QString path = Settings::getUserPath() + pAnim->getResPath();
         if (!QFile::exists(path))
         {
-            path = oxygine::Resource::RCC_PREFIX_PATH + path;
+            path = oxygine::Resource::RCC_PREFIX_PATH + pAnim->getResPath();
         }
         QImage preCaptureImage(path);
         QImage captureImage(path);

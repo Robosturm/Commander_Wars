@@ -52,14 +52,14 @@ var Constructor = function()
         map.replaceTerrainOnly("PLAINS_DESTROYED", x, y);
         map.getTerrain(x, y).loadSprites();
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("explosion+land.wav");
     };
     this.getShotAnimation = function(building)
     {
         var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
-        animation.addSprite("minicanon_west", -map.getImageSize() * 1.5, -map.getImageSize() * 0.5, 0, 1.5);
+        animation.addSprite("minicanon_west", -map.getImageSize() * 1.5, -map.getImageSize() * 0.5, 0, 2);
         animation.setSound("minicanon_shot.wav");
         return animation;
     };

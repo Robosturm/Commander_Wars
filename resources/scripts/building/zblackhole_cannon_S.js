@@ -88,7 +88,7 @@ var Constructor = function()
     this.getShotAnimation = function(building)
     {
         var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
-        animation.addSprite("blackhole_shot_south", -map.getImageSize() * 2.0, -map.getImageSize() * 2.0, 0, 1.5);
+        animation.addSprite("blackhole_shot_south", -map.getImageSize() * 2.0, -map.getImageSize() * 2.0, 0, 2);
         animation.setSound("blackcanon_shot.wav");
         return animation;
     };

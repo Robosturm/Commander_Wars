@@ -38,8 +38,8 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyDataStanding);
         // load sprites
-        unit.loadSprite("sniper+" + armyName, false, 1.5);
-        unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Table, 1.5);
+        unit.loadSprite("sniper+" + armyName, false, 2);
+        unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Table, 2);
     };
     this.getMovementType = function()
     {
@@ -65,9 +65,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, SNIPER.armyData);
-        var zoom = 1.5;
-        animation.loadSpriteV2("sniper+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, zoom);
-        animation.loadSprite("sniper+" + armyName + "+walk", false, zoom);
+        animation.loadSpriteV2("sniper+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("sniper+" + armyName + "+walk", false, 2);
         animation.setSound("movewalk.wav", -2);
         return animation;
     };

@@ -1,7 +1,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QDir>
-#include <QGuiApplication>
+#include <QApplication>
 #include <QFile>
 #ifdef GAMEDEBUG
     #include <QQmlEngine>
@@ -167,7 +167,7 @@ int main(qint32 argc, char* argv[])
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
 

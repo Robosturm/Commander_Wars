@@ -54,4 +54,18 @@ namespace oxygine
         */
         void removeListener() { currentTarget->removeEventListener(listenerID); }
     };
+
+    class SlidingEvent: public Event
+    {
+        public:
+            enum SEvent
+            {
+                BEGIN = sysEventID('S', 'B', 'G'),
+                SLIDING = sysEventID('S', 'S', 'L'),
+                END = sysEventID('S', 'E', 'N')
+            };
+
+            SlidingEvent(SEvent ev) : Event(ev) {}
+            Vector2 speed;
+    };
 }

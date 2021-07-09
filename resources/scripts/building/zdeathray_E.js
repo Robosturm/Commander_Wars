@@ -97,10 +97,10 @@ var Constructor = function()
     this.createRayAnimation = function(building, x, y, fields)
     {
         var animation = GameAnimationFactory.createAnimation(x, y + 2);
-        animation.addSprite("deathray_start_loading", 0, 0, 0, 1.5);
+        animation.addSprite("deathray_start_loading", 0, 0, 0, 2);
         animation.setRotation(270);
         var animation2 = GameAnimationFactory.createAnimation(x, y + 2);
-        animation2.addSprite("deathray_start", 0, 0, 0, 1.5);
+        animation2.addSprite("deathray_start", 0, 0, 0, 2);
         animation2.setRotation(270);
         animation.queueAnimation(animation2);
 
@@ -113,7 +113,7 @@ var Constructor = function()
                 if ((point.y === -1) && ((point.x) % 2 === 0))
                 {
                     animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y + 3);
-                    animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 1.5);
+                    animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 2);
                     animation2.setRotation(270);
                     animation.queueAnimation(animation2);
                 }

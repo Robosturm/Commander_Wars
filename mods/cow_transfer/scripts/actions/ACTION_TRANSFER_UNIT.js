@@ -50,7 +50,7 @@ var Constructor = function()
 		cursorData.setCursor("cursor+edit");
 		cursorData.setXOffset(0);
 		cursorData.setYOffset(0);
-		cursorData.setScale(1.0);
+        cursorData.setScale(2.0);
     };
     this.getStepData = function(action, data)
     {

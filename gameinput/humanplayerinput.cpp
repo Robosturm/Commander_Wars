@@ -596,6 +596,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 
 void HumanPlayerInput::getNextStepData()
 {
+    Mainapp::getInstance()->pauseRendering();
     Console::print("HumanPlayerInput::getNextStepData", Console::eDEBUG);
     clearMenu();
     clearMarkedFields();
@@ -639,6 +640,7 @@ void HumanPlayerInput::getNextStepData()
             Console::print("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()), Console::eERROR);
         }
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::finishAction()
@@ -812,16 +814,6 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
     if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
     {
         float initFrame = 0;
-        if (point.x() % 2 == 0 &&
-            point.y() % 2 != 0)
-        {
-            initFrame = 0.5f;
-        }
-        else if (point.y() % 2 == 0 &&
-                 point.x() % 2 != 0)
-        {
-            initFrame = 0.5f;
-        }
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
         pSprite->addTween(tween);
     }
@@ -1007,6 +999,7 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     textField->setStyle(style);
     textField->setScale(32.0f / 72.0f);
     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
+    textField->setSize(clipRec->getSize());
     textField->attachTo(clipRec);
     clipRec->attachTo(m_ZInformationLabel);
 
@@ -1014,7 +1007,7 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     textField2->setStyle(style);
     textField2->setY(44);
     textField2->setX(10);
-
+    textField2->setSize(clipRec->getSize());
     textField2->setScale(32.0f / 72.0f);
     textField2->setHtmlText(labelText);
     textField2->attachTo(m_ZInformationLabel);
@@ -1431,6 +1424,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 
 void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)
 {
+    Mainapp::getInstance()->pauseRendering();
     UnitPathFindingSystem pfs(pUnit, m_pPlayer);
     QVector<QPoint> points;
     QPoint position = pUnit->getPosition();
@@ -1466,6 +1460,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
         }
     }
     syncMarkedFields();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::nextMarkedField()

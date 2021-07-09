@@ -39,6 +39,14 @@ public:
         return getInstance()->getResFont("main48");
     }
     /**
+     * @brief getMainFont48
+     * @return
+     */
+    inline static oxygine::ResFont* getMainFont32()
+    {
+        return getInstance()->getResFont("main32");
+    }
+    /**
      * @brief getMainFont72
      * @return
      */

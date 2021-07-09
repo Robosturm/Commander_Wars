@@ -50,7 +50,7 @@ var Constructor = function()
         var rocketTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav", 1);
         animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");        
         powerNameAnimation.queueAnimation(animation);

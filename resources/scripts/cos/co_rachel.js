@@ -57,13 +57,13 @@ var Constructor = function()
             }
             if (animations.length < 5)
             {
-                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(0, 400));
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -93,7 +93,7 @@ var Constructor = function()
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
         
         var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav", 1);
         animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());
         animation2.queueAnimation(animation);

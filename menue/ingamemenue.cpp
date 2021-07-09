@@ -384,6 +384,14 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
         m_mapSlidingActor = oxygine::spActor::create();
         addChild(m_mapSliding);
         m_mapSliding->setContent(m_mapSlidingActor);
+        m_mapSlidingActor->addEventListener(oxygine::Draggable::DragMoveEvent, [=](oxygine::Event*)
+        {
+            emit GameMap::getInstance()->sigMovedMap();
+        });
+        m_mapSliding->addEventListener(oxygine::SlidingEvent::SLIDING, [=](oxygine::Event*)
+        {
+            emit GameMap::getInstance()->sigMovedMap();
+        });
     }
 
     m_mapSliding->setPosition(x, y);

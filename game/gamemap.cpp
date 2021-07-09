@@ -39,7 +39,8 @@ const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
 static constexpr qint32 loadingScreenSize = 900;
-qint32 GameMap::m_imagesize = 24;
+qint32 GameMap::m_imagesize = GameMap::defaultImageSize;
+
 
 spGameMap GameMap::m_pInstance = nullptr;
 
@@ -889,15 +890,7 @@ void GameMap::centerMap(qint32 x, qint32 y, bool updateMinimapPosition)
                 qint32 newY = pMapSliding->getHeight() / 2.0f - y * getZoom() * m_imagesize - m_imagesize / 2.0f;
                 limitPosition(pMenu, newX, newY);
                 pMapSlidingActor->setPosition(newX, newY);
-
-                if (Settings::getAutoMoveCursor())
-                {
-                    pMenu->calcNewMousePosition(x, y);
-                }
-                else
-                {
-                    pMenu->getCursor()->setMapPoint(x, y);
-                }
+                pMenu->getCursor()->setMapPoint(x, y);
             }
         }
         if (updateMinimapPosition)

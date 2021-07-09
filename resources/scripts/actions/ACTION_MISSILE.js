@@ -43,7 +43,7 @@ var Constructor = function()
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
-        cursorData.setScale(1.5);
+        cursorData.setScale(2);
     };
     this.getStepData = function(action, data)
     {
@@ -125,7 +125,7 @@ var Constructor = function()
         }
 
         var animation = GameAnimationFactory.createAnimation(ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
-        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav");
         // replace silo with rocket with
         ACTION_MISSILE.postAnimationUnit.getTerrain().loadBuilding("SILO");

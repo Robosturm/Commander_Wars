@@ -51,7 +51,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+water.wav");
         return animation;
     };
@@ -60,8 +60,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
-        animation.loadSprite(unitID + "+walk", false, 1.5);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite(unitID + "+walk", false, 2);
         animation.setSound("moveship.wav", -2);
         return animation;
     };

@@ -29,8 +29,8 @@ var Constructor = function()
     this.loadSprites = function(unit)
     {
         // load sprites
-        unit.loadSprite("commando", false, 1.5);
-        unit.loadSpriteV2("commando+mask", GameEnums.Recoloring_Table, 1.5);
+        unit.loadSprite("commando", false, 2);
+        unit.loadSpriteV2("commando+mask", GameEnums.Recoloring_Table, 2);
     };
     this.getMovementType = function()
     {
@@ -49,9 +49,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
-        var zoom = 1.5;
-        animation.loadSpriteV2("commando+walk+mask", GameEnums.Recoloring_Table, zoom);
-        animation.loadSprite("commando+walk", false, zoom);
+        animation.loadSpriteV2("commando+walk+mask", GameEnums.Recoloring_Table, 2);
+        animation.loadSprite("commando+walk", false, 2);
         animation.setSound("moveboots.wav", -2);
         return animation;
     };
@@ -99,7 +98,7 @@ var Constructor = function()
                         queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
                     }
                     var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("stealth.wav", 1);
                     if (queueAnimation !== null)
                     {
@@ -115,7 +114,7 @@ var Constructor = function()
                 if (cloaked !== cloakedNow)
                 {
                     var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+                    animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("unstealth.wav", 1);
                 }
             }

@@ -71,7 +71,6 @@ void VictoryRulePopup::updateInfo()
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 spBuilding building = spBuilding::create("HQ");
-                // building->setScale(1.5f);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 addItem(building);
