@@ -46,28 +46,28 @@
 		<image file="plains+E.png" />
 		<image file="plains+N.png" />
 		
-		<image file="sea.png" cols = "8" />
-		<image file="sea+NE.png" cols = "5" />
-		<image file="sea+NW.png" cols = "5" />
-		<image file="sea+SE.png" cols = "5" />
-		<image file="sea+SW.png" cols = "5" />
-		<image file="sea+E.png" />
-		<image file="sea+E+S.png" />
-		<image file="sea+E+S+W.png" />
-		<image file="sea+E+W.png" />
-		<image file="sea+N.png" />
-		<image file="sea+N+E.png" />
-		<image file="sea+N+E+S.png" />
-		<image file="sea+N+E+S+W.png" />
-		<image file="sea+N+E+W.png" />
-		<image file="sea+N+S.png" />
-		<image file="sea+N+S+W.png" />
-		<image file="sea+N+W.png" />
-		<image file="sea+S.png" />
-		<image file="sea+S+W.png" />
-		<image file="sea+W.png" />
+		<image file="sea.png" cols = "4" />
+		<image file="sea+NE.png" cols = "4" />
+		<image file="sea+NW.png" cols = "4" />
+		<image file="sea+SE.png" cols = "1" />
+		<image file="sea+SW.png" cols = "1" />
+		<image file="sea+E.png" cols = "4" />
+		<image file="sea+E+S.png" cols = "4" />
+		<image file="sea+E+S+W.png" cols = "4" />
+		<image file="sea+E+W.png" cols = "4" />
+		<image file="sea+N.png" cols = "4" />
+		<image file="sea+N+E.png" cols = "4" />
+		<image file="sea+N+E+S.png" cols = "4" />
+		<image file="sea+N+E+S+W.png" cols = "4" />
+		<image file="sea+N+E+W.png" cols = "4" />
+		<image file="sea+N+S.png" cols = "4" />
+		<image file="sea+N+S+W.png" cols = "4" />
+		<image file="sea+N+W.png" cols = "4" />
+		<image file="sea+S.png" cols = "4" />
+		<image file="sea+S+W.png" cols = "4" />
+		<image file="sea+W.png" cols = "4" />
 		
-		<image file="rough_sea+N+E+S+W.png" cols = "5" />
+		<image file="rough_sea+N+E+S+W.png" cols = "4" />
 		
 		<image file="fire.png" cols = "6" />
 		
@@ -136,8 +136,12 @@
 		<image file="beach+S+W+land+N+E.png" />
 		<image file="beach+W+land+N+E+S.png" />
 		<image file="beach+W+land+N+S.png" />
-		<image file="beach+W+land+S.png" />		
+		<image file="beach+W+land+S.png" />
 		<image file="beach.png" />
+		<image file="beach+NW.png" />
+		<image file="beach+NE.png" />
+		<image file="beach+SW.png" />
+		<image file="beach+SE.png" />
 		<image file="sea+beach+E.png" />
 		<image file="sea+beach+W.png" />
 		<image file="sea+beach+S.png" />
@@ -174,27 +178,27 @@
 		<image file="street+S+W.png" />
 		<image file="street+W.png" />
 		
-		<image file="river.png" />
-		<image file="river+E.png" />
-		<image file="river+E+S.png" />
-		<image file="river+E+S+W.png" />
-		<image file="river+E+W.png" />
-		<image file="river+N.png" />
-		<image file="river+N+E.png" />
-		<image file="river+N+E+S.png" />
-		<image file="river+N+E+S+W.png" />
-		<image file="river+N+E+W.png" />
-		<image file="river+N+S.png" />
-		<image file="river+N+S+W.png" />
-		<image file="river+N+W.png" />
-		<image file="river+S.png" />
-		<image file="river+S+W.png" />
-		<image file="river+W.png" />
+		<image file="river.png" cols = "4" />
+		<image file="river+E.png" cols = "4" />
+		<image file="river+E+S.png" cols = "4" />
+		<image file="river+E+S+W.png" cols = "4" />
+		<image file="river+E+W.png" cols = "4" />
+		<image file="river+N.png" cols = "4" />
+		<image file="river+N+E.png" cols = "4" />
+		<image file="river+N+E+S.png" cols = "4" />
+		<image file="river+N+E+S+W.png" cols = "4" />
+		<image file="river+N+E+W.png" cols = "4" />
+		<image file="river+N+S.png" cols = "4" />
+		<image file="river+N+S+W.png" cols = "4" />
+		<image file="river+N+W.png" cols = "4" />
+		<image file="river+S.png" cols = "4" />
+		<image file="river+S+W.png" cols = "4" />
+		<image file="river+W.png" cols = "4" />
 		
-		<image file="riverending+E.png" />
-		<image file="riverending+S.png" />
-		<image file="riverending+W.png" />
-		<image file="riverending+N.png" />
+		<image file="riverending+E.png" cols = "4" />
+		<image file="riverending+S.png" cols = "4" />
+		<image file="riverending+W.png" cols = "4" />
+		<image file="riverending+N.png" cols = "4" />
 		
 		<image file="plasma.png" cols = "3" />
 		<image file="plasma+E.png" cols = "3" />

@@ -1,0 +1,7 @@
+name=Advance Wars Darc Conflict Image Mod 
+description=This mod brings back the Advance Wars Darc Conflict Terrain Sprites to Commander Wars. Created by Robosturm
+version=1.0.0
+CompatibleMods=
+IncompatibleMods=
+required_mods=
+cosmetic=true
