@@ -325,7 +325,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 
 qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color, qint32 priority)
 {
-    oxygine::TextStyle style = FontManager::getMainFont72();
+    oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = color;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -334,12 +334,12 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(text);
     pTextfield->setPosition(offsetX, offsetY);
-    pTextfield->setScale(scale * 16.0f / 72.0f);
+    pTextfield->setScale(scale);
     pTextfield->setPriority(priority);
-    pTextfield->setWidth(pTextfield->getTextRect().getWidth() * scale * 16.0f / 72.0f);
-    pTextfield->setHeight(72);
+    pTextfield->setWidth(pTextfield->getTextRect().getWidth() * scale);
+    pTextfield->setHeight(40);
     addChild(pTextfield);
-    return pTextfield->getTextRect().getWidth() * scale * 16.0f / 72.0f;
+    return pTextfield->getTextRect().getWidth() * scale;
 }
 
 bool GameAnimation::onFinished(bool skipping)

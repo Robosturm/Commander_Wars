@@ -23,6 +23,30 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
 }
 
+void GameAnimationWalk::start()
+{
+    if (!m_started)
+    {
+        m_started = true;
+        Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
+        if (m_pUnit->isStealthed(pPlayer))
+        {
+            setVisible(false);
+        }
+        else
+        {
+            setVisible(true);
+        }
+        m_previousAnimation = nullptr;
+        doPreAnimationCall();
+        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        for (auto & data : m_SoundData)
+        {
+            pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs, data.volume);
+        }
+    }
+}
+
 bool GameAnimationWalk::onFinished(bool skipping)
 {    
     spGameMap pMap = GameMap::getInstance();

@@ -962,13 +962,19 @@ void GameMap::setZoom(float zoom)
         m_zoom /= 2.0f;
     }
     // limit zoom
+
+    float minLimit = 1.0f;
+    if (Mainapp::getInstance()->devicePixelRatio() >= 2.0f)
+    {
+        minLimit = 0.5f;
+    }
     if (m_zoom > 16.0f)
     {
         m_zoom = 16.0f;
     }
-    else if (m_zoom < 0.5f)
+    else if (m_zoom < minLimit)
     {
-        m_zoom = 0.5f;
+        m_zoom = minLimit;
     }
     else
     {
@@ -980,6 +986,7 @@ void GameMap::setZoom(float zoom)
     {
         pMenu->updateSlidingActorSize();
     }
+
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
     emit sigZoomChanged(m_zoom);
 }

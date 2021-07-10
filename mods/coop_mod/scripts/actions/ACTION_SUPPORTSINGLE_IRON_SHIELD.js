@@ -30,8 +30,8 @@ ACTION_SUPPORTSINGLE_IRON_SHIELD.performPostAnimation = function(postAnimation)
     var defenseUnit = terrain.getUnit();
     var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
     var width = animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, 2, 1);
-    animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-    animation.addSprite("defense", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+    animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+    animation.addSprite("defense", map.getImageSize() / 2 + 4, 4, 400, 2);
     var shieldOwner = ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit.getOwner();
     var targetOwner = defenseUnit.getOwner();
     if (targetOwner === ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit.getOwner())

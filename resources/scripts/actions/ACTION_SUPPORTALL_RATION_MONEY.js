@@ -124,8 +124,8 @@ var Constructor = function()
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");
                 if (queueAnimation !== null)
                 {
@@ -157,8 +157,8 @@ var Constructor = function()
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");
                 if (queueAnimation !== null)
                 {
@@ -191,8 +191,8 @@ var Constructor = function()
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");
                 if (queueAnimation !== null)
                 {
@@ -224,8 +224,8 @@ var Constructor = function()
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
-                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
                 animation.addSound("repair_1.wav");
                 if (queueAnimation !== null)
                 {

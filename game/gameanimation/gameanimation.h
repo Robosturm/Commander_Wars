@@ -332,16 +332,7 @@ protected:
     bool m_finishQueued{false};
     bool m_started{false};
     bool m_skipping{false};
-private:
-
-    QVector<spGameAnimation> m_QueuedAnimations;
     spGameAnimation m_previousAnimation{nullptr};
-    QString m_jsPostActionObject{""};
-    QString m_jsPostActionFunction{""};
-    QString m_jsPreActionObject{""};
-    QString m_jsPreActionFunction{""};
-    bool m_stopSoundAtAnimationEnd{false};
-
     struct SoundData
     {
         QString soundFile;
@@ -351,6 +342,15 @@ private:
         qint32 delayMs;
     };
     QVector<SoundData> m_SoundData;
+private:
+
+    QVector<spGameAnimation> m_QueuedAnimations;
+    QString m_jsPostActionObject{""};
+    QString m_jsPostActionFunction{""};
+    QString m_jsPreActionObject{""};
+    QString m_jsPreActionFunction{""};
+    bool m_stopSoundAtAnimationEnd{false};
+
     QVector<oxygine::spSingleResAnim> m_resAnims;
     /**
      * @brief animation data needed to perform this action
