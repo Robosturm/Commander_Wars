@@ -3,53 +3,48 @@
 #include "ai/neuralnetwork/neural/layer.h"
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 
-Edge::Edge(Neuron *n, Neuron* nb, double w)
-    : m_n(n),
-      m_nb(nb),
-      m_w(w)
+Edge::Edge(Neuron *nextNeuron, Neuron* previousNeuron, double weight)
+    : m_nextNeuron(nextNeuron),
+      m_previousNeuron(previousNeuron),
+      m_weight(weight)
 {
 }
 
-Neuron* Edge::neuron() const
+Neuron* Edge::nextNeuron() const
 {
-    return m_n;
+    return m_nextNeuron;
 }
 
-Neuron* Edge::neuronb() const
+Neuron* Edge::previousNeuron() const
 {
-    return m_nb;
+    return m_previousNeuron;
 }
 
 double Edge::weight() 
 {
-    return m_w;
-}
-
-double Edge::weightP()
-{
-    return m_w;
+    return m_weight;
 }
 
 void Edge::propagate(double neuron_output)
 {
-    neuron()->addAccumulated(neuron_output * weight());
+    m_nextNeuron->addAccumulated(neuron_output * weight());
 }
 
 void Edge::alterWeight(double w)
 {
-    m_w = w;
+    m_weight = w;
 }
 
 void Edge::shiftWeight(double dw)
 {
-    dw *= m_nb->getLayer()->getNet()->getLearningRate();
-    m_w += dw;
+    dw *= m_previousNeuron->getLayer()->getNet()->getLearningRate();
+    m_weight += dw;
     m_last_shift = dw;
 }
 
 void Edge::resetLastShift()
 {
-    m_w -= m_last_shift;
+    m_weight -= m_last_shift;
 }
 
 double Edge::getLastShift() const
@@ -71,15 +66,16 @@ void Edge::setBackpropagationMemory(double v)
 void Edge::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
-    pStream << m_w;
+    pStream << m_weight;
     pStream << m_last_shift;
     pStream << m_backpropagation_memory;
 }
+
 void Edge::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    pStream >> m_w;
+    pStream >> m_weight;
     pStream >> m_last_shift;
     pStream >> m_backpropagation_memory;
 }

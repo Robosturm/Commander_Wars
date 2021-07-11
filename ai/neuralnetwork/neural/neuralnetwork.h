@@ -20,8 +20,7 @@ class NeuralNetwork : public oxygine::ref_counter, public FileSerializable
 public:
 
     NeuralNetwork(double maxWeight = 1);
-
-    ~NeuralNetwork();
+    virtual ~NeuralNetwork()= default;
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -40,50 +39,93 @@ public:
     {
         return 1;
     }
-
-    void autogenerate(bool randomize = true);
-
+    /**
+     * @brief addLayer adds a layer to the neural network
+     * @param parameters
+     * TYPE (Standard=0, OUTPUT=1, INPUT=2)
+     * SIZE
+     * ACTIVATION (LINEAR=0, SIGMOID=1, RELU=2)
+     */
     void addLayer(QMap<QString, double> parameters);
-
-    void clean();
-
-    void setInput(QVector<double> in);
-
-    void trigger();
-
+    /**
+     * @brief autogenerate connects all neurons and can be used to randomize all weights
+     * @param randomize
+     */
+    void autogenerate(bool randomize = true);
+    /**
+     * @brief predicts the score for the input calls
+     * @param in
+     * @return
+     */
+    QVector<double> predict(const QVector<double>& in);
+    /**
+     * @brief output
+     * @return the last predicted output
+     */
     QVector<double> output();
 
     QString outputString();
 
-    void connectComplete();
-
-    void alterWeights(const QVector<QVector<QVector<double>>>& weights);
-
-    void shiftBackWeights(const QVector<QVector<QVector<double>>>& weights);
-
     QVector<QVector<QVector<double>>> getWeights();
-
     QVector<QVector<QVector<spEdge>>> getEdges();
-
-    void randomizeAllWeights();
-
-    double loss(const QVector<double>& in, const QVector<double>& out);
-
-    double loss(const QVector<QVector<double>>& ins, const QVector<QVector<double>>& outs);
-
-    QString toString();
-
-    void shiftWeights(float percentage_of_range);
-
-    QVector<double> predict(const QVector<double>& in);
-
-    double predictAllForScore(const spDataset dataset, Dataset::Datatype d = Dataset::Datatype::TEST, qint32 limit=-1);
-
     QVector<spLayer> getLayers();
 
+    /**
+     * @brief toString for debugging
+     * @return
+     */
+    QString toString();
+    /**
+     * @brief shiftBackWeights for learning
+     * @param weights
+     */
+    void alterWeights(const QVector<QVector<QVector<double>>>& weights);
+    /**
+     * @brief shiftBackWeights for learning
+     * @param weights
+     */
+    void shiftBackWeights(const QVector<QVector<QVector<double>>>& weights);
+    /**
+     * @brief loss for learning
+     * @param in
+     * @param out
+     * @return
+     */
+    double loss(const QVector<double>& in, const QVector<double>& out);
+    /**
+     * @brief loss for learning
+     * @param ins
+     * @param outs
+     * @return
+     */
+    double loss(const QVector<QVector<double>>& ins, const QVector<QVector<double>>& outs);
+    /**
+     * @brief shiftWeights for learning
+     * @param percentage_of_range
+     */
+    void shiftWeights(float percentage_of_range);
+    /**
+     * @brief predictAllForScore for learning
+     * @param in
+     * @return
+     */
+    double predictAllForScore(const spDataset dataset, Dataset::Datatype d = Dataset::Datatype::TEST, qint32 limit=-1);
+    /**
+     * @brief getLearningRate  for training
+     * @return
+     */
     double getLearningRate() const;
+    /**
+     * @brief setLearningRate for training
+     * @param learningRate
+     */
     void setLearningRate(double learningRate);
-
+private:
+    void setInput(QVector<double> in);
+    void trigger();
+    void clean();
+    void connectComplete();
+    void randomizeAllWeights();
 private:
     QVector<spLayer> m_layers;
     double m_fitness;

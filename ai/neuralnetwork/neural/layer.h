@@ -28,8 +28,7 @@ public:
 
     };
     Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> parameters);
-
-    ~Layer();
+    virtual ~Layer() = default;
 
     qint32 getId() const;
 

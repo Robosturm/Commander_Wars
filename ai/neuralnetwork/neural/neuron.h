@@ -25,35 +25,23 @@ public:
     };
 
     Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function = ActivationFunction::LINEAR, bool is_bias = false);
-
-    ~Neuron();
+    virtual ~Neuron() = default;
 
     void trigger();
-
     double in();
-
     double output();
-
     double outputDerivative();
-
     double outputRaw();
-
     void clean();
-
     void addAccumulated(double v);
-
     void addNext(spNeuron n);
-
     void addPrevious(spEdge e);
-
     qint32 getNeuronId() const;
 
     void setAccumulated(double v);
 
     void alterWeights(const QVector<double>& weights);
-
     QVector<double> getWeights();
-
     QVector<spEdge> getEdges();
 
     void randomizeAllWeights(double abs_value);
@@ -61,13 +49,10 @@ public:
     QString toString();
 
     void shiftWeights(float range);
-
     void shiftBackWeights(const QVector<double>& range);
-
     QVector<double> getBackpropagationShifts(const QVector<double>& target);
 
     bool isBias() const;
-
     const Layer* getLayer() const
     {
         return m_layer;
@@ -90,6 +75,8 @@ public:
     {
         return 1;
     }
+private:
+
 private:
     Layer* m_layer = nullptr;
     qint32 m_id_neuron = 0;

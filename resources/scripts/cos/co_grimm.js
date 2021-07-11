@@ -153,11 +153,12 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action)
     {
-        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return -10;
+            return 0;
         }
-        return -20;
+        return -10;
     };
 
     this.getAiCoUnitBonus = function(co, unit)

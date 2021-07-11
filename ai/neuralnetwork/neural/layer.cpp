@@ -14,10 +14,6 @@ Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> paramete
 	initLayer();
 }
 
-Layer::~Layer()
-{
-}
-
 int Layer::getId() const
 {
     return m_id_layer;
@@ -29,11 +25,12 @@ void Layer::initLayer()
 
     if (m_type == LayerType::STANDARD || m_type == LayerType::INPUT)
 	{
-        m_parameters[LAYER_PARAMETER_SIZE] += 1; //bias for the next layer
-        m_neurons.reserve(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
-        for (qint32 i_neuron = 0; i_neuron <m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
+        m_parameters[LAYER_PARAMETER_SIZE] += 1; // bias for the next layer
+        m_neurons = QVector<spNeuron>(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
+        for (qint32 i_neuron = 0; i_neuron < m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
-            m_neurons.push_back(spNeuron::create(i_neuron, this, m_activation, i_neuron == m_neurons.capacity() - 1));
+            bool isBias = i_neuron == (m_neurons.length() - 1);
+            m_neurons[i_neuron] = spNeuron::create(i_neuron, this, m_activation, isBias);
         }
 	}
     else if (m_type == LayerType::OUTPUT)

@@ -9,11 +9,6 @@ NeuralNetwork::NeuralNetwork(double maxWeight)
 {
 }
 
-NeuralNetwork::~NeuralNetwork()
-{
-}
-
-
 void NeuralNetwork::autogenerate(bool randomize)
 {
 	connectComplete();

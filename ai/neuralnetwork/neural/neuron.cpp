@@ -11,10 +11,6 @@ Neuron::Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function, bool
 {	
 }
 
-Neuron::~Neuron()
-{
-}
-
 void Neuron::trigger()
 {
     for (spEdge & e : m_next)
@@ -88,7 +84,7 @@ void Neuron::addAccumulated(double v)
 
 void Neuron::addNext(spNeuron n)
 {
-    m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-5, 5)));
+    m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-1, 1)));
     n->addPrevious(m_next.back());
 }
 
@@ -184,7 +180,7 @@ QVector<double> Neuron::getBackpropagationShifts(const QVector<double>& target)
         double d2 = outputDerivative();
         for (qint32 i = 0; i < m_previous.size(); ++i)
         {
-            dw[i] = (-d1 * d2 * m_previous[i]->neuronb()->output());
+            dw[i] = (-d1 * d2 * m_previous[i]->previousNeuron()->output());
             m_previous[i]->setBackpropagationMemory(d1 * d2);
         }
     }
@@ -199,7 +195,7 @@ QVector<double> Neuron::getBackpropagationShifts(const QVector<double>& target)
         for (qint32 i = 0; i < m_previous.size(); i++)
         {
             m_previous[i]->setBackpropagationMemory(d);
-            dw[i] = -d * m_previous[i]->neuronb()->output();
+            dw[i] = -d * m_previous[i]->previousNeuron()->output();
         }
     }
     return dw;
@@ -218,11 +214,12 @@ void Neuron::serializeObject(QDataStream& pStream) const
     pStream << m_threshold;
     pStream << m_activation_function;
     pStream << m_is_bias;
-    pStream << static_cast<qint32>(m_next.size());
-    for (const auto & next : m_next)
+    // store the connection to the previous layer
+    pStream << static_cast<qint32>(m_previous.size());
+    for (const auto & previous : m_previous)
     {
-        pStream << next->neuron()->getNeuronId();
-        next->serializeObject(pStream);
+        pStream << previous->previousNeuron()->getNeuronId();
+        previous->serializeObject(pStream);
     }
 }
 
@@ -239,6 +236,7 @@ void Neuron::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
+        // read the connection to the previous layer
         qint32 id = 0;
         pStream >> id;
         Neuron* previous = nullptr;
@@ -246,12 +244,12 @@ void Neuron::deserializeObject(QDataStream& pStream)
         {
             previous = m_layer->getPreviousLayer()->getNeuron(id);
         }
-        spEdge pEdge = spEdge::create(previous, this, 0);
+        spEdge pEdge = spEdge::create(this, previous, 0);
         pEdge->deserializeObject(pStream);
-        m_next.append(pEdge);
+        m_previous.append(pEdge);
         if (previous != nullptr)
         {
-            previous->addPrevious(pEdge);
+            previous->addNext(this);
         }
     }
 }

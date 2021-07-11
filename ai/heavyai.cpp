@@ -31,6 +31,56 @@ HeavyAi::HeavyAi(QString type)
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/" + m_aiName.toLower() + ".ini");
+
+    loadNeuralNetwork("Production", m_buildScoreNetwork, BuildingEntry::MaxSize, 5);
+}
+
+void HeavyAi::loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
+{
+    QString baseName = "aidata/heavy/" + netName + m_aiName + ".net";
+    QStringList searchFiles;
+    // make sure to overwrite existing js stuff
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    {
+        searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + baseName);
+        searchFiles.append(Settings::getUserPath() + Settings::getMods().at(i) + baseName);
+    }
+    searchFiles.append("resources/" + baseName);
+    searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "/resources/" + baseName);
+    bool found = false;
+    for (qint32 i = 0; i < searchFiles.size(); i++)
+    {
+        if (QFile::exists(searchFiles[i]))
+        {
+            QFile file(searchFiles[i]);
+            file.open(QIODevice::ReadOnly);
+            QDataStream stream(&file);
+            network.deserializeObject(stream);
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        QMap<QString, double> parameters;
+        parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
+        parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID));
+        parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize));
+        network.addLayer(parameters);
+        parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
+        for (qint32 i = 0; i < netDepth; ++i)
+        {
+            network.addLayer(parameters);
+        }
+        parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT));
+        parameters[Layer::LAYER_PARAMETER_SIZE] = 1;
+        network.addLayer(parameters);
+        network.autogenerate();
+        QFile file("resources/" + baseName);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        network.serializeObject(stream);
+    }
 }
 
 void HeavyAi::readIni(QString name)
@@ -119,7 +169,6 @@ void HeavyAi::process()
             scoreActionWait();
             if (!selectActionToPerform())
             {
-                scoreProduction();
                 if (!buildUnits(pBuildings, m_pUnits, m_pEnemyUnits, pEnemyBuildings))
                 {
                     endTurn();
@@ -382,8 +431,11 @@ void HeavyAi::scoreActions(UnitData & unit)
                 FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
-                mutateActionForFields(unit, moveTargets, action, type, index,
-                                      bestScore, bestScores, bestActions);
+                if (index >= 0)
+                {
+                    mutateActionForFields(unit, moveTargets, action, type, index,
+                                          bestScore, bestScores, bestActions);
+                }
             }
         }
         m_currentTargetedfPfs = nullptr;
@@ -808,7 +860,6 @@ qint32 HeavyAi::getMovingToAttackEnvironmentDistanceModifier()
     return 1.0f;
 }
 
-
 float HeavyAi::scoreWait(spGameAction action, UnitData & unitData)
 {
     float score = 0.0f;
@@ -824,11 +875,6 @@ float HeavyAi::scoreWait(spGameAction action, UnitData & unitData)
         }
     }
     return score;
-}
-
-void HeavyAi::scoreProduction()
-{
-    // todo
 }
 
 bool HeavyAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
@@ -848,6 +894,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
     }
     if (index >= 0)
     {
+        Console::print("HeavyAi::buildUnits with scored value " + QString::number(bestScore), Console::eDEBUG);
         m_updatePoints.append(m_BuildingData[index].m_action->getTarget());
         emit performAction(m_BuildingData[index].m_action);
         m_BuildingData[index].m_action = nullptr;
@@ -871,13 +918,40 @@ void HeavyAi::scoreUnitBuildings(spQmlVectorBuilding pBuildings, spQmlVectorUnit
         }
         else
         {
-            // update
-            for (auto & unitData : building.buildingDataInput)
+            updateUnitBuildData(building, data, funds);
+        }
+        scoreBuildingProductionData(building);
+    }
+}
+
+void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
+{
+    double bestScore = 0.0;
+    QVector<qint32> bestItems;
+    for (qint32 i = 0; i < building.buildingDataInput.size(); ++i)
+    {
+        if (building.buildingDataInput[i].enabled)
+        {
+            auto score = m_buildScoreNetwork.predict(building.buildingDataInput[i].unitBuildingDataInput);
+            if (score[0] > bestScore && score[0] >= m_minActionScore)
             {
-                updateUnitBuildData(unitData, data, funds);
+                bestItems.clear();
+                bestItems.append(i);
+                bestScore = score[0];
+            }
+            else if (bestScore - m_actionScoreVariant <= score[0] && score[0] <= bestScore + m_actionScoreVariant)
+            {
+                bestItems.append(i);
             }
         }
-        // todo calc the score and create the action
+    }
+    if (bestItems.size() > 0)
+    {
+        qint32 item = GlobalUtils::randInt(0, bestItems.size() - 1);
+        building.m_score = bestScore;
+        building.m_action = spGameAction::create(CoreAI::ACTION_BUILD_UNITS);
+        building.m_action->setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
+        CoreAI::addMenuItemData(building.m_action, building.buildingDataInput[item].unitId, building.buildingDataInput[item].cost);
     }
 }
 
@@ -896,12 +970,14 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
         {
             auto enableList = pData->getEnabledList();
             auto actionIds = pData->getActionIDs();
+            auto costs = pData->getCostList();
             for (qint32 i = 0; i < pData->getActionIDs().size(); i++)
             {
                 if (enableList[i])
                 {
                     UnitBuildData unitData;
                     unitData.unitId = actionIds[i];
+                    unitData.cost = costs[i];
                     Unit dummy(unitData.unitId, m_pPlayer, false);
                     dummy.setVirtuellX(x);
                     dummy.setVirtuellY(y);
@@ -914,7 +990,45 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
     }
 }
 
-void HeavyAi::updateUnitBuildData(UnitBuildData & unitData, QVector<double> & data, qint32 funds)
+void HeavyAi::updateUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds)
+{
+    GameAction action = GameAction(ACTION_BUILD_UNITS);
+    action.setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
+    if (action.canBePerformed())
+    {
+        spMenuData pData = action.getMenuStepData();
+        if (pData->validData())
+        {
+            // update
+            auto enableList = pData->getEnabledList();
+            auto actionIds = pData->getActionIDs();
+            for (auto & unitData : building.buildingDataInput)
+            {
+                for (qint32 i = 0; i < enableList.size(); ++i)
+                {
+                    if (unitData.unitId == actionIds[i])
+                    {
+                        unitData.enabled = enableList[i];
+                        break;
+                    }
+                }
+                updateUnitBuildData(unitData, data, funds);
+            }
+        }
+        else
+        {
+            building.m_action = nullptr;
+            building.m_score = -1;
+        }
+    }
+    else
+    {
+        building.m_action = nullptr;
+        building.m_score = -1;
+    }
+}
+
+void HeavyAi::updateUnitBuildData(UnitBuildData &unitData, QVector<double> &data, qint32 funds)
 {
     for (qint32 i = 0; i < BuildingEntry::LocalUnitData; ++i)
     {
@@ -928,7 +1042,6 @@ void HeavyAi::updateUnitBuildData(UnitBuildData & unitData, QVector<double> & da
     {
         unitData.unitBuildingDataInput[FondsUsage] = 0;
     }
-
 }
 
 void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, QVector<double> & data)

@@ -7,6 +7,8 @@
 #include "ai/coreai.h"
 #include "ai/influencefrontmap.h"
 #include "ai/targetedunitpathfindingsystem.h"
+#include "ai/neuralnetwork/neural/neuralnetwork.h"
+
 #include "game/unitpathfindingsystem.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
@@ -72,9 +74,10 @@ public:
     };
     struct UnitBuildData
     {
+        bool enabled{true};
         QString unitId;
         qint32 cost{0};
-        QVector<double> unitBuildingDataInput;
+        QVector<double> unitBuildingDataInput = QVector<double>(static_cast<qsizetype>(BuildingEntry::MaxSize));
     };
 
     struct BuildingData
@@ -88,6 +91,8 @@ public:
 
     explicit HeavyAi(QString type);
     virtual ~HeavyAi() = default;
+
+    void loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth);
 public slots:
     /**
      * @brief process
@@ -208,10 +213,6 @@ private:
      */
     void getFunctionType(QString action, FunctionType & type, qint32 & index);
     /**
-     * @brief scoreProduction
-     */
-    void scoreProduction();
-    /**
      * @brief getProductionInputVector
      * @param pBuilding
      * @param pUnit
@@ -228,6 +229,10 @@ private:
      */
     void scoreUnitBuildings(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
                             spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+    /**
+     * @brief scoreBuildingProductionData
+     */
+    void scoreBuildingProductionData(BuildingData & building);
     /**
      * @brief getGlobalBuildInfo
      * @param pBuildings
@@ -249,7 +254,15 @@ private:
      * @param data
      * @param funds
      */
+    void updateUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds);
+    /**
+     * @brief updateUnitBuildData
+     * @param unitData
+     * @param data
+     * @param funds
+     */
     void updateUnitBuildData(UnitBuildData & unitData, QVector<double> & data, qint32 funds);
+
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action, UnitData & unitData)>;
@@ -282,6 +295,8 @@ private:
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};
+
+    NeuralNetwork m_buildScoreNetwork;
 };
 
 #endif // HEAVYAI_H

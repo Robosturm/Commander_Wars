@@ -1528,6 +1528,8 @@ void Console::KeyInput(oxygine::KeyEvent event)
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+    static QMutex messageOutputMutex;
+    QMutexLocker lock(&messageOutputMutex);
     static QFile file(Settings::getUserPath() + "console.log");
     if (!file.isOpen())
     {

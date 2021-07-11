@@ -18,7 +18,7 @@ using spEdge = oxygine::intrusive_ptr<Edge>;
 class Edge : public oxygine::ref_counter, public FileSerializable
 {
 public:
-    Edge(Neuron* n, Neuron* start, double w );
+    Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -38,13 +38,11 @@ public:
         return 1;
     }
 
-    Neuron* neuron() const;
+    Neuron* nextNeuron() const;
 
-    Neuron* neuronb() const;
+    Neuron* previousNeuron() const;
 
     double weight();
-
-    double weightP();
 
     void propagate(double neuron_output);
 
@@ -61,9 +59,9 @@ public:
     void setBackpropagationMemory(double v);
 
 private:
-    Neuron* m_n = nullptr;
-    Neuron* m_nb = nullptr;
-    double m_w = 0.0;
+    Neuron* m_nextNeuron = nullptr;
+    Neuron* m_previousNeuron = nullptr;
+    double m_weight = 0.0;
     double m_last_shift = 0;
     double m_backpropagation_memory{0};
 
