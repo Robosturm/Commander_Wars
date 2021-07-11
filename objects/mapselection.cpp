@@ -233,11 +233,6 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
     });
 }
 
-MapSelection::~MapSelection()
-{
-
-}
-
 void MapSelection::setSelection(QString folder, QStringList files)
 {    
     Console::print("MapSelection::setSelection", Console::eDEBUG);

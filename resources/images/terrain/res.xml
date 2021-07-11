@@ -69,12 +69,12 @@
 		
 		<image file="rough_sea+N+E+S+W.png" cols = "4" />
 		
-		<image file="fire.png" cols = "6" />
-		
-		<image file="reaf+N+E+S+W.png" />
-		<image file="reaf+1+N+E+S+W.png" />
-		<image file="reaf+2+N+E+S+W.png" />
-		<image file="reaf+3+N+E+S+W.png" />
+		<image file="fire.png" cols = "6" />		
+
+                <image file="reaf+N+E+S+W.png" cols = "4" />
+                <image file="reaf+1+N+E+S+W.png" cols = "4" />
+                <image file="reaf+2+N+E+S+W.png" cols = "4" />
+                <image file="reaf+3+N+E+S+W.png" cols = "4" />
 		
 		<image file="mountain.png" />
 		<image file="mountain+E.png" />

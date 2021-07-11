@@ -267,7 +267,7 @@ void CampaignEditor::updateCampaignData()
         style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
-        oxygine::spTextField pText =  oxygine::spTextField::create();
+        spLabel pText =  spLabel::create(180);
         pText->setStyle(style);
         pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 10 + i * 40);
@@ -306,7 +306,7 @@ void CampaignEditor::updateCampaignData()
             emit sigUpdateCampaignData();
         });
 
-        pText =  oxygine::spTextField::create();
+        pText = spLabel::create(90);
         pText->setStyle(style);
         pText->setHtmlText(tr("Last Map"));
         pText->setPosition(835, 10 + i * 40);
@@ -685,7 +685,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText =  oxygine::spTextField::create();
+    spLabel pText =  spLabel::create(280);
     pText->setStyle(style);
     pText->setHtmlText(tr("Enable Map Count:"));
     pText->setPosition(10, 10);
@@ -706,7 +706,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     {
         if (i != index)
         {
-            pText =  oxygine::spTextField::create();
+            pText =  spLabel::create(280);
             pText->setStyle(style);
             pText->setHtmlText(mapDatas[i].mapName);
             pText->setPosition(10, 50 + counter * 40);
@@ -738,8 +738,9 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             counter++;
         }
     }
-    addChild(pBox);
-    
+    pPanel->setContentHeigth(mapDatas.size() * 50 + 100);
+    pPanel->setContentWidth(400);
+    addChild(pBox);    
 }
 
 void CampaignEditor::showEditDisableMaps(qint32 index)
@@ -756,7 +757,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText =  oxygine::spTextField::create();
+    spLabel pText =  spLabel::create(280);
     pText->setStyle(style);
     pText->setHtmlText(tr("Disable Map Count:"));
     pText->setPosition(10, 10);
@@ -775,7 +776,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     qint32 counter = 0;
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
-        pText =  oxygine::spTextField::create();
+        pText = spLabel::create(280);
         pText->setStyle(style);
         pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 50 + counter * 40);
@@ -806,6 +807,8 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         pPanel->addItem(pCheckbox);
         counter++;
     }
+    pPanel->setContentHeigth(mapDatas.size() * 50 + 100);
+    pPanel->setContentWidth(400);
     CampaignEditor::addChild(pBox);
     
 }

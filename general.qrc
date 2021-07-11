@@ -5193,5 +5193,6 @@
         <file>resources/images/terrain/beach+NW.png</file>
         <file>resources/images/terrain/beach+SE.png</file>
         <file>resources/images/terrain/beach+SW.png</file>
+        <file>maps/advance_wars_days_of_ruin.jsm</file>
     </qresource>
 </RCC>

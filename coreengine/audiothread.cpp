@@ -250,7 +250,7 @@ void AudioThread::SlotSetVolume(qint32 value)
 void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
     QString currentPath = file;
-    if (QFile::exists(currentPath))
+    if (!QFile::exists(currentPath))
     {
         currentPath = oxygine::Resource::RCC_PREFIX_PATH + file;
     }

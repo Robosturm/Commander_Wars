@@ -401,79 +401,79 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="761"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="762"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="765"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="766"/>
         <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="785"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="786"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="837"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="840"/>
         <source>Enable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="846"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="922"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="849"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="925"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="850"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="926"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="853"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="929"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="863"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="939"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="866"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="942"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="869"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="943"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="872"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="946"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="881"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="955"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="884"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="958"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="885"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="959"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="888"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="962"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="898"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="972"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="901"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="975"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="902"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="905"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="918"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="976"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="979"/>
         <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
