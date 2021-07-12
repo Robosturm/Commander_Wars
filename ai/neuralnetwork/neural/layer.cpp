@@ -138,6 +138,14 @@ void Layer::randomizeAllWeights(double abs_value)
     }
 }
 
+void Layer::mutateAllWeights(double mutationChance, double maxWeight)
+{
+    for(auto & neuron : m_neurons)
+    {
+        neuron->mutateAllWeights(mutationChance, maxWeight);
+    }
+}
+
 Neuron* Layer::getNeuron(qint32 id)
 {
     for(auto & neuron : m_neurons)

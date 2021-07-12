@@ -242,42 +242,45 @@ void H_Scrollbar::update(const oxygine::UpdateState&)
 
 void H_Scrollbar::changeScrollValue(float value)
 {
-    
-    m_Scrollvalue += value;
-    if (m_Scrollvalue < 0)
+    if (value != 0.0f)
     {
-        m_Scrollvalue = 0;
+        m_Scrollvalue += value;
+        if (m_Scrollvalue < 0)
+        {
+            m_Scrollvalue = 0;
+        }
+        else if (m_Scrollvalue > 1.0f)
+        {
+            m_Scrollvalue = 1.0f;
+        }
+        else
+        {
+            // all fine do nothing
+        }
+        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
+        emit sigScrollValueChanged(m_Scrollvalue);
     }
-    else if (m_Scrollvalue > 1.0f)
-    {
-        m_Scrollvalue = 1.0f;
-    }
-    else
-    {
-        // all fine do nothing
-    }
-    m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
-    emit sigScrollValueChanged(m_Scrollvalue);
-    
 }
 
 void H_Scrollbar::setScrollvalue(float Scrollvalue)
 {    
-    m_Scrollvalue = Scrollvalue;
-    if (m_Scrollvalue < 0)
+    if (m_Scrollvalue != Scrollvalue)
     {
-        m_Scrollvalue = 0;
+        m_Scrollvalue = Scrollvalue;
+        if (m_Scrollvalue < 0)
+        {
+            m_Scrollvalue = 0;
+        }
+        else if (m_Scrollvalue > 1.0f)
+        {
+            m_Scrollvalue = 1.0f;
+        }
+        else
+        {
+            // all fine do nothing
+        }
+        m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
     }
-    else if (m_Scrollvalue > 1.0f)
-    {
-        m_Scrollvalue = 1.0f;
-    }
-    else
-    {
-        // all fine do nothing
-    }
-    m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
-    
 }
 
 void H_Scrollbar::setHeight(float h)

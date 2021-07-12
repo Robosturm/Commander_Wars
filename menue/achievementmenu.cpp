@@ -123,6 +123,7 @@ void Achievementmenu::search()
 
 void Achievementmenu::searchChanged(QString text)
 {
+    Console::print("Achievementmenu::searchChanged " + text, Console::eDEBUG);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -155,25 +156,21 @@ void Achievementmenu::searchChanged(QString text)
                   lowerDescription.contains(text)) &&
                  (!achievement.hide || achieved)))
             {
-
+                oxygine::spActor pParent = oxygine::spActor::create();
                 if (achieved)
                 {
                     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
                     oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
                     pIcon->setPosition(x, y + 16);
-                    m_MainPanel->addItem(pIcon);
+                    pParent->addChild(pIcon);
                 }
                 else
                 {
-                    //                    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                    //                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-                    //                    pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
-                    //                    m_MainPanel->addItem(pIcon);
                     spLabel pTextfield = spLabel::create(50);
                     pTextfield->setStyle(styleLarge);
                     pTextfield->setHtmlText("?");
                     pTextfield->setPosition(x, y + 8);
-                    m_MainPanel->addItem(pTextfield);
+                    pParent->addChild(pTextfield);
                 }
 
                 spLabel pTextfield = spLabel::create(singleWidth - 60);
@@ -187,7 +184,7 @@ void Achievementmenu::searchChanged(QString text)
                     pTextfield->setHtmlText(achievement.name);
                 }
                 pTextfield->setPosition(x + 60, y);
-                m_MainPanel->addItem(pTextfield);
+                pParent->addChild(pTextfield);
 
                 pTextfield = spLabel::create(singleWidth - 60);
                 pTextfield->setStyle(style);
@@ -200,12 +197,14 @@ void Achievementmenu::searchChanged(QString text)
                     pTextfield->setHtmlText(achievement.description);
                 }
                 pTextfield->setPosition(x + 60, y + 40);
-                m_MainPanel->addItem(pTextfield);
+                pParent->addChild(pTextfield);
 
                 QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
                 spProgressInfoBar pProgressInfoBar = spProgressInfoBar::create(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
                 pProgressInfoBar->setPosition(x, y + 80);
-                m_MainPanel->addItem(pProgressInfoBar);
+                pParent->addChild(pProgressInfoBar);
+                pParent->setSize(Settings::getWidth(), 120);
+                m_MainPanel->addItem(pParent);
                 y += 120;
             }
         }

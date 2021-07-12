@@ -5,13 +5,13 @@
 #include "objects/base/dropdownmenubase.h"
 
 Panel::Panel(bool useBox, QSize size, QSize contentSize)
+    : m_hideTimer(this)
 {
     setObjectName("Panel");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-
     m_HScrollbar = spH_Scrollbar::create(size.height() - sliderSize, contentSize.height());
     addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
@@ -64,11 +64,12 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
            pTouchEvent->stopPropagation();
         }
     });
+    m_hideTimer.setSingleShot(true);
+    connect(&m_hideTimer, &QTimer::timeout, this, &Panel::hideItems);
 }
 
 void Panel::scrolledY(float value)
-{
-    
+{    
     if (m_HScrollbar->getVisible() && getVisible())
     {
         oxygine::RectF bounds = m_SlidingActor->getDragBounds();
@@ -83,7 +84,10 @@ void Panel::scrolledY(float value)
         }
         m_ContentRect->setY(newY);
     }
-    hideItems();
+    if (!m_hideTimer.isActive())
+    {
+        m_hideTimer.start(250);
+    }
 }
 
 void Panel::scrolledX(float value)
@@ -102,7 +106,10 @@ void Panel::scrolledX(float value)
         }
         m_ContentRect->setX(newX);
     }
-    hideItems();
+    if (!m_hideTimer.isActive())
+    {
+        m_hideTimer.start(250);
+    }
 }
 
 void Panel::doUpdate(const oxygine::UpdateState& us)
@@ -152,15 +159,13 @@ void Panel::hideItems()
         {
             pDropDownmenuBase->hideDropDown();
         }
-        hideItems(child);
+        hideChildItems(child);
         child = child->getNextSibling();
     }
-    
 }
 
-void Panel::hideItems(oxygine::spActor parent)
-{
-    
+void Panel::hideChildItems(oxygine::spActor parent)
+{    
     oxygine::spActor child =  parent->getFirstChild();
     while (child)
     {
@@ -174,10 +179,9 @@ void Panel::hideItems(oxygine::spActor parent)
         {
             pDropDownmenuBase->hideDropDown();
         }
-        hideItems(child);
+        hideChildItems(child);
         child = child->getNextSibling();
-    }
-    
+    }    
 }
 
 void Panel::setContentHeigth(qint32 heigth)

@@ -142,6 +142,16 @@ void Neuron::randomizeAllWeights(double abs_value)
     }
 }
 
+void Neuron::mutateAllWeights(double mutationChance, double maxWeight)
+{
+    for(spEdge & e : m_next)
+    {
+        if (GlobalUtils::randDouble(0, 1) < mutationChance)
+        {
+            e->alterWeight(GlobalUtils::randDouble(-maxWeight, maxWeight));
+        }
+    }
+}
 
 QString Neuron::toString()
 {

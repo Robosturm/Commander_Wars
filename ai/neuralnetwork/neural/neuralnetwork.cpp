@@ -3,10 +3,14 @@
 #include "ai/neuralnetwork/neural/layer.h"
 
 #include "coreengine/globalutils.h"
+#include "coreengine/mainapp.h"
 
 NeuralNetwork::NeuralNetwork(double maxWeight)
     : m_maxWeight(maxWeight)
 {
+    Interpreter::setCppOwnerShip(this);
+    Mainapp* pApp = Mainapp::getInstance();
+    moveToThread(pApp->getWorkerthread());
 }
 
 void NeuralNetwork::autogenerate(bool randomize)
@@ -15,8 +19,7 @@ void NeuralNetwork::autogenerate(bool randomize)
 	if(randomize)
     {
 		randomizeAllWeights();
-    }
-	
+    }	
 }
 
 void NeuralNetwork::addLayer(QMap<QString, double> parameters)
@@ -131,6 +134,24 @@ void NeuralNetwork::randomizeAllWeights()
     {
         m_layers[i_layer]->randomizeAllWeights(m_maxWeight);
     }
+}
+
+void NeuralNetwork::mutateAllWeights(double mutationChance)
+{
+    for(qint32 i_layer = 0; i_layer < m_layers.size() - 1; ++i_layer)
+    {
+        m_layers[i_layer]->mutateAllWeights(mutationChance, m_maxWeight);
+    }
+}
+
+const QString &NeuralNetwork::getNetworkName() const
+{
+    return m_networkName;
+}
+
+void NeuralNetwork::setNetworkName(const QString &newNetworkName)
+{
+    m_networkName = newNetworkName;
 }
 
 double NeuralNetwork::loss(const QVector<double>& in, const QVector<double>& out)

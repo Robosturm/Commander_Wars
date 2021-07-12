@@ -32,11 +32,13 @@ HeavyAi::HeavyAi(QString type)
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/" + m_aiName.toLower() + ".ini");
 
-    loadNeuralNetwork("Production", m_buildScoreNetwork, BuildingEntry::MaxSize, 5);
+    loadNeuralNetwork("Production", m_neuralNetworks[static_cast<qint32>(NeuralNetworks::Production)], static_cast<qint32>(BuildingEntry::MaxSize), 5);
 }
 
-void HeavyAi::loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
+void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
 {
+    network = spNeuralNetwork::create();
+    network->setNetworkName(netName);
     QString baseName = "aidata/heavy/" + netName + m_aiName + ".net";
     QStringList searchFiles;
     // make sure to overwrite existing js stuff
@@ -55,7 +57,7 @@ void HeavyAi::loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32
             QFile file(searchFiles[i]);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            network.deserializeObject(stream);
+            network->deserializeObject(stream);
             found = true;
             break;
         }
@@ -66,20 +68,60 @@ void HeavyAi::loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
         parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID));
         parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize));
-        network.addLayer(parameters);
+        network->addLayer(parameters);
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
         for (qint32 i = 0; i < netDepth; ++i)
         {
-            network.addLayer(parameters);
+            network->addLayer(parameters);
         }
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT));
         parameters[Layer::LAYER_PARAMETER_SIZE] = 1;
-        network.addLayer(parameters);
-        network.autogenerate();
+        network->addLayer(parameters);
+        network->autogenerate();
         QFile file("resources/" + baseName);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        network.serializeObject(stream);
+        network->serializeObject(stream);
+    }
+}
+
+void HeavyAi::saveNeuralNetwork(QString name, qint32 network)
+{
+    if (network >= 0 && network < m_neuralNetworks.size())
+    {
+        QFile file("resources/aidata/heavy/" + name);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        m_neuralNetworks[network]->serializeObject(stream);
+    }
+    else
+    {
+        Console::print("HeavyAi::saveNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+    }
+}
+
+QString HeavyAi::getNeuralNetworkName(qint32 network)
+{
+    if (network >= 0 && network < m_neuralNetworks.size())
+    {
+        return m_neuralNetworks[network]->getNetworkName();
+    }
+    else
+    {
+        Console::print("HeavyAi::getNeuralNetworkName invalid index " + QString::number(network), Console::eDEBUG);
+    }
+    return "";
+}
+
+void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance)
+{
+    if (network >= 0 && network < m_neuralNetworks.size())
+    {
+        m_neuralNetworks[network]->mutateAllWeights(mutationChance);
+    }
+    else
+    {
+        Console::print("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
     }
 }
 
@@ -928,11 +970,13 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
 {
     double bestScore = 0.0;
     QVector<qint32> bestItems;
+    building.m_action = nullptr;
+    building.m_score = 0;
     for (qint32 i = 0; i < building.buildingDataInput.size(); ++i)
     {
         if (building.buildingDataInput[i].enabled)
         {
-            auto score = m_buildScoreNetwork.predict(building.buildingDataInput[i].unitBuildingDataInput);
+            auto score = m_neuralNetworks[NeuralNetworks::Production]->predict(building.buildingDataInput[i].unitBuildingDataInput);
             if (score[0] > bestScore && score[0] >= m_minActionScore)
             {
                 bestItems.clear();
@@ -1017,14 +1061,12 @@ void HeavyAi::updateUnitBuildData(BuildingData & building, QVector<double> & dat
         }
         else
         {
-            building.m_action = nullptr;
-            building.m_score = -1;
+            building.buildingDataInput.clear();
         }
     }
     else
     {
-        building.m_action = nullptr;
-        building.m_score = -1;
+        building.buildingDataInput.clear();
     }
 }
 

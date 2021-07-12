@@ -15,17 +15,15 @@ var Constructor = function()
             building.loadSprite("oilrig+neutral", false);
         }
     };
+    this.baseTerrain = ["SEA", "PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
     this.getBaseTerrain = function(building)
     {
-        return ["SEA", "PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
+        return OILRIG.baseTerrain;
     };
 	this.canBuildingBePlaced = function(terrain, building)
     {
-		if (terrain.getTerrainID() === "SEA")
-		{
-			return true;
-		}
-		return false;
+        var id = terrain.getTerrainID();
+        return OILRIG.baseTerrain.includes(id);
 	};
     this.getBaseIncome = function()
     {

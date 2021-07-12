@@ -121,6 +121,7 @@ void WorkerThread::start()
 
     if (QFile::exists("init.js"))
     {
+        Console::print("Init script is present and will be loaded", Console::eDEBUG);
         pInterpreter->openScript("init.js", true);
     }
 

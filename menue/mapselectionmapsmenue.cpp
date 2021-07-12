@@ -506,6 +506,10 @@ void MapSelectionMapsMenue::selectMap(QString folder, QString filename)
     QFileInfo info(folder + filename);
     m_pMapSelectionView->getMapSelection()->changeFolder(folder);
     m_pMapSelectionView->getMapSelection()->setCurrentItem(filename);
+    if (!QFile::exists(folder + filename))
+    {
+        info = QFileInfo(oxygine::Resource::RCC_PREFIX_PATH + folder + filename);
+    }
     m_pMapSelectionView->loadMap(info, true);
 }
 

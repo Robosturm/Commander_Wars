@@ -1,6 +1,7 @@
 #include "wiki/wikiview.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -70,7 +71,7 @@ void WikiView::searchChanged(QString)
 
 void WikiView::search(bool onlyTag)
 {
-
+    Console::print("WikiView::searchChanged ", Console::eDEBUG);
     m_MainPanel->clearContent();
     QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;
@@ -82,6 +83,7 @@ void WikiView::search(bool onlyTag)
         pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
+        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         oxygine::TextStyle style = FontManager::getMainFont24();
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -92,11 +94,11 @@ void WikiView::search(bool onlyTag)
         textField->setHeight(40);
         textField->setX(13);
         textField->setY(5);
+        // loop through all entries :)
+        QString item = std::get<0>(items[i]);
+        textField->setHtmlText(item);
         pBox->addChild(textField);
-        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
-
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-        m_MainPanel->addItem(pBox);
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
         {
@@ -107,14 +109,11 @@ void WikiView::search(bool onlyTag)
             pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, itemCount * 40);
-
-        // loop through all entries :)
-        QString item = std::get<0>(items[i]);
-        textField->setHtmlText(item);
         pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowWikipage(items[i]);
         });
+        m_MainPanel->addItem(pBox);
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);

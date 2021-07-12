@@ -214,60 +214,77 @@ namespace oxygine
 
     void Actor::dispatchEvent(Event* event)
     {
-        if (event->type == TouchEvent::MOVE)
+        if (!m_onScreen)
         {
-            TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (m_overred == 0)
+            dispatchToParent(event);
+        }
+        else
+        {
+            if (event->type == TouchEvent::MOVE)
             {
-                m_overred = te->index;
+                TouchEvent* te = safeCast<TouchEvent*>(event);
                 if (m_overred == 0)
                 {
-                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
+                    m_overred = te->index;
+                    if (m_overred == 0)
+                    {
+                        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
+                    }
+                    updateStateOvered();
+
+                    TouchEvent over = *te;
+                    over.type = TouchEvent::OVER;
+                    over.bubbles = false;
+                    dispatchEvent(&over);
+                    m_onGlobalTouchMoveEvent = oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
                 }
-                updateStateOvered();
-
-                TouchEvent over = *te;
-                over.type = TouchEvent::OVER;
-                over.bubbles = false;
-                dispatchEvent(&over);
-                m_onGlobalTouchMoveEvent = oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
-        }
 
-        if (event->type == TouchEvent::TOUCH_DOWN)
-        {
-            TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (!m_pressedButton[te->mouseButton])
+            if (event->type == TouchEvent::TOUCH_DOWN)
             {
-                if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+                TouchEvent* te = safeCast<TouchEvent*>(event);
+                if (!m_pressedButton[te->mouseButton])
                 {
-                    m_onGlobalTouchUpEvent = oxygine::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                    if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+                    {
+                        m_onGlobalTouchUpEvent = oxygine::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                    }
+                    m_pressedButton[te->mouseButton] = te->index;
+                    updateStatePressed();
                 }
-                m_pressedButton[te->mouseButton] = te->index;
-                updateStatePressed();
             }
-        }
 
-        TouchEvent click(0);
+            TouchEvent click(0);
 
-        if (event->type == TouchEvent::TOUCH_UP)
-        {
-            TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
+            if (event->type == TouchEvent::TOUCH_UP)
             {
-                te->__clickDispatched = true;
-                click = *te;
-                click.type = TouchEvent::CLICK;
-                click.bubbles = true;
-                //will be dispatched later after UP
+                TouchEvent* te = safeCast<TouchEvent*>(event);
+                if (m_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
+                {
+                    te->__clickDispatched = true;
+                    click = *te;
+                    click.type = TouchEvent::CLICK;
+                    click.bubbles = true;
+                    //will be dispatched later after UP
 
-                setNotPressed(te->mouseButton);
+                    setNotPressed(te->mouseButton);
+                }
+            }
+
+
+            EventDispatcher::dispatchEvent(event);
+            dispatchToParent(event);
+
+            if (click.type)
+            {
+                //send click event at the end after TOUCH_UP event
+                dispatchEvent(&click);
             }
         }
+    }
 
-
-        EventDispatcher::dispatchEvent(event);
-
+    void Actor::dispatchToParent(Event* event)
+    {
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
         {
             if (m_parent)
@@ -279,15 +296,9 @@ namespace oxygine
                 }
 
                 event->phase = Event::phase_bubbling;
-                event->currentTarget = 0;
+                event->currentTarget = nullptr;
                 m_parent->dispatchEvent(event);
             }
-        }
-
-        if (click.type)
-        {
-            //send click event at the end after TOUCH_UP event
-            dispatchEvent(&click);
         }
     }
 
@@ -1016,7 +1027,8 @@ namespace oxygine
         }
         rs.transform.x = floorf(rs.transform.x);
         rs.transform.y = floorf(rs.transform.y);
-        if (onScreen(rs))
+        m_onScreen = onScreen(rs);
+        if (m_onScreen)
         {
             doRender(rs);
         }

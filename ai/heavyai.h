@@ -49,6 +49,12 @@ class HeavyAi : public CoreAI
 
         MaxSize,
     };
+
+    enum NeuralNetworks
+    {
+        Production,
+        Max,
+    };
 public:
     ENUM_CLASS ThreadLevel
     {
@@ -61,6 +67,7 @@ public:
         JavaScript,
         CPlusPlus,
     };
+
     struct UnitData
     {
         Unit* m_pUnit;
@@ -88,11 +95,10 @@ public:
         QVector<UnitBuildData> buildingDataInput;
     };
 
-
     explicit HeavyAi(QString type);
     virtual ~HeavyAi() = default;
 
-    void loadNeuralNetwork(QString netName, NeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth);
+    void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth);
 public slots:
     /**
      * @brief process
@@ -104,10 +110,55 @@ public slots:
      */
     virtual void readIni(QString name) override;
 
-    void toggleAiPause();
 
+    /*******************************************************************/
+    // training section
+    /*******************************************************************/
+    /**
+     * @brief getMaxNeuralNetworks amount of neural networks owned by the heavy ai
+     * @return
+     */
+    qint32 getMaxNeuralNetworks()
+    {
+        return static_cast<qint32>(NeuralNetworks::Max);
+    }
+    /**
+     * @brief saveNeuralNetwork saves the network under the given name
+     * @param name
+     * @param network
+     */
+    void saveNeuralNetwork(QString name, qint32 network);
+    /**
+     * @brief getNeuralNetworkName
+     * @param network
+     * @return
+     */
+    QString getNeuralNetworkName(qint32 network);
+    /**
+     * @brief mutateNeuralNetwork
+     * @param network
+     * @param mutationChance
+     * @return
+     */
+    void mutateNeuralNetwork(qint32 network, double mutationChance);
+    /*******************************************************************/
+    // debugging section
+    /*******************************************************************/
+    /**
+     * @brief toggleAiPause for debugging
+     */
+    void toggleAiPause();
+    /**
+     * @brief showFrontMap for debugging visualization
+     */
     void showFrontMap();
+    /**
+     * @brief showFrontLines for debugging visualization
+     */
     void showFrontLines();
+    /**
+     * @brief hideFrontMap  for debugging visualization
+     */
     void hideFrontMap();
 protected:
     /**
@@ -296,7 +347,7 @@ private:
     // storable stuff
     QString m_aiName{"HEAVY_AI"};
 
-    NeuralNetwork m_buildScoreNetwork;
+    QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworks::Max)};
 };
 
 #endif // HEAVYAI_H

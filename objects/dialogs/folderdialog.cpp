@@ -186,7 +186,7 @@ void FolderDialog::showFolder(QString folder)
         textField->setStyle(style);
 
         textField->attachTo(pBox);
-        pBox->setSize(m_MainPanel->getWidth() - 50, 40);
+        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         textField->setHeight(40);
         textField->setWidth(pBox->getWidth() - 18);
         textField->setX(13);

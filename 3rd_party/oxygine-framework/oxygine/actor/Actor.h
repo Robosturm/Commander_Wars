@@ -281,7 +281,7 @@ namespace oxygine
         void internalUpdate(const UpdateState& us);
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
-
+        void dispatchToParent(Event* event);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;
@@ -330,6 +330,7 @@ namespace oxygine
         qint32 m_zOrder;
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
+        bool m_onScreen{true};
     };
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = nullptr);

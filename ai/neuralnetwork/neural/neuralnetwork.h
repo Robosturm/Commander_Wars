@@ -3,6 +3,7 @@
 
 #include <QMap>
 #include <QVector>
+#include <QObject>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -15,11 +16,12 @@ class Neuron;
 class Layer;
 using spNeuralNetwork = oxygine::intrusive_ptr<NeuralNetwork>;
 
-class NeuralNetwork : public oxygine::ref_counter, public FileSerializable
+class NeuralNetwork : public QObject, public FileSerializable, public oxygine::ref_counter
 {
+    Q_OBJECT
 public:
 
-    NeuralNetwork(double maxWeight = 1);
+    NeuralNetwork(double maxWeight = 5);
     virtual ~NeuralNetwork()= default;
     /**
      * @brief serialize stores the object
@@ -120,6 +122,21 @@ public:
      * @param learningRate
      */
     void setLearningRate(double learningRate);
+    /**
+     * @brief getNetworkName
+     * @return
+     */
+    const QString &getNetworkName() const;
+    /**
+     * @brief setNetworkName
+     * @param newNetworkName
+     */
+    void setNetworkName(const QString &newNetworkName);
+    /**
+     * @brief mutateNeuralNetwork
+     * @param mutationChance
+     */
+    void mutateAllWeights(double mutationChance);
 private:
     void setInput(QVector<double> in);
     void trigger();
@@ -132,6 +149,7 @@ private:
     QVector<QMap<QString, double>> m_configuration;
     double m_maxWeight = 1;
     double m_learningRate = 1;
+    QString m_networkName;
 };
 
 #endif // NEURALNETWORK_H

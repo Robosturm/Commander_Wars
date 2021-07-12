@@ -3,9 +3,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QFile>
-#ifdef GAMEDEBUG
-    #include <QQmlEngine>
-#endif
 
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
@@ -62,6 +59,7 @@
 #include "network/mainserver.h"
 
 #include "ai/heavyai.h"
+#include "ai/neuralnetwork/neural/neuralnetwork.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -146,6 +144,7 @@ void registerInterfaceData()
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
+    qmlRegisterInterface<NeuralNetwork>("NeuralNetwork", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
     qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
@@ -189,7 +188,7 @@ int main(qint32 argc, char* argv[])
     window.setPosition(Settings::getX(), Settings::getY());
     qint32 returncode = app.exec();
     /*************************************************************************************************/
-    // shhutting down
+    // shutting down
     Settings::setX(window.x());
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);

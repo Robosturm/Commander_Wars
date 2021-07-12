@@ -5838,27 +5838,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WikiView</name>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="25"/>
+        <location filename="../wiki/wikiview.cpp" line="26"/>
         <source>Search: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="29"/>
+        <location filename="../wiki/wikiview.cpp" line="30"/>
         <source>Text that will be searched for in the title of each wikipage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="33"/>
+        <location filename="../wiki/wikiview.cpp" line="34"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="45"/>
+        <location filename="../wiki/wikiview.cpp" line="46"/>
         <source>Tags: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="49"/>
+        <location filename="../wiki/wikiview.cpp" line="50"/>
         <source>Shows all pages grouped under a given tag. A page can be grouped in several groups at once.</source>
         <translation type="unfinished"></translation>
     </message>

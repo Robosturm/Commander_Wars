@@ -53,6 +53,7 @@ public:
     QVector<QVector<spEdge>> getEdges();
 
     void randomizeAllWeights(double abs_value);
+    void mutateAllWeights(double mutationChance, double maxWeight);
 
     QString toString();
 
