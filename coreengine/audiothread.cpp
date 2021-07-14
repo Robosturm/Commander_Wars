@@ -353,11 +353,16 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0) * volume;
     QString soundfile = folder + file;
     QStringList searchFolders = Settings::getMods();
-    searchFolders.append(folder + file);
-    searchFolders.append(oxygine::Resource::RCC_PREFIX_PATH + folder + file);
+    searchFolders.append(folder);
+    searchFolders.append(oxygine::Resource::RCC_PREFIX_PATH + folder);
     for (qint32 i = searchFolders.size() - 1; i >= 0; i--)
     {
-        if (QFile::exists(searchFolders[i] + "/sounds/" + file))
+        if (QFile::exists(searchFolders[i] + file))
+        {
+            soundfile = searchFolders[i] + file;
+            break;
+        }
+        else if (QFile::exists(searchFolders[i] + "/sounds/" + file))
         {
             soundfile = searchFolders[i] + "/sounds/" + file;
             break;
@@ -366,30 +371,30 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
     QUrl url = QUrl::fromLocalFile(soundfile);
     if (url.isValid())
     {
-        QSoundEffect* pSoundEffect = new QSoundEffect(this);
-        pSoundEffect->setObjectName("SoundEffect");
-        qreal value = QAudio::convertVolume(sound,
-                                            QAudio::LogarithmicVolumeScale,
-                                            QAudio::LinearVolumeScale);
-        QTimer* pTimer = new QTimer(this);
-        pTimer->setObjectName("SoundEffectTimer");
-        pSoundEffect->setVolume(value);
-        pSoundEffect->setSource(url);
-        pSoundEffect->setLoopCount(loops);
-        // pSoundEffect->setAudioDevice(m_audioDevice);
-        connect(pSoundEffect, &QSoundEffect::playingChanged, this, &AudioThread::SlotSoundEnded, Qt::QueuedConnection);
-        if (delay > 0)
-        {
-            connect(pTimer, &QTimer::timeout, this, &AudioThread::SlotSoundStart, Qt::QueuedConnection);
-            pTimer->setSingleShot(true);
-            pTimer->start(delay);
-        }
-        else
-        {
-            pSoundEffect->play();
-        }
-        m_Sounds.push_back(pSoundEffect);
-        m_SoundTimers.push_back(pTimer);
+        // QSoundEffect* pSoundEffect = new QSoundEffect(this);
+        // pSoundEffect->setObjectName("SoundEffect");
+        // qreal value = QAudio::convertVolume(sound,
+        //                                     QAudio::LogarithmicVolumeScale,
+        //                                     QAudio::LinearVolumeScale);
+        // QTimer* pTimer = new QTimer(this);
+        // pTimer->setObjectName("SoundEffectTimer");
+        // pSoundEffect->setVolume(value);
+        // pSoundEffect->setSource(url);
+        // pSoundEffect->setLoopCount(loops);
+        // // pSoundEffect->setAudioDevice(m_audioDevice);
+        // connect(pSoundEffect, &QSoundEffect::playingChanged, this, &AudioThread::SlotSoundEnded, Qt::QueuedConnection);
+        // if (delay > 0)
+        // {
+        //     connect(pTimer, &QTimer::timeout, this, &AudioThread::SlotSoundStart, Qt::QueuedConnection);
+        //     pTimer->setSingleShot(true);
+        //     pTimer->start(delay);
+        // }
+        // else
+        // {
+        //     pSoundEffect->play();
+        // }
+        // m_Sounds.push_back(pSoundEffect);
+        // m_SoundTimers.push_back(pTimer);
     }
 }
 

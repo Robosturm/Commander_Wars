@@ -10,6 +10,13 @@ getIndexOf1 = function(table, item)
     }
     return -1;
 }
+
+getFogOfWarColor = function()
+{
+    // the color used for the fog of war overlay
+    return "#64464646";
+}
+
 getArmyNameFromPlayerTable = function(player, table)
 {
     return Global.getArmyNameFromTable(player.getArmy(), table);

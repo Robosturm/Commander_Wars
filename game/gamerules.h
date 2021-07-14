@@ -396,7 +396,7 @@ public slots:
      * @param y
      * @param pPlayer
      */
-    void createFieldFogWar(qint32 x, qint32 y, Player* pPlayer);
+    void createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor = QColor(70, 70, 70, 100));
     /**
      * @brief createFieldFogShrouded
      * @param x

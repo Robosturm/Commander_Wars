@@ -366,7 +366,7 @@ var Constructor = function()
             if (map.onMap(x, y) && unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
                 if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human &&
-                    settings.getShowDetailedBattleForcast())
+                        settings.getShowDetailedBattleForcast())
                 {
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
@@ -701,6 +701,38 @@ var Constructor = function()
     {
         return qsTr("Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.");
     };
+
+    this.createOverworldBattleAnimation = function(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                             pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage)
+    {
+        var pRet = null;
+        // attacking unit
+        var atkDamage = globals.roundUp(defStartHp) - globals.roundUp(defEndHp);
+        var defDamage = globals.roundUp(atkStartHp) - globals.roundUp(atkEndHp);
+        var pAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY(), 70);
+        pAtk.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+        pAtk.setSound("talongunhit.wav", 1);
+        var pDmgTextAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY());
+        pDmgTextAtk.addText(atkDamage + " Hp", -8, 0, 2.0, "#FF0000");
+        pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * map.getImageSize(), (pDefTerrain.getY() - 2) * map.getImageSize()), 1000);
+        pDmgTextAtk.addTweenWait(1500);
+        pAtk.queueAnimation(pDmgTextAtk);
+        if (defenderDamage >= 0)
+        {
+            // counter damage
+            pRet = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
+            pRet.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+            pRet.setSound("talongunhit.wav", 1);
+            pDmgTextAtk.queueAnimation(pRet);
+            var pDmgTextDef = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY());
+            pDmgTextDef.addText(defDamage + " Hp", -8, 0, 2.0, "#FF0000");
+            pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * map.getImageSize(), (pAtkTerrain.getY() - 2) * map.getImageSize()), 1000);
+            pDmgTextDef.addTweenWait(1500);
+            pRet.queueAnimation(pDmgTextDef);
+        }
+        pRet = pAtk;
+        return pRet;
+    }
 
     // you may implement the following function in a mod to further tweak when a unit can attack with a certain weapon.
     // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY)

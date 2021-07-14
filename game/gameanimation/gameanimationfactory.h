@@ -142,7 +142,23 @@ public slots:
 private:
     friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();
-
+    /**
+     * @brief createOverworldBattleAnimation
+     * @param pAtkTerrain
+     * @param pAtkUnit
+     * @param atkStartHp
+     * @param atkEndHp
+     * @param atkWeapon
+     * @param pDefTerrain
+     * @param pDefUnit
+     * @param defStartHp
+     * @param defEndHp
+     * @param defWeapon
+     * @param defenderDamage
+     * @return
+     */
+    static GameAnimation* createOverworldBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                                                         Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
 private:
     static spGameAnimationFactory m_pInstance;
     static QVector<spGameAnimation> m_Animations;

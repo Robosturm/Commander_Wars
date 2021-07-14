@@ -159,33 +159,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         auto battleViewMode = Settings::getBattleAnimations();
         if (battleViewMode == GameEnums::BattleAnimationMode_Overworld)
         {
-            // attacking unit
-            GameAnimation* pAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
-            pAtk->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
-            pAtk->setSound("talongunhit.wav", 1);
-            GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY());
-            pDmgTextAtk->addText(QString::number(atkDamage) + " Hp", -8, 0, 2.0f, Qt::GlobalColor::red);
-            pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->Terrain::getX() * GameMap::getImageSize(), (pDefTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
-            pDmgTextAtk->addTweenWait(1500);
-            pAtk->queueAnimation(pDmgTextAtk);
-            if (defenderDamage >= 0)
-            {
-                // counter damage
-                pRet = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), 70);
-                pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 2.0f);
-                pRet->setSound("talongunhit.wav", 1);
-                pDmgTextAtk->queueAnimation(pRet.get());
-                spGameAnimation pDmgTextDef = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY());
-                pDmgTextDef->addText(QString::number(defDamage) + " Hp", -8, 0, 2.0f, Qt::GlobalColor::red);
-                pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->Terrain::getX() * GameMap::getImageSize(), (pAtkTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
-                pDmgTextDef->addTweenWait(1500);
-                pRet->queueAnimation(pDmgTextDef.get());
-                pRet = pDmgTextDef;
-            }
-            else
-            {
-                pRet = pDmgTextAtk;
-            }
+            pRet = createOverworldBattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                                  pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
         }
         else
         {
@@ -275,6 +250,30 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
     }
 
     return pRet.get();
+}
+
+GameAnimation* GameAnimationFactory::createOverworldBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                                                                    Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(pAtkTerrain);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pAtkUnit);
+    args << obj1;
+    args << atkStartHp;
+    args << atkEndHp;
+    args << atkWeapon;
+    QJSValue obj2 = pInterpreter->newQObject(pDefTerrain);
+    args << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefUnit);
+    args << obj3;
+    args << defStartHp;
+    args << defEndHp;
+    args << defWeapon;
+    args << defenderDamage;
+    QJSValue ret = pInterpreter->doFunction("ACTION_FIRE", "createOverworldBattleAnimation", args);
+    return dynamic_cast<GameAnimation*>(ret.toQObject());
 }
 
 qint32 GameAnimationFactory::getAnimationCount()

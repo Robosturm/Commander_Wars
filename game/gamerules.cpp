@@ -583,6 +583,13 @@ void GameRules::createFogVision()
 {
     Console::print("Creating fog vision. Pausing Rendering", Console::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
+    QColor fogOfWarColor = QColor(70, 70, 70, 100);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue ret = pInterpreter->doFunction("Global", "getFogOfWarColor");
+    if (ret.isString())
+    {
+        fogOfWarColor = QColor(ret.toString());
+    }
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -655,7 +662,7 @@ void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
     }
 }
 
-void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
+void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor)
 {
     spGameMap pMap = GameMap::getInstance();
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
@@ -680,7 +687,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-            sprite->setColor(70, 70, 70, 100);
+            sprite->setColor(fogOfWarColor);
             sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());

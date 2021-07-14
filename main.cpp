@@ -224,8 +224,12 @@ int main(qint32 argc, char* argv[])
     //end
     if (returncode == 1)
     {
+#ifdef Q_OS_ANDROID
+        Console::print("No automatic restart on android", Console::eDEBUG);
+#else
         Console::print("Restarting application", Console::eDEBUG);
         QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
+#endif
     }
     return returncode;
 }
