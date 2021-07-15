@@ -54,7 +54,7 @@ void GameAnimation::start()
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs, data.volume);
+            pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs / Settings::getAnimationSpeed(), data.volume);
         }
     }
 }
