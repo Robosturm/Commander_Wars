@@ -19,6 +19,10 @@ var Init =
                         ["heavy_ai8",   13],
                         ["heavy_ai9",   14],],
     // internal data
+    startAi = 0,
+    rotationStartAi = 0,
+    rotationCount = 0,
+    currentMatch = [],
     matchData   = [],
     runCount    = 0,
     main = function(menu)
@@ -31,6 +35,16 @@ var Init =
 
     mapsSelection = function(menu)
     {
+        GameConsole.print("Preparing next match", 0);
+        var playerCount = map.getPlayerCount();
+        Init.currentMatch = [];
+        if (Init.matchData.length === 0)
+        {
+            for (var i = 0; i < Init.trainingAis.length; ++i)
+            {
+                Init.matchData.push(0);
+            }
+        }
         menu.selectMap(Init.trainingFolder, Init.trainingMap);
         menu.slotButtonNext();
         menu.slotButtonNext();
@@ -38,22 +52,80 @@ var Init =
         var gameRules = map.getGameRules();
         gameRules.setFogMode(Init.setFogMode);
         gameRules.setRandomWeather(false);
-        // todo select ai's based on missing matches
-        selection.selectPlayerAi(0, 5);
-        selection.selectPlayerAi(1, 5);
+        for (var i = 0; i < playerCount; ++i)
+        {
+            var player = Init.rotationCount + i;
+            if (i > 0)
+            {
+                player += Init.rotationStartAi;
+            }
+            else
+            {
+                player += Init.startAi;
+            }
+
+            if (player >= playerCount)
+            {
+                player -= playerCount;
+            }
+            selection.selectPlayerAi(i, trainingAis[player][1]);
+            GameConsole.print("Using ai-setting " + trainingAis[player][0] + " for player " + i, 0);
+            Init.currentMatch.push(player);
+        }
+        // todo add co mirror matches
         menu.startGame();
     },
 
     onVictory = function(menu)
     {
-        // todo get victorious ai and store it
-        // todo check if all matches have been done and prepare next run if so
+        if (Init.evaluateMatch())
+        {
+            Init.prepareNextRun();
+        }
         menu.exitMenue();
+    },
+
+    evaluateMatch = function()
+    {
+        var playerCount = map.getPlayerCount();
+        var team = map.getVictoryTeam();
+        var nextRound = false;
+        if (team >= 0)
+        {
+            var winnerAi = Init.currentMatch[team];
+            GameConsole.print("Winning Ai is " + Init.trainingAis[player][0], 0);
+            for (var i = 0; i < Init.trainingAis.length; ++i)
+            {
+                if (Init.trainingAis[player][0] === Init.trainingAis[i][0])
+                {
+                    Init.matchData[i] += 1;
+                }
+            }
+        }
+        Init.rotationCount += 1;
+        if (Init.rotationCount === playerCount)
+        {
+            GameConsole.print("Going for next match up", 0);
+            Init.rotationCount = 0;
+            Init.rotationStartAi += 1;
+            if (Init.rotationStartAi === Init.trainingAis.length - playerCount)
+            {
+                nextRound = true;
+            }
+        }
+        return nextRound;
     },
 
     prepareNextRun = function()
     {
+        GameConsole.print("Preparing next run", 0);
         // todo mutate ai's that haven't one the match
-        Init.runCount = Init.runCount + 1
+        Init.runCount = Init.runCount + 1;
+        // reset data
+        Init.startAi = 0;
+        Init.rotationStartAi = 0;
+        Init.rotationCount = 0;
+        Init.currentMatch = [];
+        Init.matchData = [];
     },
 }

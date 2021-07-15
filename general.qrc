@@ -5195,5 +5195,23 @@
         <file>resources/images/terrain/beach+SW.png</file>
         <file>maps/advance_wars_days_of_ruin.jsm</file>
         <file>resources/aidata/heavyai_training.js</file>
+        <file>resources/aidata/heavy/heavy_ai1.ini</file>
+        <file>resources/aidata/heavy/heavy_ai1.js</file>
+        <file>resources/aidata/heavy/heavy_ai2.ini</file>
+        <file>resources/aidata/heavy/heavy_ai2.js</file>
+        <file>resources/aidata/heavy/heavy_ai3.ini</file>
+        <file>resources/aidata/heavy/heavy_ai3.js</file>
+        <file>resources/aidata/heavy/heavy_ai4.ini</file>
+        <file>resources/aidata/heavy/heavy_ai4.js</file>
+        <file>resources/aidata/heavy/heavy_ai5.ini</file>
+        <file>resources/aidata/heavy/heavy_ai5.js</file>
+        <file>resources/aidata/heavy/heavy_ai6.ini</file>
+        <file>resources/aidata/heavy/heavy_ai6.js</file>
+        <file>resources/aidata/heavy/heavy_ai7.ini</file>
+        <file>resources/aidata/heavy/heavy_ai7.js</file>
+        <file>resources/aidata/heavy/heavy_ai8.ini</file>
+        <file>resources/aidata/heavy/heavy_ai8.js</file>
+        <file>resources/aidata/heavy/heavy_ai9.ini</file>
+        <file>resources/aidata/heavy/heavy_ai9.js</file>
     </qresource>
 </RCC>

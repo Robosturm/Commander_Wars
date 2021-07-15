@@ -269,6 +269,7 @@ public slots:
      * @brief checkVictory checks for defeats of a player and for the win of a team;
      */
     void checkVictory();
+    qint32 getVictoryTeam();
     void addVictoryRule(QString rule);
     void removeVictoryRule(QString rule);
     VictoryRule* getVictoryRule(QString rule);
