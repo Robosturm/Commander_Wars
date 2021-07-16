@@ -67,7 +67,7 @@ public:
 
 private:
     bool m_useBasecosts{false};
-    bool m_abortOnCostExceed{false};
+    bool m_abortOnCostExceed{true};
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;
     QVector<QVector<std::tuple<qint32, bool>>>* m_pMoveCostMap;

@@ -17,6 +17,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(Unit* pUnit, QVecto
             m_Targets[i].setZ(1.0f);
         }
     }
+    setMovepoints(m_pUnit->getFuel() * 2);
 }
 
 qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
