@@ -39,7 +39,10 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     pTextfield->setHtmlText(achievement.name);
     pTextfield->setPosition(bannerWidth - 5 - pTextfield->getWidth(), 5);
     pButtonBox->addChild(pTextfield);
+}
 
+void AchievementBanner::init()
+{
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Achievement));
     setPosition(0, Settings::getHeight() + 60);
     oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() - 60 * (m_activeBanners + 1)), oxygine::timeMS(200 * (m_activeBanners + 1)));
@@ -49,6 +52,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     m_showTimer.setSingleShot(true);
     m_showTimer.start(std::chrono::seconds(5));
     connect(&m_showTimer, &QTimer::timeout, this, &AchievementBanner::removeBanner, Qt::QueuedConnection);
+
 }
 
 void AchievementBanner::removeBanner()

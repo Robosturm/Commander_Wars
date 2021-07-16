@@ -563,6 +563,8 @@
 		<image file="mech/mech+os+river+mask.png" />
 		<image file="mech/mech+yc+river.png" />
 		<image file="mech/mech+yc+river+mask.png" />
+		<image file="mech/mech+ma+river.png" />
+		<image file="mech/mech+ma+river+mask.png" />
 		<image file="mech/mech+bh+dying.png" cols = "3" />
 		<image file="mech/mech+bh+dying+mask.png" cols = "3" />
 		<image file="mech/mech+bm+dying.png" cols = "3" />

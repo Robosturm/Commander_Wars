@@ -5213,5 +5213,7 @@
         <file>resources/aidata/heavy/heavy_ai8.js</file>
         <file>resources/aidata/heavy/heavy_ai9.ini</file>
         <file>resources/aidata/heavy/heavy_ai9.js</file>
+        <file>resources/images/battleanimations/mech/mech+ma+river.png</file>
+        <file>resources/images/battleanimations/mech/mech+ma+river+mask.png</file>
     </qresource>
 </RCC>

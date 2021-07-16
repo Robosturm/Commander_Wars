@@ -152,6 +152,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             if (!achieved && (achievement.progress >= achievement.targetValue))
             {
                 spAchievementBanner banner = spAchievementBanner::create(achievement);
+                banner->init();
                 oxygine::getStage()->addChild(banner);
                 
             }

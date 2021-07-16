@@ -1078,6 +1078,11 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
             return nullptr;
         }
+        else if (getRefCounter() == 0)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween trying to add tween during actor construction isn't allowed.");
+            return nullptr;
+        }
         tween->start(*this);
         m_tweens.append(tween);
         return tween;
