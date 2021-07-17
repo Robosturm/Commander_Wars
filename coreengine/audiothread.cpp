@@ -35,8 +35,9 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::BlockingQueuedConnection);
     connect(this, &AudioThread::SignalStopAllSounds,    this, &AudioThread::SlotStopAllSounds, Qt::BlockingQueuedConnection);
     connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalChangeAudioDevice,this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
 #ifdef EnableMultimedia
-    m_audioDevice = QMediaDevices::defaultAudioOutput();
+    m_audioDevice = Settings::getAudioOutput().value<QAudioDevice>();
     m_audioOutput.setDevice(m_audioDevice);
     m_player.setAudioOutput(&m_audioOutput);
     m_player2.setAudioOutput(&m_audioOutput);
@@ -63,6 +64,21 @@ void AudioThread::initAudio()
     m_doubleBufferTimer.setSingleShot(false);
     m_doubleBufferTimer.setInterval(50);
     connect(&m_doubleBufferTimer, &QTimer::timeout, this, &AudioThread::stopSecondPlayer, Qt::QueuedConnection);
+}
+
+void AudioThread::changeAudioDevice(const QVariant& value)
+{
+    emit SignalChangeAudioDevice(value);
+}
+
+void AudioThread::SlotChangeAudioDevice(const QVariant& value)
+{
+#ifdef EnableMultimedia
+    m_audioDevice = value.value<QAudioDevice>();
+    m_audioOutput.setDevice(m_audioDevice);
+    m_player.setAudioOutput(&m_audioOutput);
+    m_player2.setAudioOutput(&m_audioOutput);
+#endif
 }
 
 void AudioThread::playMusic(qint32 File)

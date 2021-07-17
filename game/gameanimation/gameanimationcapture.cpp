@@ -106,7 +106,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
         m_buildingSprites->setY(m_BuildingStartPos);
 
         float startPercent = static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints);
-        float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints);
+        float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints + 1.5f);
         float movingHeight = pAnim->getHeight();
         float startPosition = (startPercent) * movingHeight + m_BuildingStartPos;
         m_buildingSprites->setPosition(0, startPosition);
@@ -167,10 +167,14 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         {
             endPoints = m_maxPoints;
         }
-        float unitOffsetY = -pAnim->getHeight() + m_BuildingStartPos + 5;
-        float buildingHigh = m_BuildingEndPos - m_BuildingStartPos - 4;
-        float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints);
-        float startPosition = unitOffsetY + (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints)) * buildingHigh;
+        const float unitOffsetY = -pAnim->getHeight() + m_BuildingStartPos;
+        const float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints + 1.5f);
+        const float startPercentDone = (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints));
+        constexpr qint32 unitOffset = 6;
+        float buildingHigh = m_BuildingEndPos - m_BuildingStartPos;
+        float startPosition = unitOffsetY + qCeil(unitOffset * (1.0f - startPercentDone)) + qCeil(startPercentDone * buildingHigh);
+        float endPosition = unitOffsetY + qCeil(unitOffset * ( 1.0f - percentDone)) + qCeil(percentDone * buildingHigh);
+
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
@@ -186,7 +190,6 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
             oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, m_jumpSprites, m_jumpSprites + m_ayeAyeSprites - 1), oxygine::timeMS(m_ayeAyeSprites * m_frameTime), 1);
             queueAnimating->add(tween2);
             // going down on the building
-            float endPosition = unitOffsetY + percentDone * buildingHigh;
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenY(endPosition), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
             queueAnimating->add(tween3);
             // maybe going up again as well

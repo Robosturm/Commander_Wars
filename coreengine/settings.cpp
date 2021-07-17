@@ -12,6 +12,8 @@
 #include <qlocale.h>
 #include <QStandardPaths>
 #include <QInputDevice>
+#include <QMediaDevices>
+#include <QAudioDevice>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -82,6 +84,7 @@ QString Settings::m_language      = "en";
 qint32 Settings::m_TotalVolume       = 100;
 qint32 Settings::m_MusicVolume       = 80;
 qint32 Settings::m_SoundVolume       = 100;
+QVariant Settings::m_audioOutput = QVariant();
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
@@ -152,6 +155,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+const QVariant &Settings::getAudioOutput()
+{
+    return m_audioOutput;
+}
+
+void Settings::setAudioOutput(const QVariant &newAudioOutput)
+{
+    m_audioOutput = newAudioOutput;
 }
 
 bool Settings::getAutoMoveCursor()
@@ -1238,6 +1251,14 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_SoundVolume = 100;
     }
+#ifdef EnableMultimedia
+    const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
+    m_audioOutput = settings.value("AudioDevice", QVariant::fromValue(defaultDeviceInfo));
+    if (m_audioOutput.value<QAudioDevice>().isNull())
+    {
+        m_audioOutput = QVariant::fromValue(defaultDeviceInfo);
+    }
+#endif
     settings.endGroup();
 
     // game
@@ -1505,6 +1526,7 @@ void Settings::saveSettings()
         settings.setValue("TotalVolume",               m_TotalVolume);
         settings.setValue("MusicVolume",               m_MusicVolume);
         settings.setValue("SoundVolume",               m_SoundVolume);
+        settings.setValue("AudioDevice",               m_audioOutput);
         settings.endGroup();
 
         settings.beginGroup("Game");

@@ -38,6 +38,9 @@ class Settings : public QObject, public oxygine::ref_counter
         static void setUsername(const QString &Username);
 
 public slots:
+        static const QVariant &getAudioOutput();
+        static void setAudioOutput(const QVariant &newAudioOutput);
+
         static bool getAutoMoveCursor();
         static void setAutoMoveCursor(bool newAutoMoveCursor);
 
@@ -490,6 +493,7 @@ public slots:
         static qint32 m_TotalVolume;
         static qint32 m_MusicVolume;
         static qint32 m_SoundVolume;
+        static QVariant m_audioOutput;
         // Network
         static quint16 m_GamePort;
         static quint16 m_ServerPort;

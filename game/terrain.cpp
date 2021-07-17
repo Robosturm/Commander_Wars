@@ -382,6 +382,10 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     }
+    else
+    {
+        m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+    }
 }
 
 QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)

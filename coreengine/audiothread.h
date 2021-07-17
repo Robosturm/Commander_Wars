@@ -32,6 +32,7 @@ signals:
     void SignalPlaySound(QString file, qint32 loops, QString folder, qint32 delay, float volume = 1.0f);
     void SignalStopSound(QString file, QString folder);
     void SignalStopAllSounds();
+    void SignalChangeAudioDevice(const QVariant& value);
 public slots:
     /**
      * @brief getLoadBaseGameFolders
@@ -95,6 +96,11 @@ public slots:
      * @brief stopAllSound
      */
     void stopAllSounds();
+    /**
+     * @brief changeAudioDevice
+     * @param value
+     */
+    void changeAudioDevice(const QVariant& value);
 protected slots:
     // stops current Music and launches another one.
     void SlotPlayMusic(qint32 file);
@@ -123,6 +129,7 @@ protected slots:
      * @param errorString
      */
     void reportReplayError(QMediaPlayer::Error error, const QString &errorString);
+    void SlotChangeAudioDevice(const QVariant& value);
 protected:
     /**
      * @brief loadMusicFolder

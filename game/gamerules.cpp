@@ -714,6 +714,14 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
+            if (x == pMap->getMapWidth() - 1)
+            {
+                sprite->setWidth(GameMap::getImageSize() + 1);
+            }
+            if (y == pMap->getMapHeight() - 1)
+            {
+                sprite->setHeight(GameMap::getImageSize() + 1);
+            }
             sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
@@ -772,6 +780,14 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(70, 70, 70, 100);
+            if (x == pMap->getMapWidth() - 1)
+            {
+                sprite->setWidth(GameMap::getImageSize() + 1);
+            }
+            if (y == pMap->getMapHeight() - 1)
+            {
+                sprite->setHeight(GameMap::getImageSize() + 1);
+            }
             sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
@@ -790,6 +806,17 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            if (x == pMap->getMapWidth() - 1)
+            {
+                sprite->setWidth(GameMap::getImageSize() + 1);
+                sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+            }
+            else if (y == pMap->getMapHeight() - 1)
+            {
+                sprite->setHeight(GameMap::getImageSize() + 1);
+                sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+            }
+            sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
             sprite->setColor(0, 0, 0, 255);
             sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
             pTerrain->addChild(sprite);

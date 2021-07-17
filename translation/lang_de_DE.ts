@@ -3285,6 +3285,7 @@ Host mods: </source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="382"/>
+        <location filename="../menue/optionmenue.cpp" line="715"/>
         <source>Selects the screen mode for the game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3440,90 +3441,95 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="696"/>
+        <location filename="../menue/optionmenue.cpp" line="698"/>
+        <source>Audio Device: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="731"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="700"/>
+        <location filename="../menue/optionmenue.cpp" line="735"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="713"/>
+        <location filename="../menue/optionmenue.cpp" line="748"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="717"/>
+        <location filename="../menue/optionmenue.cpp" line="752"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="730"/>
+        <location filename="../menue/optionmenue.cpp" line="765"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="734"/>
+        <location filename="../menue/optionmenue.cpp" line="769"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="777"/>
+        <location filename="../menue/optionmenue.cpp" line="812"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="779"/>
+        <location filename="../menue/optionmenue.cpp" line="814"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="780"/>
+        <location filename="../menue/optionmenue.cpp" line="815"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="781"/>
+        <location filename="../menue/optionmenue.cpp" line="816"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="782"/>
+        <location filename="../menue/optionmenue.cpp" line="817"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="784"/>
+        <location filename="../menue/optionmenue.cpp" line="819"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="859"/>
+        <location filename="../menue/optionmenue.cpp" line="894"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="861"/>
+        <location filename="../menue/optionmenue.cpp" line="896"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="866"/>
+        <location filename="../menue/optionmenue.cpp" line="901"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="871"/>
+        <location filename="../menue/optionmenue.cpp" line="906"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="876"/>
+        <location filename="../menue/optionmenue.cpp" line="911"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>

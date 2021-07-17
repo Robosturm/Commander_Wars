@@ -691,6 +691,41 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     y += 40;
+
+#ifdef EnableMultimedia
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Audio Device: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
+    const auto deviceInfos = QMediaDevices::audioOutputs();
+    QVector<QString> items;
+    qint32 currentItem = 0;
+
+    for (qint32 i = 0; i < deviceInfos.size(); ++i)
+    {
+        items.append(deviceInfos[i].description());
+        if (deviceInfos[i] == currentDevice)
+        {
+            currentItem = i;
+        }
+    }
+    spDropDownmenu pAudioDevice = spDropDownmenu::create(400, items);
+    pAudioDevice->setTooltipText(tr("Selects the screen mode for the game"));
+    pAudioDevice->setPosition(sliderOffset - 130, y);
+    pAudioDevice->setCurrentItem(currentItem);
+    pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
+    pOwner->addItem(pAudioDevice);
+    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+       auto item = QVariant::fromValue(deviceInfos[value]);
+       Settings::setAudioOutput(item);
+       pAudio->changeAudioDevice(item);
+    });
+    y += 40;
+#endif
+
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Global Volume: "));
