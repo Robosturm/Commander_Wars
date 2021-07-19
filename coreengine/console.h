@@ -28,12 +28,12 @@ public:
 
     enum eLogLevels
     {
+        eOFF = -1,
         eDEBUG = 0,
         eINFO,
         eWARNING,
         eERROR,
         eFATAL,
-        eOFF
     };
     Q_ENUM(eLogLevels)
 

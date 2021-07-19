@@ -497,6 +497,16 @@ qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
                      "music.qrc"
     )
 
+##############################################################################
+# This section finds all resources so they can be linked to a rcc file later #
+##############################################################################
+# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
+FILE(GLOB_RECURSE ResourceFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.qrc")
+FILE(GLOB_RECURSE TS_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "translation/*.ts")
+
+add_custom_target(Resources SOURCES
+    ${ResourceFiles}
+    ${TS_FILES})
 ##############################################################
 # Linking and executable section                             #
 ##############################################################
@@ -585,16 +595,6 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_translations)
 endif()
 
-##############################################################################
-# This section finds all resources so they can be linked to a rcc file later #
-##############################################################################
-# this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
-FILE(GLOB_RECURSE ResourceFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.qrc")
-FILE(GLOB_RECURSE QM_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "translation*.ts")
-
-add_custom_target(Resources SOURCES
-    ${ResourceFiles}
-    ${TS_FILES})
 ##############################################################
 # end of this is just for the ide view nothing for execution #
 ##############################################################

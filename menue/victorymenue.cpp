@@ -699,6 +699,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
 void VictoryMenue::exitMenue()
 {
+    Console::print("Leaving Victory Menue", Console::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
         emit m_pNetworkInterface->sig_close();
@@ -708,14 +709,12 @@ void VictoryMenue::exitMenue()
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false)
     {
         GameMap::deleteMap();
-        Console::print("Leaving Victory Menue", Console::eDEBUG);
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
         oxygine::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {
         GameMap::deleteMap();
-        Console::print("Leaving Victory Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(spMainwindow::create());
     }
     oxygine::Actor::detach();
@@ -994,6 +993,7 @@ qint32 VictoryMenue::getStepTime()
 
 void VictoryMenue::AddScoreToUserdata()
 {
+    Console::print("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QString path = pMap->getMapPath();
     if (!path.isEmpty() && pMap->getWinnerTeam() >= 0)
@@ -1035,6 +1035,7 @@ void VictoryMenue::AddScoreToUserdata()
 
 void VictoryMenue::onEnter()
 {
+    Console::print("VictoryMenue::onEnter", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "onVictory";
@@ -1049,6 +1050,7 @@ void VictoryMenue::onEnter()
 
 void VictoryMenue::showPlayerStatistic(qint32 player)
 {
+    Console::print("VictoryMenue::showPlayerStatistic for " + QString::number(player), Console::eDEBUG);
     if (m_statisticsView.get() != nullptr)
     {
         m_statisticsView->detach();

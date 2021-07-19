@@ -121,7 +121,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     connect(this, &MapSelectionMapsMenue::sigShowSaveMap, this, &MapSelectionMapsMenue::showSaveMap, Qt::QueuedConnection);
 
 
-    m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
+    m_pButtonStart = ObjectManager::createButton(tr("Start Game"), 150);
     m_pButtonStart->setPosition(Settings::getWidth() - 10 - m_pButtonStart->getWidth(), Settings::getHeight() - 10 - m_pButtonStart->getHeight());
     m_pButtonStart->attachTo(this);
     m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

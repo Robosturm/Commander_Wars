@@ -64,6 +64,30 @@ var Constructor = function()
             sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 400);
         }
     };
+    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    {
+        var count = sprite.getUnitCount(5);
+        var i = 0;
+        if (weapon === 0)
+        {
+            sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+                              1, 1.0, 0, 0);
+            sprite.addSpriteScreenshake(8, 0.98, 800, 200);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
+        }
+        else
+        {
+            sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
+                              1, 1.0, 0, 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
+        }
+    };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {

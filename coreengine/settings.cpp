@@ -833,8 +833,6 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_gamma = 1.0f;
     }
-
-
     m_borderless = settings.value("borderless", true).toBool();
     m_fullscreen = settings.value("fullscreen", false).toBool();
     m_record = settings.value("recordgames", false).toBool();
@@ -851,7 +849,7 @@ void Settings::loadSettings()
     // general
     settings.beginGroup("General");
     setLanguage(settings.value("language","en").toString());
-    m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
+    m_mouseSensitivity           = settings.value("MouseSensitivity", -0.75f).toFloat(&ok);
     if(!ok)
     {
         QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
@@ -1437,6 +1435,10 @@ void Settings::loadSettings()
     // logging
     settings.beginGroup("Logging");
     m_LogActions  = settings.value("LogActions", false).toBool();
+    if (settings.contains("LogLevel"))
+    {
+        Console::setLogLevel(static_cast<Console::eLogLevels>(settings.value("LogLevel", 0).toInt(&ok)));
+    }
     settings.endGroup();
 }
 
@@ -1453,7 +1455,6 @@ void Settings::saveSettings()
         settings.setValue("MouseSensitivity",           m_mouseSensitivity);
         settings.setValue("UserPath",                   m_userPath);
         settings.setValue("TouchScreen",                m_touchScreen);
-
         settings.endGroup();
 
         settings.beginGroup("Resolution");

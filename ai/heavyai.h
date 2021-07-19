@@ -124,10 +124,9 @@ public slots:
     }
     /**
      * @brief saveNeuralNetwork saves the network under the given name
-     * @param name
      * @param network
      */
-    void saveNeuralNetwork(QString name, qint32 network);
+    void saveNeuralNetwork(qint32 network);
     /**
      * @brief getNeuralNetworkName
      * @param network
@@ -141,6 +140,25 @@ public slots:
      * @return
      */
     void mutateNeuralNetwork(qint32 network, double mutationChance);
+    /**
+     * @brief getAiName
+     * @return
+     */
+    const QString &getAiName() const;
+    /**
+     * @brief setAiName
+     * @param newAiName
+     */
+    void setAiName(const QString &newAiName);
+    /**
+     * @brief loadNeuralNetworks
+     */
+    void loadNeuralNetworks();
+    /**
+     * @brief combineAi
+     * @param aisToUse
+     */
+    void combineAi(QStringList aisToUse);
     /*******************************************************************/
     // debugging section
     /*******************************************************************/
@@ -336,8 +354,6 @@ private:
     bool m_pause{false};
 
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
-
-    static const qint32 minSiloDamage;
     float m_minActionScore{0.1f};
     float m_actionScoreVariant{0.05f};
     float m_stealthDistanceMultiplier{2.0f};
@@ -346,8 +362,11 @@ private:
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};
-
     QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworks::Max)};
+
+    // static constants
+    static const qint32 minSiloDamage;
+    static const QStringList NeuralNetworkNames;
 };
 
 #endif // HEAVYAI_H

@@ -13,9 +13,13 @@
 #include "resource_management/unitspritemanager.h"
 
 const qint32 HeavyAi::minSiloDamage = 7000;
+constexpr const char* const NeuralNetworkFileEnding = ".net";
+constexpr const char* const NeuralNetworkPath = "aidata/heavy/";
+const QStringList HeavyAi::NeuralNetworkNames = {"Production"};
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
+
 
 HeavyAi::HeavyAi(QString type)
     : CoreAI(GameEnums::AiTypes_Heavy),
@@ -31,15 +35,23 @@ HeavyAi::HeavyAi(QString type)
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/" + m_aiName.toLower() + ".ini");
+    loadNeuralNetworks();
+    if (NeuralNetworkNames.length() != NeuralNetworks::Max)
+    {
+        oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Missing Enum name mapping");
+    }
+}
 
-    loadNeuralNetwork("Production", m_neuralNetworks[static_cast<qint32>(NeuralNetworks::Production)], static_cast<qint32>(BuildingEntry::MaxSize), 5);
+void HeavyAi::loadNeuralNetworks()
+{
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntry::MaxSize), 5);
 }
 
 void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
 {
     network = spNeuralNetwork::create();
     network->setNetworkName(netName);
-    QString baseName = "aidata/heavy/" + netName + m_aiName + ".net";
+    QString baseName = NeuralNetworkPath + netName + m_aiName + NeuralNetworkFileEnding;
     QStringList searchFiles;
     // make sure to overwrite existing js stuff
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -85,11 +97,11 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
     }
 }
 
-void HeavyAi::saveNeuralNetwork(QString name, qint32 network)
+void HeavyAi::saveNeuralNetwork(qint32 network)
 {
     if (network >= 0 && network < m_neuralNetworks.size())
     {
-        QFile file("resources/aidata/heavy/" + name);
+        QFile file(QString("resources/") + NeuralNetworkPath + NeuralNetworkNames[network] + m_aiName + NeuralNetworkFileEnding);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
         m_neuralNetworks[network]->serializeObject(stream);
@@ -122,6 +134,19 @@ void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance)
     else
     {
         Console::print("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+    }
+}
+
+void HeavyAi::combineAi(QStringList aisToUse)
+{
+    Console::print("HeavyAi::combineAi", Console::eDEBUG);
+    for (qint32 i = 0; i < NeuralNetworks::Max; ++i)
+    {
+        qint32 item = GlobalUtils::randInt(0, aisToUse.length() - 1);
+        QString netName = NeuralNetworkNames[i];
+        QString targetName = QString("resources/") + NeuralNetworkPath + netName + m_aiName + NeuralNetworkFileEnding;
+        QFile::remove(targetName);
+        QFile::copy(QString("resources/") + NeuralNetworkPath + netName + aisToUse[item] + NeuralNetworkFileEnding, targetName);
     }
 }
 
@@ -192,6 +217,7 @@ void HeavyAi::process()
     pEnemyBuildings->randomize();
     if (m_pause)
     {
+        setupTurn(pBuildings);
         m_timer.start(1000);
         return;
     }
@@ -1084,6 +1110,16 @@ void HeavyAi::updateUnitBuildData(UnitBuildData &unitData, QVector<double> &data
     {
         unitData.unitBuildingDataInput[FondsUsage] = 0;
     }
+}
+
+const QString &HeavyAi::getAiName() const
+{
+    return m_aiName;
+}
+
+void HeavyAi::setAiName(const QString &newAiName)
+{
+    m_aiName = newAiName;
 }
 
 void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, QVector<double> & data)
