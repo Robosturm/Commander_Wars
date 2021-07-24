@@ -29,19 +29,13 @@ var ACTION =
         // make the action infinite
         return false;
     },
-
-    getActions : function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "";
-    },
-
+    emptyFieldActions : ["ACTION_ACTIVATE_POWER_CO_0", "ACTION_ACTIVATE_POWER_CO_1", "ACTION_ACTIVATE_SUPERPOWER_CO_0",
+                         "ACTION_ACTIVATE_SUPERPOWER_CO_1", "ACTION_ACTIVATE_TAGPOWER", "ACTION_INFO",
+                         "ACTION_NICKNAME_UNIT", "ACTION_DELETE_UNIT", "ACTION_SURRENDER",
+                         "ACTION_OPTIONS", "ACTION_EXITGAME", "ACTION_SAVEGAME", "ACTION_NEXT_PLAYER", "ACTION_SWAP_COS"],
     getEmptyFieldActions : function()
     {
-        return "ACTION_ACTIVATE_POWER_CO_0,ACTION_ACTIVATE_POWER_CO_1,ACTION_ACTIVATE_SUPERPOWER_CO_0," +
-               "ACTION_ACTIVATE_SUPERPOWER_CO_1,ACTION_ACTIVATE_TAGPOWER,ACTION_INFO," +
-               "ACTION_NICKNAME_UNIT,ACTION_DELETE_UNIT,ACTION_SURRENDER," +
-               "ACTION_OPTIONS,ACTION_EXITGAME,ACTION_SAVEGAME,ACTION_NEXT_PLAYER,ACTION_SWAP_COS";
+        return ACTION.emptyFieldActions;
     },
 
     getViewplayerActionList : function()

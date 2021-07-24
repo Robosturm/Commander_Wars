@@ -24,11 +24,7 @@ var Constructor = function()
     {
         return qsTr("Labor");
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_BUILD_UNITS";
-    };
+    this.actionList = ["ACTION_BUILD_UNITS"];
     this.constructionList = ["HOELLIUM"];
     this.getConstructionList = function(building)
     {

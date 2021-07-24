@@ -81,7 +81,9 @@ Console::Console()
 
     m_text = oxygine::spTextField::create();
     m_text->setPosition(1, 1);
+    m_text->setWidth(Settings::getWidth() - 2);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).withColor(QColor(255,127,39)).alignLeft();
+    style.multiline = true;
     m_text->setStyle(style);
     addChild(m_text);
 
@@ -273,7 +275,12 @@ void Console::update(const oxygine::UpdateState& us)
         }
         drawText += "> " + curprintmsg;
         m_text->setHtmlText(drawText);
-        m_text->setSize(m_text->getTextRect().size);
+        qint32 height = m_text->getTextRect().size.y;
+        m_text->setHeight(height);
+        if (height > Settings::getHeight() - 50)
+        {
+            m_text->setY(Settings::getHeight() - 50 - height);
+        }
     }
     oxygine::Actor::update(us);
 }

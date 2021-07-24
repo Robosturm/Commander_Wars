@@ -15,11 +15,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_CANNON_FIRE";
-    };
+    this.actionList = ["ACTION_CANNON_FIRE"];
     this.getName = function()
     {
         return qsTr("Black Cannon");

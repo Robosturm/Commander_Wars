@@ -489,6 +489,23 @@ bool Player::isEnemyUnit(Unit* pUnit)
     return (checkAlliance(pUnit->getOwner()) == GameEnums::Alliance_Enemy);
 }
 
+bool Player::isPlayerIdEnemy(qint32 playerId)
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        if (playerId < 0 || playerId >= pMap->getPlayerCount())
+        {
+            oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Player::isPlayerIdEnemy playerId outside player range");
+        }
+        else
+        {
+            return (checkAlliance(pMap->getPlayer(playerId)) == GameEnums::Alliance_Enemy);
+        }
+    }
+    return true;
+}
+
 bool Player::isEnemy(Player* pOwner)
 {
     return (checkAlliance(pOwner) == GameEnums::Alliance_Enemy);

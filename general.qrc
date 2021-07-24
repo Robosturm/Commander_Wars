@@ -59,7 +59,6 @@
         <file>resources/objects/h_scrollbar.png</file>
         <file>resources/objects/h_scrollbar_active.png</file>
         <file>resources/objects/h_scrollbar_pressed.png</file>
-        <file>resources/objects/KartenauswahlHintergrundTextur.png</file>
         <file>resources/objects/mapSelectionBottom.png</file>
         <file>resources/objects/mapSelectionBuildingInfo.png</file>
         <file>resources/objects/mapSelectionItem.png</file>

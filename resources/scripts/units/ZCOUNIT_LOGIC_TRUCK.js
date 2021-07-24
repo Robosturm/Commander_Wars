@@ -32,11 +32,7 @@ var Constructor = function()
     {
         return "MOVE_TANK";
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_SUPPORTALL_RATION_MONEY,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
+    this.actionList = ["ACTION_SUPPORTALL_RATION_MONEY", "ACTION_JOIN", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.getBaseCost = function()
     {
         return 5000;

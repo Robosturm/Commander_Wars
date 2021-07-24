@@ -866,7 +866,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pLoadingUnit = pUnits->at(i);
-        if (pLoadingUnit != pUnit)
+        if (pLoadingUnit != pUnit && pLoadingUnit->getHp() > 0.0f)
         {
             // can we transport it?
             if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
@@ -1899,7 +1899,7 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
 
 void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                               qint32 & infantryUnits, qint32 & indirectUnits,
-                              qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets)
+                              qint32 & directUnits, qint32 & transporterUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1921,6 +1921,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnit
         }
         if (pUnit->getLoadingPlace() > 0)
         {
+            transporterUnits++;
             QVector<QVector3D> ret;
             QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
             for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)

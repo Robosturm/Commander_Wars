@@ -215,6 +215,11 @@ public slots:
      */
     bool isEnemy(Player* pOwner);
     /**
+     * @brief isPlayerIdEnemy
+     * @param playerId
+     */
+    bool isPlayerIdEnemy(qint32 playerId);
+    /**
      * @brief isAlly
      * @param pOwner
      * @return

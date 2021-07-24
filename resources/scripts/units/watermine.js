@@ -136,13 +136,7 @@ var Constructor = function()
     {
         return 1;
     };
-
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "";
-    };
-
+    this.actionList = [];
     this.getDescription = function()
     {
         return qsTr("Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units in a 2 square area on sea tiles.");

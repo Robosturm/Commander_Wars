@@ -29,11 +29,7 @@ var Constructor = function()
     {
         return "MOVE_HOELLIUM";
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_HOELLIUM_WAIT";
-    };
+    this.actionList = ["ACTION_HOELLIUM_WAIT"];
     this.getBaseCost = function()
     {
         return 10000;

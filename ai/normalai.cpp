@@ -2034,10 +2034,11 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     qint32 infantryUnits = 0;
     qint32 indirectUnits = 0;
     qint32 directUnits = 0;
+    qint32 transporterUnits = 0;
     QVector<std::tuple<Unit*, Unit*>> transportTargets;
     GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
                      infantryUnits, indirectUnits, directUnits,
-                     transportTargets);
+                     transporterUnits, transportTargets);
     QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
     getEnemyDamageCounts(pUnits, pEnemyUnits, attackCount);
     float funds = m_pPlayer->getFunds();
@@ -2386,8 +2387,7 @@ void NormalAi::getEnemyDamageCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEne
                 dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit) * hpValue;
             }
 
-            if ((dmg1 > m_notAttackableDamage || dmg2 > m_notAttackableDamage) &&
-                pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->Unit::getX(), pEnemyUnit->Unit::getY())) - pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())) < 2)
+            if ((dmg1 > m_notAttackableDamage || dmg2 > m_notAttackableDamage))
             {
                 if (onSameIsland(pUnit, pEnemyUnits->at(i2)))
                 {

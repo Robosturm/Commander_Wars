@@ -28,11 +28,8 @@ var Constructor = function()
     {
         return "MOVE_TANK";
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_BUILD_TEMP_HARBOUR,ACTION_BUILD_TEMP_AIRPORT,ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_SUPPORTALL_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
+    this.actionList = ["ACTION_BUILD_TEMP_HARBOUR", "ACTION_BUILD_TEMP_AIRPORT", "ACTION_LOAD",
+                       "ACTION_UNLOAD", "ACTION_JOIN", "ACTION_SUPPORTALL_RATION", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.getBaseCost = function()
     {
         return 5000;
@@ -55,10 +52,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.getTransportUnits = function()
-    {
-        return ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
-    };
+    this.transportList = ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     this.startOfTurn = function(unit)
     {
         // pay unit upkeep

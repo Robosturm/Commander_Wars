@@ -22,11 +22,7 @@ var Constructor = function()
         unit.setMaxRange(1);
         unit.setVision(1);
     };
-	this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_SUPPORTSINGLE_FREEREPAIR,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
+    this.actionList = ["ACTION_SUPPORTSINGLE_FREEREPAIR", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {

@@ -40,10 +40,11 @@ void MapMover::autoScroll()
     {
         auto sliding = m_pOwner->getMapSliding();
         auto slidingActor = m_pOwner->getMapSlidingActor();
+        spGameMap pMap = GameMap::getInstance();
         if (sliding.get() != nullptr &&
-            slidingActor.get() != nullptr)
+            slidingActor.get() != nullptr &&
+            pMap.get() != nullptr)
         {
-            spGameMap pMap = GameMap::getInstance();
             auto position = sliding->getPosition() + slidingActor->getPosition() + pMap->getPosition();
             auto* pCursor = m_pOwner->getCursor();
             curPos.setX(position.x + pCursor->getMapPointX() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);

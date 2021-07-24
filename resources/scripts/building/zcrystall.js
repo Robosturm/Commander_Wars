@@ -15,11 +15,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_CRYSTALL_HEAL";
-    };
+    this.actionList = ["ACTION_CRYSTALL_HEAL"];
     this.getDamage = function(building, unit)
     {
         return -2;

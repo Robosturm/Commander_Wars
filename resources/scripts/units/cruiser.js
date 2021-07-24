@@ -75,10 +75,7 @@ var Constructor = function()
     {
         return 2;
     };
-    this.getTransportUnits = function()
-    {
-        return ["T_HELI", "K_HELI"];
-    };
+    this.transportList = ["T_HELI", "K_HELI"];
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         return "base_air";

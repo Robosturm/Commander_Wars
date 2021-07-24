@@ -19,10 +19,7 @@ CANNONBOAT.getLoadingPlace = function()
 {
     return 1;
 };
-CANNONBOAT.getTransportUnits = function()
-{
-    return ["INFANTRY", "MECH", "SNIPER"];
-};
+CANNONBOAT.transportList = ["INFANTRY", "MECH", "SNIPER"];
 CANNONBOAT.getBaseCost = function()
 {
     return 6000;
@@ -33,8 +30,4 @@ CANNONBOAT.getDescription = function()
             "<div c='#00ff00'>" + qsTr("transport X 2") + "</div>" +
             "<r>" + qsTr("infantry units.") + "</r>";
 };
-CANNONBOAT.getActions = function()
-{
-    // returns a string id list of the actions this unit can perform
-    return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-};
+CANNONBOAT.actionList = ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];

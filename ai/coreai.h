@@ -477,7 +477,7 @@ protected:
      */
     void GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                           qint32 & infantryUnits, qint32 & indirectUnits,
-                          qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
+                          qint32 & directUnits, qint32 & transporterUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
     /**
      * @brief buildCOUnit
      * @return

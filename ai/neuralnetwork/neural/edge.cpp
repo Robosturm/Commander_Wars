@@ -27,7 +27,7 @@ double Edge::weight()
 
 void Edge::propagate(double neuron_output)
 {
-    m_nextNeuron->addAccumulated(neuron_output * weight());
+    m_nextNeuron->addAccumulated(neuron_output * m_weight);
 }
 
 void Edge::alterWeight(double w)

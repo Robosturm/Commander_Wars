@@ -43,10 +43,11 @@ var UNIT =
     {
         return "";
     },
+    actionList : ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"],
     getActions : function(unit)
     {
         // returns a string id list of the actions this unit can perform
-        return ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
+        return Global[unit.getUnitID()].actionList;
     },
 
     getName : function(unit)
@@ -95,11 +96,11 @@ var UNIT =
     {
         return true;
     },
+    transportList : [],
     getTransportUnits : function(unit)
     {
-        return [];
+        return Global[unit.getUnitID()].transportList;
     },
-
     transporterRefilling : function (unit)
     {
         // carrier refilling and unmoving is done here

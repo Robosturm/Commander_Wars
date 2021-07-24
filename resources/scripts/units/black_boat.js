@@ -69,10 +69,7 @@ var Constructor = function()
     {
         return 2;
     };
-    this.getTransportUnits = function()
-    {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
-    };
+    this.transportList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         return "base_air";
@@ -93,12 +90,8 @@ var Constructor = function()
         return 1;
     };
 
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_SUPPORTSINGLE_REPAIR,ACTION_CAPTURE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
-
+    this.actionList = ["ACTION_SUPPORTSINGLE_REPAIR", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD",
+                       "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     this.getDescription = function()
     {
         return qsTr("<r>Naval Unit. Has unique ability to </r><div c='#00ff00'>repair other units.</div><r> Can </r><div c='#00ff00'>carry X 2</div><r> infantry units and capture buildings.</r>");

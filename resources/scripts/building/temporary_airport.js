@@ -25,11 +25,7 @@ var Constructor = function()
     {
         return qsTr("Temporary Airport");
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "";
-    };
+    this.actionList = [];
     this.getBaseIncome = function()
     {
         return 0;

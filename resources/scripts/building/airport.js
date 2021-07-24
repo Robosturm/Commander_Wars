@@ -25,11 +25,7 @@ var Constructor = function()
     {
         return qsTr("Airport");
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_BUILD_UNITS";
-    };
+    this.actionList = ["ACTION_BUILD_UNITS"];
 
     this.constructionList = ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
     this.getConstructionList = function(building)

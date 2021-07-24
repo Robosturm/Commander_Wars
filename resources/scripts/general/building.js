@@ -108,10 +108,10 @@ var BUILDING =
     {
         return [];
     },
-
+    actionList : [],
     getActions : function(building)
     {
-        return "";
+        return Global[building.getBuildingID()].actionList;
     },
     startOfTurn : function(building)
     {

@@ -39,11 +39,7 @@ var Constructor = function()
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
     };
-	this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_FIRE,ACTION_STEALTH,ACTION_UNSTEALTH,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
+    this.actionList = ["ACTION_FIRE", "ACTION_STEALTH", "ACTION_UNSTEALTH", "ACTION_JOIN", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {

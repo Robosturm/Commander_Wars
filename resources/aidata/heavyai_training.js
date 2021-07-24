@@ -1,11 +1,12 @@
 var Init =
         {
     // training setup data
-    trainingFolder  = "maps/2_player/",     // map folder used
-    trainingMap     = "Agitated.map",       // map that will be used for training
-    mutationRate    = 0.05,                 // chance for a weight to mutate at random
-    fogOfWar        = GameEnums.Fog_Off,    // fog of war rule for training
-    maxRuns         = 10,                 // maximum amount of iterations
+    trainingFolder  = "maps/2_player/",             // map folder used
+    trainingMap     = "Dragons in the Dark.map",    // map that will be used for training
+    mutationRate    = 0.05,                         // chance for a weight to mutate at random
+    fogOfWar        = GameEnums.Fog_Off,            // fog of war rule for training
+    maxRuns         = 100,                          // maximum amount of iterations
+    turnLimit       = 30,
     // ai's and names that will be used for training
     topAis          = 1,
     trainingAis     =  [["heavy_ai",    5],
@@ -41,8 +42,11 @@ var Init =
         menu.selectMap(Init.trainingFolder, Init.trainingMap);
         menu.slotButtonNext();
         menu.slotButtonNext();
-        var selection = menu.getPlayerSelection();
         var gameRules = map.getGameRules();
+        gameRules.addVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
+        var victoryRule = gameRules.getVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
+        victoryRule.setRuleValue(Init.turnLimit, 0);
+        var selection = menu.getPlayerSelection();
         var playerCount = map.getPlayerCount();
         Init.currentMatch = [];
         if (Init.matchData.length === 0)
@@ -135,7 +139,7 @@ var Init =
                 var lowestIndex = -1;
                 for (var i2 = 0; i2 < bestAis.length; ++i2)
                 {
-                    if (Init.bestAis[i2][1] < lowestScore)
+                    if (bestAis[i2][1] < lowestScore)
                     {
                         lowestScore = bestAis[i2][1];
                         lowestIndex = i2;
@@ -152,7 +156,7 @@ var Init =
         for (i = 0; i < bestAis.length; ++i)
         {
             aiNames.push(bestAis[i][0][0]);
-            GameConsole.print(aiNames[i], Init.logLevel);
+            GameConsole.print(aiNames[i] + " with " + bestAis[i][1] + " won matches", Init.logLevel);
         }
         for (i = 0; i < Init.trainingAis.length; ++i)
         {

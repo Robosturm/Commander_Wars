@@ -25,11 +25,7 @@ var Constructor = function()
         animation.addBuildingSprite("factory", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     };
 
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_BUILD_UNITS";
-    };
+    this.actionList = ["ACTION_BUILD_UNITS"];
 
     this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
                              "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",

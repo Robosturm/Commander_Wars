@@ -22,9 +22,11 @@ public:
     {
         InfluenceInfo(GameMap* pMap);
         void reset();
-        void updateOwner();
+        void updateOwner(Player* pOwner);
         QVector<qint32> playerValues;
         qint32 highestInfluence{0};
+        qint32 ownInfluence{0};
+        qint32 highestEnemyInfluence{0};
         QVector<qint32> owners;
         QStringList frontMovetype;
         QVector<qint32> frontOwners;
@@ -35,7 +37,7 @@ public:
     void addBuildingInfluence();
     void addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints);
     void updateOwners();
-    void findFrontLines();
+    void calculateGlobalData();
     /**
      * @brief show for debugging purpose
      */
@@ -50,11 +52,25 @@ public:
     void hide();
 
     void reset();
-
+    /**
+     * @brief getInfluenceInfo
+     * @param x
+     * @param y
+     * @return
+     */
     const InfluenceInfo & getInfluenceInfo(qint32 x, qint32 y) const
     {
         return m_InfluenceMap[x][y];
     }
+    /**
+     * @brief getTotalHighestInfluence
+     * @return
+     */
+    qint32 getTotalHighestInfluence() const;
+
+    Player *getOwner() const;
+    void setOwner(Player *newPOwner);
+
 private:
     /**
      * @brief getIslandFromUnitId
@@ -82,6 +98,10 @@ private:
      * @param y
      */
     void searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline);
+    /**
+     * @brief updateHighestInfluence
+     */
+    void updateHighestInfluence();
 private:
 
     QVector<QVector<InfluenceInfo>> m_InfluenceMap;
@@ -89,7 +109,7 @@ private:
     QVector<QVector<QPoint>> m_frontLines;
     Player* m_pOwner;
     QVector<oxygine::spActor> m_info;
-
+    qint32 m_totalHighestInfluence{0};
 };
 
 #endif // INFLUENCEFRONTMAP_H

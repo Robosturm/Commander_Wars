@@ -31,11 +31,7 @@ var Constructor = function()
         return qsTr("Black Hole Factory");
     };
 
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_BLACKHOLEFACTORY_DOOR1,ACTION_BLACKHOLEFACTORY_DOOR2,ACTION_BLACKHOLEFACTORY_DOOR3";
-    };
+    this.actionList = ["ACTION_BLACKHOLEFACTORY_DOOR1", "ACTION_BLACKHOLEFACTORY_DOOR2", "ACTION_BLACKHOLEFACTORY_DOOR3"];
 
     this.getBuildingWidth = function()
     {

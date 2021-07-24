@@ -993,7 +993,7 @@ bool Terrain::getVisionHide(Player* pPlayer)
     args1 << obj1;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
     spGameMap pMap = GameMap::getInstance();
-    if (ret.isBool())
+    if (ret.isBool() && pMap.get() != nullptr)
     {
         bool value = ret.toBool();
         if (!value &&

@@ -23,11 +23,7 @@ var Constructor = function()
     {
         return GameEnums.BuildingTarget_Enemy;
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_DEATHRAY_FIRE";
-    };
+    this.actionList = ["ACTION_DEATHRAY_FIRE"];
     this.startOfTurn = function(building)
     {
         building.setFireCount(building.getFireCount() + 1);

@@ -1128,7 +1128,8 @@ void GameMenue::autoScroll(QPoint cursorPosition)
         Settings::getAutoScrolling())
     {
         spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr && pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        if (pMap.get() != nullptr && m_IngameInfoBar.get() != nullptr &&
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             qint32 moveX = 0;
             qint32 moveY = 0;

@@ -75,6 +75,10 @@ public slots:
     {
         delete this;
     }
+    void removeAt(qint32 i)
+    {
+        m_Vector.removeAt(i);
+    }
     void randomize();
     /**
      * @brief sortExpensive most expensive units are sorted in first
@@ -114,6 +118,10 @@ public slots:
     void remove()
     {
         delete this;
+    }
+    void removeAt(qint32 i)
+    {
+        m_Vector.removeAt(i);
     }
     void randomize();
 private:

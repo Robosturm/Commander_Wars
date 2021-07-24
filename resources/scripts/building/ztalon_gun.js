@@ -15,11 +15,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this building can perform
-        return "ACTION_TALON_GUN";
-    };
+    this.actionList = ["ACTION_TALON_GUN"];
     this.startOfTurn = function(building)
     {
         building.setFireCount(1);

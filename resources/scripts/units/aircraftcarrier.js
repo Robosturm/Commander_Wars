@@ -73,10 +73,7 @@ var Constructor = function()
     {
         return 2;
     };
-    this.getTransportUnits = function()
-    {
-        return ["T_HELI", "K_HELI", "BOMBER", "DUSTER", "FIGHTER", "WATERPLANE", "STEALTHBOMBER"];
-    };
+    this.transportList = ["T_HELI", "K_HELI", "BOMBER", "DUSTER", "FIGHTER", "WATERPLANE", "STEALTHBOMBER"];
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         return "base_air";
@@ -95,11 +92,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.getActions = function()
-    {
-        // returns a string id list of the actions this unit can perform
-        return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_BUILD_WATERPLANE,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
-    };
+    this.actionList = ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_BUILD_WATERPLANE", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
 
     this.getDescription = function()
     {

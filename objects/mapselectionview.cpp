@@ -142,7 +142,7 @@ MapSelectionView::MapSelectionView()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = oxygine::spBox9Sprite::create();
     m_pBuildingBackground->setResAnim(pAnim);
-    m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, 60);
+    m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);

@@ -119,12 +119,22 @@ InfluenceFrontMap::InfluenceInfo::InfluenceInfo(GameMap* pMap)
     }
 }
 
-void InfluenceFrontMap::InfluenceInfo::updateOwner()
+void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
 {
     owners.clear();
     qint32 highestValue = 0;
+    qint32 highestEnemy = 0;
+    qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
+        if (playerId != player &&
+            pOwner->isPlayerIdEnemy(player))
+        {
+            if (highestEnemy < playerValues[player])
+            {
+                highestEnemy = playerValues[player];
+            }
+        }
         if (playerValues[player] > highestValue)
         {
             highestValue = playerValues[player];
@@ -137,6 +147,7 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner()
             owners.append(player);
         }
     }
+    ownInfluence = playerValues[playerId];
     highestInfluence = highestValue;
 }
 
@@ -165,6 +176,7 @@ void InfluenceFrontMap::reset()
             m_InfluenceMap[x][y].reset();
         }
     }
+    m_totalHighestInfluence = 0;
 }
 
 void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints)
@@ -193,7 +205,7 @@ void InfluenceFrontMap::updateOwners()
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            m_InfluenceMap[x][y].updateOwner();
+            m_InfluenceMap[x][y].updateOwner(m_pOwner);
         }
     }
 }
@@ -236,7 +248,11 @@ void InfluenceFrontMap::showFrontlines()
         for (auto & field : frontline)
         {
             auto & info = m_InfluenceMap[field.x()][field.y()];
-            qint32 size = GameMap::getImageSize() / info.frontOwners.size();
+            qint32 size = GameMap::getImageSize();
+            if (info.frontOwners.size() > 0)
+            {
+                size /= info.frontOwners.size();
+            }
             for (qint32 i = 0; i < info.frontOwners.size(); ++i)
             {
                 qint32 owner = info.frontOwners[i];
@@ -270,11 +286,12 @@ void InfluenceFrontMap::hide()
     m_info.clear();
 }
 
-void InfluenceFrontMap::findFrontLines()
+void InfluenceFrontMap::calculateGlobalData()
 {
-    Console::print("InfluenceFrontMap::findFrontLines()", Console::eDEBUG);
+    Console::print("InfluenceFrontMap::calculateGlobalData()", Console::eDEBUG);
     findFrontLineTiles();
     createFrontLine();
+    updateHighestInfluence();
 }
 
 void InfluenceFrontMap::findFrontLineTiles()
@@ -394,4 +411,39 @@ void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInf
             }
         }
     }
+}
+
+void InfluenceFrontMap::updateHighestInfluence()
+{
+    Console::print("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
+    spQmlVectorPoint circle = GlobalUtils::getCircle(1, 1);
+    spGameMap pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    for (qint32 x = 0; x < width; ++x)
+    {
+        for (qint32 y = 0; y < heigth; ++y)
+        {
+            auto & info = m_InfluenceMap[x][y];
+            if (info.highestInfluence > m_totalHighestInfluence)
+            {
+                m_totalHighestInfluence = info.highestInfluence;
+            }
+        }
+    }
+}
+
+Player *InfluenceFrontMap::getOwner() const
+{
+    return m_pOwner;
+}
+
+void InfluenceFrontMap::setOwner(Player *newPOwner)
+{
+    m_pOwner = newPOwner;
+}
+
+qint32 InfluenceFrontMap::getTotalHighestInfluence() const
+{
+    return m_totalHighestInfluence;
 }
