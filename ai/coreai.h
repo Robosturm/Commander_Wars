@@ -483,6 +483,16 @@ protected:
      * @return
      */
     bool buildCOUnit(spQmlVectorUnit pUnits);
+    /**
+     * @brief canTransportToEnemy
+     * @param pUnit
+     * @param pLoadedUnit
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

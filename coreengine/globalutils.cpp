@@ -58,7 +58,7 @@ float GlobalUtils::randFloat(float low, float high)
     }
     if (m_useSeed)
     {
-        return m_randGenerator.bounded(high + 0.00001f) + low;
+        return m_randGenerator.bounded(high - low + 0.00001f) + low;
     }
     else
     {
@@ -74,7 +74,7 @@ double GlobalUtils::randDouble(double low, double high)
     }
     if (m_useSeed)
     {
-        return m_randGenerator.bounded(high + 0.00001) + low;
+        return m_randGenerator.bounded(high - low + 0.00001) + low;
     }
     else
     {
@@ -97,7 +97,7 @@ float GlobalUtils::randFloatBase(float low, float high)
     {
         return low;
     }
-    return QRandomGenerator::global()->bounded(high + 0.00001f) + low;
+    return QRandomGenerator::global()->bounded(high - low + 0.00001f) + low;
 }
 
 double GlobalUtils::randDoubleBase(double low, double high)
@@ -106,7 +106,7 @@ double GlobalUtils::randDoubleBase(double low, double high)
     {
         return low;
     }
-    return QRandomGenerator::global()->bounded(high + 0.00001) + low;
+    return QRandomGenerator::global()->bounded(high - low + 0.00001) + low;
 }
 
 qint32 GlobalUtils::roundUp(float value)

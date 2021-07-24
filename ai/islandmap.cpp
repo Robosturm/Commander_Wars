@@ -53,6 +53,22 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
     }
 }
 
+qint32 IslandMap::getIslandSize(qint32 island)
+{
+    qint32 count = 0;
+    for (const auto & data : qAsConst(m_Islands))
+    {
+        for (const auto & field : qAsConst(data))
+        {
+            if (field == island)
+            {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 QString IslandMap::getMovementType() const
 {
     return m_MovementType;

@@ -351,15 +351,6 @@ protected:
      */
     float calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit pUnits, QVector<float>& data);
     /**
-     * @brief canTransportToEnemy
-     * @param pUnit
-     * @param pLoadedUnit
-     * @param pEnemyUnits
-     * @param pEnemyBuildings
-     * @return
-     */
-    bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
-    /**
      * @brief NormalAi::calcExpectedFundsDamage
      * @param dummy
      * @param pEnemyUnits

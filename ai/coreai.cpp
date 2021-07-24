@@ -1997,6 +1997,68 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
     return false;
 }
 
+bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
+{
+    spQmlVectorPoint pUnloadArea = GlobalUtils::getCircle(1, 1);
+    // check for enemis
+    qint32 loadedUnitIslandIdx = getIslandIndex(pLoadedUnit);
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    QVector<qint32> checkedIslands;
+    QVector<QVector3D> targets;
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pEnemy = pEnemyUnits->at(i);
+        qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx]->getIsland(pEnemy->Unit::getX(), pEnemy->Unit::getY());
+        // check if we could reach the enemy if we would be on his island
+        // and we didn't checked this island yet -> improves the speed
+        if (targetIsland >= 0 )
+        {
+            // could we beat his ass? -> i mean can we attack him
+            // if so this is a great island
+            if (pLoadedUnit->isAttackable(pEnemy, true))
+            {
+                checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                                        loadedUnitIslandIdx, targetIsland, pUnloadArea.get(), targets);
+                if (targets.size() > 0)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    // check for capturable buildings
+    if (pLoadedUnit->getActionList().contains(ACTION_CAPTURE) && targets.size() == 0)
+    {
+        bool missileTarget = hasMissileTarget();
+        for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+        {
+            Building* pEnemyBuilding = pEnemyBuildings->at(i);
+
+            qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx]->getIsland(pEnemyBuilding->Building::getX(), pEnemyBuilding->Building::getY());
+            // check if we could reach the enemy if we would be on his island
+            // and we didn't checked this island yet -> improves the speed
+            if (targetIsland >= 0 )
+            {
+                if (pEnemyBuilding->isCaptureOrMissileBuilding(missileTarget))
+                {
+                    checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                                            loadedUnitIslandIdx, targetIsland, pUnloadArea.get(), targets);
+                    if (targets.size() > 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (targets.size() > 0)
+    {
+        return true;
+    }
+    return false;
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
     Console::print("storing core ai", Console::eDEBUG);

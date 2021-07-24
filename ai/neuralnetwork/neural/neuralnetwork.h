@@ -21,7 +21,7 @@ class NeuralNetwork : public QObject, public FileSerializable, public oxygine::r
     Q_OBJECT
 public:
 
-    NeuralNetwork(double maxWeight = 5);
+    NeuralNetwork(double maxWeight = 4);
     virtual ~NeuralNetwork()= default;
     /**
      * @brief serialize stores the object

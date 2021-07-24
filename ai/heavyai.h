@@ -37,6 +37,7 @@ class HeavyAi : public CoreAI
         CaptureUnit             ,
         CoUnitValue             ,
         Movementpoints          ,
+        MapMovementpoints,
         FondsUsage              ,
         FireRange               ,
         Flying                  ,
@@ -49,10 +50,17 @@ class HeavyAi : public CoreAI
         ReceivingHpDamage       ,
         CapturePotential        ,
         CanAttackImmuneUnitRatio,
-        // not implemented yet
         UnitsToTransportRatio,
-
+        RequiredUnitsToTransportRatio,
+        MovementPotential,
         MaxSize,
+    };
+
+    enum BasicFieldInfo
+    {
+        OwnInfluenceValue,
+        EnemyInfluenceValue,
+
     };
 
     enum NeuralNetworks
@@ -292,7 +300,7 @@ private:
      * @param pBuilding
      * @param pUnit
      */
-    void getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits);
+    void getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits, qint32 movementPoints);
     /**
      * @brief buildUnits
      * @return
@@ -317,12 +325,14 @@ private:
      * @return
      */
     QVector<double> getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
-                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+                                       QVector<std::tuple<Unit*, Unit*>> & transportTargets);
     /**
      * @brief createUnitBuildData
      * @param building
      */
-    void createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const QVector<Unit*> & immuneUnits);
+    void createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds, const QVector<Unit*> & immuneUnits,
+                             const QVector<std::tuple<Unit*, Unit*>> & transportTargets, const spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief UpdateUnitBuildData
      * @param unitData
@@ -336,7 +346,7 @@ private:
      * @param data
      * @param funds
      */
-    void updateUnitBuildData(UnitBuildData & unitData, QVector<double> & data, qint32 funds);
+    void updateUnitBuildData(UnitBuildData &unitData, QVector<double> &data, qint32 funds);
     /**
      * @brief calculateUnitProductionDamage
      * @param pBuilding
@@ -351,12 +361,30 @@ private:
      */
     float getBaseDamage(Unit* pAttacker, Unit* pDefender);
     /**
+     * @brief getProductionScoreMultiplier
+     * @param position
+     * @param target
+     * @param movementPoints
+     * @return
+     */
+    float getProductionScoreMultiplier(QPoint position, QPoint target, qint32 movementPoints);
+    /**
      * @brief getImmuneUnits
      * @param pUnits
      * @param pEnemyUnits
      * @param immuneUnits
      */
     void getImmuneUnits(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<Unit*> & immuneUnits);
+    /**
+     * @brief getTransportInputVector
+     * @param building
+     * @param transportTargets
+     * @param unitData
+     * @param pEnemyBuildings
+     * @param data
+     */
+    void getTransportInputVector(Building* pBuilding, Unit* pUnit, const QVector<std::tuple<Unit*, Unit*>> transportTargets,
+                                 const spQmlVectorBuilding & pEnemyBuildings, qint32 movementPoints, UnitBuildData & data);
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action, UnitData & unitData)>;
@@ -379,7 +407,7 @@ private:
     bool m_pause{false};
 
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
-    float m_minActionScore{0.1f};
+    float m_minActionScore{0.2f};
     float m_actionScoreVariant{0.05f};
     float m_stealthDistanceMultiplier{2.0f};
     float m_alliedDistanceModifier{5.0f};

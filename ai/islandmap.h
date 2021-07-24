@@ -46,6 +46,12 @@ public slots:
     {
         return m_Islands[x][y];
     }
+    /**
+     * @brief getIslandSize
+     * @param island
+     * @return
+     */
+    qint32 getIslandSize(qint32 island);
     QString getMovementType() const;
 private:
     QVector<QVector<qint32>> m_Islands;

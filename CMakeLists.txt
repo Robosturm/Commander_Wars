@@ -412,6 +412,7 @@ set(${PROJECT_NAME}_SRCS
     ai/proxyai.cpp
     ai/normalai.cpp
     ai/heavyai.cpp
+    ai/heavyai/heavyaiproduction.cpp
     ai/influencefrontmap.cpp
 
     ai/neuralnetwork/neural/edge.cpp
