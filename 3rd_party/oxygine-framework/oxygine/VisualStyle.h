@@ -42,19 +42,22 @@ namespace oxygine
 
         typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
         typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
-
-        void                    setMaterial(spSTDMaterial mat);
-        void                    resetMaterial();
-        spSTDMaterial m_mat;
-
         QColor getDisableColor() const;
         void setDisableColor(const QColor &value);
 
+        inline spSTDMaterial & getMaterial()
+        {
+            return m_mat;
+        }
     protected:
         virtual void matChanged() {}
+        void setMaterial(spSTDMaterial mat);
+    private:
+        void changeAddColor(const QColor& color);
     protected:
         VisualStyle m_vstyle;
         QColor m_disableColor{75, 75, 75, 0};
+        spSTDMaterial m_mat;
 
     };
 

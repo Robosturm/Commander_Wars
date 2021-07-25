@@ -1072,7 +1072,6 @@ namespace oxygine
 
     spTween Actor::__addTween(spTween tween, bool)
     {
-        QMutexLocker lock(&m_Locked);
         if (!tween)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
@@ -1083,8 +1082,11 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween trying to add tween during actor construction isn't allowed.");
             return nullptr;
         }
+        {
+            QMutexLocker lock(&m_Locked);
+            m_tweens.append(tween);
+        }
         tween->start(*this);
-        m_tweens.append(tween);
         return tween;
     }
 

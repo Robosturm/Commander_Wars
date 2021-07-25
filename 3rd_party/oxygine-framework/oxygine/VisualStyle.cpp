@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {
@@ -57,7 +58,19 @@ namespace oxygine
         {
             return;
         }
+        if (GameWindow::getWindow()->isWorker())
+        {
+            QMutexLocker lock(&m_Locked);
+            changeAddColor(color);
+        }
+        else
+        {
+            changeAddColor(color);
+        }
+    }
 
+    void VStyleActor::changeAddColor(const QColor& color)
+    {
         m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
         m_mat->m_addColor = color;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
@@ -75,8 +88,8 @@ namespace oxygine
         {
             return;
         }
+        QMutexLocker lock(&m_Locked);
         m_vstyle.setBlendMode(mode);
-
         m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
         m_mat->m_blend = mode;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
@@ -87,11 +100,6 @@ namespace oxygine
     {
         m_mat = mat;
         matChanged();
-    }
-
-    void VStyleActor::resetMaterial()
-    {
-        setMaterial(m_mat->cloneDefaultShader());
     }
 
     QColor VStyleActor::getDisableColor() const

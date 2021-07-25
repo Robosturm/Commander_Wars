@@ -189,8 +189,8 @@ namespace oxygine
 
         QColor color = rs.getFinalColor(sprite->getColor());
 
-        sprite->m_mat->apply();
-        sprite->m_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->getMaterial()->apply();
+        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDRenderDelegate::doRender(TextField* tf, const RenderState& rs)
@@ -210,9 +210,9 @@ namespace oxygine
 
     void STDRenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
-        sprite->m_mat->apply();
+        sprite->getMaterial()->apply();
         QColor color = rs.getFinalColor(sprite->getColor());
-        sprite->m_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDRenderDelegate::doRender(ProgressBar*, const RenderState&)

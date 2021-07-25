@@ -80,8 +80,8 @@ namespace oxygine
         text::Node* getRootNode();
 
     protected:
-        void sizeChanged(const Vector2& size) override;
-        void matChanged() override;
+        virtual void sizeChanged(const Vector2& size) override;
+        virtual void matChanged() override;
         void rebuildText();
 
     protected:

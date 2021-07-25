@@ -5,6 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 namespace oxygine
@@ -204,6 +205,7 @@ namespace oxygine
 
     void Sprite::setColorTable(const oxygine::spResAnim pAnim)
     {
+        QMutexLocker lock(&m_Locked);
         m_colorTable = pAnim;
         if (pAnim.get() != nullptr)
         {
@@ -278,12 +280,20 @@ namespace oxygine
         if (df.base  != m_mat->m_base ||
             df.alpha != m_mat->m_alpha)
         {
-            spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
 
+            spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
             mat->m_base  = df.base;
             mat->m_alpha = df.alpha;
             mat->m_flags = df.flags;
-            m_mat = MaterialCache::mc().cache(*mat.get());
+            if (GameWindow::getWindow()->isWorker())
+            {
+                QMutexLocker lock(&m_Locked);
+                setMaterial(MaterialCache::mc().cache(*mat.get()));
+            }
+            else
+            {
+                setMaterial(MaterialCache::mc().cache(*mat.get()));
+            }
         }
         animFrameChanged(m_frame);
     }

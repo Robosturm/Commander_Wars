@@ -136,7 +136,7 @@ var Constructor = function()
         return baseCost * CO_KANBEI.costIncrease / 100;
     };
     this.coZoneBonus = 50;
-    this.globalBonus = 20;
+    this.globalBonus = 15;
     this.costIncrease = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
