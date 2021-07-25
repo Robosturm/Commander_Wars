@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QTimer>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
@@ -30,6 +31,7 @@ signals:
     void sigImport();
     void sigOnEnter();
     void sigEnterShopMenu();
+    void sigVersionClicked();
 public slots:
     void enterSingleplayer();
     void enterEditor();
@@ -53,9 +55,14 @@ public slots:
     void import();
     void importFromDirectory(QString file);
     void onEnter();
-
+    void versionClicked();
+protected slots:
+    void cheatTimeout();
+    void unlockAllShopItems();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
-
+protected:
     oxygine::spResAnim test;
+    QTimer m_cheatTimeout;
+    qint32 m_cheatCounter{0};
 };

@@ -31,11 +31,13 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/folderdialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 #include "objects/loadingscreen.h"
 
 #include "ui_reader/uifactory.h"
 
 Mainwindow::Mainwindow()
+    : m_cheatTimeout(this)
 {
     setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
@@ -229,10 +231,15 @@ Mainwindow::Mainwindow()
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pTextfield = oxygine::spTextField::create();
+    spLabel pTextfield = spLabel::create(250);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
+    pTextfield->addClickListener([=](oxygine::Event*)
+    {
+        emit sigVersionClicked();
+    });
+    connect(this, &Mainwindow::sigVersionClicked, this, &Mainwindow::versionClicked, Qt::QueuedConnection);
     addChild(pTextfield);
 
     if (!Settings::getSmallScreenDevice())
@@ -253,6 +260,10 @@ Mainwindow::Mainwindow()
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+
+    m_cheatTimeout.setSingleShot(true);
+    connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
+
     emit sigOnEnter();
     pApp->continueRendering();
 }
@@ -525,4 +536,32 @@ void Mainwindow::onEnter()
         args << value;
         pInterpreter->doFunction(object, func, args);
     }
+}
+
+void Mainwindow::cheatTimeout()
+{
+    m_cheatCounter = 0;
+}
+
+void Mainwindow::versionClicked()
+{
+    Console::print("Mainwindow::versionClicked", Console::eDEBUG);
+    ++m_cheatCounter;
+    m_cheatTimeout.stop();
+    if (m_cheatCounter >= 10)
+    {
+        m_cheatCounter = 0;
+        spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(tr("Do you want to enable all current items in the shop?"), true);
+        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Mainwindow::unlockAllShopItems, Qt::QueuedConnection);
+        addChild(pDialogMessageBox);
+    }
+    else
+    {
+        m_cheatTimeout.start(400);
+    }
+}
+
+void Mainwindow::unlockAllShopItems()
+{
+    Userdata::getInstance()->unlockAllShopItems(true);
 }

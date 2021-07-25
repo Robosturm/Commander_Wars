@@ -2839,88 +2839,93 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="66"/>
+        <location filename="../menue/mainwindow.cpp" line="68"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="78"/>
+        <location filename="../menue/mainwindow.cpp" line="80"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="89"/>
+        <location filename="../menue/mainwindow.cpp" line="91"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="100"/>
+        <location filename="../menue/mainwindow.cpp" line="102"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="111"/>
+        <location filename="../menue/mainwindow.cpp" line="113"/>
         <source>Load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="122"/>
+        <location filename="../menue/mainwindow.cpp" line="124"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="133"/>
+        <location filename="../menue/mainwindow.cpp" line="135"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="144"/>
+        <location filename="../menue/mainwindow.cpp" line="146"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="155"/>
+        <location filename="../menue/mainwindow.cpp" line="157"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="166"/>
+        <location filename="../menue/mainwindow.cpp" line="168"/>
         <source>Shop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="177"/>
+        <location filename="../menue/mainwindow.cpp" line="179"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="188"/>
+        <location filename="../menue/mainwindow.cpp" line="190"/>
         <source>Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="199"/>
+        <location filename="../menue/mainwindow.cpp" line="201"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="210"/>
+        <location filename="../menue/mainwindow.cpp" line="212"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="222"/>
+        <location filename="../menue/mainwindow.cpp" line="224"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="241"/>
+        <location filename="../menue/mainwindow.cpp" line="248"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="241"/>
+        <location filename="../menue/mainwindow.cpp" line="248"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="554"/>
+        <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
