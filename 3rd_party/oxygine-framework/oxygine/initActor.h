@@ -97,25 +97,6 @@ namespace oxygine
                 _frame = frame;
                 return *this;
             }
-
-            // void apply(Sprite* s) const
-            // {
-            //     if (_managed)
-            //     {
-            //         s->setManageResAnim(_managed);
-            //     }
-            //     if (_useResAnim)
-            //     {
-            //         return s->setAnimFrame(_resAnim, _col, _row);
-            //     }
-            //     return s->setAnimFrame(_frame);
-            // }
-            //
-            // void apply(Button* b) const
-            // {
-            //     Q_ASSERT(_useResAnim);
-            //     b->setResAnim(_resAnim);
-            // }
         };
     }
 

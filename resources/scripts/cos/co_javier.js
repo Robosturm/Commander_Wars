@@ -18,18 +18,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/javier.mp3", 22016, 74716);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/javier.mp3", 22016, 74716);
+            break;
         }
     };
 
@@ -130,56 +130,57 @@ var Constructor = function()
         return "GE";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action)
     {
         var towers = co.getOwner().getBuildingCount("TOWER");
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return towers * 25 + 10;
-            case GameEnums.PowerMode_Power:
-                return towers * 15 + 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return towers * 5 + 10;
-                }
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return towers * 25 + 10;
+        case GameEnums.PowerMode_Power:
+            return towers * 15 + 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return towers * 5 + 10;
+            }
         }
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action)
     {
         var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
         var towers = co.getOwner().getBuildingCount("TOWER");
         var ret = 0;
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (rangedAttacked)
+            {
+                ret += 60;
+            }
+            ret += towers * 5  + 10;
+            break;
+        case GameEnums.PowerMode_Power:
+            if (rangedAttacked)
+            {
+                ret += 40;
+            }
+            ret += towers * 5  + 10;
+            break;
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                ret += towers * 5 + 10;
                 if (rangedAttacked)
                 {
-                    ret += 60;
+                    ret += 20;
                 }
-                ret += towers * 5  + 10;
-                break;
-            case GameEnums.PowerMode_Power:
-                if (rangedAttacked)
-                {
-                    ret += 40;
-                }
-                ret += towers * 5  + 10;
-                break;
-            default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                {
-                    ret += towers * 5 + 10;
-                    if (rangedAttacked)
-                    {
-                        ret += 20;
-                    }
-                }
-                break;
+            }
+            break;
         }
         return ret;
     };
@@ -192,8 +193,8 @@ var Constructor = function()
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ")
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
         {
             return ["ZCOUNIT_CHAPERON"];
         }
@@ -220,8 +221,8 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nChaperon\n") +
-               qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased defense against indirect units. Units gain additional firepower and defense per Comtower.");
+                qsTr("\nGlobal Effect: \nNo Effects.") +
+                qsTr("\n\nCO Zone Effect: \nUnits have increased defense against indirect units. Units gain additional firepower and defense per Comtower.");
     };
     this.getPowerDescription = function(co)
     {

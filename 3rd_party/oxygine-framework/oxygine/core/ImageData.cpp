@@ -42,10 +42,13 @@ namespace oxygine
 
     ImageData ImageData::getRect(const Rect& r) const
     {
-        Q_ASSERT(r.getX() >= 0 && r.getX() <= m_w);
-        Q_ASSERT(r.getY() >= 0 && r.getY() <= m_h);
-        Q_ASSERT(r.getX() + r.getWidth() <= m_w);
-        Q_ASSERT(r.getY() + r.getHeight() <= m_h);
+        if (r.getX() < 0 && r.getX() > m_w ||
+            r.getY() < 0 && r.getY() > m_h ||
+            r.getX() + r.getWidth() > m_w ||
+            r.getY() + r.getHeight() > m_h)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "ImageData::getRect invalid rect access");
+        }
 
         unsigned char* ptr = m_data + r.getX() * m_bytespp + r.getY() * m_pitch;
         ImageData buffer(r.getWidth(), r.getHeight(), m_pitch, m_format, ptr);

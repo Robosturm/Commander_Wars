@@ -43,7 +43,7 @@ class HeavyAi : public CoreAI
         Flying                  ,
         LoadingPotential        ,
         OwnInfluence,
-        HighestEnemyInfluence,
+        HighestEnemyInfluence, // 17
         DealingFundsDamage      ,
         DealingHpDamage         ,
         ReceivingFundsDamge     ,
@@ -53,20 +53,47 @@ class HeavyAi : public CoreAI
         UnitsToTransportRatio,
         RequiredUnitsToTransportRatio,
         MovementPotential,
-        MaxSize,
+        VisionPotential,
+        MaxUnitValue,
+        BuildingEntryMaxSize,
     };
 
     enum BasicFieldInfo
     {
         OwnInfluenceValue,
         EnemyInfluenceValue,
+        // the higher the more units haven't moved yet
+        MoveTurnProgress,
+        // amount of adjustant tiles blocked by an allied unit
+        WallCount,
+        // if the unit is potentially stealthed at this tile
+        VisionHide,
+        // how much movement points getting here will be consumed
+        UsedMovement,
+        EnemyThread,
+        OwnProtection,
+        UnitHealth,
+        VisionRange,
+        BasicFieldInfoMaxSize,
+    };
 
+    enum AttackInfo
+    {
+        AttackInfoStart = BasicFieldInfoMaxSize,
+        AttackDealingHpDamage = BasicFieldInfoMaxSize,
+        AttackReceavingHpDamage,
+        AttackDealingAbsolutDamage,
+        AttackReceicingAbsolutDamage,
+        AttackDealingFundsDamage,
+        AttackReceicingFundsDamage,
+        AttackInfoMaxSize,
     };
 
     enum NeuralNetworks
     {
         Production,
-        Max,
+        ActionFire,
+        NeuralNetworksMax,
     };
 public:
     ENUM_CLASS ThreadLevel
@@ -97,7 +124,7 @@ public:
         bool enabled{true};
         QString unitId;
         qint32 cost{0};
-        QVector<double> unitBuildingDataInput = QVector<double>(static_cast<qsizetype>(BuildingEntry::MaxSize));
+        QVector<double> unitBuildingDataInput = QVector<double>(static_cast<qsizetype>(BuildingEntryMaxSize));
     };
 
     struct BuildingData
@@ -134,7 +161,7 @@ public slots:
      */
     qint32 getMaxNeuralNetworks()
     {
-        return static_cast<qint32>(NeuralNetworks::Max);
+        return static_cast<qint32>(NeuralNetworksMax);
     }
     /**
      * @brief saveNeuralNetwork saves the network under the given name
@@ -209,6 +236,7 @@ private:
     void endTurn();
     void createIslandMaps();
     void initUnits(spQmlVectorUnit pUnits, QVector<UnitData> & units, bool enemyUnits);
+    void addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool enemyUnits);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
     void findHqThreads(const spQmlVectorBuilding & buildings);
@@ -217,7 +245,7 @@ private:
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, QVector<float> & bestScores,
                                QVector<spGameAction> & bestActions);
-    bool mutateAction(spGameAction pAction, UnitData & unitData, FunctionType type, qint32 functionIndex,
+    bool mutateAction(spGameAction pAction, UnitData & unitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex,
                       qint32 & step, QVector<qint32> & stepPosition, float & score);
     /**
      * @brief performAction
@@ -228,13 +256,13 @@ private:
      * @param action
      * @return
      */
-    float scoreCapture(spGameAction action, UnitData & unitData);
+    float scoreCapture(spGameAction action, UnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreFire
      * @param action
      * @return
      */
-    float scoreFire(spGameAction action, UnitData & unitData);
+    float scoreFire(spGameAction action, UnitData & unitData, QVector<double> baseData);
     /**
      * @brief scoreWait
      * @param unit
@@ -251,7 +279,7 @@ private:
      * @param action
      * @return
      */
-    float scoreWait(spGameAction action, UnitData & unitData);
+    float scoreWait(spGameAction action, UnitData & unitData, QVector<double> baseData);
     /**
      * @brief addCaptureTargets
      * @param pUnit
@@ -385,9 +413,27 @@ private:
      */
     void getTransportInputVector(Building* pBuilding, Unit* pUnit, const QVector<std::tuple<Unit*, Unit*>> transportTargets,
                                  const spQmlVectorBuilding & pEnemyBuildings, qint32 movementPoints, UnitBuildData & data);
+    /**
+     * @brief isPrimaryEnemy
+     * @param pPlayer
+     * @return
+     */
+    bool isPrimaryEnemy(Player* pPlayer) const;
+    /**
+     * @brief isPrimaryEnemy
+     * @param pUnit
+     * @return
+     */
+    bool isPrimaryEnemy(Unit* pUnit) const;
+    /**
+     * @brief isPrimaryEnemy
+     * @param pBuilding
+     * @return
+     */
+    bool isPrimaryEnemy(Building* pBuilding) const;
 private:
     // function for scoring a function
-    using scoreFunction = std::function<float (spGameAction action, UnitData & unitData)>;
+    using scoreFunction = std::function<float (spGameAction action, UnitData & unitData, QVector<double> baseData)>;
     struct ScoreInfo
     {
         QString m_actionId;
@@ -399,9 +445,9 @@ private:
     QVector<QPoint> m_updatePoints;
     QVector<BuildingData> m_BuildingData;
     InfluenceFrontMap m_InfluenceFrontMap;
-
     spQmlVectorUnit m_pUnits = nullptr;
     spQmlVectorUnit m_pEnemyUnits = nullptr;
+    Player* m_pPrimaryEnemy{nullptr};
 
     QTimer m_timer;
     bool m_pause{false};
@@ -414,13 +460,17 @@ private:
     float m_maxMovementpoints{15.0f};
     float m_maxFirerange{10};
     float m_maxProductionTurnRange{4};
+    float m_maxVision{10};
     float m_primaryEnemyMultiplier{1.2f};
     float m_maxLoadingPlace{4};
     float m_notAttackableDamage{30.0f};
+    float m_ownUnitProtection{5};
+    float m_enemyUnitThread{5};
+    float m_maxUnitValue{40000.0f};
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};
-    QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworks::Max)};
+    QList<spNeuralNetwork> m_neuralNetworks{static_cast<qsizetype>(NeuralNetworksMax)};
 
     // static constants
     static const qint32 minSiloDamage;

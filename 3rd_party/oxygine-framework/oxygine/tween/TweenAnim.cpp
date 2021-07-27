@@ -80,7 +80,11 @@ namespace oxygine
 
     void TweenAnim::update(Sprite& actor, float p, const UpdateState&)
     {
-        Q_ASSERT(m_resAnim);
+        if (m_resAnim == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenAnim::update no resAnim specified");
+            return;
+        }
         qint32 frame;
 
         p += m_initFrame;

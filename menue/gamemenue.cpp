@@ -604,7 +604,8 @@ void GameMenue::performAction(spGameAction pGameAction)
     m_saveAllowed = false;
     if (pGameAction.get() != nullptr)
     {
-        Console::print("GameMenue::performAction " + pGameAction->getActionID(), Console::eDEBUG);
+        Console::print("GameMenue::performAction " + pGameAction->getActionID() + " at X: " + QString::number(pGameAction->getTarget().x())
+                       + " at Y: " + QString::number(pGameAction->getTarget().y()), Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&

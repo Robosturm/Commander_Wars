@@ -1,4 +1,4 @@
-#include "rotatingsprite.h"
+#include "objects/rotatingsprite.h"
 
 #include "coreengine/mainapp.h"
 

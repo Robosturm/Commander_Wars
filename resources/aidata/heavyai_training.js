@@ -4,7 +4,7 @@ var Init =
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Dragons in the Dark.map",    // map that will be used for training
     mutationRate    = 0.05,                         // chance for a weight to mutate at random
-    fogOfWar        = GameEnums.Fog_Off,            // fog of war rule for training
+    fogOfWar        = GameEnums.Fog_OfWar,          // fog of war rule for training
     maxRuns         = 100,                          // maximum amount of iterations
     turnLimit       = 30,
     // ai's and names that will be used for training
@@ -28,8 +28,15 @@ var Init =
     matchData   = [],
     runCount    = 0,
     logLevel    = 1,
+    cos = ["CO_ANDY", "CO_JESS"],
+    start = false,
     main = function(menu)
     {
+        if (Init.start === false)
+        {
+            Init.selectCos();
+            Init.start = true;
+        }
         if (Init.runCount < Init.maxRuns)
         {
             menu.enterSingleplayer();
@@ -56,7 +63,7 @@ var Init =
                 Init.matchData.push(0);
             }
         }
-        gameRules.setFogMode(Init.setFogMode);
+        gameRules.setFogMode(Init.fogOfWar);
         gameRules.setRandomWeather(false);
         for (var i = 0; i < playerCount; ++i)
         {
@@ -74,8 +81,9 @@ var Init =
             selection.selectPlayerAi(playerIdx, Init.trainingAis[aiIdx][1]);
             GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
             Init.currentMatch.push(aiIdx);
+            selection.playerCO1Changed(Init.cos[0], i);
+            selection.playerCO2Changed(Init.cos[1], i);
         }
-        // todo add co mirror matches
         menu.startGame();
     },
 
@@ -202,5 +210,19 @@ var Init =
         Init.rotationCount = 0;
         Init.currentMatch = [];
         Init.matchData = [];
+        Init.selectCos();
     },
+
+    selectCos = function()
+    {
+        var cos = coSpriteManager.getCoIds();
+        var index = globals.randInt(0, cos.length - 1);
+        Init.cos[0] = cos[index];
+        var index2 = globals.randInt(0, cos.length - 1);
+        while (index === index2)
+        {
+            index2 = globals.randInt(0, cos.length - 1);
+        }
+        Init.cos[1] = cos[index2];
+    }
 }

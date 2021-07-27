@@ -6,17 +6,26 @@ namespace oxygine
     {
         bool check(const ImageData& src, const ImageData& dest)
         {
-            Q_ASSERT(dest.m_w == src.m_w);
-            Q_ASSERT(dest.m_h == src.m_h);
+            if (dest.m_w != src.m_w  ||
+                dest.m_h != src.m_h)
+            {
+                oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "ImageDataOperations::check size missmatch");
+            }
             if (src.m_w)
             {
-                Q_ASSERT(src.m_data);
-                Q_ASSERT(dest.m_data);
-                Q_ASSERT(src.m_pitch);
-                Q_ASSERT(dest.m_pitch);
+                if (src.m_data == 0 ||
+                    dest.m_data == 0 ||
+                    src.m_pitch == 0 ||
+                    dest.m_pitch == 0)
+                {
+                    oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "ImageDataOperations::check unset image data");
+                }
             }
-            Q_ASSERT(src.m_bytespp);
-            Q_ASSERT(dest.m_bytespp);
+            if (src.m_bytespp == 0 ||
+                dest.m_bytespp == 0)
+            {
+                oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "ImageDataOperations::check bytespp unset");
+            }
             if (dest.m_w != src.m_w ||
                     dest.m_h != src.m_h ||
                     !src.m_data ||
@@ -37,7 +46,10 @@ namespace oxygine
             {
                 return;
             }
-            Q_ASSERT(src.m_format == dest.m_format);
+            if (src.m_format != dest.m_format)
+            {
+                oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "ImageDataOperations::copy format error");
+            }
 
             qint32 bppPitch = src.m_w * src.m_bytespp;
 

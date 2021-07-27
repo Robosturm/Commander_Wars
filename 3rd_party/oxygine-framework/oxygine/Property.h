@@ -1,4 +1,7 @@
 #pragma once
+
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+
 namespace oxygine
 {
     template<typename Value, typename getValueRef, typename setValueRef, typename C, getValueRef(C::*GetF)() const, void (C::*SetF)(setValueRef)>
@@ -49,7 +52,11 @@ namespace oxygine
 
         void update(type& t, float p, const oxygine::UpdateState& us)
         {
-            Q_ASSERT(_initialized);
+            if (!_initialized)
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "Property0::update not initialized");
+                return;
+            }
             value v = lerp(_src, _dest, p);
             set(t, v);
         }

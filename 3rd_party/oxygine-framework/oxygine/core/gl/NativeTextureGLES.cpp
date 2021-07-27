@@ -204,9 +204,11 @@ namespace oxygine
 
     ImageData NativeTextureGLES::lock(lock_flags flags, const Rect* src)
     {
-        Q_ASSERT(m_lockFlags == 0);
-
-
+        if (m_lockFlags != 0)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "NativeTextureGLES::lock already locked");
+            return ImageData();
+        }
         m_lockFlags = flags;
         Rect r(0, 0, m_width, m_height);
 
@@ -214,12 +216,19 @@ namespace oxygine
         {
             r = *src;
         }
-        Q_ASSERT(r.getX() + r.getWidth() <= m_width);
-        Q_ASSERT(r.getY() + r.getHeight() <= m_height);
+        if (r.getX() + r.getWidth() > m_width ||
+            r.getY() + r.getHeight() > m_height)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "NativeTextureGLES::lock invalid copy rect");
+            return ImageData();
+        }
 
         m_lockRect = r;
-
-        Q_ASSERT(m_lockFlags != 0);
+        if (m_lockFlags == 0)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "NativeTextureGLES::lock called with invalid lock flags");
+            return ImageData();
+        }
 
         if (m_lockRect.isEmpty())
         {
