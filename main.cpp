@@ -59,7 +59,6 @@
 #include "network/mainserver.h"
 
 #include "ai/heavyai.h"
-#include "ai/neuralnetwork/neural/neuralnetwork.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -171,6 +170,22 @@ int main(qint32 argc, char* argv[])
     app.setApplicationVersion(Mainapp::getGameVersion());
 
     Settings::loadSettings();
+
+    NeuralNetwork network;
+    QMap<QString, double> parameters;
+    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
+    parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::Step));
+    parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(10));
+    network.addLayer(parameters);
+    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
+    for (qint32 i = 0; i < 4; ++i)
+    {
+        network.addLayer(parameters);
+    }
+    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT));
+    parameters[Layer::LAYER_PARAMETER_SIZE] = 1;
+    network.addLayer(parameters);
+    network.autogenerate();
 
     Mainapp window;
     window.setTitle("Commander Wars");

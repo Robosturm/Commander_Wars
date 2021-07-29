@@ -99,23 +99,11 @@ public slots:
      */
     static double sigmoid(double x);
     /**
-     * @brief sigmoid_derivative
-     * @param x
-     * @return
-     */
-    static double sigmoid_derivative(double x);
-    /**
      * @brief relu
      * @param x
      * @return
      */
     static double relu(double x);
-    /**
-     * @brief relu_derivative
-     * @param x
-     * @return
-     */
-    static double relu_derivative(double x);
     /**
      * @brief distanceVector
      * @param v1

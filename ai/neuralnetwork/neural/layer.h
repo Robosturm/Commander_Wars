@@ -42,26 +42,12 @@ public:
 
     QVector<double> output();
 
-    QVector<spNeuron> neurons() const;
-
-    void alterWeights(const QVector<QVector<double> >& weights);
-
-    void shiftBackWeights(const QVector<QVector<double> >& weights);
-
-    QVector<QVector<double>> getWeights();
-
-    QVector<QVector<spEdge>> getEdges();
-
     void randomizeAllWeights(double abs_value);
     void mutateAllWeights(double mutationChance, double maxWeight);
-
+    void setAccumulated(qint32 neuron, double value);
     QString toString();
 
-    void shiftWeights(float range);
-
     const QMap<QString, double>& getParameters() const;
-
-    QVector<QVector<double>> getBackpropagationShifts(const QVector<double>& target);
 
     LayerType getType() const;
 

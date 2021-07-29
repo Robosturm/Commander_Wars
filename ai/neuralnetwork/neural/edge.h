@@ -37,34 +37,15 @@ public:
     {
         return 1;
     }
-
     Neuron* nextNeuron() const;
-
     Neuron* previousNeuron() const;
-
     double weight();
-
     void propagate(double neuron_output);
-
     void alterWeight(double w);
-
-    void shiftWeight(double dw);
-
-    double getLastShift() const;
-
-    void resetLastShift();
-
-    double backpropagationMemory() const;
-
-    void setBackpropagationMemory(double v);
-
 private:
     Neuron* m_nextNeuron = nullptr;
     Neuron* m_previousNeuron = nullptr;
     double m_weight = 0.0;
-    double m_last_shift = 0;
-    double m_backpropagation_memory{0};
-
 };
 
 #endif // EDGE_H

@@ -25,7 +25,6 @@ set(CMAKE_AUTORCC ON)
 # Find external libs
 ###################################################################################
 find_package(Qt6 COMPONENTS Core REQUIRED)
-# Qt6LinguistTools
 find_package(Qt6 COMPONENTS Qml REQUIRED)
 find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
@@ -419,8 +418,6 @@ set(${PROJECT_NAME}_SRCS
     ai/neuralnetwork/neural/layer.cpp
     ai/neuralnetwork/neural/neuralnetwork.cpp
     ai/neuralnetwork/neural/neuron.cpp
-    ai/neuralnetwork/dataset/dataset.cpp
-    ai/neuralnetwork/optimizer/optimizer.cpp
 
     # multiplayer
     multiplayer/lobbymenu.cpp

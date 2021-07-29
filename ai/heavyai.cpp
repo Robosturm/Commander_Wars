@@ -45,8 +45,8 @@ HeavyAi::HeavyAi(QString type)
 
 void HeavyAi::loadNeuralNetworks()
 {
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), 15);
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), 10);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 2);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 2);
 }
 
 void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
@@ -80,8 +80,8 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
     {
         QMap<QString, double> parameters;
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
-        parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID));
-        parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize));
+        parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::Step));
+        parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize) * 3);
         network->addLayer(parameters);
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
         for (qint32 i = 0; i < netDepth; ++i)

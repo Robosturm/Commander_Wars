@@ -11,7 +11,8 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
+            else if (attacker.getBaseMaxRange() === 1 &&
+                     attacker.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 return -20;
             }
@@ -21,7 +22,8 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
+            else if (attacker.getBaseMaxRange() === 1 &&
+                     attacker.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 return -20;
             }

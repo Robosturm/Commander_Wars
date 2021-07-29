@@ -316,21 +316,7 @@ double GlobalUtils::sigmoid(double x)
     return 1.0 / (1.0 + qExp(-x));
 }
 
-double GlobalUtils::sigmoid_derivative(double x)
-{
-    return GlobalUtils::sigmoid(x) * (1 - GlobalUtils::sigmoid(x));
-}
-
 double GlobalUtils::relu(double x)
-{
-    if (x > 0)
-    {
-        return x;
-    }
-    return 0;
-}
-
-double GlobalUtils::relu_derivative(double x)
 {
     if (x > 0)
     {

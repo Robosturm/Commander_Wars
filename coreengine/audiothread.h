@@ -11,8 +11,6 @@
 #include <QTimer>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-// #define EnableMultimedia
-
 class AudioThread : public QObject
 {
     Q_OBJECT

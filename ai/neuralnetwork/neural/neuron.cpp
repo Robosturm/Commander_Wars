@@ -8,84 +8,111 @@ Neuron::Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function, bool
       m_id_neuron(id_neuron),
       m_activation_function(function),
       m_is_bias(is_bias)
-{	
+{
+    if(m_layer->getType() == Layer::LayerType::INPUT)
+    {
+        m_activation_function = ActivationFunction::LINEAR;
+    }
+    else if (m_layer->getType() == Layer::LayerType::INPUT)
+    {
+        m_activation_function = ActivationFunction::Limited;
+    }
+    else if (m_is_bias)
+    {
+        m_activation_function = ActivationFunction::Bias;
+    }
 }
 
 void Neuron::trigger()
 {
+    double value = output();
     for (spEdge & e : m_next)
     {
-        e->propagate(output());
+        e->propagate(value);
     }
 
-}
-
-double Neuron::in()
-{
-    return m_accumulated;
 }
 
 double Neuron::output()
 {
-    if (m_is_bias)
+    double ret = 0;
+    switch (m_activation_function)
     {
-        return 1;
+        case ActivationFunction::Bias:
+        {
+            ret = 1;
+            break;
+        }
+        case ActivationFunction::Limited:
+        {
+            if (m_accumulated > 1)
+            {
+                ret = 1;
+            }
+            else if (m_accumulated < -1)
+            {
+                ret = -1;
+            }
+            else
+            {
+                ret = m_accumulated;
+            }
+            break;
+        }
+        case ActivationFunction::LINEAR:
+        {
+            ret = m_accumulated;
+            break;
+        }
+        case ActivationFunction::RELU:
+        {
+            ret = GlobalUtils::relu(m_accumulated);
+            break;
+        }
+        case ActivationFunction::SIGMOID:
+        {
+            ret = GlobalUtils::sigmoid(m_accumulated);
+            break;
+        }
+        case ActivationFunction::Step:
+        {
+            if (m_accumulated > 0)
+            {
+                ret = 1;
+            }
+            else
+            {
+                ret = -1;
+            }
+            break;
+        }
+        default:
+        {
+            oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Neuron::output invalid output function defined");
+        }
     }
-    else if(m_layer->getType() == Layer::LayerType::INPUT)
-    {
-        return outputRaw();
-    }
-    else if (m_activation_function == ActivationFunction::LINEAR)
-    {
-        return m_accumulated;
-    }
-    else if(m_activation_function == ActivationFunction::RELU)
-    {
-        return GlobalUtils::relu(m_accumulated);
-    }
-    else if (m_activation_function == ActivationFunction::SIGMOID)
-    {
-        return GlobalUtils::sigmoid(m_accumulated);
-    }
-    return outputRaw();
-}
-
-double Neuron::outputDerivative()
-{
-    if (m_activation_function == ActivationFunction::LINEAR)
-    {
-        return 1;
-    }
-    else if (m_activation_function == ActivationFunction::RELU)
-    {
-        return GlobalUtils::relu_derivative(output());
-    }
-    else if (m_activation_function == ActivationFunction::SIGMOID)
-    {
-        return GlobalUtils::sigmoid_derivative(outputRaw());
-    }
-    return m_accumulated;
-}
-
-double Neuron::outputRaw()
-{
-    return m_accumulated;
+    return ret;
 }
 
 void Neuron::clean()
 {
-    setAccumulated(0);
+    m_accumulated = 0;
 }
 
 void Neuron::addAccumulated(double v)
 {
-    setAccumulated(m_accumulated + v);
+    m_accumulated += v;
 }
 
 void Neuron::addNext(spNeuron n)
 {
     m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-1, 1)));
     n->addPrevious(m_next.back());
+}
+
+void Neuron::addNext(spEdge e)
+{
+   m_next.push_back(e);
 }
 
 void Neuron::addPrevious(spEdge e)
@@ -102,36 +129,6 @@ void Neuron::setAccumulated(double v)
 {
 
     m_accumulated = v;
-}
-
-void Neuron::alterWeights(const QVector<double>& weights)
-{
-    for(qint32 i_edge = 0; i_edge < weights.size(); ++i_edge)
-    {
-        m_next[i_edge]->alterWeight(weights[i_edge]);
-    }
-}
-
-QVector<double> Neuron::getWeights()
-{
-    QVector<double> w;
-    w.reserve(m_next.size());
-    for (qint32 i_edge = 0; i_edge < m_next.size(); ++i_edge)
-    {
-        w.push_back(m_next[i_edge]->weight());
-    }
-    return w;
-}
-
-QVector<spEdge> Neuron::getEdges()
-{
-    QVector<spEdge> w;
-    w.reserve(m_next.size());
-    for (qint32 i_edge = 0; i_edge < m_next.size(); ++i_edge)
-    {
-        w.push_back(m_next[i_edge]);
-    }
-    return w;
 }
 
 void Neuron::randomizeAllWeights(double abs_value)
@@ -162,53 +159,6 @@ QString Neuron::toString()
     }
     QString str =  "[" +  QString::number(m_layer->getId()) + "," + QString::number(m_id_neuron) + "]" + "("+ weights +")";
     return str;
-}
-
-void Neuron::shiftWeights(float range)
-{
-    for (spEdge & e : m_next)
-    {
-        e->alterWeight(e->weight() + GlobalUtils::randFloat(-range, range));
-    }
-}
-
-void Neuron::shiftBackWeights(const QVector<double>& w)
-{
-    for (qint32 i = 0; i < m_previous.size(); i++)
-    {
-        m_previous[i]->shiftWeight(w[i]);
-    }
-}
-
-//gradient descent
-QVector<double> Neuron::getBackpropagationShifts(const QVector<double>& target)
-{
-    QVector<double> dw(m_previous.size(),0);
-    if (m_layer->getType() == Layer::LayerType::OUTPUT)
-    {
-        double d1 = output() - target[getNeuronId()];
-        double d2 = outputDerivative();
-        for (qint32 i = 0; i < m_previous.size(); ++i)
-        {
-            dw[i] = (-d1 * d2 * m_previous[i]->previousNeuron()->output());
-            m_previous[i]->setBackpropagationMemory(d1 * d2);
-        }
-    }
-    else
-    {
-        float d = 0;
-        for (qint32 i = 0; i < m_next.size(); i++)
-        {
-            d += m_next[i]->backpropagationMemory() * m_next[i]->weight();
-        }
-        d *= outputDerivative();
-        for (qint32 i = 0; i < m_previous.size(); i++)
-        {
-            m_previous[i]->setBackpropagationMemory(d);
-            dw[i] = -d * m_previous[i]->previousNeuron()->output();
-        }
-    }
-    return dw;
 }
 
 bool Neuron::isBias() const
@@ -259,7 +209,7 @@ void Neuron::deserializeObject(QDataStream& pStream)
         m_previous.append(pEdge);
         if (previous != nullptr)
         {
-            previous->addNext(this);
+            previous->addNext(pEdge);
         }
     }
 }

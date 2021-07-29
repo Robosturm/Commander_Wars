@@ -21,37 +21,30 @@ public:
     {
         LINEAR,
         SIGMOID,
-        RELU
+        RELU,
+        Step,
+        Limited,
+        Bias,
     };
 
     Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function = ActivationFunction::LINEAR, bool is_bias = false);
     virtual ~Neuron() = default;
 
     void trigger();
-    double in();
     double output();
-    double outputDerivative();
-    double outputRaw();
     void clean();
     void addAccumulated(double v);
     void addNext(spNeuron n);
+    void addNext(spEdge e);
     void addPrevious(spEdge e);
     qint32 getNeuronId() const;
 
     void setAccumulated(double v);
 
-    void alterWeights(const QVector<double>& weights);
-    QVector<double> getWeights();
-    QVector<spEdge> getEdges();
-
     void randomizeAllWeights(double abs_value);
     void mutateAllWeights(double mutationChance, double maxWeight);
 
     QString toString();
-
-    void shiftWeights(float range);
-    void shiftBackWeights(const QVector<double>& range);
-    QVector<double> getBackpropagationShifts(const QVector<double>& target);
 
     bool isBias() const;
     const Layer* getLayer() const

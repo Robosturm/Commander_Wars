@@ -67,9 +67,9 @@ void Layer::connectComplete(Layer *next)
     {
         for(auto & n2 : next->m_neurons)
         {
-			if(!n2->isBias())
+            if(!n2->isBias())
             {
-				n1->addNext(n2);
+                n1->addNext(n2);
             }
         }
     }
@@ -87,49 +87,6 @@ QVector<double> Layer::output()
 
 }
 
-QVector<spNeuron> Layer::neurons() const
-{
-    return m_neurons;
-}
-
-void Layer::alterWeights(const QVector<QVector<double> >& weights)
-{
-    for(qint32 i_neuron=0;i_neuron < weights.size(); ++i_neuron)
-    {
-        m_neurons[i_neuron]->alterWeights(weights[i_neuron]);
-    }
-}
-
-void Layer::shiftBackWeights(const QVector<QVector<double> >& weights)
-{
-    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
-    {
-        m_neurons[i_neuron]->shiftBackWeights(weights[i_neuron]);
-    }
-}
-
-QVector<QVector<double>> Layer::getWeights()
-{
-    QVector<QVector<double>> w;
-    w.reserve(m_neurons.size());
-    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
-    {
-        w.push_back(m_neurons[i_neuron]->getWeights());
-    }
-    return w;
-}
-
-QVector<QVector<spEdge> > Layer::getEdges()
-{
-    QVector<QVector<spEdge>> w;
-    w.reserve(m_neurons.size());
-    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
-    {
-        w.push_back(m_neurons[i_neuron]->getEdges());
-    }
-    return w;
-}
-
 void Layer::randomizeAllWeights(double abs_value)
 {
     for(auto & neuron : m_neurons)
@@ -144,6 +101,11 @@ void Layer::mutateAllWeights(double mutationChance, double maxWeight)
     {
         neuron->mutateAllWeights(mutationChance, maxWeight);
     }
+}
+
+void Layer::setAccumulated(qint32 neuron, double value)
+{
+    m_neurons[neuron]->setAccumulated(value);
 }
 
 Neuron* Layer::getNeuron(qint32 id)
@@ -168,28 +130,9 @@ QString Layer::toString()
     return str;
 }
 
-void Layer::shiftWeights(float range)
-{
-    for(auto & neuron : m_neurons)
-    {
-		neuron->shiftWeights(range);
-    }
-}
-
 const QMap<QString, double>& Layer::getParameters() const
 {
     return m_parameters;
-}
-
-QVector<QVector<double>> Layer::getBackpropagationShifts(const QVector<double>& target)
-{
-    QVector<QVector<double>> dw(m_neurons.size());
-    for (qint32 i = 0; i < m_neurons.size(); i++)
-	{
-        spNeuron n = m_neurons[i];
-		dw[i] = n->getBackpropagationShifts(target);
-	}
-	return dw;
 }
 
 Layer::LayerType Layer::getType() const

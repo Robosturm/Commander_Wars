@@ -3,18 +3,18 @@ var Init =
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Dragons in the Dark.map",    // map that will be used for training
-    mutationRate    = 0.05,                         // chance for a weight to mutate at random
+    mutationRate    = 0.1,                         // chance for a weight to mutate at random
     fogOfWar        = GameEnums.Fog_OfWar,          // fog of war rule for training
-    maxRuns         = 100,                          // maximum amount of iterations
+    maxRuns         = 1000,                         // maximum amount of iterations
     turnLimit       = 30,
     // ai's and names that will be used for training
     topAis          = 1,
     trainingAis     =  [["heavy_ai",    5],
                         ["heavy_ai1",   6],
                         ["heavy_ai2",   7],
-//                        ["heavy_ai3",   8],
-//                        ["heavy_ai4",   9],
-//                        ["heavy_ai5",   10],
+                        ["heavy_ai3",   8],
+                        ["heavy_ai4",   9],
+                        ["heavy_ai5",   10],
 //                        ["heavy_ai6",   11],
 //                        ["heavy_ai7",   12],
 //                        ["heavy_ai8",   13],
@@ -217,9 +217,14 @@ var Init =
     {
         var cos = coSpriteManager.getCoIds();
         var index = globals.randInt(0, cos.length - 1);
+        while (cos[index] === "CO_RANDOM")
+        {
+            index = globals.randInt(0, cos.length - 1);
+        }
         Init.cos[0] = cos[index];
         var index2 = globals.randInt(0, cos.length - 1);
-        while (index === index2)
+        while (index === index2 ||
+               cos[index2] === "CO_RANDOM")
         {
             index2 = globals.randInt(0, cos.length - 1);
         }
