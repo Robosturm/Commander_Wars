@@ -16,7 +16,7 @@ CO_WALTER.getSuperPowerName = function()
     return CO_WALTER.getPowerName();
 };
 CO_WALTER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action)
+                                        defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

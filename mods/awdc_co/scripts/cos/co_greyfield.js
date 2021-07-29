@@ -47,7 +47,7 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isAttacker, action)
 {
     var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
     switch (co.getPowerMode())

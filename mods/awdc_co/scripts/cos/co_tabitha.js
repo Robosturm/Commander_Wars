@@ -23,7 +23,7 @@ CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_TABITHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isAttacker, action)
 {
     switch (co.getPowerMode())
     {

@@ -155,7 +155,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender, action)
+                                           defender, defPosX, defPosY, isAttacker, action)
     {
         switch (co.getPowerMode())
         {
@@ -163,7 +163,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 return 200;
             case GameEnums.PowerMode_Power:
-                if (isDefender)
+                if (isAttacker)
                 {
                     return 60;
                 }

@@ -31,7 +31,7 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender, action)
+                                           defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

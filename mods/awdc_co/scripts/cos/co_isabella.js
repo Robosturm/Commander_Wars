@@ -27,7 +27,7 @@ CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ISABELLA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isAttacker, action)
 {
     switch (co.getPowerMode())
     {

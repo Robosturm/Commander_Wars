@@ -117,7 +117,7 @@ CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {
@@ -130,7 +130,7 @@ CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action)
+                                          defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

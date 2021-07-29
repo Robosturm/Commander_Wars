@@ -184,7 +184,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isAttacker, action)
     {
         var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
         switch (co.getPowerMode())

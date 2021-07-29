@@ -194,7 +194,7 @@ var UNIT =
     {
         return 0;
     },
-    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isDefender, action)
+    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action)
     {
         return 0;
     },

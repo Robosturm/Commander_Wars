@@ -867,7 +867,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     return ergValue;
 }
 
-qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -882,7 +882,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();
-    args1 << isDefender;
+    args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     qint32 ergValue = 0;
@@ -897,7 +897,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
     return ergValue;
 }
 
-qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveReduction";
@@ -912,7 +912,7 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();
-    args1 << isDefender;
+    args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     qint32 ergValue = 0;

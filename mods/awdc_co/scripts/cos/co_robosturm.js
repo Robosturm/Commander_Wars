@@ -16,7 +16,7 @@ CO_ROBOSTURM.getSuperPowerName = function()
     return CO_ROBOSTURM.getPowerName();
 };
 CO_ROBOSTURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isAttacker, action)
 {
     switch (co.getPowerMode())
     {

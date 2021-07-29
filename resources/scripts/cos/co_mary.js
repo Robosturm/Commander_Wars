@@ -214,7 +214,7 @@ var Constructor = function()
         }
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -224,7 +224,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isAttacker, action)
     {
         // reduce enemy defense
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||

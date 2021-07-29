@@ -238,7 +238,11 @@ void HeavyAi::readIni(QString name)
         {
             m_maxScore = 10.0f;
         }
-
+        m_maxTerrainDefense = settings.value("MaxTerrainDefense", 15.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_maxTerrainDefense = 15.0f;
+        }
 
     }
 }

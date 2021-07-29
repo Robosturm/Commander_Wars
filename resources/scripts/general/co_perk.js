@@ -149,13 +149,13 @@ var CO_PERK =
     },
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isAttacker, action)
     {
         return 0;
     },
 
     getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isAttacker, action)
     {
         return 0;
     },

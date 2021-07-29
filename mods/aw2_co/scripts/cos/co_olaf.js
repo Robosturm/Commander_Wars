@@ -17,7 +17,7 @@ CO_OLAF.getWeatherImmune = function(co)
 };
 
 CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

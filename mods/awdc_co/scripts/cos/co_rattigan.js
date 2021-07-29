@@ -51,7 +51,7 @@ CO_RATTIGAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_RATTIGAN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isAttacker, action)
 {
     var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
     switch (co.getPowerMode())

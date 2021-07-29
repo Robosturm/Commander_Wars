@@ -138,7 +138,7 @@ var Constructor = function()
     this.coGlobalBonus = 15;
     this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
     {
         switch (co.getPowerMode())
         {

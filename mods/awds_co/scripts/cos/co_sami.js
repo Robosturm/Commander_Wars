@@ -58,7 +58,7 @@ CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
     return 0;
 };
 CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

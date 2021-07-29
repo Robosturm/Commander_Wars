@@ -34,14 +34,14 @@ CO_OZZY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_OZZY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     switch (co.getPowerMode())
     {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            if (isDefender)
+            if (isAttacker)
             {
                 return 60;
             }

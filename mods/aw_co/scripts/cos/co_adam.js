@@ -47,7 +47,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isAttacker, action)
 {
     var ret = 0;
     if (co.getIsCO0() === true)

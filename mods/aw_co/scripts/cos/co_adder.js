@@ -34,7 +34,7 @@ CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

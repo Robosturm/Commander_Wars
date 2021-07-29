@@ -1102,7 +1102,7 @@ qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPo
     return ergValue;
 }
 
-qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveFieldBonus";
@@ -1117,7 +1117,7 @@ qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();
-    args1 << isDefender;
+    args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     qint32 ergValue = 0;

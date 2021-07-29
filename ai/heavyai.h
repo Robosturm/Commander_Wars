@@ -74,6 +74,7 @@ class HeavyAi : public CoreAI
         OwnProtection,
         UnitHealth,
         VisionRange,
+
         BasicFieldInfoMaxSize,
     };
 
@@ -468,6 +469,7 @@ private:
     float m_enemyUnitThread{5};
     float m_maxUnitValue{40000.0f};
     float m_maxScore{10.0f};
+    float m_maxTerrainDefense{15.0f};
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};

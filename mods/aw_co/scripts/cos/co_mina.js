@@ -22,7 +22,7 @@ CO_MINA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MINA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

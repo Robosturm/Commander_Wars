@@ -63,7 +63,7 @@ CO_CONRAD.getBonusLuck = function(co, unit, posX, posY)
 };
 
 CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {

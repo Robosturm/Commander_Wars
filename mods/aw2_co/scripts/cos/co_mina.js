@@ -18,7 +18,7 @@ CO_MINA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MINA.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                      defender, defPosX, defPosY, isDefender, luckMode)
+                                      defender, defPosX, defPosY, isAttacker, luckMode)
 {
     if (co.getIsCO0() === true)
     {

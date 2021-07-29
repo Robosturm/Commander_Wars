@@ -92,7 +92,7 @@ CO_ALEXIS.startOfTurn = function(co)
 };
 CO_ALEXIS.coZoneBonus = 0;
 CO_ALEXIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action)
+                                        defender, defPosX, defPosY, isAttacker, action)
 {
     if (co.getIsCO0() === true)
     {
