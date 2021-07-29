@@ -885,7 +885,8 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
             atkPos = unitPos;
         }
 
-        if (m_pOwner->getFieldVisible(pDefender->Unit::getX(), pDefender->Unit::getY()) || ignoreOutOfVisionRange)
+        if (m_pOwner->getFieldVisibleType(pDefender->Unit::getX(), pDefender->Unit::getY()) == GameEnums::VisionType::VisionType_Clear ||
+            ignoreOutOfVisionRange)
         {
             if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
             {
@@ -2121,6 +2122,7 @@ bool Unit::getTransportHidden(Player* pPlayer)
     if (pPlayer != nullptr)
     {
         if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
+            (pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist) &&
             (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0 &&
             !isStatusStealthed())
         {

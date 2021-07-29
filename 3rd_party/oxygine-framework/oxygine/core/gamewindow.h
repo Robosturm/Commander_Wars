@@ -129,7 +129,10 @@ namespace oxygine
         }
         void startUpdateTimer()
         {
-             m_Timer.start(m_timerCycle, this);
+            if (!m_noUi)
+            {
+                m_Timer.start(m_timerCycle, this);
+            }
         }
     protected:
         virtual void registerResourceTypes();
@@ -173,6 +176,7 @@ namespace oxygine
         Qt::HANDLE m_mainHandle{nullptr};
 
         bool m_shuttingDown{false};
+        bool m_noUi{false};
     };
 }
 

@@ -86,9 +86,14 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
         if (building.buildingDataInput[i].enabled)
         {
             auto score = m_neuralNetworks[NeuralNetworks::Production]->predict(building.buildingDataInput[i].unitBuildingDataInput);
-            if (score[0] > bestScore && score[0] >= m_minActionScore)
+            double value = score[0];
+            if (value > m_maxScore)
             {
-                bestScore = score[0];
+                value = m_maxScore;
+            }
+            if (value > bestScore && value >= m_minActionScore)
+            {
+                bestScore = value;
                 qint32 i2 = 0;
                 while (i2 < bestItems.size())
                 {
@@ -105,10 +110,10 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
                 scores.append(bestScore);
                 bestItems.append(i);
             }
-            else if (bestScore - m_actionScoreVariant <= score[0])
+            else if (bestScore - m_actionScoreVariant <= value)
             {
                 bestItems.append(i);
-                scores.append(score[0]);
+                scores.append(value);
             }
         }
     }

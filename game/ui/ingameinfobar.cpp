@@ -262,7 +262,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }
@@ -284,7 +285,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }
@@ -305,7 +307,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }

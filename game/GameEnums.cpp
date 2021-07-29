@@ -50,6 +50,7 @@ void GameEnums::registerEnums()
     value.setProperty("Fog_Off", Fog_Off);
     value.setProperty("Fog_OfWar", Fog_OfWar);
     value.setProperty("Fog_OfShroud", Fog_OfShroud);
+    value.setProperty("Fog_OfMist", Fog_OfMist);
 
     value.setProperty("VisionType_Shrouded", VisionType_Shrouded);
     value.setProperty("VisionType_Fogged", VisionType_Fogged);

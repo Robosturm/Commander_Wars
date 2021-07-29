@@ -377,7 +377,7 @@ void RuleSelection::showRuleSelection()
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
     addChild(textField);
-    QVector<QString> fogModes = {tr("Off"), tr("Fog of War"), tr("Shroud of War")};
+    QVector<QString> fogModes = {tr("Off"), tr("Mist of War"), tr("Fog of War"), tr("Shroud of War")};
     spDropDownmenu fogOfWar = spDropDownmenu::create(300, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
@@ -385,7 +385,18 @@ void RuleSelection::showRuleSelection()
     fogOfWar->setEnabled(m_ruleChangeEabled);
     connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, pMap->getGameRules(), [=](qint32 value)
     {
-        pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
+        if (value == 1)
+        {
+            pMap->getGameRules()->setFogMode(GameEnums::Fog_OfMist);
+        }
+        else if (value > 1)
+        {
+            pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value - 1));
+        }
+        else
+        {
+            pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
+        }
     });
     addChild(fogOfWar);
     y += 40;

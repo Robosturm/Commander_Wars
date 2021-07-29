@@ -169,7 +169,8 @@ void PlayerInfo::updateData()
             Text->setStyle(style);
             QString number = QString::number(pPlayer->getFunds());
             if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
             {
                 number = "?";
             }

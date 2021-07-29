@@ -210,7 +210,6 @@ private:
     static AudioThread* m_Audiothread;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
-    bool m_noUi{false};
 };
 
 #endif // MAINAPP_H

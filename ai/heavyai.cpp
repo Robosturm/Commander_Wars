@@ -233,6 +233,13 @@ void HeavyAi::readIni(QString name)
         {
             m_maxUnitValue = 40000.0f;
         }
+        m_maxScore = settings.value("MaxScore", 10.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_maxScore = 10.0f;
+        }
+
+
     }
 }
 
@@ -706,10 +713,9 @@ void HeavyAi::mutateActionForFields(UnitData & unitData, const QVector<QPoint> &
             {
                 float score = 0;
                 mutate = mutateAction(pAction, unitData, baseData, type, index, step, stepPosition, score);
-                if (score > 1.0f)
+                if (score > m_maxScore)
                 {
-                    // cap scoring
-                    score = 1.0f;
+                    score = m_maxScore;
                 }
                 if (score > m_minActionScore)
                 {

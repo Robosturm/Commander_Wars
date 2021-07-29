@@ -13,9 +13,9 @@ Neuron::Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function, bool
     {
         m_activation_function = ActivationFunction::LINEAR;
     }
-    else if (m_layer->getType() == Layer::LayerType::INPUT)
+    else if (m_layer->getType() == Layer::LayerType::OUTPUT)
     {
-        m_activation_function = ActivationFunction::Limited;
+        m_activation_function = ActivationFunction::LINEAR;
     }
     else if (m_is_bias)
     {

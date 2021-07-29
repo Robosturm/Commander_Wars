@@ -101,6 +101,11 @@ void Player::loadVisionFields()
                     m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Shrouded, 0, false));
                     break;
                 }
+                case GameEnums::Fog::Fog_OfMist:
+                {
+                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Mist, 0, false));
+                    break;
+                }
             }
         }
     }
@@ -1114,6 +1119,7 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
     spGameMap pMap = GameMap::getInstance();
     switch (pMap->getGameRules()->getFogMode())
     {
+        case GameEnums::Fog_OfMist:
         case GameEnums::Fog_Off:
         {
             return true;
@@ -1144,6 +1150,7 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
             return GameEnums::VisionType_Clear;
         }
         case GameEnums::Fog_OfShroud:
+        case GameEnums::Fog_OfMist:
         case GameEnums::Fog_OfWar:
         {
             if (m_FogVisionFields.size() > 0)

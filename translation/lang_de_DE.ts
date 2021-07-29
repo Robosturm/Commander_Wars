@@ -1825,27 +1825,27 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1446"/>
+        <location filename="../menue/gamemenue.cpp" line="1447"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1456"/>
+        <location filename="../menue/gamemenue.cpp" line="1457"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1846"/>
+        <location filename="../menue/gamemenue.cpp" line="1847"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1877"/>
+        <location filename="../menue/gamemenue.cpp" line="1878"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1903"/>
+        <location filename="../menue/gamemenue.cpp" line="1904"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2568,107 +2568,107 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="280"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="281"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="302"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="304"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="324"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="327"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="337"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="340"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="555"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="561"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="565"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="812"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="558"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="564"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="568"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="815"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="577"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="580"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="583"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="586"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="596"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="599"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="602"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="605"/>
         <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="614"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="617"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="619"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="622"/>
         <source>Ammo 2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="630"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="851"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="633"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="854"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="635"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="846"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="638"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="849"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="644"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="647"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="658"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="661"/>
         <source>Weapon 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="674"/>
         <source>Move:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="683"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="686"/>
         <source>Movepoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="695"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="829"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="832"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="842"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="845"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3986,159 +3986,164 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="380"/>
+        <source>Mist of War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="382"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="395"/>
+        <location filename="../objects/ruleselection.cpp" line="406"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="399"/>
+        <location filename="../objects/ruleselection.cpp" line="410"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="409"/>
+        <location filename="../objects/ruleselection.cpp" line="420"/>
         <source>Building Hidding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="413"/>
+        <location filename="../objects/ruleselection.cpp" line="424"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="423"/>
+        <location filename="../objects/ruleselection.cpp" line="434"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="426"/>
+        <location filename="../objects/ruleselection.cpp" line="437"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="426"/>
+        <location filename="../objects/ruleselection.cpp" line="437"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="428"/>
+        <location filename="../objects/ruleselection.cpp" line="439"/>
         <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="443"/>
+        <location filename="../objects/ruleselection.cpp" line="454"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="450"/>
+        <location filename="../objects/ruleselection.cpp" line="461"/>
         <source>CO Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="453"/>
-        <location filename="../objects/ruleselection.cpp" line="469"/>
-        <location filename="../objects/ruleselection.cpp" line="485"/>
+        <location filename="../objects/ruleselection.cpp" line="464"/>
+        <location filename="../objects/ruleselection.cpp" line="480"/>
+        <location filename="../objects/ruleselection.cpp" line="496"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="466"/>
+        <location filename="../objects/ruleselection.cpp" line="477"/>
         <source>Perk Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="482"/>
+        <location filename="../objects/ruleselection.cpp" line="493"/>
         <source>Action Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="498"/>
+        <location filename="../objects/ruleselection.cpp" line="509"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="502"/>
+        <location filename="../objects/ruleselection.cpp" line="513"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="514"/>
+        <location filename="../objects/ruleselection.cpp" line="525"/>
         <source>Terrain Defense: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="518"/>
+        <location filename="../objects/ruleselection.cpp" line="529"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="530"/>
+        <location filename="../objects/ruleselection.cpp" line="541"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="534"/>
+        <location filename="../objects/ruleselection.cpp" line="545"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="547"/>
+        <location filename="../objects/ruleselection.cpp" line="558"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="550"/>
+        <location filename="../objects/ruleselection.cpp" line="561"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="554"/>
+        <location filename="../objects/ruleselection.cpp" line="565"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="572"/>
+        <location filename="../objects/ruleselection.cpp" line="583"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="579"/>
+        <location filename="../objects/ruleselection.cpp" line="590"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="583"/>
+        <location filename="../objects/ruleselection.cpp" line="594"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="593"/>
+        <location filename="../objects/ruleselection.cpp" line="604"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="597"/>
+        <location filename="../objects/ruleselection.cpp" line="608"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="607"/>
+        <location filename="../objects/ruleselection.cpp" line="618"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="611"/>
+        <location filename="../objects/ruleselection.cpp" line="622"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="624"/>
+        <location filename="../objects/ruleselection.cpp" line="635"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

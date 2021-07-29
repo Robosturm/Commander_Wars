@@ -404,7 +404,15 @@ public slots:
      * @param y
      * @param pPlayer
      */
-    void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer);
+    void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor = QColor(70, 70, 70, 100));
+    /**
+     * @brief createFieldFogMist
+     * @param x
+     * @param y
+     * @param pPlayer
+     * @param fogOfMistColor
+     */
+    void createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor = QColor(180, 180, 180, 100));
     /**
      * @brief showHideStealthUnit
      * @param pPlayer

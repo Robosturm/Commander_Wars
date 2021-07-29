@@ -616,6 +616,12 @@ void GameRules::createFogVision()
     {
         fogOfWarColor = QColor(ret.toString());
     }
+    QColor fogOfMistColor = QColor(180, 180, 180, 100);
+    ret = pInterpreter->doFunction("Global", "getFogOfMistColor");
+    if (ret.isString())
+    {
+        fogOfMistColor = QColor(ret.toString());
+    }
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -652,12 +658,17 @@ void GameRules::createFogVision()
                     }
                     case GameEnums::Fog_OfWar:
                     {
-                        createFieldFogWar(x, y, pPlayer);
+                        createFieldFogWar(x, y, pPlayer, fogOfWarColor);
                         break;
                     }
                     case GameEnums::Fog_OfShroud:
                     {
-                        createFieldFogShrouded(x, y, pPlayer);
+                        createFieldFogShrouded(x, y, pPlayer, fogOfWarColor);
+                        break;
+                    }
+                    case GameEnums::Fog_OfMist:
+                    {
+                        createFieldFogMist(x, y, pPlayer, fogOfMistColor);
                         break;
                     }
                 }
@@ -685,6 +696,55 @@ void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
     if (pBuilding != nullptr)
     {
         pBuilding->updatePlayerColor(true);
+    }
+}
+
+void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor)
+{
+    spGameMap pMap = GameMap::getInstance();
+    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+    if (m_FogSprites[x][y].get() != nullptr)
+    {
+        m_FogSprites[x][y]->detach();
+        m_FogSprites[x][y] = nullptr;
+    }
+    if (pUnit != nullptr)
+    {
+        showHideStealthUnit(pPlayer, pUnit);
+    }
+    if (pBuilding != nullptr)
+    {
+        pBuilding->updatePlayerColor(true);
+    }
+    GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
+    if (visible != GameEnums::VisionType_Clear)
+    {
+        if (m_FogSprites[x][y].get() == nullptr)
+        {
+            // create fog of war sprite
+            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            sprite->setColor(fogOfMistColor);
+            if (x == pMap->getMapWidth() - 1)
+            {
+                sprite->setWidth(GameMap::getImageSize() + 1);
+            }
+            if (y == pMap->getMapHeight() - 1)
+            {
+                sprite->setHeight(GameMap::getImageSize() + 1);
+            }
+            sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+            pMap->addChild(sprite);
+            m_FogSprites[x][y] = sprite;
+        }
+    }
+    else if (m_FogSprites[x][y].get() != nullptr)
+    {
+        m_FogSprites[x][y]->detach();
+        m_FogSprites[x][y] = nullptr;
     }
 }
 
@@ -736,7 +796,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
     }
 }
 
-void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
+void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor)
 {
     spGameMap pMap = GameMap::getInstance();
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
@@ -779,7 +839,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-            sprite->setColor(70, 70, 70, 100);
+            sprite->setColor(fogOfWarColor);
             if (x == pMap->getMapWidth() - 1)
             {
                 sprite->setWidth(GameMap::getImageSize() + 1);
@@ -822,6 +882,11 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             pTerrain->addChild(sprite);
             pTerrain->setSpriteVisibility(false);
             m_FogSprites[x][y] = sprite;
+            break;
+        }
+        case GameEnums::VisionType_Mist:
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal vision type mist of war during shroud of war");
             break;
         }
     }

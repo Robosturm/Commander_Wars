@@ -17,6 +17,12 @@ getFogOfWarColor = function()
     return "#64464646";
 }
 
+getFogOfMistColor = function()
+{
+    // the color used for the fog of war overlay
+    return "#64B4B4B4";
+}
+
 getArmyNameFromPlayerTable = function(player, table)
 {
     return Global.getArmyNameFromTable(player.getArmy(), table);

@@ -1436,7 +1436,8 @@ void GameMenue::showGameInfo(qint32 player)
             qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
             QString buildings = QString::number(buildingCount);
             if (pViewPlayer->getTeam() != pMap->getPlayer(i)->getTeam() &&
-                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
             {
                 funds = "?";
                 armyValue = "?";

@@ -79,7 +79,8 @@ public:
     {
         Fog_Off,
         Fog_OfWar,
-        Fog_OfShroud
+        Fog_OfShroud,
+        Fog_OfMist,
     };
     Q_ENUM(Fog)
 
@@ -87,7 +88,8 @@ public:
     {
         VisionType_Shrouded,
         VisionType_Fogged,
-        VisionType_Clear
+        VisionType_Clear,
+        VisionType_Mist,
     };
     Q_ENUM(VisionType)
 
