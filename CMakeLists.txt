@@ -50,6 +50,9 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        add_definitions(
+            -DEnableMultimedia
+        )
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
@@ -75,11 +78,14 @@ add_definitions(
 ###################################################################################
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}") # -g for debug info
-    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}") # -g for debug info
+    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
     find_program(ADDR_2_LINE addr2line)
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(ADDR_2_LINE "")
+    if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
+        add_link_options("-long-plt")
+    endif()
 else()  # this branch works at least for linux
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
     set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
@@ -489,11 +495,17 @@ set(${PROJECT_NAME}_SRCS
     ui_reader/uifactory.cpp
     )
 
-qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-                     "general.qrc"
-                     "sound.qrc"
-                     "music.qrc"
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+        "general.qrc"
     )
+else()
+    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+                         "general.qrc"
+                         "music.qrc"
+                         "sound.qrc"
+    )
+endif()
 
 ##############################################################################
 # This section finds all resources so they can be linked to a rcc file later #

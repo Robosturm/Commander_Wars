@@ -138,13 +138,13 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
         return "TI";
     };
-    this.coZoneBonus = 60;
+    this.coZoneBonus = 40;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
     {
@@ -170,7 +170,7 @@ var Constructor = function()
                 {
                     if (attacker.getHp() >= defender.getHp())
                     {
-                        return 60;
+                        return CO_CASSIDY.coZoneBonus;
                     }
                     return 10;
                 }

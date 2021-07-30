@@ -136,8 +136,9 @@ var Constructor = function()
                 }
             }
         }
-
         buildings.remove();
+        fields.remove();
+        fields = globals.getCircle(0, 1);
         var playerCounter = map.getPlayerCount();
         for (var i3 = 0; i3 < playerCounter; i3++)
         {
@@ -217,7 +218,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {

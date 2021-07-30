@@ -42,10 +42,10 @@ namespace oxygine
 
     ImageData ImageData::getRect(const Rect& r) const
     {
-        if (r.getX() < 0 && r.getX() > m_w ||
-            r.getY() < 0 && r.getY() > m_h ||
-            r.getX() + r.getWidth() > m_w ||
-            r.getY() + r.getHeight() > m_h)
+        if ((r.getX() < 0 && r.getX() > m_w) ||
+            (r.getY() < 0 && r.getY() > m_h) ||
+            (r.getX() + r.getWidth() > m_w) ||
+            (r.getY() + r.getHeight() > m_h))
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "ImageData::getRect invalid rect access");
         }
