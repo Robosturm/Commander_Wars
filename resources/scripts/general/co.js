@@ -74,7 +74,7 @@ var CO =
     },
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
     },
@@ -139,25 +139,25 @@ var CO =
     },
 
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
     },
 
     getOffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
     },
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isAttacker, action)
+                                  defender, defPosX, defPosY, isAttacker, action, luckMode)
     {
         return 0;
     },
 
     getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isAttacker, action)
+                                  defender, defPosX, defPosY, isAttacker, action, luckMode)
     {
         return 0;
     },
@@ -206,17 +206,17 @@ var CO =
     {
         var powerGain = fundsDamage;
         // reduce power meter filling based on power usages
-        powerGain *= 1 / (1.0 + co.getPowerUsed() * 0.1);
+        powerGain *= 1 / (1.0 + co.getPowerUsed() * 0.2);
         if (!co.inCORange(Qt.point(x, y), null))
         {
            // reduce power meter gain when not in co range
-           powerGain /= 2.0;
+           powerGain *= 0.5;
         }
         if (!defender)
         {
-            powerGain /= 4.0;
+            powerGain *= 0.25;
         }
-        return powerGain / 11000;
+        return powerGain / 9000;
     },
 
     gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)

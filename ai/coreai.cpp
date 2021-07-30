@@ -1886,8 +1886,8 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
         multiplier = pCO->getAiCoUnitBonus(pUnit, valid);
         if (!valid)
         {
-            if (pCO->getOffensiveBonus(nullptr, pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                pCO->getDeffensiveBonus(nullptr, nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false) > 0 ||
+            if (pCO->getOffensiveBonus(nullptr, pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false, GameEnums::LuckDamageMode_Off) > 0 ||
+                pCO->getDeffensiveBonus(nullptr, nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false, GameEnums::LuckDamageMode_Off) > 0 ||
                 pCO->getFirerangeModifier(pUnit, QPoint(-1, -1)) > 0)
             {
                 multiplier = 1.0f;

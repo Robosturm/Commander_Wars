@@ -236,28 +236,28 @@ public slots:
      * @param pDefender the defending unit the unit we attack
      * @return
      */
-    qint32 getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    qint32 getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getOffensiveReduction
      * @param pAttacker the attacking unit our unit
      * @param pDefender the defending unit the unit we attack
      * @return
      */
-    qint32 getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    qint32 getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker);
+    qint32 getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker);
+    qint32 getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
 
     /**
      * @brief getDamageReduction
@@ -283,7 +283,7 @@ public slots:
      * @return
      */
     float getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                        Unit* pDefender, QPoint defPosition, bool isDefender);
+                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getMovementFuelCostModifier
      * @param pUnit

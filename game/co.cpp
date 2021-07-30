@@ -807,7 +807,7 @@ void CO::addUnitShines()
     }
 }
 
-qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveBonus";
@@ -825,6 +825,7 @@ qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPos
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -837,7 +838,7 @@ qint32 CO::getOffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPos
     return ergValue;
 }
 
-qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveReduction";
@@ -855,6 +856,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -867,7 +869,7 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
     return ergValue;
 }
 
-qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
+qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -885,6 +887,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
     args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -897,7 +900,7 @@ qint32 CO::getDeffensiveBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPo
     return ergValue;
 }
 
-qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
+qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveReduction";
@@ -915,6 +918,7 @@ qint32 CO::getDeffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint a
     args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
@@ -962,7 +966,7 @@ float CO::getDamageReduction(GameAction* pAction, float damage, Unit* pAttacker,
 }
 
 float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                        Unit* pDefender, QPoint defPosition, bool isDefender)
+                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTrueDamage";
@@ -982,6 +986,7 @@ float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoi
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     float ergValue = 0.0f;
     for (qint32 i = 0; i < m_perkList.size(); ++i)
     {

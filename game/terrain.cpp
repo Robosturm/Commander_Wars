@@ -1075,7 +1075,7 @@ void Terrain::startOfTurn()
     }
 }
 
-qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveFieldBonus";
@@ -1093,6 +1093,7 @@ qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPo
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
@@ -1102,7 +1103,7 @@ qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPo
     return ergValue;
 }
 
-qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker)
+qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveFieldBonus";
@@ -1120,6 +1121,7 @@ qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     args1 << isAttacker;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())

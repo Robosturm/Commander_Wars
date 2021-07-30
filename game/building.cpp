@@ -700,7 +700,7 @@ qint32 Building::getVisionBonus()
     }
 }
 
-qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getOffensiveFieldBonus";
@@ -718,6 +718,7 @@ qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isNumber())
@@ -727,7 +728,7 @@ qint32 Building::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     return ergValue;
 }
 
-qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getDeffensiveFieldBonus";
@@ -745,6 +746,7 @@ qint32 Building::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, Q
     args1 << isDefender;
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
+    args1 << luckMode;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isNumber())

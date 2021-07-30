@@ -190,11 +190,11 @@ var UNIT =
     postAction : function(unit, action)
     {
     },
-    getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender, action)
+    getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckMode)
     {
         return 0;
     },
-    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action)
+    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action, luckMode)
     {
         return 0;
     },

@@ -686,7 +686,7 @@ public slots:
      * @param position
      * @return offensive bonus at this position
      */
-    qint32 getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getUnitBonusOffensive
      * @param position
@@ -695,7 +695,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
+    qint32 getUnitBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getDamageReduction
      * @param pAttacker
@@ -718,7 +718,7 @@ public slots:
      * @return
      */
     float getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
-                        Unit* pDefender, QPoint defPosition, bool isDefender);
+                        Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTerrainDefense
      * @return
@@ -729,7 +729,7 @@ public slots:
      * @param position
      * @return defense bonus at this position
      */
-    qint32 getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker);
+    qint32 getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getUnitBonusDefensive
      * @param position
@@ -738,7 +738,7 @@ public slots:
      * @param isDefender
      * @return
      */
-    qint32 getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker);
+    qint32 getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief useTerrainDefense
      * @return

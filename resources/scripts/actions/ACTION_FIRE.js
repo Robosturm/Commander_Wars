@@ -132,8 +132,8 @@ var Constructor = function()
         {
             var hp = attacker.getHp();
             attacker.setHp(attackerBaseHp);
-            var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defender.getPosition(), isDefender);
-            var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender);
+            var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defender.getPosition(), isDefender, luckMode);
+            var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
             attacker.setHp(hp);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             var luckDamage = 0;
