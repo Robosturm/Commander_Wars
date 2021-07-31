@@ -262,6 +262,24 @@ void HeavyAi::showFrontLines()
     m_InfluenceFrontMap.showFrontlines();
 }
 
+void HeavyAi::showUnitPfs(bool enemy, qint32 index)
+{
+    if (enemy)
+    {
+        if (index >= 0 && index < m_enemyUnits.size())
+        {
+            m_InfluenceFrontMap.showPfs(m_enemyUnits[index].m_pPfs.get());
+        }
+    }
+    else
+    {
+        if (index >= 0 && index < m_ownUnits.size())
+        {
+            m_InfluenceFrontMap.showPfs(m_ownUnits[index].m_pPfs.get());
+        }
+    }
+}
+
 void HeavyAi::hideFrontMap()
 {
     m_InfluenceFrontMap.hide();

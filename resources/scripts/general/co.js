@@ -214,7 +214,7 @@ var CO =
         }
         if (!defender)
         {
-            powerGain *= 0.25;
+            powerGain *= 0.75;
         }
         return powerGain / 9000;
     },

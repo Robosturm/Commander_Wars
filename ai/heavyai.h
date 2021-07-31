@@ -220,6 +220,12 @@ public slots:
      * @brief hideFrontMap  for debugging visualization
      */
     void hideFrontMap();
+    /**
+     * @brief showUnitPfs
+     * @param enemy
+     * @param index
+     */
+    void showUnitPfs(bool enemy, qint32 index);
 protected:
     /**
      * @brief scoreActions

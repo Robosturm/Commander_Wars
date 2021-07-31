@@ -234,6 +234,37 @@ void InfluenceFrontMap::show()
     }
 }
 
+void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
+{
+    spGameMap pMap = GameMap::getInstance();
+    for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
+    {
+        for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
+        {
+            qint32 cost = pPfs->getTargetCosts(x, y);
+            if (cost >= 0)
+            {
+                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+                sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+                QColor color = pMap->getCurrentPlayer()->getColor();
+                if (cost > 0)
+                {
+                    color.setAlphaF(0.5f);
+                }
+                else
+                {
+                    color.setAlphaF(0.2f);
+                }
+                sprite->setColor(color);
+                sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+                sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+                pMap->addChild(sprite);
+                m_info.append(sprite);
+            }
+        }
+    }
+}
+
 void InfluenceFrontMap::showFrontlines()
 {
     oxygine::TextStyle style = FontManager::getMainFont24();

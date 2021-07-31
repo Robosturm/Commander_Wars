@@ -1942,6 +1942,7 @@ void NormalAi::updateEnemyData(spQmlVectorUnit pUnits)
                         m_EnemyUnits[i2]->getMovementpoints(QPoint(m_EnemyUnits[i2]->Unit::getX(), m_EnemyUnits[i2]->Unit::getY())) + 2)
                     {
                         m_EnemyPfs[i2] = spUnitPathFindingSystem::create(m_EnemyUnits[i2].get());
+                        m_EnemyPfs[i2]->setIgnoreEnemies(true);
                         m_EnemyPfs[i2]->explore();
                     }
                     updated.push_back(i2);

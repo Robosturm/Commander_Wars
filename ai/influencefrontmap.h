@@ -47,6 +47,11 @@ public:
      */
     void showFrontlines();
     /**
+     * @brief showPfs
+     * @param pPfs
+     */
+    void showPfs(UnitPathFindingSystem* pPfs);
+    /**
      * @brief show for debugging purpose
      */
     void hide();
