@@ -27,7 +27,7 @@ public:
     static const QString stopAnimation;
 
     explicit BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
-    ~BattleAnimationSprite();
+    virtual ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
      * @param animationType

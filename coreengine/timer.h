@@ -10,7 +10,8 @@ class Timer : public QTimer
 {
     Q_OBJECT
 public:
-    Timer();
+    explicit Timer();
+    virtual ~Timer() = default;
 public slots:
     void pause();
     void resume();

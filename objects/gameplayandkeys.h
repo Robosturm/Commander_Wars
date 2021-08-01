@@ -15,8 +15,8 @@ class GameplayAndKeys : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    GameplayAndKeys(qint32 heigth);
-
+    explicit GameplayAndKeys(qint32 heigth);
+    virtual ~GameplayAndKeys() = default;
 private:
     spPanel m_pOptions;
 };

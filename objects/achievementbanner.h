@@ -16,6 +16,7 @@ class AchievementBanner : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit AchievementBanner(const Userdata::Achievement& achievement);
+    virtual ~AchievementBanner() = default;
     void init();
 protected slots:
     void removeBanner();

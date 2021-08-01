@@ -32,6 +32,7 @@ public:
     static constexpr qint32 MAX_CO_UNIT_VALUE = 10;
 
     explicit CO(QString coID, Player* owner);
+    virtual ~CO() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

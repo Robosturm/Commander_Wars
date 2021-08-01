@@ -17,6 +17,7 @@ class DropDownmenu : public DropDownmenuBase
     Q_OBJECT
 public:
     explicit DropDownmenu(qint32 width, QVector<QString> items);
+    virtual ~DropDownmenu() = default;
     /**
      * @brief getCurrentItemText text of the current item
      * @return

@@ -18,8 +18,8 @@ namespace oxygine
     {
         Q_OBJECT
     public:
-        GameWindow();
-        ~GameWindow();
+        explicit GameWindow();
+        virtual ~GameWindow() = default;
         spEventDispatcher getDispatcher();
 
         static QOpenGLContext* getGLContext();

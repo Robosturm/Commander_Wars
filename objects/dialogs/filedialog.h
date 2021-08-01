@@ -28,7 +28,7 @@ class FileDialog : public QObject, public oxygine::Actor
      * @param wildcards wildcard items will be split at ;
      */
         explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "", bool preview = false);
-        virtual ~FileDialog();
+        virtual ~FileDialog() = default;
 
         bool getPreview() const;
         void setPreview(bool preview);

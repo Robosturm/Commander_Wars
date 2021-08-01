@@ -17,7 +17,7 @@ public:
     static constexpr qint32 spriteHeigth = 192;
 
     explicit IngameInfoBar();
-
+    virtual ~IngameInfoBar() = default;
     Minimap* getMinimap()
     {
         return m_pMinimap.get();

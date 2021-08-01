@@ -19,7 +19,7 @@ class Chat : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
-
+    virtual ~Chat() = default;
     /**
      * @brief setVisible
      * @param vis

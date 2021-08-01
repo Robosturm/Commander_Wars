@@ -22,6 +22,7 @@ public:
         BLINKFREQG = 250
     };
     explicit Textbox(qint32 width, qint32 heigth = -1);
+    virtual ~Textbox() = default;
     /**
      * @brief getCurrentText
      * @return the current text of the textbox

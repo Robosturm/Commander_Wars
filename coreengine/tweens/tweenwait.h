@@ -9,7 +9,7 @@ public:
     typedef oxygine::Actor type;
 
     explicit TweenWait();
-
+    virtual ~TweenWait() = default;
     void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
 
     void init(oxygine::Actor&){}

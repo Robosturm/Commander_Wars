@@ -42,7 +42,7 @@ public:
         BLINKFREQG = 250,
         MAXLASTMSG = 20
     };
-
+    virtual ~Console() = default;
     static Console* getInstance();
     static void dotask(QString message);
     static void draw();
@@ -179,8 +179,7 @@ public slots:
     }
 private:
     friend class oxygine::intrusive_ptr<Console>;
-    Console();
-    virtual  ~Console() = default;
+    explicit Console();
 
     void createSprites(QString file, QImage& colorTable, QImage maskTable);
 

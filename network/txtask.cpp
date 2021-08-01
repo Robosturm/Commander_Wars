@@ -14,11 +14,6 @@ TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
 {
 }
 
-TxTask::~TxTask()
-{
-
-}
-
 void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData)
 {
     bool open = m_pSocket->isOpen();

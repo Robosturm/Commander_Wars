@@ -42,7 +42,7 @@ namespace oxygine
         typedef intrusive_list_item<Actor> intr_list;
 
     public:
-        Actor();
+        explicit Actor();
         virtual ~Actor();
 
         /**returns first child*/

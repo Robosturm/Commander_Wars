@@ -26,7 +26,8 @@ namespace oxygine
     class VStyleActor : public Actor
     {
     public:
-        VStyleActor();
+        explicit VStyleActor();
+        virtual ~VStyleActor() = default;
 
         blend_mode              getBlendMode() const {return m_vstyle.getBlendMode();}
         const QColor&            getColor() const;

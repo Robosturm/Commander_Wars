@@ -18,7 +18,7 @@ class DecisionQuestion : public QObject, public FileSerializable, public oxygine
     Q_OBJECT
 public:
     explicit DecisionQuestion();
-
+    virtual ~DecisionQuestion() = default;
     void appendQuestion(spQuestion pQuestions);
     virtual void serializeObject(QDataStream& pStream) const override;
     virtual void deserializeObject(QDataStream& pStream)  override;

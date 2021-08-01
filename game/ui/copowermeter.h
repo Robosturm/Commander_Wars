@@ -15,7 +15,7 @@ class CoPowermeter : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit CoPowermeter(CO* pCO);
-
+    virtual ~CoPowermeter() = default;
     /**
      * @brief drawPowerMeter
      */

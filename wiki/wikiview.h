@@ -20,7 +20,7 @@ class WikiView : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit WikiView(qint32 viewWidth, qint32 viewHeigth);
-
+    virtual ~WikiView() = default;
 signals:
     void sigSearch(bool onlyTag);
     void sigShowWikipage(WikiDatabase::pageData page);

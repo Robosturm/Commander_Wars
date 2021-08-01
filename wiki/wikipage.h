@@ -14,6 +14,7 @@ class Wikipage : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit Wikipage();
+    virtual ~Wikipage() = default;
     /**
      * @brief getPanel
      * @return

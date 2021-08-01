@@ -165,7 +165,7 @@ var Constructor = function()
             }
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive, luckDamage);
             damage += attacker.getTrueDamage(action, damage, attackerPosition, attackerBaseHp,
-                                             defender, defenderPosition, isDefender);
+                                             defender, defenderPosition, isDefender, luckMode);
             damage -= defender.getDamageReduction(action, damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender, luckMode);
             damage -= ACTION_FIRE.predictSupportDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,

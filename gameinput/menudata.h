@@ -16,6 +16,7 @@ class MenuData : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit MenuData();
+    virtual ~MenuData() = default;
 
     QStringList getTexts()
     {

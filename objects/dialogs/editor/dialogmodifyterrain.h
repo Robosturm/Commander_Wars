@@ -20,7 +20,7 @@ class DialogModifyTerrain : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogModifyTerrain(Terrain* pTerrain);
-
+    virtual ~DialogModifyTerrain() = default;
 signals:
     void sigFinished();
     void sigTerrainClicked(QString id);

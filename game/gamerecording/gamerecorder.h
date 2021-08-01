@@ -96,6 +96,7 @@ public:
     };
 
     explicit GameRecorder();
+    virtual ~GameRecorder() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

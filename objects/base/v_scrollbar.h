@@ -21,6 +21,7 @@ public:
      * @param contentWidth width of the area you can scroll with this scrollbar. Needed for the arrows to calculate the add value. :)
      */
     explicit V_Scrollbar(qint32 width, qint32 contentWidth);
+    virtual ~V_Scrollbar() = default;
     /**
      * @brief setContentWidth
      * @param heigth

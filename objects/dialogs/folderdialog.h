@@ -27,7 +27,7 @@ class FolderDialog : public QObject, public oxygine::Actor
      * @param startFolder initial folder of the file dialog
      */
         explicit FolderDialog(QString startFolder);
-        virtual ~FolderDialog();
+        virtual ~FolderDialog() = default;
 
     signals:
         void sigFolderSelected(QString file);

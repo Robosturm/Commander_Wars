@@ -167,11 +167,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     pApp->continueRendering();
 }
 
-MapSelectionMapsMenue::~MapSelectionMapsMenue()
-{
-
-}
-
 void MapSelectionMapsMenue::slotButtonBack()
 {    
     Console::print("slotButtonBack()", Console::eDEBUG);

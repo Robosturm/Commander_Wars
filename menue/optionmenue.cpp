@@ -145,10 +145,6 @@ OptionMenue::OptionMenue()
     pApp->continueRendering();
 }
 
-OptionMenue::~OptionMenue()
-{
-}
-
 void OptionMenue::exitMenue()
 {    
     // save changed settings :)

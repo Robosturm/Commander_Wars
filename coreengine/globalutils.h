@@ -15,6 +15,7 @@ public:
     {
         return &m_pInstace;
     };
+    virtual ~GlobalUtils() = default;
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);

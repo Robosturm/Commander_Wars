@@ -9,7 +9,8 @@ public:
 
     static QString ImportCsvTable(QString csvTable, QString jsHeaderString, QString tableName, QStringList& newData);
 private:
-    CsvTableImporter() = default;
+    explicit CsvTableImporter() = default;
+    virtual ~CsvTableImporter() = default;
     static void MergeCsvEntry(QStringList & item);
 };
 

@@ -29,6 +29,7 @@ public:
     };
 
     explicit SpinBox(qint32 width, qint32 min = 0, qint32 max = 100, Mode mode = Mode::Int);
+    virtual ~SpinBox() = default;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box

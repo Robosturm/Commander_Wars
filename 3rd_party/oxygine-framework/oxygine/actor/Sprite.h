@@ -14,8 +14,8 @@ namespace oxygine
     class Sprite : public VStyleActor
     {
     public:
-        Sprite();
-        virtual ~Sprite() override;
+        explicit Sprite();
+        virtual ~Sprite();
 
         const AnimationFrame&   getAnimFrame() const {return m_frame;}
         RectF                   getDestRect() const override;

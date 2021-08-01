@@ -28,12 +28,12 @@ namespace oxygine
     class EventDispatcher: public Object
     {
     public:
-        EventDispatcher(const EventDispatcher& ed)
+        explicit EventDispatcher(const EventDispatcher& ed)
             : Object(ed),
               m_lastID(0)
         {
         }
-        EventDispatcher();
+        explicit EventDispatcher();
         virtual ~EventDispatcher() = default;
 
         qint32 addEventListener(eventType, const EventCallback&);

@@ -10,8 +10,8 @@ namespace oxygine
     class Object : public ref_counter, public IClosureOwner
     {        
     public:
-        Object(const Object& src);
-        Object() = default;
+        explicit Object(const Object& src);
+        explicit Object() = default;
         virtual ~Object() = default;
     protected:
         QMutex m_Locked;

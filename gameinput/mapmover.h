@@ -16,7 +16,7 @@ class MapMover : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit MapMover(InGameMenue* pOwner);
-    virtual ~MapMover();
+    virtual ~MapMover() = default;
 public slots:
     void mouseWheel(float direction);
     virtual void keyInput(oxygine::KeyEvent event);

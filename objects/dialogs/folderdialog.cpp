@@ -112,10 +112,6 @@ FolderDialog::FolderDialog(QString startFolder)
     pApp->continueRendering();
 }
 
-FolderDialog::~FolderDialog()
-{
-}
-
 void FolderDialog::showFolder(QString folder)
 {
     Mainapp* pApp = Mainapp::getInstance();

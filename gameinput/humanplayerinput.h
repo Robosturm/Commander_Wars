@@ -42,8 +42,8 @@ public:
         Down
     };
 
-    HumanPlayerInput();
-    ~HumanPlayerInput();
+    explicit HumanPlayerInput();
+    virtual ~HumanPlayerInput();
 
     virtual void init() override;
     /**

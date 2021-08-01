@@ -21,6 +21,7 @@ class Weather : public QObject, public FileSerializable, public oxygine::ref_cou
 public:
     explicit Weather();
     explicit Weather(QString weatherId);
+    virtual ~Weather() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

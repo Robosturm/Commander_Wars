@@ -25,8 +25,7 @@ class COSelection : public QObject, public oxygine::Actor
     static constexpr float scale = 1.5f;
 public:
     explicit COSelection(QSize maxSize, QStringList coids = {});
-    virtual ~COSelection();
-
+    virtual ~COSelection() = default;
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);

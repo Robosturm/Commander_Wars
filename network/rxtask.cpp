@@ -12,10 +12,6 @@ RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
 {
 }
 
-RxTask::~RxTask()
-{
-
-}
 void RxTask::recieveData()
 {
     while (m_pSocket->bytesAvailable() > 0)

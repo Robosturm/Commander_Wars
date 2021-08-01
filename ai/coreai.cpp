@@ -85,10 +85,6 @@ CoreAI::CoreAI(GameEnums::AiTypes aiType)
     }
 }
 
-CoreAI::~CoreAI()
-{
-}
-
 void CoreAI::init()
 {
     connect(GameMenue::getInstance(), &GameMenue::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);

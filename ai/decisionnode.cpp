@@ -14,10 +14,6 @@ DecisionNode::DecisionNode()
     setObjectName("DecisionNode");
 }
 
-DecisionNode::~DecisionNode()
-{
-}
-
 float DecisionNode::getDecision(QVector<float>& input)
 {
     qint32 result = m_pQuestion->matches(input);

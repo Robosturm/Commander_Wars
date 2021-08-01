@@ -12,6 +12,7 @@ class Wikimenu : public Basemenu
     Q_OBJECT
 public:
     explicit Wikimenu();
+    virtual ~Wikimenu() = default;
 signals:
     void sigExitMenue();
 public slots:

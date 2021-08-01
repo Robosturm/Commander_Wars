@@ -23,6 +23,7 @@ public:
     };
 
     explicit TimeSpinBox(qint32 width);
+    virtual ~TimeSpinBox() = default;
     /**
      * @brief getCurrentValue
      * @return the current value of the spin box

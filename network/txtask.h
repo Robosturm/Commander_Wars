@@ -20,7 +20,7 @@ class TxTask : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll);
-    virtual ~TxTask();
+    virtual ~TxTask() = default;
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
 

@@ -14,7 +14,7 @@ class Checkbox : public Tooltip
     Q_OBJECT
 public:
     explicit Checkbox();
-
+    virtual ~Checkbox() = default;
     bool getChecked() const;
     void setChecked(bool Checked);
 signals:

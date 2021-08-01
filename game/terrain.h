@@ -55,7 +55,7 @@ public:
     };
     static spTerrain createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID);
 
-    virtual ~Terrain();
+    virtual ~Terrain() = default;
 
     void init();
     /**

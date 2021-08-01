@@ -13,7 +13,7 @@ public:
      * @param end fraction between 0 and 1
      */
     explicit TweenToggleVisibility(float start, float end);
-
+    virtual ~TweenToggleVisibility() = default;
     void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
 
     void init(oxygine::Actor&){}

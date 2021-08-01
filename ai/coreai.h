@@ -75,7 +75,7 @@ public:
     static const QString ACTION_FLARE;
 
     explicit CoreAI(GameEnums::AiTypes aiType);
-    virtual ~CoreAI();
+    virtual ~CoreAI() = default;
     /**
      * @brief init
      */

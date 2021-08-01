@@ -36,10 +36,6 @@ void GameAction::setSeed(quint32 seed)
     m_seed = seed;
 }
 
-GameAction::~GameAction()
-{
-}
-
 void GameAction::deleteAction()
 {
     delete this;

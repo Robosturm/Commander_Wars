@@ -47,11 +47,6 @@ namespace oxygine
         connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
     }
 
-    GameWindow::~GameWindow()
-    {
-
-    }
-
     void GameWindow::shutdown()
     {
         m_shuttingDown = true;

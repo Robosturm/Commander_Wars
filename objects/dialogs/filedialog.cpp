@@ -136,10 +136,6 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pApp->continueRendering();
 }
 
-FileDialog::~FileDialog()
-{
-}
-
 void FileDialog::filterChanged(qint32)
 {
     showFolder(m_CurrentFolder->getCurrentText());

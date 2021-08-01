@@ -25,33 +25,33 @@ class HeavyAi : public CoreAI
      */
     enum BuildingEntry
     {
-        DirectUnitRatio         ,
-        IndirectUnitRatio       ,
-        InfantryUnitRatio       ,
-        TransportUnitRatio      ,
-        TotalBuildingRatio      ,
-        EnemyRatio              ,
-        ProductionUsage         ,
-        LocalUnitData           ,
-        BasicAttackRange = LocalUnitData,
-        CaptureUnit             ,
-        CoUnitValue             ,
-        Movementpoints          ,
-        MapMovementpoints,
-        FondsUsage              ,
-        FireRange               ,
-        Flying                  ,
-        LoadingPotential        ,
-        OwnInfluence,
-        HighestEnemyInfluence, // 17
-        DealingFundsDamage      ,
-        DealingHpDamage         ,
-        ReceivingFundsDamge     ,
-        ReceivingHpDamage       ,
-        CapturePotential        ,
-        CanAttackImmuneUnitRatio,
-        UnitsToTransportRatio,
-        RequiredUnitsToTransportRatio,
+        DirectUnitRatio         ,           // 0
+        IndirectUnitRatio       ,           // 1
+        InfantryUnitRatio       ,           // 2
+        TransportUnitRatio      ,           // 3
+        TotalBuildingRatio      ,           // 4
+        EnemyRatio              ,           // 5
+        ProductionUsage         ,           // 6
+        LocalUnitData           ,           //
+        BasicAttackRange = LocalUnitData,   // 7
+        CaptureUnit             ,           // 8
+        CoUnitValue             ,           // 9
+        Movementpoints          ,           // 10
+        MapMovementpoints,                  // 11
+        FondsUsage              ,           // 12
+        FireRange               ,           // 13
+        Flying                  ,           // 14
+        LoadingPotential        ,           // 15
+        OwnInfluence,                       // 16
+        HighestEnemyInfluence,              // 17
+        DealingFundsDamage      ,           // 18
+        DealingHpDamage         ,           // 19
+        ReceivingFundsDamge     ,           // 20
+        ReceivingHpDamage       ,           // 21
+        CapturePotential        ,       	// 22
+        CanAttackImmuneUnitRatio,           // 23
+        UnitsToTransportRatio,              // 24
+        RequiredUnitsToTransportRatio,      // 25
         MovementPotential,
         VisionPotential,
         MaxUnitValue,
@@ -60,21 +60,23 @@ class HeavyAi : public CoreAI
 
     enum BasicFieldInfo
     {
-        OwnInfluenceValue,
-        EnemyInfluenceValue,
+        OwnInfluenceValue,      // 0
+        EnemyInfluenceValue,    // 1
         // the higher the more units haven't moved yet
-        MoveTurnProgress,
+        MoveTurnProgress,       // 2
         // amount of adjustant tiles blocked by an allied unit
-        WallCount,
+        WallCount,              // 3
         // if the unit is potentially stealthed at this tile
-        VisionHide,
+        VisionHide,             // 4
         // how much movement points getting here will be consumed
-        UsedMovement,
-        EnemyThread,
-        OwnProtection,
-        UnitHealth,
-        VisionRange,
-
+        UsedMovement,           // 5
+        EnemyThread,            // 6
+        OwnProtection,          // 7
+        UnitHealth,             // 8
+        VisionRange,            // 9
+        TerrainDefense,         // 10
+        ProductionOwner,        // 11
+        FrontTile,              // 12
         BasicFieldInfoMaxSize,
     };
 
@@ -87,13 +89,21 @@ class HeavyAi : public CoreAI
         AttackReceicingAbsolutDamage,
         AttackDealingFundsDamage,
         AttackReceicingFundsDamage,
+        AttackRemainingCaptureDays,
         AttackInfoMaxSize,
+    };
+
+    enum CaptureInfo
+    {
+        CaptureInfoStart = BasicFieldInfoMaxSize,
+
     };
 
     enum NeuralNetworks
     {
         Production,
         ActionFire,
+        ActionCapture,
         NeuralNetworksMax,
     };
 public:
@@ -460,22 +470,23 @@ private:
     bool m_pause{false};
 
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
-    float m_minActionScore{0.2f};
-    float m_actionScoreVariant{0.05f};
-    float m_stealthDistanceMultiplier{2.0f};
-    float m_alliedDistanceModifier{5.0f};
-    float m_maxMovementpoints{15.0f};
-    float m_maxFirerange{10};
-    float m_maxProductionTurnRange{4};
-    float m_maxVision{10};
-    float m_primaryEnemyMultiplier{1.2f};
-    float m_maxLoadingPlace{4};
-    float m_notAttackableDamage{30.0f};
-    float m_ownUnitProtection{5};
-    float m_enemyUnitThread{5};
-    float m_maxUnitValue{40000.0f};
-    float m_maxScore{10.0f};
-    float m_maxTerrainDefense{15.0f};
+    double m_minActionScore{0.2};
+    double m_actionScoreVariant{0.05};
+    double m_stealthDistanceMultiplier{2.0};
+    double m_alliedDistanceModifier{5.0};
+    double m_maxMovementpoints{15.0};
+    double m_maxFirerange{10};
+    double m_maxProductionTurnRange{4};
+    double m_maxVision{10};
+    double m_primaryEnemyMultiplier{1.2};
+    double m_maxLoadingPlace{4};
+    double m_notAttackableDamage{20.0};
+    double m_ownUnitProtection{5};
+    double m_enemyUnitThread{5};
+    double m_maxUnitValue{40000.0};
+    double m_maxScore{10.0f};
+    double m_maxTerrainDefense{15.0};
+    double m_maxCapturePoints = 20;
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};

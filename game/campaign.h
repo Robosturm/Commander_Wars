@@ -21,7 +21,7 @@ public:
     static const QString scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
-    virtual ~Campaign() override;
+    virtual ~Campaign();
     /**
      * @brief serialize stores the object
      * @param pStream

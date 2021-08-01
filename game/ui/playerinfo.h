@@ -18,7 +18,7 @@ class PlayerInfo : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PlayerInfo();
-
+    virtual ~PlayerInfo() = default;
 public slots:
     void updateData();
     void setFlippedX(bool value);

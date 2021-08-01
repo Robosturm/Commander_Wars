@@ -18,7 +18,7 @@ public:
     DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
     DecisionTree(QString treeFile, QString trainingDataFile);
 
-    virtual ~DecisionTree();
+    virtual ~DecisionTree() = default;
 
     spDecisionNode train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 

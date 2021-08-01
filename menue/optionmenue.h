@@ -19,7 +19,7 @@ class OptionMenue : public Basemenu
     Q_OBJECT
 public:
     explicit OptionMenue();
-    virtual ~OptionMenue();
+    virtual ~OptionMenue() = default;
 
     static void showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y);
 signals:

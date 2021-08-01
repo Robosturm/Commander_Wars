@@ -77,10 +77,6 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
     }
 }
 
-DecisionTree::~DecisionTree()
-{
-}
-
 float DecisionTree::getDecision(QVector<float>& input)
 {
     Console::print("getDecision() for decision tree()", Console::eDEBUG);

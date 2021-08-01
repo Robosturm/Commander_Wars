@@ -22,7 +22,7 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
     Q_OBJECT
 public:
     explicit BaseGameInputIF(GameEnums::AiTypes aiType);
-
+    virtual ~BaseGameInputIF() = default;
     void setPlayer(Player* pPlayer);
 
     virtual void init() = 0;

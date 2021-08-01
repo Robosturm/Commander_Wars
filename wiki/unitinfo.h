@@ -16,6 +16,7 @@ class UnitInfo : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit UnitInfo(Unit* pUnit, qint32 width);
+    virtual ~UnitInfo() = default;
     /**
      * @brief createWeaponTable
      * @param weaponID

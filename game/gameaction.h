@@ -27,7 +27,7 @@ class GameAction : public QObject, public FileSerializable, public oxygine::ref_
 public:
     explicit GameAction();
     explicit GameAction(QString actionID);
-    virtual ~GameAction();
+    virtual ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
      * @param point

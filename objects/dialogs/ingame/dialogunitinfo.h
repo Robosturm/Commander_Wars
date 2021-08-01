@@ -17,7 +17,7 @@ class DialogUnitInfo : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogUnitInfo(Player* pPlayer);
-
+    virtual ~DialogUnitInfo() = default;
 signals:
     void sigFinished();
     void sigMoveToUnit(qint32 posX, qint32 posY);

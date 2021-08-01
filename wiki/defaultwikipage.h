@@ -10,7 +10,8 @@ class DefaultWikipage : public Wikipage
 {
     Q_OBJECT
 public:
-    DefaultWikipage(QString item);
+    explicit DefaultWikipage(QString item);
+    virtual ~DefaultWikipage() = default;
 };
 
 #endif // DEFAULTWIKIPAGE_H

@@ -17,7 +17,7 @@ class PerkSelection : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList);
-
+    virtual ~PerkSelection() = default;
     void updatePerksView(CO* pCO);
 
 signals:

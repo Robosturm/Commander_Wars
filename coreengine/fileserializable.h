@@ -6,8 +6,8 @@
 class FileSerializable
 {
 public:
-    FileSerializable() = default;
-    ~FileSerializable() = default;
+    explicit FileSerializable() = default;
+    virtual ~FileSerializable() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

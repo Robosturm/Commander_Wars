@@ -103,10 +103,6 @@ qint32 Terrain::getTotalVisionHigh()
     return high;
 }
 
-Terrain::~Terrain()
-{
-}
-
 bool Terrain::isValid()
 {
     return TerrainManager::getInstance()->exists(m_terrainID);

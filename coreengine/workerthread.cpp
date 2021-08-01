@@ -40,10 +40,6 @@ WorkerThread::WorkerThread()
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
 }
 
-WorkerThread::~WorkerThread()
-{
-}
-
 void WorkerThread::start()
 {
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();

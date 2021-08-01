@@ -72,6 +72,7 @@ public:
     };
 
     explicit NormalAi(QString configurationFile);
+    virtual ~NormalAi() = default;
 signals:
 
 public slots:

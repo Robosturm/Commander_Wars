@@ -19,7 +19,8 @@ class VeryEasyAI : public CoreAI
     Q_OBJECT
 public:
 
-    VeryEasyAI();
+    explicit VeryEasyAI();
+    virtual ~VeryEasyAI() = default;
 public slots:
     /**
      * @brief process

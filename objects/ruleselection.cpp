@@ -34,10 +34,6 @@ RuleSelection::RuleSelection(qint32 width, Mode mode, bool enabled)
     showRuleSelection();
 }
 
-RuleSelection::~RuleSelection()
-{
-}
-
 void RuleSelection::confirmRuleSelectionSetup()
 {
     if (m_ruleChangeEabled)

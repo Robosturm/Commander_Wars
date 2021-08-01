@@ -33,10 +33,6 @@ Minimap::Minimap()
     });
 }
 
-Minimap::~Minimap()
-{
-}
-
 void Minimap::clear()
 {
     // clear minimap
@@ -106,7 +102,6 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                 }
                 else
                 {
-
                     Terrain* pTerrain = pMap->getTerrain(x, y);
                     Building* pBuilding = pTerrain->getBuilding();
                     QString id = pTerrain->getID();
@@ -247,6 +242,10 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
             }
         }
         Mainapp::getInstance()->continueRendering();
+    }
+    else
+    {
+        clear();
     }
     Mainapp::getInstance()->continueRendering();
 }

@@ -5,11 +5,6 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 
-Filesupport::Filesupport() : QObject()
-{
-
-}
-
 QByteArray Filesupport::getHash(QStringList filter, const QStringList & folders)
 {
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);

@@ -13,8 +13,8 @@ class GameAnimationNextDay : public GameAnimation
 {
     Q_OBJECT
 public:
-    GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 2000);
-
+    explicit GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 2000);
+    virtual ~GameAnimationNextDay() = default;
     virtual void restart() override;
     virtual void stop() override;
 

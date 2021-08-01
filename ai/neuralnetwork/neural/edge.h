@@ -19,6 +19,7 @@ class Edge : public oxygine::ref_counter, public FileSerializable
 {
 public:
     Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);
+    virtual ~Edge() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

@@ -10,8 +10,8 @@ class TerrainFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
 public:
-    TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);
-
+    explicit TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);
+    virtual ~TerrainFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

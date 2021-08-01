@@ -10,7 +10,8 @@ class Label : public Tooltip
 {
     Q_OBJECT
 public:
-    Label(qint32 width);
+    explicit Label(qint32 width);
+    virtual ~Label() = default;
     /**
      * @brief setText
      * @param str

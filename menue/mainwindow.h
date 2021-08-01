@@ -13,7 +13,7 @@ class Mainwindow : public Basemenu
     Q_OBJECT
 public:
     explicit Mainwindow();
-    virtual ~Mainwindow();
+    virtual ~Mainwindow() = default;
 signals:
     void sigEnterSingleplayer();
     void sigEnterMultiplayer();

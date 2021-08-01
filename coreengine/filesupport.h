@@ -8,6 +8,7 @@ class Filesupport : public QObject
 {
     Q_OBJECT
 public:
+    virtual ~Filesupport() = default;
     /**
      * @brief getRuntimeHash
      * @return
@@ -120,7 +121,7 @@ public:
 signals:
 
 private:
-    explicit Filesupport();
+    explicit Filesupport() = default;
 };
 
 #endif // HASHING_H

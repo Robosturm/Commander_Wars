@@ -10,7 +10,7 @@ class GameData : public QObject, public FileSerializable
     Q_OBJECT
 public:
     explicit GameData();
-
+    virtual ~GameData() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

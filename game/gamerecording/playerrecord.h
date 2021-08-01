@@ -21,7 +21,7 @@ public:
     explicit PlayerRecord();
     explicit PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
                           qint32 buildings, qint32 units, qint32 playerStrength);
-
+    virtual ~PlayerRecord() = default;
     /**
      * @brief serialize stores the object
      * @param pStream

@@ -15,7 +15,7 @@ class DialogConnecting : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogConnecting(QString text, qint32 timeoutMs);
-
+    virtual ~DialogConnecting() = default;
 signals:
     void sigCancel();
     void sigConnected();

@@ -29,14 +29,11 @@ public:
      * @brief Player
      */
     explicit Player();
+    virtual ~Player() = default;
     /**
      * @brief init
      */
     void init();
-    /**
-     * @brief ~Player
-     */
-    virtual ~Player();
     /**
      * @brief releaseStaticData
      */

@@ -16,7 +16,7 @@ class DialogModifyBuilding : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit DialogModifyBuilding(Building* pBuilding);
-
+    virtual ~DialogModifyBuilding() = default;
 signals:
     void sigFinished();
 private:

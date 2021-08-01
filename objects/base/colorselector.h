@@ -21,7 +21,7 @@ class ColorSelector : public QObject, public oxygine::Actor
     static constexpr qint32 pixelCount = 4;
 public:
     explicit ColorSelector(QColor color, qint32 pixelSize);
-
+    virtual ~ColorSelector() = default;
     QColor getCurrentColor() const;
 
 signals:

@@ -16,10 +16,6 @@ MapMover::MapMover(InGameMenue* pOwner)
     m_scrollTimer.start(100);
 }
 
-MapMover::~MapMover()
-{
-}
-
 void MapMover::mouseWheel(float direction)
 {
     GameMap::getInstance()->setZoom(direction);

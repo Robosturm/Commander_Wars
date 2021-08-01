@@ -21,7 +21,6 @@ class ColorSelectionDialog : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit ColorSelectionDialog(QColor color);
-
     virtual ~ColorSelectionDialog() = default;
 signals:
     void editFinished(QColor color);

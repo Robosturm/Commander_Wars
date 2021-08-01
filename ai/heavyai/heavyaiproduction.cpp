@@ -15,7 +15,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
                          spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
     scoreUnitBuildings(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings);
-    float bestScore = std::numeric_limits<float>::min();
+    double bestScore = std::numeric_limits<float>::min();
     qint32 index = -1;
     for (qint32 i = 0; i < m_BuildingData.size(); ++i)
     {
@@ -120,11 +120,11 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
     if (bestItems.size() > 0)
     {
         qint32 item = GlobalUtils::randInt(0, bestItems.size() - 1);
-        building.m_score = bestScore;
-        building.m_selectedData = item;
+        building.m_score = scores[item];
+        building.m_selectedData = bestItems[item];
         building.m_action = spGameAction::create(CoreAI::ACTION_BUILD_UNITS);
         building.m_action->setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
-        CoreAI::addMenuItemData(building.m_action, building.buildingDataInput[item].unitId, building.buildingDataInput[item].cost);
+        CoreAI::addMenuItemData(building.m_action, building.buildingDataInput[building.m_selectedData].unitId, building.buildingDataInput[building.m_selectedData].cost);
     }
 }
 
@@ -250,18 +250,18 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
     }
     QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
     auto & influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
-    float highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();
-    float value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
+    double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();
+    double value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
     value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
     data.unitBuildingDataInput[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
     data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
     data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
     data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(pMap->getMapHeight() * pMap->getMapWidth());
     data.unitBuildingDataInput[BuildingEntry::FireRange] = static_cast<double>(pUnit->getMaxRange(position)) / static_cast<double>(m_maxFirerange);
-    data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false);
+    data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
     data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
-    data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = influenceInfo.ownInfluence / highestInfluence;
-    data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = influenceInfo.highestEnemyInfluence / highestInfluence;
+    data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
+    data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.highestEnemyInfluence) / highestInfluence;
     qint32 islandIdx = getIslandIndex(pUnit);
     qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
     qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);
@@ -298,14 +298,14 @@ void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QV
         {
             if (canTransportToEnemy(pUnit, unit, m_pEnemyUnits, pEnemyBuildings))
             {
-                float scoreMultiplier = getProductionScoreMultiplier(position, unit->Unit::getMapPosition(), movementPoints);
+                double scoreMultiplier = getProductionScoreMultiplier(position, unit->Unit::getMapPosition(), movementPoints);
                 transporterCount += scoreMultiplier;
             }
         }
         double requiredTransporterCount = 0;
         for (const auto & unit : qAsConst(transporterUnits))
         {
-            float scoreMultiplier = getProductionScoreMultiplier(position, unit->Unit::getMapPosition(), movementPoints);
+            double scoreMultiplier = getProductionScoreMultiplier(position, unit->Unit::getMapPosition(), movementPoints);
             requiredTransporterCount += scoreMultiplier;
         }
         if (transportTargets.size() > 0)
@@ -326,16 +326,16 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
     qint32 mapHeight = pMap->getMapHeight();
     qint32 unitValue = pUnit->getUnitValue();
     bool canCapture = (data.unitBuildingDataInput[BuildingEntry::CaptureUnit] > 0);
-    float fundsDamage = 0.0f;
-    float possibleFundsDamage = 0.0f;
-    float hpDamage = 0.0f;
-    float possibleHpDamage = 0.0f;
-    float captureRate = 0.0f;
-    float maxCaptureRate = 0.0f;
-    float counterFundsDamage = 0.0f;
-    float counterhpDamage = 0.0f;
-    float counterAttackCount = 0.0f;
-    float immuneUnit = 0;
+    double fundsDamage = 0.0;
+    double possibleFundsDamage = 0.0;
+    double hpDamage = 0.0;
+    double possibleHpDamage = 0.0;
+    double captureRate = 0.0;
+    double maxCaptureRate = 0.0;
+    double counterFundsDamage = 0.0;
+    double counterhpDamage = 0.0;
+    double counterAttackCount = 0.0;
+    double immuneUnit = 0;
     for (qint32 x = 0; x < mapWidth; ++x)
     {
         for (qint32 y = 0; y < mapHeight; ++y)
@@ -343,22 +343,22 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
             Terrain* pTerrain = pMap->getTerrain(x, y);
             Unit* pEnemyUnit = pTerrain->getUnit();
             Building* pBuilding = pTerrain->getBuilding();
-            float scoreMultiplier = getProductionScoreMultiplier(position, QPoint(x, y), movementPoints);
+            double scoreMultiplier = getProductionScoreMultiplier(position, QPoint(x, y), movementPoints);
             if (pEnemyUnit != nullptr &&
                 m_pPlayer->isEnemyUnit(pEnemyUnit))
             {
-                float unitMulitpler = scoreMultiplier;
+                double unitMulitpler = scoreMultiplier;
                 if (isPrimaryEnemy(pEnemyUnit))
                 {
                     unitMulitpler *= m_primaryEnemyMultiplier;
                 }
-                float dmg = getBaseDamage(pUnit, pEnemyUnit);
-                float enemyHp = pEnemyUnit->getHp();
-                float enemyHpRatio = enemyHp / Unit::MAX_UNIT_HP;
+                double dmg = getBaseDamage(pUnit, pEnemyUnit);
+                double enemyHp = pEnemyUnit->getHp();
+                double enemyHpRatio = enemyHp / Unit::MAX_UNIT_HP;
                 if (dmg >= 0)
                 {
-                    qint32 enemyUnitValue = pEnemyUnit->getUnitValue();
-                    float damageMultiplier = dmg / (enemyHp * Unit::MAX_UNIT_HP);
+                    double enemyUnitValue = pEnemyUnit->getUnitValue();
+                    double damageMultiplier = dmg / (enemyHp * Unit::MAX_UNIT_HP);
                     fundsDamage         += unitMulitpler * enemyUnitValue * damageMultiplier;
                     possibleFundsDamage += unitMulitpler * enemyUnitValue;
                     hpDamage            += unitMulitpler * damageMultiplier;
@@ -371,7 +371,7 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
                 dmg = getBaseDamage(pEnemyUnit, pUnit) * enemyHpRatio;
                 if (dmg >= 0)
                 {
-                    constexpr float maxDamage = Unit::MAX_UNIT_HP  * Unit::MAX_UNIT_HP;
+                    static constexpr double maxDamage = Unit::MAX_UNIT_HP  * Unit::MAX_UNIT_HP;
                     counterFundsDamage  += unitMulitpler * unitValue * dmg / maxDamage;
                     counterhpDamage     += unitMulitpler * dmg / maxDamage;
                     ++counterAttackCount;
@@ -382,7 +382,7 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
                 m_pPlayer->isEnemy(pBuilding->getOwner()) &&
                 pBuilding->isCaptureOrMissileBuilding(true))
             {
-                float buildingMulitpler = 1;
+                double buildingMulitpler = 1;
                 if (isPrimaryEnemy(pBuilding))
                 {
                     buildingMulitpler = m_primaryEnemyMultiplier;
@@ -430,7 +430,7 @@ float HeavyAi::getProductionScoreMultiplier(QPoint position, QPoint target, qint
 {
     float scoreMultiplier = 1.0f;
     qint32 distance = GlobalUtils::getDistance(position, target);
-    float turnDistance = static_cast<float>(distance) / static_cast<float>(movementPoints);
+    double turnDistance = distance / static_cast<double>(movementPoints);
     if (turnDistance > m_maxProductionTurnRange)
     {
         scoreMultiplier = m_maxProductionTurnRange / turnDistance;
@@ -566,7 +566,7 @@ void HeavyAi::getImmuneUnits(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits
             Unit* pEnemyUnit = pEnemyUnits->at(i2);
             auto dmg = getBaseDamage(pUnit, pEnemyUnit);
 
-            if (dmg > m_notAttackableDamage)
+            if (dmg > m_notAttackableDamage || dmg >= pEnemyUnit->getHp())
             {
                 attackable = true;
                 break;

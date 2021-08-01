@@ -337,11 +337,6 @@ void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
     pButton->setY(Settings::getHeight() / 2.0f - buttonCount  / 2 * buttonHeigth + buttonHeigth * btnI);
 }
 
-Mainwindow::~Mainwindow()
-{
-
-}
-
 void Mainwindow::enterSingleplayer()
 {    
     Mainapp::getInstance()->pauseRendering();

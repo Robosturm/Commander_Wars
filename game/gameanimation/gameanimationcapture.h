@@ -15,7 +15,7 @@ class GameAnimationCapture : public GameAnimation
     Q_OBJECT
 public:
     explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints);
-
+    virtual ~GameAnimationCapture() = default;
 public slots:
     /**
      * @brief addBackgroundSprite adds a background sprite with no functionality. Besides looking pretty.

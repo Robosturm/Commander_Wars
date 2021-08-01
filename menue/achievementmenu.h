@@ -16,7 +16,7 @@ class Achievementmenu : public Basemenu
     Q_OBJECT
 public:
     explicit Achievementmenu();
-
+    virtual ~Achievementmenu() = default;
 signals:
     void sigExitMenue();
     void sigSearch();

@@ -16,7 +16,7 @@ class TableView : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit TableView(QVector<qint32> widths, QVector<QStringList> data, QStringList header, bool selectable = false);
-
+    virtual ~TableView() = default;
 signals:
     void sigItemClicked();
 public slots:

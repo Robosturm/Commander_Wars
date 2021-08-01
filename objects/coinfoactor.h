@@ -20,8 +20,8 @@ class COInfoActor : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    COInfoActor(qint32 width);
-
+    explicit COInfoActor(qint32 width);
+    virtual ~COInfoActor() = default;
     /**
      * @brief showCO
      * @param pCO

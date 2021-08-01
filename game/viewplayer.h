@@ -17,7 +17,8 @@ public:
         Map  = -1,
     };
 
-    Viewplayer();
+    explicit Viewplayer();
+    virtual ~Viewplayer() = default;
 public slots:
     /**
      * @brief getFieldVisible

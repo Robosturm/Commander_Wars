@@ -16,7 +16,8 @@ const qint32 HeavyAi::minSiloDamage = 7000;
 constexpr const char* const NeuralNetworkFileEnding = ".net";
 constexpr const char* const NeuralNetworkPath = "aidata/heavy/";
 const QStringList HeavyAi::NeuralNetworkNames = {"Production",
-                                                 "ACTION_FIRE"};
+                                                 "ACTION_FIRE",
+                                                 "ACTION_CAPTURE"};
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -242,6 +243,11 @@ void HeavyAi::readIni(QString name)
         if(!ok)
         {
             m_maxTerrainDefense = 15.0f;
+        }
+        m_maxCapturePoints = settings.value("MaxCapturePoints", 20.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_maxCapturePoints = 20.0f;
         }
 
     }
@@ -873,17 +879,21 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, QVector<do
 float HeavyAi::scoreCapture(spGameAction action, UnitData & unitData, QVector<double> baseData)
 {
     // todo
-    return 1;
+
+    auto score = m_neuralNetworks[NeuralNetworks::ActionCapture]->predict(baseData);
+    return score[0];
 }
 
 float HeavyAi::scoreFire(spGameAction action, UnitData & unitData, QVector<double> baseData)
 {
-    // todo
     spGameMap pMap = GameMap::getInstance();
     baseData.append(QList<double>(static_cast<qsizetype>(AttackInfoMaxSize - AttackInfoStart)));
     if (pMap.get() != nullptr)
     {
         action->startReading();
+        Unit* pAttacker = action->getTargetUnit();
+        double attackerHp = pAttacker->getHp() * Unit::MAX_UNIT_HP;
+        double attackerUnitValue = pAttacker->getUnitValue();
         qint32 x = action->readDataInt32();
         qint32 y = action->readDataInt32();
         Terrain* pTerrain = pMap->getTerrain(x, y);
@@ -895,22 +905,54 @@ float HeavyAi::scoreFire(spGameAction action, UnitData & unitData, QVector<doubl
         }
         else if (pDefUnit != nullptr)
         {
+            double defenderUnitHp = pDefUnit->getHp() * Unit::MAX_UNIT_HP;
+            double defenderUnitValue = pDefUnit->getUnitValue();
             double atkDamage = data.x();
+            if (atkDamage > defenderUnitHp)
+            {
+                atkDamage = defenderUnitHp;
+            }
             double defDamage = data.width();
-
+            if (defDamage > attackerHp)
+            {
+                defDamage = attackerHp;
+            }
+            static constexpr double maxDamage = Unit::MAX_UNIT_HP * Unit::MAX_UNIT_HP;
+            baseData[AttackInfo::AttackDealingHpDamage] = atkDamage / defenderUnitHp;
+            baseData[AttackInfo::AttackReceavingHpDamage] = defDamage / attackerHp;
+            baseData[AttackInfo::AttackDealingAbsolutDamage] = atkDamage / maxDamage;
+            baseData[AttackInfo::AttackReceicingAbsolutDamage] = defDamage / maxDamage;
+            baseData[AttackInfo::AttackDealingFundsDamage] = baseData[AttackInfo::AttackDealingHpDamage] * defenderUnitValue / m_maxUnitValue;
+            baseData[AttackInfo::AttackReceicingFundsDamage] = baseData[AttackInfo::AttackReceavingHpDamage] * attackerUnitValue / m_maxUnitValue;
+            if (pDefUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
+            {
+                double captureDays = static_cast<double>(pDefUnit->getHpRounded()) / (m_maxCapturePoints - static_cast<double>(pDefUnit->getCapturePoints()));
+                baseData[AttackInfo::AttackRemainingCaptureDays] = captureDays;
+            }
         }
         else if (m_enableNeutralTerrainAttack)
         {
-
+            Building* pBuilding = pTerrain->getBuilding();
+            double atkDamage = data.x();
+            double hp = pTerrain->getHp();
+            if (hp <= 0 && pBuilding != nullptr)
+            {
+                hp = pBuilding->getHp();
+            }
+            if (atkDamage > hp)
+            {
+                atkDamage = hp;
+            }
+            baseData[AttackInfo::AttackDealingHpDamage] = atkDamage / hp;
+            baseData[AttackInfo::AttackDealingAbsolutDamage] = atkDamage / hp;
         }
         else
         {
             return 0;
         }
     }
-    // auto score = m_neuralNetworks[NeuralNetworks::ActionFire]->predict(baseData);
-    // return score[0];
-    return 0.9;
+    auto score = m_neuralNetworks[NeuralNetworks::ActionFire]->predict(baseData);
+    return score[0];
 }
 
 void HeavyAi::getFunctionType(QString action, FunctionType & type, qint32 & index)
@@ -945,6 +987,8 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
         Unit* pMoveUnit = action->getTargetUnit();
         double movepoints = pMoveUnit->getMovementpoints(action->getTarget());
         Terrain* pTerrainTarget = pMap->getTerrain(moveTarget.x(), moveTarget.y());
+        Building* pBuildingTarget = pTerrainTarget->getBuilding();
+        qint32 playerId = m_pPlayer->getPlayerID();
         const double highestInfluece = m_InfluenceFrontMap.getTotalHighestInfluence();
         const auto & info = m_InfluenceFrontMap.getInfluenceInfo(moveTarget.x(), moveTarget.y());
         double notMovedUnitCount = 0;
@@ -973,7 +1017,7 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
         }
         data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info.ownInfluence) / highestInfluece;
         data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.highestEnemyInfluence) / highestInfluece;
-        data[BasicFieldInfo::EnemyInfluenceValue] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
+        data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
         spQmlVectorPoint pCircle = GlobalUtils::getCircle(1, 1);
         double wallCount = 0;
         for (qint32 i = 0; i < pCircle->size(); ++i)
@@ -1002,9 +1046,9 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
         }
         else if (fogOfWar)
         {
-            data[BasicFieldInfo::VisionHide] = (pTerrainTarget->getVisionHide(nullptr) == true);
+            data[BasicFieldInfo::VisionHide] = (pTerrainTarget->getVisionHide(nullptr) == true) ? 1 : -1;
         }
-        data[BasicFieldInfo::EnemyInfluenceValue] = action->getCosts() / movepoints;
+        data[BasicFieldInfo::UsedMovement] = static_cast<double>(action->getCosts()) / movepoints;
         data[BasicFieldInfo::UnitHealth] = pMoveUnit->getHp() / Unit::MAX_UNIT_HP;
         if (threadValue > ownValue * m_enemyUnitThread)
         {
@@ -1016,13 +1060,44 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
         }
         if (threadValue > ownValue * m_ownUnitProtection)
         {
-            data[BasicFieldInfo::EnemyThread] = 1;
+            data[BasicFieldInfo::OwnProtection] = 1;
         }
         else
         {
-            data[BasicFieldInfo::EnemyThread] = protectionValue / (ownValue * m_ownUnitProtection);
+            data[BasicFieldInfo::OwnProtection] = protectionValue / (ownValue * m_ownUnitProtection);
         }
-        data[BasicFieldInfo::VisionRange] = pMoveUnit->getVision(moveTarget) / m_maxVision;
+        data[BasicFieldInfo::VisionRange] = static_cast<double>(pMoveUnit->getVision(moveTarget)) / m_maxVision;
+        data[BasicFieldInfo::TerrainDefense] = static_cast<double>(pMoveUnit->getTerrainDefense(moveTarget.x(), moveTarget.y())) / m_maxTerrainDefense;
+        if (pBuildingTarget != nullptr &&
+            pBuildingTarget->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
+        {
+            bool enemy = m_pPlayer->isEnemy(pBuildingTarget->getOwner());
+            bool allied = m_pPlayer->isAlly(pBuildingTarget->getOwner());
+            bool neutral = (pBuildingTarget->getOwner() == nullptr);
+            if (!neutral)
+            {
+                if (enemy)
+                {
+                    data[BasicFieldInfo::TerrainDefense] = -1;
+                }
+                else if (allied)
+                {
+                    data[BasicFieldInfo::TerrainDefense] = 1;
+                }
+                else
+                {
+                    oxygine::handleErrorPolicy(oxygine::ep_show_error, "HeavyAi::getBasicFieldInputVector unknown building ownership");
+                }
+            }
+        }
+        if (info.frontOwners.contains(playerId))
+        {
+            data[BasicFieldInfo::FrontTile] = 1;
+        }
+        else if (info.frontOwners.size() > 0)
+        {
+            data[BasicFieldInfo::FrontTile] = -1;
+        }
     }
 }
 

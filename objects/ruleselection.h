@@ -24,7 +24,7 @@ public:
         Multiplayer,
     };
     explicit RuleSelection(qint32 width, Mode mode, bool enabled = true);
-    virtual ~RuleSelection();
+    virtual ~RuleSelection() = default;
     void showRuleSelection();
     void confirmRuleSelectionSetup();
     Mode getMode() const;

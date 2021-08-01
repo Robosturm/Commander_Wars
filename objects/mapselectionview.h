@@ -26,6 +26,7 @@ class MapSelectionView : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit MapSelectionView();
+    virtual ~MapSelectionView() = default;
 
     inline MapSelection* getMapSelection()
     {

@@ -218,11 +218,6 @@ void COSelection::armyBannerClicked(QString army, qint32 index)
     }
 }
 
-COSelection::~COSelection()
-{
-
-}
-
 void COSelection::armyChanged(QString army)
 {
     

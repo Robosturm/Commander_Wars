@@ -13,6 +13,7 @@ class UnitPathFindingSystem : public PathFindingSystem
     Q_OBJECT
 public:
     explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
+    virtual ~UnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
      * @param x

@@ -18,6 +18,7 @@ class WikiDatabase : public QObject, public RessourceManagement<WikiDatabase>
 {
     Q_OBJECT
 public:
+    virtual ~WikiDatabase() = default;
     /**
      * @brief m_Entries
      * 0 = Name

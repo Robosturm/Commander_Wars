@@ -17,7 +17,7 @@ class DropDownmenuBase : public Tooltip
     Q_OBJECT
 public:
     explicit DropDownmenuBase(qint32 width, qint32 itemcount);
-
+    virtual ~DropDownmenuBase() = default;
 
     /**
      * @brief getCurrentItem index of the current item

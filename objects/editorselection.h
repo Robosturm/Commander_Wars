@@ -44,7 +44,7 @@ public:
     };
 
     explicit EditorSelection(qint32 width, bool smallScreen);
-
+    virtual ~EditorSelection() = default;
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;

@@ -130,10 +130,6 @@ void Player::loadCOMusic()
     }
 }
 
-Player::~Player()
-{
-}
-
 QColor Player::getColor() const
 {
     return m_Color;

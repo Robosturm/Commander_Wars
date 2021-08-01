@@ -36,7 +36,7 @@ public:
     };
 
     explicit MapSelectionMapsMenue(qint32 heigth = -1, spMapSelectionView pMapSelectionView = nullptr);
-    virtual ~MapSelectionMapsMenue();
+    virtual ~MapSelectionMapsMenue() = default;
     // functions for swapping between the inputs
     virtual void hideMapSelection();
     virtual void showMapSelection();

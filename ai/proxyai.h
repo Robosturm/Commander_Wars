@@ -18,8 +18,8 @@ class ProxyAi : public CoreAI
 {
     Q_OBJECT
 public:
-    ProxyAi();
-
+    explicit ProxyAi();
+    virtual ~ProxyAi() = default;
     virtual void init() override;
     /**
      * @brief serialize stores the object
