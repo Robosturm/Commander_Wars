@@ -327,8 +327,9 @@ void Interpreter::setGlobal(QString var, QJSValue obj)
 
 void Interpreter::deleteObject(QString name)
 {
-    QString order = "delete " + name + ";";
+    QString order = "Global[\"" + name + "\"] = null;\nGlobal[\"" + name + "\"] = undefined;";
     doString(order);
+    collectGarbage();
 }
 
 bool Interpreter::exists(QString object, QString function)

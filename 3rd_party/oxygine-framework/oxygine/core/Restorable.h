@@ -9,7 +9,7 @@ namespace oxygine
     class Restorable : public IClosureOwner
     {
     public:
-        Restorable();
+        explicit Restorable();
         virtual ~Restorable();
 
         typedef QVector<Restorable*> restorable;

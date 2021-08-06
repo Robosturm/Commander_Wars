@@ -80,7 +80,7 @@ namespace oxygine
     public:
         static LoadResourcesContext* get();
 
-        virtual ~LoadResourcesContext() {}
+        virtual ~LoadResourcesContext() = default;
 
 
         virtual void createTexture(const CreateTextureTask& opt) = 0;

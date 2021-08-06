@@ -31,6 +31,8 @@ namespace oxygine
         };
 
         typedef qint32 lock_flags;
+        explicit Texture() = default;
+        virtual ~Texture() = default;
 
         virtual qint32 getWidth() const = 0;
         virtual qint32 getHeight() const = 0;

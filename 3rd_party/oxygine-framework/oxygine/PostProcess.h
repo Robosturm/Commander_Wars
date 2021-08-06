@@ -46,8 +46,8 @@ namespace oxygine
         static void initShaders();
         static void freeShaders();
 
-        PostProcess(const PostProcessOptions& opt);
-        ~PostProcess();
+        explicit PostProcess(const PostProcessOptions& opt);
+        virtual ~PostProcess() = default;
 
         void free();
 
@@ -77,8 +77,8 @@ namespace oxygine
     class TweenPostProcess : public TweenBase, public RenderDelegate, public PPTask
     {
     public:
-        TweenPostProcess(const PostProcessOptions& opt);
-        ~TweenPostProcess();
+        explicit TweenPostProcess(const PostProcessOptions& opt);
+        virtual ~TweenPostProcess();
 
         void renderPP() override;
         void addRefPP() override;
@@ -103,7 +103,8 @@ namespace oxygine
     class RenderTargetsManager
     {
     public:
-        RenderTargetsManager();
+        explicit RenderTargetsManager() = default;
+        virtual ~RenderTargetsManager() = default;
 
         spNativeTexture get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
         void update();
@@ -113,10 +114,10 @@ namespace oxygine
         bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
 
         typedef QVector<spNativeTexture> rts;
-        rts _rts;
+        rts m_rts;
 
         typedef QVector<spNativeTexture> free;
-        free _free;
+        free m_free;
     };
 
     void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);

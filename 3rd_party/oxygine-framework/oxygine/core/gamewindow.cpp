@@ -41,7 +41,9 @@ namespace oxygine
         m_window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
+        connect(this, &GameWindow::sigWaitOnRelease, this, &GameWindow::waitOnRelease, Qt::BlockingQueuedConnection);
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
+        connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
 
         connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
         connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
@@ -91,6 +93,12 @@ namespace oxygine
         timeMS duration = IVideoDriver::_stats.duration;
         IVideoDriver::_stats = IVideoDriver::Stats();
         IVideoDriver::_stats.duration = duration;
+    }
+
+    void GameWindow::quitApp()
+    {
+        m_shuttingDown = true;
+        QApplication::processEvents();
     }
 
     void GameWindow::paintGL()
@@ -230,13 +238,16 @@ namespace oxygine
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-        if (QThread::currentThreadId() == m_mainHandle)
+        if (!m_shuttingDown)
         {
-            loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
-        }
-        else
-        {
-            emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+            if (QThread::currentThreadId() == m_mainHandle)
+            {
+                loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+            }
+            else
+            {
+                emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
+            }
         }
     }
 
@@ -246,6 +257,10 @@ namespace oxygine
         {
             pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
         }
+    }
+
+    void GameWindow::waitOnRelease()
+    {
     }
 
     void GameWindow::mousePressEvent(QMouseEvent *event)

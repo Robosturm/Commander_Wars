@@ -6,11 +6,6 @@ namespace oxygine
 {
     spIVideoDriver IVideoDriver::instance = nullptr;
 
-    IVideoDriver::~IVideoDriver()
-    {
-
-    }
-
     void IVideoDriver::setUniform(const char* id, const Matrix& v)
     {
         setUniform(id, &v, 1);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <atomic>
 
 /**main oxygine namespace*/
 namespace oxygine

@@ -553,7 +553,7 @@ private:
 
     QColor m_Color;
     QImage m_colorTable;
-    oxygine::spResAnim m_ColorTableAnim{oxygine::spSingleResAnim::create()};
+    oxygine::spResAnim m_ColorTableAnim;
     QString m_playerArmy{""};
     qint32 m_team{0};
     spCO m_playerCOs[2]{nullptr, nullptr};
@@ -562,7 +562,20 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool m_isDefeated{false};
-    QVector<QVector<std::tuple<GameEnums::VisionType, qint32, bool>>> m_FogVisionFields;
+    struct VisionFieldInfo
+    {
+        VisionFieldInfo(GameEnums::VisionType visionType, qint32 duration, bool directView)
+            : m_visionType(visionType),
+              m_duration(duration),
+              m_directView(directView)
+        {
+        }
+        GameEnums::VisionType m_visionType = GameEnums::VisionType_Shrouded;
+        qint32 m_duration = 0;
+        bool m_directView = false;
+    };
+
+    QVector<QVector<VisionFieldInfo>> m_FogVisionFields;
     /**
      * @brief m_BuildList contains all units we're allowed to build
      */

@@ -147,7 +147,10 @@ public:
      * @return
      */
     QVector<Userdata::ShopItem> getItems(GameEnums::ShopItemType type, bool bought);
-
+    /**
+     * @brief release
+     */
+    void release();
 signals:
 
 public slots:

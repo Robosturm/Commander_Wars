@@ -169,11 +169,6 @@ namespace oxygine
         }
     };
 
-
-    RenderTargetsManager::RenderTargetsManager()
-    {
-    }
-
     bool RenderTargetsManager::isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const
     {
         if (!t)
@@ -206,25 +201,23 @@ namespace oxygine
 
         spNativeTexture result;
 
-        auto it = lower_bound(_free.cbegin(), _free.cend(), result, NTP(w, h, tf));
-        if (it != _free.end())
+        auto it = lower_bound(m_free.cbegin(), m_free.cend(), result, NTP(w, h, tf));
+        if (it != m_free.end())
         {
             const spNativeTexture& t = *it;
             if (isGood(t, w, h, tf))
             {
                 result = t;
-                _free.erase(it);
+                m_free.erase(it);
             }
         }
 
         if (!result)
         {
-            //if texture wasn't found create it
-            result = IVideoDriver::instance->createTexture();
-            result->init(w, h, tf, true);
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "unable to find a render target");
         }
         result->setCreationTime(Clock::getTimeMS());
-        _rts.push_back(result);
+        m_rts.push_back(result);
         return result;
     }
 
@@ -233,48 +226,48 @@ namespace oxygine
     void RenderTargetsManager::update()
     {
         timeMS tm = Clock::getTimeMS();
-        for (size_t i = 0, sz = _rts.size(); i < sz; ++i)
+        for (size_t i = 0, sz = m_rts.size(); i < sz; ++i)
         {
-            spNativeTexture& texture = _rts[i];
+            spNativeTexture& texture = m_rts[i];
             if (texture->getRefCounter() == 1)
             {
-                auto it = lower_bound(_free.cbegin(), _free.cend(), texture, NTP::cmp);
-                _free.insert(it, texture);
-                _rts.erase(_rts.cbegin() + i);
+                auto it = lower_bound(m_free.cbegin(), m_free.cend(), texture, NTP::cmp);
+                m_free.insert(it, texture);
+                m_rts.erase(m_rts.cbegin() + i);
                 --i;
                 --sz;
                 continue;
             }
         }
 
-        for (size_t i = 0, sz = _free.size(); i < sz; ++i)
+        for (size_t i = 0, sz = m_free.size(); i < sz; ++i)
         {
-            spNativeTexture& t = _free[i];
+            spNativeTexture& t = m_free[i];
             timeMS createTime = t->getCreationTime();
             if (createTime + TEXTURE_LIVE > tm)
             {
                 continue;
             }
-            _free.erase(_free.cbegin() + i);
+            m_free.erase(m_free.cbegin() + i);
             --i;
             --sz;
         }
 
-        if (_free.size() > MAX_FREE_TEXTURES)
+        if (m_free.size() > MAX_FREE_TEXTURES)
         {
-            _free.erase(_free.cbegin(), _free.cbegin() + _free.size() - MAX_FREE_TEXTURES);
+            m_free.erase(m_free.cbegin(), m_free.cbegin() + m_free.size() - MAX_FREE_TEXTURES);
         }
     }
 
     void RenderTargetsManager::reset()
     {
-        for (qint32 i = 0; i < _rts.size(); ++i)
+        for (qint32 i = 0; i < m_rts.size(); ++i)
         {
-            _rts[i]->release();
+            m_rts[i]->release();
         }
 
-        _free.clear();
-        _rts.clear();
+        m_free.clear();
+        m_rts.clear();
     }
 
     RenderTargetsManager _rtm;
@@ -379,10 +372,6 @@ namespace oxygine
           _format(ImageData::TF_R8G8B8A8),
           _options(opt)
 
-    {
-    }
-
-    PostProcess::~PostProcess()
     {
     }
 
@@ -499,7 +488,6 @@ namespace oxygine
 
     TweenPostProcess::~TweenPostProcess()
     {
-
         removePostProcessItem(this);
         if (_actor && _actor->getRenderDelegate())
         {

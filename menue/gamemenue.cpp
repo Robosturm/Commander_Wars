@@ -496,17 +496,21 @@ void GameMenue::loadUIButtons()
 
 void GameMenue::updateTimer()
 {    
-    QTimer* pTimer = GameMap::getInstance()->getGameRules()->getRoundTimer();
-    qint32 roundTime = pTimer->remainingTime();
-    if (!pTimer->isActive())
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
-        roundTime = pTimer->interval();
+        QTimer* pTimer = pMap->getGameRules()->getRoundTimer();
+        qint32 roundTime = pTimer->remainingTime();
+        if (!pTimer->isActive())
+        {
+            roundTime = pTimer->interval();
+        }
+        if (roundTime < 0)
+        {
+            roundTime = 0;
+        }
+        m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
     }
-    if (roundTime < 0)
-    {
-        roundTime = 0;
-    }
-    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
 }
 
 bool GameMenue::getGameStarted() const

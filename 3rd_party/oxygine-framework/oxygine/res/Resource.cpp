@@ -14,11 +14,6 @@ namespace oxygine
 
     }
 
-    Resource::~Resource()
-    {
-
-    }
-
     void Resource::load(LoadResourcesContext* context /* = 0 */)
     {
         if (!context)

@@ -9,13 +9,15 @@ namespace oxygine
     class ref_counter
     {
     public:
-        ref_counter() = default;
+        explicit ref_counter() = default;
         virtual ~ref_counter() = default;
 
         inline const std::atomic<qint32> & getRefCounter() const
         {
             return m_ref_counter;
         }
+
+        static std::atomic<qint32> instanceCounter;
     private:
         template<typename T>
         friend class intrusive_ptr;

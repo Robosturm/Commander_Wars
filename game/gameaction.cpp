@@ -162,24 +162,28 @@ QString GameAction::getActionID()
 
 Unit* GameAction::getTargetUnit()
 {
-    if (m_pTargetUnit == nullptr && GameMap::getInstance()->onMap(m_target.x(), m_target.y()))
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
-        return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getUnit();
+        if (m_pTargetUnit == nullptr && pMap->onMap(m_target.x(), m_target.y()))
+        {
+            return pMap->getTerrain(m_target.x(), m_target.y())->getUnit();
+        }
     }
     return m_pTargetUnit;
 }
 
 Building* GameAction::getTargetBuilding()
 {
-    if (GameMap::getInstance()->onMap(m_target.x(), m_target.y()))
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
-        return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getBuilding();
+        if (pMap->onMap(m_target.x(), m_target.y()))
+        {
+            return pMap->getTerrain(m_target.x(), m_target.y())->getBuilding();
+        }
     }
-    else
-    {
-        return nullptr;
-    }
-
+    return nullptr;
 }
 
 void GameAction::setMovepath(QVector<QPoint> points, qint32 fuelCost)
@@ -412,16 +416,24 @@ Unit* GameAction::getMovementTarget()
 Building* GameAction::getMovementBuilding()
 {
     spGameMap pMap = GameMap::getInstance();
-    QPoint actionTarget = getActionTarget();
-    Building* pBuilding = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
+    Building* pBuilding = nullptr;
+    if (pMap.get() != nullptr)
+    {
+        QPoint actionTarget = getActionTarget();
+        pBuilding = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
+    }
     return pBuilding;
 }
 
 Terrain* GameAction::getMovementTerrain()
 {
     spGameMap pMap = GameMap::getInstance();
-    QPoint actionTarget = getActionTarget();
-    Terrain* pTerrain = pMap->getTerrain(actionTarget.x(), actionTarget.y());
+    Terrain* pTerrain = nullptr;
+    if (pMap.get() != nullptr)
+    {
+        QPoint actionTarget = getActionTarget();
+        pTerrain = pMap->getTerrain(actionTarget.x(), actionTarget.y());
+    }
     return pTerrain;
 }
 

@@ -11,9 +11,10 @@ namespace oxygine
     class NativeTexture: public Texture, public Restorable
     {
     public:
-        NativeTexture() {}
+        explicit NativeTexture() = default;
+        virtual ~NativeTexture() = default;
         virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) = 0;
-        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) = 0;
+        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf) = 0;
         virtual void init(const ImageData& src) = 0;
         //virtual void release() = 0;
         virtual GLuint getId() = 0;
@@ -38,8 +39,10 @@ namespace oxygine
     class NativeTextureNull: public NativeTexture
     {
     public:
+        explicit NativeTextureNull() = default;
+        virtual ~NativeTextureNull() = default;
         virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) override;
-        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) override;
+        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf) override;
         virtual void init(const ImageData& src) override;
         virtual void release() override;
 

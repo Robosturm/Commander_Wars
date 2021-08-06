@@ -12,7 +12,7 @@ namespace oxygine
         Q_OBJECT
     public:
         explicit SingleResAnim();
-        ~SingleResAnim() = default;
+        virtual ~SingleResAnim();
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder) override;
 

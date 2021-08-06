@@ -1774,14 +1774,17 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
     }
     qint32 costs = baseCosts;
     spGameMap pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (pMap.get() != nullptr)
     {
-        Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer != nullptr &&
-            (pPlayer->isEnemy(m_pOwner) ||
-             m_pOwner == pPlayer))
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer != nullptr &&
+                (pPlayer->isEnemy(m_pOwner) ||
+                 m_pOwner == pPlayer))
+            {
+                costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
+            }
         }
     }
     if (baseCosts >= 0)

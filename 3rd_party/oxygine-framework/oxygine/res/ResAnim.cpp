@@ -17,10 +17,6 @@ namespace oxygine
     {
     }
 
-    ResAnim::~ResAnim()
-    {
-    }
-
     void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         m_scaleFactor = scaleFactor;

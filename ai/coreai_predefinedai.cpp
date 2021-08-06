@@ -97,80 +97,83 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
 {
     Console::print("moveBlackBombs()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    QVector<QVector3D> enemyTargets;
-    spQmlVectorPoint enemyFields = GlobalUtils::getCircle(1, 1);
-    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    if (pMap.get() != nullptr)
     {
-        Unit* pUnit = pEnemyUnits->at(i);
-        for (qint32 i2 = 0; i2 < enemyFields->size(); i2++)
+        QVector<QVector3D> enemyTargets;
+        spQmlVectorPoint enemyFields = GlobalUtils::getCircle(1, 1);
+        for (qint32 i = 0; i < pEnemyUnits->size(); i++)
         {
-            if (pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
+            Unit* pUnit = pEnemyUnits->at(i);
+            for (qint32 i2 = 0; i2 < enemyFields->size(); i2++)
             {
-                QVector3D point = QVector3D(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y(), 1);
-                if (!enemyTargets.contains(point))
+                if (pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
                 {
-                    enemyTargets.append(point);
+                    QVector3D point = QVector3D(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y(), 1);
+                    if (!enemyTargets.contains(point))
+                    {
+                        enemyTargets.append(point);
+                    }
                 }
             }
         }
-    }
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (!pUnit->getHasMoved())
+        for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            if (pUnit->getActionList().contains(ACTION_EXPLODE))
+            Unit* pUnit = pUnits->at(i);
+            if (!pUnit->getHasMoved())
             {
-                UnitPathFindingSystem turnPfs(pUnit);
-                turnPfs.explore();
-                spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 3);
-                QVector<QPoint> targets = turnPfs.getAllNodePoints();
-                qint32 maxDamage = 0;
-                QVector<QPoint> bestTargets;
-                spGameAction pAction = spGameAction::create(ACTION_EXPLODE);
-                pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                if (pUnit->getActionList().contains(ACTION_EXPLODE))
                 {
-                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints.get(), 5, 1.2f, GameEnums::RocketTarget_Money, true);
-                    if (damageDone > maxDamage)
+                    UnitPathFindingSystem turnPfs(pUnit);
+                    turnPfs.explore();
+                    spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 3);
+                    QVector<QPoint> targets = turnPfs.getAllNodePoints();
+                    qint32 maxDamage = 0;
+                    QVector<QPoint> bestTargets;
+                    spGameAction pAction = spGameAction::create(ACTION_EXPLODE);
+                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                    for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
-                        bestTargets.clear();
-                        bestTargets.append(targets[i2]);
-                        maxDamage = damageDone;
+                        qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints.get(), 5, 1.2f, GameEnums::RocketTarget_Money, true);
+                        if (damageDone > maxDamage)
+                        {
+                            bestTargets.clear();
+                            bestTargets.append(targets[i2]);
+                            maxDamage = damageDone;
+                        }
+                        else if (damageDone == maxDamage)
+                        {
+                            bestTargets.append(targets[i2]);
+                            maxDamage = damageDone;
+                        }
                     }
-                    else if (damageDone == maxDamage)
+                    if (bestTargets.size() > 0 && maxDamage > 0)
                     {
-                        bestTargets.append(targets[i2]);
-                        maxDamage = damageDone;
-                    }
-                }
-                if (bestTargets.size() > 0 && maxDamage > 0)
-                {
-                    QPoint target = bestTargets[GlobalUtils::randIntBase(0, bestTargets.size() - 1)];
-                    QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
-                    pAction->setMovepath(path, turnPfs.getCosts(path));
-                    addSelectedFieldData(pAction, target);
-                    if (pAction->canBePerformed())
-                    {
-                        emit performAction(pAction);
-                        return true;
-                    }
-                }
-                else
-                {
-                    TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets, &m_MoveCostMap);
-                    pfs.explore();
-                    qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    QPoint targetFields = pfs.getReachableTargetField(movepoints);
-                    if (targetFields.x() >= 0)
-                    {
-                        pAction->setActionID(ACTION_WAIT);
-                        QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+                        QPoint target = bestTargets[GlobalUtils::randIntBase(0, bestTargets.size() - 1)];
+                        QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                         pAction->setMovepath(path, turnPfs.getCosts(path));
+                        addSelectedFieldData(pAction, target);
                         if (pAction->canBePerformed())
                         {
                             emit performAction(pAction);
                             return true;
+                        }
+                    }
+                    else
+                    {
+                        TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets, &m_MoveCostMap);
+                        pfs.explore();
+                        qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                        QPoint targetFields = pfs.getReachableTargetField(movepoints);
+                        if (targetFields.x() >= 0)
+                        {
+                            pAction->setActionID(ACTION_WAIT);
+                            QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+                            pAction->setMovepath(path, turnPfs.getCosts(path));
+                            if (pAction->canBePerformed())
+                            {
+                                emit performAction(pAction);
+                                return true;
+                            }
                         }
                     }
                 }
@@ -185,14 +188,34 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransport
     Console::print("CoreAI::moveSupport", Console::eDEBUG);
     aiStep = step;
     spGameMap pMap = GameMap::getInstance();
-    QVector<QVector3D> unitTargets;
-    QVector<QPoint> unitPos;
-    spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    if (pMap.get() != nullptr)
     {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
+        QVector<QVector3D> unitTargets;
+        QVector<QPoint> unitPos;
+        spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
+        for (qint32 i = 0; i < pUnits->size(); i++)
         {
+            Unit* pUnit = pUnits->at(i);
+            if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP && pUnit->getUnitCosts() / Unit::MAX_UNIT_HP <= m_pPlayer->getFunds())
+            {
+                for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
+                {
+                    if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
+                        pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                    {
+                        QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
+                        if (!unitTargets.contains(point) )
+                        {
+                            unitTargets.append(point);
+                            unitPos.append(pUnit->getPosition());
+                        }
+                    }
+                }
+            }
+        }
+        for (qint32 i = 0; i < pUnits->size(); i++)
+        {
+            Unit* pUnit = pUnits->at(i);
             for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
             {
                 if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
@@ -207,57 +230,40 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransport
                 }
             }
         }
-    }
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
+        for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
-                pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+            Unit* pUnit = pUnits->at(i);
+            if (!pUnit->getHasMoved() &&
+                (pUnit->getLoadedUnitCount() == 0) &&
+                (pUnit->getLoadingPlace() == 0 || useTransporters))
             {
-                QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
-                if (!unitTargets.contains(point) )
+                QStringList actions = pUnit->getActionList();
+                for (const auto& action : actions)
                 {
-                    unitTargets.append(point);
-                    unitPos.append(pUnit->getPosition());
-                }
-            }
-        }
-    }
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (!pUnit->getHasMoved() &&
-            (pUnit->getLoadedUnitCount() == 0) &&
-            (pUnit->getLoadingPlace() == 0 || useTransporters))
-        {
-            QStringList actions = pUnit->getActionList();
-            for (const auto& action : actions)
-            {
-                spGameAction pAction = spGameAction::create(action);
-                if (action.startsWith(ACTION_SUPPORTSINGLE) ||
-                    action.startsWith(ACTION_SUPPORTALL))
-                {
-                    UnitPathFindingSystem turnPfs(pUnit);
-                    turnPfs.explore();
-                    QVector<QPoint> targets = turnPfs.getAllNodePoints();
-                    pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
-                    for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                    spGameAction pAction = spGameAction::create(action);
+                    if (action.startsWith(ACTION_SUPPORTSINGLE) ||
+                        action.startsWith(ACTION_SUPPORTALL))
                     {
-                        qint32 index = CoreAI::index(unitTargets, targets[i2]);
-                        if (index >= 0 && pUnit->getPosition() != unitPos[index])
+                        UnitPathFindingSystem turnPfs(pUnit);
+                        turnPfs.explore();
+                        QVector<QPoint> targets = turnPfs.getAllNodePoints();
+                        pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+                        for (qint32 i2 = 0; i2 < targets.size(); i2++)
                         {
-                            if (action.startsWith(ACTION_SUPPORTSINGLE))
+                            qint32 index = CoreAI::index(unitTargets, targets[i2]);
+                            if (index >= 0 && pUnit->getPosition() != unitPos[index])
                             {
-                                addSelectedFieldData(pAction, unitPos[index]);
-                            }
-                            QVector<QPoint> path = turnPfs.getPath(targets[i2].x(), targets[i2].y());
-                            pAction->setMovepath(path, turnPfs.getCosts(path));
-                            if (pAction->canBePerformed())
-                            {
-                                emit performAction(pAction);
-                                return true;
+                                if (action.startsWith(ACTION_SUPPORTSINGLE))
+                                {
+                                    addSelectedFieldData(pAction, unitPos[index]);
+                                }
+                                QVector<QPoint> path = turnPfs.getPath(targets[i2].x(), targets[i2].y());
+                                pAction->setMovepath(path, turnPfs.getCosts(path));
+                                if (pAction->canBePerformed())
+                                {
+                                    emit performAction(pAction);
+                                    return true;
+                                }
                             }
                         }
                     }

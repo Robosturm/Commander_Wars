@@ -11,10 +11,10 @@ namespace oxygine
     class NativeTextureGLES : public NativeTexture
     {
     public:
-        ~NativeTextureGLES();
+        virtual ~NativeTextureGLES();
 
         virtual void init(GLuint id, qint32 w, qint32 h, ImageData::TextureFormat tf) override;
-        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget) override;
+        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf) override;
         virtual void init(const ImageData& src) override;
         virtual void release() override;
         virtual void swap(NativeTexture*)  override;
@@ -23,7 +23,6 @@ namespace oxygine
         virtual qint32    getWidth() const override;
         virtual qint32    getHeight() const override;
         virtual ImageData::TextureFormat getFormat() const override;
-        quint32        getFboID() const;
 
         virtual ImageData lock(lock_flags, const Rect* src) override;
         virtual void unlock() override;
@@ -43,11 +42,10 @@ namespace oxygine
         friend class VideoDriverGL;
         friend class VideoDriverGLES20;
         friend class intrusive_ptr<NativeTextureGLES>;
-        NativeTextureGLES();
+        explicit NativeTextureGLES();
 
     protected:
         GLuint m_id;
-        size_t m_fbo;
         ImageData::TextureFormat m_format;
         qint32 m_width;
         qint32 m_height;

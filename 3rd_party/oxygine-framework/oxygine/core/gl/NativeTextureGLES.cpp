@@ -36,23 +36,22 @@ namespace oxygine
     GLuint createTexture()
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        GLuint id = 0;
-        window->glGenTextures(1, &id);
+        GLuint ids[1] = {0};
+        window->glGenTextures(1, ids);
         window->glActiveTexture(GL_TEXTURE7);
-        window->glBindTexture(GL_TEXTURE_2D, id);
+        window->glBindTexture(GL_TEXTURE_2D, ids[0]);
 
-        quint32 f = GL_LINEAR;
+        GLint  f = GL_LINEAR;
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
 
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        return id;
+        return ids[0];
     }
 
     NativeTextureGLES::NativeTextureGLES()
         : m_id(0),
-          m_fbo(0),
           m_format(ImageData::TF_UNDEFINED),
           m_width(0),
           m_height(0),
@@ -61,7 +60,7 @@ namespace oxygine
 
     }
 
-    void NativeTextureGLES::init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool rt)
+    void NativeTextureGLES::init(qint32 w, qint32 h, ImageData::TextureFormat tf)
     {
         release();
 
@@ -70,32 +69,7 @@ namespace oxygine
         GLuint id = createTexture();
 
         glPixel p = SurfaceFormat2GL(tf);
-        window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
-
-        if (rt)
-        {
-            qint32 prevFBO = 0;
-            window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
-            window->glBindTexture(GL_TEXTURE_2D, 0);
-            quint32 fbo = 0;
-            window->glGenFramebuffers(1, &fbo);
-            window->glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-            window->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
-            quint32 status = window->glCheckFramebufferStatus(GL_FRAMEBUFFER);
-            if (status != GL_FRAMEBUFFER_COMPLETE)
-            {
-                qCritical("status != GL_FRAMEBUFFER_COMPLETE_OES");
-            }
-            qreal ratio = window->devicePixelRatio();
-            window->glViewport(0, 0, w * ratio, h * ratio);
-            window->glClearColor(0, 0, 0, 0);
-            window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            window->glBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
-            window->glBindTexture(GL_TEXTURE_2D, 0);
-
-            m_fbo = fbo;
-        }
+        window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);        
 
         m_id = id;
         m_width = w;
@@ -146,7 +120,7 @@ namespace oxygine
         window->glActiveTexture(GL_TEXTURE7);
         window->glBindTexture(GL_TEXTURE_2D, (GLuint) m_id);
 
-        quint32 f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
+        GLint f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
 
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, f);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, f);
@@ -157,15 +131,10 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         if (m_id)
         {
-            window->glDeleteTextures(1, (GLuint*)&m_id);
+            GLuint ids[] = {m_id};
+            window->glDeleteTextures(1, ids);
             m_id = 0;
-        }
-        if (m_fbo)
-        {
-            window->glDeleteFramebuffers(1, (GLuint*)&m_fbo);
-            m_fbo = 0;
-        }
-
+        }       
         unreg();
     }
 
@@ -174,9 +143,7 @@ namespace oxygine
     {
         NativeTextureGLES* nt = safeCast<NativeTextureGLES*>(t);
         std::swap(m_id, nt->m_id);
-        std::swap(m_fbo, nt->m_fbo);
         std::swap(m_format, nt->m_format);
-
         std::swap(m_width, nt->m_width);
         std::swap(m_height, nt->m_height);
         std::swap(m_format, nt->m_format);
@@ -250,9 +217,9 @@ namespace oxygine
         {
             GameWindow* window = oxygine::GameWindow::getWindow();
             window->glActiveTexture(GL_TEXTURE7);
-            window->glBindTexture(GL_TEXTURE_2D, (GLuint) m_id);
+            window->glBindTexture(GL_TEXTURE_2D, m_id);
             window->glGetError();
-            ImageData src = ImageData(m_width, m_height, (int)(m_data.size() / m_height), m_format, &m_data.front());
+            ImageData src = ImageData(m_width, m_height, static_cast<qint32>(m_data.size() / m_height), m_format, &m_data.front());
             ImageData locked = src.getRect(m_lockRect);
             window->glGetError();
             Image mt;
@@ -306,10 +273,5 @@ namespace oxygine
     GLuint NativeTextureGLES::getHandle() const
     {
         return reinterpret_cast<GLuint>(m_id);
-    }
-
-    quint32 NativeTextureGLES::getFboID() const
-    {
-        return (unsigned int) m_fbo;
     }
 }

@@ -11,10 +11,11 @@
 #include <qscreen.h>
 #include <qlocale.h>
 #include <QStandardPaths>
+#ifdef EnableMultimedia
 #include <QInputDevice>
 #include <QMediaDevices>
 #include <QAudioDevice>
-
+#endif
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";

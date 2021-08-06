@@ -19,8 +19,8 @@ namespace oxygine
             qint32 flags;
         };
 
-        UberShaderProgramBase();
-        ~UberShaderProgramBase();
+        explicit UberShaderProgramBase() = default;
+        virtual ~UberShaderProgramBase();
 
         void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
 

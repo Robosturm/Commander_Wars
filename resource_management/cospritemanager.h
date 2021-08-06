@@ -27,6 +27,10 @@ public:
      * @return
      */
     virtual oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+    /**
+     * @brief release
+     */
+    void release();
 signals:
     void sigLoadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
@@ -52,7 +56,18 @@ protected:
     COSpriteManager();
 private:
     virtual ~COSpriteManager() = default;
-    QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
+    struct CoSprite
+    {
+        CoSprite(QString spriteId, oxygine::spResAnim sprite)
+            : m_spriteId(spriteId),
+              m_sprite(sprite)
+        {
+        }
+        QString m_spriteId;
+        oxygine::spResAnim m_sprite;
+    };
+
+    QVector<CoSprite> m_Ressources;
 };
 
 

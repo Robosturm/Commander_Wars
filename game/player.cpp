@@ -81,29 +81,29 @@ void Player::loadVisionFields()
     m_FogVisionFields.clear();
     for (qint32 x = 0; x < width; x++)
     {
-        m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());
+        m_FogVisionFields.append(QVector<VisionFieldInfo>());
         for (qint32 y = 0; y < heigth; y++)
         {
             switch (mode)
             {
                 case GameEnums::Fog::Fog_Off:
                 {
-                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Clear, 0, false));
+                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Clear, 0, false));
                     break;
                 }
                 case GameEnums::Fog::Fog_OfWar:
                 {
-                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Fogged, 0, false));
+                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Fogged, 0, false));
                     break;
                 }
                 case GameEnums::Fog::Fog_OfShroud:
                 {
-                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Shrouded, 0, false));
+                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Shrouded, 0, false));
                     break;
                 }
                 case GameEnums::Fog::Fog_OfMist:
                 {
-                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Mist, 0, false));
+                    m_FogVisionFields[x].append(VisionFieldInfo(GameEnums::VisionType_Mist, 0, false));
                     break;
                 }
             }
@@ -159,6 +159,7 @@ void Player::setColor(QColor color, qint32 table)
     {
         createTable(m_Color);
     }
+    m_ColorTableAnim = oxygine::spSingleResAnim::create();
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
 }
 
@@ -932,14 +933,14 @@ void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView
 
 void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView)
 {
-    std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Clear;
-    if (duration > std::get<1>(m_FogVisionFields[x][y]))
+    m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
+    if (duration > m_FogVisionFields[x][y].m_duration)
     {
-        std::get<1>(m_FogVisionFields[x][y]) = duration;
+        m_FogVisionFields[x][y].m_duration = duration;
     }
-    if (std::get<2>(m_FogVisionFields[x][y]) == false)
+    if (m_FogVisionFields[x][y].m_directView == false)
     {
-        std::get<2>(m_FogVisionFields[x][y]) = directView;
+        m_FogVisionFields[x][y].m_directView = directView;
     }
 }
 
@@ -969,17 +970,17 @@ void Player::updatePlayerVision(bool reduceTimer)
             {
                 if (reduceTimer)
                 {
-                    std::get<1>(m_FogVisionFields[x][y]) -= 1;
+                    m_FogVisionFields[x][y].m_duration -= 1;
                 }
-                qint32 duration = std::get<1>(m_FogVisionFields[x][y]);
+                qint32 duration = m_FogVisionFields[x][y].m_duration;
                 if (duration <= 0)
                 {
-                    if (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear)
+                    if (m_FogVisionFields[x][y].m_visionType == GameEnums::VisionType_Clear)
                     {
-                        std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Fogged;
+                        m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Fogged;
                     }
-                    std::get<1>(m_FogVisionFields[x][y]) = 0;
-                    std::get<2>(m_FogVisionFields[x][y]) = false;
+                    m_FogVisionFields[x][y].m_duration = 0;
+                    m_FogVisionFields[x][y].m_directView = false;
                 }
             }
         }
@@ -1015,7 +1016,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                             }
                         }
                     }
@@ -1026,7 +1027,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     ((isAlly( pBuilding->getOwner())) ||
                      (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
                 {
-                    std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Clear;
+                    m_FogVisionFields[x][y].m_visionType = GameEnums::VisionType_Clear;
                     qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
@@ -1051,7 +1052,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                     ((pUnit != nullptr) && visionHide &&
                                      !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                                 {
-                                    std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
+                                    m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                                 }
                             }
                         }
@@ -1091,12 +1092,12 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                             }
                             // terrain hides are visible if we're near it.
                             else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
+                                m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                             }
                             else
                             {
@@ -1125,7 +1126,7 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
         {
             if (m_FogVisionFields.size() > 0)
             {
-                return (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear);
+                return (m_FogVisionFields[x][y].m_visionType == GameEnums::VisionType_Clear);
             }
             else
             {
@@ -1155,7 +1156,7 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
                 {
                     if (m_FogVisionFields.size() > 0)
                     {
-                        return std::get<0>(m_FogVisionFields[x][y]);
+                        return m_FogVisionFields[x][y].m_visionType;
                     }
                 }
                 return GameEnums::VisionType_Shrouded;
@@ -1176,7 +1177,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
         spGameMap pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
         {
-            return std::get<2>(m_FogVisionFields[x][y]);
+            return m_FogVisionFields[x][y].m_directView;
         }
         else
         {
@@ -1235,7 +1236,7 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     if (pUnit->getOwner() == this)
     {
         spGameMap pMap = GameMap::getInstance();
-        if (!getWeatherImmune())
+        if (pMap.get() != nullptr && !getWeatherImmune())
         {
             modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
         }
@@ -1259,7 +1260,7 @@ qint32 Player::getBonusMovementpoints(Unit* pUnit, QPoint position)
     if (pUnit->getOwner() == this)
     {
         spGameMap pMap = GameMap::getInstance();
-        if (!getWeatherImmune())
+        if (pMap.get() != nullptr && !getWeatherImmune())
         {
             movementModifier += pMap->getGameRules()->getCurrentWeather()->getMovementpointModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
         }
@@ -1292,9 +1293,10 @@ void Player::startOfTurn()
 
 QmlVectorUnit* Player::getUnits()
 {
-    if (GameMap::getInstance() != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
-        return GameMap::getInstance()->getUnits(this);
+        return pMap->getUnits(this);
     }
     else
     {
@@ -1319,19 +1321,22 @@ qint32 Player::getEnemyCount()
 QmlVectorUnit* Player::getEnemyUnits()
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
     QmlVectorUnit* ret = new QmlVectorUnit();
-    for (qint32 y = 0; y < heigth; y++)
+    if (pMap.get())
     {
-        for (qint32 x = 0; x < width; x++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
+            for (qint32 x = 0; x < width; x++)
             {
-                if ((isEnemyUnit(pUnit)))
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
                 {
-                    ret->append(pUnit);
+                    if ((isEnemyUnit(pUnit)))
+                    {
+                        ret->append(pUnit);
+                    }
                 }
             }
         }
@@ -1342,19 +1347,22 @@ QmlVectorUnit* Player::getEnemyUnits()
 QVector<spUnit> Player::getSpEnemyUnits()
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
     QVector<spUnit> ret;
-    for (qint32 y = 0; y < heigth; y++)
+    if (pMap.get())
     {
-        for (qint32 x = 0; x < width; x++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
         {
-            spUnit pUnit = pMap->getTerrain(x, y)->getSpUnit();
-            if (pUnit.get() != nullptr &&
-                !pUnit->getOwner()->getIsDefeated() &&
-                isEnemyUnit(pUnit.get()))
+            for (qint32 x = 0; x < width; x++)
             {
-                ret.append(pUnit);
+                spUnit pUnit = pMap->getTerrain(x, y)->getSpUnit();
+                if (pUnit.get() != nullptr &&
+                    !pUnit->getOwner()->getIsDefeated() &&
+                    isEnemyUnit(pUnit.get()))
+                {
+                    ret.append(pUnit);
+                }
             }
         }
     }
@@ -1364,19 +1372,22 @@ QVector<spUnit> Player::getSpEnemyUnits()
 QmlVectorBuilding* Player::getEnemyBuildings()
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
     QmlVectorBuilding* ret = new QmlVectorBuilding();
-    for (qint32 y = 0; y < heigth; y++)
+    if (pMap.get())
     {
-        for (qint32 x = 0; x < width; x++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
         {
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pBuilding != nullptr &&
-                pBuilding->getTerrain() == pMap->getTerrain(x, y) &&
-                pBuilding->isEnemyBuilding(this))
+            for (qint32 x = 0; x < width; x++)
             {
-                ret->append(pBuilding);
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pBuilding != nullptr &&
+                    pBuilding->getTerrain() == pMap->getTerrain(x, y) &&
+                    pBuilding->isEnemyBuilding(this))
+                {
+                    ret->append(pBuilding);
+                }
             }
         }
     }
@@ -1714,9 +1725,9 @@ void Player::serializeObject(QDataStream& pStream) const
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            pStream << static_cast<qint32>(std::get<0>(m_FogVisionFields[x][y]));
-            pStream << std::get<1>(m_FogVisionFields[x][y]);
-            pStream << std::get<2>(m_FogVisionFields[x][y]);
+            pStream << static_cast<qint32>(m_FogVisionFields[x][y].m_visionType);
+            pStream << m_FogVisionFields[x][y].m_duration;
+            pStream << m_FogVisionFields[x][y].m_directView;
         }
     }
     pStream << m_BuildList;
@@ -1805,7 +1816,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             Console::print("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
             for (qint32 x = 0; x < width; x++)
             {
-                m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());
+                m_FogVisionFields.append(QVector<VisionFieldInfo>());
                 for (qint32 y = 0; y < heigth; y++)
                 {
                     GameEnums::VisionType value = GameEnums::VisionType_Shrouded;
@@ -1848,7 +1859,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
                     {
                         pStream >> directView;
                     }
-                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(value, duration, directView));
+                    m_FogVisionFields[x].append(VisionFieldInfo(value, duration, directView));
                 }
             }
         }
@@ -1895,6 +1906,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
+            m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
         }
     }
@@ -1908,6 +1920,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
+            m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
         }
     }

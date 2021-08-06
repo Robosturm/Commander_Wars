@@ -36,10 +36,6 @@ namespace oxygine
     {
     }
 
-    ImageData::~ImageData()
-    {
-    }
-
     ImageData ImageData::getRect(const Rect& r) const
     {
         if ((r.getX() < 0 && r.getX() > m_w) ||

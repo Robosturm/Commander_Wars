@@ -19,6 +19,7 @@ namespace oxygine
         template<typename ...TArgs>
         static intrusive_ptr<T> create(TArgs... args)
         {
+            ++oxygine::ref_counter::instanceCounter;
             return new T(args...);
         }
 
@@ -77,6 +78,10 @@ namespace oxygine
         {
             if (p)
             {
+                if (p->getRefCounter() == 0)
+                {
+                    ++oxygine::ref_counter::instanceCounter;
+                }
                 p->addRef();
             }
         }

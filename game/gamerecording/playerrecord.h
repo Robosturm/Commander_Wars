@@ -40,8 +40,6 @@ public:
     {
         return 1;
     }
-
-
     qint32 getDay() const;
     qint32 getOwner() const;
     qint32 getFunds() const;

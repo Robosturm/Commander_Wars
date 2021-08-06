@@ -20,8 +20,11 @@ GameScript::GameScript()
 
 GameScript::~GameScript()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(m_scriptName);
+    if (!m_script.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_scriptName);
+    }
 }
 
 void GameScript::serializeObject(QDataStream& pStream) const
@@ -74,7 +77,6 @@ void GameScript::init()
         {
             m_scriptFile = "";
             m_script = "";
-            pInterpreter->deleteObject(m_scriptName);
             m_loaded = false;
         }
     }

@@ -15,38 +15,40 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     spGameMap pMap = GameMap::getInstance();
-
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
-
-    for (qint32 x = 0; x < width; x++)
+    if (pMap.get() != nullptr)
     {
-        m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
-    }
-    spUnit pUnit = spUnit::create(unitID, pOwner, false);
-    pUnit->setIgnoreUnitCollision(true);
-    m_MovementType = pUnit->getMovementType();
-    qint32 currentIsland = 0;
+        qint32 width = pMap->getMapWidth();
+        qint32 heigth = pMap->getMapHeight();
 
-    for (qint32 x = 0; x < width; x++)
-    {
-        for (qint32 y = 0; y < heigth; y++)
+        for (qint32 x = 0; x < width; x++)
         {
-            if (m_Islands[x][y] < 0)
+            m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
+        }
+        spUnit pUnit = spUnit::create(unitID, pOwner, false);
+        pUnit->setIgnoreUnitCollision(true);
+        m_MovementType = pUnit->getMovementType();
+        qint32 currentIsland = 0;
+
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
             {
-                if (pUnit->canMoveOver(x, y))
+                if (m_Islands[x][y] < 0)
                 {
-                    UnitPathFindingSystem pfs(pUnit.get());
-                    pfs.setMovepoints(-2);
-                    pfs.setFast(true);
-                    pfs.setStartPoint(x, y);
-                    pfs.explore();
-                    QVector<QPoint> nodes = pfs.getAllNodePoints();
-                    for (qint32 i = 0; i < nodes.size(); i++)
+                    if (pUnit->canMoveOver(x, y))
                     {
-                        m_Islands[nodes[i].x()][nodes[i].y()] = currentIsland;
+                        UnitPathFindingSystem pfs(pUnit.get());
+                        pfs.setMovepoints(-2);
+                        pfs.setFast(true);
+                        pfs.setStartPoint(x, y);
+                        pfs.explore();
+                        QVector<QPoint> nodes = pfs.getAllNodePoints();
+                        for (qint32 i = 0; i < nodes.size(); i++)
+                        {
+                            m_Islands[nodes[i].x()][nodes[i].y()] = currentIsland;
+                        }
+                        currentIsland++;
                     }
-                    currentIsland++;
                 }
             }
         }

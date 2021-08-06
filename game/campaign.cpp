@@ -34,8 +34,11 @@ Campaign::Campaign()
 
 Campaign::~Campaign()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->deleteObject(scriptName);
+    if (!m_script.isEmpty())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(scriptName);
+    }
 }
 
 void Campaign::init()
@@ -57,13 +60,12 @@ void Campaign::init()
         {
             m_scriptFile = "";
             m_script = "";
-            pInterpreter->deleteObject(scriptName);
             m_loaded = false;
         }
     }
 }
 
-std::tuple<QString, QStringList> Campaign::getCampaignMaps()
+Campaign::CampaignMapInfo Campaign::getCampaignMaps()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
@@ -89,7 +91,7 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
         }
         addDeveloperMaps(folder, files);
     }
-    return std::tuple<QString, QStringList>(folder, files);
+    return CampaignMapInfo(folder, files);
 }
 
 void Campaign::addDeveloperMaps(QString & folder, QStringList & files)

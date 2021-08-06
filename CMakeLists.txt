@@ -30,7 +30,7 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
-find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+#find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -305,6 +305,7 @@ set(${PROJECT_NAME}_SRCS
     resource_management/coperkmanager.cpp
     resource_management/achievementmanager.cpp
     resource_management/shoploader.cpp
+    resource_management/customspritemanager.cpp
 
     # core engine
     coreengine/mainapp.cpp
@@ -554,7 +555,7 @@ set(QT_LIBRARIES
     Qt6::Network
     Qt6::Widgets
     Qt6::Xml
-    Qt6::Multimedia
+    #Qt6::Multimedia
     Qt6::OpenGL
     )
 

@@ -81,8 +81,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked, Qt::QueuedConnection);
 
-    std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
-    m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));
+    Campaign::CampaignMapInfo data = campaign->getCampaignMaps();
+    m_pMapSelectionView->getMapSelection()->setSelection(data.m_folder, data.m_mapFilenames);
 
     if (autosaveCampaign)
     {

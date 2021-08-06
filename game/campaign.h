@@ -18,6 +18,16 @@ class Campaign : public QObject, public FileSerializable, public oxygine::ref_co
 {
     Q_OBJECT
 public:
+    struct CampaignMapInfo
+    {
+        CampaignMapInfo(QString folder, QStringList mapFilenames)
+            : m_folder(folder),
+              m_mapFilenames(mapFilenames)
+        {
+        }
+        QString m_folder;
+        QStringList m_mapFilenames;
+    };
     static const QString scriptName;
     explicit Campaign(QString file);
     explicit Campaign();
@@ -48,7 +58,7 @@ public:
      * @brief getCampaignMaps
      * @return
      */
-    std::tuple<QString, QStringList> getCampaignMaps();
+    CampaignMapInfo getCampaignMaps();
     /**
      * @brief getSelectableCOs
      * @return

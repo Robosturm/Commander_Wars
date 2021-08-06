@@ -48,6 +48,7 @@ void HeavyAi::loadNeuralNetworks()
 {
     loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 2);
     loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 2);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionCapture], m_neuralNetworks[NeuralNetworks::ActionCapture], static_cast<qint32>(CaptureInfo::CaptureInfoMaxSize), CaptureInfoMaxSize / 2);
 }
 
 void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
@@ -879,9 +880,8 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, QVector<do
 float HeavyAi::scoreCapture(spGameAction action, UnitData & unitData, QVector<double> baseData)
 {
     // todo
-
-    auto score = m_neuralNetworks[NeuralNetworks::ActionCapture]->predict(baseData);
-    return score[0];
+    // auto score = m_neuralNetworks[NeuralNetworks::ActionCapture]->predict(baseData);
+    return 5;
 }
 
 float HeavyAi::scoreFire(spGameAction action, UnitData & unitData, QVector<double> baseData)
@@ -1145,37 +1145,40 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
 {
     // todo
     spGameMap pMap = GameMap::getInstance();
-    qint32 mapWidth = pMap->getMapWidth();
-    qint32 mapHeight = pMap->getMapHeight();
-    qint32 unitIslandIdx = getIslandIndex(unit.m_pUnit);
-    qint32 minFirerange = unit.m_pUnit->getMinRange(unit.m_pUnit->getPosition());
-    qint32 maxFirerange = unit.m_pUnit->getMaxRange(unit.m_pUnit->getPosition());
-    spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(minFirerange, maxFirerange);
-    for (qint32 x = 0; x < mapWidth; ++x)
+    if (pMap.get() != nullptr)
     {
-        for (qint32 y = 0; y < mapHeight; ++y)
+        qint32 mapWidth = pMap->getMapWidth();
+        qint32 mapHeight = pMap->getMapHeight();
+        qint32 unitIslandIdx = getIslandIndex(unit.m_pUnit);
+        qint32 minFirerange = unit.m_pUnit->getMinRange(unit.m_pUnit->getPosition());
+        qint32 maxFirerange = unit.m_pUnit->getMaxRange(unit.m_pUnit->getPosition());
+        spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(minFirerange, maxFirerange);
+        for (qint32 x = 0; x < mapWidth; ++x)
         {
-            if (unit.m_pUnit->canMoveOver(x, y) &&
-                onSameIsland(unitIslandIdx, unit.m_pUnit->Unit::getX(), unit.m_pUnit->Unit::getY(), x, y))
+            for (qint32 y = 0; y < mapHeight; ++y)
             {
-                Terrain* pTerrain = pMap->getTerrain(x, y);
-                addCaptureTargets(actions, pTerrain, targets);
-                addAttackTargets(unit.m_pUnit, pTerrain, pTargetFields.get(), targets);
-                // todo implement that list
-                //                addRepairTargets();
-                //                addSupportTargets();
-                //                // transporting stuff
-                //                addCaptureTransporterTargets();
-                //                addTransporterTargets();
-                //                addUnloadTargets(); // capture and attack once
-                //                addLoadingTargets();
-                //                // we need reparing / supplying
-                //                addRepairTargets();
-                //                addRefillTargets();
-                //                addFlareTargets();
-                //                addOoziumTargets();
-                //                addBlackbombTargets();
-                //                addCustomTargets();
+                if (unit.m_pUnit->canMoveOver(x, y) &&
+                    onSameIsland(unitIslandIdx, unit.m_pUnit->Unit::getX(), unit.m_pUnit->Unit::getY(), x, y))
+                {
+                    Terrain* pTerrain = pMap->getTerrain(x, y);
+                    addCaptureTargets(actions, pTerrain, targets);
+                    addAttackTargets(unit.m_pUnit, pTerrain, pTargetFields.get(), targets);
+                    // todo implement that list
+                    //                addRepairTargets();
+                    //                addSupportTargets();
+                    //                // transporting stuff
+                    //                addCaptureTransporterTargets();
+                    //                addTransporterTargets();
+                    //                addUnloadTargets(); // capture and attack once
+                    //                addLoadingTargets();
+                    //                // we need reparing / supplying
+                    //                addRepairTargets();
+                    //                addRefillTargets();
+                    //                addFlareTargets();
+                    //                addOoziumTargets();
+                    //                addBlackbombTargets();
+                    //                addCustomTargets();
+                }
             }
         }
     }
@@ -1219,54 +1222,20 @@ qint32 HeavyAi::getMovingToCaptureDistanceModifier()
 void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 x = pTerrain->Terrain::getX();
-    qint32 y = pTerrain->Terrain::getY();
-    for (qint32 i = 0; i < pTargetFields->size(); ++i)
+    if (pMap.get() != nullptr)
     {
-        qint32 targetX = pTargetFields->at(i).x() + x;
-        qint32 targetY = pTargetFields->at(i).y() + y;
-        if (pMap->onMap(targetX, targetY))
+        qint32 x = pTerrain->Terrain::getX();
+        qint32 y = pTerrain->Terrain::getY();
+        for (qint32 i = 0; i < pTargetFields->size(); ++i)
         {
-            Terrain* pTargetTerrain = pMap->getTerrain(targetX, targetY);
-            Unit* pEnemy = pTargetTerrain->getUnit();
-            if (pEnemy != nullptr &&
-                pUnit->isAttackable(pEnemy, true))
+            qint32 targetX = pTargetFields->at(i).x() + x;
+            qint32 targetY = pTargetFields->at(i).y() + y;
+            if (pMap->onMap(targetX, targetY))
             {
-                Unit* pTargetUnit = pTerrain->getUnit();
-                float alliedmultiplier = 1.0f;
-                if (pTargetUnit != nullptr &&
-                    pTargetUnit->getOwner()->checkAlliance(m_pPlayer) == GameEnums::Alliance_Friend)
-                {
-                    alliedmultiplier = m_alliedDistanceModifier;
-                }
-                qint32 stealthMalus = 0;
-                bool terrainHide = false;
-                if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
-                {
-                    stealthMalus = m_stealthDistanceMultiplier;
-                    if (terrainHide)
-                    {
-                        stealthMalus /=  2;
-                    }
-                }
-                qint32 attackDistanceModifier = getMovingToAttackDistanceModifier();
-                QVector3D possibleTarget(x, y, (stealthMalus + attackDistanceModifier) * alliedmultiplier);
-                if (!targets.contains(possibleTarget))
-                {
-                    targets.append(possibleTarget);
-                    break;
-                }
-            }
-            else
-            {
-                Building* pBuilding = pTargetTerrain->getBuilding();
-                if ((pBuilding != nullptr &&
-                     pBuilding->getHp() > 0 &&
-                     m_pPlayer->isEnemy(pBuilding->getOwner()) &&
-                     pUnit->isEnvironmentAttackable(pBuilding->getBuildingID())) ||
-                    (m_enableNeutralTerrainAttack &&
-                     isAttackOnTerrainAllowed(pTerrain) &&
-                     pUnit->isEnvironmentAttackable(pTerrain->getID())))
+                Terrain* pTargetTerrain = pMap->getTerrain(targetX, targetY);
+                Unit* pEnemy = pTargetTerrain->getUnit();
+                if (pEnemy != nullptr &&
+                    pUnit->isAttackable(pEnemy, true))
                 {
                     Unit* pTargetUnit = pTerrain->getUnit();
                     float alliedmultiplier = 1.0f;
@@ -1275,12 +1244,49 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                     {
                         alliedmultiplier = m_alliedDistanceModifier;
                     }
-                    qint32 attackDistanceModifier = getMovingToAttackEnvironmentDistanceModifier();
-                    QVector3D possibleTarget(x, y, (attackDistanceModifier) * alliedmultiplier);
+                    qint32 stealthMalus = 0;
+                    bool terrainHide = false;
+                    if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
+                    {
+                        stealthMalus = m_stealthDistanceMultiplier;
+                        if (terrainHide)
+                        {
+                            stealthMalus /=  2;
+                        }
+                    }
+                    qint32 attackDistanceModifier = getMovingToAttackDistanceModifier();
+                    QVector3D possibleTarget(x, y, (stealthMalus + attackDistanceModifier) * alliedmultiplier);
                     if (!targets.contains(possibleTarget))
                     {
                         targets.append(possibleTarget);
                         break;
+                    }
+                }
+                else
+                {
+                    Building* pBuilding = pTargetTerrain->getBuilding();
+                    if ((pBuilding != nullptr &&
+                         pBuilding->getHp() > 0 &&
+                         m_pPlayer->isEnemy(pBuilding->getOwner()) &&
+                         pUnit->isEnvironmentAttackable(pBuilding->getBuildingID())) ||
+                        (m_enableNeutralTerrainAttack &&
+                         isAttackOnTerrainAllowed(pTerrain) &&
+                         pUnit->isEnvironmentAttackable(pTerrain->getID())))
+                    {
+                        Unit* pTargetUnit = pTerrain->getUnit();
+                        float alliedmultiplier = 1.0f;
+                        if (pTargetUnit != nullptr &&
+                            pTargetUnit->getOwner()->checkAlliance(m_pPlayer) == GameEnums::Alliance_Friend)
+                        {
+                            alliedmultiplier = m_alliedDistanceModifier;
+                        }
+                        qint32 attackDistanceModifier = getMovingToAttackEnvironmentDistanceModifier();
+                        QVector3D possibleTarget(x, y, (attackDistanceModifier) * alliedmultiplier);
+                        if (!targets.contains(possibleTarget))
+                        {
+                            targets.append(possibleTarget);
+                            break;
+                        }
                     }
                 }
             }

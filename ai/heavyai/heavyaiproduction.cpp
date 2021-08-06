@@ -231,50 +231,53 @@ void HeavyAi::setAiName(const QString &newAiName)
 void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits, qint32 movementPoints)
 {
     spGameMap pMap = GameMap::getInstance();
-    QStringList actionList = pUnit->getActionList();
-    if (pUnit->getBaseMaxRange() > 1)
+    if (pMap.get() != nullptr)
     {
-        data.unitBuildingDataInput[BuildingEntry::BasicAttackRange] = 1;
+        QStringList actionList = pUnit->getActionList();
+        if (pUnit->getBaseMaxRange() > 1)
+        {
+            data.unitBuildingDataInput[BuildingEntry::BasicAttackRange] = 1;
+        }
+        else
+        {
+            data.unitBuildingDataInput[BuildingEntry::BasicAttackRange] = -1;
+        }
+        if (actionList.contains(ACTION_CAPTURE))
+        {
+            data.unitBuildingDataInput[BuildingEntry::CaptureUnit] = 1;
+        }
+        else
+        {
+            data.unitBuildingDataInput[BuildingEntry::CaptureUnit] = -1;
+        }
+        QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
+        auto & influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
+        double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();
+        double value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
+        value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
+        data.unitBuildingDataInput[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
+        data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
+        data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
+        data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(pMap->getMapHeight() * pMap->getMapWidth());
+        data.unitBuildingDataInput[BuildingEntry::FireRange] = static_cast<double>(pUnit->getMaxRange(position)) / static_cast<double>(m_maxFirerange);
+        data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
+        data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
+        data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
+        data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.highestEnemyInfluence) / highestInfluence;
+        qint32 islandIdx = getIslandIndex(pUnit);
+        qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
+        qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);
+        double maxIslandSize = movementPoints * movementPoints;
+        if (islandSize > maxIslandSize)
+        {
+            data.unitBuildingDataInput[BuildingEntry::MovementPotential] = 1;
+        }
+        else if (maxIslandSize > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::MovementPotential] = islandSize / maxIslandSize;
+        }
+        calculateUnitProductionDamage(pBuilding, pUnit, movementPoints, position, data, immuneUnits);
     }
-    else
-    {
-        data.unitBuildingDataInput[BuildingEntry::BasicAttackRange] = -1;
-    }
-    if (actionList.contains(ACTION_CAPTURE))
-    {
-        data.unitBuildingDataInput[BuildingEntry::CaptureUnit] = 1;
-    }
-    else
-    {
-        data.unitBuildingDataInput[BuildingEntry::CaptureUnit] = -1;
-    }
-    QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
-    auto & influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
-    double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();
-    double value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
-    value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
-    data.unitBuildingDataInput[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
-    data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
-    data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
-    data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(pMap->getMapHeight() * pMap->getMapWidth());
-    data.unitBuildingDataInput[BuildingEntry::FireRange] = static_cast<double>(pUnit->getMaxRange(position)) / static_cast<double>(m_maxFirerange);
-    data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
-    data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
-    data.unitBuildingDataInput[BuildingEntry::OwnInfluence] = static_cast<double>(influenceInfo.ownInfluence) / highestInfluence;
-    data.unitBuildingDataInput[BuildingEntry::HighestEnemyInfluence] = static_cast<double>(influenceInfo.highestEnemyInfluence) / highestInfluence;
-    qint32 islandIdx = getIslandIndex(pUnit);
-    qint32 island = m_IslandMaps[islandIdx]->getIsland(position.x(), position.y());
-    qint32 islandSize =  m_IslandMaps[islandIdx]->getIslandSize(island);
-    double maxIslandSize = movementPoints * movementPoints;
-    if (islandSize > maxIslandSize)
-    {
-        data.unitBuildingDataInput[BuildingEntry::MovementPotential] = 1;
-    }
-    else if (maxIslandSize > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::MovementPotential] = islandSize / maxIslandSize;
-    }
-    calculateUnitProductionDamage(pBuilding, pUnit, movementPoints, position, data, immuneUnits);
 }
 
 void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QVector<std::tuple<Unit*, Unit*>> transportTargets,
@@ -322,108 +325,111 @@ void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QV
 void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const QVector<Unit*> & immuneUnits)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 mapWidth = pMap->getMapWidth();
-    qint32 mapHeight = pMap->getMapHeight();
-    qint32 unitValue = pUnit->getUnitValue();
-    bool canCapture = (data.unitBuildingDataInput[BuildingEntry::CaptureUnit] > 0);
-    double fundsDamage = 0.0;
-    double possibleFundsDamage = 0.0;
-    double hpDamage = 0.0;
-    double possibleHpDamage = 0.0;
-    double captureRate = 0.0;
-    double maxCaptureRate = 0.0;
-    double counterFundsDamage = 0.0;
-    double counterhpDamage = 0.0;
-    double counterAttackCount = 0.0;
-    double immuneUnit = 0;
-    for (qint32 x = 0; x < mapWidth; ++x)
+    if (pMap.get() != nullptr)
     {
-        for (qint32 y = 0; y < mapHeight; ++y)
+        qint32 mapWidth = pMap->getMapWidth();
+        qint32 mapHeight = pMap->getMapHeight();
+        qint32 unitValue = pUnit->getUnitValue();
+        bool canCapture = (data.unitBuildingDataInput[BuildingEntry::CaptureUnit] > 0);
+        double fundsDamage = 0.0;
+        double possibleFundsDamage = 0.0;
+        double hpDamage = 0.0;
+        double possibleHpDamage = 0.0;
+        double captureRate = 0.0;
+        double maxCaptureRate = 0.0;
+        double counterFundsDamage = 0.0;
+        double counterhpDamage = 0.0;
+        double counterAttackCount = 0.0;
+        double immuneUnit = 0;
+        for (qint32 x = 0; x < mapWidth; ++x)
         {
-            Terrain* pTerrain = pMap->getTerrain(x, y);
-            Unit* pEnemyUnit = pTerrain->getUnit();
-            Building* pBuilding = pTerrain->getBuilding();
-            double scoreMultiplier = getProductionScoreMultiplier(position, QPoint(x, y), movementPoints);
-            if (pEnemyUnit != nullptr &&
-                m_pPlayer->isEnemyUnit(pEnemyUnit))
+            for (qint32 y = 0; y < mapHeight; ++y)
             {
-                double unitMulitpler = scoreMultiplier;
-                if (isPrimaryEnemy(pEnemyUnit))
+                Terrain* pTerrain = pMap->getTerrain(x, y);
+                Unit* pEnemyUnit = pTerrain->getUnit();
+                Building* pBuilding = pTerrain->getBuilding();
+                double scoreMultiplier = getProductionScoreMultiplier(position, QPoint(x, y), movementPoints);
+                if (pEnemyUnit != nullptr &&
+                    m_pPlayer->isEnemyUnit(pEnemyUnit))
                 {
-                    unitMulitpler *= m_primaryEnemyMultiplier;
-                }
-                double dmg = getBaseDamage(pUnit, pEnemyUnit);
-                double enemyHp = pEnemyUnit->getHp();
-                double enemyHpRatio = enemyHp / Unit::MAX_UNIT_HP;
-                if (dmg >= 0)
-                {
-                    double enemyUnitValue = pEnemyUnit->getUnitValue();
-                    double damageMultiplier = dmg / (enemyHp * Unit::MAX_UNIT_HP);
-                    fundsDamage         += unitMulitpler * enemyUnitValue * damageMultiplier;
-                    possibleFundsDamage += unitMulitpler * enemyUnitValue;
-                    hpDamage            += unitMulitpler * damageMultiplier;
-                    possibleHpDamage    += unitMulitpler * enemyHp / Unit::MAX_UNIT_HP;
-                    if (immuneUnits.contains(pEnemyUnit))
+                    double unitMulitpler = scoreMultiplier;
+                    if (isPrimaryEnemy(pEnemyUnit))
                     {
-                        ++immuneUnit;
+                        unitMulitpler *= m_primaryEnemyMultiplier;
+                    }
+                    double dmg = getBaseDamage(pUnit, pEnemyUnit);
+                    double enemyHp = pEnemyUnit->getHp();
+                    double enemyHpRatio = enemyHp / Unit::MAX_UNIT_HP;
+                    if (dmg >= 0)
+                    {
+                        double enemyUnitValue = pEnemyUnit->getUnitValue();
+                        double damageMultiplier = dmg / (enemyHp * Unit::MAX_UNIT_HP);
+                        fundsDamage         += unitMulitpler * enemyUnitValue * damageMultiplier;
+                        possibleFundsDamage += unitMulitpler * enemyUnitValue;
+                        hpDamage            += unitMulitpler * damageMultiplier;
+                        possibleHpDamage    += unitMulitpler * enemyHp / Unit::MAX_UNIT_HP;
+                        if (immuneUnits.contains(pEnemyUnit))
+                        {
+                            ++immuneUnit;
+                        }
+                    }
+                    dmg = getBaseDamage(pEnemyUnit, pUnit) * enemyHpRatio;
+                    if (dmg >= 0)
+                    {
+                        static constexpr double maxDamage = Unit::MAX_UNIT_HP  * Unit::MAX_UNIT_HP;
+                        counterFundsDamage  += unitMulitpler * unitValue * dmg / maxDamage;
+                        counterhpDamage     += unitMulitpler * dmg / maxDamage;
+                        ++counterAttackCount;
                     }
                 }
-                dmg = getBaseDamage(pEnemyUnit, pUnit) * enemyHpRatio;
-                if (dmg >= 0)
+                if (canCapture &&
+                    pBuilding != nullptr &&
+                    m_pPlayer->isEnemy(pBuilding->getOwner()) &&
+                    pBuilding->isCaptureOrMissileBuilding(true))
                 {
-                    static constexpr double maxDamage = Unit::MAX_UNIT_HP  * Unit::MAX_UNIT_HP;
-                    counterFundsDamage  += unitMulitpler * unitValue * dmg / maxDamage;
-                    counterhpDamage     += unitMulitpler * dmg / maxDamage;
-                    ++counterAttackCount;
-                }
-            }
-            if (canCapture &&
-                pBuilding != nullptr &&
-                m_pPlayer->isEnemy(pBuilding->getOwner()) &&
-                pBuilding->isCaptureOrMissileBuilding(true))
-            {
-                double buildingMulitpler = 1;
-                if (isPrimaryEnemy(pBuilding))
-                {
-                    buildingMulitpler = m_primaryEnemyMultiplier;
-                    scoreMultiplier *= m_primaryEnemyMultiplier;
-                }
-                if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
-                {
-                    qint32 buildSize = pBuilding->getConstructionList().size();
-                    captureRate += scoreMultiplier * buildSize;
-                    maxCaptureRate += buildSize * buildingMulitpler;
-                }
-                else
-                {
-                    captureRate += buildingMulitpler;
-                    maxCaptureRate += buildingMulitpler;
+                    double buildingMulitpler = 1;
+                    if (isPrimaryEnemy(pBuilding))
+                    {
+                        buildingMulitpler = m_primaryEnemyMultiplier;
+                        scoreMultiplier *= m_primaryEnemyMultiplier;
+                    }
+                    if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
+                    {
+                        qint32 buildSize = pBuilding->getConstructionList().size();
+                        captureRate += scoreMultiplier * buildSize;
+                        maxCaptureRate += buildSize * buildingMulitpler;
+                    }
+                    else
+                    {
+                        captureRate += buildingMulitpler;
+                        maxCaptureRate += buildingMulitpler;
+                    }
                 }
             }
         }
+        if (possibleHpDamage > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::DealingHpDamage] = hpDamage / possibleHpDamage;
+        }
+        if (possibleFundsDamage > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::DealingFundsDamage] = fundsDamage / possibleFundsDamage;
+        }
+        if (counterAttackCount > 0 && unitValue > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::ReceivingFundsDamge]  = counterFundsDamage / (counterAttackCount * unitValue);
+            data.unitBuildingDataInput[BuildingEntry::ReceivingHpDamage]    = counterhpDamage / counterAttackCount;
+        }
+        if (maxCaptureRate > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::CapturePotential] = captureRate / maxCaptureRate;
+        }
+        if (immuneUnits.size() > 0)
+        {
+            data.unitBuildingDataInput[BuildingEntry::CanAttackImmuneUnitRatio] = immuneUnit / static_cast<double>(immuneUnits.size());
+        }
+        data.unitBuildingDataInput[BuildingEntry::MaxUnitValue] = unitValue / m_maxUnitValue;
     }
-    if (possibleHpDamage > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::DealingHpDamage] = hpDamage / possibleHpDamage;
-    }
-    if (possibleFundsDamage > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::DealingFundsDamage] = fundsDamage / possibleFundsDamage;
-    }
-    if (counterAttackCount > 0 && unitValue > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::ReceivingFundsDamge]  = counterFundsDamage / (counterAttackCount * unitValue);
-        data.unitBuildingDataInput[BuildingEntry::ReceivingHpDamage]    = counterhpDamage / counterAttackCount;
-    }
-    if (maxCaptureRate > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::CapturePotential] = captureRate / maxCaptureRate;
-    }
-    if (immuneUnits.size() > 0)
-    {
-        data.unitBuildingDataInput[BuildingEntry::CanAttackImmuneUnitRatio] = immuneUnit / static_cast<double>(immuneUnits.size());
-    }
-    data.unitBuildingDataInput[BuildingEntry::MaxUnitValue] = unitValue / m_maxUnitValue;
 }
 
 float HeavyAi::getProductionScoreMultiplier(QPoint position, QPoint target, qint32 movementPoints)
@@ -471,85 +477,88 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQm
 {
     QVector<double> data(BuildingEntryMaxSize, 0.0);
     spGameMap pMap = GameMap::getInstance();
-    qint32 infantryUnits = 0;
-    qint32 indirectUnits = 0;
-    qint32 directUnits = 0;
-    qint32 transporterUnits = 0;
-    GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
-                     infantryUnits, indirectUnits, directUnits, transporterUnits,
-                     transportTargets);
-    double count = pUnits->size();
-    if (count > 0)
+    if (pMap.get() != nullptr)
     {
-        data[DirectUnitRatio]       = static_cast<double>(directUnits)   / count;
-        data[IndirectUnitRatio]     = static_cast<double>(indirectUnits) / count;
-        data[InfantryUnitRatio]     = static_cast<double>(infantryUnits) / count;
-        data[TransportUnitRatio]    = static_cast<double>(transporterUnits) / count;
-    }
-    double enemeyCount = 0;
-    double playerCount = 0;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-    {
-        if (!pMap->getPlayer(i)->getIsDefeated())
+        qint32 infantryUnits = 0;
+        qint32 indirectUnits = 0;
+        qint32 directUnits = 0;
+        qint32 transporterUnits = 0;
+        GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
+                         infantryUnits, indirectUnits, directUnits, transporterUnits,
+                         transportTargets);
+        double count = pUnits->size();
+        if (count > 0)
         {
-            playerCount++;
-            if (m_pPlayer->isEnemy(pMap->getPlayer(i)))
-            {
-                enemeyCount++;
-            }
+            data[DirectUnitRatio]       = static_cast<double>(directUnits)   / count;
+            data[IndirectUnitRatio]     = static_cast<double>(indirectUnits) / count;
+            data[InfantryUnitRatio]     = static_cast<double>(infantryUnits) / count;
+            data[TransportUnitRatio]    = static_cast<double>(transporterUnits) / count;
         }
-    }
-    if (pEnemyBuildings->size() + pBuildings->size() > 0)
-    {
-        data[TotalBuildingRatio] = pBuildings->size() / static_cast<double>(pBuildings->size() + pEnemyBuildings->size());
-    }
-    if (playerCount > 0)
-    {
-        data[EnemyRatio] = static_cast<double>(enemeyCount) / playerCount;
-    }
-    double productionCount = 0;
-    double unusedCount = 0;
-    for (qint32 i = 0; i < pBuildings->size(); i++)
-    {
-        Building* pBuilding = pBuildings->at(i);
-        if (pBuilding->isProductionBuilding())
+        double enemeyCount = 0;
+        double playerCount = 0;
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            productionCount++;
-            if (pBuilding->getTerrain()->getUnit() == nullptr)
+            if (!pMap->getPlayer(i)->getIsDefeated())
             {
-                unusedCount++;
-                bool found = false;
-                for (auto & building : m_BuildingData)
+                playerCount++;
+                if (m_pPlayer->isEnemy(pMap->getPlayer(i)))
                 {
-                    if (building.m_pBuilding == pBuilding)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    BuildingData newData;
-                    newData.m_pBuilding = pBuilding;
-                    m_BuildingData.append(newData);
-                }
-            }
-            else
-            {
-                for (qint32 i = 0; i < m_BuildingData.size(); ++i)
-                {
-                    if (m_BuildingData[i].m_pBuilding == pBuilding)
-                    {
-                        m_BuildingData.removeAt(i);
-                        break;
-                    }
+                    enemeyCount++;
                 }
             }
         }
-    }
-    if (productionCount > 0)
-    {
-        data[ProductionUsage] = static_cast<double>(unusedCount) / productionCount;
+        if (pEnemyBuildings->size() + pBuildings->size() > 0)
+        {
+            data[TotalBuildingRatio] = pBuildings->size() / static_cast<double>(pBuildings->size() + pEnemyBuildings->size());
+        }
+        if (playerCount > 0)
+        {
+            data[EnemyRatio] = static_cast<double>(enemeyCount) / playerCount;
+        }
+        double productionCount = 0;
+        double unusedCount = 0;
+        for (qint32 i = 0; i < pBuildings->size(); i++)
+        {
+            Building* pBuilding = pBuildings->at(i);
+            if (pBuilding->isProductionBuilding())
+            {
+                productionCount++;
+                if (pBuilding->getTerrain()->getUnit() == nullptr)
+                {
+                    unusedCount++;
+                    bool found = false;
+                    for (auto & building : m_BuildingData)
+                    {
+                        if (building.m_pBuilding == pBuilding)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        BuildingData newData;
+                        newData.m_pBuilding = pBuilding;
+                        m_BuildingData.append(newData);
+                    }
+                }
+                else
+                {
+                    for (qint32 i = 0; i < m_BuildingData.size(); ++i)
+                    {
+                        if (m_BuildingData[i].m_pBuilding == pBuilding)
+                        {
+                            m_BuildingData.removeAt(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (productionCount > 0)
+        {
+            data[ProductionUsage] = static_cast<double>(unusedCount) / productionCount;
+        }
     }
     return data;
 }

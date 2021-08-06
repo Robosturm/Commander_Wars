@@ -20,7 +20,7 @@ class QmlVectorPoint : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorPoint();
-    virtual ~QmlVectorPoint() = default;
+    virtual ~QmlVectorPoint();
 signals:
 
 public slots:
@@ -55,7 +55,7 @@ class QmlVectorUnit : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorUnit();
-    virtual ~QmlVectorUnit() = default;
+    virtual ~QmlVectorUnit();
 signals:
 
 public slots:
@@ -99,7 +99,7 @@ class QmlVectorBuilding: public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     explicit QmlVectorBuilding();
-    virtual ~QmlVectorBuilding() = default;
+    virtual ~QmlVectorBuilding();
 signals:
 
 public slots:

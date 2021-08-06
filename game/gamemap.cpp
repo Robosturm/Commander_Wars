@@ -335,12 +335,6 @@ void GameMap::deleteMap()
 GameMap::~GameMap()
 {
     Console::print("desctructing map.", Console::eDEBUG);
-    // remove us from the interpreter again
-    if (GameMap::getInstance() == nullptr)
-    {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_JavascriptName);
-    }
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
@@ -351,6 +345,12 @@ GameMap::~GameMap()
         m_fields[y].clear();
     }
     m_fields.clear();
+    // remove us from the interpreter again
+    if (GameMap::getInstance() == nullptr)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->deleteObject(m_JavascriptName);
+    }
     Console::print("map was deleted", Console::eDEBUG);
 }
 
@@ -1167,7 +1167,6 @@ void GameMap::readMapHeader(QDataStream& pStream,
                             qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
                             qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter)
 {
-    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pStream >> version;
     if (version > 1)
     {

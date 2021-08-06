@@ -68,7 +68,7 @@ namespace oxygine
         };
 
         static spIVideoDriver instance;
-        virtual ~IVideoDriver();
+        virtual ~IVideoDriver() = default;
 
         virtual void reset() = 0;
         virtual void restore() = 0;

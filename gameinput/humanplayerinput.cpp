@@ -1059,7 +1059,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     pBox->setSize(itemWidth, 10 + 30 * pData->valueNames.size());
     for (qint32 i = 0; i < pData->valueNames.size(); ++i)
     {
-        spLabel pLabel = new Label(textWidth);
+        spLabel pLabel = spLabel::create(textWidth);
         pLabel->setStyle(style);
         pLabel->setHtmlText(pData->valueNames[i]);
         pLabel->setPosition(baseWidth, 30 * i + 5);
@@ -1075,7 +1075,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
         pBox->addChild(pRect);
         for (qint32 i = 0; i < pData->valueNames.size(); ++i)
         {
-            spLabel pLabel = new Label(baseWidth);
+            spLabel pLabel = spLabel::create(baseWidth);
             pLabel->setStyle(style);
             if (pData->ownUnitValues[i] < 0)
             {
@@ -1099,7 +1099,7 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
         pBox->addChild(pRect);
         for (qint32 i = 0; i < pData->enemyUnitValues.size(); ++i)
         {
-            spLabel pLabel = new Label(baseWidth);
+            spLabel pLabel = spLabel::create(baseWidth);
             pLabel->setStyle(style);
             if (pData->enemyUnitValues[i] < 0)
             {

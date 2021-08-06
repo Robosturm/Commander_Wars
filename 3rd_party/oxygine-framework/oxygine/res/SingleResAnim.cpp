@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "qthread.h"
 #include "qapplication.h"
@@ -13,8 +14,14 @@ namespace oxygine
 
     SingleResAnim::SingleResAnim()
     {
-        moveToThread(QApplication::instance()->thread());
         setObjectName("SingleResAnim");
+    }
+
+    SingleResAnim::~SingleResAnim()
+    {
+        m_frames.clear();
+        m_texture = nullptr;
+        emit oxygine::GameWindow::getWindow()->sigWaitOnRelease();
     }
 
     void SingleResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
@@ -24,7 +31,6 @@ namespace oxygine
 
     void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-
         m_scaleFactor = scaleFactor;
         if (!original)
         {

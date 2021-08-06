@@ -16,81 +16,81 @@
 template<class TClass>
 class RessourceManagement : public oxygine::Resources
 {
-    public:
-        /**
+public:
+    /**
      * @brief getInstance
      * @return
      */
-        static TClass* getInstance();
-        /**
+    static TClass* getInstance();
+    /**
      * @brief loadAll loads all units data
      */
-        virtual void loadAll();
-        /**
+    virtual void loadAll();
+    /**
      * @brief getID
      * @param position
      * @return
      */
-        QString getID(qint32 position);
-        /**
+    QString getID(qint32 position);
+    /**
      * @brief getIndex
      * @param id
      * @return
      */
-        qint32 getIndex(QString id);
-        /**
+    qint32 getIndex(QString id);
+    /**
      * @brief getCount
      * @return
      */
-        qint32 getCount()
-        {
-            return m_loadedRessources.size();
-        }
-        /**
+    qint32 getCount()
+    {
+        return m_loadedRessources.size();
+    }
+    /**
      * @brief reset
      */
-        virtual void reset();
-        /**
+    virtual void reset();
+    /**
      * @brief exists
      * @param id
      * @return
      */
-        bool exists(QString id);
-        /**
+    bool exists(QString id);
+    /**
      * @brief getName
      * @param position
      * @return
      */
-        QString getName(qint32 position);
-        /**
+    QString getName(qint32 position);
+    /**
      * @brief getName
      * @param id
      * @return
      */
-        QString getName(QString id);
-        /**
+    QString getName(QString id);
+    /**
      * @brief getLoadedRessources
      * @return
      */
-        QStringList getLoadedRessources()
-        {
-            return m_loadedRessources;
-        }
-        bool getLoaded() const;
+    QStringList getLoadedRessources()
+    {
+        return m_loadedRessources;
+    }
+    bool getLoaded() const;
 
-    protected:
-        explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true);
-        virtual ~RessourceManagement() = default;
-        void loadRessources(QString resPath, bool addTransparentBorder = true);
-        void loadAll(QStringList& list);
-        void reset(QStringList& list);
-        QStringList getSearchPaths();
-    protected:
-        QStringList m_loadedRessources;
-        QString m_scriptPath;
-        bool m_loaded{false};
-    private:
-        static TClass* m_pInstance;
+protected:
+    explicit RessourceManagement(QString resPath, QString scriptPath, bool addTransparentBorder = true);
+    virtual ~RessourceManagement() = default;
+    void loadRessources(QString resPath, bool addTransparentBorder = true);
+    void loadAll(QStringList& list);
+    void reset(QStringList& list);
+    QStringList getSearchPaths();
+protected:
+    QStringList m_loadedRessources;
+    QString m_scriptPath;
+    bool m_loaded{false};
+private:
+    static TClass* m_pInstance;
 };
 
 template<class TClass>

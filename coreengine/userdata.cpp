@@ -30,6 +30,16 @@ Userdata::Userdata()
     Interpreter::setCppOwnerShip(this);
 }
 
+void Userdata::release()
+{
+    m_customCOStyles.clear();
+    m_achievements.clear();
+    m_mapVictoryInfo.clear();
+    m_shopItems.clear();
+    m_scriptVariableFiles.clear();
+    m_pInstance = nullptr;
+}
+
 qint32 Userdata::getCredtis() const
 {
     return m_credtis;

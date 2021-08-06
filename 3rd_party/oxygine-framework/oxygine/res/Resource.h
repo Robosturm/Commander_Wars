@@ -10,8 +10,8 @@ namespace oxygine
     {
         public:
             static const char* const RCC_PREFIX_PATH;
-            Resource();
-            ~Resource();
+            explicit Resource();
+            virtual ~Resource() = default;
 
             /**Loads resource heavy data into memory*/
             void load(LoadResourcesContext* context = 0);

@@ -96,6 +96,7 @@ class HeavyAi : public CoreAI
     enum CaptureInfo
     {
         CaptureInfoStart = BasicFieldInfoMaxSize,
+        CaptureInfoMaxSize
 
     };
 

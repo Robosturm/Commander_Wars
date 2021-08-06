@@ -11,6 +11,12 @@ QmlVectorPoint::QmlVectorPoint()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    ++oxygine::ref_counter::instanceCounter;
+}
+
+QmlVectorPoint::~QmlVectorPoint()
+{
+    --oxygine::ref_counter::instanceCounter;
 }
 
 QmlVectorUnit::QmlVectorUnit()
@@ -20,6 +26,12 @@ QmlVectorUnit::QmlVectorUnit()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    ++oxygine::ref_counter::instanceCounter;
+}
+
+QmlVectorUnit::~QmlVectorUnit()
+{
+    --oxygine::ref_counter::instanceCounter;
 }
 
 void QmlVectorUnit::randomize()
@@ -128,6 +140,12 @@ QmlVectorBuilding::QmlVectorBuilding()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    ++oxygine::ref_counter::instanceCounter;
+}
+
+QmlVectorBuilding::~QmlVectorBuilding()
+{
+    --oxygine::ref_counter::instanceCounter;
 }
 
 void QmlVectorBuilding::randomize()

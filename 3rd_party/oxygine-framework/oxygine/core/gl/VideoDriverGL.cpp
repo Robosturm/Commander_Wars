@@ -7,10 +7,6 @@ namespace oxygine
     VideoDriverGL::VideoDriverGL()
     {
         m_rt = spNativeTextureGLES::create();
-        GLint fbo = 0;
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-        m_rt->m_fbo = fbo;
     }
 
     quint32 VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
@@ -120,8 +116,6 @@ namespace oxygine
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
     {
         m_rt = safeSpCast<NativeTextureGLES>(rt);
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glBindFramebuffer(GL_FRAMEBUFFER, m_rt->getFboID());
     }
 
     void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)
@@ -155,6 +149,7 @@ namespace oxygine
         switch (state)
         {
             case STATE_BLEND:
+            {
                 if (value)
                 {
                     window->glEnable(GL_BLEND);
@@ -164,7 +159,9 @@ namespace oxygine
                     window->glDisable(GL_BLEND);
                 }
                 break;
+            }
             case STATE_CULL_FACE:
+            {
                 switch (value)
                 {
                     case CULL_FACE_FRONT_AND_BACK:
@@ -180,6 +177,7 @@ namespace oxygine
                         break;
                 }
                 break;
+            }
             default:
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "VideoDriverGL::setState unknown state");
         }

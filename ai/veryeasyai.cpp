@@ -665,101 +665,104 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUni
 {
     Console::print("VeryEasyAI::buildUnits()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    QVector<float> data;
-    qint32 productionBuildings = 0;
-    for (qint32 i = 0; i < pBuildings->size(); i++)
+    if (pMap.get() != nullptr)
     {
-        Building* pBuilding = pBuildings->at(i);
-        if (pBuilding->isProductionBuilding() &&
-            pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
+        QVector<float> data;
+        qint32 productionBuildings = 0;
+        for (qint32 i = 0; i < pBuildings->size(); i++)
         {
-            productionBuildings++;
+            Building* pBuilding = pBuildings->at(i);
+            if (pBuilding->isProductionBuilding() &&
+                pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
+            {
+                productionBuildings++;
+            }
         }
-    }
-    qint32 infantryUnits = 0;
-    qint32 indirectUnits = 0;
-    qint32 directUnits = 0;
-    qint32 transporterUnits = 0;
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        qint32 infantryUnits = 0;
+        qint32 indirectUnits = 0;
+        qint32 directUnits = 0;
+        qint32 transporterUnits = 0;
+        for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            infantryUnits++;
+            Unit* pUnit = pUnits->at(i);
+            if (pUnit->getActionList().contains(ACTION_CAPTURE))
+            {
+                infantryUnits++;
+            }
+            if (pUnit->getBaseMaxRange() > 1)
+            {
+                indirectUnits++;
+            }
+            else
+            {
+                directUnits++;
+            }
+            if (pUnit->getLoadingPlace() > 0 &&
+                pUnit->getWeapon1ID().isEmpty() &&
+                pUnit->getWeapon2ID().isEmpty())
+            {
+                transporterUnits++;
+            }
         }
-        if (pUnit->getBaseMaxRange() > 1)
+        data.append(m_pPlayer->getFunds());
+        data.append(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
+        data.append(pUnits->size());
+        if (indirectUnits > 0)
         {
-            indirectUnits++;
+            data.append(directUnits / static_cast<float>(indirectUnits));
         }
         else
         {
-            directUnits++;
+            data.append(1.0f);
         }
-        if (pUnit->getLoadingPlace() > 0 &&
-            pUnit->getWeapon1ID().isEmpty() &&
-            pUnit->getWeapon2ID().isEmpty())
-        {
-            transporterUnits++;
-        }
-    }
-    data.append(m_pPlayer->getFunds());
-    data.append(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
-    data.append(pUnits->size());
-    if (indirectUnits > 0)
-    {
-        data.append(directUnits / static_cast<float>(indirectUnits));
-    }
-    else
-    {
-        data.append(1.0f);
-    }
-    data.append(infantryUnits);
-    data.append(transporterUnits);
+        data.append(infantryUnits);
+        data.append(transporterUnits);
 
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i2 = 0; i2 < m_maxTreeDecisionTries; i2++)
-    {
-        if (i2 == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
+        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        for (qint32 i2 = 0; i2 < m_maxTreeDecisionTries; i2++)
         {
-            for (qint32 i = 0; i < pBuildings->size(); i++)
+            if (i2 == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
             {
-                Building* pBuilding = pBuildings->at(i);
-                if (pBuilding->isProductionBuilding() &&
-                    pBuilding->getTerrain()->getUnit() == nullptr)
+                for (qint32 i = 0; i < pBuildings->size(); i++)
                 {
-                    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
-                    pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
-                    if (pAction->canBePerformed())
+                    Building* pBuilding = pBuildings->at(i);
+                    if (pBuilding->isProductionBuilding() &&
+                        pBuilding->getTerrain()->getUnit() == nullptr)
                     {
-                        // we're allowed to build units here
-                        spMenuData pData = pAction->getMenuStepData();
-                        if (pData->validData())
+                        spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
+                        pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
+                        if (pAction->canBePerformed())
                         {
-                            qint32 selectedUnit = -1;
-                            if (pBuilding->getBuildingID() == "AIRPORT")
+                            // we're allowed to build units here
+                            spMenuData pData = pAction->getMenuStepData();
+                            if (pData->validData())
                             {
-                                selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
-                            }
-                            else if (pBuilding->getBuildingID() == "HARBOUR")
-                            {
-                                selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
-                            }
-                            else
-                            {
-                                selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
-                            }
-                            if (selectedUnit >= 0)
-                            {
-                                QString unitID = pUnitSpriteManager->getID(selectedUnit);
-                                qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
-                                if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
+                                qint32 selectedUnit = -1;
+                                if (pBuilding->getBuildingID() == "AIRPORT")
                                 {
-                                    CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
-                                    // produce the unit
-                                    if (pAction->isFinalStep())
+                                    selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
+                                }
+                                else if (pBuilding->getBuildingID() == "HARBOUR")
+                                {
+                                    selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
+                                }
+                                else
+                                {
+                                    selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
+                                }
+                                if (selectedUnit >= 0)
+                                {
+                                    QString unitID = pUnitSpriteManager->getID(selectedUnit);
+                                    qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
+                                    if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
                                     {
-                                        emit performAction(pAction);
-                                        return true;
+                                        CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
+                                        // produce the unit
+                                        if (pAction->isFinalStep())
+                                        {
+                                            emit performAction(pAction);
+                                            return true;
+                                        }
                                     }
                                 }
                             }

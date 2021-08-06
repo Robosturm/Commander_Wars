@@ -91,14 +91,17 @@ void CoreAI::init()
     connect(this, &CoreAI::performAction, GameMenue::getInstance(), &GameMenue::performAction, Qt::QueuedConnection);
 
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
-    for (qint32 x = 0; x < width; x++)
+    if (pMap.get() != nullptr)
     {
-        m_MoveCostMap.append(QVector<std::tuple<qint32, bool>>());
-        for (qint32 y = 0; y < heigth; y++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 x = 0; x < width; x++)
         {
-            m_MoveCostMap[x].append(std::tuple<qint32, bool>(0, false));
+            m_MoveCostMap.append(QVector<std::tuple<qint32, bool>>());
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                m_MoveCostMap[x].append(std::tuple<qint32, bool>(0, false));
+            }
         }
     }
 }
@@ -133,8 +136,10 @@ void CoreAI::nextAction()
     Console::print("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     spGameMenue pMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMenue.get() != nullptr &&
-        m_pPlayer == GameMap::getInstance()->getCurrentPlayer() &&
+        pMap.get() != nullptr &&
+        m_pPlayer == pMap->getCurrentPlayer() &&
         pMenue->getGameStarted())
     {
 
@@ -315,31 +320,34 @@ void CoreAI::createMovementMap(spQmlVectorBuilding pBuildings, spQmlVectorBuildi
 {
     Console::print("CoreAI::createMovementMap", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
-    for (qint32 x = 0; x < width; x++)
+    if (pMap.get() != nullptr)
     {
-        for (qint32 y = 0; y < heigth; y++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 x = 0; x < width; x++)
         {
-            if (std::get<1>(m_MoveCostMap[x][y]) == false)
+            for (qint32 y = 0; y < heigth; y++)
             {
-                std::get<0>(m_MoveCostMap[x][y]) = 0.0f;
+                if (std::get<1>(m_MoveCostMap[x][y]) == false)
+                {
+                    std::get<0>(m_MoveCostMap[x][y]) = 0.0f;
+                }
             }
         }
-    }
-    for (qint32 i = 0; i < pBuildings->size(); i++)
-    {
-        Building* pBuilding = pBuildings->at(i);
-        float damage = pBuilding->getDamage(nullptr);
-        addMovementMap(pBuilding, damage);
-    }
-    for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
-    {
-        Building* pBuilding = pEnemyBuildings->at(i);
-        if (pBuilding->getOwner() != nullptr)
+        for (qint32 i = 0; i < pBuildings->size(); i++)
         {
+            Building* pBuilding = pBuildings->at(i);
             float damage = pBuilding->getDamage(nullptr);
             addMovementMap(pBuilding, damage);
+        }
+        for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+        {
+            Building* pBuilding = pEnemyBuildings->at(i);
+            if (pBuilding->getOwner() != nullptr)
+            {
+                float damage = pBuilding->getDamage(nullptr);
+                addMovementMap(pBuilding, damage);
+            }
         }
     }
 }
@@ -380,13 +388,16 @@ void CoreAI::getBestTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSys
     if (pUnit->canMoveAndFire(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())))
     {
         spGameMap pMap = GameMap::getInstance();
-        QVector<QPoint> targets = pPfs->getAllNodePoints();
-        for (qint32 i2 = 0; i2 < targets.size(); i2++)
+        if (pMap.get() != nullptr)
         {
-            if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+            QVector<QPoint> targets = pPfs->getAllNodePoints();
+            for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
-                pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
-                getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+                if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+                {
+                    pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
+                    getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+                }
             }
         }
     }
@@ -467,13 +478,16 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFinding
     if (pUnit->canMoveAndFire(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())))
     {
         spGameMap pMap = GameMap::getInstance();
-        QVector<QPoint> targets = pPfs->getAllNodePoints();
-        for (qint32 i2 = 0; i2 < targets.size(); i2++)
+        if (pMap.get() != nullptr)
         {
-            if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+            QVector<QPoint> targets = pPfs->getAllNodePoints();
+            for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
-                pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
-                getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+                if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+                {
+                    pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
+                    getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+                }
             }
         }
     }

@@ -6,11 +6,6 @@
 
 namespace oxygine
 {
-    UberShaderProgramBase::UberShaderProgramBase()
-    {
-
-    }
-
     void UberShaderProgramBase::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader)
     {
         m_fracShader = fracShader;

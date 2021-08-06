@@ -13,10 +13,10 @@ namespace oxygine
             TF_UNDEFINED,
             TF_R8G8B8A8,//default
         };
-        ImageData();
-        ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, unsigned char* Data = nullptr);
-        ImageData(const ImageData& b, unsigned char* Data);
-        ~ImageData();
+        explicit ImageData();
+        explicit ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, unsigned char* Data = nullptr);
+        explicit ImageData(const ImageData& b, unsigned char* Data);
+        virtual ~ImageData() = default;
 
         ImageData getRect(const Rect& r) const;
         ImageData getRect(qint32 x, qint32 y, qint32 w, qint32 h) const;

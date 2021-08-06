@@ -72,7 +72,7 @@ namespace oxygine
         window->glActiveTexture(GL_TEXTURE0 + sampler);
         if (t)
         {
-            window->glBindTexture(GL_TEXTURE_2D, (GLuint)((size_t)t->getHandle()));
+            window->glBindTexture(GL_TEXTURE_2D, t->getHandle());
         }
         else
         {
@@ -100,8 +100,8 @@ namespace oxygine
             el++;
         }
 
-        size_t primitives = verticesDataSize / decl->size;
-        window->glDrawArrays(getPT(pt), 0, (GLsizei)primitives);
+        GLsizei primitives = verticesDataSize / decl->size;
+        window->glDrawArrays(getPT(pt), 0, primitives);
 
         el = decl->m_elements;
         for (qint32 i = 0; i < decl->numElements; ++i)
@@ -155,7 +155,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniformInt(const char* id, qint32 v)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 location = window->glGetUniformLocation(m_programID, id);
+        GLint location = window->glGetUniformLocation(m_programID, id);
         if (location == -1)
         {
             return;
@@ -166,7 +166,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector4* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(m_programID, id);
+        GLint p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -177,7 +177,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector2* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(m_programID, id);
+        GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -188,7 +188,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector3* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(m_programID, id);
+        GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -199,7 +199,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Matrix* mat, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(m_programID, id);
+        GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -210,7 +210,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, float val)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(m_programID, id);
+        GLint  p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;

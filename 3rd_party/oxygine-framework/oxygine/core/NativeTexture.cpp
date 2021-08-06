@@ -9,7 +9,7 @@ namespace oxygine
 
     }
 
-    void NativeTextureNull::init(int, int, ImageData::TextureFormat, bool)
+    void NativeTextureNull::init(int, int, ImageData::TextureFormat)
     {
 
     }

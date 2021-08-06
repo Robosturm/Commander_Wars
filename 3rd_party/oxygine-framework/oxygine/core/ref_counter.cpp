@@ -9,10 +9,12 @@
 
 namespace oxygine
 {
+    std::atomic<qint32> ref_counter::instanceCounter = 0;
     void ref_counter::releaseRef()
     {
         if (0 == --m_ref_counter)
         {
+            --oxygine::ref_counter::instanceCounter;
             QObject* pObj = dynamic_cast<QObject*>(this);
             if (pObj == nullptr)
             {

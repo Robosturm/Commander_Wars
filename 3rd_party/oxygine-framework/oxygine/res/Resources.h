@@ -38,8 +38,8 @@ namespace oxygine
     class Resources: public Resource
     {
     public:
-        typedef QVector<spResource> resources;
-        typedef QMap<QString, spResource> resourcesMap;
+        using resources = QVector<spResource>;
+        using resourcesMap = QMap<QString, spResource>;
 
         typedef spResource (*createResourceCallback)(CreateResourceContext& context);
 

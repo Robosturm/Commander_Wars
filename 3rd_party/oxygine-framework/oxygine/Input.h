@@ -13,8 +13,8 @@ namespace oxygine
     public:
         static Input instance;
 
-        Input();
-        ~Input();
+        explicit Input();
+        virtual ~Input();
 
         void cleanup();
 

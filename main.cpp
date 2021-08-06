@@ -65,6 +65,7 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/customspritemanager.h"
 
 void registerInterfaceData()
 {
@@ -208,6 +209,8 @@ int main(qint32 argc, char* argv[])
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
+    window.getWorkerthread()->quit();
+    window.getWorkerthread()->wait();
     Player::releaseStaticData();
     if (GameMenue::getInstance() != nullptr)
     {
@@ -221,20 +224,25 @@ int main(qint32 argc, char* argv[])
     {
         GameMap::getInstance()->deleteMap();
     }
-    window.getWorkerthread()->quit();
-    window.getWorkerthread()->wait();
+    Userdata::getInstance()->release();
+    COSpriteManager::getInstance()->release();
+    //CustomSpriteManager::getInstance()->release();
     Console::print("Shutting down main window", Console::eDEBUG);
     window.shutdown();
     Console::print("Saving settings and shutting them down", Console::eDEBUG);
     Settings::saveSettings();
     Settings::shutdown();
-
     if (MainServer::getInstance() != nullptr)
     {
-        Console::print("Shutting game server", Console::eDEBUG);
+        Console::print("Shutting dwon game server", Console::eDEBUG);
         MainServer::getInstance()->deleteLater();
         window.getGameServerThread()->quit();
         window.getGameServerThread()->wait();
+    }
+    Console::print("Checking for memory leak during runtime", Console::eDEBUG);
+    if (oxygine::ref_counter::instanceCounter != 0)
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected");
     }
     //end
     if (returncode == 1)

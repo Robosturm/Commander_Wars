@@ -31,10 +31,6 @@ namespace oxygine
         }
     }
 
-    ShaderProgramGL::~ShaderProgramGL()
-    {
-    }
-
     quint32 ShaderProgramGL::getID() const
     {
         return m_program.programId();

@@ -521,6 +521,7 @@ void Mainwindow::quitGame()
 
 void Mainwindow::onEnter()
 {
+    Console::print("Allocated objects: " + QString::number(oxygine::ref_counter::instanceCounter), Console::eINFO);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "main";

@@ -652,6 +652,14 @@ private:
     bool m_coRangeEnabled{true};
 
     QStringList m_perkList;
+    struct CustomCoStyle
+    {
+        QString m_id;
+        QString m_file;
+        QImage m_colorTable;
+        QImage m_maskTable;
+        bool useColorBox;
+    };
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;

@@ -12,8 +12,8 @@ namespace oxygine
     class ResAnim: public Resource
     {
     public:
-        ResAnim(Resource* atlas = 0);
-        ~ResAnim();
+        explicit ResAnim(Resource* atlas = 0);
+        virtual ~ResAnim() = default;
 
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         void init(QImage & img, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);

@@ -615,6 +615,8 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setAnimationSpeed(100);
         Settings::setWalkAnimationSpeed(100);
         Settings::setBattleAnimationSpeed(100);
+        Settings::setDialogAnimation(false);
+        Settings::setDialogAnimationSpeed(100);
         Settings::setTotalVolume(0);
         m_Timer.stop();
     }
