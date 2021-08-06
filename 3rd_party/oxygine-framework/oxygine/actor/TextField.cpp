@@ -12,28 +12,13 @@
 
 namespace oxygine
 {
-    static ResFont* _defaultFont = nullptr;
-    void TextField::setDefaultFont(ResFont* f)
-    {
-        _defaultFont = f;
-    }
-
-    ResFont* TextField::getDefaultFont()
-    {
-        return _defaultFont;
-    }
-
     TextField::TextField():
         m_root(nullptr),
         m_textRect(0, 0, 0, 0),
         m_rtscale(1.0f)
     {
-        m_style.font = _defaultFont;
+        m_style.font = nullptr;
         setText("");
-    }
-
-    TextField::~TextField()
-    {
     }
 
     bool TextField::isOn(const Vector2& localPosition, float)
@@ -107,7 +92,7 @@ namespace oxygine
         m_style.font = font;
         if (!m_style.font)
         {
-            m_style.font = _defaultFont;
+            m_style.font = nullptr;
         }
         rebuildText();
     }
@@ -148,7 +133,7 @@ namespace oxygine
 
         if (!m_style.font)
         {
-            m_style.font = _defaultFont;
+            m_style.font = nullptr;
         }
         rebuildText();
     }

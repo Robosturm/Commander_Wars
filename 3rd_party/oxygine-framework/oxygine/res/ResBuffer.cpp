@@ -20,17 +20,6 @@ namespace oxygine
         return rs;
     }
 
-
-    ResBuffer::ResBuffer()
-    {
-
-    }
-
-    ResBuffer::~ResBuffer()
-    {
-
-    }
-
     void ResBuffer::init(QString file)
     {
         m_path = file;

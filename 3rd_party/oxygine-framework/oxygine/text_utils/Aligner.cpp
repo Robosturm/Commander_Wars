@@ -23,11 +23,6 @@ namespace oxygine
             m_options = Style.options;
         }
 
-        Aligner::~Aligner()
-        {
-
-        }
-
         qint32 Aligner::_alignX(qint32 rx)
         {
             qint32 tx = 0;

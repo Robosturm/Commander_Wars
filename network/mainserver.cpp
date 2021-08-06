@@ -20,6 +20,11 @@ MainServer* MainServer::getInstance()
     return m_pInstance;
 }
 
+bool MainServer::exists()
+{
+    return m_pInstance != nullptr;
+}
+
 MainServer::MainServer()
     : QObject(),
       m_updateTimer(this)

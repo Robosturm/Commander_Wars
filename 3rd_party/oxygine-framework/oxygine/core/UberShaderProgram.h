@@ -44,8 +44,8 @@ namespace oxygine
     class UberShaderProgram : public UberShaderProgramBase
     {
     public:
-        UberShaderProgram();
-        ~UberShaderProgram();
+        explicit UberShaderProgram();
+        virtual ~UberShaderProgram();
 
         enum
         {

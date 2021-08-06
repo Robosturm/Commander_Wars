@@ -24,10 +24,6 @@ namespace oxygine
 
     }
 
-    Tween::~Tween()
-    {
-    }
-
     void Tween::reset()
     {
         m_elapsed = timeMS(0);

@@ -35,7 +35,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     {
         heigth = 40;
     }
-    m_Textfield->attachTo(pClipActor);
+    pClipActor->addChild(m_Textfield);
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width, heigth);
     setSize(width, heigth);

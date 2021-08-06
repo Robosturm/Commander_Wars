@@ -24,15 +24,25 @@ Interpreter::Interpreter()
 {
     setObjectName("Interpreter");
     setCppOwnerShip(this);
-    m_pInstance = this;
-    init();
 }
 
 void Interpreter::reloadInterpreter(QString runtime)
 {
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
+    m_pInstance->init();
     m_pInstance->loadScript(runtime, "Interpreter Runtime");
+}
+
+Interpreter::~Interpreter()
+{
+    // free memory
+    collectGarbage();
+}
+
+void Interpreter::release()
+{
+    m_pInstance = nullptr;
 }
 
 void Interpreter::init()
@@ -126,12 +136,6 @@ void Interpreter::loadScript(QString content, QString script)
                         value.property("lineNumber").toString();
         Console::print(error, Console::eERROR);
     }
-}
-
-Interpreter::~Interpreter()
-{
-    // free memory
-    collectGarbage();
 }
 
 

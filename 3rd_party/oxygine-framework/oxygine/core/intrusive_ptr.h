@@ -11,7 +11,7 @@ namespace oxygine
     template <class T>
     class intrusive_ptr
     {
-        T* _ptr{nullptr};
+        T* m_pPointer{nullptr};
     public:
         typedef T element_type;
 
@@ -20,45 +20,51 @@ namespace oxygine
         static intrusive_ptr<T> create(TArgs... args)
         {
             ++oxygine::ref_counter::instanceCounter;
-            return new T(args...);
+            intrusive_ptr<T> pRet;
+            pRet.m_pPointer =  new T(args...);
+            oxygine::ref_counter::lock.lock();
+            oxygine::ref_counter::objects.append(pRet.m_pPointer);
+            oxygine::ref_counter::lock.unlock();
+            pRet.m_pPointer->addRef();
+            return pRet;
         }
 
         intrusive_ptr()
-            : _ptr(nullptr)
+            : m_pPointer(nullptr)
         {
         }
         intrusive_ptr(const intrusive_ptr& s)
-            : _ptr(s._ptr)
+            : m_pPointer(s.m_pPointer)
         {
-            if (_ptr != nullptr)
+            if (m_pPointer != nullptr)
             {
-                s._ptr->addRef();
+                s.m_pPointer->addRef();
             }
         }
 
         template<class U>
         intrusive_ptr(intrusive_ptr<U> const& rhs)
-            : _ptr(rhs.get())
+            : m_pPointer(rhs.get())
         {
-            if (_ptr != nullptr)
+            if (m_pPointer != nullptr)
             {
-                _ptr->addRef();
+                m_pPointer->addRef();
             }
         }
 
         T* get() const
         {
-            return _ptr;
+            return m_pPointer;
         }
 
         T& operator*() const
         {
-            return *_ptr;
+            return *m_pPointer;
         }
 
         T* operator->() const
         {
-            return _ptr;
+            return m_pPointer;
         }
 
         intrusive_ptr& operator = (const intrusive_ptr& s)
@@ -74,7 +80,7 @@ namespace oxygine
         }
 
         intrusive_ptr(T* p)
-            : _ptr(p)
+            : m_pPointer(p)
         {
             if (p)
             {
@@ -88,26 +94,26 @@ namespace oxygine
 
         bool operator!() const
         {
-            return _ptr == nullptr;
+            return m_pPointer == nullptr;
         }
 
         void swap(intrusive_ptr& s)
         {
-            T* p = s._ptr;
-            s._ptr = _ptr;
-            _ptr = p;
+            T* p = s.m_pPointer;
+            s.m_pPointer = m_pPointer;
+            m_pPointer = p;
         }
         operator bool ()const
         {
-            return _ptr != nullptr;
+            return m_pPointer != nullptr;
         }
 
-        ~intrusive_ptr()
+        virtual ~intrusive_ptr()
         {
-            if (_ptr != nullptr)
+            if (m_pPointer != nullptr)
             {
-                _ptr->releaseRef();
-                _ptr = nullptr;
+                m_pPointer->releaseRef();
+                m_pPointer = nullptr;
             }
         }
     };

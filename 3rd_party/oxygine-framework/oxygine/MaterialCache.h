@@ -25,7 +25,8 @@ namespace oxygine
     class MaterialCache
     {
     public:
-        MaterialCache();
+        explicit MaterialCache();
+        virtual ~MaterialCache() = default;
 
         template<class T>
         intrusive_ptr<T> cache(const T& other)

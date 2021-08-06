@@ -10,11 +10,10 @@ namespace oxygine
 {
     namespace text
     {
-        Node::Node(): m_firstChild(0), m_lastChild(0), m_nextSibling(0)
-        {
-        }
-
-        Node::~Node()
+        Node::Node()
+            : m_firstChild(0),
+              m_lastChild(0),
+              m_nextSibling(0)
         {
         }
 

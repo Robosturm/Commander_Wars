@@ -305,7 +305,6 @@ set(${PROJECT_NAME}_SRCS
     resource_management/coperkmanager.cpp
     resource_management/achievementmanager.cpp
     resource_management/shoploader.cpp
-    resource_management/customspritemanager.cpp
 
     # core engine
     coreengine/mainapp.cpp

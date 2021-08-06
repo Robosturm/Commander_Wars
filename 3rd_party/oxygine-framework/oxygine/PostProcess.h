@@ -113,10 +113,10 @@ namespace oxygine
     protected:
         bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
 
-        typedef QVector<spNativeTexture> rts;
+        using rts = QVector<spNativeTexture>;
         rts m_rts;
 
-        typedef QVector<spNativeTexture> free;
+        using free = QVector<spNativeTexture>;
         free m_free;
     };
 

@@ -12,7 +12,8 @@ namespace oxygine
         enum { EVENT_LOOP_BEGIN = sysEventID('T', 'L', 'B'), };
         enum { EVENT_LOOP_END = sysEventID('T', 'L', 'E'), };
 
-        TweenQueue();
+        explicit TweenQueue();
+        virtual ~TweenQueue() = default;
 
         /**short syntax for easy tween queue creation*/
         static spTweenQueue create(spTween t1);
@@ -51,7 +52,7 @@ namespace oxygine
         void _update(Actor& actor, const UpdateState& us);
 
     private:
-        typedef intrusive_list<Tween> tweens;
+        using tweens = intrusive_list<Tween>;
         tweens m_tweens;
         spTween m_current;
         qint32 m_loopsDone;

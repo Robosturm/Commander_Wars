@@ -12,7 +12,8 @@ namespace oxygine
     class SlidingSprite : public oxygine::ClipRectActor
     {
     public:
-        SlidingSprite();
+        explicit SlidingSprite();
+        virtual ~SlidingSprite() = default;
         void setResAnim(ResAnim* pAnim);
         float getSpeed() const;
         void setSpeed(float speed);

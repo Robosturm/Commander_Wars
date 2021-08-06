@@ -65,7 +65,6 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/unitspritemanager.h"
-#include "resource_management/customspritemanager.h"
 
 void registerInterfaceData()
 {
@@ -169,24 +168,8 @@ int main(qint32 argc, char* argv[])
     QApplication app(argc, argv);
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
-
+    Settings::getInstance();
     Settings::loadSettings();
-
-    NeuralNetwork network;
-    QMap<QString, double> parameters;
-    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
-    parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::Step));
-    parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(10));
-    network.addLayer(parameters);
-    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
-    for (qint32 i = 0; i < 4; ++i)
-    {
-        network.addLayer(parameters);
-    }
-    parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT));
-    parameters[Layer::LAYER_PARAMETER_SIZE] = 1;
-    network.addLayer(parameters);
-    network.autogenerate();
 
     Mainapp window;
     window.setTitle("Commander Wars");
@@ -209,30 +192,15 @@ int main(qint32 argc, char* argv[])
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
-    window.getWorkerthread()->quit();
-    window.getWorkerthread()->wait();
     Player::releaseStaticData();
-    if (GameMenue::getInstance() != nullptr)
-    {
-        GameMenue::getInstance()->deleteMenu();
-    }
-    if (EditorMenue::getInstance() != nullptr)
-    {
-        EditorMenue::getInstance()->deleteMenu();
-    }
-    if (GameMap::getInstance() != nullptr)
-    {
-        GameMap::getInstance()->deleteMap();
-    }
     Userdata::getInstance()->release();
-    COSpriteManager::getInstance()->release();
-    //CustomSpriteManager::getInstance()->release();
+    Console::getInstance()->release();
+    Settings::shutdown();
     Console::print("Shutting down main window", Console::eDEBUG);
     window.shutdown();
-    Console::print("Saving settings and shutting them down", Console::eDEBUG);
+    Console::print("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
-    Settings::shutdown();
-    if (MainServer::getInstance() != nullptr)
+    if (MainServer::exists())
     {
         Console::print("Shutting dwon game server", Console::eDEBUG);
         MainServer::getInstance()->deleteLater();
@@ -240,9 +208,10 @@ int main(qint32 argc, char* argv[])
         window.getGameServerThread()->wait();
     }
     Console::print("Checking for memory leak during runtime", Console::eDEBUG);
-    if (oxygine::ref_counter::instanceCounter != 0)
+    static constexpr qint32 finalObjects = 1; // console never gets released
+    if (oxygine::ref_counter::instanceCounter != finalObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected");
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::instanceCounter));
     }
     //end
     if (returncode == 1)

@@ -10,7 +10,8 @@ namespace oxygine
     class TweenGlowImpl : public TweenPostProcess
     {
     public:
-        TweenGlowImpl(const QColor& c, const PostProcessOptions& opt);
+        explicit TweenGlowImpl(const QColor& c, const PostProcessOptions& opt);
+        virtual ~TweenGlowImpl() = default;
         virtual void render(Actor* actor, const RenderState& rs) override;
         virtual void _renderPP() override;
     private:
@@ -21,6 +22,7 @@ namespace oxygine
     class TweenGlow : public TweenProxy<TweenGlowImpl>
     {
     public:
-        TweenGlow(const QColor& color, const PostProcessOptions& opt = PostProcessOptions());
+        explicit TweenGlow(const QColor& color, const PostProcessOptions& opt = PostProcessOptions());
+        virtual ~TweenGlow() = default;
     };
 }

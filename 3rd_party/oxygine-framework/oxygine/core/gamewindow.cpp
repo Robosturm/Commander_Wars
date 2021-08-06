@@ -31,7 +31,6 @@ namespace oxygine
     GameWindow* GameWindow::m_window = nullptr;
 
     GameWindow::GameWindow()
-        : m_dispatcher(spEventDispatcher::create())
     {
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
@@ -51,10 +50,9 @@ namespace oxygine
 
     void GameWindow::shutdown()
     {
-        m_shuttingDown = true;
+        QApplication::processEvents();
         m_timerCycle = -1;
         m_Timer.stop();
-        m_dispatcher->removeAllEventListeners();
         rsCache().reset();
         rsCache().setDriver(nullptr);
 
@@ -66,13 +64,9 @@ namespace oxygine
         STDRenderer::release();
         STDRenderDelegate::instance = nullptr;
         IVideoDriver::instance = nullptr;
-
+        Material::null = nullptr;
+        Material::current = nullptr;
         Input::instance.cleanup();
-
-        if (Stage::instance)
-        {
-            Stage::instance->cleanup();
-        }
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
         Resources::unregisterResourceType("buffer");
@@ -98,7 +92,7 @@ namespace oxygine
     void GameWindow::quitApp()
     {
         m_shuttingDown = true;
-        QApplication::processEvents();
+        onQuit();
     }
 
     void GameWindow::paintGL()
@@ -216,7 +210,7 @@ namespace oxygine
 
         STDRenderer::instance = spSTDRenderer::create();
         STDRenderDelegate::instance = spSTDRenderDelegate::create();
-        Material::null       = spNullMaterialX::create();
+        Material::null = spNullMaterialX::create();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;
@@ -429,11 +423,6 @@ namespace oxygine
     qint32 GameWindow::getTimerCycle() const
     {
         return m_timerCycle;
-    }
-
-    spEventDispatcher GameWindow::getDispatcher()
-    {
-        return m_dispatcher;
     }
 
     QOpenGLContext* GameWindow::getGLContext()

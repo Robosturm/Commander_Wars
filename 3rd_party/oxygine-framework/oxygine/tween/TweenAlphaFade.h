@@ -12,7 +12,8 @@ namespace oxygine
     class TweenAlphaFadeImpl : public TweenPostProcess
     {
     public:
-        TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt);
+        explicit TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt);
+        virtual ~TweenAlphaFadeImpl() = default;
         void render(Actor*, const RenderState&);
     private:
         bool m_fadeIn;
@@ -21,6 +22,7 @@ namespace oxygine
     class TweenAlphaFade: public TweenProxy<TweenAlphaFadeImpl>
     {
     public:
-        TweenAlphaFade(bool fadeIn, const PostProcessOptions& opt = PostProcessOptions());
+        explicit TweenAlphaFade(bool fadeIn, const PostProcessOptions& opt = PostProcessOptions());
+        virtual ~TweenAlphaFade() = default;
     };
 }

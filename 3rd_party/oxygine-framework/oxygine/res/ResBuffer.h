@@ -10,8 +10,8 @@ namespace oxygine
     public:
         static spResource create(CreateResourceContext&);
 
-        explicit ResBuffer();
-        ~ResBuffer();
+        explicit ResBuffer() = default;
+        virtual ~ResBuffer() = default;
 
         void init(QString file);
 

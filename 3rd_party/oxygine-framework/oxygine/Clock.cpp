@@ -11,11 +11,6 @@ namespace oxygine
     {
     }
 
-    Clock::~Clock()
-    {
-
-    }
-
     float Clock::getMultiplier() const
     {
         return m_multiplier;

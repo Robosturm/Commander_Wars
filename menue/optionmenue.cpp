@@ -56,7 +56,7 @@ OptionMenue::OptionMenue()
 
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(this);
+    addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -68,7 +68,7 @@ OptionMenue::OptionMenue()
 
 
     oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
-    pButtonMods->attachTo(this);
+    addChild(pButtonMods);
     pButtonMods->setPosition(Settings::getWidth() - pButtonMods->getWidth() - 10, 10);
     pButtonMods->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -77,7 +77,7 @@ OptionMenue::OptionMenue()
     connect(this, &OptionMenue::sigShowMods, this, &OptionMenue::showMods, Qt::QueuedConnection);
 
     oxygine::spButton pButtonSettings = ObjectManager::createButton(tr("Settings"));
-    pButtonSettings->attachTo(this);
+    addChild(pButtonSettings);
     pButtonSettings->setPosition(10, 10);
     pButtonSettings->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -89,7 +89,7 @@ OptionMenue::OptionMenue()
     connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
     oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"), 220);
-    pButtonGameplayAndKeys->attachTo(this);
+    addChild(pButtonGameplayAndKeys);
     pButtonGameplayAndKeys->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
     pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

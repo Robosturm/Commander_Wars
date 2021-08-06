@@ -28,7 +28,8 @@ namespace oxygine
         class DrawContext
         {
         public:
-            DrawContext() {}
+            explicit DrawContext() = default;
+            virtual ~DrawContext() = default;
 
             QColor m_color;
             QColor m_primary;
@@ -40,8 +41,8 @@ namespace oxygine
         class Node : public oxygine::ref_counter
         {
         public:
-            Node();
-            virtual ~Node();
+            explicit Node();
+            virtual ~Node() = default;
 
             void appendNode(spNode tn);
             virtual void resize(Aligner& rd);
@@ -73,7 +74,8 @@ namespace oxygine
         public:
             static void setDefaultMissingSymbol(int);
 
-            TextNode(QString v);
+            explicit TextNode(QString v);
+            virtual ~TextNode() = default;
 
             text_data _data;
             void xresize(Aligner& rd) override;
@@ -90,7 +92,8 @@ namespace oxygine
         class DivNode: public Node
         {
         public:
-            DivNode(QDomElement& reader);
+            explicit DivNode(QDomElement& reader);
+            virtual ~DivNode() = default;
 
             void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;
@@ -106,6 +109,8 @@ namespace oxygine
         class BrNode: public Node
         {
         public:
+            explicit BrNode() = default;
+            virtual ~BrNode() = default;
             void xresize(Aligner& rd)
             {
                 rd.nextLine();

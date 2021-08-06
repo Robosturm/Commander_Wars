@@ -141,7 +141,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         if (pMenu.get() != nullptr)
         {
             oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
-            pButtonSaveAndExit->attachTo(this);
+            addChild(pButtonSaveAndExit);
             pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getWidth() - 10, Settings::getHeight() - 50);
             pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
             {
@@ -150,7 +150,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
             connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenu.get(), &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
 
             oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
-            pButtonContinue->attachTo(this);
+            addChild(pButtonContinue);
             pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
             pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
             {

@@ -742,25 +742,6 @@ namespace oxygine
         }
     }
 
-    void Actor::attachTo(spActor parent)
-    {
-        attachTo(parent.get());
-    }
-
-    void Actor::attachTo(Actor* parent)
-    {
-        if (!parent)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::attachTo parent is nullptr");
-            return;
-        }
-        else if (parent == this)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::attachTo parent is self");
-        }
-        parent->addChild(this);
-    }
-
     void Actor::addChild(Actor* actor)
     {
         if (!GameWindow::getWindow()->isWorker())
@@ -1225,24 +1206,6 @@ namespace oxygine
         }
 
         return t;
-    }
-
-    void changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent)
-    {
-        Vector2 pos = actor->getPosition();
-        spActor act = actor->getParent();
-        while (act && act != mutualParent)
-        {
-            pos = act->local2parent(pos);
-            act = act->getParent();
-        }
-
-        if (newParent != mutualParent)
-        {
-            pos = convert_global2local(newParent, mutualParent, pos);
-        }
-        actor->setPosition(pos);
-        actor->attachTo(newParent);
     }
 
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)

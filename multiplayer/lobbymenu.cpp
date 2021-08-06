@@ -51,7 +51,7 @@ LobbyMenu::LobbyMenu()
     pApp->getAudioThread()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(this);
+    addChild(pButtonExit);
     pButtonExit->setPosition(10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -60,7 +60,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Host Local"));
-    pButtonHost->attachTo(this);
+    addChild(pButtonHost);
     pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -69,7 +69,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
     oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Host"));
-    pButtonHostOnServer->attachTo(this);
+    addChild(pButtonHostOnServer);
     pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
     pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -78,7 +78,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
-    pButtonJoin->attachTo(this);
+    addChild(pButtonJoin);
     pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -87,7 +87,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
-    pButtonJoinAdress->attachTo(this);
+    addChild(pButtonJoinAdress);
     pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

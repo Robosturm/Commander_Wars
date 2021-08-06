@@ -212,7 +212,8 @@ bool GameAction::canBePerformed(QString actionID, bool emptyField)
     if (!actionID.isEmpty())
     {
         spGameMap pMap = GameMap::getInstance();
-        if (pMap->getGameRules()->getAllowedActions().contains(actionID))
+        if (pMap.get() != nullptr &&
+            pMap->getGameRules()->getAllowedActions().contains(actionID))
         {
             Unit* pUnit = getTargetUnit();
             Building* pBuilding = getTargetBuilding();

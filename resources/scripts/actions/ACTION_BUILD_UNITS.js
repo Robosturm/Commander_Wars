@@ -13,7 +13,8 @@ var Constructor = function()
 		{
             var unitCount = building.getOwner().getUnitCount();
             if ((unitLimit <= 0) ||
-                (unitCount < unitLimit))
+                (unitCount < unitLimit) &&
+                ACTION_BUILD_UNITS.canBuildUnits())
             {
                 return true;
             }
@@ -67,6 +68,26 @@ var Constructor = function()
             return "MENU";
         }
         return "";
+    };
+
+    this.canBuildUnits = function()
+    {
+        var units = building.getConstructionList();
+        var unitData = [];
+        for (i = 0; i < units.length; i++)
+        {
+            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            unitData.push([cost, units[i]]);
+        }
+        var funds = map.getCurrentPlayer().getFunds();
+        for (i = 0; i < unitData.length; i++)
+        {
+            if (unitData[i][0] <= funds)
+            {
+                return true;
+            }
+        }
+        return false;
     };
 
     this.getStepData = function(action, data)

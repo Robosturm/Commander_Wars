@@ -1,6 +1,8 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <atomic>
+#include <qmutex.h>
+#include <QVector>
 
 namespace oxygine
 {
@@ -18,6 +20,8 @@ namespace oxygine
         }
 
         static std::atomic<qint32> instanceCounter;
+        static QMutex lock;
+        static QVector<ref_counter*> objects;
     private:
         template<typename T>
         friend class intrusive_ptr;

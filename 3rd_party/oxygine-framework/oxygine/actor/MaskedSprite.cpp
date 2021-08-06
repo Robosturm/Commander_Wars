@@ -9,10 +9,6 @@ namespace oxygine
     {
     }
 
-    MaskedSprite::~MaskedSprite()
-    {
-    }
-
     Sprite* MaskedSprite::getMask() const
     {
         return m_mask.get();

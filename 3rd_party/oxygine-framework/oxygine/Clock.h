@@ -9,8 +9,8 @@ namespace oxygine
     class Clock: public Object
     {
     public:
-        Clock();
-        ~Clock();
+        explicit Clock();
+        virtual ~Clock() = default;
 
         timeMS  getTime() const;
         qint32     getPauseCounter() const;

@@ -67,7 +67,7 @@ Mainwindow::Mainwindow()
         // create the ui for the main menue here :)
         oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"), buttonWidth);
         setButtonPosition(pButtonLastSaveGame, btnI);
-        pButtonLastSaveGame->attachTo(this);
+        addChild(pButtonLastSaveGame);
         pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {
             emit sigLastSaveGame();
@@ -79,7 +79,7 @@ Mainwindow::Mainwindow()
     // create the ui for the main menue here :)
     oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"), buttonWidth);
     setButtonPosition(pButtonSingleplayer, btnI);
-    pButtonSingleplayer->attachTo(this);
+    addChild(pButtonSingleplayer);
     pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigEnterSingleplayer();
@@ -90,7 +90,7 @@ Mainwindow::Mainwindow()
     // create the ui for the main menue here :)
     oxygine::spButton pButtonMultiplayer = ObjectManager::createButton(tr("Multiplayer"), buttonWidth);
     setButtonPosition(pButtonMultiplayer, btnI);
-    pButtonMultiplayer->attachTo(this);
+    addChild(pButtonMultiplayer);
     pButtonMultiplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigEnterMultiplayer();
@@ -100,7 +100,7 @@ Mainwindow::Mainwindow()
 
     // load button
     oxygine::spButton pButtonLoadGame = ObjectManager::createButton(tr("Load Game"), buttonWidth);
-    pButtonLoadGame->attachTo(this);
+    addChild(pButtonLoadGame);
     setButtonPosition(pButtonLoadGame, btnI);
     pButtonLoadGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -111,7 +111,7 @@ Mainwindow::Mainwindow()
 
     // load button
     oxygine::spButton pButtonLoadCampaign = ObjectManager::createButton(tr("Load Campaign"), buttonWidth);
-    pButtonLoadCampaign->attachTo(this);
+    addChild(pButtonLoadCampaign);
     setButtonPosition(pButtonLoadCampaign, btnI);
     pButtonLoadCampaign->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -122,7 +122,7 @@ Mainwindow::Mainwindow()
 
     // replay button
     oxygine::spButton pButtonReplay = ObjectManager::createButton(tr("Replay Game"), buttonWidth);
-    pButtonReplay->attachTo(this);
+    addChild(pButtonReplay);
     setButtonPosition(pButtonReplay, btnI);
     pButtonReplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -133,7 +133,7 @@ Mainwindow::Mainwindow()
 
     // editor button
     oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"), buttonWidth);
-    pButtonEditor->attachTo(this);
+    addChild(pButtonEditor);
     setButtonPosition(pButtonEditor, btnI);
     pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -144,7 +144,7 @@ Mainwindow::Mainwindow()
 
     // option button
     oxygine::spButton pButtonOptions = ObjectManager::createButton(tr("Options"), buttonWidth);
-    pButtonOptions->attachTo(this);
+    addChild(pButtonOptions);
     setButtonPosition(pButtonOptions, btnI);
     pButtonOptions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -155,7 +155,7 @@ Mainwindow::Mainwindow()
 
     // co style button
     oxygine::spButton pButtonCOStyle = ObjectManager::createButton(tr("CO Style"), buttonWidth);
-    pButtonCOStyle->attachTo(this);
+    addChild(pButtonCOStyle);
     setButtonPosition(pButtonCOStyle, btnI);
     pButtonCOStyle->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -166,7 +166,7 @@ Mainwindow::Mainwindow()
 
     // co style button
     oxygine::spButton pButtonShop = ObjectManager::createButton(tr("Shop"), buttonWidth);
-    pButtonShop->attachTo(this);
+    addChild(pButtonShop);
     setButtonPosition(pButtonShop, btnI);
     pButtonShop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -177,7 +177,7 @@ Mainwindow::Mainwindow()
 
     // wiki button
     oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"), buttonWidth);
-    pButtonWiki->attachTo(this);
+    addChild(pButtonWiki);
     setButtonPosition(pButtonWiki, btnI);
     pButtonWiki->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -188,7 +188,7 @@ Mainwindow::Mainwindow()
 
     // wiki button
     oxygine::spButton pButtonAchievement = ObjectManager::createButton(tr("Achievements"), buttonWidth);
-    pButtonAchievement->attachTo(this);
+    addChild(pButtonAchievement);
     setButtonPosition(pButtonAchievement, btnI);
     pButtonAchievement->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -199,7 +199,7 @@ Mainwindow::Mainwindow()
 
     // credits button
     oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"), buttonWidth);
-    pButtonCredtis->attachTo(this);
+    addChild(pButtonCredtis);
     setButtonPosition(pButtonCredtis, btnI);
     pButtonCredtis->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -210,7 +210,7 @@ Mainwindow::Mainwindow()
 
     // quit button
     oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"), buttonWidth);
-    pQuit->attachTo(this);
+    addChild(pQuit);
     setButtonPosition(pQuit, btnI);
     pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -246,7 +246,7 @@ Mainwindow::Mainwindow()
     {
         // import
         oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));
-        pImport->attachTo(this);
+        addChild(pImport);
         pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
         pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {

@@ -20,11 +20,6 @@ namespace oxygine
         m_stage = this;
     }
 
-    Stage::~Stage()
-    {
-
-    }
-
     void Stage::onDeactivate(Event*)
     {
         core::reset();
@@ -115,6 +110,7 @@ namespace oxygine
 
     void Stage::cleanup()
     {
+        removeChildren();
     }
 
     void Stage::updateStage()

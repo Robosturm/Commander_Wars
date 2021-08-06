@@ -11,10 +11,8 @@ namespace oxygine
     class TextField : public VStyleActor
     {
     public:
-        static void setDefaultFont(ResFont*);
-        static ResFont* getDefaultFont();
-        TextField();
-        ~TextField();
+        explicit TextField();
+        virtual ~TextField() = default;
 
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return m_style;}

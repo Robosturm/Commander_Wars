@@ -13,7 +13,8 @@ namespace oxygine
     public:
         static spSTDRenderDelegate instance;
 
-        STDRenderDelegate() {}
+        explicit STDRenderDelegate() = default;
+        virtual ~STDRenderDelegate() = default;
 
         void render(ClipRectActor*,     const RenderState& rs) override;
         void render(MaskedSprite*,      const RenderState& rs) override;

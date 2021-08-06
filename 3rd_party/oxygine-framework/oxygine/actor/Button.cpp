@@ -6,17 +6,18 @@
 namespace oxygine
 {
 
-    Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), m_btnPressed(0), m_btnOvered(0)
+    Button::Button()
+        : m_state(stateNormal),
+          m_resAnim(nullptr),
+          m_row(0),
+          m_btnPressed(0),
+          m_btnOvered(0)
     {
         EventCallback ncb = EventCallback(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);
         addEventListener(TouchEvent::OUTX, ncb);
         addEventListener(TouchEvent::CLICK, ncb);
-    }
-
-    Button::~Button()
-    {
     }
 
     void Button::_mouseEvent(Event* event)
@@ -91,39 +92,39 @@ namespace oxygine
 
     void Button::setResAnim(const ResAnim* r, int, int)
     {
-        _resAnim = r;
-        updateButtonState(_state);
+        m_resAnim = r;
+        updateButtonState(m_state);
     }
 
     void Button::setRow(qint32 row)
     {
-        _row = row;
-        updateButtonState(_state);
+        m_row = row;
+        updateButtonState(m_state);
     }
 
     void Button::setState(state s)
     {
-        if (s == _state)
+        if (s == m_state)
         {
             return;
         }
-        _state = s;
+        m_state = s;
         updateButtonState(s);
     }
 
     void Button::updateButtonState(state s)
     {
-        if (!_resAnim)
+        if (!m_resAnim)
         {
             return;
         }
-        if (_resAnim->getColumns() > s)
+        if (m_resAnim->getColumns() > s)
         {
-            Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
+            Sprite::setAnimFrame(m_resAnim->getFrame(s, m_row));
         }
         else
         {
-            Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
+            Sprite::setAnimFrame(m_resAnim->getFrame(0, m_row));
         }
     }
 }

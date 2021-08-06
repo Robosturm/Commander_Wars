@@ -76,7 +76,7 @@ Console::Console()
     m_pBackgroundsprite = oxygine::spColorRectSprite::create();
     m_pBackgroundsprite->setPosition(0, 0);
     m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
-    m_pBackgroundsprite->attachTo(this);
+    addChild(m_pBackgroundsprite);
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
     m_text = oxygine::spTextField::create();
@@ -115,6 +115,14 @@ void Console::init()
     Console::print("", Console::eLogLevels::eINFO);
     Console::createfunnymessage();
     Console::print("", Console::eLogLevels::eINFO);
+}
+
+void Console::release()
+{
+    m_pBackgroundsprite->detach();
+    m_pBackgroundsprite = nullptr;
+    m_text->detach();
+    m_text = nullptr;
 }
 
 void Console::createSprites(QString input, QString colorTable, QString maskTable)

@@ -26,11 +26,17 @@ public:
         if (m_pInstance.get() == nullptr)
         {
             m_pInstance = spInterpreter::create();
+            m_pInstance->init();
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal interpreter creation");
         }
         return m_pInstance.get();
     }
 
     virtual ~Interpreter();
+    static void release();
 
     static void setCppOwnerShip(QObject* object);
     /**

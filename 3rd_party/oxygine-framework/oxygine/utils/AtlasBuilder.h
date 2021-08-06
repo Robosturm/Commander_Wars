@@ -14,7 +14,8 @@ namespace oxygine
     class AtlasBuilder
     {
     public:
-        AtlasBuilder();
+        explicit AtlasBuilder();
+        virtual ~AtlasBuilder() = default;
 
         void init(qint32 w, qint32 h, qint32 skipSize = 3);
         void clean();
@@ -24,7 +25,7 @@ namespace oxygine
         const Rect& getBounds() const { return m_bounds; }
 
     protected:
-        typedef QQueue<Rect> rects;
+        using rects = QQueue<Rect>;
         Rect m_bounds;
         rects m_free;
         qint32 m_skipSize;
@@ -37,7 +38,8 @@ namespace oxygine
     public:
         using createTextureCallback = Closure<spTexture, int, int>;
 
-        MultiAtlas(createTextureCallback);
+        explicit MultiAtlas(createTextureCallback);
+        virtual ~MultiAtlas() = default;
 
         void init(qint32 skipSize = 3);
         void clean();
@@ -57,7 +59,7 @@ namespace oxygine
 
     protected:
         createTextureCallback m_cb;
-        typedef QQueue<rect> rects;
+        using rects = QQueue<rect>;
         Rect m_bounds;
         rects m_free;
         qint32 m_skipSize;

@@ -12,7 +12,13 @@ namespace oxygine
     class ResourcesLoadOptions
     {
     public:
-        ResourcesLoadOptions() : m_loadCompletely(true), m_useLoadCounter(false), m_shortenIDS(false) {};
+        explicit ResourcesLoadOptions()
+            : m_loadCompletely(true),
+              m_useLoadCounter(false),
+              m_shortenIDS(false)
+        {
+        }
+        virtual ~ResourcesLoadOptions() = default;
 
         //load only Resources definitions. Skips internal heavy data (atlasses/textures/buffers). Could be overridden in xml: <your_res_type ... load = "false"/>
         ResourcesLoadOptions& dontLoadAll(bool v = false) { m_loadCompletely = v; return *this; }
@@ -51,8 +57,8 @@ namespace oxygine
         static void unregisterResourceType(QString resTypeID);
         static void setDefaultMissingResAnim(ResAnim*);
 
-        Resources();
-        ~Resources();
+        explicit Resources();
+        virtual ~Resources();
 
         /**Loads resources from xml file. Load could be called multiple times for different xml files.
         @param xml file paths

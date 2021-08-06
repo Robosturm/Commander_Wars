@@ -75,7 +75,6 @@ void LoadingScreen::show()
     
 }
 
-
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
     m_workText->setHtmlText(workText);
@@ -88,7 +87,6 @@ void LoadingScreen::setWorktext(QString workText)
 {
     m_workText->setHtmlText(workText);
 }
-
 
 void LoadingScreen::hide()
 {

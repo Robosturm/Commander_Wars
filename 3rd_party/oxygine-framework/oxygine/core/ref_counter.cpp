@@ -10,11 +10,17 @@
 namespace oxygine
 {
     std::atomic<qint32> ref_counter::instanceCounter = 0;
+    QMutex ref_counter::lock;
+    QVector<ref_counter*> ref_counter::objects;
     void ref_counter::releaseRef()
     {
         if (0 == --m_ref_counter)
         {
+
             --oxygine::ref_counter::instanceCounter;
+            lock.lock();
+            objects.removeOne(this);
+            lock.unlock();
             QObject* pObj = dynamic_cast<QObject*>(this);
             if (pObj == nullptr)
             {

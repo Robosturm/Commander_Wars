@@ -124,7 +124,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         textField->setStyle(style);
         textField->setHtmlText(tr("Predefined Styles"));
         textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight() - 70);
-        textField->attachTo(m_pSpriteBox);
+        m_pSpriteBox->addChild(textField);
     }
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
 

@@ -7,8 +7,8 @@ namespace oxygine
     class ClipUV
     {
     public:
-        ClipUV() {}
-        ClipUV(const Vector2& a, const Vector2& b, const Vector2& c,
+        explicit ClipUV() = default;
+        explicit ClipUV(const Vector2& a, const Vector2& b, const Vector2& c,
                const Vector2& a_uv, const Vector2& b_uv, const Vector2& c_uv) : m_uvA(a_uv)
         {
             m_dAB = b - a;
@@ -29,7 +29,7 @@ namespace oxygine
             m_duvAB = b_uv - m_uvA;
             m_duvAC = c_uv - m_uvA;
         }
-
+        virtual ~ClipUV() = default;
         void get(Vector3* vec) const
         {
             vec[0] = Vector3(m_dac.x, m_dAC.y, m_dAC.x);
@@ -61,7 +61,8 @@ namespace oxygine
     class MaskedRenderer : public STDRenderer
     {
     public:
-        MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver*);
+        explicit MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver*);
+        virtual ~MaskedRenderer() = default;
 
     protected:
         void shaderProgramChanged() override;

@@ -8,10 +8,11 @@ namespace oxygine
     class ResFont : public Resource
     {
     public:
-        ResFont()
+        explicit ResFont()
             : m_size(0)
         {
         }
+        virtual ~ResFont() = default;
 
         virtual const Font* getFont(QString name = "", qint32 size = 0) const = 0;
         qint32 getSize() const { return m_size; }

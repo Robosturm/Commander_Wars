@@ -22,8 +22,8 @@ namespace oxygine
             QString alpha_path;
         };
 
-        ResAtlas();
-        ~ResAtlas();
+        explicit ResAtlas();
+        virtual ~ResAtlas();
 
         void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, qint32 w, qint32 h);
 

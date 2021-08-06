@@ -83,7 +83,7 @@ namespace oxygine
 
 
 
-        STDRenderer(IVideoDriver* driver = 0);
+        explicit STDRenderer(IVideoDriver* driver = 0);
         virtual ~STDRenderer();
 
         const Matrix&               getViewProjection() const;

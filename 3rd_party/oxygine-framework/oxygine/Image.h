@@ -11,8 +11,8 @@ namespace oxygine
     class Image : public Texture
     {
     public:
-        Image();
-        ~Image();
+        explicit Image();
+        virtual ~Image() = default;
 
         bool init(QImage bf, bool premultiplied);
         void init(const ImageData& src);

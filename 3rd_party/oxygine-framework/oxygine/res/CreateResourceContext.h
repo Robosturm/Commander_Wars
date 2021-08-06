@@ -9,10 +9,11 @@ namespace oxygine
     class XmlWalker
     {
     public:
-        XmlWalker(QString path,
+        explicit XmlWalker(QString path,
                   float scaleFactor,
                   bool load, bool alpha,
                   QDomElement xml);
+        virtual ~XmlWalker() = default;
 
         bool empty() const {return m_root.isNull();}
 
@@ -45,10 +46,11 @@ namespace oxygine
     class CreateResourceContext
     {
     public:
-        CreateResourceContext() : m_resources(0), m_xml_name(""), m_prebuilt_folder(""), m_options(0),
+        explicit CreateResourceContext() : m_resources(0), m_xml_name(""), m_prebuilt_folder(""), m_options(0),
             m_walker("", 1.0f, true, false, QDomElement())
         {
         }
+        virtual ~CreateResourceContext() = default;
 
         Resources* m_resources;
         QString m_xml_name;
@@ -64,8 +66,8 @@ namespace oxygine
     class CreateTextureTask
     {
     public:
-        CreateTextureTask();
-
+        explicit CreateTextureTask();
+        virtual ~CreateTextureTask() = default;
         spImage src;
         spNativeTexture dest;
         quint32 linearFilter;
@@ -79,7 +81,7 @@ namespace oxygine
     {
     public:
         static LoadResourcesContext* get();
-
+        explicit LoadResourcesContext() = default;
         virtual ~LoadResourcesContext() = default;
 
 
@@ -90,6 +92,8 @@ namespace oxygine
     class SingleThreadResourcesContext: public LoadResourcesContext
     {
     public:
+        explicit SingleThreadResourcesContext() = default;
+        virtual ~SingleThreadResourcesContext() = default;
         void createTexture(const CreateTextureTask& opt) override;
         bool isNeedProceed(spNativeTexture t) override;
     public:
@@ -99,6 +103,8 @@ namespace oxygine
     class RestoreResourcesContext: public LoadResourcesContext
     {
     public:
+        explicit RestoreResourcesContext() = default;
+        virtual ~RestoreResourcesContext() = default;
         void createTexture(const CreateTextureTask& opt) override;
         bool isNeedProceed(spNativeTexture t) override;
     public:

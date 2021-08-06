@@ -56,18 +56,19 @@ namespace oxygine
     typedef intrusive_ptr<Material> spMaterialX;
 
     class NullMaterialX;
-    typedef intrusive_ptr<NullMaterialX> spNullMaterialX;
+    using spNullMaterialX = intrusive_ptr<NullMaterialX> ;
 
     class NullMaterialX : public Material
     {
     public:
-        NullMaterialX()
+        explicit NullMaterialX()
         {
             typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
             fn f = &NullMaterialX::cmp;
             m_compare = (compare)f;
             init();
         }
+        virtual ~NullMaterialX() = default;
         void copyTo(NullMaterialX &d) const{d = *this;}
         void copyFrom(const NullMaterialX &d) {*this = d;}
         spMaterial clone() const override {return spNullMaterialX::create(*this);}
@@ -87,13 +88,14 @@ namespace oxygine
     class STDMaterial : public Material
     {
     public:
-        STDMaterial()
+        explicit STDMaterial()
         {
             typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
             fn f = &STDMaterial::cmp;
             m_compare = (compare)f;
             STDMaterial::init();
         }
+        virtual ~STDMaterial() = default;
         void copyTo(STDMaterial &d) const{d = *this;}
         void copyFrom(const STDMaterial &d) {*this = d;}
         spMaterial clone() const override {return spSTDMaterial::create(*this);}

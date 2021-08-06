@@ -31,7 +31,8 @@ namespace oxygine
         class Stats
         {
         public:
-            Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
+            explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
+            virtual  ~Stats() = default;
             qint32 batches;
             qint32 elements[PT_COUNT];
             timeMS start;
@@ -68,6 +69,7 @@ namespace oxygine
         };
 
         static spIVideoDriver instance;
+        explicit IVideoDriver() = default;
         virtual ~IVideoDriver() = default;
 
         virtual void reset() = 0;
@@ -115,7 +117,8 @@ namespace oxygine
     public:
         spNativeTexture createTexture();
 
-
+        explicit VideoDriverNull() = default;
+        virtual ~VideoDriverNull() = default;
         void clear(const Color& color) {}
         void begin(const Rect& viewport, const QColor* clearColor);
         bool isReady() const {return true;}

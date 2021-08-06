@@ -56,7 +56,6 @@ namespace oxygine
         typedef argT<float, float, Actor, &Actor::setScaleY> scaleY;
         typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;
         typedef argT<bool, bool, Actor, &Actor::setTouchEnabled> input;
-        typedef argT<Actor*, Actor*, Actor, &Actor::attachTo> attachTo;
         typedef argT<QColor, const QColor&, VStyleActor, &VStyleActor::setColor> color;
         typedef argT<blend_mode, blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
         typedef argT<qint32, qint32, Actor, &Actor::setPriority> priority;

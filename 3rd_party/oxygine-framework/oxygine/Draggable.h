@@ -9,8 +9,8 @@ namespace oxygine
     public:
         enum { DragMoveEvent = sysEventID('D', 'M', 'E') };
 
-        Draggable();
-        ~Draggable();
+        explicit Draggable();
+        virtual ~Draggable();
 
         void init(Actor* actor);
 

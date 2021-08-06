@@ -101,7 +101,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     style.multiline = true;
     textField->setStyle(style);
     textField->setHtmlText("..");
-    textField->attachTo(pBox);
+    pBox->addChild(textField);
     pBox->setSize(m_MainPanel->getWidth() - 50, 40);
     textField->setHeight(40);
     textField->setWidth(pBox->getWidth() - 18);
@@ -220,7 +220,7 @@ void FileDialog::showFolder(QString folder)
         style.multiline = false;
         textField->setStyle(style);
 
-        textField->attachTo(pBox);
+        pBox->addChild(textField);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         textField->setHeight(40);
         textField->setWidth(pBox->getWidth() - 18);

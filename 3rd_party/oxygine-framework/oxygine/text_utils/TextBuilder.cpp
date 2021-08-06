@@ -6,16 +6,6 @@ namespace oxygine
 {
     namespace text
     {
-        TextBuilder::TextBuilder()
-        {
-
-        }
-
-        TextBuilder::~TextBuilder()
-        {
-
-        }
-
         text::spNode TextBuilder::create(QDomNode& reader)
         {
             QDomElement element = reader.toElement();

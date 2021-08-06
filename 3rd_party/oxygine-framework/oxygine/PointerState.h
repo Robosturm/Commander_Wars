@@ -17,7 +17,8 @@ namespace oxygine
     class PointerState
     {
     public:
-        PointerState();
+        explicit PointerState();
+        virtual ~PointerState() = default;
 
         void init(pointer_index pointerIndex);
 

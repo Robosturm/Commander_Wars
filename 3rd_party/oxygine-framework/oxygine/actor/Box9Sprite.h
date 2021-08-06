@@ -17,6 +17,7 @@ namespace oxygine
         };
 
         explicit Box9Sprite();
+        virtual ~Box9Sprite() = default;
         StretchMode getVerticalMode() const {return m_vertMode;}
         StretchMode getHorizontalMode() const {return m_horzMode;}
         float       getGuideX1() const { return m_guideX[0]; }

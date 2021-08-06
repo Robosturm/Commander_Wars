@@ -121,7 +121,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(this);
+    addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -213,7 +213,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     addChild(panel);
 
     oxygine::spButton pButtonFunds = ObjectManager::createButton(tr("Funds"));
-    pButtonFunds->attachTo(this);
+    addChild(pButtonFunds);
     pButtonFunds->setPosition(5, 5);
     pButtonFunds->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -222,7 +222,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     panel->addItem(pButtonFunds);
 
     oxygine::spButton pButtonIncome = ObjectManager::createButton(tr("Income"));
-    pButtonIncome->attachTo(this);
+    addChild(pButtonIncome);
     pButtonIncome->setPosition(10 + pButtonFunds->getWidth() + pButtonFunds->getX(), 5);
     pButtonIncome->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -231,7 +231,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     panel->addItem(pButtonIncome);
 
     oxygine::spButton pButtonBuildings = ObjectManager::createButton(tr("Buildings"));
-    pButtonBuildings->attachTo(this);
+    addChild(pButtonBuildings);
     pButtonBuildings->setPosition(10 + pButtonIncome->getWidth() + pButtonIncome->getX(), 5);
     pButtonBuildings->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -240,7 +240,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     panel->addItem(pButtonBuildings);
 
     oxygine::spButton pButtonUnits = ObjectManager::createButton(tr("Units"));
-    pButtonUnits->attachTo(this);
+    addChild(pButtonUnits);
     pButtonUnits->setPosition(10 + pButtonBuildings->getWidth() + pButtonBuildings->getX(), 5);
     pButtonUnits->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -249,7 +249,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     panel->addItem(pButtonUnits);
 
     oxygine::spButton pButtonPlayerStrength = ObjectManager::createButton(tr("Player Strength"));
-    pButtonPlayerStrength->attachTo(this);
+    addChild(pButtonPlayerStrength);
     pButtonPlayerStrength->setPosition(10 + pButtonUnits->getWidth() + pButtonUnits->getX(), 5);
     pButtonPlayerStrength->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -258,7 +258,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     panel->addItem(pButtonPlayerStrength);
 
     oxygine::spButton pButtonPlayerStatistic = ObjectManager::createButton(tr("Player Statistics"));
-    pButtonPlayerStatistic->attachTo(this);
+    addChild(pButtonPlayerStatistic);
     pButtonPlayerStatistic->setPosition(10 + pButtonPlayerStrength->getWidth() + pButtonPlayerStrength->getX(), 5);
     pButtonPlayerStatistic->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -269,7 +269,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     if (pMap->getWinnerTeam() >= 0)
     {
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
-        pButtonVictoryRanking->attachTo(this);
+        addChild(pButtonVictoryRanking);
         pButtonVictoryRanking->setPosition(10 + pButtonPlayerStatistic->getWidth() + pButtonPlayerStatistic->getX(), 5);
         pButtonVictoryRanking->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {

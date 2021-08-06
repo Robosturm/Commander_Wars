@@ -13,15 +13,14 @@ namespace oxygine
     class TweenAnim
     {
     public:
-        typedef Sprite type;
+        using type = Sprite;
 
         /**Row/Column mode. Plays single row. if resanim == 0 will be used current*/
-        TweenAnim(const ResAnim* resAnim, qint32 row = 0);
-
-        TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row);
-
+        explicit TweenAnim(const ResAnim* resAnim, qint32 row = 0);
+        explicit TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row);
         /**Frames mode. Play animation in interval [start, end]*/
-        TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);
+        explicit TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame);
+        virtual ~TweenAnim() = default;
 
         void init(Sprite& actor);
         void done(Sprite&) {}

@@ -47,7 +47,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     pApp->getAudioThread()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(this);
+    addChild(pButtonExit);
     pButtonExit->setPosition(10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -58,7 +58,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
     m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
-    m_pButtonNext->attachTo(this);
+    addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit buttonNext();
@@ -67,7 +67,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
     m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
-    m_pButtonSave->attachTo(this);
+    addChild(m_pButtonSave);
     m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowSaveCampaign();

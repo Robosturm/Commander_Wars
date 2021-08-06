@@ -10,10 +10,10 @@ namespace oxygine
     {
     public:
 
-        Button();
-        ~Button();
+        explicit Button();
+        virtual ~Button() = default;
 
-        qint32 getRow() const {return _row;}
+        qint32 getRow() const {return m_row;}
 
         void setResAnim(const ResAnim* r, qint32  col = 0, qint32 row = 0) override;
 
@@ -29,9 +29,9 @@ namespace oxygine
         };
         virtual void updateButtonState(state s);
 
-        state _state;
-        const ResAnim* _resAnim;
-        qint32 _row;
+        state m_state;
+        const ResAnim* m_resAnim;
+        qint32 m_row;
     private:
         void _mouseEvent(Event* event);
         void setState(state s);

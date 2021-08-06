@@ -9,8 +9,8 @@ namespace oxygine
     class ColorRectSprite: public Sprite
     {
     public:
-        ColorRectSprite();
-        ~ColorRectSprite();
+        explicit ColorRectSprite();
+        virtual ~ColorRectSprite() = default;
 
         void doRender(const RenderState&) override;
 

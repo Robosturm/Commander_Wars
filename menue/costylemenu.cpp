@@ -42,7 +42,7 @@ COStyleMenu::COStyleMenu()
     pApp->getAudioThread()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(this);
+    addChild(pButtonExit);
     pButtonExit->setPosition(20, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -51,7 +51,7 @@ COStyleMenu::COStyleMenu()
     connect(this, &COStyleMenu::sigExitMenue, this, &COStyleMenu::exitMenue, Qt::QueuedConnection);
 
     oxygine::spButton pButtonEdit = ObjectManager::createButton(tr("Edit CO"));
-    pButtonEdit->attachTo(this);
+    addChild(pButtonEdit);
     pButtonEdit->setPosition(Settings::getWidth() - pButtonEdit->getWidth() - 20, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonEdit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

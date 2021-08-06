@@ -18,7 +18,7 @@ class MainServer : public QObject
     Q_OBJECT
 public:
     static MainServer* getInstance();
-
+    static bool exists();
     virtual ~MainServer();
 
     inline TCPServer* getGameServer()

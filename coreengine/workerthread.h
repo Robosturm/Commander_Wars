@@ -27,6 +27,7 @@ protected slots:
     void mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
     void wheelEvent(qint32 x, qint32 y);
     void mouseMoveEvent(qint32 x, qint32 y);
+    void onQuit();
 private:
     bool m_started{false};
 };

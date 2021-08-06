@@ -18,8 +18,8 @@ namespace oxygine
         static spStage instance;
         static Rect calcCenteredViewport(const Point& displaySize, const Point& gameSize);
 
-        Stage();
-        ~Stage();
+        explicit Stage();
+        virtual ~Stage() = default;
 
         /**Initializes size, scale and position of Stage
         @param is real display size of device.

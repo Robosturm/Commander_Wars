@@ -49,7 +49,7 @@ Shopmenu::Shopmenu()
     addChild(pButtonBox);
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
-    pButtonExit->attachTo(pButtonBox);
+    pButtonBox->addChild(pButtonExit);
     pButtonExit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 10,
                              10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -85,7 +85,7 @@ Shopmenu::Shopmenu()
     connect(this, &Shopmenu::sigUpdateItemCosts, this, &Shopmenu::updateItemCosts, Qt::QueuedConnection);
 
     m_buyButton = ObjectManager::createButton(tr("Buy"));
-    m_buyButton->attachTo(pButtonBox);
+    pButtonBox->addChild(m_buyButton);
     m_buyButton->setPosition(Settings::getWidth() - m_buyButton->getWidth() - pButtonExit->getWidth() - 20,
                              10);
     m_buyButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

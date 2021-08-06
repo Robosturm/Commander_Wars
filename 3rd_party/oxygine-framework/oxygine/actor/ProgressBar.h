@@ -21,8 +21,8 @@ namespace oxygine
             __dir_radial_ccw//not implemented!!
         };
 
-        ProgressBar();
-        ~ProgressBar();
+        explicit ProgressBar();
+        virtual ~ProgressBar() = default;
 
         float       getProgress() const;
         direction   getDirection() const;

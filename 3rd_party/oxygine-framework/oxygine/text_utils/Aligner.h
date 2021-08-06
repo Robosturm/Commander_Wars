@@ -33,8 +33,8 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style, spSTDMaterial mat, const Font* font, float gscale, const Vector2& size);
-            ~Aligner();
+            explicit Aligner(const TextStyle& style, spSTDMaterial mat, const Font* font, float gscale, const Vector2& size);
+            virtual ~Aligner() = default;
 
 
             const TextStyle& getStyle() const {return m_style;}

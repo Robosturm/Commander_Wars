@@ -13,8 +13,8 @@ namespace oxygine
     public:
         static void setDefaultTouchThreshold(float val);
 
-        SlidingActor();
-        ~SlidingActor();
+        explicit SlidingActor();
+        virtual ~SlidingActor();
 
         spActor         getContent() const {return m_content;}
         const RectF&    getDragBounds() const {return m_drag.getDragBounds();}

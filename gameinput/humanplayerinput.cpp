@@ -1000,8 +1000,8 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     textField->setScale(32.0f / 72.0f);
     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
     textField->setSize(clipRec->getSize());
-    textField->attachTo(clipRec);
-    clipRec->attachTo(m_ZInformationLabel);
+    clipRec->addChild(textField);
+    m_ZInformationLabel->addChild(clipRec);
 
     oxygine::spTextField textField2 = oxygine::spTextField::create();
     textField2->setStyle(style);
@@ -1010,7 +1010,7 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     textField2->setSize(clipRec->getSize());
     textField2->setScale(32.0f / 72.0f);
     textField2->setHtmlText(labelText);
-    textField2->attachTo(m_ZInformationLabel);
+    m_ZInformationLabel->addChild(textField2);
 
     m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     pMap->addChild(m_ZInformationLabel);
@@ -1836,15 +1836,15 @@ void HumanPlayerInput::autoEndTurn()
             (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
             (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
         {
-
             qint32 heigth = pMap->getMapHeight();
             qint32 width = pMap->getMapWidth();
             for (qint32 y = 0; y < heigth; y++)
             {
                 for (qint32 x = 0; x < width; x++)
                 {
-                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-                    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                    Terrain* pTerrain = pMap->getTerrain(x, y);
+                    Unit* pUnit = pTerrain->getUnit();
+                    Building* pBuilding = pTerrain->getBuilding();
                     if (pUnit != nullptr && pUnit->getOwner() == m_pPlayer && !pUnit->getHasMoved())
                     {
                         return;
@@ -1856,7 +1856,8 @@ void HumanPlayerInput::autoEndTurn()
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
                         {
-                            if (action.canBePerformed(actions[i]))
+                            action.setActionID(actions[i]);
+                            if (action.canBePerformed())
                             {
                                 return;
                             }

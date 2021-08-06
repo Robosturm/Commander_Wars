@@ -20,7 +20,6 @@ namespace oxygine
     public:
         explicit GameWindow();
         virtual ~GameWindow() = default;
-        spEventDispatcher getDispatcher();
 
         static QOpenGLContext* getGLContext();
         static GameWindow*  getWindow();
@@ -82,7 +81,7 @@ namespace oxygine
          * @return
          */
         bool hasCursor();
-        void shutdown();
+        virtual void shutdown();
         qint32 getTimerCycle() const;
 
         bool getShuttingDown() const;
@@ -137,6 +136,7 @@ namespace oxygine
         }
         void quitApp();
         void waitOnRelease();
+        virtual void onQuit() = 0;
     protected:
         virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;
@@ -157,7 +157,6 @@ namespace oxygine
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
     protected:
         bool m_renderEnabled = true;
-        spEventDispatcher m_dispatcher;
 
         bool m_quit{false};
         QBasicTimer m_Timer;

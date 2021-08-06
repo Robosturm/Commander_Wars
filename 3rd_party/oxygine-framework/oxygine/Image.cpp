@@ -5,15 +5,12 @@
 namespace oxygine
 {
 
-    Image::Image(): m_offset(0)
+    Image::Image()
+        : m_offset(0)
     {
 
     }
 
-    Image::~Image()
-    {
-
-    }
 
     void Image::cleanup()
     {

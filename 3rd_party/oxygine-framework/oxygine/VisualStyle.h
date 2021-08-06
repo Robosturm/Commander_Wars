@@ -8,8 +8,8 @@ namespace oxygine
     class VisualStyle
     {
     public:
-
-        VisualStyle();
+        explicit VisualStyle();
+        virtual ~VisualStyle() = default;
 
         const QColor&        getColor() const {return _color;}
         blend_mode          getBlendMode() const {return _blend;}

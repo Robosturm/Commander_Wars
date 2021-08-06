@@ -36,8 +36,8 @@ namespace oxygine
     class Font : public Object
     {
     public:
-        Font();
-        ~Font();
+        explicit Font();
+        virtual ~Font() = default;
 
         void init(qint32 size, qint32 baselineDistance, qint32 lineHeight, bool sdf = false);
 

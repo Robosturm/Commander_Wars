@@ -11,8 +11,8 @@ namespace oxygine
     class ClipRectActor : public Actor
     {
     public:
-        ClipRectActor();
-        ~ClipRectActor();
+        explicit ClipRectActor();
+        virtual ~ClipRectActor() = default;
 
         bool getClipping() const { return m_clipping; }
 

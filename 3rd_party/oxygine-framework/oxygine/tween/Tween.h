@@ -90,8 +90,8 @@ namespace oxygine
             ease_count
         };
 
-        Tween();
-        ~Tween();
+        explicit Tween();
+        virtual ~Tween() = default;
 
         void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
         void init2(const TweenOptions& opt);
@@ -206,7 +206,8 @@ namespace oxygine
     public:
         typedef typename GS::type type;
 
-        TweenT(const GS& gs) : m_gs(gs) {}
+        explicit TweenT(const GS& gs) : m_gs(gs) {}
+        virtual ~TweenT() = default;
 
         void _update(Actor& actor, const UpdateState& us)
         {

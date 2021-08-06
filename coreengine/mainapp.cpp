@@ -5,6 +5,7 @@
 #include "qmessagebox.h"
 #include "qthread.h"
 #include "qresource.h"
+#include <QApplication>
 
 #include "coreengine/userdata.h"
 #include "coreengine/mainapp.h"
@@ -31,6 +32,8 @@
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
 #include "resource_management/shoploader.h"
+#include "resource_management/movementtablemanager.h"
+#include "resource_management/weaponmanager.h"
 #include "wiki/wikidatabase.h"
 
 Mainapp* Mainapp::m_pMainapp;
@@ -74,6 +77,28 @@ Mainapp::~Mainapp()
     m_AudioWorker.wait();
     m_Networkthread.quit();
     m_Networkthread.wait();
+}
+
+void Mainapp::shutdown()
+{
+    BuildingSpriteManager::getInstance()->free();
+    COSpriteManager::getInstance()->free();
+    GameManager::getInstance()->free();
+    GameRuleManager::getInstance()->free();
+    MovementTableManager::getInstance()->free();
+    TerrainManager::getInstance()->free();
+    UnitSpriteManager::getInstance()->free();
+    WeaponManager::getInstance()->free();
+    BattleAnimationManager::getInstance()->free();
+    COPerkManager::getInstance()->free();
+    WikiDatabase::getInstance()->free();
+    AchievementManager::getInstance()->free();
+    BackgroundManager::getInstance()->free();
+    FontManager::getInstance()->free();
+    GameAnimationManager::getInstance()->free();
+    ObjectManager::getInstance()->free();
+    ShopLoader::getInstance()->free();
+    GameWindow::shutdown();
 }
 
 bool Mainapp::isWorker()
@@ -167,6 +192,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
             GameRuleManager::getInstance();
+            WeaponManager::getInstance();
+            MovementTableManager::getInstance();
             if (!m_noUi)
             {
                 update();
@@ -686,4 +713,14 @@ void Mainapp::createBaseDirs()
             newDir.mkpath(".");
         }
     }
+}
+
+void Mainapp::onQuit()
+{
+   m_Workerthread.quit();
+   while (!m_Workerthread.isFinished())
+   {
+       QApplication::processEvents();
+       m_Workerthread.wait(1);
+   }
 }

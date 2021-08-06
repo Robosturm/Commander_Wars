@@ -8,6 +8,8 @@
 #include "coreengine/userdata.h"
 
 #include "menue/mainwindow.h"
+#include "menue/editormenue.h"
+#include "menue/gamemenue.h"
 
 #include "multiplayer/multiplayermenu.h"
 #include "network/localserver.h"
@@ -38,6 +40,7 @@ WorkerThread::WorkerThread()
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
+    connect(Mainapp::getWorkerthread(), &QThread::finished, this, &WorkerThread::onQuit);
 }
 
 void WorkerThread::start()
@@ -160,6 +163,8 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->hide();
     oxygine::getStage()->addChild(spMainwindow::create());
 }
 
@@ -168,8 +173,35 @@ bool WorkerThread::getStarted() const
     return m_started;
 }
 
+void WorkerThread::onQuit()
+{
+    Console::print("Shutting down workerthread", Console::eDEBUG);
+    if (oxygine::Stage::instance)
+    {
+        oxygine::Stage::instance->cleanup();
+    }
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->deleteMenu();
+    }
+    if (EditorMenue::getInstance() != nullptr)
+    {
+        EditorMenue::getInstance()->deleteMenu();
+    }
+    if (GameMap::getInstance() != nullptr)
+    {
+        GameMap::getInstance()->deleteMap();
+    }
+    Interpreter::release();
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->hide();
+    COSpriteManager::getInstance()->release();
+}
+
 void WorkerThread::startSlaveGame()
 {
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->hide();
     spLocalServer pServer = spLocalServer::create();
     spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);
     pMenu->connectNetworkSlots();

@@ -19,7 +19,14 @@ namespace oxygine
     class HitTestData
     {
     public:
-        HitTestData(): data(0), w(0), h(0), pitch(0) {}
+        explicit HitTestData()
+            : data(0),
+              w(0),
+              h(0),
+              pitch(0)
+        {
+        }
+        virtual ~HitTestData() = default;
 
         const unsigned char* data;
         short w, h;
@@ -29,7 +36,7 @@ namespace oxygine
     class AnimationFrame
     {
     public:
-        AnimationFrame()
+        explicit AnimationFrame()
             : m_srcRect(0, 0, 1, 1),
               m_destRect(0, 0, 1, 1),
               m_resAnim(0),
@@ -37,7 +44,8 @@ namespace oxygine
               m_column(0)
         {
         }
-        AnimationFrame(spNativeTexture t);
+        explicit AnimationFrame(spNativeTexture t);
+        virtual ~AnimationFrame() = default;
 
         void init(ResAnim* rs, const Diffuse& df,
                   const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);

@@ -33,7 +33,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 
     oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
 
-    m_Textfield->attachTo(pClipActor);
+    pClipActor->addChild(m_Textfield);
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width - 35, 40);
     setSize(width, 40);

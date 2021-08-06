@@ -13,8 +13,8 @@ namespace oxygine
         class TextBuilder
         {
         public:
-            TextBuilder();
-            virtual ~TextBuilder();
+            explicit TextBuilder() = default;
+            virtual ~TextBuilder() = default;
 
             text::spNode parse(QString str);
 

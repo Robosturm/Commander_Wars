@@ -48,7 +48,7 @@ public:
     static void draw();
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     void init();
-
+    void release();
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
     /**

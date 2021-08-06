@@ -74,7 +74,7 @@ public:
 
     explicit Mainapp();
     virtual ~Mainapp();
-
+    virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
         return m_pMainapp;
@@ -199,6 +199,7 @@ protected:
     bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event);
     virtual bool event(QEvent *ev) override;
     void createBaseDirs();
+    virtual void onQuit() override;
 private:
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;

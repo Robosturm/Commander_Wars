@@ -17,10 +17,6 @@ namespace oxygine
     {
     }
 
-    Font::~Font()
-    {
-    }
-
     void Font::init(qint32 realSize, qint32 baselineDistance, int, bool sdf)
     {
         m_sdf = sdf;

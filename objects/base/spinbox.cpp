@@ -35,7 +35,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 
     oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
 
-    m_Textfield->attachTo(pClipActor);
+    pClipActor->addChild(m_Textfield);
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width - 35, 40);
     setSize(width, 40);

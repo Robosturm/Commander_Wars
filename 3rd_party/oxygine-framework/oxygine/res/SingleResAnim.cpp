@@ -21,7 +21,10 @@ namespace oxygine
     {
         m_frames.clear();
         m_texture = nullptr;
-        emit oxygine::GameWindow::getWindow()->sigWaitOnRelease();
+        if (!oxygine::GameWindow::getWindow()->getShuttingDown())
+        {
+            emit oxygine::GameWindow::getWindow()->sigWaitOnRelease();
+        }
     }
 
     void SingleResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)

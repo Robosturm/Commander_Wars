@@ -12,11 +12,6 @@ namespace oxygine
 
     }
 
-    ClipRectActor::~ClipRectActor()
-    {
-
-    }
-
     void ClipRectActor::handleEvent(Event* event)
     {
         if (TouchEvent::isTouchEvent(event->type))

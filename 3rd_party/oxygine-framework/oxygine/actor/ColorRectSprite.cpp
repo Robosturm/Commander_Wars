@@ -14,11 +14,6 @@ namespace oxygine
         m_mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(mat));
     }
 
-    ColorRectSprite::~ColorRectSprite()
-    {
-
-    }
-
     void ColorRectSprite::doRender(const RenderState& rs)
     {
         m_rdelegate->doRender(this, rs);

@@ -8,8 +8,8 @@ namespace oxygine
     class MaskedSprite: public Sprite
     {
     public:
-        MaskedSprite();
-        ~MaskedSprite();
+        explicit MaskedSprite();
+        virtual ~MaskedSprite() = default;
 
         Sprite*    getMask() const;
         bool        getUseRChannel() const;

@@ -51,11 +51,6 @@ namespace oxygine
         setAnimFrame(f);
     }
 
-    ProgressBar::~ProgressBar()
-    {
-
-    }
-
     void ProgressBar::animFrameChanged(const AnimationFrame& f)
     {
         m_originalFrame = f;

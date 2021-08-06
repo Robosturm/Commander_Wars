@@ -261,6 +261,7 @@ namespace oxygine
         }
         invisible = nullptr;
         instance = nullptr;
+        current = nullptr;
     }
 
     void STDRenderer::reset()

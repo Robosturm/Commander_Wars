@@ -16,8 +16,8 @@ namespace oxygine
         static spResource createBM(CreateResourceContext& context);
         static spResource createSD(CreateResourceContext& context);
 
-        ResFontBM();
-        ~ResFontBM();
+        explicit ResFontBM();
+        virtual ~ResFontBM();
 
         /**loads "fnt" font from file, supported XML */
         void init(QString fntPath, bool premultipliedAlpha = false);
