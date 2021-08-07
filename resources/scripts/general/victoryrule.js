@@ -38,7 +38,6 @@ var VICTORYRULE =
     // sets the rule value of the spinbox
     setRuleValue : function(rule, value, item = 0)
     {
-
         var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
         var variable = variables.createVariable(variableName);

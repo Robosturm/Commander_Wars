@@ -26,6 +26,7 @@ LobbyMenu::LobbyMenu()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Lobby Menue", Console::eDEBUG);
+    Interpreter::setCppOwnerShip(this);
 
     if (!Settings::getServer())
     {

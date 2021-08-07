@@ -25,6 +25,7 @@ Achievementmenu::Achievementmenu()
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Achievement Menue", Console::eDEBUG);
+    Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background

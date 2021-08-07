@@ -48,33 +48,6 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(m_CurrentFile->getWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
-    auto* pPtrCurrentFolder = m_CurrentFolder.get();
-    auto* pPtrCurrentFile = m_CurrentFile.get();
-    auto* pPtrDropDownmenu = m_DropDownmenu.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-    {
-        QString file = m_pathPrefix + pPtrCurrentFolder->getCurrentText() + "/" + pPtrCurrentFile->getCurrentText();
-        QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
-        for (qint32 i = 0; i < items.size(); i++)
-        {
-            items[i] = items[i].replace("*", "");
-        }
-        bool found = false;
-        for (qint32 i = 0; i < items.size(); i++)
-        {
-            if (file.endsWith(items[i]))
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            file += items[0];
-        }
-        emit sigFileSelected(file);
-        emit sigFinished();
-    });
     // drop down menu
     m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
@@ -88,7 +61,6 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     {
         emit sigCancel();
     });
-
     // go folder up
     pAnim = pObjectManager->getResAnim("filedialogitems");
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
@@ -133,6 +105,32 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
         {
             emit sigShowFolder(ROOT);
         }
+    });
+    auto* pPtrCurrentFile = m_CurrentFile.get();
+    auto* pPtrDropDownmenu = m_DropDownmenu.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        QString file = m_pathPrefix + pCurrentFolder->getCurrentText() + "/" + pPtrCurrentFile->getCurrentText();
+        QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
+        for (qint32 i = 0; i < items.size(); i++)
+        {
+            items[i] = items[i].replace("*", "");
+        }
+        bool found = false;
+        for (qint32 i = 0; i < items.size(); i++)
+        {
+            if (file.endsWith(items[i]))
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            file += items[0];
+        }
+        emit sigFileSelected(file);
+        emit sigFinished();
     });
     connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);

@@ -24,6 +24,7 @@ COStyleMenu::COStyleMenu()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 
     Console::print("Entering Co Style Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

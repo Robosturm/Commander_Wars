@@ -47,6 +47,7 @@ EditorMenue::EditorMenue()
     Mainapp* pApp = Mainapp::getInstance();
     qint32 selectionWidth = Settings::getWidth() / 4;
     bool smallScreen = Settings::getSmallScreenDevice();
+    Interpreter::setCppOwnerShip(this);
     if (smallScreen)
     {
         selectionWidth = Settings::getWidth() * 3 / 4;

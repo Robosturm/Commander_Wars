@@ -30,6 +30,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Campaign Menue", Console::eDEBUG);
+    Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background

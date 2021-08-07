@@ -1622,12 +1622,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="84"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="57"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="346"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="344"/>
         <source>Do you want to delete the item </source>
         <translation type="unfinished"></translation>
     </message>

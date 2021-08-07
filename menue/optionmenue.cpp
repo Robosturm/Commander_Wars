@@ -36,6 +36,7 @@ OptionMenue::OptionMenue()
     setObjectName("OptionMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Option Menue", Console::eDEBUG);
 

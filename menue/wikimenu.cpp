@@ -18,6 +18,7 @@ Wikimenu::Wikimenu()
     setObjectName("Wikimenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Wiki Menue", Console::eDEBUG);
 

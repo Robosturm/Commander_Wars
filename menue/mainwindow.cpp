@@ -42,6 +42,7 @@ Mainwindow::Mainwindow()
     setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
+    Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
     Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

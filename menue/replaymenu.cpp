@@ -17,6 +17,7 @@
 ReplayMenu::ReplayMenu(QString filename)
     : GameMenue()
 {
+    Interpreter::setCppOwnerShip(this);
     setObjectName("ReplayMenu");
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);

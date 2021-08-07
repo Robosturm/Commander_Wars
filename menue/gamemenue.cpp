@@ -62,6 +62,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pGameMenuInstance = spGameMenue(this, true);
+    Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
     loadGameMenue();
@@ -116,6 +117,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pGameMenuInstance = spGameMenue(this, true);
+    Interpreter::setCppOwnerShip(this);
     loadHandling();
     loadGameMenue();
     loadUIButtons();
@@ -133,6 +135,7 @@ GameMenue::GameMenue()
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pGameMenuInstance = spGameMenue(this, true);
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
 }

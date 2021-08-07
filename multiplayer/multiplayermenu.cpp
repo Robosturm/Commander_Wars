@@ -102,6 +102,7 @@ void Multiplayermenu::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     Console::print("Entering Multiplayer Menue", Console::eDEBUG);
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
     m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
