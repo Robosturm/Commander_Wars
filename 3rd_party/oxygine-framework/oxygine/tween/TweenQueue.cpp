@@ -80,15 +80,13 @@ namespace oxygine
 
     void TweenQueue::_start(Actor& actor)
     {
-        m_current = m_tweens.first();
-        if (!m_current)
+        if (m_tweens.size() > 0)
         {
-            return;
+            m_current = m_tweens.first();
+            Event ev(EVENT_LOOP_BEGIN);
+            dispatchEvent(&ev);
+            m_current->start(actor);
         }
-        Event ev(EVENT_LOOP_BEGIN);
-        dispatchEvent(&ev);
-
-        m_current->start(actor);
     }
 
     void TweenQueue::_update(Actor& actor, const UpdateState& us)

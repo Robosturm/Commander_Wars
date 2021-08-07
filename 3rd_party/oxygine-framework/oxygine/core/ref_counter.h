@@ -48,8 +48,10 @@ namespace oxygine
         std::atomic<qint32> m_ref_counter{0};
 
         static std::atomic<qint32> m_instanceCounter;
+#ifdef MEMORYTRACING
         static QMutex m_lock;
         static QVector<ref_counter*> m_objects;
+#endif
     };
 
 

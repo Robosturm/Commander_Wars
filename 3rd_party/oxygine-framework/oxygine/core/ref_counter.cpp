@@ -11,7 +11,7 @@
 namespace oxygine
 {
     std::atomic<qint32> ref_counter::m_instanceCounter = 0;
-#ifdef GAMEDEBUG
+#ifdef MEMORYTRACING
     QMutex ref_counter::m_lock;
     QVector<ref_counter*> ref_counter::m_objects;
 #endif
@@ -53,7 +53,7 @@ namespace oxygine
     void ref_counter::freeObject()
     {
         --m_instanceCounter;
-#ifdef GAMEDEBUG
+#ifdef MEMORYTRACING
         m_lock.lock();
         m_objects.removeOne(this);
         m_lock.unlock();
@@ -63,7 +63,7 @@ namespace oxygine
     void ref_counter::trackObject(ref_counter *pObj)
     {
         ++m_instanceCounter;
-#ifdef GAMEDEBUG
+#ifdef MEMORYTRACING
         m_lock.lock();
         m_objects.append(pObj);
         m_lock.unlock();

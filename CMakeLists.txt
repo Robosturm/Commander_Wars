@@ -45,6 +45,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
+        -DMEMORYTRACING
         -DOXYGINE_DEBUG_SAFECAST
         )
 

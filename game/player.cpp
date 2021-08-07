@@ -1034,11 +1034,11 @@ void Player::updatePlayerVision(bool reduceTimer)
                         spQmlVectorPoint pPoints;
                         if (visionBlock)
                         {
-                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
+                            pPoints = spQmlVectorPoint(pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh()));
                         }
                         else
                         {
-                            pPoints = GlobalUtils::getCircle(0, visionRange);
+                            pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
                         }
                         for (qint32 i = 0; i < pPoints->size(); i++)
                         {
@@ -1069,16 +1069,16 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         if (pBuilding != nullptr)
                         {
-                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh());
+                            pPoints = spQmlVectorPoint(pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh()));
                         }
                         else
                         {
-                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh());
+                            pPoints = spQmlVectorPoint(pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh()));
                         }
                     }
                     else
                     {
-                        pPoints = GlobalUtils::getCircle(0, visionRange);
+                        pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, visionRange));
                     }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {

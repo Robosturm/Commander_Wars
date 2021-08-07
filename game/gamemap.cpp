@@ -1040,7 +1040,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
         }
         else
         {
-            pTerrainOld->setBuilding(nullptr);
+            pTerrainOld->setBuilding(spBuilding());
         }
     }
 }
@@ -1063,7 +1063,7 @@ void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
-            pTerrain->setBuilding(pBuilding.get());
+            pTerrain->setBuilding(pBuilding);
             pBuilding->setOwner(nullptr);
             
         }

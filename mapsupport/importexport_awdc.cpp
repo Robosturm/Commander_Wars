@@ -78,7 +78,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 18:
@@ -92,7 +92,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 19:
@@ -106,7 +106,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 20:
@@ -120,7 +120,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 21:
@@ -134,7 +134,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 22:
@@ -148,7 +148,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 23:
@@ -162,7 +162,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 24:
@@ -176,7 +176,7 @@ void GameMap::importAWDCMap(QString file)
                         {
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 25:
@@ -192,7 +192,7 @@ void GameMap::importAWDCMap(QString file)
                             pBuilding = spBuilding::create("HQ");
                             pBuilding->setOwner(getPlayer(buildingPlayer));
                         }
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     // terrain

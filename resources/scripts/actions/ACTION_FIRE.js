@@ -11,6 +11,7 @@ var Constructor = function()
         {
             return false;
         }
+        var ret = false;
         // are we allowed to attack from this field?
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
                 ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
@@ -33,7 +34,8 @@ var Constructor = function()
                         {
                             if (unit.isAttackableFromPosition(defUnit, actionTargetField))
                             {
-                                return true
+                                ret = true
+                                break;
                             }
                         }
                         if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
@@ -45,7 +47,8 @@ var Constructor = function()
                             {
                                 if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
-                                    return true;
+                                    ret = true
+                                    break;
                                 }
                             }
                             if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
@@ -53,7 +56,8 @@ var Constructor = function()
                             {
                                 if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
-                                    return true;
+                                    ret = true
+                                    break;
                                 }
                             }
                         }
@@ -62,7 +66,7 @@ var Constructor = function()
             }
             fields.remove();
         }
-        return false;
+        return ret;
     };
     this.getActionText = function()
     {

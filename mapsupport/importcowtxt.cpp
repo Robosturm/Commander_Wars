@@ -197,22 +197,22 @@ void GameMap::importTxtMap(QString file)
                             pBuilding->setHp(data[8].toInt());
                             if (i < building3x3Start)
                             {
-                                pTerrain->setBuilding(pBuilding.get());
+                                pTerrain->setBuilding(pBuilding);
                             }
                             else if (i < building4x4Start)
                             {
                                 Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 1, pTerrain->Terrain::getY() + 1);
-                                pTargetTerrain->setBuilding(pBuilding.get());
+                                pTargetTerrain->setBuilding(pBuilding);
                             }
                             else if (i < building3x4Start)
                             {
                                 Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 2, pTerrain->Terrain::getY() + 1);
-                                pTargetTerrain->setBuilding(pBuilding.get());
+                                pTargetTerrain->setBuilding(pBuilding);
                             }
                             else
                             {
                                 Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 1, pTerrain->Terrain::getY() + 1);
-                                pTargetTerrain->setBuilding(pBuilding.get());
+                                pTargetTerrain->setBuilding(pBuilding);
                             }
                             break;
                         }

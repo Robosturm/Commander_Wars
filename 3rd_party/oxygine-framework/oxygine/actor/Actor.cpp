@@ -317,7 +317,6 @@ namespace oxygine
         event->phase = Event::phase_capturing;
         if (!touchEvent || (m_flags & flag_touchChildrenEnabled))
         {
-            QMutexLocker lock(&m_Locked);
             auto iter = m_children.end();
             while (iter != m_children.begin())
             {
@@ -791,7 +790,6 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
         QMutexLocker lock(&m_Locked);
-        m_tweenLock.lock();
         for (auto & tween : m_tweens)
         {
             tween->update(*this, us);
@@ -800,7 +798,6 @@ namespace oxygine
                 m_tweens.removeOne(tween);
             }
         }
-        m_tweenLock.unlock();
         doUpdate(us);
         for (auto & child : m_children)
         {
@@ -996,7 +993,7 @@ namespace oxygine
             return spTween();
         }
         {
-            QMutexLocker lock(&m_tweenLock);
+            QMutexLocker lock(&m_Locked);
             m_tweens.append(tween);
         }
         tween->start(*this);
@@ -1016,7 +1013,7 @@ namespace oxygine
 
     void Actor::removeTween(spTween pTween)
     {
-        QMutexLocker lock(&m_tweenLock);
+        QMutexLocker lock(&m_Locked);
         if (pTween.get() == nullptr)
         {
             return;

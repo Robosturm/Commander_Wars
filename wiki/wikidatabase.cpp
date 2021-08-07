@@ -229,7 +229,7 @@ spWikipage WikiDatabase::getPage(pageData data)
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
         spBuilding pBuilding = spBuilding::create(id);
-        pTerrain->setBuilding(pBuilding.get());
+        pTerrain->setBuilding(pBuilding);
         ret = spFieldInfo::create(pTerrain.get(), nullptr);
     }
     else if (pUnitSpriteManager->exists(id))

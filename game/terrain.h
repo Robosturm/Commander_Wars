@@ -77,6 +77,12 @@ public:
      * @param pUnit
      */
     void setUnit(spUnit pUnit);
+
+    /**
+     * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to remove it.
+     * @param pBuilding
+     */
+    void setBuilding(spBuilding pBuilding);
     /**
      * @brief getUnit the unit on this terrain
      * @return
@@ -349,11 +355,6 @@ public slots:
      * @return
      */
     QString getID();
-    /**
-     * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to remove it.
-     * @param pBuilding
-     */
-    void setBuilding(Building* pBuilding);
     /**
      * @brief getFirerangeModifier
      * @param pUnit

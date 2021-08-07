@@ -311,13 +311,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         {
             pLabel->setHtmlText("-");
         }
-        pLabel->setPosition(x + 30, y - 5);
+        pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
         addChild(pLabel);
-        x += 80;
-        if (x + 90 > width)
+        x += 90;
+        if (x + 100 > width)
         {
             x = 0;
-            y += 40;
+            y += GameMap::getImageSize() * 2 + 6;
         }
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
@@ -339,7 +339,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         {
             pBuilding->setY(GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
         }
-        pTerrain->setBuilding(pBuilding.get());
+        pTerrain->setBuilding(pBuilding);
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([=](oxygine::Event*)
@@ -358,13 +358,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         {
             pLabel->setHtmlText("-");
         }
-        pLabel->setPosition(x + 30, y - 5);
+        pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
         addChild(pLabel);
-        x += 80;
-        if (x + 90 > width && i < pBuildingSpriteManager->getCount() - 1)
+        x += 90;
+        if (x + 100 > width && i < pBuildingSpriteManager->getCount() - 1)
         {
             x = 0;
-            y += 40;
+            y += GameMap::getImageSize() * 2 + 6;
         }
     }
     y += 40;
@@ -427,10 +427,10 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         {
             pLabel->setHtmlText("-");
         }
-        pLabel->setPosition(x + 30, y - 5);
+        pLabel->setPosition(x + GameMap::getImageSize() + 6, y - 5);
         addChild(pLabel);
-        x += 140;
-        if (x + 150 > width && i < pUnitSpriteManager->getCount() - 1)
+        x += 150;
+        if (x + 160 > width && i < pUnitSpriteManager->getCount() - 1)
         {
             x = 0;
             y += 40;

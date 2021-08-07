@@ -689,13 +689,13 @@ qint32 Terrain::getDefense(Unit* pUnit)
     return defense;
 }
 
-void Terrain::setBuilding(Building* pBuilding)
+void Terrain::setBuilding(spBuilding pBuilding)
 {
     if (m_Building.get() != nullptr)
     {
         removeBuilding();
     }
-    if (pBuilding != nullptr)
+    if (pBuilding.get() != nullptr)
     {
         m_Building = pBuilding;
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));

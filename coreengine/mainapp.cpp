@@ -104,7 +104,7 @@ void Mainapp::shutdown()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-           (QThread::currentThread() == m_pMainThread && (m_shuttingDown || !m_Worker->getStarted()));
+            (QThread::currentThread() == m_pMainThread && (m_shuttingDown || !m_Worker->getStarted()));
 }
 
 void Mainapp::loadRessources()
@@ -305,7 +305,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::Finalizing:
         {
             if (!m_noUi)
-            {                
+            {
                 m_Timer.start(m_timerCycle, this);
             }
             // only launch the server if the rest is ready for it ;)
@@ -716,6 +716,7 @@ void Mainapp::createBaseDirs()
 
 void Mainapp::onQuit()
 {
-   m_Workerthread.quit();
-   m_Workerthread.wait();
+    QApplication::processEvents();
+    m_Workerthread.quit();
+    m_Workerthread.wait();
 }

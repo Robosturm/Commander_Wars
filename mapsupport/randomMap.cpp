@@ -559,7 +559,7 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
         playerPositions.push_back(position);
         spBuilding pBuilding = spBuilding::create("HQ");
         pBuilding->setOwner(getPlayer(i));
-        getTerrain(position.x(), position.y())->setBuilding(pBuilding.get());
+        getTerrain(position.x(), position.y())->setBuilding(pBuilding);
     }
 
     buildings -= playerPositions.size();
@@ -589,7 +589,7 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
             replaceTerrain(erg.toString(), x, y);
             spBuilding pBuilding = spBuilding::create("FACTORY");
             pBuilding->setOwner(getPlayer(i));
-            getTerrain(x, y)->setBuilding(pBuilding.get());
+            getTerrain(x, y)->setBuilding(pBuilding);
         }
     }
     buildings -= playerPositions.size();
@@ -684,7 +684,7 @@ void GameMap::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID,
                     break;
                 }
             }
-            getTerrain(x, y)->setBuilding(pBuilding.get());
+            getTerrain(x, y)->setBuilding(pBuilding);
             if (innerBase > 0)
             {
                 innerBase--;

@@ -157,308 +157,308 @@ void GameMap::importAWByWebMap(QString file)
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 35:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 36:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 37:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 38:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 39:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 40:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 41:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 42:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 43:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 44:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 45:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 46:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 47:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 48:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 49:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 50:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 51:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 52:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 53:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 54:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 55:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 56:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 57:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 81:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 82:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 83:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 84:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 85:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 86:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 87:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 88:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 89:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 90:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 91:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 92:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 93:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 94:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 95:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 96:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 97:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 98:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 99:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 100:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 101:
@@ -479,14 +479,14 @@ void GameMap::importAWByWebMap(QString file)
                     {
                         spBuilding pBuilding = spBuilding::create("SILO_ROCKET");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 112:
                     {
                         spBuilding pBuilding = spBuilding::create("SILO");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 113:
@@ -505,224 +505,224 @@ void GameMap::importAWByWebMap(QString file)
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 118:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 119:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 120:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 121:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 122:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 123:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 124:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 125:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 126:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 127:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 128:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 129:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 130:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 131:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 132:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 133:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 134:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 135:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 136:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 137:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 138:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(8));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 139:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 140:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 141:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(7));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 142:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 143:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(6));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 144:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(9));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 145:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 146:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 147:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(5));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 148:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
 
@@ -730,98 +730,98 @@ void GameMap::importAWByWebMap(QString file)
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 150:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 151:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 152:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 153:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 154:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 155:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(10));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 156:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 157:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 158:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 159:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 160:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 161:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 162:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(11));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
 
@@ -829,196 +829,196 @@ void GameMap::importAWByWebMap(QString file)
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 164:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 165:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 166:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 167:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 168:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 169:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(12));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 170:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 171:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 172:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 173:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 174:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 175:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 176:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(13));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 177:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 178:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 179:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 180:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 181:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 182:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 183:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(14));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 184:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 185:
                     {
                         spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 186:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 187:
                     {
                         spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 188:
                     {
                         spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 189:
                     {
                         spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     case 190:
                     {
                         spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(15));
-                        getTerrain(x, y)->setBuilding(pBuilding.get());
+                        getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
                     default:

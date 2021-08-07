@@ -300,7 +300,6 @@ namespace oxygine
         char    m_extendedIsOn;
         spClock m_clock;
         Actor* m_parent;
-        QMutex m_tweenLock;
         tweens m_tweens;
         children m_children;
         union

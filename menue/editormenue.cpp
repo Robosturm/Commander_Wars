@@ -1333,7 +1333,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pMap->getTerrain(curX, curY)->setBuilding(pBuilding.get());
+                pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
                 if (points.size() < 14)
                 {
                     pMap->updateTerrain(points.at(i).x(), points.at(i).y());
@@ -1827,7 +1827,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     }
                                     spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
-                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding.get());
+                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
                                 if (selection != EditorSelection::EditorMode::All)
                                 {

@@ -253,7 +253,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
                 if (pBuilding->Building::getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
                     pBuilding->Building::getY() - pBuilding->getBuildingHeigth() + 1 < 0)
                 {
-                    m_fields[y][x]->setBuilding(nullptr);
+                    m_fields[y][x]->setBuilding(spBuilding());
                 }
             }
         }
@@ -287,7 +287,7 @@ void GameMap::flipX()
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding.get());
+                pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
@@ -327,7 +327,7 @@ void GameMap::rotateX()
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding.get());
+                pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
@@ -367,7 +367,7 @@ void GameMap::flipY()
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding.get());
+                pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
@@ -407,7 +407,7 @@ void GameMap::rotateY()
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding.get());
+                pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
