@@ -54,7 +54,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 spBaseGameInputIF BaseGameInputIF::deserializeInterface(QDataStream& pStream, qint32 version)
 {
     Console::print("reading ai", Console::eDEBUG);
-    spBaseGameInputIF ret = nullptr;
+    spBaseGameInputIF ret;
     if (version > 7)
     {
         GameEnums::AiTypes type;
@@ -81,7 +81,7 @@ spBaseGameInputIF BaseGameInputIF::deserializeInterface(QDataStream& pStream, qi
 spBaseGameInputIF BaseGameInputIF::createAi(GameEnums::AiTypes type)
 {
     Console::print("Creating AI " + QString::number(type), Console::eDEBUG);
-    spBaseGameInputIF ret = nullptr;
+    spBaseGameInputIF ret;
     switch (type)
     {
         case GameEnums::AiTypes_Human:

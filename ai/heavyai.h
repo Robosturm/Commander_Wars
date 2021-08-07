@@ -463,8 +463,8 @@ private:
     QVector<QPoint> m_updatePoints;
     QVector<BuildingData> m_BuildingData;
     InfluenceFrontMap m_InfluenceFrontMap;
-    spQmlVectorUnit m_pUnits = nullptr;
-    spQmlVectorUnit m_pEnemyUnits = nullptr;
+    spQmlVectorUnit m_pUnits = spQmlVectorUnit();
+    spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
     Player* m_pPrimaryEnemy{nullptr};
 
     QTimer m_timer;

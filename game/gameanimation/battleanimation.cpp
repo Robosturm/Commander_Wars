@@ -228,8 +228,8 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     addChild(m_HealthBar1);
 
     // dummy impl for standing units
-    m_pAttackerAnimation = spBattleAnimationSprite::create(pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
-                                                     GlobalUtils::roundUp(atkStartHp));
+    m_pAttackerAnimation = spBattleAnimationSprite::create(spUnit(pAtkUnit), pAtkTerrain, BattleAnimationSprite::standingAnimation,
+                                                           GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
@@ -238,8 +238,8 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
 
     m_pAttackerSprite->addChild(m_pAttackerAnimation);
-    m_pDefenderAnimation = spBattleAnimationSprite::create(pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
-                                                     GlobalUtils::roundUp(defStartHp));
+    m_pDefenderAnimation = spBattleAnimationSprite::create(spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
+                                                           GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);
     if (!m_pAttackerAnimation->hasMoveInAnimation(pAtkUnit, pDefUnit, atkWeapon))

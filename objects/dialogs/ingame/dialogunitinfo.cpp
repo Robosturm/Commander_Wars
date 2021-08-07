@@ -79,7 +79,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pSpriteBox->addChild(pText);
 
     y += 40;
-    spQmlVectorUnit pUnits = pPlayer->getUnits();
+    spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
 
     y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)

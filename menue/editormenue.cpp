@@ -455,7 +455,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "EDITMAP")
     {
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap pGameMap = GameMap::getInstance();
         spMapEditDialog mapEditDialog = spMapEditDialog::create(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
                                                                 pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
                                                                 pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
@@ -467,22 +467,22 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "FLIPX")
     {
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap pGameMap = GameMap::getInstance();
         pGameMap->flipX();
     }
     else if (itemID == "FLIPY")
     {
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap  pGameMap = GameMap::getInstance();
         pGameMap->flipY();
     }
     else if (itemID == "ROTATEX")
     {
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap  pGameMap = GameMap::getInstance();
         pGameMap->rotateX();
     }
     else if (itemID == "ROTATEY")
     {
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap  pGameMap = GameMap::getInstance();
         pGameMap->rotateY();
     }
     else if (itemID == "RANDOMMAP")
@@ -652,7 +652,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 {
     Console::print("EditorMenue::createRandomMap", Console::eDEBUG);
     cleanTemp(-1);
-    GameMap* pGameMap = GameMap::getInstance();
+    spGameMap pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed);
@@ -846,12 +846,12 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         }
         case EditorModes::EditUnits:
         {
-            m_Cursor->changeCursor("cursor+edit", 0, 0, 2.0f);
+            m_Cursor->changeCursor("cursor+edit", 0, 0, 1.0f);
             break;
         }
         case EditorModes::EditTerrain:
         {
-            m_Cursor->changeCursor("cursor+edit", 0, 0, 2.0f);
+            m_Cursor->changeCursor("cursor+edit", 0, 0, 1.0f);
             break;
         }
         case EditorModes::PlaceEditorSelection:
@@ -1250,7 +1250,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
 
-            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(nullptr);
+            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(spUnit());
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
@@ -1690,7 +1690,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
         {
             if (p2.x() > 0)
             {
-                spQmlVectorPoint pPoints = GlobalUtils::getCircle(p2.x(), p2.x());
+                spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(p2.x(), p2.x()));
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {
@@ -1844,7 +1844,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(nullptr);
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());

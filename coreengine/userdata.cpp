@@ -12,7 +12,7 @@
 
 #include "objects/achievementbanner.h"
 
-spUserdata Userdata::m_pInstance = nullptr;
+spUserdata Userdata::m_pInstance;
 
 Userdata* Userdata::getInstance()
 {

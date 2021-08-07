@@ -21,6 +21,7 @@ public:
 signals:
     void sigTextChanged(QString text);
     void sigCancel();
+    void sigFinished();
 private slots:
     void remove();
 private:

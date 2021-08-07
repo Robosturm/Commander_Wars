@@ -229,7 +229,7 @@ void MapSelectionMapsMenue::slotButtonNext()
                 (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER) ||
                 (mapFile == NetworkCommands::SERVERMAPIDENTIFIER))
             {
-                m_pMapSelectionView->setCurrentCampaign(nullptr);
+                m_pMapSelectionView->setCurrentCampaign(spCampaign());
                 if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
                 {
                     startGame();
@@ -358,7 +358,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->updateSprites(-1, -1, false, true);
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spGameMenue::create(false, nullptr));
+    oxygine::getStage()->addChild(spGameMenue::create(false, spNetworkInterface()));
     oxygine::Actor::detach();
 }
 
@@ -413,7 +413,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
-    m_pMapSelectionView->setCurrentMap(pGameMap.get());
+    m_pMapSelectionView->setCurrentMap(pGameMap);
     emit buttonNext();
     
 }

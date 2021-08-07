@@ -169,6 +169,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
 void BuildListDialog::remove()
 {
+    m_Checkboxes.clear();
     detach();
 }
 

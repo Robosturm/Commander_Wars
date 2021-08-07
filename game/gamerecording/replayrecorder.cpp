@@ -155,7 +155,7 @@ spGameAction ReplayRecorder::nextAction()
             return pAction;
         }
     }
-    return nullptr;
+    return spGameAction();
 }
 
 void ReplayRecorder::seekToDay(qint32 day)

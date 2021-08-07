@@ -7,7 +7,7 @@
 namespace oxygine
 {
     DECLARE_SMART(Object, spObject);
-    class Object : public ref_counter, public IClosureOwner
+    class Object : public IClosureOwner, public ref_counter
     {
     public:
         explicit Object(const Object& src);
@@ -42,15 +42,15 @@ namespace oxygine
     {
         if (!p)
         {
-            return 0;
+            return intrusive_ptr<T>();
         }
 #ifdef OXYGINE_DEBUG_SAFECAST
-        intrusive_ptr<T> t = dynamic_cast<T*>(p.get());
+        intrusive_ptr<T> t = intrusive_ptr<T>(dynamic_cast<T*>(p.get()));
         if (t.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "safeSpCast can't cast pointer");
         }
 #endif
-        return static_cast<T*>(p.get());
+        return intrusive_ptr<T>(static_cast<T*>(p.get()));
     }
 }

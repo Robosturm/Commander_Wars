@@ -308,10 +308,6 @@ public slots:
         m_buffer.seek(0);
     }
     /**
-     * @brief deleteAction
-     */
-    void deleteAction();
-    /**
      * @brief getIsLocal
      * @return
      */

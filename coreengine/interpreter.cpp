@@ -16,7 +16,7 @@
 #include <QTextStream>
 #include <QThread>
 
-spInterpreter Interpreter::m_pInstance = nullptr;
+spInterpreter Interpreter::m_pInstance;
 QString Interpreter::m_runtimeData;
 
 Interpreter::Interpreter()

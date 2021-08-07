@@ -55,7 +55,7 @@ namespace oxygine
         spIVideoDriver driver = IVideoDriver::instance;
         m_downsample = 1;
         spNativeTexture rt = _pp._rt;
-        spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
+        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, _pp._format);
 
         Rect rc(0, 0, w, h);
         driver->setShaderProgram(PostProcess::shaderBlurH.get());

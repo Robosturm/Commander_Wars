@@ -28,7 +28,7 @@ void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood 
 
 void ScriptEventDialog::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spScriptDialogDialog pScriptDialogDialog = spScriptDialogDialog::create(this);
+    spScriptDialogDialog pScriptDialogDialog = spScriptDialogDialog::create(spScriptEventDialog(this));
     pScriptEditor->addChild(pScriptDialogDialog);
     connect(pScriptDialogDialog.get(), &ScriptDialogDialog::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
 }
@@ -47,7 +47,7 @@ spDialogEntry ScriptEventDialog::getDialog(qint32 index)
     {
         return m_Dialog[index];
     }
-    return nullptr;
+    return spDialogEntry();
 }
 
 void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)

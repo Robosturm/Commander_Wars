@@ -178,7 +178,7 @@ namespace oxygine
         {
             return;
         }
-        if (isDescendant(safeCast<Actor*>(ev->target.get())))
+        if (isDescendant(safeSpCast<Actor>(ev->target)))
         {
             return;
         }
@@ -451,7 +451,7 @@ namespace oxygine
         {
             QMutexLocker lockParent(&m_parent->m_Locked);
             QMutexLocker lock(&m_Locked);
-            spActor me = this;
+            spActor me = spActor(this);
             m_parent->m_children.removeOne(me);
             m_parent->insertActor(this);
         }
@@ -722,7 +722,7 @@ namespace oxygine
     void Actor::insertActor(Actor* actor)
     {
         qint32 z = actor->getPriority();
-        spActor insert = actor;
+        spActor insert = spActor(actor);
         auto iter = m_children.cend();
         auto insertBefore = iter;
         while (iter != m_children.cbegin())
@@ -783,7 +783,7 @@ namespace oxygine
         Actor* parent = getParent();
         if (parent)
         {
-            parent->removeChild(this);
+            parent->removeChild(spActor(this));
         }
         return parent;
     }
@@ -988,12 +988,12 @@ namespace oxygine
         if (!tween)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
-            return nullptr;
+            return spTween();
         }
         else if (getRefCounter() == 0)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween trying to add tween during actor construction isn't allowed.");
-            return nullptr;
+            return spTween();
         }
         {
             QMutexLocker lock(&m_tweenLock);

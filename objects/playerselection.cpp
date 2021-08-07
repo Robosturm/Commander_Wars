@@ -156,7 +156,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     QStringList cos;
     if (m_pCampaign.get() != nullptr)
     {
-        cos = m_pCampaign->getSelectableCOs(GameMap::getInstance(), player, co);
+        cos = m_pCampaign->getSelectableCOs(GameMap::getInstance().get(), player, co);
     }
     else
     {
@@ -1218,12 +1218,15 @@ void PlayerSelection::selectAI(qint32 player)
 
 void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
 {
-    GameMap* pMap = GameMap::getInstance();
-    Player* pPlayer = pMap->getPlayer(player);
-    pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
-    if (pPlayer->getBaseGameInput() != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if(pMap.get() != nullptr)
     {
-        pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(pMap->getGameRules()->getAiAttackTerrain());
+        Player* pPlayer = pMap->getPlayer(player);
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
+        if (pPlayer->getBaseGameInput() != nullptr)
+        {
+            pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(pMap->getGameRules()->getAiAttackTerrain());
+        }
     }
 }
 
@@ -1426,7 +1429,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             // we need to handle opening a player slightly different here...
             if (eAiType == GameEnums::AiTypes_Open)
             {
-                pPlayer->setBaseGameInput(nullptr);
+                pPlayer->setBaseGameInput(spBaseGameInputIF());
                 m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
                 m_PlayerSockets[player] = 0;
             }

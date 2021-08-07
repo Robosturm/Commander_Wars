@@ -145,14 +145,14 @@ spScriptCondition ScriptCondition::createCondition(ConditionType type)
             return spScriptConditionCheckVariable::create();
         }
     }
-    return nullptr;
+    return spScriptCondition();
 }
 
 
 spScriptCondition ScriptCondition::createReadCondition(QTextStream& rStream, QString & line)
 {
     line = line.simplified();
-    spScriptCondition ret = nullptr;
+    spScriptCondition ret;
     if (line.endsWith(ConditionEachDay))
     {
          ret = spScriptConditionEachDay::create();
@@ -222,7 +222,7 @@ spScriptEvent ScriptCondition::getEvent(qint32 index)
     {
        return events[index];
     }
-    return nullptr;
+    return spScriptEvent();
 }
 
 void ScriptCondition::removeEvent(spScriptEvent pEvent)

@@ -72,7 +72,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setPosition(width - 210, y);
     addChild(pSpriteBox);
 
-    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
+    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
     pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
     addChild(pBattleAnimationSprite);
@@ -464,7 +464,7 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
     qint32 x = 0;
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
     {
-        spUnit loadedUnit = pUnit->getLoadedUnit(i);
+        spUnit loadedUnit = spUnit(pUnit->getLoadedUnit(i));
         spUnit pDummy = spUnit::create(loadedUnit->getUnitID(), pUnit->getOwner(), false);
         pDummy->setPosition(x, y);
         pDummy->setHasMoved(loadedUnit->getHasMoved());

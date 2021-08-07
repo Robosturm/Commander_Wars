@@ -100,7 +100,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
     if (pMap.get() != nullptr)
     {
         QVector<QVector3D> enemyTargets;
-        spQmlVectorPoint enemyFields = GlobalUtils::getCircle(1, 1);
+        spQmlVectorPoint enemyFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         for (qint32 i = 0; i < pEnemyUnits->size(); i++)
         {
             Unit* pUnit = pEnemyUnits->at(i);
@@ -125,7 +125,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
                 {
                     UnitPathFindingSystem turnPfs(pUnit);
                     turnPfs.explore();
-                    spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 3);
+                    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 3));
                     QVector<QPoint> targets = turnPfs.getAllNodePoints();
                     qint32 maxDamage = 0;
                     QVector<QPoint> bestTargets;
@@ -192,7 +192,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransport
     {
         QVector<QVector3D> unitTargets;
         QVector<QPoint> unitPos;
-        spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
+        spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
             Unit* pUnit = pUnits->at(i);
@@ -277,10 +277,9 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransport
 bool CoreAI::processPredefinedAi()
 {
     Console::print("processPredefinedAi()", Console::eDEBUG);
-    spQmlVectorUnit pUnits = m_pPlayer->getUnits();
+    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
-
-    spQmlVectorUnit pEnemyUnits = m_pPlayer->getEnemyUnits();
+    spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
     pEnemyUnits->randomize();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -296,7 +295,7 @@ bool CoreAI::processPredefinedAi()
                 }
                 case GameEnums::GameAi_Offensive:
                 {
-                    processPredefinedAiOffensive(pUnit, pEnemyUnits.get());
+                    processPredefinedAiOffensive(pUnit, pEnemyUnits);
                     return true;
                 }
                 case GameEnums::GameAi_Defensive:

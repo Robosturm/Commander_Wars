@@ -116,14 +116,14 @@ void VeryEasyAI::readIni(QString name)
 
 void VeryEasyAI::process()
 {
-    spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
+    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
-    spQmlVectorUnit pUnits = m_pPlayer->getUnits();
+    spQmlVectorUnit pUnits = spQmlVectorUnit(m_pPlayer->getUnits());
     pUnits->randomize();
 
-    spQmlVectorUnit pEnemyUnits = m_pPlayer->getEnemyUnits();
+    spQmlVectorUnit pEnemyUnits = spQmlVectorUnit(m_pPlayer->getEnemyUnits());
     pEnemyUnits->randomize();
-    spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getEnemyBuildings();
+    spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
     pEnemyBuildings->randomize();
 
     qint32 cost = 0;

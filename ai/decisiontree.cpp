@@ -173,7 +173,7 @@ float DecisionTree::infoGain(QVector<QVector<QVector<float>>>& splitTrainingData
 
 spDecisionQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spDecisionQuestion>>& questions)
 {
-    spDecisionQuestion bestQuestion = nullptr;
+    spDecisionQuestion bestQuestion;
     if (trainingData.size() > 0)
     {
         float currentUncertainty = giniImpurity(trainingData);

@@ -18,7 +18,7 @@ namespace oxygine
 {
     spResource ResFontBM::create(CreateResourceContext& context)
     {
-        spResFontBM font = nullptr;
+        spResFontBM font = spResFontBM();
 
         font = spResFontBM::create();
         font->_createFont(&context, false, false, 1);
@@ -32,7 +32,7 @@ namespace oxygine
 
     spResource ResFontBM::createBM(CreateResourceContext& context)
     {
-        spResFontBM font = nullptr;
+        spResFontBM font = spResFontBM();
 
         font = spResFontBM::create();
         font->_createFont(&context, false, true, 1);
@@ -44,7 +44,7 @@ namespace oxygine
 
     spResource ResFontBM::createSD(CreateResourceContext& context)
     {
-        spResFontBM font = nullptr;
+        spResFontBM font = spResFontBM();
         font = spResFontBM::create();
         font->_createFont(&context, true, false, 1);
         setNode(font, context.m_walker.getNode());

@@ -74,7 +74,7 @@ void Chat::setVisible(bool vis)
     oxygine::Actor::setVisible(vis);
     if (vis)
     {
-        if (GameMenue::getInstance() != nullptr)
+        if (GameMenue::getInstance().get() != nullptr)
         {
             QString tooltip = tr("Message to send via chat. Start a message with one of the following items to send "
                                  "a message to specific targets. \n") +

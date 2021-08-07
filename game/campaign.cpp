@@ -171,7 +171,7 @@ void Campaign::mapFinished(bool result)
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(GameMap::getInstance());
+    QJSValue obj1 = pInterpreter->newQObject(GameMap::getInstance().get());
     args << obj1;
     args << result;
     pInterpreter->doFunction(Campaign::scriptName, "mapFinished", args);

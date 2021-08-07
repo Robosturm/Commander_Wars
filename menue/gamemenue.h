@@ -42,9 +42,9 @@ public:
     explicit GameMenue();
     virtual ~GameMenue();
     void deleteMenu();
-    static GameMenue* getInstance()
+    static spGameMenue getInstance()
     {
-        return m_pGameMenuInstance.get();
+        return m_pGameMenuInstance;
     }
     /**
      * @brief attachInterface

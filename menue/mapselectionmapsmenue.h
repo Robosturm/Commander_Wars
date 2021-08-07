@@ -35,7 +35,7 @@ public:
         selectPlayer
     };
 
-    explicit MapSelectionMapsMenue(qint32 heigth = -1, spMapSelectionView pMapSelectionView = nullptr);
+    explicit MapSelectionMapsMenue(qint32 heigth = -1, spMapSelectionView pMapSelectionView = spMapSelectionView());
     virtual ~MapSelectionMapsMenue() = default;
     // functions for swapping between the inputs
     virtual void hideMapSelection();

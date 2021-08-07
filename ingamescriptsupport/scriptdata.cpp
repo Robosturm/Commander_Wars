@@ -275,7 +275,7 @@ void ScriptData::removeCondition(QVector<spScriptCondition>& data, spScriptCondi
             {
                 if (cond == condition)
                 {
-                    parent->setSubCondition(nullptr);
+                    parent->setSubCondition(spScriptCondition());
                     break;
                 }
                 else
@@ -312,7 +312,7 @@ spScriptCondition ScriptData::getVictoryCondition(qint32 index)
     {
         return m_Victory[index];
     }
-    return nullptr;
+    return spScriptCondition();
 }
 
 spScriptCondition ScriptData::getDayCondition(qint32 index)
@@ -321,7 +321,7 @@ spScriptCondition ScriptData::getDayCondition(qint32 index)
     {
         return m_DayConditions[index];
     }
-    return nullptr;
+    return spScriptCondition();
 }
 
 spScriptCondition ScriptData::getActionCondition(qint32 index)
@@ -330,5 +330,5 @@ spScriptCondition ScriptData::getActionCondition(qint32 index)
     {
         return m_ActionConditions[index];
     }
-    return nullptr;
+    return spScriptCondition();
 }

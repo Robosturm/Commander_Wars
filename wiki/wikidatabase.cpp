@@ -306,7 +306,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         {
             // check buildings?
             spGameMap pMap = GameMap::getInstance();
-            spPlayer pPlayer = nullptr;
+            spPlayer pPlayer;
             if (pMap.get() != nullptr)
             {
                 pPlayer = pMap->getCurrentPlayer();
@@ -320,7 +320,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         {
             spTerrain pTerrain = Terrain::createTerrain(file, -1, -1, "");
             pTerrain->loadSprites();
-            return pTerrain.get();
+            return pTerrain;
         }
     }
     return pSprite;

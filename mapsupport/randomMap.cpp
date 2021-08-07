@@ -33,7 +33,7 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
 {
     clearMap();
 
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
     qint32 maxSteps = terrains.size() + buildings.size() + units.size() + 1;
     qint32 progress = 0;
@@ -720,7 +720,7 @@ void GameMap::randomMapPlaceUnits(QVector<std::tuple<QString, float>> units,
                                   bool distributed,
                                   qint32& progress, qint32 maxProgess, QRandomGenerator& randInt)
 {
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (distributed)
     {
         for (qint32 owner = 0; owner < playerPositions.size(); ++owner)

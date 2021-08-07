@@ -294,9 +294,9 @@ void HeavyAi::hideFrontMap()
 
 void HeavyAi::process()
 {
-    spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
+    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
-    spQmlVectorBuilding pEnemyBuildings = m_pPlayer->getEnemyBuildings();
+    spQmlVectorBuilding pEnemyBuildings = spQmlVectorBuilding(m_pPlayer->getEnemyBuildings());
     pEnemyBuildings->randomize();
     if (m_pause)
     {
@@ -309,7 +309,8 @@ void HeavyAi::process()
         m_timer.stop();
     }
     if (useBuilding(pBuildings)){}
-    else if (useCOPower(m_pPlayer->getUnits(), m_pPlayer->getEnemyUnits())){}
+    else if (useCOPower(spQmlVectorUnit(m_pPlayer->getUnits()),
+                        spQmlVectorUnit(m_pPlayer->getEnemyUnits()))){}
     else
     {
         setupTurn(pBuildings);
@@ -340,7 +341,8 @@ void HeavyAi::endTurn()
     turnMode = GameEnums::AiTurnMode_EndOfDay;
     m_pUnits = nullptr;
     m_pEnemyUnits = nullptr;
-    if (useCOPower(m_pPlayer->getUnits(), m_pPlayer->getEnemyUnits()))
+    if (useCOPower(spQmlVectorUnit(m_pPlayer->getUnits()),
+                   spQmlVectorUnit(m_pPlayer->getEnemyUnits())))
     {
     }
     else
@@ -523,7 +525,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
         }
     }
     QVector<qint32> updated;
-    spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 5);
+    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 5));
     for (qint32 i = 0; i < m_updatePoints.size(); i++)
     {
         qint32 i2 = 0;
@@ -1018,7 +1020,7 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
         data[BasicFieldInfo::OwnInfluenceValue] = static_cast<double>(info.ownInfluence) / highestInfluece;
         data[BasicFieldInfo::EnemyInfluenceValue] = static_cast<double>(info.highestEnemyInfluence) / highestInfluece;
         data[BasicFieldInfo::MoveTurnProgress] = notMovedUnitCount / static_cast<double>(m_ownUnits.size());
-        spQmlVectorPoint pCircle = GlobalUtils::getCircle(1, 1);
+        spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         double wallCount = 0;
         for (qint32 i = 0; i < pCircle->size(); ++i)
         {
@@ -1116,7 +1118,7 @@ void HeavyAi::scoreActionWait()
                 QVector<spGameAction> bestActions;
                 float bestScore = 0.0f;
                 QString action = ACTION_WAIT;
-                spGameAction pAction = nullptr;
+                spGameAction pAction;
                 FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
@@ -1152,7 +1154,7 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
         qint32 unitIslandIdx = getIslandIndex(unit.m_pUnit);
         qint32 minFirerange = unit.m_pUnit->getMinRange(unit.m_pUnit->getPosition());
         qint32 maxFirerange = unit.m_pUnit->getMaxRange(unit.m_pUnit->getPosition());
-        spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(minFirerange, maxFirerange);
+        spQmlVectorPoint pTargetFields = spQmlVectorPoint(GlobalUtils::getCircle(minFirerange, maxFirerange));
         for (qint32 x = 0; x < mapWidth; ++x)
         {
             for (qint32 y = 0; y < mapHeight; ++y)

@@ -223,7 +223,7 @@ void Shopmenu::buy()
 
 oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType, QString key)
 {
-    oxygine::spSprite pRet = nullptr;
+    oxygine::spSprite pRet;
     switch (itemType)
     {
         case GameEnums::ShopItemType_CO:

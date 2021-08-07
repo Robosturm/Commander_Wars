@@ -37,7 +37,7 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
     m_costList.append(costs);
     m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    spUnit menuIcon = dynamic_cast<Unit*>(pGameManager->getIcon(pIcon->getUnitID()).get());
+    spUnit menuIcon = oxygine::dynamic_pointer_cast<Unit>(pGameManager->getIcon(pIcon->getUnitID()));
     if (menuIcon.get() != nullptr)
     {
         menuIcon->setHasMoved(pIcon->getHasMoved());

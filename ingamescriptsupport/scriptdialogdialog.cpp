@@ -297,7 +297,7 @@ void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
         }
         oxygine::spResAnim pAnim = oxygine::spSingleResAnim::create();
         m_backgroundAnims[index] = pAnim;
-        Mainapp::getInstance()->loadResAnim(pAnim.get(), image, 1, 1, 1, false);
+        Mainapp::getInstance()->loadResAnim(pAnim, image, 1, 1, 1, false);
         m_backgrounds[index]->setResAnim(pAnim.get());
         m_backgrounds[index]->setScaleX(60.0f / pAnim->getWidth());
         m_backgrounds[index]->setScaleY(30.0f / pAnim->getHeight());

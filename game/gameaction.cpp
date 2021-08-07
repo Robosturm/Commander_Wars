@@ -36,11 +36,6 @@ void GameAction::setSeed(quint32 seed)
     m_seed = seed;
 }
 
-void GameAction::deleteAction()
-{
-    delete this;
-}
-
 bool GameAction::getIsLocal() const
 {
     return m_isLocal;

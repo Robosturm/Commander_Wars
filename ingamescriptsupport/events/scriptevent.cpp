@@ -51,7 +51,7 @@ ScriptEvent::ScriptEvent(EventType type)
 spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream, QString line)
 {
     line = line.simplified();
-    spScriptEvent ret = nullptr;
+    spScriptEvent ret;
     if (line.endsWith(EventDialog))
     {
          ret = spScriptEventDialog::create();
@@ -219,5 +219,5 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
             return spScriptEventPlaySound::create();
         }
     }
-    return nullptr;
+    return spScriptEvent();
 }

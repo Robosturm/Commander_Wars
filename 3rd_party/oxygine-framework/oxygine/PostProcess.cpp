@@ -364,7 +364,7 @@ namespace oxygine
 
 
         driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));
-        driver->setTexture(0, 0);
+        driver->setTexture(0, spNativeTexture());
     }
 
     PostProcess::PostProcess(const PostProcessOptions& opt)

@@ -325,13 +325,13 @@ namespace oxygine
         bool m_onScreen{true};
     };
 
-    Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = nullptr);
+    Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
     Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-    Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = nullptr);
+    Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
     Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
 
     /*Tests 2 actors intersection and returns contact point in space of object1.*/
-    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = nullptr, Vector2* contact = nullptr);
+    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = spActor(), Vector2* contact = nullptr);
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
 }

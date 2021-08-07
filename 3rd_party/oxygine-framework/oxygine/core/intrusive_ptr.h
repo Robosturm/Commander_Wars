@@ -16,14 +16,9 @@ namespace oxygine
         template<typename ...TArgs>
         static intrusive_ptr<T> create(TArgs... args)
         {
-            ++oxygine::ref_counter::instanceCounter;
             intrusive_ptr<T> pRet;
             pRet.m_pPointer =  new T(args...);
-#ifdef GAMEDEBUG
-            oxygine::ref_counter::lock.lock();
-            oxygine::ref_counter::objects.append(pRet.m_pPointer);
-            oxygine::ref_counter::lock.unlock();
-#endif
+            oxygine::ref_counter::trackObject(pRet.m_pPointer);
             pRet.m_pPointer->addRef();
             return pRet;
         }
@@ -34,8 +29,13 @@ namespace oxygine
         }
 
         intrusive_ptr(const intrusive_ptr& s)
-            : m_pPointer(s.m_pPointer)
         {
+            // free old pointer
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+            }
+            m_pPointer = s.get();
             if (m_pPointer != nullptr)
             {
                 m_pPointer->addRef();
@@ -44,8 +44,13 @@ namespace oxygine
 
         template<class U>
         intrusive_ptr(intrusive_ptr<U> const& rhs)
-            : m_pPointer(rhs.get())
         {
+            // free old pointer
+            if (m_pPointer != nullptr)
+            {
+                m_pPointer->releaseRef();
+            }
+            m_pPointer = rhs.get();
             if (m_pPointer != nullptr)
             {
                 m_pPointer->addRef();
@@ -79,7 +84,7 @@ namespace oxygine
             return *this;
         }
 
-        intrusive_ptr(T* p)
+        explicit intrusive_ptr(T* p, bool inConstructor = false)
         {
             // free old pointer
             if (m_pPointer != nullptr)
@@ -91,9 +96,9 @@ namespace oxygine
             if (m_pPointer != nullptr)
             {
                 // allocate new pointer
-                if (m_pPointer->getRefCounter() == 0)
+                if (m_pPointer->getRefCounter() == 0 && !inConstructor)
                 {
-                    ++oxygine::ref_counter::instanceCounter;
+                    oxygine::ref_counter::trackObject(m_pPointer);
                 }
                 m_pPointer->addRef();
             }
@@ -156,11 +161,6 @@ namespace oxygine
         return a != b.get();
     }
 
-    template<class T> T* get_pointer(intrusive_ptr<T> const& p)
-    {
-        return p.get();
-    }
-
     template<class T, class U> intrusive_ptr<T> static_pointer_cast(intrusive_ptr<U> const& p)
     {
         return static_cast<T*>(p.get());
@@ -168,12 +168,12 @@ namespace oxygine
 
     template<class T, class U> intrusive_ptr<T> const_pointer_cast(intrusive_ptr<U> const& p)
     {
-        return const_cast<T*>(p.get());
+        return intrusive_ptr<T>(const_cast<T*>(p.get()));
     }
 
     template<class T, class U> intrusive_ptr<T> dynamic_pointer_cast(intrusive_ptr<U> const& p)
     {
-        return dynamic_cast<T*>(p.get());
+        return intrusive_ptr<T>(dynamic_cast<T*>(p.get()));
     }
 }
 

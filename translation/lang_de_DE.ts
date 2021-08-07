@@ -57,7 +57,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="213"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="214"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -90,32 +90,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="239"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="240"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="247"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="248"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="248"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="249"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="249"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="250"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="250"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="251"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="251"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="252"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -156,32 +156,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="294"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="295"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="302"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="303"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="303"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="304"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="304"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="305"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="305"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="306"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="306"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="307"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -637,8 +637,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="206"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="227"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="208"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="229"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1189,7 +1189,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogtextinput.cpp" line="59"/>
+        <location filename="../objects/dialogs/dialogtextinput.cpp" line="60"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2739,98 +2739,98 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="144"/>
+        <location filename="../coreengine/mainapp.cpp" line="143"/>
         <source>Start Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="153"/>
+        <location filename="../coreengine/mainapp.cpp" line="152"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="163"/>
+        <location filename="../coreengine/mainapp.cpp" line="162"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="173"/>
+        <location filename="../coreengine/mainapp.cpp" line="172"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="183"/>
+        <location filename="../coreengine/mainapp.cpp" line="182"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="193"/>
+        <location filename="../coreengine/mainapp.cpp" line="192"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="205"/>
+        <location filename="../coreengine/mainapp.cpp" line="204"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="215"/>
+        <location filename="../coreengine/mainapp.cpp" line="214"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="225"/>
+        <location filename="../coreengine/mainapp.cpp" line="224"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="235"/>
+        <location filename="../coreengine/mainapp.cpp" line="234"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="245"/>
+        <location filename="../coreengine/mainapp.cpp" line="244"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="252"/>
+        <location filename="../coreengine/mainapp.cpp" line="251"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="262"/>
+        <location filename="../coreengine/mainapp.cpp" line="261"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="272"/>
+        <location filename="../coreengine/mainapp.cpp" line="271"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="282"/>
+        <location filename="../coreengine/mainapp.cpp" line="281"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="292"/>
+        <location filename="../coreengine/mainapp.cpp" line="291"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="581"/>
+        <location filename="../coreengine/mainapp.cpp" line="580"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="587"/>
+        <location filename="../coreengine/mainapp.cpp" line="586"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="589"/>
+        <location filename="../coreengine/mainapp.cpp" line="588"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -2924,7 +2924,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="555"/>
+        <location filename="../menue/mainwindow.cpp" line="550"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3475,33 +3475,33 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="86"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="80"/>
         <source>If checked clicking the random button. The selected perks are filled up to the maximum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="89"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="83"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="119"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="113"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="127"/>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="156"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="121"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="150"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="136"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="130"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="235"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="237"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

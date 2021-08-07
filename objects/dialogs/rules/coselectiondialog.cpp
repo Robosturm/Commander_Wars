@@ -85,7 +85,7 @@ void COSelectionDialog::showCOInfo()
     }
     Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
     spCO co = spCO::create(coid, pPlayer);
-    addChild(spCOInfoDialog::create(co, pPlayer, [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         qint32 index = pCOSpriteManager->getIndex(pCurrentCO->getCoID());

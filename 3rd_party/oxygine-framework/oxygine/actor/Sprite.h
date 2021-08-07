@@ -45,7 +45,10 @@ namespace oxygine
         bool                    isFlippedX() const {return (m_flags & flag_flipX) != 0;}
         bool                    isFlippedY() const {return (m_flags & flag_flipY) != 0;}
         void                    setFlippedX(bool flippedX);
-        virtual void            flipActorsX(bool flippedX){flipActorsX(this, flippedX);}
+        virtual void            flipActorsX(bool flippedX)
+        {
+            flipActorsX(oxygine::spActor(this), flippedX);
+        }
         static void             flipActorsX(oxygine::spActor pActor, bool flippedX);
         void                    setFlippedY(bool flippedY);
         void                    setFlipped(bool flippedX, bool flippedY);

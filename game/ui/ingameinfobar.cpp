@@ -392,8 +392,8 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
-    spBuilding pBuilding = pTerrain->getBuilding();
-    spUnit pUnit = pTerrain->getUnit();
+    spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
+    spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
@@ -510,7 +510,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
-    spUnit pUnit = pTerrain->getUnit();
+    spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {
@@ -752,8 +752,8 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
-    spBuilding pBuilding = pTerrain->getBuilding();
-    spUnit pUnit = pTerrain->getUnit();
+    spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
+    spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
     {

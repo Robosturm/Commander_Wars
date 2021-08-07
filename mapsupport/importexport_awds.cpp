@@ -1636,7 +1636,7 @@ void GameMap::exportAWDSMap(QString file)
         {
             for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
             {
-                spBuilding pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                spBuilding pBuilding = spBuilding(pMap->getTerrain(x, y)->getBuilding());
                 Terrain* pTerrain = pMap->getTerrain(x, y);
                 if (pBuilding.get() != nullptr)
                 {

@@ -200,7 +200,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
-            spQmlVectorPoint pPoints = GlobalUtils::getCircle(minRange, maxRange);
+            spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
@@ -228,7 +228,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
         if (pBuilding != nullptr)
         {
-            spQmlVectorPoint pPoints = pBuilding->getActionTargetFields();
+            spQmlVectorPoint pPoints = spQmlVectorPoint(pBuilding->getActionTargetFields());
             QPoint targetOffset = pBuilding->getActionTargetOffset();
             QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
             if (pPoints.get() != nullptr && pPoints->size() > 0)
@@ -1440,7 +1440,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     spGameMap pMap = GameMap::getInstance();
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
-    spQmlVectorPoint pPoints = GlobalUtils::getCircle(minRange, maxRange);
+    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
     for (qint32 i = 0; i < points.size(); i++)
     {
         if (canMoveAndFire ||

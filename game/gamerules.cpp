@@ -632,7 +632,7 @@ void GameRules::createFogVision()
             m_FogSprites.append(QVector<oxygine::spSprite>());
             for (qint32 y = 0; y < heigth; y++)
             {
-                m_FogSprites[x].append(nullptr);
+                m_FogSprites[x].append(oxygine::spSprite());
             }
         }
     }

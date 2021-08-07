@@ -131,7 +131,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
     pCOAnim = nullptr;
     if (!nrmFound)
     {
-        oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
+        oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error));
         if (pAnim.get() != nullptr)
         {
             oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);

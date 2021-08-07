@@ -239,9 +239,9 @@ public:
      * @brief getInstance
      * @return
      */
-    inline static GameMap* getInstance()
+    inline static spGameMap getInstance()
     {
-        return m_pInstance.get();
+        return m_pInstance;
     }
     /**
      * @brief getTerrain smart pointer

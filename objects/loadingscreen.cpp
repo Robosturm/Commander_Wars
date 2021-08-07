@@ -6,15 +6,15 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
 
-spLoadingScreen LoadingScreen::m_pLoadingScreen = nullptr;
+spLoadingScreen LoadingScreen::m_pLoadingScreen;
 
-LoadingScreen* LoadingScreen::getInstance()
+spLoadingScreen LoadingScreen::getInstance()
 {
     if (m_pLoadingScreen.get() == nullptr)
     {
         m_pLoadingScreen = spLoadingScreen::create();
     }
-    return m_pLoadingScreen.get();
+    return m_pLoadingScreen;
 }
 
 LoadingScreen::LoadingScreen()

@@ -199,7 +199,7 @@ void Unit::removeShineTween()
     {
         if (m_ShineTweens[i].get() != nullptr)
         {
-            oxygine::spActor pActor = m_ShineTweens[i]->getClient();
+            oxygine::spActor pActor = oxygine::spActor(m_ShineTweens[i]->getClient());
             if (pActor.get() != nullptr)
             {
                 m_ShineTweens[i]->removeFromActor();
@@ -1048,7 +1048,7 @@ void Unit::loadUnit(Unit* pUnit)
 {
     if (m_TransportUnits.size() < getLoadingPlace())
     {
-        m_TransportUnits.append(pUnit);
+        m_TransportUnits.append(spUnit(pUnit));
         pUnit->removeUnit(false);
         spGameMap pMap = GameMap::getInstance();
         if (pMap.get() != nullptr)
@@ -2528,7 +2528,7 @@ void Unit::removeUnit(bool killed)
     createCORange(-1);
     if (m_pTerrain != nullptr)
     {
-        m_pTerrain->setUnit(nullptr);
+        m_pTerrain->setUnit(spUnit());
     }
 }
 
@@ -3069,7 +3069,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         if (isStatusStealthed() ||
             hasTerrainHide(pPlayer))
         {
-            spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 1);
+            spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 QPoint point = pPoints->at(i);
@@ -3205,9 +3205,9 @@ void Unit::deserializeObject(QDataStream& pStream)
 
 void Unit::deserializer(QDataStream& pStream, bool fast)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     bool savegame = false;
-    if (pMap != nullptr)
+    if (pMap.get() != nullptr)
     {
         savegame = pMap->getSavegame();
     }

@@ -11,7 +11,7 @@ namespace oxygine
             QDomElement element = reader.toElement();
             if (!element.isNull())
             {
-                text::spNode tn = nullptr;
+                text::spNode tn = text::spNode();
                 QString name = element.tagName();
                 if (name == "div")
                 {
@@ -36,7 +36,7 @@ namespace oxygine
                 }
                 else
                 {
-                    return nullptr;
+                    return text::spNode();
                 }
                 if (reader.hasChildNodes())
                 {

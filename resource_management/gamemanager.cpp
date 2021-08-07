@@ -73,7 +73,7 @@ oxygine::spSprite GameManager::getIcon(QString icon)
         {
             // check buildings?
             spGameMap pMap = GameMap::getInstance();
-            spPlayer pPlayer = nullptr;
+            spPlayer pPlayer;
             if (pMap.get() != nullptr)
             {
                 pPlayer = pMap->getCurrentPlayer();
@@ -84,7 +84,7 @@ oxygine::spSprite GameManager::getIcon(QString icon)
             return pBuilding;
         }
     }
-    return nullptr;
+    return oxygine::spSprite();
 }
 
 oxygine::spSprite GameManager::getIconSprite(QString icon)

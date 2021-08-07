@@ -21,7 +21,7 @@ namespace oxygine
             Material* sec = items[0].get();
             if (cm == sec->m_compare && cm(sec, &other))
             {
-                return sec;
+                return spMaterial(sec);
             }
             //hash collision?
             auto it = items.begin();
@@ -32,7 +32,7 @@ namespace oxygine
                 Material* sec = it->get();
                 if (cm == sec->m_compare && cm(sec, &other))
                 {
-                    return sec;
+                    return spMaterial(sec);
                 }
             }
         }

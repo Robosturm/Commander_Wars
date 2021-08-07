@@ -183,7 +183,7 @@ void ScriptEditor::showExitBox()
 void ScriptEditor::exitEditor()
 {    
     emit sigFinished();
-    detach();    
+    detach();
 }
 
 void ScriptEditor::showSaveScript()
@@ -193,7 +193,7 @@ void ScriptEditor::showSaveScript()
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
 }
 
 void ScriptEditor::showLoadScript()
@@ -203,7 +203,7 @@ void ScriptEditor::showLoadScript()
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
 }
 
 void ScriptEditor::saveScript(QString filename)
@@ -365,7 +365,7 @@ void ScriptEditor::updateEvents()
         }
 
     }
-    m_EventPanel->setContentHeigth(y + 40);    
+    m_EventPanel->setContentHeigth(y + 40);
 }
 
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
@@ -388,14 +388,14 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     auto* pPtrEvent = pEvent.get();
     pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit sigShowEditEvent(pPtrEvent);
+        emit sigShowEditEvent(spScriptEvent(pPtrEvent));
     });
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
     pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        m_CurrentCondition->removeEvent(pPtrEvent);
+        m_CurrentCondition->removeEvent(spScriptEvent(pPtrEvent));
         emit sigUpdateEvents();
     });
     oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
@@ -403,7 +403,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     m_EventPanel->addItem(pDuplicateButton);
     pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit sigDuplicateEvent(pPtrEvent);
+        emit sigDuplicateEvent(spScriptEvent(pPtrEvent));
     });
 
     y += 40;
@@ -417,7 +417,7 @@ void ScriptEditor::addCondition()
     if (m_CurrentCondition != nullptr &&
         ScriptCondition::sameConditionGroup(m_CurrentCondition->getType(), type))
     {
-        spScriptCondition parent = m_CurrentCondition;
+        spScriptCondition parent = spScriptCondition(m_CurrentCondition);
         spScriptCondition subCondition = m_CurrentCondition->getSubCondition();
         while (subCondition.get() != nullptr)
         {
@@ -444,17 +444,13 @@ void ScriptEditor::addEvent()
 }
 
 void ScriptEditor::showEditCondition(spScriptCondition pCondition)
-{
-    
-    pCondition->showEditCondition(this);
-    
+{    
+    pCondition->showEditCondition(spScriptEditor(this));
 }
 
 void ScriptEditor::showEditEvent(spScriptEvent pEvent)
-{
-    
-    pEvent->showEditEvent(this);
-    
+{    
+    pEvent->showEditEvent(spScriptEditor(this));
 }
 
 void ScriptEditor::duplicateEvent(spScriptEvent pEvent)

@@ -16,7 +16,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
-spGameAnimationFactory GameAnimationFactory::m_pInstance = nullptr;
+spGameAnimationFactory GameAnimationFactory::m_pInstance;
 QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 
 GameAnimationFactory::GameAnimationFactory()
@@ -150,7 +150,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
 GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {    
-    spGameAnimation pRet = nullptr;
+    spGameAnimation pRet;
     spGameMap pMap = GameMap::getInstance();
     if (pDefUnit != nullptr && pMap.get() != nullptr)
     {
@@ -172,7 +172,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         {
             pRet = spBattleAnimation::create(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
                                              pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
-            oxygine::spSprite pBack = nullptr;
+            oxygine::spSprite pBack;
 
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
@@ -319,7 +319,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue)
 {
-    spGameAnimation spAnimation = pAnimation;
+    spGameAnimation spAnimation = spGameAnimation(pAnimation);
     if (removeFromQueue)
     {
         removeAnimationFromQueue(spAnimation);

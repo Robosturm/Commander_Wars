@@ -19,7 +19,7 @@
 
 namespace oxygine
 {
-    spSTDRenderDelegate STDRenderDelegate::instance = nullptr;
+    spSTDRenderDelegate STDRenderDelegate::instance;
 
     void RenderDelegate::render(Actor* parent, const RenderState& parentRS)
     {

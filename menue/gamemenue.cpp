@@ -53,7 +53,7 @@
 
 #include "ui_reader/uifactory.h"
 
-spGameMenue GameMenue::m_pGameMenuInstance = nullptr;
+spGameMenue GameMenue::m_pGameMenuInstance;
 
 GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
@@ -61,7 +61,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pGameMenuInstance = this;
+    m_pGameMenuInstance = spGameMenue(this, true);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
     loadGameMenue();
@@ -115,7 +115,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pGameMenuInstance = this;
+    m_pGameMenuInstance = spGameMenue(this, true);
     loadHandling();
     loadGameMenue();
     loadUIButtons();
@@ -132,7 +132,7 @@ GameMenue::GameMenue()
 {
     setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
-    m_pGameMenuInstance = this;
+    m_pGameMenuInstance = spGameMenue(this, true);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
 }
@@ -235,7 +235,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
 Player* GameMenue::getCurrentViewPlayer()
 {
     spGameMap pMap = GameMap::getInstance();
-    spPlayer pCurrentPlayer = pMap->getCurrentPlayer();
+    spPlayer pCurrentPlayer = spPlayer(pMap->getCurrentPlayer());
     if (pCurrentPlayer.get() != nullptr)
     {
         qint32 currentPlayerID = pCurrentPlayer->getPlayerID();
@@ -617,7 +617,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
                            m_gameStarted;
-        spPlayer currentPlayer = pMap->getCurrentPlayer();
+        spPlayer currentPlayer = spPlayer(pMap->getCurrentPlayer());
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
@@ -1903,7 +1903,7 @@ void GameMenue::surrenderGame()
 
 void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 {    
-    spUnit pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
+    spUnit pUnit = spUnit(GameMap::getInstance()->getTerrain(x, y)->getUnit());
     if (pUnit.get() != nullptr)
     {
         Console::print("showNicknameUnit()", Console::eDEBUG);

@@ -554,7 +554,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     {
                         spWikipage page = pDatabase->getPage(data);
                         pMenu->addChild(page);
-                        connect(page.get(), &FieldInfo::sigFinished, [=]
+                        connect(page.get(), &FieldInfo::sigFinished, this, [=]
                         {
                             m_Focused = true;
                         });

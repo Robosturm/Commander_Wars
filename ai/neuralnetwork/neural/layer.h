@@ -13,7 +13,7 @@ class Layer;
 
 using spLayer = oxygine::intrusive_ptr<Layer>;
 //Layer of the network
-class Layer : public oxygine::ref_counter, public FileSerializable
+class Layer : public FileSerializable, public oxygine::ref_counter
 {
 public:
     static const QString LAYER_PARAMETER_SIZE;

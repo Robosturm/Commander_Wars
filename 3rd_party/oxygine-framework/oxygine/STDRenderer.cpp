@@ -20,8 +20,8 @@ typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
 namespace oxygine
 {
     static bool _restored = false;
-    spSTDRenderer STDRenderer::instance = nullptr;
-    spSTDRenderer STDRenderer::current = nullptr;
+    spSTDRenderer STDRenderer::instance;
+    spSTDRenderer STDRenderer::current;
 
 
     spNativeTexture STDRenderer::white;

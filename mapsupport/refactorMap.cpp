@@ -139,7 +139,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    m_fields[y][0]->setUnit(nullptr);
+                    m_fields[y][0]->setUnit(spUnit());
                     m_fields[y][0]->detach();                    
                     m_fields[y].pop_front();
                 }
@@ -166,7 +166,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    m_fields[y].back()->setUnit(nullptr);
+                    m_fields[y].back()->setUnit(spUnit());
                     m_fields[y].back()->detach();
                     m_fields[y].pop_back();
                 }
@@ -195,7 +195,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    m_fields[0][x]->setUnit(nullptr);
+                    m_fields[0][x]->setUnit(spUnit());
                     m_fields[0][x]->detach();
                 }
                 m_fields.pop_front();
@@ -223,7 +223,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    m_fields.back()[x]->setUnit(nullptr);
+                    m_fields.back()[x]->setUnit(spUnit());
                     m_fields.back()[x]->detach();
                 }
                 m_fields.pop_back();
@@ -247,7 +247,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
     {
         for (qint32 x = 0; x < currentWidth; x++)
         {
-            spBuilding pBuilding = m_fields[y][x]->getBuilding();
+            spBuilding pBuilding = spBuilding(m_fields[y][x]->getBuilding());
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->Building::getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
@@ -274,7 +274,7 @@ void GameMap::flipX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            currentTerrain->setUnit(nullptr);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields.at(y)[currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -282,7 +282,7 @@ void GameMap::flipX()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
@@ -314,7 +314,7 @@ void GameMap::rotateX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            currentTerrain->setUnit(nullptr);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -322,7 +322,7 @@ void GameMap::rotateX()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
@@ -354,7 +354,7 @@ void GameMap::flipY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            currentTerrain->setUnit(nullptr);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][x];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -362,7 +362,7 @@ void GameMap::flipY()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
@@ -394,7 +394,7 @@ void GameMap::rotateY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            currentTerrain->setUnit(nullptr);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -402,7 +402,7 @@ void GameMap::rotateY()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = spBuilding(flipTerrain->getBuilding());
             if (flipTerrain->getBuilding() != nullptr)
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());

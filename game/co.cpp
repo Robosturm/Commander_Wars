@@ -1370,7 +1370,7 @@ GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint3
 
 bool CO::getIsCO0()
 {
-    if (this == m_Owner->getCO(0) || GameMenue::getInstance() == nullptr)
+    if (this == m_Owner->getCO(0) || GameMenue::getInstance().get() == nullptr)
     {
         return true;
     }
@@ -1754,8 +1754,8 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     QString coidLower = coid.toLower();
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
-    oxygine::spResAnim pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
-    oxygine::spResAnim pCOAnim = nullptr;
+    oxygine::spResAnim pAnim = oxygine::spResAnim(pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error));
+    oxygine::spResAnim pCOAnim;
     if (pAnim.get() != nullptr)
     {
         pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), true);

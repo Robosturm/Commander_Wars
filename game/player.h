@@ -556,7 +556,7 @@ private:
     oxygine::spResAnim m_ColorTableAnim;
     QString m_playerArmy{""};
     qint32 m_team{0};
-    spCO m_playerCOs[2]{nullptr, nullptr};
+    spCO m_playerCOs[2]{spCO(), spCO()};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */

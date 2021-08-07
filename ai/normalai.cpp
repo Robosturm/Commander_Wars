@@ -491,11 +491,11 @@ void NormalAi::readIni(QString name)
 
 void NormalAi::process()
 {
-    spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
+    spQmlVectorBuilding pBuildings = spQmlVectorBuilding(m_pPlayer->getBuildings());
     pBuildings->randomize();
-    spQmlVectorUnit pUnits = nullptr;
-    spQmlVectorUnit pEnemyUnits = nullptr;
-    spQmlVectorBuilding pEnemyBuildings = nullptr;
+    spQmlVectorUnit pUnits;
+    spQmlVectorUnit pEnemyUnits;
+    spQmlVectorBuilding pEnemyBuildings;
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= m_minSiloDamage);
@@ -929,7 +929,7 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     bool ret = false;
     const auto points = pfs.getAllNodePoints();
     spGameMap pMap = GameMap::getInstance();
-    spQmlVectorPoint circle = GlobalUtils::getCircle(1, 1);
+    spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     qint32 highestCount = 0;
     for (const auto & point : points)
     {
@@ -978,7 +978,7 @@ void NormalAi::appendRefillTargets(QStringList actions, Unit* pUnit, spQmlVector
         actions.contains(ACTION_SUPPORTSINGLE_REPAIR) ||
         actions.contains(ACTION_SUPPORTSINGLE_FREEREPAIR))
     {
-        spQmlVectorPoint circle = GlobalUtils::getCircle(1, 1);
+        spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         spGameMap pMap = GameMap::getInstance();
         qint32 islandIdx = getIslandIndex(pUnit);
         qint32 curX = pUnit->Unit::getX();
@@ -1876,7 +1876,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, s
         Building* pBuilding = pEnemyBuildings->at(i);
         counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding);
     }
-    spQmlVectorPoint pCircle = GlobalUtils::getCircle(1, 2);
+    spQmlVectorPoint pCircle = spQmlVectorPoint(GlobalUtils::getCircle(1, 2));
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pCircle->size(); i++)
     {
@@ -2097,7 +2097,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     {
         variance = m_maxDayScoreVariancer;
     }
-    spQmlVectorPoint pFields = GlobalUtils::getCircle(1, 1);
+    spQmlVectorPoint pFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);

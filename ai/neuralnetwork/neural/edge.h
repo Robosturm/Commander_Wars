@@ -15,7 +15,7 @@ using spNeuron = oxygine::intrusive_ptr<Neuron>;
 using spEdge = oxygine::intrusive_ptr<Edge>;
 
 //Edge between two neurons
-class Edge : public oxygine::ref_counter, public FileSerializable
+class Edge : public FileSerializable, public oxygine::ref_counter
 {
 public:
     Edge(Neuron* nextNeuron, Neuron* previousNeuron, double weight);

@@ -105,10 +105,10 @@ namespace oxygine
 
     void Tween::removeFromActor()
     {
-        oxygine::spActor pClient = getClient();
+        oxygine::spActor pClient = oxygine::spActor(getClient());
         if (pClient.get() != nullptr)
         {
-            pClient->removeTween(this);
+            pClient->removeTween(spTween(this));
         }
     }
 

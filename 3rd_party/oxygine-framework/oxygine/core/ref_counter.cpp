@@ -10,28 +10,19 @@
 
 namespace oxygine
 {
-    std::atomic<qint32> ref_counter::instanceCounter = 0;
+    std::atomic<qint32> ref_counter::m_instanceCounter = 0;
 #ifdef GAMEDEBUG
-    QMutex ref_counter::lock;
-    QVector<ref_counter*> ref_counter::objects;
+    QMutex ref_counter::m_lock;
+    QVector<ref_counter*> ref_counter::m_objects;
 #endif
     void ref_counter::releaseRef()
     {
         if (0 == --m_ref_counter)
         {
-
-            --oxygine::ref_counter::instanceCounter;
-#ifdef GAMEDEBUG
-            lock.lock();
-            objects.removeOne(this);
-            lock.unlock();
-#endif
+            freeObject();
             QObject* pObj = dynamic_cast<QObject*>(this);
-            if (pObj == nullptr)
-            {
-                delete this;
-            }
-            else if (pObj->thread() == QThread::currentThread())
+            if (pObj == nullptr ||
+                pObj->thread() == QThread::currentThread())
             {
                 delete this;
             }
@@ -53,5 +44,29 @@ namespace oxygine
                 pObj->deleteLater();
             }
         }
+        else if (m_ref_counter < 0)
+        {
+            handleErrorPolicy(oxygine::ep_show_error, "ref_counter counter is negativ");
+        }
+    }
+
+    void ref_counter::freeObject()
+    {
+        --m_instanceCounter;
+#ifdef GAMEDEBUG
+        m_lock.lock();
+        m_objects.removeOne(this);
+        m_lock.unlock();
+#endif
+    }
+
+    void ref_counter::trackObject(ref_counter *pObj)
+    {
+        ++m_instanceCounter;
+#ifdef GAMEDEBUG
+        m_lock.lock();
+        m_objects.append(pObj);
+        m_lock.unlock();
+#endif
     }
 }

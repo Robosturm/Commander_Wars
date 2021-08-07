@@ -48,7 +48,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxRed = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxRed->setPosition(space * 0, y + 40);
     addChild(m_SpinBoxRed);
-    connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, [=](float value)
+    connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, this, [=](float value)
     {
         emit sigSelecetedColorChanged(QColor(value, m_CurrentColor.green(), m_CurrentColor.blue()));
     });
@@ -61,7 +61,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxGreen = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxGreen->setPosition(space * 1, y + 40);
     addChild(m_SpinBoxGreen);
-    connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, [=](float value)
+    connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, this, [=](float value)
     {
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), value, m_CurrentColor.blue()));
     });
@@ -74,7 +74,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_SpinBoxBlue= spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxBlue->setPosition(space * 2, y + 40);
     addChild(m_SpinBoxBlue);
-    connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, [=](float value)
+    connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, this, [=](float value)
     {
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), value));
     });

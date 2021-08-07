@@ -91,7 +91,7 @@ void DropDownmenuBase::showDropDown()
     m_OriginalPosition = getPosition();
     auto transform = computeGlobalTransform();
     setPosition(transform.x, transform.y);
-    oxygine::spActor pMe = this;
+    oxygine::spActor pMe = oxygine::spActor(this);
     oxygine::getStage()->addChild(pMe);
     if (getY() > Settings::getHeight() / 2)
     {
@@ -130,7 +130,7 @@ void DropDownmenuBase::hideDropDown()
         m_Panel->setVisible(false);
         hideTooltip();
         stopTooltiptimer();
-        oxygine::spActor pMe = this;
+        oxygine::spActor pMe = oxygine::spActor(this);
         m_OriginalOwner->addChild(pMe);
         setPosition(m_OriginalPosition);
         m_OriginalOwner = nullptr;

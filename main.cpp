@@ -207,10 +207,10 @@ int main(qint32 argc, char* argv[])
         window.getGameServerThread()->wait();
     }
     Console::print("Checking for memory leak during runtime", Console::eDEBUG);
-    static constexpr qint32 finalObjects = 1; // console never gets released
-    if (oxygine::ref_counter::instanceCounter != finalObjects)
+    static constexpr qint32 finalObjects = 0; // console never gets released
+    if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::instanceCounter));
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
     //end
     if (returncode == 1)

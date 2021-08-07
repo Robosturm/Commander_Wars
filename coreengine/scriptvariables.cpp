@@ -38,7 +38,7 @@ void ScriptVariables::deserializeObject(QDataStream& pStream)
 
 ScriptVariable* ScriptVariables::createVariable(QString id)
 {
-    spScriptVariable pVar = getVariable(id);
+    spScriptVariable pVar = spScriptVariable(getVariable(id));
     if (pVar.get() == nullptr)
     {
         pVar = spScriptVariable::create(id);

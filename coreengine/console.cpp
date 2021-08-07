@@ -32,7 +32,7 @@ bool Console::m_show = false;
 bool Console::m_toggled = false;
 bool Console::m_developerMode = false;
 QList<QString> Console::m_output;
-spConsole Console::m_pConsole = nullptr;
+spConsole Console::m_pConsole;
 QString Console::m_curmsg = nullptr;
 qint32 Console::m_curmsgpos = 0;
 QElapsedTimer Console::m_toggle;
@@ -120,9 +120,10 @@ void Console::init()
 void Console::release()
 {
     m_pBackgroundsprite->detach();
-    m_pBackgroundsprite = nullptr;
+    m_pBackgroundsprite = oxygine::spSprite();
     m_text->detach();
-    m_text = nullptr;
+    m_text = oxygine::spTextField();
+    m_pConsole = spConsole();
 }
 
 void Console::createSprites(QString input, QString colorTable, QString maskTable)

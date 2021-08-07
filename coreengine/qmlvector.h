@@ -65,7 +65,7 @@ public slots:
     }
     inline void append(Unit* t)
     {
-        m_Vector.append(t);
+        m_Vector.append(spUnit(t));
     }
     inline qint32 size() const
     {
@@ -109,7 +109,7 @@ public slots:
     }
     inline void append(Building* t)
     {
-        m_Vector.append(t);
+        m_Vector.append(spBuilding(t));
     }
     inline qint32 size() const
     {

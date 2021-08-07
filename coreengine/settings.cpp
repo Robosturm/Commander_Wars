@@ -132,7 +132,7 @@ QString Settings::m_userPath = "";
 QStringList Settings::m_activeMods;
 QStringList Settings::m_activeModVersions;
 // this Object
-spSettings Settings::m_pInstance = nullptr;
+spSettings Settings::m_pInstance;
 QTranslator Settings::m_Translator;
 
 // logging

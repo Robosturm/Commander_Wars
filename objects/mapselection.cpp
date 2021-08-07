@@ -119,11 +119,12 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         qint32 itemPos = m_Items.size() - 1;
         auto* pSelectedItem = m_SelectedItem.get();
         auto* pItem = m_Items[itemPos].get();
+        auto* pItemContainer = m_ItemContainer.get();
         pBackground->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
         {
             if (pItem->getText() != "")
             {
-                pSelectedItem->setY(y - m_ItemContainer->getY());
+                pSelectedItem->setY(y - pItemContainer->getY());
                 m_currentItem = m_Files[m_currentStartIndex + i];
                 m_currentIdx = m_currentStartIndex + i;
                 emit sigStartItemChangeTimer();
@@ -133,7 +134,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         {
             if (pItem->getText() != "")
             {
-                pSelectedItem->setY(y - m_ItemContainer->getY());
+                pSelectedItem->setY(y - pItemContainer->getY());
                 m_currentItem = m_Files[m_currentStartIndex + i];
                 m_currentIdx = m_currentStartIndex + i;
                 emit sigStartItemChangeTimer();

@@ -58,7 +58,7 @@ namespace oxygine
         if (!t)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "TweenQueue::add adding empty item");
-            return 0;
+            return spTween();
         }
         m_tweens.append(t);
         return t;
@@ -101,7 +101,7 @@ namespace oxygine
             m_current->update(actor, us);
             if (m_current->isDone())
             {
-                if (next < m_tweens.size())
+                if (next < m_tweens.size() - 1)
                 {
                     m_current = m_tweens[next + 1];
                     m_current->start(actor);

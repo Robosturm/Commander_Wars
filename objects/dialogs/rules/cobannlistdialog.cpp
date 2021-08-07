@@ -216,6 +216,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
 void COBannListDialog::remove()
 {
+    m_Checkboxes.clear();
     detach();
 }
 

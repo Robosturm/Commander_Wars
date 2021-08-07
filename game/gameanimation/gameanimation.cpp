@@ -90,7 +90,7 @@ void GameAnimation::setRotation(float angle)
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
     pGameAnimation->setPreviousAnimation(this);
-    m_QueuedAnimations.append(pGameAnimation);
+    m_QueuedAnimations.append(spGameAnimation(pGameAnimation));
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
 }
 
@@ -345,7 +345,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 bool GameAnimation::onFinished(bool skipping)
 {
     m_skipping |= skipping;
-    GameAnimationFactory::removeAnimationFromQueue(this);
+    GameAnimationFactory::removeAnimationFromQueue(spGameAnimation(this));
     if (m_skipping == skipping)
     {
         if (!m_started)

@@ -92,7 +92,7 @@ namespace oxygine
     spResource ResAtlas::create(CreateResourceContext& context)
     {
         context.m_walker.checkSetAttributes();
-        spResAtlas ra = nullptr;
+        spResAtlas ra = spResAtlas();
         spResAtlasGeneric rs = spResAtlasGeneric::create();
         rs->loadAtlas(context);
         ra = rs;

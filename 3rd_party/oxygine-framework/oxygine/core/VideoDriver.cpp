@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    spIVideoDriver IVideoDriver::instance = nullptr;
+    spIVideoDriver IVideoDriver::instance;
 
     void IVideoDriver::setUniform(const char* id, const Matrix& v)
     {
@@ -30,7 +30,7 @@ namespace oxygine
 
     spNativeTexture VideoDriverNull::createTexture()
     {
-        return nullptr;
+        return spNativeTexture();
     }
 
     void VideoDriverNull::begin(const Rect&, const QColor*)

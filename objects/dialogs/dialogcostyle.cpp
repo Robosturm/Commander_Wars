@@ -154,6 +154,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
 void DialogCOStyle::remove()
 {
+    m_pCOBoxes.clear();
+    m_Pixels.clear();
     detach();
 }
 
@@ -309,7 +311,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     m_pCOPanel->addItem(pBox);
     // add some event handling :)
     qint32 index = m_pCOBoxes.size();
-    auto pPtrBox = pBox;
+    auto* pPtrBox = pBox.get();
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
@@ -342,7 +344,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
 
     m_pCOSprites.append(pCO);
     m_pCOBoxes.append(pBox);
-    m_pResAnims.append(nullptr);
+    m_pResAnims.append(oxygine::spResAnim());
 }
 
 void DialogCOStyle::updateSprites()

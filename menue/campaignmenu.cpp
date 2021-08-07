@@ -145,7 +145,7 @@ void CampaignMenu::slotButtonNext()
         pMap->updateSprites();
         // start game
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(spGameMenue::create(false, nullptr));
+        oxygine::getStage()->addChild(spGameMenue::create(false, spNetworkInterface()));
         oxygine::Actor::detach();
     }
     else if (m_Multiplayer)

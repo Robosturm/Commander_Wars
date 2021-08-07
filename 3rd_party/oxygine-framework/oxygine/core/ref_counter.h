@@ -18,10 +18,19 @@ namespace oxygine
         {
             return m_ref_counter;
         }
-
-        static std::atomic<qint32> instanceCounter;
-        static QMutex lock;
-        static QVector<ref_counter*> objects;
+        static void trackObject(ref_counter* pObj);
+        static qint32 getAlloctedObjectCount()
+        {
+            return m_instanceCounter;
+        }
+        static void addInstanceCounter()
+        {
+            ++m_instanceCounter;
+        }
+        static void releaseInstanceCounter()
+        {
+            --m_instanceCounter;
+        }
     private:
         template<typename T>
         friend class intrusive_ptr;
@@ -30,13 +39,17 @@ namespace oxygine
             ++m_ref_counter;
         }
         void releaseRef();
-    private:
-        std::atomic<qint32> m_ref_counter{0};
-    private:
+        void freeObject();
         ref_counter(const ref_counter&) = delete ;
         const ref_counter& operator=(const ref_counter&) = delete ;
         ref_counter(const ref_counter&&) = delete ;
         const ref_counter&& operator=(const ref_counter&&) = delete ;
+    private:
+        std::atomic<qint32> m_ref_counter{0};
+
+        static std::atomic<qint32> m_instanceCounter;
+        static QMutex m_lock;
+        static QVector<ref_counter*> m_objects;
     };
 
 

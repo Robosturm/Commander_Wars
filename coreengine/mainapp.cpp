@@ -118,7 +118,7 @@ void Mainapp::loadRessources()
 
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
     if (Settings::getSmallScreenDevice())
     {
@@ -138,9 +138,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
-            LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+            spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-
             pLoadingScreen->setProgress(tr("Start Loading..."), step  * stepProgress);
             if (!m_noUi)
             {

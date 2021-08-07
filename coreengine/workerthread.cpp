@@ -47,7 +47,7 @@ WorkerThread::WorkerThread()
 
 void WorkerThread::start()
 {
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     Console* pConsole = Console::getInstance();
     // create the initial menue no need to store the object
@@ -165,7 +165,7 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     oxygine::getStage()->addChild(spMainwindow::create());
 }
@@ -182,7 +182,7 @@ void WorkerThread::onQuit()
     {
         oxygine::Stage::instance->cleanup();
     }
-    if (GameMenue::getInstance() != nullptr)
+    if (GameMenue::getInstance().get() != nullptr)
     {
         GameMenue::getInstance()->deleteMenu();
     }
@@ -190,21 +190,22 @@ void WorkerThread::onQuit()
     {
         EditorMenue::getInstance()->deleteMenu();
     }
-    if (GameMap::getInstance() != nullptr)
+    if (GameMap::getInstance().get() != nullptr)
     {
         GameMap::getInstance()->deleteMap();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     COSpriteManager::getInstance()->release();
     Player::releaseStaticData();
+    Console::getInstance()->release();
 }
 
 void WorkerThread::startSlaveGame()
 {
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     spLocalServer pServer = spLocalServer::create();
     spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);

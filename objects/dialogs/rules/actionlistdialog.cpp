@@ -180,6 +180,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
 
 void ActionListDialog::remove()
 {
+    m_Checkboxes.clear();
     detach();
 }
 

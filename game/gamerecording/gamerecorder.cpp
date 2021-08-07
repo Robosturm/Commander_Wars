@@ -328,7 +328,7 @@ QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)
         if ((m_Attackreports[i]->attackerOwnerID == player) ||
             (m_Attackreports[i]->defenderOwnerID == player))
         {
-            ret.append(m_Attackreports[i].get());
+            ret.append(m_Attackreports[i]);
         }
     }
     return ret;

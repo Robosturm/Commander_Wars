@@ -85,7 +85,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     GameMap* pPtrMap = pMap.get();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
-        if (value >= pMap->getPlayerCount())
+        if (value >= pPtrMap->getPlayerCount())
         {
             m_pBuilding->setOwner(nullptr);
         }

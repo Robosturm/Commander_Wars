@@ -513,7 +513,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
             {
                 tween->addDoneCallback([=](oxygine::Event * pEvent)
                 {
-                    oxygine::spActor pTarget = dynamic_cast<oxygine::Actor*>(pEvent->target.get());
+                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                     if (pTarget.get() != nullptr)
                     {
                         emit sigDetachChild(pTarget);
@@ -566,7 +566,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
             {
                 moveTween->addDoneCallback([=](oxygine::Event * pEvent)
                 {
-                    oxygine::spActor pTarget = dynamic_cast<oxygine::Actor*>(pEvent->target.get());
+                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
                     if (pTarget.get() != nullptr)
                     {
                         emit sigDetachChild(pTarget);

@@ -161,5 +161,5 @@ spTCPClient TCPServer::getClient(quint64 socketID)
             return m_pClients[i];
         }
     }
-    return nullptr;
+    return spTCPClient();
 }

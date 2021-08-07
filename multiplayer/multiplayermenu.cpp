@@ -568,7 +568,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         else
         {
             // quit game with wrong version
-            spDialogMessageBox pDialogMessageBox = nullptr;
+            spDialogMessageBox pDialogMessageBox;
             if (sameMods)
             {
                 pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
@@ -694,7 +694,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         stream >> mapFile;
         QString scriptFile;
         stream >> scriptFile;
-        spGameMap pNewMap = nullptr;
+        spGameMap pNewMap;
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
@@ -801,7 +801,7 @@ void Multiplayermenu::slotHostGameLaunched()
 
 spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
 {
-    spGameMap pNewMap = nullptr;
+    spGameMap pNewMap;
     mapFile = getNewFileName(mapFile);
     QFile map(mapFile);
     QFileInfo mapInfo(mapFile);
@@ -1080,7 +1080,7 @@ void Multiplayermenu::startGameOnServer()
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << command;
     Filesupport::writeVectorList(sendStream, Settings::getMods());
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->serializeObject(sendStream);
     emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
@@ -1124,7 +1124,7 @@ void Multiplayermenu::disconnectNetwork()
             m_Chat = nullptr;
         }
         emit m_NetworkInterface->sig_close();
-        m_pPlayerSelection->attachNetworkInterface(nullptr);
+        m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
         m_NetworkInterface = nullptr;
     }
     

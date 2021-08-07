@@ -393,7 +393,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         qint32 curY = m_y;
         // get our x, y coordinates
         GameMap::getField(curX, curY, static_cast<GameEnums::Directions>(i));
-        GameMap* pGameMap = GameMap::getInstance();
+        spGameMap pGameMap = GameMap::getInstance();
         bool found = false;
         QString addString = "";
         // load compare value
@@ -487,7 +487,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         {
             // do nothing
         }
-        if (pGameMap != nullptr && pGameMap->onMap(curX, curY))
+        if (pGameMap.get() != nullptr && pGameMap->onMap(curX, curY))
         {
             QString neighbourID = "";
             Terrain* pTerrain = pGameMap->getTerrain(curX, curY);
@@ -710,7 +710,7 @@ void Terrain::setBuilding(Building* pBuilding)
         }
     }
     // remove current unit to avoid strange impact :)
-    setUnit(nullptr);
+    setUnit(spUnit());
 }
 
 void Terrain::removeBuilding()
@@ -764,7 +764,7 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         }
     }
     // remove current unit to avoid strange impact :)
-    setUnit(nullptr);
+    setUnit(spUnit());
 }
 
 void Terrain::loadBuilding(QString buildingID)
@@ -798,7 +798,7 @@ void Terrain::setUnit(spUnit pUnit)
         Terrain* pTerrain = m_Unit->getTerrain();
         if (pTerrain != nullptr)
         {
-            pTerrain->setUnit(nullptr);
+            pTerrain->setUnit(spUnit());
         }
         // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y) + 2);

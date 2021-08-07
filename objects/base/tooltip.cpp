@@ -114,7 +114,7 @@ void Tooltip::showTooltip()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
         hideTooltip();
-        if (oxygine::getStage()->isDescendant(this) && m_enabled && pApp->hasCursor())
+        if (oxygine::getStage()->isDescendant(oxygine::spActor(this)) && m_enabled && pApp->hasCursor())
         {
             if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
             {

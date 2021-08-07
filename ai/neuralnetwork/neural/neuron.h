@@ -13,7 +13,7 @@ class Layer;
 class Neuron;
 using spNeuron = oxygine::intrusive_ptr<Neuron>;
 
-class Neuron : public oxygine::ref_counter, public FileSerializable
+class Neuron : public FileSerializable, public oxygine::ref_counter
 {
 public:
 

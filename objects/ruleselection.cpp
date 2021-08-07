@@ -44,7 +44,7 @@ void RuleSelection::confirmRuleSelectionSetup()
         for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
         {
             QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-            spVictoryRule pRule = pMap->getGameRules()->getVictoryRule(ruleID);
+            spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
             if (pRule.get() != nullptr)
             {
                 QStringList inputTypes = pRule->getRuleType();
@@ -86,7 +86,7 @@ void RuleSelection::confirmRuleSelectionSetup()
         for (qint32 i = 0; i < pGameRuleManager->getGameRuleCount(); i++)
         {
             QString ruleID = pGameRuleManager->getGameRuleID(i);
-            spGameRule pRule = pMap->getGameRules()->getGameRule(ruleID);
+            spGameRule pRule = spGameRule(pMap->getGameRules()->getGameRule(ruleID));
             if (pRule.get() != nullptr)
             {
                 QStringList inputTypes = pRule->getRuleType();
@@ -639,7 +639,7 @@ void RuleSelection::showRuleSelection()
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-        spVictoryRule pRule = pMap->getGameRules()->getVictoryRule(ruleID);
+        spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
             pRule = spVictoryRule::create(ruleID);
@@ -735,7 +735,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
     {
         qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getGameRuleID(i);
-        spGameRule pRule = pMap->getGameRules()->getGameRule(ruleID);
+        spGameRule pRule = spGameRule(pMap->getGameRules()->getGameRule(ruleID));
         if (pRule.get() == nullptr)
         {
             pRule = spGameRule::create(ruleID);

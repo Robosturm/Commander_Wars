@@ -52,6 +52,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
         if (!currentText.isEmpty())
         {
             emit sigTextChanged(currentText);
+            emit sigFinished();
         }
     });
     if (showCancel)
@@ -65,7 +66,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
             emit sigCancel();
         });
     }
-    connect(this, &DialogTextInput::sigTextChanged, this, &DialogTextInput::remove, Qt::QueuedConnection);
+    connect(this, &DialogTextInput::sigFinished, this, &DialogTextInput::remove, Qt::QueuedConnection);
     connect(this, &DialogTextInput::sigCancel, this, &DialogTextInput::remove, Qt::QueuedConnection);
 }
 

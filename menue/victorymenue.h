@@ -128,7 +128,7 @@ private:
      */
     QVector<qint32> m_GraphMaxValues = QVector<qint32>(static_cast<qint32>(GraphModes::Max), 0);
 
-    QVector<oxygine::spColorRectSprite> m_GraphsProgessLine = QVector<oxygine::spColorRectSprite>(static_cast<qint32>(GraphModes::Max), nullptr);
+    QVector<oxygine::spColorRectSprite> m_GraphsProgessLine = QVector<oxygine::spColorRectSprite>(static_cast<qint32>(GraphModes::Max), oxygine::spColorRectSprite());
     /**
      * @brief m_VisiblePlayers holds the graphs of which players are drawn (by default all)
      */

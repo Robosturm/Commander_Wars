@@ -42,7 +42,7 @@ static constexpr qint32 loadingScreenSize = 900;
 qint32 GameMap::m_imagesize = GameMap::defaultImageSize;
 
 
-spGameMap GameMap::m_pInstance = nullptr;
+spGameMap GameMap::m_pInstance;
 
 qint32 GameMap::getFrameTime()
 {
@@ -119,7 +119,7 @@ void GameMap::setMapNameFromFilename(QString filename)
 void GameMap::loadMapData()
 {
     deleteMap();
-    m_pInstance = this;
+    m_pInstance = spGameMap(this, true);
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
     if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
@@ -346,7 +346,7 @@ GameMap::~GameMap()
     }
     m_fields.clear();
     // remove us from the interpreter again
-    if (GameMap::getInstance() == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->deleteObject(m_JavascriptName);
@@ -377,7 +377,7 @@ spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
     }
     else
     {
-        return nullptr;
+        return spTerrain();
     }
 }
 
@@ -401,7 +401,7 @@ spPlayer GameMap::getspPlayer(qint32 player)
     }
     else
     {
-        return nullptr;
+        return spPlayer();
     }
 }
 
@@ -439,7 +439,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
 {
     Console::print("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
 
-    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
         pLoadingScreen->show();
@@ -574,7 +574,7 @@ void GameMap::killDeadUnits()
             if (pUnit != nullptr &&
                 pUnit->getHp() <= 0)
             {
-                m_fields[y][x]->setUnit(nullptr);
+                m_fields[y][x]->setUnit(spUnit());
             }
         }
     }
@@ -641,7 +641,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         {
             range = width + heigth;
         }
-        spPlayer pPlayer = nullptr;
+        spPlayer pPlayer;
         for (qint32 i = 0; i < m_players.size(); i++)
         {
             if (owner == m_players[i].get())
@@ -669,7 +669,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
         {
-            spTerrain pTerrain = getTerrain(x, y);
+            spTerrain pTerrain = spTerrain(getTerrain(x, y));
             if (pTerrain.get() != nullptr &&
                 (pTerrain->getUnit() == nullptr) &&
                 (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -694,7 +694,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
+                    spTerrain pTerrain = spTerrain(getTerrain(x + x2 - currentRadius, y + y2));
                     if (pTerrain.get() != nullptr &&
                         (pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -710,7 +710,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -726,7 +726,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 y2 -= 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -742,7 +742,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 y2 += 1;
                 if (onMap(x + x2, y + y2))
                 {
-                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    spTerrain pTerrain = spTerrain(getTerrain(x + x2, y + y2));
                     if ((pTerrain.get() != nullptr &&
                          pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
@@ -999,8 +999,8 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
         if (pTerrainOld->getTerrainID() != terrainID)
         {
             pTerrainOld->removeBuilding();
-            spUnit pUnit = pTerrainOld->getUnit();
-            pTerrainOld->setUnit(nullptr);
+            spUnit pUnit = spUnit(pTerrainOld->getUnit());
+            pTerrainOld->setUnit(spUnit());
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
 
@@ -1460,7 +1460,7 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            m_fields[y][x]->setUnit(nullptr);
+            m_fields[y][x]->setUnit(spUnit());
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();

@@ -17,7 +17,7 @@
 
 #include "resource_management/unitspritemanager.h"
 
-oxygine::spResAnim Player::m_neutralTableAnim = nullptr;
+oxygine::spResAnim Player::m_neutralTableAnim;
 QImage Player::m_neutralTableImage;
 
 void Player::releaseStaticData()
@@ -160,7 +160,7 @@ void Player::setColor(QColor color, qint32 table)
         createTable(m_Color);
     }
     m_ColorTableAnim = oxygine::spSingleResAnim::create();
-    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
+    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
 }
 
 bool Player::loadTable(qint32 table)
@@ -394,7 +394,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
             if (QFile::exists(path + "neutral.png"))
             {
                 m_neutralTableImage = QImage(path + "neutral.png");
-                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), m_neutralTableImage, 1, 1, 1, false);
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim, m_neutralTableImage, 1, 1, 1, false);
                 break;
             }
         }
@@ -681,7 +681,7 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
 
         }
     }
-    spQmlVectorUnit pUnits = getUnits();
+    spQmlVectorUnit pUnits = spQmlVectorUnit(getUnits());
     for (qint32 i = 0; i < pUnits->size(); ++i)
     {
         Unit* pUnit = pUnits->at(i);
@@ -785,7 +785,7 @@ qint32 Player::calcIncome(float modifier)
 
 qint32 Player::calcArmyValue()
 {
-    spQmlVectorUnit pUnits = GameMap::getInstance()->getUnits(this);
+    spQmlVectorUnit pUnits = spQmlVectorUnit(GameMap::getInstance()->getUnits(this));
     qint32 armyValue = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1404,7 +1404,7 @@ void Player::updateVisualCORange()
     spCO pCo = m_playerCOs[0];
     if (pCo.get() != nullptr)
     {
-        spUnit pCoUnit = pCo->getCOUnit();
+        spUnit pCoUnit = spUnit(pCo->getCOUnit());
         if (pCoUnit.get() != nullptr)
         {
             if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
@@ -1420,7 +1420,7 @@ void Player::updateVisualCORange()
     pCo = m_playerCOs[1];
     if (pCo.get() != nullptr)
     {
-        spUnit pCoUnit = pCo->getCOUnit();
+        spUnit pCoUnit = spUnit(pCo->getCOUnit());
         if (pCoUnit.get() != nullptr)
         {
             if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
@@ -1452,7 +1452,7 @@ spCO Player::getspCO(quint8 id)
     }
     else
     {
-        return nullptr;
+        return spCO();
     }
 }
 
@@ -1487,7 +1487,7 @@ void Player::setCO(QString coId, quint8 idx)
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    spQmlVectorPoint pPoints = GlobalUtils::getCircle(0, radius);
+    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1522,7 +1522,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
 QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    spQmlVectorPoint pPoints = GlobalUtils::getCircle(0, radius);
+    spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(0, radius));
     highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1907,7 +1907,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
         }
     }
     else
@@ -1921,7 +1921,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable, 1, 1, 1, false);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
         }
     }
     if (version > 13)

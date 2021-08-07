@@ -196,7 +196,7 @@ MapSelectionView::MapSelectionView()
     {
         if (pContent->getWidth() > pContentSlider->getWidth())
         {
-            pContent->setX(m_content->getX() - GameMap::getImageSize());
+            pContent->setX(pContent->getX() - GameMap::getImageSize());
             if (pContent->getX() + pContent->getWidth() < pContentSlider->getWidth())
             {
                 pContent->setX(pContentSlider->getWidth() - pContent->getWidth());
@@ -209,14 +209,14 @@ MapSelectionView::MapSelectionView()
     pButtonTop = oxygine::spButton::create();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    ptr = pButtonTop.get();
+    auto* ptr2 = pButtonTop.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        ptr2->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
     pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        ptr2->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
@@ -306,7 +306,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_currentMapFile = QFileInfo();
             m_pCurrentMap = nullptr;
         }
-        m_pMinimap->updateMinimap(nullptr);
+        m_pMinimap->updateMinimap(spGameMap());
         m_CurrentCampaign = nullptr;
         m_CurrentCampaign = spCampaign::create(info.absoluteFilePath());
         m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());

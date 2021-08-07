@@ -258,19 +258,19 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, 
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
         Console::print("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
-        return nullptr;
+        return oxygine::spResAnim();
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(newTable) && newTable.endsWith(".png"))
     {
         Console::print("The mask table is not an existing file. " + newTable, Console::eLogLevels::eERROR);
-        return nullptr;
+        return oxygine::spResAnim();
     }
     QImage maskTableImg(newTable);
     if (maskTableImg.width() < colorTableImg.width())
     {
         Console::print("The mask table is to small. " + newTable, Console::eERROR);
-        return nullptr;
+        return oxygine::spResAnim();
     }
     return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor, addTransparentBorder);
 }
@@ -292,7 +292,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
         Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor, addTransparentBorder);
         return pRet;
     }
-    return nullptr;
+    return oxygine::spResAnim();
 }
 
 QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save)
