@@ -47,15 +47,16 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_pArrowDown->setPosition(m_Box->getWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    oxygine::Actor* pPtrDown = m_pArrowDown.get();
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_Box->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_Box->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {
@@ -83,8 +84,7 @@ void DropDownmenuBase::focusedLost()
 }
 
 void DropDownmenuBase::showDropDown()
-{
-    
+{    
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
@@ -140,13 +140,11 @@ void DropDownmenuBase::hideDropDown()
 }
 
 void DropDownmenuBase::setEnabled(bool value)
-{
-    
+{    
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_Box->setEnabled(value);
-    m_Panel->setVisible(false);
-    
+    m_Panel->setVisible(false);    
 }
 
 qint32 DropDownmenuBase::getCurrentItem() const
@@ -170,18 +168,19 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_Panel->addItem(pBox);
     // add some event handling :)
-    pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    oxygine::Actor* pPtrBox = pBox.get();
+    pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         m_currentItem = id;
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(1));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(1));
         emit sigItemChangedInternal(m_currentItem);
         emit sigHideDropDown();
     });

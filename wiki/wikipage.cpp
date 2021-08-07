@@ -36,20 +36,20 @@ Wikipage::Wikipage()
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
     // no the fun begins create checkboxes and stuff and a panel down here
     m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+                               QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
     connect(this, &Wikipage::sigShowLink, this, &Wikipage::showLink, Qt::QueuedConnection);
+    connect(this, &Wikipage::sigFinished, this, &Wikipage::remove, Qt::QueuedConnection);
 }
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
@@ -62,9 +62,13 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
         cur == Settings::getKey_cancel2())
     {
         emit sigFinished();
-        detach();
     }
     
+}
+
+void Wikipage::remove()
+{
+    detach();
 }
 
 void Wikipage::loadText(QString text)
@@ -106,7 +110,7 @@ void Wikipage::showLink(QString pageID)
     if (!std::get<0>(entry).isEmpty() &&
         !std::get<1>(entry).isEmpty())
     {
-       oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
+        oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
     
 }

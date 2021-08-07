@@ -71,6 +71,8 @@ void WikiView::searchChanged(QString)
 
 void WikiView::search(bool onlyTag)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     Console::print("WikiView::searchChanged ", Console::eDEBUG);
     m_MainPanel->clearContent();
     QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
@@ -99,17 +101,18 @@ void WikiView::search(bool onlyTag)
         textField->setHtmlText(item);
         pBox->addChild(textField);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+        auto* pPtrBox = pBox.get();
         // add some event handling :)
-        pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+            pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
         });
-        pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+            pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, itemCount * 40);
-        pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowWikipage(items[i]);
         });
@@ -117,7 +120,7 @@ void WikiView::search(bool onlyTag)
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
-
+    pApp->continueRendering();
 }
 
 void WikiView::showWikipage(WikiDatabase::pageData page)

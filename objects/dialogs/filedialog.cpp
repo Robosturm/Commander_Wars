@@ -48,10 +48,13 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(m_CurrentFile->getWidth() + 30 + 10, m_CurrentFile->getY());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pPtrCurrentFolder = m_CurrentFolder.get();
+    auto* pPtrCurrentFile = m_CurrentFile.get();
+    auto* pPtrDropDownmenu = m_DropDownmenu.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        QString file = m_pathPrefix + m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText();
-        QStringList items = m_DropDownmenu->getCurrentItemText().split((";"));
+        QString file = m_pathPrefix + pPtrCurrentFolder->getCurrentText() + "/" + pPtrCurrentFile->getCurrentText();
+        QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
         for (qint32 i = 0; i < items.size(); i++)
         {
             items[i] = items[i].replace("*", "");
@@ -70,7 +73,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
             file += items[0];
         }
         emit sigFileSelected(file);
-        detach();
+        emit sigFinished();
     });
     // drop down menu
     m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getWidth(), wildcards);
@@ -81,10 +84,9 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
     pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigCancel();
-        detach();
     });
 
     // go folder up
@@ -110,18 +112,20 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_MainPanel->addItem(pBox);
     // add some event handling :)
-    pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pPtrBox = pBox.get();
+    pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pCurrentFolder = m_CurrentFolder.get();
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        QDir dir(m_CurrentFolder->getCurrentText());
-        if (m_CurrentFolder->getCurrentText() != "")
+        QDir dir(pCurrentFolder->getCurrentText());
+        if (pCurrentFolder->getCurrentText() != "")
         {
             emit sigShowFolder(dir.absolutePath() + "/..");
         }
@@ -133,7 +137,14 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
     connect(pApp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
+    connect(this, &FileDialog::sigCancel, this, &FileDialog::remove, Qt::QueuedConnection);
+    connect(this, &FileDialog::sigFinished, this, &FileDialog::remove, Qt::QueuedConnection);
     pApp->continueRendering();
+}
+
+void FileDialog::remove()
+{
+    detach();
 }
 
 void FileDialog::filterChanged(qint32)
@@ -229,13 +240,14 @@ void FileDialog::showFolder(QString folder)
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         m_MainPanel->addItem(pBox);
         // add some event handling :)
-        pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+        auto* pPtrBox = pBox.get();
+        pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+            pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
         });
-        pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+        pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+            pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, 40 + itemCount * 40);
 
@@ -250,7 +262,7 @@ void FileDialog::showFolder(QString folder)
             {
                 textField->setHtmlText(infoList[i].baseName());
             }
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
             });
@@ -260,7 +272,8 @@ void FileDialog::showFolder(QString folder)
             QString fullPath = infoList[i].absoluteFilePath();
             QString file = infoList[i].fileName();
             textField->setHtmlText(file);
-            pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+            auto* pCurrentFile = m_CurrentFile.get();
+            pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
             {
                 if (fullPath.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
                 {
@@ -270,7 +283,7 @@ void FileDialog::showFolder(QString folder)
                 {
                     m_pathPrefix = Settings::getUserPath();
                 }
-                m_CurrentFile->setCurrentText(file);
+                pCurrentFile->setCurrentText(file);
             });
             if (m_preview)
             {

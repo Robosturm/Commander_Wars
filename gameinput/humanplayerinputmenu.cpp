@@ -169,12 +169,13 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         scrollbarWidth = m_scrollbar->getWidth() + 25;
         m_scrollbar->setX(width * xCount + 25);
         addChild(m_scrollbar);
-        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+        auto* pScrollbar = m_scrollbar.get();
+        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
         {
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
-                emit m_scrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(m_scrollbar->getContentHeigth()));
+                emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
                 pTouchEvent->stopPropagation();
             }
         });
@@ -213,6 +214,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
             }
             event->stopPropagation();
         });
+        auto * pScrollbar = m_scrollbar.get();
         addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* event)
         {
             if (m_moveScrolling)
@@ -223,7 +225,7 @@ void HumanPlayerInputMenu::addTouchMoveEvents()
                 float speed = -(newPos.y - m_lastScrollPoint.y);
                 if (speed != 0.0f)
                 {
-                    emit m_scrollbar->sigChangeScrollValue(speed / static_cast<float>(m_scrollbar->getContentHeigth()));
+                    emit m_scrollbar->sigChangeScrollValue(speed / static_cast<float>(pScrollbar->getContentHeigth()));
                     m_lastScrollPoint = newPos;
                 }
             }
@@ -311,12 +313,13 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
     addChild(pItemBox);
     oxygine::Actor* pBox = pItemBox.get();
+    oxygine::Sprite* pCursor = m_Cursor.get();
     pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
     {
         Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
         pEvent->stopPropagation();
-        m_Cursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
-        m_Cursor->setX(pBox->getX() + width);
+        pCursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - pCursor->getScaledHeight() / 2);
+        pCursor->setX(pBox->getX() + width);
         m_currentAction = item;
     });
     if (enabled)

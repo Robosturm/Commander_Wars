@@ -46,7 +46,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     pClipActor->setY(5);
 
     addChild(m_Textbox);
-    addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* event)
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
     {
         event->stopPropagation();
         emit sigFocused();

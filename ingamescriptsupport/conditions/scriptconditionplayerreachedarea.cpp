@@ -272,13 +272,15 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
 
     oxygine::spButton pButton = ObjectManager::createButton(tr("Add Player"), 200);
     pButton->setPosition(30, y);
+    SpinBox* pSpinBox = spinBox.get();
+    Label* pLabel = pTextInfo.get();
     pButton->addClickListener([=](oxygine::Event*)
     {
-        qint32 player = spinBox->getCurrentValue() - 1;
+        qint32 player = pSpinBox->getCurrentValue() - 1;
         if (!m_Player.contains(player))
         {
             m_Player.append(player);
-            pTextInfo->setHtmlText(getPlayerInfo());
+            pLabel->setHtmlText(getPlayerInfo());
         }
     });
     pBox->addItem(pButton);
@@ -289,7 +291,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         if (m_Player.size() > 1)
         {
             m_Player.removeLast();
-            pTextInfo->setHtmlText(getPlayerInfo());
+            pLabel->setHtmlText(getPlayerInfo());
         }
     });
     pBox->addItem(pButton);

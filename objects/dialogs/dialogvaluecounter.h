@@ -21,6 +21,7 @@ signals:
     void sigFinished();
 private slots:
     void updateData();
+    void remove();
 private:
     spLabel m_pointsAddedLabel;
     spLabel m_totalPointsLabel;

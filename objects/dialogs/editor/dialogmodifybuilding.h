@@ -19,6 +19,8 @@ public:
     virtual ~DialogModifyBuilding() = default;
 signals:
     void sigFinished();
+public slots:
+    void remove();
 private:
     spPanel m_pPanel;
     Building* m_pBuilding{nullptr};

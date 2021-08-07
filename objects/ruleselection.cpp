@@ -379,19 +379,20 @@ void RuleSelection::showRuleSelection()
     fogOfWar->setPosition(textWidth, textField->getY());
     fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());
     fogOfWar->setEnabled(m_ruleChangeEabled);
+    GameMap* pPtrMap = pMap.get();
     connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, pMap->getGameRules(), [=](qint32 value)
     {
         if (value == 1)
         {
-            pMap->getGameRules()->setFogMode(GameEnums::Fog_OfMist);
+            pPtrMap->getGameRules()->setFogMode(GameEnums::Fog_OfMist);
         }
         else if (value > 1)
         {
-            pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value - 1));
+            pPtrMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value - 1));
         }
         else
         {
-            pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
+            pPtrMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
         }
     });
     addChild(fogOfWar);
@@ -439,7 +440,7 @@ void RuleSelection::showRuleSelection()
     pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getDayToDayScreen()));
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
     {
-        pMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
+        pPtrMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
     });
     y += 50;
 
@@ -564,7 +565,7 @@ void RuleSelection::showRuleSelection()
         m_MapScriptFile->setEnabled(m_ruleChangeEabled);
         addChild(m_MapScriptFile);
         pScriptButton->setEnabled(m_ruleChangeEabled);
-        pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowSelectScript();
         });
@@ -666,6 +667,7 @@ void RuleSelection::showRuleSelection()
         if (pRule.get() != nullptr)
         {
             QStringList inputTypes = pRule->getRuleType();
+            VictoryRule* pPtrRule = pRule.get();
             for (qint32 i2 = 0; i2 < inputTypes.size(); i2++)
             {
                 QString inputType = inputTypes[i2];
@@ -688,7 +690,7 @@ void RuleSelection::showRuleSelection()
                     pCheckbox->setChecked(defaultValue);
                     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
                     {
-                        pRule->setRuleValue(value, i2);
+                        pPtrRule->setRuleValue(value, i2);
                     });
                 }
                 else if (inputType == VictoryRule::spinbox)
@@ -705,7 +707,7 @@ void RuleSelection::showRuleSelection()
                     connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
                     {
                         qint32 newValue = static_cast<qint32>(value);
-                        pRule->setRuleValue(newValue, i2);
+                        pPtrRule->setRuleValue(newValue, i2);
                     });
                 }
                 xPos += textWidth * 2 * 0.85;
@@ -759,6 +761,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
         }
         QStringList inputTypes = pRule->getRuleType();
         pMap->getGameRules()->addGameRule(pRule);
+        GameRule* pPtrRule = pRule.get();
         for (qint32 i2 = 0; i2 < inputTypes.size(); i2++)
         {
             QString inputType = inputTypes[i2];
@@ -781,7 +784,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 pCheckbox->setChecked(defaultValue);
                 connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
                 {
-                    pRule->setRuleValue(value, i2);
+                    pPtrRule->setRuleValue(value, i2);
                 });
             }
             else if (inputType == GameRule::spinbox)
@@ -798,7 +801,7 @@ void RuleSelection::addCustomGamerules(qint32 & y)
                 connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
                 {
                     qint32 newValue = static_cast<qint32>(value);
-                    pRule->setRuleValue(newValue, i2);
+                    pPtrRule->setRuleValue(newValue, i2);
                 });
             }
             xPos += textWidth * 2 * 0.85;

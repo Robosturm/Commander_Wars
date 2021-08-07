@@ -32,8 +32,9 @@ signals:
     void sigCOStyleChanged(qint32 index);
 public slots:
     void changeCOStyle(qint32 index);
-
     void selecetedColorChanged(QColor color);
+private slots:
+    void remove();
 private:
     void updateSprites();
 private:

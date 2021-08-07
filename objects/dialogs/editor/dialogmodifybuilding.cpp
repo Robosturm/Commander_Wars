@@ -35,10 +35,9 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
 
@@ -83,6 +82,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pBuilding->getOwner()->getPlayerID());
+    GameMap* pPtrMap = pMap.get();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
         if (value >= pMap->getPlayerCount())
@@ -91,7 +91,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
         }
         else
         {
-            m_pBuilding->setOwner(pMap->getPlayer(value));
+            m_pBuilding->setOwner(pPtrMap->getPlayer(value));
         }
     });
     m_pPanel->addItem(pDropdownmenu);
@@ -109,4 +109,10 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     m_pPanel->addItem(pTextbox);
     m_pPanel->addItem(pLabel);
     y += 40;
+    connect(this, &DialogModifyBuilding::sigFinished, this, &DialogModifyBuilding::remove, Qt::QueuedConnection);
+}
+
+void DialogModifyBuilding::remove()
+{
+    detach();
 }

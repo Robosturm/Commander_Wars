@@ -23,6 +23,7 @@ signals:
     void editFinished(QStringList cobannlist);
     void canceled();
     void sigShowSaveBannlist();
+    void sigFinished();
 public slots:
     void setCOBannlist(qint32 item);
     /**
@@ -33,6 +34,8 @@ public slots:
      * @brief saveBannlist
      */
     void saveBannlist(QString filename);
+private slots:
+    void remove();
 private:
     QVector<QString> getNameList();
 private:

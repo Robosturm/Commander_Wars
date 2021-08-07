@@ -28,6 +28,7 @@ public:
      */
     static GameAnimationFactory* getInstance();
     virtual ~GameAnimationFactory() = default;
+    void release();
     /**
      * @brief queueAnimation queues the given animation by removing it from the execution
      * @param pGameAnimation

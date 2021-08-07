@@ -160,7 +160,7 @@ private:
     spScriptData m_Data;
     spDropDownmenu m_Conditions;
     spDropDownmenu m_Events;
-    spScriptCondition m_CurrentCondition;
+    ScriptCondition* m_CurrentCondition{nullptr};
     QVector<oxygine::spBox9Sprite> m_ConditionBoxes;
 };
 

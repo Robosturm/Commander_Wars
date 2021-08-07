@@ -35,11 +35,11 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pPerkSelection = m_pPerkSelection.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit editFinished(m_pPerkSelection->getPerks());
+        emit editFinished(pPerkSelection->getPerks());
         emit sigFinished();
-        detach();
     });
 
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -89,7 +89,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
         randomButton->setPosition(m_randomFillCheckbox->getX() + m_randomFillCheckbox->getWidth() + 10, 30);
         pSpriteBox->addChild(randomButton);
-        randomButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        randomButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigSelectRandomPerks();
         });
@@ -119,10 +119,9 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
         m_CancelButton->setPosition(30, Settings::getHeight() - 30 - m_CancelButton->getHeight());
         pSpriteBox->addChild(m_CancelButton);
-        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigCancel();
-            detach();
         });
 
         oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
@@ -137,7 +136,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
         m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
         pSpriteBox->addChild(m_ToggleAll);
-        m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             m_toggle = !m_toggle;
             emit sigToggleAll(m_toggle);
@@ -169,6 +168,13 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         pSpriteBox->addChild(m_PredefinedLists);
         connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
     }
+    connect(this, &PerkSelectionDialog::sigCancel, this, &PerkSelectionDialog::remove, Qt::QueuedConnection);
+    connect(this, &PerkSelectionDialog::sigFinished, this, &PerkSelectionDialog::remove, Qt::QueuedConnection);
+}
+
+void PerkSelectionDialog::remove()
+{
+    detach();
 }
 
 void PerkSelectionDialog::setPerkBannlist(qint32)

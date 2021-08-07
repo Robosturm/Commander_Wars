@@ -54,7 +54,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     setContentWidth(contentSize.width());
     setContentHeigth(contentSize.height());
 
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -66,6 +66,11 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     });
     m_hideTimer.setSingleShot(true);
     connect(&m_hideTimer, &QTimer::timeout, this, &Panel::hideItems);
+}
+
+Panel::~Panel()
+{
+    clearContent();
 }
 
 void Panel::scrolledY(float value)
@@ -145,9 +150,9 @@ void Panel::setSubComponent(bool subComponent)
 }
 
 void Panel::hideItems()
-{    
-    oxygine::spActor child =  m_ContentRect->getFirstChild();
-    while (child)
+{
+    auto & children = m_ContentRect->getChildren();
+    for (auto & child : children)
     {
         Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
         DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
@@ -160,14 +165,13 @@ void Panel::hideItems()
             pDropDownmenuBase->hideDropDown();
         }
         hideChildItems(child);
-        child = child->getNextSibling();
     }
 }
 
 void Panel::hideChildItems(oxygine::spActor parent)
-{    
-    oxygine::spActor child =  parent->getFirstChild();
-    while (child)
+{
+    auto & children = parent->getChildren();
+    for (auto & child : children)
     {
         Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
         DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
@@ -180,8 +184,7 @@ void Panel::hideChildItems(oxygine::spActor parent)
             pDropDownmenuBase->hideDropDown();
         }
         hideChildItems(child);
-        child = child->getNextSibling();
-    }    
+    }
 }
 
 void Panel::setContentHeigth(qint32 heigth)
@@ -276,10 +279,8 @@ void Panel::removeItem(oxygine::spActor pActor)
 }
 
 void Panel::clearContent()
-{
-    
+{    
     m_ContentRect->removeChildren();
     m_ContentRect->setX(0.0f);
-    m_ContentRect->setY(0.0f);
-    
+    m_ContentRect->setY(0.0f);    
 }

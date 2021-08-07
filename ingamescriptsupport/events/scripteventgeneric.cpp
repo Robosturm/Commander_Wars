@@ -172,7 +172,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
                 pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getWidth(), y);
                 pBox->addChild(pButtonSelect);
-                pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+                pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
                 {
                      emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, pTextbox);
                 });
@@ -191,11 +191,12 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
     wildcards.append(filter);
     QString path = Settings::getUserPath() + startFolder;
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile);
+    Textbox* pBox = pTextbox.get();
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
     {
         QString file = GlobalUtils::makePathRelative(id);
-        pTextbox->setCurrentText(file);
-        emit pTextbox->sigTextChanged(file);
+        pBox->setCurrentText(file);
+        emit pBox->sigTextChanged(file);
     });
     oxygine::getStage()->addChild(fileDialog);
     

@@ -70,7 +70,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Folder"), 150);
     pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
-    pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowSelectFolder();
     });
@@ -121,7 +121,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
     pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getHeight());
     pSpriteBox->addChild(pAddCampaignButton);
-    pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowAddCampaign();
     });
@@ -130,7 +130,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), Settings::getHeight() - 30 - pLoadCampaignButton->getHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
-    pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowLoadCampaign();
     });
@@ -139,7 +139,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 30 - pSaveCampaignButton->getHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
-    pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowSaveCampaign();
     });
@@ -148,7 +148,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowExitBox();
     });
@@ -276,7 +276,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pEnableButton = pObjectManager->createButton(tr("Enable Maps"), 150);
         pEnableButton->setPosition(200, 10 + i * 40);
         m_Panel->addItem(pEnableButton);
-        pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowEditEnableMaps(i);
         });
@@ -284,7 +284,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pDisableButton = pObjectManager->createButton(tr("Disable Maps"), 150);
         pDisableButton->setPosition(360, 10 + i * 40);
         m_Panel->addItem(pDisableButton);
-        pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowEditDisableMaps(i);
         });
@@ -292,7 +292,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pVariableButton = pObjectManager->createButton(tr("Variables"), 150);
         pVariableButton->setPosition(520, 10 + i * 40);
         m_Panel->addItem(pVariableButton);
-        pVariableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pVariableButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowEditScriptVariables(i);
         });
@@ -300,7 +300,7 @@ void CampaignEditor::updateCampaignData()
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove Map"), 150);
         pRemoveButton->setPosition(680, 10 + i * 40);
         m_Panel->addItem(pRemoveButton);
-        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             mapDatas.removeAt(i);
             emit sigUpdateCampaignData();

@@ -27,21 +27,22 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pArrowUp->setResAnim(pAnim);
     pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pArrowUp->setFlippedY(true);
-    pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pPtrArrowUp = pArrowUp.get();
+    pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pPtrArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
         m_spin = -1;
         m_timer.start();
         emit changeSelection(m_currentStartIndex - 1);
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
     {
         m_spin = 0;
     });
@@ -116,11 +117,13 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         m_ItemContainer->addChild(pBackground);
         m_Items.append(pTextfield);
         qint32 itemPos = m_Items.size() - 1;
+        auto* pSelectedItem = m_SelectedItem.get();
+        auto* pItem = m_Items[itemPos].get();
         pBackground->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
         {
-            if (m_Items[itemPos]->getText() != "")
+            if (pItem->getText() != "")
             {
-                m_SelectedItem->setY(y - m_ItemContainer->getY());
+                pSelectedItem->setY(y - m_ItemContainer->getY());
                 m_currentItem = m_Files[m_currentStartIndex + i];
                 m_currentIdx = m_currentStartIndex + i;
                 emit sigStartItemChangeTimer();
@@ -128,9 +131,9 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         });
         pBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
-            if (m_Items[itemPos]->getText() != "")
+            if (pItem->getText() != "")
             {
-                m_SelectedItem->setY(y - m_ItemContainer->getY());
+                pSelectedItem->setY(y - m_ItemContainer->getY());
                 m_currentItem = m_Files[m_currentStartIndex + i];
                 m_currentIdx = m_currentStartIndex + i;
                 emit sigStartItemChangeTimer();
@@ -152,21 +155,22 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowDown->setResAnim(pAnim);
     pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pPtrArrowDown = pArrowDown.get();
+    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pPtrArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
         m_spin = +1;
         m_timer.start();
         emit changeSelection(m_currentStartIndex + 1);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
     {
         m_spin = 0;
     });
@@ -176,7 +180,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     changeFolder(folder);
     connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
     connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -226,8 +230,8 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
             if (speed != 0)
             {
                 m_wasMoveScrolling = true;
-                emit changeSelection(m_currentStartIndex + speed);
                 m_lastScrollPoint = newPos;
+                emit changeSelection(m_currentStartIndex + speed);
             }
         }
     });

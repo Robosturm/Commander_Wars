@@ -67,21 +67,23 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pTooltip->addChild(pBox);
     pTooltip->setPosition(0, 40 * m_Items.at(group).size());
     // add some event handling :)
-    pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pPtrBox = pBox.get();
+    pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pPtrTooltip = pTooltip.get();
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         for (qint32 i = 0; i < m_Items.size(); i++)
         {
             m_ItemPanels[i]->setVisible(false);
         }
-        emit pTooltip->sigHideTooltip();
+        emit pPtrTooltip->sigHideTooltip();
         emit sigItemClicked(itemID);
     });
     m_Items[group].append(pTooltip);

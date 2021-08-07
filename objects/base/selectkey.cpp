@@ -16,11 +16,12 @@ SelectKey::SelectKey(Qt::Key code)
     moveToThread(pApp->getWorkerthread());
 
     m_Button = ObjectManager::createButton("", 180);
+    oxygine::Actor* pActor = m_Button.get();
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(pActor->getFirstChild()->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
-        pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        pText->setX(pActor->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
         if (pText->getX() < 5)
         {
             pText->setX(5);

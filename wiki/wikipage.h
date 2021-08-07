@@ -52,6 +52,8 @@ public slots:
      * @param pageID
      */
     void showLink(QString pageID);
+private slots:
+    void remove();
 protected:
     spPanel m_pPanel;
     oxygine::spButton m_OkButton;

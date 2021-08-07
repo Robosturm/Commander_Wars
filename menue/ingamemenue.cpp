@@ -110,6 +110,7 @@ void InGameMenue::connectMapCursor()
 {
     Mainapp* pApp = Mainapp::getInstance();
     spGameMap pMap = GameMap::getInstance();
+    Cursor* pCursor = m_Cursor.get();
     pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -120,7 +121,7 @@ void InGameMenue::connectMapCursor()
             {
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
                 qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
-                emit m_Cursor->sigUpdatePosition(curX, curY);
+                emit pCursor->sigUpdatePosition(curX, curY);
             }
             else
             {
@@ -136,11 +137,11 @@ void InGameMenue::connectMapCursor()
             pEvent->stopPropagation();
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
-                emit sigRightClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigRightClick(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
             else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
             {
-                emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigLeftClick(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
         }
     });
@@ -151,11 +152,11 @@ void InGameMenue::connectMapCursor()
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
-                emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigRightClickDown(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
             else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
             {
-                emit sigLeftClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigLeftClickDown(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
         }
     });
@@ -166,11 +167,11 @@ void InGameMenue::connectMapCursor()
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
-                emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigRightClickUp(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
             else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
             {
-                emit sigLeftClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                emit sigLeftClickUp(pCursor->getMapPointX(), pCursor->getMapPointY());
             }
         }
     });

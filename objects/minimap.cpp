@@ -21,7 +21,7 @@ Minimap::Minimap()
     setObjectName("Minimap");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -219,12 +219,11 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             }
                             else
                             {
-                                oxygine::spTween pTween = m_Items[item].unit->getFirstTween();
-                                while (pTween.get() != nullptr)
+                                auto & tweens = m_Items[item].unit->getTweens();
+                                for (auto & tween : tweens)
                                 {
-                                    pTween->reset();
-                                    pTween->start(*m_Items[item].unit);
-                                    pTween = pTween->getNextSibling();
+                                    tween->reset();
+                                    tween->start(*m_Items[item].unit);
                                 }
                             }
                         }

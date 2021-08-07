@@ -121,9 +121,10 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
+    DropDownmenu* pPtrMenu = pMenu.get();
     connect(pMenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
-        unitID = pMenu->getCurrentItemText();
+        unitID = pPtrMenu->getCurrentItemText();
     });
 
     pText = spLabel::create(width - 10);

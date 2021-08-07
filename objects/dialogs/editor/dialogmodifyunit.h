@@ -25,12 +25,11 @@ signals:
     void sigFinished();
     void sigUpdateData();
     void sigLoadUnit(QString unitID, qint32 index);
-public slots:
-
 protected slots:
     void updateData();
     void loadUnit(QString unitID, qint32 index);
     void addLoadLoopPoints(qint32& y, qint32 sliderOffset);
+    void remove();
 private:
     void addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y);
     spPanel m_pPanel;

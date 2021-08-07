@@ -8,7 +8,7 @@ namespace oxygine
 {
 
     Draggable::Draggable(): m_bounds(0, 0, -1, -1),
-        m_dragClient(0),
+        m_dragClient(nullptr),
         m_startTm(0),
         m_dragEnabled(true),
         m_pressed(false),

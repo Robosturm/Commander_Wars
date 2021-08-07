@@ -483,12 +483,14 @@ void GameMenue::loadUIButtons()
         addChild(pButtonBox);
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
         m_ChatButton->setPosition(8, 4);
+        auto* pChat = m_pChat.get();
+        auto* pChatButton = m_ChatButton.get();
         m_ChatButton->addClickListener([=](oxygine::Event*)
         {
-            m_pChat->setVisible(!m_pChat->getVisible());
-            setFocused(!m_pChat->getVisible());
-            m_ChatButton->removeTweens();
-            m_ChatButton->setAddColor(0, 0, 0, 0);
+            pChat->setVisible(!pChat->getVisible());
+            setFocused(!pChat->getVisible());
+            pChat->removeTweens();
+            pChatButton->setAddColor(0, 0, 0, 0);
         });
         pButtonBox->addChild(m_ChatButton);
     }

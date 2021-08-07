@@ -718,9 +718,5 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
    m_Workerthread.quit();
-   while (!m_Workerthread.isFinished())
-   {
-       QApplication::processEvents();
-       m_Workerthread.wait(1);
-   }
+   m_Workerthread.wait();
 }

@@ -29,6 +29,8 @@ signals:
      * @brief sigCancel
      */
     void sigCancel();
+private slots:
+    void remove();
 private:
     oxygine::spBox9Sprite m_pSpriteBox;
 };

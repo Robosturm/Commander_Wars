@@ -53,16 +53,16 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     pButton->addChild(clipRect);
 
     oxygine::Sprite* ptr = pButton.get();
-    pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
     });
@@ -82,16 +82,16 @@ oxygine::spButton ObjectManager::createIconButton(QString icon)
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();
-    pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
     });
@@ -107,16 +107,16 @@ oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite)
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();
-    pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
-    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
     });

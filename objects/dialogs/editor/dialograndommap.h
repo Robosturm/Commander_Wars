@@ -42,10 +42,12 @@ signals:
      * @brief sigShowGeneratorSelection
      */
     void sigShowGeneratorSelection();
+    void sigClose();
 public slots:
     void generatorChanged(QString filename);
     void showGeneratorSelection();
     void playerChanged(qreal);
+    void remove();
 private:
     void createUnitChances();
 private:

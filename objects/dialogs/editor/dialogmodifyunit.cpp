@@ -45,10 +45,9 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
 
@@ -60,6 +59,12 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     connect(this, &DialogModifyUnit::sigUpdateData, this, &DialogModifyUnit::updateData, Qt::QueuedConnection);
     connect(this, &DialogModifyUnit::sigLoadUnit, this, &DialogModifyUnit::loadUnit, Qt::QueuedConnection);
     updateData();
+    connect(this, &DialogModifyUnit::sigFinished, this, &DialogModifyUnit::remove, Qt::QueuedConnection);
+}
+
+void DialogModifyUnit::remove()
+{
+    detach();
 }
 
 void DialogModifyUnit::updateData()
@@ -212,9 +217,10 @@ void DialogModifyUnit::updateData()
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
+    GameMap* pPtrMap = pMap.get();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
-        m_pUnit->setOwner(pMap->getPlayer(value));
+        m_pUnit->setOwner(pPtrMap->getPlayer(value));
 
     });
     m_pPanel->addItem(pDropdownmenu);
@@ -328,9 +334,10 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     {
         pDropdownmenu->setCurrentItem("-");
     }
+    auto* pPtrDropdownmenu = pDropdownmenu.get();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
-        emit sigLoadUnit(pDropdownmenu->getCurrentItemText(), index);
+        emit sigLoadUnit(pPtrDropdownmenu->getCurrentItemText(), index);
     });
     m_pPanel->addItem(pDropdownmenu);
     y += 40;
@@ -399,7 +406,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
         oxygine::spButton pButton = pObjectManager->createButton(tr("Add Point"), 150);
         pButton->setPosition(sliderOffset - 160, y + 10);
         m_pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             m_pUnit->addAiMovePathPoint(QPoint(0, 0));
             emit sigUpdateData();
@@ -407,7 +414,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
         pButton = pObjectManager->createButton(tr("Remove last Point"), 150);
         pButton->setPosition(sliderOffset, y + 10);
         m_pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             m_pUnit->removeLastAiMovePathPoint();
             emit sigUpdateData();

@@ -43,31 +43,37 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit editFinished(m_currentCOID, m_player);
-        detach();
+        emit sigFinished();
     });
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit canceled();
-        detach();
     });
 
     // show co info button
     m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 250);
     m_ShowCOInfoButton->setPosition(Settings::getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, Settings::getHeight() - 30 - m_ShowCOInfoButton->getHeight());
     pSpriteBox->addChild(m_ShowCOInfoButton);
-    m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowCOInfo();
     });
     connect(this, &COSelectionDialog::sigShowCOInfo, this, &COSelectionDialog::showCOInfo, Qt::QueuedConnection);
+    connect(this, &COSelectionDialog::canceled, this, &COSelectionDialog::remove, Qt::QueuedConnection);
+    connect(this, &COSelectionDialog::sigFinished, this, &COSelectionDialog::remove, Qt::QueuedConnection);
+}
+
+void COSelectionDialog::remove()
+{
+    detach();
 }
 
 void COSelectionDialog::showCOInfo()

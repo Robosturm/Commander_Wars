@@ -41,17 +41,16 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
     // add Dialog button
     oxygine::spButton pDialogButton = pObjectManager->createButton(tr("add Dialog"), 150);
     pDialogButton->setPosition(30, Settings::getHeight() - 30 - pDialogButton->getHeight());
     m_pSpriteBox->addChild(pDialogButton);
-    pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigAddItem();
     });
@@ -59,14 +58,20 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("remove Last"), 150);
     pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getWidth() / 2, Settings::getHeight() - 30 - pRemoveButton->getHeight());
     m_pSpriteBox->addChild(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigRemoveLast();
     });
     connect(this, &ScriptDialogDialog::sigRemoveLast, this, &ScriptDialogDialog::removeLast, Qt::QueuedConnection);
     connect(this, &ScriptDialogDialog::sigAddItem, this, &ScriptDialogDialog::addItem, Qt::QueuedConnection);
     connect(this, &ScriptDialogDialog::sigShowChangeBackground, this, &ScriptDialogDialog::showChangeBackground, Qt::QueuedConnection);
+    connect(this, &ScriptDialogDialog::sigFinished, this, &ScriptDialogDialog::remove, Qt::QueuedConnection);
     updateDialog();
+}
+
+void ScriptDialogDialog::remove()
+{
+    detach();
 }
 
 void ScriptDialogDialog::addItem()
@@ -115,9 +120,10 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     pTextbox->setPosition(0, y);
     pTextbox->setCurrentText(pDialog->text);
     pActor->addChild(pTextbox);
-    connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString text)
+    DialogEntry* pPtrDialog = pDialog.get();
+    connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString text)
     {
-        pDialog->text = text;
+        pPtrDialog->text = text;
     });
     QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
     spDropDownmenu moodMenu = spDropDownmenu::create(150, moods);
@@ -125,9 +131,9 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     moodMenu->setPosition(posX, y);
     moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
     pActor->addChild(moodMenu);
-    connect(moodMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    connect(moodMenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 item)
     {
-        pDialog->mood = static_cast<GameEnums::COMood>(item);
+        pPtrDialog->mood = static_cast<GameEnums::COMood>(item);
     });
 
     QVector<QString> ids;
@@ -181,9 +187,9 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     coidsMenu->setPosition(posX + 150, y);
     coidsMenu->setCurrentItem(pDialog->coid);
     pActor->addChild(coidsMenu);
-    connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
+    connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
-        pDialog->coid = coidsMenu->getCurrentItemText();
+        pPtrDialog->coid = coidsMenu->getCurrentItemText();
     });
 
     function = "getDefaultPlayerColors";
@@ -204,9 +210,9 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     colors->setPosition(posX + 300, y);
     colors->setCurrentItem(pDialog->color);
     pActor->addChild(colors);
-    connect(colors.get(), &DropDownmenuColor::sigItemChanged, [=](QColor color)
+    connect(colors.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor color)
     {
-        pDialog->color = color;
+        pPtrDialog->color = color;
     });
 
     oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("Background"), 200);

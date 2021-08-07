@@ -39,6 +39,8 @@ signals:
 public slots:
     void slotNext();
     void slotBack();
+private slots:
+    void remove();
 private:
     oxygine::spButton m_NextButton;
     oxygine::spButton m_QuitButton;

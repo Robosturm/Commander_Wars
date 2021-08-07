@@ -6,7 +6,6 @@
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
-#include "3rd_party/oxygine-framework/oxygine/utils/intrusive_list.h"
 #include <limits>
 
 namespace oxygine
@@ -33,9 +32,8 @@ namespace oxygine
 
 
     DECLARE_SMART(Tween, spTween);
-    class Tween : public EventDispatcher, public intrusive_list_item<Tween>
+    class Tween : public EventDispatcher
     {
-        typedef intrusive_list_item<Tween> intr_list;
     public:
         enum EASE
         {
@@ -107,8 +105,6 @@ namespace oxygine
         timeMS                  getDelay() const { return m_delay; }
         Actor*                  getClient() const { return m_client; }
         float                   getPercent() const { return m_percent; }
-        spTween                 getNextSibling() { return intr_list::getNextSibling(); }
-        spTween                 getPrevSibling() { return intr_list::getPrevSibling(); }
         const EventCallback&    getDoneCallback() const { return m_cbDone; }
 
         bool        isStarted() const { return m_status != status_not_started; }

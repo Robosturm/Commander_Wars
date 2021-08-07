@@ -105,8 +105,8 @@ namespace oxygine
                 pActorSprite->setFlippedX(flippedX);
             }
         }
-        oxygine::spActor child = pActor->getFirstChild();
-        while (child)
+        auto & children = pActor->getChildren();
+        for (auto child : children)
         {
             oxygine::Sprite* pSprite1 = dynamic_cast<oxygine::Sprite*>(child.get());
             if (pSprite1 != nullptr)
@@ -136,7 +136,6 @@ namespace oxygine
                 }
             }
             flipActorsX(child, flippedX);
-            child = child->getNextSibling();
         }
     }
 

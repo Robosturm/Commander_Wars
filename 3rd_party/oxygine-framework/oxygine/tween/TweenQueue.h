@@ -52,7 +52,7 @@ namespace oxygine
         void _update(Actor& actor, const UpdateState& us);
 
     private:
-        using tweens = intrusive_list<Tween>;
+        using tweens = QVector<spTween>;
         tweens m_tweens;
         spTween m_current;
         qint32 m_loopsDone;

@@ -64,6 +64,8 @@ public slots:
      * @param file
      */
     void setCurrentDialogBackground(QString file);
+private slots:
+    void remove();
 private:
     void addActorItem(qint32 i, qint32 panelWidth);
     qint32 getPanelWidth();

@@ -474,7 +474,7 @@ void PlayerSelection::showPlayerSelection()
         m_pPlayerSelection->addItem(spriteCO1);
         m_playerCO1.append(spriteCO1);
 
-        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowSelectCO(i, 0);
         });
@@ -505,7 +505,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO2->setDisableColor(QColor(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO2);
         m_playerCO2.append(spriteCO2);
-        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowSelectCO(i, 1);
         });
@@ -537,7 +537,7 @@ void PlayerSelection::showPlayerSelection()
         pIconButton->setPosition(xPositions[itemIndex] + 70, y + 10);
         m_pPlayerSelection->addItem(pIconButton);
         m_playerPerks.append(pIconButton);
-        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowSelectCOPerks(i);
         });
@@ -558,9 +558,10 @@ void PlayerSelection::showPlayerSelection()
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(pMap->getPlayer(i)->getColor());
         m_pPlayerSelection->addItem(playerColor);
+        DropDownmenuColor* pPlayerColor = playerColor.get();
         connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
         {
-            playerColorChanged(value, i, playerColor->getCurrentItem());
+            playerColorChanged(value, i, pPlayerColor->getCurrentItem());
         }, Qt::QueuedConnection);
         m_playerColors.append(playerColor);
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
@@ -753,9 +754,10 @@ void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPosition
     pArmy->setTooltipText(tr("Selects the army for the player. CO means the army of the first CO is selected."));
     m_pPlayerSelection->addItem(pArmy);
     m_playerArmy.append(pArmy);
+    DropDownmenuSprite* pPtrArmy = pArmy.get();
     connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
-        emit sigSelectedArmyChanged(player, pArmy->getCurrentItemText());
+        emit sigSelectedArmyChanged(player, pPtrArmy->getCurrentItemText());
     });
     if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         m_saveGame ||

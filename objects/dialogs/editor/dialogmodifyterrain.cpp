@@ -35,10 +35,9 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
     m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
@@ -128,7 +127,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 150);
     pButtonDefault->setPosition(10, y);
     m_pPanel->addChild(pButtonDefault);
-    pButtonDefault->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButtonDefault->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
          emit sigTerrainClicked("");
     });
@@ -136,7 +135,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select Image"), 150);
     pButtonSelect->setPosition(10 + 20 + pButtonDefault->getWidth(), y);
     m_pPanel->addChild(pButtonSelect);
-    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
          emit sigShowLoadDialog();
     });
@@ -153,6 +152,12 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     {
         terrainClicked("");
     }
+    connect(this, &DialogModifyTerrain::sigFinished, this, &DialogModifyTerrain::remove, Qt::QueuedConnection);
+}
+
+void DialogModifyTerrain::remove()
+{
+    detach();
 }
 
 void DialogModifyTerrain::terrainClicked(QString id)

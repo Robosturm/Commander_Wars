@@ -39,6 +39,10 @@ protected slots:
      * @brief selectRandomPerks
      */
     void selectRandomPerks();
+    /**
+     * @brief remove
+     */
+    void remove();
 signals:
     void sigCancel();
     void sigFinished();

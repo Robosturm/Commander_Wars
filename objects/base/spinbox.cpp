@@ -56,15 +56,16 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pArrowDown = oxygine::spButton::create();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pArrowDown = m_pArrowDown.get();
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
         if (m_spinDirection == 0)
         {
@@ -76,7 +77,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
             emit sigValueChanged(getCurrentValue());
         }
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
     {
         m_spinDirection = 0;
     });
@@ -88,15 +89,16 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
     m_pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowUp->setFlippedY(true);
-    m_pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pArrowUp = m_pArrowUp.get();
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        m_pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    m_pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        m_pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
         if (m_spinDirection == 0)
         {
@@ -108,7 +110,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
             emit sigValueChanged(getCurrentValue());
         }
     });
-    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
     {
         m_spinDirection = 0;
     });
@@ -118,7 +120,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     addChild(m_pSpinBox);
 
 
-    addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFocused();
     });

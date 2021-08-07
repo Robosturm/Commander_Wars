@@ -63,20 +63,22 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
         pLockButton->getFirstChild()->setX(-8);
         qint32 x = m_Slider[i]->getX() + m_Slider[i]->getWidth() + 10;
         pLockButton->setPosition(x, i * 40);
+        oxygine::Actor* pActor = pLockButton.get();
+        auto* pSlider = m_Slider[i].get();
         pLockButton->addClickListener([=](oxygine::Event*)
         {
-            Label* pLabel = static_cast<Label*>(pLockButton->getFirstChild()->getFirstChild().get());
+            Label* pLabel = static_cast<Label*>(pActor->getFirstChild().get());
             if (m_locked[i])
             {
-                pLockButton->getFirstChild()->setY(-5);
+                pActor->getFirstChild()->setY(-5);
                 pLabel->setText(QString(unlockChar));
             }
             else
             {
-                pLockButton->getFirstChild()->setY(0);
+                pActor->getFirstChild()->setY(0);
                 pLabel->setText(QString(lockChar));
             }
-            m_Slider[i]->setEnabled(m_locked[i]);
+            pSlider->setEnabled(m_locked[i]);
             m_locked[i] = !m_locked[i];
         });
         m_lockButtons.append(pLockButton);

@@ -29,6 +29,7 @@ public slots:
     void terrainClicked(QString id);
     void showLoadDialog();
     void loadCustomSprite(QString id);
+    void remove();
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;

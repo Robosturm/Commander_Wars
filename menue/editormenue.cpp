@@ -152,6 +152,7 @@ EditorMenue::EditorMenue()
     }
     addChild(m_Topbar);
 
+    Cursor* pCursor = m_Cursor.get();
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -161,12 +162,12 @@ EditorMenue::EditorMenue()
             static qint32 lastY = -1;
             if (pTouchEvent->getPointer()->isPressed(oxygine::MouseButton::MouseButton_Left))
             {
-                if (m_Cursor->getMapPointX() != lastX ||
-                    m_Cursor->getMapPointY() != lastY)
+                if (pCursor->getMapPointX() != lastX ||
+                    pCursor->getMapPointY() != lastY)
                 {
-                    lastX = m_Cursor->getMapPointX();
-                    lastY = m_Cursor->getMapPointY();
-                    emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    lastX = pCursor->getMapPointX();
+                    lastY = pCursor->getMapPointY();
+                    emit sigLeftClick(pCursor->getMapPointX(), pCursor->getMapPointY());
                 }
             }
             else
@@ -617,10 +618,15 @@ void EditorMenue::showResizeMap()
     y += 40;
 
     addChild(pBox);
+    auto* pLeftBox = leftBox.get();
+    auto* pRightBox = rightBox.get();
+    auto* pTopBox = topBox.get();
+    auto* pBottomBox = bottomBox.get();
+
     connect(pBox.get(), &GenericBox::sigFinished, this, [=]
     {
-        emit sigResizeMap(leftBox->getCurrentValue(), topBox->getCurrentValue(),
-                          rightBox->getCurrentValue(), bottomBox->getCurrentValue());
+        emit sigResizeMap(pLeftBox->getCurrentValue(), pTopBox->getCurrentValue(),
+                          pRightBox->getCurrentValue(), pBottomBox->getCurrentValue());
     });
     
 }

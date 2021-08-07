@@ -8,13 +8,13 @@ namespace oxygine
 {
     DECLARE_SMART(Object, spObject);
     class Object : public ref_counter, public IClosureOwner
-    {        
+    {
     public:
         explicit Object(const Object& src);
         explicit Object() = default;
         virtual ~Object() = default;
     protected:
-        QMutex m_Locked;
+        mutable QMutex m_Locked;
     };
 
 

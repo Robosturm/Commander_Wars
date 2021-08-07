@@ -62,6 +62,12 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
     return m_pInstance.get();
 }
 
+void GameAnimationFactory::release()
+{
+    m_Animations.clear();
+    m_pInstance = nullptr;
+}
+
 GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
 {
     

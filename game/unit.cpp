@@ -180,8 +180,7 @@ void Unit::setTerrain(Terrain* pTerrain)
 void Unit::addShineTween()
 {    
     removeShineTween();
-    oxygine::spActor child = getFirstChild();
-    while (child.get() != nullptr)
+    for (auto & child : m_children)
     {
         oxygine::spVStyleActor pActor = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(child);
         if (pActor.get() != nullptr)
@@ -190,7 +189,6 @@ void Unit::addShineTween()
             pActor->addTween(shineTween);
             m_ShineTweens.append(shineTween);
         }
-        child = child->getNextSibling();
     }
 }
 
@@ -293,29 +291,26 @@ void Unit::syncAnimation(oxygine::timeMS syncTime)
 {
     for (auto & sprite : m_pUnitSprites)
     {
-        oxygine::spTween pTween = sprite->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = sprite->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->setElapsed(syncTime);
-            pTween = pTween->getNextSibling();
         }
     }
     for (auto & sprite : m_pUnitWaitSprites)
     {
-        oxygine::spTween pTween = sprite->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = sprite->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->setElapsed(syncTime);
-            pTween = pTween->getNextSibling();
         }
     }
     for (auto & icons : m_pIconSprites)
     {
-        oxygine::spTween pTween = icons->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = icons->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->setElapsed(syncTime);
-            pTween = pTween->getNextSibling();
         }
     }
 }

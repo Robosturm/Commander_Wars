@@ -430,18 +430,17 @@ void GameAnimation::addTweenPosition(QPoint point, qint32 duration)
 
 void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay)
 {
-    oxygine::spActor actor = getFirstChild().get();
-    for (qint32 i = 0; i <spriteIdx; i++)
+    if (spriteIdx < m_children.size())
     {
-        actor = getNextSibling();
-    }
-    oxygine::Sprite* sprite = dynamic_cast<oxygine::Sprite*>(actor.get());
-    if (sprite != nullptr)
-    {
-        sprite->setColor(startColor);
-        oxygine::Sprite::TweenColor tweenColor(endColor);
-        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
-        sprite->addTween(tween);
+        oxygine::spActor actor = m_children[spriteIdx];
+        oxygine::Sprite* sprite = dynamic_cast<oxygine::Sprite*>(actor.get());
+        if (sprite != nullptr)
+        {
+            sprite->setColor(startColor);
+            oxygine::Sprite::TweenColor tweenColor(endColor);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
+            sprite->addTween(tween);
+        }
     }
 }
 

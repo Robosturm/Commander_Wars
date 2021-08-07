@@ -39,9 +39,8 @@ DialogVictoryConditions::DialogVictoryConditions()
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        detach();
         emit sigFinished();
     });
 
@@ -131,7 +130,7 @@ DialogVictoryConditions::DialogVictoryConditions()
         oxygine::spButton pButton = pObjectManager->createButton(tr("Keep Track"), 150);
         pButton->setPosition(10, y);
         pPanel->addItem(pButton);
-        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowPopup(pVictoryRule->getRuleID());
         });
@@ -140,6 +139,12 @@ DialogVictoryConditions::DialogVictoryConditions()
     }
     pPanel->setContentHeigth(y + 40);
     connect(this, &DialogVictoryConditions::sigShowPopup, this, &DialogVictoryConditions::showPopup, Qt::QueuedConnection);
+    connect(this, &DialogVictoryConditions::sigFinished, this, &DialogVictoryConditions::remove, Qt::QueuedConnection);
+}
+
+void DialogVictoryConditions::remove()
+{
+    detach();
 }
 
 void DialogVictoryConditions::showPopup(QString rule)

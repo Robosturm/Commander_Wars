@@ -123,6 +123,8 @@ void Achievementmenu::search()
 
 void Achievementmenu::searchChanged(QString text)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     Console::print("Achievementmenu::searchChanged " + text, Console::eDEBUG);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -210,4 +212,5 @@ void Achievementmenu::searchChanged(QString text)
         }
     }
     m_MainPanel->setContentHeigth(y + 50);
+    pApp->continueRendering();
 }

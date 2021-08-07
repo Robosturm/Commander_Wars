@@ -41,20 +41,19 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit editFinished(m_Player, m_CurrentBuildList);
-        detach();
+        emit sigFinished();
     });
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit canceled();
-        detach();
     });
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
@@ -69,7 +68,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 75 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
-    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         m_toggle = !m_toggle;
         for (qint32 i = 0; i < m_Checkboxes.size(); i++)
@@ -164,6 +163,13 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         }
     }
     pPanel->setContentHeigth(y + 50);
+    connect(this, &BuildListDialog::canceled, this, &BuildListDialog::remove, Qt::QueuedConnection);
+    connect(this, &BuildListDialog::sigFinished, this, &BuildListDialog::remove, Qt::QueuedConnection);
+}
+
+void BuildListDialog::remove()
+{
+    detach();
 }
 
 void BuildListDialog::setBuildlist(qint32 item)

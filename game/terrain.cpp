@@ -179,11 +179,10 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
 {
     if (m_pTerrainSprite.get() != nullptr)
     {
-        oxygine::spTween pTween = m_pTerrainSprite->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = m_pTerrainSprite->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->setElapsed(syncTime);
-            pTween = pTween->getNextSibling();
         }
     }
     if (m_pBaseTerrain.get() != nullptr)

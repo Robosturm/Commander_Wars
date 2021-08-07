@@ -86,7 +86,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_MapScriptFile->setPosition(text->getX() + width, text->getY());
     m_MapScriptFile->setCurrentText(scriptFile);
     pSpriteBox->addChild(m_MapScriptFile);
-    m_ScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigshowSelectScript();
     });
@@ -161,25 +161,40 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pMapName = m_MapName.get();
+    auto* pMapAuthor = m_MapAuthor.get();
+    auto* pMapDescription = m_MapDescription.get();
+    auto* pMapScriptFile = m_MapScriptFile.get();
+    auto* pMapWidth = m_MapWidth.get();
+    auto* pMapHeigth = m_MapHeigth.get();
+    auto* pMapPlayerCount = m_MapPlayerCount.get();
+    auto* pMapTurnLimit = m_MapTurnLimit.get();
+    auto* pUnitBuildLimit = m_UnitBuildLimit.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit editFinished(m_MapName->getCurrentText(), m_MapAuthor->getCurrentText(),
-                          m_MapDescription->getCurrentText(), m_MapScriptFile->getCurrentText(),
-                          static_cast<qint32>(m_MapWidth->getCurrentValue()), static_cast<qint32>(m_MapHeigth->getCurrentValue()),
-                          static_cast<qint32>(m_MapPlayerCount->getCurrentValue()), static_cast<qint32>(m_MapTurnLimit->getCurrentValue()),
-                          static_cast<quint32>(m_UnitBuildLimit->getCurrentValue()));
-        detach();
+        emit editFinished(pMapName->getCurrentText(), pMapAuthor->getCurrentText(),
+                          pMapDescription->getCurrentText(), pMapScriptFile->getCurrentText(),
+                          static_cast<qint32>(pMapWidth->getCurrentValue()), static_cast<qint32>(pMapHeigth->getCurrentValue()),
+                          static_cast<qint32>(pMapPlayerCount->getCurrentValue()), static_cast<qint32>(pMapTurnLimit->getCurrentValue()),
+                          static_cast<quint32>(pUnitBuildLimit->getCurrentValue()));
+        emit sigFinished();
     });
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigCanceled();
-        detach();
     });
+    connect(this, &MapEditDialog::sigCanceled, this, &MapEditDialog::remove, Qt::QueuedConnection);
+    connect(this, &MapEditDialog::sigFinished, this, &MapEditDialog::remove, Qt::QueuedConnection);
+}
+
+void MapEditDialog::remove()
+{
+    detach();
 }
 
 void MapEditDialog::scriptFileChanged(QString file)

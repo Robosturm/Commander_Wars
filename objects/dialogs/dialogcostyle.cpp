@@ -39,23 +39,21 @@ DialogCOStyle::DialogCOStyle(QString coid)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Apply"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* event)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
     {
         event->stopPropagation();
         Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
         emit pCOSpriteManager->sigLoadResAnim(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
         emit sigFinished();
-        detach();
     });
 
     // cancel button
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
     pExitButton->setPosition(30, Settings::getHeight() - 30 - pExitButton->getHeight());
     m_pSpriteBox->addChild(pExitButton);
-    pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigCancel();
-        detach();
     });
     qint32 heigth = Settings::getHeight() - 320;
     if (Settings::getSmallScreenDevice())
@@ -149,7 +147,14 @@ DialogCOStyle::DialogCOStyle(QString coid)
         }
     }
     updateSprites();
+    connect(this, &DialogCOStyle::sigCancel, this, &DialogCOStyle::remove, Qt::QueuedConnection);
+    connect(this, &DialogCOStyle::sigFinished, this, &DialogCOStyle::remove, Qt::QueuedConnection);
     pApp->continueRendering();
+}
+
+void DialogCOStyle::remove()
+{
+    detach();
 }
 
 void DialogCOStyle::selecetedColorChanged(QColor color)
@@ -264,12 +269,12 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 QColor color = m_maskTable.pixelColor(i, 0);
                 pixel->setColor(color.red(), color.green(), color.blue(), 255);
                 pixel->setPosition(xStep * 22 + 5, y);
+                oxygine::Actor* pActor = m_PixelsSelector.get();
                 pixel->addClickListener([=](oxygine::Event* pEvent)
                 {
                     pEvent->stopPropagation();
-                    m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
+                    pActor->setPosition(xStep * 22 - 2 + 5, y - 2);
                     m_currentPixel = i;
-
                 });
 
                 m_pPixelPanel->addItem(pixel);
@@ -304,23 +309,24 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     m_pCOPanel->addItem(pBox);
     // add some event handling :)
     qint32 index = m_pCOBoxes.size();
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto pPtrBox = pBox;
+    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
         {
-            if (m_pCOBoxes[i].get() != pBox.get())
+            if (m_pCOBoxes[i].get() != pPtrBox)
             {
                 m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
             }
         }
-        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
         emit sigCOStyleChanged(index);
     });
     if (select)
     {
         for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
         {
-            if (m_pCOBoxes[i].get() != pBox.get())
+            if (m_pCOBoxes[i].get() != pPtrBox)
             {
                 m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
             }

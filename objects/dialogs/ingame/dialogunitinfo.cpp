@@ -42,10 +42,9 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
@@ -169,6 +168,12 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pPanel->setContentHeigth(y + 40);
 
     connect(this, &DialogUnitInfo::sigMoveToUnit, this, &DialogUnitInfo::moveToUnit, Qt::QueuedConnection);
+    connect(this, &DialogUnitInfo::sigFinished, this, &DialogUnitInfo::remove, Qt::QueuedConnection);
+}
+
+void DialogUnitInfo::remove()
+{
+    detach();
 }
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)

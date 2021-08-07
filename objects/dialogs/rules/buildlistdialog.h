@@ -23,6 +23,7 @@ signals:
     void editFinished(qint32 player, QStringList buildList);
     void canceled();
     void sigShowSaveBannlist();
+    void sigFinished();
 public slots:
     /**
      * @brief setBuildlist
@@ -37,6 +38,8 @@ public slots:
      * @brief saveBannlist
      */
     void saveBannlist(QString filename);
+private slots:
+    void remove();
 private:
     QVector<QString> getNameList();
 private:

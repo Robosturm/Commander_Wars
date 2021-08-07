@@ -56,23 +56,29 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     m_OkButton->setPosition(Settings::getWidth() / 2 + 10,
                             Settings::getHeight() / 2 + 90);
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         QString currentText = m_pTextbox->getCurrentText();
         QString password = m_pPasswordbox->getCurrentText();
         if (!currentText.isEmpty())
         {
             emit sigTextChanged(currentText, password);
-            detach();
+            emit sigFinished();
         }
     });
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
                                 Settings::getHeight() / 2 + 90);
     pSpriteBox->addChild(m_CancelButton);
-    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigCancel();
-        detach();
     });
+    connect(this, &DialogPasswordAndAdress::sigFinished, this, &DialogPasswordAndAdress::remove, Qt::QueuedConnection);
+    connect(this, &DialogPasswordAndAdress::sigCancel, this, &DialogPasswordAndAdress::remove, Qt::QueuedConnection);
+}
+
+void DialogPasswordAndAdress::remove()
+{
+    detach();
 }

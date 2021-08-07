@@ -192,7 +192,6 @@ int main(qint32 argc, char* argv[])
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
-    Player::releaseStaticData();
     Userdata::getInstance()->release();
     Console::getInstance()->release();
     Settings::shutdown();

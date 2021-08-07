@@ -8,7 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
-#include "3rd_party/oxygine-framework/oxygine/utils/intrusive_list.h"
+#include <QVector>
 
 namespace oxygine
 {
@@ -16,6 +16,7 @@ namespace oxygine
     {
     public:
         explicit TweenOptions(timeMS duration = timeMS(500)) : m_duration(duration), m_delay(timeMS(0)), m_ease(Tween::ease_linear), m_globalEase(Tween::ease_linear), m_loops(1), m_twoSides(false), m_detach(false) {}
+        virtual ~TweenOptions() = default;
         TweenOptions& duration(timeMS duration) { m_duration = duration; return *this; }
         TweenOptions& delay(timeMS delay) { m_delay = delay; return *this; }
         TweenOptions& loops(qint32 loops) { m_loops = loops; return *this; }
@@ -37,31 +38,30 @@ namespace oxygine
 
     DECLARE_SMART(Actor, spActor);
 
-    class Actor: public EventDispatcher, public intrusive_list_item<Actor>
+    class Actor: public EventDispatcher
     {
-        typedef intrusive_list_item<Actor> intr_list;
-
     public:
         explicit Actor();
         virtual ~Actor();
+        using children = QVector<spActor>;
+        using tweens = QVector<spTween>;
 
-        /**returns first child*/
-        spActor             getFirstChild() const {return m_children._first;}
-        /**returns first child*/
-        Actor*              getFirstChildActor() const {return m_children._first.get();}
-        /**returns last child*/
-        spActor             getLastChild() const {return m_children._last;}
-        /**returns next sibling*/
-        spActor             getNextSibling()const {return intr_list::_next;}
-        /**returns next sibling*/
-        Actor*              getNextSiblingActor()const {return intr_list::_next.get();}
-        /**returns previous sibling*/
-        spActor             getPrevSibling()const {return intr_list::_prev;}
-
-        /**returns first tween in actor*/
-        spTween             getFirstTween() const {return m_tweens._first;}
-        /**returns last tween in actor*/
-        spTween             getLastTween() const {return m_tweens._last;}
+        children& getChildren()
+        {
+            return m_children;
+        }
+        oxygine::spActor getFirstChild()
+        {
+            return m_children.first();
+        }
+        oxygine::spActor getLastChild()
+        {
+            return m_children.last();
+        }
+        tweens& getTweens()
+        {
+            return m_tweens;
+        }
 
         const Vector2&      getAnchor() const {return m_anchor;}
         float               getAnchorX() const {return m_anchor.x;}
@@ -106,10 +106,6 @@ namespace oxygine
         Transform           computeGlobalTransform(Actor* parent = nullptr) const;
         /**computes actor Bounds rectangle. Iterates children*/
         RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
-        /**computes actor Bounds rectangle in Parent Space. Iterates children*/
-        RectF               computeBoundsInParent() const;
-        /**computes actor Bounds rectangle in Stage Space. Iterates children*/
-        RectF               computeStageBounds() const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -261,10 +257,7 @@ namespace oxygine
 
         virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
         void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
-        typedef intrusive_list<Actor> children;
         static void setParent(Actor* actor, Actor* parent);
-        static children& getChildren(spActor& actor) { return actor->m_children; }
-        static unsigned int& _getFlags(Actor* actor) { return actor->m_flags; }
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
         const Vector2& _getSize() const { return m_size; }
@@ -280,6 +273,7 @@ namespace oxygine
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
+        void insertActor(Actor* actor);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;
@@ -306,7 +300,7 @@ namespace oxygine
         char    m_extendedIsOn;
         spClock m_clock;
         Actor* m_parent;
-        typedef intrusive_list<Tween> tweens;
+        QMutex m_tweenLock;
         tweens m_tweens;
         children m_children;
         union

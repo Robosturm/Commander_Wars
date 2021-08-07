@@ -30,9 +30,12 @@ signals:
     void editFinished(QString coid, qint32 player);
     void canceled();
     void sigShowCOInfo();
+    void sigFinished();
 public slots:
     void selectedCOIDChanged(QString coid);
     void showCOInfo();
+private slots:
+    void remove();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ShowCOInfoButton;

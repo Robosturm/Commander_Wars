@@ -42,7 +42,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
                             m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigOk();
     });
@@ -53,7 +53,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
         m_CancelButton->setPosition(Settings::getWidth() / 2 + 10,
                                 m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
         pSpriteBox->addChild(m_CancelButton);
-        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigCancel();
         });

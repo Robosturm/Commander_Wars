@@ -80,7 +80,7 @@ namespace oxygine
 
     void TweenQueue::_start(Actor& actor)
     {
-        m_current = m_tweens._first;
+        m_current = m_tweens.first();
         if (!m_current)
         {
             return;
@@ -97,16 +97,17 @@ namespace oxygine
 
         if (m_current)
         {
-            spTween next = m_current->getNextSibling();
+            qint32 next = m_tweens.indexOf(m_current);
             m_current->update(actor, us);
             if (m_current->isDone())
             {
-                m_current = next;
-                if (m_current)
+                if (next < m_tweens.size())
                 {
+                    m_current = m_tweens[next + 1];
                     m_current->start(actor);
                 }
             }
+
         }
 
         if (!m_current)
@@ -122,13 +123,10 @@ namespace oxygine
             }
             else
             {
-                spTween next = m_tweens._first;
-                while (next)
+                for (auto & tween : m_tweens)
                 {
-                    next->reset();
-                    next = next->getNextSibling();
+                    tween->reset();
                 }
-
                 _start(actor);
             }
         }

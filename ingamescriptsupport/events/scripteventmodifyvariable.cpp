@@ -113,9 +113,10 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     dropDown->setTooltipText(tr("The way how the variable gets modified."));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Modifier);
+    DropDownmenu* pDropDown = dropDown.get();
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
-        m_Modifier = dropDown->getCurrentItemText();
+        m_Modifier = pDropDown->getCurrentItemText();
     });
     pBox->addItem(dropDown);
 

@@ -386,9 +386,10 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     m_UnitDataActors.append(oxygine::spActor::create());
     qint32 i = m_UnitDataActors.size() - 1;
     m_UnitDataActors[i]->setPosition(x, y);
+    QString unitId = pUnit->getUnitID();
     m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
     {
-        emit sigShowLink(pUnit->getUnitID());
+        emit sigShowLink(unitId);
     });
     addChild(m_UnitDataActors[i]);
 

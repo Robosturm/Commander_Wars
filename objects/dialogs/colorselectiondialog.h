@@ -25,6 +25,9 @@ public:
 signals:
     void editFinished(QColor color);
     void canceled();
+    void sigFinished();
+private slots:
+    void remove();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ExitButton;

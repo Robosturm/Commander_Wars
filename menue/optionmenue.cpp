@@ -163,22 +163,18 @@ void OptionMenue::exitMenue()
     }
 }
 
-
 void OptionMenue::showGameplayAndKeys()
-{
-    
+{    
     m_pOptions->setVisible(false);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
     m_ModSelector->setVisible(false);
-    m_pGameplayAndKeys->setVisible(true);
-    
+    m_pGameplayAndKeys->setVisible(true);    
 }
 
 void OptionMenue::reloadSettings()
 {    
     Console::print("Leaving Option Menue", Console::eDEBUG);
-
     spOptionMenue newMenu = spOptionMenue::create();
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
@@ -187,8 +183,7 @@ void OptionMenue::reloadSettings()
 }
 
 void OptionMenue::showSettings()
-{
-    
+{    
     m_pOptions->setVisible(true);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
@@ -356,9 +351,10 @@ void OptionMenue::showSettings()
     pScreenResolution->setCurrentItem(currentDisplayMode);
     pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game"));
     m_pOptions->addItem(pScreenResolution);
+    auto* pPtrScreenResolution = pScreenResolution.get();
     connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
-        QStringList itemData = pScreenResolution->getCurrentItemText().split(" x ");
+        QStringList itemData = pPtrScreenResolution->getCurrentItemText().split(" x ");
         qint32 width = itemData[0].toInt();
         qint32 heigth = itemData[1].toInt();
         Settings::setWidth(width);
@@ -583,11 +579,12 @@ void OptionMenue::showSettings()
     spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
     pTextbox->setTooltipText(tr("Selects your username shown at various places of the game"));
     pTextbox->setCurrentText(Settings::getUsername());
+    Textbox* pPtrTextbox = pTextbox.get();
     connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString value)
     {
         if (value.isEmpty())
         {
-            pTextbox->setCurrentText(Settings::getUsername());
+            pPtrTextbox->setCurrentText(Settings::getUsername());
         }
         else
         {
@@ -774,8 +771,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
 }
 
 void OptionMenue::showMods()
-{
-    
+{    
     m_pMods->clearContent();
     m_pModDescription->clearContent();
     m_ModBoxes.clear();
@@ -876,6 +872,9 @@ void OptionMenue::showMods()
             pBox->setPosition(10, 10 + mods * 50);
             pBox->setSize(curWidth + 20, 50);
 
+            auto* pPtrBox = pBox.get();
+            auto* pModDescriptionText = m_ModDescriptionText.get();
+            auto* pModDescription = m_pModDescription.get();
             pBox->addClickListener([=](oxygine::Event* pEvent)
             {
                 pEvent->stopPropagation();
@@ -883,7 +882,7 @@ void OptionMenue::showMods()
                 {
                     m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
                 }
-                pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+                pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
                 QString cosmeticInfo;
                 if (isComsetic)
                 {
@@ -904,8 +903,8 @@ void OptionMenue::showMods()
                 {
                     modInfo += Settings::getModName(mod) + "\n";
                 }
-                m_ModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
-                m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
+                pModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
+                pModDescription->setContentHeigth(pModDescriptionText->getTextRect().getHeight() + 40);
             });
             m_ModBoxes.append(pBox);
             m_pMods->addItem(pBox);
@@ -918,8 +917,7 @@ void OptionMenue::showMods()
 }
 
 void OptionMenue::selectMods(qint32 item)
-{
-    
+{    
     QStringList removeList;
     QStringList addList;
     switch (item)
@@ -986,8 +984,7 @@ void OptionMenue::selectMods(qint32 item)
     }
     Console::print("Marking restart cause mods changed.", Console::eDEBUG);
     restartNeeded = true;
-    showMods();
-    
+    showMods();    
 }
 
 void OptionMenue::restart()

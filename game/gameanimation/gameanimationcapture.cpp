@@ -133,9 +133,10 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
 
         if (m_endPoints == 0)
         {
+            oxygine::Sprite* pSrite = m_buildingSprites.get();
             tween2->addDoneCallback([=](oxygine::Event *)
             {
-                m_buildingSprites->setResAnim(m_captureBuildingResAnim.get());
+                pSrite->setResAnim(m_captureBuildingResAnim.get());
                 if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
                 {
                     Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");

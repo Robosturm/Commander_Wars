@@ -264,6 +264,11 @@ Mainwindow::Mainwindow()
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
 
+    QSize size (100, 100);
+    spPanel pTest = spPanel::create(true, size, size);
+    pTest->addItem(oxygine::spTextField::create());
+    addChild(pTest);
+
     emit sigOnEnter();
     pApp->continueRendering();
 }

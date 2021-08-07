@@ -22,8 +22,9 @@ public:
 signals:
     void sigTextChanged(QString text, QString password);
     void sigCancel();
-public slots:
-
+    void sigFinished();
+private slots:
+    void remove();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_CancelButton;

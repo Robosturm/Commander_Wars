@@ -28,17 +28,18 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     pSprite->setPosition(width - pSprite->getScaledWidth(), 0);
     pSprite->setAnimFrame(pAnim, 3);
     pBox->addChild(pSprite);
-    pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigClosed();
     });
-    pSprite->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pPtrSprite = pSprite.get();
+    pSprite->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        pSprite->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        pPtrSprite->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pSprite->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pSprite->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
-        pSprite->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        pPtrSprite->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     addChild(pBox);
     connect(this, &CloseablePopUp::sigClosed, this, &CloseablePopUp::close, Qt::QueuedConnection);

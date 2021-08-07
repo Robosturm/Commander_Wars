@@ -68,7 +68,7 @@ ScriptEditor::ScriptEditor()
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
     pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
-    pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigAddCondition();
     });
@@ -77,7 +77,7 @@ ScriptEditor::ScriptEditor()
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
     pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionDuplicate);
-    pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigDuplicateCondition();
     });
@@ -120,7 +120,7 @@ ScriptEditor::ScriptEditor()
     oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
     pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
     pSpriteBox->addChild(pEventButton);
-    pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigAddEvent();
     });
@@ -142,7 +142,7 @@ ScriptEditor::ScriptEditor()
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigShowExitBox();
     });
@@ -150,14 +150,14 @@ ScriptEditor::ScriptEditor()
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 30 - pSaveButton->getHeight());
     pSpriteBox->addChild(pSaveButton);
-    pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadButton->setPosition(30, Settings::getHeight() - 30 - pLoadButton->getHeight());
     pSpriteBox->addChild(pLoadButton);
-    pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigLoadScript();
     });
@@ -181,35 +181,29 @@ void ScriptEditor::showExitBox()
 }
 
 void ScriptEditor::exitEditor()
-{
-    
+{    
     emit sigFinished();
-    detach();
-    
+    detach();    
 }
 
 void ScriptEditor::showSaveScript()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);    
 }
 
 void ScriptEditor::showLoadScript()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
-    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);    
 }
 
 void ScriptEditor::saveScript(QString filename)
@@ -312,14 +306,14 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
         pEditButton->setPosition(x, boxY);
         pSpritebox->addChild(pEditButton);
-        pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigShowEditCondition(condition);
         });
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
         pRemoveButton->setPosition(x + 140, boxY);
         pSpritebox->addChild(pRemoveButton);
-        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             m_Data->removeCondition(condition);
             emit sigUpdateConditions();
@@ -327,20 +321,21 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 130);
         pSelectButton->setPosition(x + 140 * 2, boxY);
         pSpritebox->addChild(pSelectButton);
-        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        auto pPtrSpritebox = pSpritebox.get();
+        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
             {
                 m_ConditionBoxes[i]->setAddColor(0, 0, 0);
             }
-            if (m_CurrentCondition.get() == condition.get())
+            if (m_CurrentCondition == condition.get())
             {
                 m_CurrentCondition = nullptr;
             }
             else
             {
-                pSpritebox->setAddColor(32, 200, 32);
-                m_CurrentCondition = condition;
+                pPtrSpritebox->setAddColor(32, 200, 32);
+                m_CurrentCondition = condition.get();
             }
             emit sigUpdateEvents();
         });
@@ -357,11 +352,10 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 }
 
 void ScriptEditor::updateEvents()
-{
-    
+{    
     m_EventPanel->clearContent();
     qint32 y = 10;
-    if (m_CurrentCondition.get() != nullptr)
+    if (m_CurrentCondition != nullptr)
     {
 
         for (qint32 i = 0; i < m_CurrentCondition->getEventSize(); i++)
@@ -371,8 +365,7 @@ void ScriptEditor::updateEvents()
         }
 
     }
-    m_EventPanel->setContentHeigth(y + 40);
-    
+    m_EventPanel->setContentHeigth(y + 40);    
 }
 
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
@@ -392,24 +385,25 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
     pEditButton->setPosition(x, y);
     m_EventPanel->addItem(pEditButton);
-    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pPtrEvent = pEvent.get();
+    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit sigShowEditEvent(pEvent);
+        emit sigShowEditEvent(pPtrEvent);
     });
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
     pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        m_CurrentCondition->removeEvent(pEvent);
+        m_CurrentCondition->removeEvent(pPtrEvent);
         emit sigUpdateEvents();
     });
     oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
     pDuplicateButton->setPosition(x + 140 * 2, y);
     m_EventPanel->addItem(pDuplicateButton);
-    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        emit sigDuplicateEvent(pEvent);
+        emit sigDuplicateEvent(pPtrEvent);
     });
 
     y += 40;
@@ -420,7 +414,7 @@ void ScriptEditor::addCondition()
 {
     ScriptCondition::ConditionType type = static_cast<ScriptCondition::ConditionType>(m_Conditions->getCurrentItem());
     spScriptCondition pCondition;
-    if (m_CurrentCondition.get() != nullptr &&
+    if (m_CurrentCondition != nullptr &&
         ScriptCondition::sameConditionGroup(m_CurrentCondition->getType(), type))
     {
         spScriptCondition parent = m_CurrentCondition;
@@ -441,7 +435,7 @@ void ScriptEditor::addCondition()
 
 void ScriptEditor::addEvent()
 {
-    if (m_CurrentCondition.get() != nullptr)
+    if (m_CurrentCondition != nullptr)
     {
         ScriptEvent::EventType type = static_cast<ScriptEvent::EventType>(m_Events->getCurrentItem());
         m_CurrentCondition->addEvent(ScriptEvent::createEvent(type));
@@ -478,7 +472,7 @@ void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
 
 void ScriptEditor::duplicateCondition()
 {
-    if (m_CurrentCondition.get() != nullptr)
+    if (m_CurrentCondition != nullptr)
     {
         QString data;
         QTextStream stream(&data);

@@ -32,10 +32,9 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2,
                             Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
     oxygine::TextStyle style = FontManager::getMainFont48();
     style.color = FontManager::getFontColor();
@@ -57,7 +56,13 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     connect(&m_updateTimer, &QTimer::timeout, this, &DialogValueCounter::updateData, Qt::QueuedConnection);
     m_updateTimer.start();
 
+    connect(this, &DialogValueCounter::sigFinished, this, &DialogValueCounter::remove, Qt::QueuedConnection);
     pApp->continueRendering();
+}
+
+void DialogValueCounter::remove()
+{
+    detach();
 }
 
 void DialogValueCounter::updateData()

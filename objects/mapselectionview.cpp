@@ -181,23 +181,25 @@ MapSelectionView::MapSelectionView()
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
-    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonTop->setFlippedX(true);
-    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pContent = m_content.get();
+    auto* pContentSlider = m_contentSlider.get();
+    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        if (m_content->getWidth() > m_contentSlider->getWidth())
+        if (pContent->getWidth() > pContentSlider->getWidth())
         {
-            m_content->setX(m_content->getX() - GameMap::getImageSize());
-            if (m_content->getX() + m_content->getWidth() < m_contentSlider->getWidth())
+            pContent->setX(m_content->getX() - GameMap::getImageSize());
+            if (pContent->getX() + pContent->getWidth() < pContentSlider->getWidth())
             {
-                m_content->setX(m_contentSlider->getWidth() - m_content->getWidth());
+                pContent->setX(pContentSlider->getWidth() - pContent->getWidth());
             }
         }
     });
@@ -208,20 +210,20 @@ MapSelectionView::MapSelectionView()
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonTop.get();
-    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        m_content->setX(m_content->getX() + GameMap::getImageSize());
-        if (m_content->getX() > 0)
+        pContent->setX(pContent->getX() + GameMap::getImageSize());
+        if (pContent->getX() > 0)
         {
-            m_content->setX(0);
+            pContent->setX(0);
         }
     });
     pButtonTop->setPosition(m_MapInfo->getX() + m_contentSlider->getWidth() + 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);

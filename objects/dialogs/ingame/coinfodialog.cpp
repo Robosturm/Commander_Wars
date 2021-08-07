@@ -44,7 +44,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_NextButton = pObjectManager->createButton(tr("Next"), 150);
     m_NextButton->setPosition(Settings::getWidth() - m_NextButton->getWidth() - 30, Settings::getHeight() - 30 - m_NextButton->getHeight());
     pSpriteBox->addChild(m_NextButton);
-    m_NextButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_NextButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit next();
     });
@@ -53,17 +53,16 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_QuitButton = pObjectManager->createButton(tr("Quit"), 150);
     m_QuitButton->setPosition(Settings::getWidth() / 2 - m_QuitButton->getWidth() / 2, Settings::getHeight() - 30 - m_QuitButton->getHeight());
     pSpriteBox->addChild(m_QuitButton);
-    m_QuitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_QuitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit quit();
-        detach();
     });
 
     // back button
     m_BackButton = pObjectManager->createButton(tr("Back"), 150);
     m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getHeight());
     pSpriteBox->addChild(m_BackButton);
-    m_BackButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_BackButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit back();
     });
@@ -79,6 +78,12 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_COInfo = spCOInfoActor::create(m_pPanel->getWidth());
     m_pPanel->addItem(m_COInfo);
     showCO();
+    connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);
+}
+
+void COInfoDialog::remove()
+{
+    detach();
 }
 
 void COInfoDialog::slotNext()

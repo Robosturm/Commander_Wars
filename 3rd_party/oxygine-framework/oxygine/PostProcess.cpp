@@ -16,9 +16,9 @@
 
 namespace oxygine
 {
-    spShaderProgram PostProcess::shaderBlurV = nullptr;
-    spShaderProgram PostProcess::shaderBlurH = nullptr;
-    spShaderProgram PostProcess::shaderBlit = nullptr;
+    spShaderProgram PostProcess::shaderBlurV ;
+    spShaderProgram PostProcess::shaderBlurH;
+    spShaderProgram PostProcess::shaderBlit;
     bool _ppBuilt = false;
 
     void PostProcess::initShaders()

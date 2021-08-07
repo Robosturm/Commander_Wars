@@ -47,10 +47,9 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
 
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
@@ -264,6 +263,12 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     pPanel->setContentHeigth(y + 40);
 
     connect(this, &DialogAttackLog::sigShowAttack, this, &DialogAttackLog::showAttack, Qt::QueuedConnection);
+    connect(this, &DialogAttackLog::sigFinished, this, &DialogAttackLog::remove, Qt::QueuedConnection);
+}
+
+void DialogAttackLog::remove()
+{
+    detach();
 }
 
 void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef)

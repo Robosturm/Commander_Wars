@@ -11,6 +11,8 @@
 #include "menue/editormenue.h"
 #include "menue/gamemenue.h"
 
+#include "game/gameanimation/gameanimationfactory.h"
+
 #include "multiplayer/multiplayermenu.h"
 #include "network/localserver.h"
 
@@ -192,10 +194,12 @@ void WorkerThread::onQuit()
     {
         GameMap::getInstance()->deleteMap();
     }
+    GameAnimationFactory::getInstance()->release();
     Interpreter::release();
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     COSpriteManager::getInstance()->release();
+    Player::releaseStaticData();
 }
 
 void WorkerThread::startSlaveGame()

@@ -243,11 +243,10 @@ void Building::syncAnimation(oxygine::timeMS syncTime)
 {
     for (auto & sprite : m_pBuildingSprites)
     {
-        oxygine::spTween pTween = sprite->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = sprite->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->setElapsed(syncTime);
-            pTween = pTween->getNextSibling();
         }
     }
 }

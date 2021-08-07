@@ -249,12 +249,11 @@ void HumanPlayerInput::syncMarkedFields()
 {
     for (auto & field : m_Fields)
     {
-        oxygine::spTween pTween = field->getFirstTween();
-        while (pTween.get() != nullptr)
+        auto & tweens = field->getTweens();
+        for (auto & pTween : tweens)
         {
             pTween->reset();
             pTween->start(*field);
-            pTween = pTween->getNextSibling();
         }
     }
 }

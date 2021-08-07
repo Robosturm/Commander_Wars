@@ -50,13 +50,9 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::added2stage trying to add to stage while on a stage");
         }
         m_stage = stage;
-
-        spActor actor = m_children._first;
-        while (actor)
+        for (auto & child : m_children)
         {
-            spActor next = actor->_next;
-            actor->added2stage(stage);
-            actor = next;
+            child->added2stage(stage);
         }
         onAdded2Stage();
     }
@@ -66,19 +62,16 @@ namespace oxygine
         if (m_stage == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removedFromStage trying to remove from stage while not on a stage");
+            return;
         }
         onRemovedFromStage();
         m_stage->removeEventListeners(this);
         m_stage = nullptr;
 
         m_pressedOvered = 0;
-
-        spActor actor = m_children._first;
-        while (actor)
+        for (auto & child : m_children)
         {
-            spActor next = actor->_next;
-            actor->removedFromStage();
-            actor = next;
+            child->removedFromStage();
         }
     }
 
@@ -88,15 +81,13 @@ namespace oxygine
 
     void Actor::calcChildrenBounds(RectF& bounds, const Transform& transform) const
     {
-        const Actor* c = getFirstChild().get();
-        while (c)
+        for (auto & child : m_children)
         {
-            if (c->getVisible())
+            if (child->getVisible())
             {
-                Transform tr = c->getTransform() * transform;
-                c->calcBounds2(bounds, tr);
+                Transform tr = child->getTransform() * transform;
+                child->calcBounds2(bounds, tr);
             }
-            c = c->getNextSibling().get();
         }
     }
 
@@ -124,16 +115,6 @@ namespace oxygine
         calcBounds2(bounds, transform);
 
         return bounds;
-    }
-
-    RectF Actor::computeBoundsInParent() const
-    {
-        return computeBounds(getTransform());
-    }
-
-    oxygine::RectF Actor::computeStageBounds() const
-    {
-        return computeBounds(computeGlobalTransform());
     }
 
     Transform Actor::computeGlobalTransform(Actor* parent) const
@@ -334,17 +315,16 @@ namespace oxygine
         }
 
         event->phase = Event::phase_capturing;
-        spActor actor = m_children._last;
-        while (actor)
+        if (!touchEvent || (m_flags & flag_touchChildrenEnabled))
         {
-            spActor prev = actor->_prev;
-            if (!touchEvent || (m_flags & flag_touchChildrenEnabled))
+            QMutexLocker lock(&m_Locked);
+            auto iter = m_children.end();
+            while (iter != m_children.begin())
             {
-                actor->handleEvent(event);
+                iter--;
+                iter->get()->handleEvent(event);
             }
-            actor = prev;
         }
-
         if (touchEvent)
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
@@ -471,34 +451,9 @@ namespace oxygine
         {
             QMutexLocker lockParent(&m_parent->m_Locked);
             QMutexLocker lock(&m_Locked);
-
-            Actor* parent = m_parent;
             spActor me = this;
-            parent->m_children.removeItem(me);
-            Actor* sibling = parent->m_children._last.get();
-            //try to insert at the end of list first
-            if (sibling && sibling->getPriority() > m_zOrder)
-            {
-                sibling = sibling->intr_list::_prev.get();
-                while (sibling)
-                {
-                    if (sibling->getPriority() <= m_zOrder)
-                    {
-                        break;
-                    }
-                    sibling = sibling->intr_list::_prev.get();
-                }
-            }
-
-            if (sibling)
-            {
-                spActor s = sibling;
-                parent->m_children.insert_after(me, s);
-            }
-            else
-            {
-                parent->m_children.prepend(me);
-            }
+            m_parent->m_children.removeOne(me);
+            m_parent->insertActor(this);
         }
     }
 
@@ -760,33 +715,26 @@ namespace oxygine
         actor->detach();
         QMutexLocker lock(&m_Locked);
         QMutexLocker lockActor(&(actor->m_Locked));
+        insertActor(actor);
+        setParent(actor, this);
+    }
+
+    void Actor::insertActor(Actor* actor)
+    {
         qint32 z = actor->getPriority();
-        spActor sibling = m_children._last;
-        //try to insert at the end of list first
-        if (sibling && sibling->getPriority() > z)
+        spActor insert = actor;
+        auto iter = m_children.cend();
+        auto insertBefore = iter;
+        while (iter != m_children.cbegin())
         {
-            sibling = sibling->getPrevSibling();
-            while (sibling)
+            iter--;
+            if (iter->get()->getPriority() <= z)
             {
-                if (sibling->getPriority() <= z)
-                {
-                    break;
-                }
-                sibling = sibling->getPrevSibling();
+                break;
             }
+            insertBefore = iter;
         }
-        if (sibling)
-        {            
-            spActor t = actor;
-            m_children.insert_after(t, sibling);
-            setParent(actor, this);
-        }
-        else
-        {
-            spActor t = actor;
-            m_children.prepend(t);
-            setParent(actor, this);
-        }
+        m_children.insert(insertBefore, insert);
     }
 
     void Actor::addChild(spActor actor)
@@ -811,7 +759,7 @@ namespace oxygine
             else
             {                
                 setParent(actor.get(), nullptr);
-                m_children.removeItem(actor);
+                m_children.removeOne(actor);
             }
         }
         else
@@ -822,12 +770,10 @@ namespace oxygine
 
     void Actor::removeChildren()
     {
-        spActor child = getFirstChild();
-        while (child)
+        while (m_children.size() > 0)
         {
-            spActor copy = child;
-            child = child->getNextSibling();
-            removeChild(copy);
+            spActor child = m_children.last();
+            removeChild(child);
         }
     }
 
@@ -845,32 +791,20 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
         QMutexLocker lock(&m_Locked);
-        spTween tween = m_tweens._first;
-        while (tween)
+        m_tweenLock.lock();
+        for (auto & tween : m_tweens)
         {
-            spTween tweenNext = tween->getNextSibling();
-
-            if (tween->getParentList())
+            tween->update(*this, us);
+            if (tween->isDone())
             {
-                tween->update(*this, us);
+                m_tweens.removeOne(tween);
             }
-            if (tween->isDone() && tween->getParentList())
-            {
-                m_tweens.removeItem(tween);
-            }
-            tween = tweenNext;
         }
+        m_tweenLock.unlock();
         doUpdate(us);
-
-        spActor actor = m_children._first;
-        while (actor)
+        for (auto & child : m_children)
         {
-            spActor next = actor->_next;
-            if (actor->getParent())
-            {
-                actor->update(us);
-            }
-            actor = next;
+            child->update(us);
         }
     }
 
@@ -1022,11 +956,9 @@ namespace oxygine
         removeTweens();
         removeAllEventListeners();
 
-        spActor child = getFirstChild();
-        while (child)
+        for (auto & child : m_children)
         {
             child->clean();
-            child = child->getNextSibling();
         }
     }
 
@@ -1064,7 +996,7 @@ namespace oxygine
             return nullptr;
         }
         {
-            QMutexLocker lock(&m_Locked);
+            QMutexLocker lock(&m_tweenLock);
             m_tweens.append(tween);
         }
         tween->start(*this);
@@ -1084,33 +1016,30 @@ namespace oxygine
 
     void Actor::removeTween(spTween pTween)
     {
-        QMutexLocker lock(&m_Locked);
+        QMutexLocker lock(&m_tweenLock);
         if (pTween.get() == nullptr)
         {
             return;
         }
-        if (pTween->getParentList() == &m_tweens)
+        if (m_tweens.contains(pTween))
         {
             pTween->setClient(nullptr);
-            m_tweens.removeItem(pTween);
+            m_tweens.removeOne(pTween);
         }
     }
 
     void Actor::removeTweens(bool callComplete)
     {
-        spTween t = m_tweens._first;
-        while (t)
+        while (m_tweens.size() > 0)
         {
-            spTween c = t;
-            t = t->getNextSibling();
-
+            spTween tween = m_tweens.last();
             if (callComplete)
             {
-                c->complete();
+                tween->complete();
             }
             else
             {
-                removeTween(c);
+                removeTween(tween);
             }
         }
     }

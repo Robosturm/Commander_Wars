@@ -19,6 +19,8 @@ public:
     virtual ~PlayerSelectionDialog() = default;
 signals:
     void sigPlayersChanged();
+private slots:
+    void remove();
 private:
     oxygine::spButton m_OkButton;
     spPlayerSelection m_pPlayerSelection;

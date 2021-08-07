@@ -340,13 +340,14 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     actor->addChild(pSprite);
 
     actor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
-    actor->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    auto* pCursor = m_Cursor.get();
+    actor->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
     {
-        m_Cursor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
+        pCursor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
         m_CurrentCO = coid;
     });
     connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
-    actor->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    actor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigHoveredCOChanged(m_CurrentCO);
         emit coSelected(m_CurrentCO);
@@ -357,18 +358,18 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
 }
 
 void COSelection::colorChanged(QColor color)
-{
-    
+{    
     QColor colorAlpha(color);
     colorAlpha.setAlpha(120);
+
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         oxygine::Sprite* pSprite = dynamic_cast<oxygine::Sprite*>(m_COFields[i]->getLastChild().get());
         pSprite->setColor(colorAlpha);
     }
+
     m_Cursor->setColor(color);
-    m_CurrentColor = color;
-    
+    m_CurrentColor = color;    
 }
 
 void COSelection::hoveredCOChanged(QString coid)
@@ -445,6 +446,5 @@ void COSelection::hoveredCOChanged(QString coid)
         m_COPower->setHtmlText("");
         m_COSuperpower->setHtmlText("");
         m_pCurrentCO->setResAnim(nullptr);
-    }
-    
+    }    
 }

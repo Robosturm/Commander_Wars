@@ -26,10 +26,9 @@ PlayerSelectionDialog::PlayerSelectionDialog()
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigPlayersChanged();
-        detach();
     });
 
     m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 60,
@@ -37,5 +36,10 @@ PlayerSelectionDialog::PlayerSelectionDialog()
     m_pPlayerSelection->setPosition(30, 30);
     m_pPlayerSelection->showPlayerSelection();
     pSpriteBox->addChild(m_pPlayerSelection);
+    connect(this, &PlayerSelectionDialog::sigPlayersChanged, this, &PlayerSelectionDialog::remove, Qt::QueuedConnection);
 }
 
+void PlayerSelectionDialog::remove()
+{
+    detach();
+}

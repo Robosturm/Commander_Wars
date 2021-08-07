@@ -198,9 +198,10 @@ void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 wid
     {
         spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false);
         pDummy->setPosition(x, y);
+        QString id = productionList[i];
         pDummy->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(productionList[i]);
+           emit sigShowLink(id);
         });
         addChild(pDummy);
         x += GameMap::getImageSize() * 2;

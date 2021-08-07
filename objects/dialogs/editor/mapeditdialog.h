@@ -31,9 +31,11 @@ signals:
                       qint32 turnLimit, quint32 buildLimit);
     void sigCanceled();
     void sigshowSelectScript();
+    void sigFinished();
 public slots:
     void scriptFileChanged(QString file);
     void showSelectScript();
+    void remove();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ExitButton;

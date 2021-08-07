@@ -103,6 +103,5 @@
 
 //utils/
 #include "oxygine/utils/AtlasBuilder.h"
-#include "oxygine/utils/intrusive_list.h"
 
 #endif

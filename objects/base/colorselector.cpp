@@ -82,13 +82,13 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     connect(this, &ColorSelector::sigSelecetedColorChanged, this, &ColorSelector::selecetedColorChanged);
 
     m_ColorDialog = oxygine::spActor::create();
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
         m_boxUpdating = true;
         FocusableObject::looseFocus();
     });
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
     {
         if (m_boxUpdating)
         {
@@ -103,7 +103,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             FocusableObject::looseFocus();
         }
     });
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event* pEvent)
     {
         if (m_boxUpdating)
         {
@@ -161,12 +161,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
         bar->addChild(pSprite);
     }
-    bar->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
         m_barUpdating = true;
     });
-    bar->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
     {
         if (m_barUpdating)
         {
@@ -180,7 +180,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             FocusableObject::looseFocus();
         }
     });
-    bar->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event* pEvent)
     {
         if (m_barUpdating)
         {

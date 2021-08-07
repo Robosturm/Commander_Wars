@@ -409,9 +409,10 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
         spUnit pDummy = spUnit::create(sortedUnits[i], pUnit->getOwner(), false);
+        QString unitId = sortedUnits[i];
         pDummy->addClickListener([=](oxygine::Event*)
         {
-            emit sigShowLink(sortedUnits[i]);
+            emit sigShowLink(unitId);
         });
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
@@ -472,9 +473,10 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
         pDummy->setAmmo2(loadedUnit->getAmmo2());
         pDummy->setFuel(loadedUnit->getFuel());
         pDummy->setUnitRank(loadedUnit->getUnitRank());
+        QString loadedUnitId = loadedUnit->getUnitID();
         pDummy->addClickListener([=](oxygine::Event*)
         {
-            emit sigShowLink(loadedUnit->getUnitID());
+            emit sigShowLink(loadedUnitId);
         });
         addChild(pDummy);
         x += GameMap::getImageSize() * 1.5f;

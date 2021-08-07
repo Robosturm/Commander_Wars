@@ -13,32 +13,32 @@ namespace oxygine
     {
         T* m_pPointer{nullptr};
     public:
-        typedef T element_type;
-
-
         template<typename ...TArgs>
         static intrusive_ptr<T> create(TArgs... args)
         {
             ++oxygine::ref_counter::instanceCounter;
             intrusive_ptr<T> pRet;
             pRet.m_pPointer =  new T(args...);
+#ifdef GAMEDEBUG
             oxygine::ref_counter::lock.lock();
             oxygine::ref_counter::objects.append(pRet.m_pPointer);
             oxygine::ref_counter::lock.unlock();
+#endif
             pRet.m_pPointer->addRef();
             return pRet;
         }
 
-        intrusive_ptr()
+        explicit intrusive_ptr()
             : m_pPointer(nullptr)
         {
         }
+
         intrusive_ptr(const intrusive_ptr& s)
             : m_pPointer(s.m_pPointer)
         {
             if (m_pPointer != nullptr)
             {
-                s.m_pPointer->addRef();
+                m_pPointer->addRef();
             }
         }
 
@@ -80,15 +80,22 @@ namespace oxygine
         }
 
         intrusive_ptr(T* p)
-            : m_pPointer(p)
         {
-            if (p)
+            // free old pointer
+            if (m_pPointer != nullptr)
             {
-                if (p->getRefCounter() == 0)
+                m_pPointer->releaseRef();
+            }
+            // swap pointer
+            m_pPointer = p;
+            if (m_pPointer != nullptr)
+            {
+                // allocate new pointer
+                if (m_pPointer->getRefCounter() == 0)
                 {
                     ++oxygine::ref_counter::instanceCounter;
                 }
-                p->addRef();
+                m_pPointer->addRef();
             }
         }
 
@@ -103,6 +110,7 @@ namespace oxygine
             s.m_pPointer = m_pPointer;
             m_pPointer = p;
         }
+
         operator bool ()const
         {
             return m_pPointer != nullptr;

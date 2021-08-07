@@ -24,6 +24,7 @@ signals:
     void sigShowPopup(QString rule);
 protected slots:
     void showPopup(QString rule);
+    void remove();
 private:
     oxygine::spButton m_OkButton;
 };

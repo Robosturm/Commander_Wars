@@ -28,10 +28,9 @@ GenericBox::GenericBox(bool cancel)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigFinished();
-        detach();
     });
     if (cancel)
     {
@@ -39,15 +38,22 @@ GenericBox::GenericBox(bool cancel)
         oxygine::spButton pCancelButton = pObjectManager->createButton(tr("Cancel"), 150);
         pCancelButton->setPosition(Settings::getWidth() / 2 - pCancelButton->getWidth() - 10, Settings::getHeight() - 30 - pOkButton->getHeight());
         m_pSpriteBox->addChild(pCancelButton);
-        pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigCancel();
-            detach();
         });
     }
+    connect(this, &GenericBox::sigCancel, this, &GenericBox::remove, Qt::QueuedConnection);
+    connect(this, &GenericBox::sigFinished, this, &GenericBox::remove, Qt::QueuedConnection);
+}
+
+void GenericBox::remove()
+{
+    detach();
 }
 
 void GenericBox::addItem(oxygine::spActor pActor)
 {
     m_pSpriteBox->addChild(pActor);
 }
+

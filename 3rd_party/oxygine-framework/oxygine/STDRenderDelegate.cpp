@@ -28,18 +28,10 @@ namespace oxygine
         {
             return;
         }
-        Actor* actor = parent->getFirstChildActor();
-        while (actor != nullptr)
+        auto & children = parent->getChildren();
+        for (auto & child : children)
         {
-            if (actor->getParent())
-            {
-                actor->render(rs);
-                actor = actor->getNextSiblingActor();
-            }
-            else
-            {
-                break;
-            }
+            child->render(rs);
         }
     }
 

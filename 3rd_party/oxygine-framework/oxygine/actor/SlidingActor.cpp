@@ -29,17 +29,16 @@ namespace oxygine
         addChild(m_clip);
     }
 
-    void SlidingActor::destroy()
-    {
-        m_clip->removeChildren();
-
-        m_drag.destroy();
-        m_content = nullptr;
-    }
-
     SlidingActor::~SlidingActor()
     {
         destroy();
+    }
+
+    void SlidingActor::destroy()
+    {
+        m_clip->removeChildren();
+        m_drag.destroy();
+        m_content = nullptr;
     }
 
     void SlidingActor::setTouchThreshold(float rad)

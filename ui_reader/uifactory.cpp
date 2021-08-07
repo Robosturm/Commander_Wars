@@ -175,9 +175,10 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         QString onUpdateLine = getAttribute(childs, attrOnUpdate);
         if (!onUpdateLine.isEmpty())
         {
+            Label* pPtr = pLabel.get();
             connect(pMenu, &Basemenu::sigOnUpdate, pLabel.get(), [=]()
             {
-                pLabel->setHtmlText(onUpdate<QString>(onUpdateLine));
+                pPtr->setHtmlText(onUpdate<QString>(onUpdateLine));
             });
         }
         parent->addChild(pLabel);

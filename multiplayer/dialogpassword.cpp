@@ -43,13 +43,14 @@ DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput
     m_OkButton->setPosition(Settings::getWidth() / 2 + 10,
                             Settings::getHeight() / 2 + 50);
     pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    auto* pTextbox = m_pTextbox.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        QString currentText = m_pTextbox->getCurrentText();
+        QString currentText = pTextbox->getCurrentText();
         if (!currentText.isEmpty())
         {
             emit sigTextChanged(currentText);
-            detach();
+            emit sigFinished();
         }
     });
     if (showCancel)
@@ -58,10 +59,16 @@ DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput
         m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
                                     Settings::getHeight() / 2 + 50);
         pSpriteBox->addChild(m_CancelButton);
-        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             emit sigCancel();
-            detach();
         });
     }
+    connect(this, &DialogPassword::sigFinished, this, &DialogPassword::remove, Qt::QueuedConnection);
+    connect(this, &DialogPassword::sigCancel, this, &DialogPassword::remove, Qt::QueuedConnection);
+}
+
+void DialogPassword::remove()
+{
+    detach();
 }
