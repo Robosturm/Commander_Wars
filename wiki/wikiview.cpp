@@ -75,7 +75,7 @@ void WikiView::search(bool onlyTag)
     pApp->pauseRendering();
     Console::print("WikiView::searchChanged ", Console::eDEBUG);
     m_MainPanel->clearContent();
-    QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
+    QVector<WikiDatabase::PageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;
     for (qint32 i = 0; i < items.size(); i++)
     {
@@ -97,7 +97,7 @@ void WikiView::search(bool onlyTag)
         textField->setX(13);
         textField->setY(5);
         // loop through all entries :)
-        QString item = std::get<0>(items[i]);
+        QString item = items[i].m_name;
         textField->setHtmlText(item);
         pBox->addChild(textField);
         pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -123,9 +123,16 @@ void WikiView::search(bool onlyTag)
     pApp->continueRendering();
 }
 
-void WikiView::showWikipage(WikiDatabase::pageData page)
+void WikiView::showWikipage(WikiDatabase::PageData page)
 {
-   oxygine::getStage()->addChild(WikiDatabase::getInstance()->getPage(page));
+   addChild(WikiDatabase::getInstance()->getPage(page));
+}
+
+void WikiView::showPage(QString id)
+{
+    WikiDatabase::PageData page;
+    page.m_id = id;
+    addChild(WikiDatabase::getInstance()->getPage(page));
 }
 
 void WikiView::tagChanged(qint32)

@@ -23,12 +23,13 @@ public:
     virtual ~WikiView() = default;
 signals:
     void sigSearch(bool onlyTag);
-    void sigShowWikipage(WikiDatabase::pageData page);
+    void sigShowWikipage(WikiDatabase::PageData page);
 public slots:
-    void showWikipage(WikiDatabase::pageData page);
+    void showWikipage(WikiDatabase::PageData page);
     void searchChanged(QString);
     void search(bool onlyTag);
     void tagChanged(qint32 item);
+    void showPage(QString id);
 private:
     spTextbox m_SearchString;
     spDropDownmenu m_Tags;

@@ -72,6 +72,22 @@ COStyleMenu::COStyleMenu()
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
     pApp->continueRendering();
+    connect(this, &COStyleMenu::sigOnEnter, this, &COStyleMenu::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void COStyleMenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "coStyleMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void COStyleMenu::exitMenue()

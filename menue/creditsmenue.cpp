@@ -126,8 +126,9 @@ CreditsMenue::CreditsMenue()
     m_speedTimer.start();
 
     UiFactory::getInstance().createUi("ui/creditsmenu.xml", this);
-
     pApp->continueRendering();
+    connect(this, &CreditsMenue::sigOnEnter, this, &CreditsMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
 }
 
 void CreditsMenue::doUpdate(const oxygine::UpdateState&)
@@ -140,6 +141,20 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
     if (m_creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
     {
         emit sigExitMenue();
+    }
+}
+
+void CreditsMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "creditsMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
     }
 }
 

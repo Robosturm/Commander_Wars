@@ -108,6 +108,22 @@ Achievementmenu::Achievementmenu()
 
     searchChanged("");
     pApp->continueRendering();
+    connect(this, &Achievementmenu::sigOnEnter, this, &Achievementmenu::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void Achievementmenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "achievementMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void Achievementmenu::exitMenue()

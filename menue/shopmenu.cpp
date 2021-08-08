@@ -118,6 +118,22 @@ Shopmenu::Shopmenu()
 
     filterChanged(0);
     pApp->continueRendering();
+    connect(this, &Shopmenu::sigOnEnter, this, &Shopmenu::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void Shopmenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "shopMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void Shopmenu::exitMenue()

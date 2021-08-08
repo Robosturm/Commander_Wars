@@ -18,11 +18,13 @@
 #include "menue/ingamemenue.h"
 #include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
-#include "menue/victorymenue.h"
+#include "menue/creditsmenue.h"
 #include "menue/gamemenue.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/campaignmenu.h"
 #include "menue/editormenue.h"
+#include "menue/achievementmenu.h"
+#include "menue/optionmenue.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -46,6 +48,7 @@
 #include "game/GameEnums.h"
 
 #include "wiki/wikidatabase.h"
+#include "wiki/wikiview.h"
 
 #include "objects/base/textbox.h"
 #include "objects/playerselection.h"
@@ -98,7 +101,7 @@ void registerInterfaceData()
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
-    qRegisterMetaType<WikiDatabase::pageData>("WikiDatabase::pageData");
+    qRegisterMetaType<WikiDatabase::PageData>("WikiDatabase::PageData");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
     qRegisterMetaType<oxygine::spResAnim>("oxygine::spResAnimf");
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
@@ -145,18 +148,22 @@ void registerInterfaceData()
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
     qmlRegisterInterface<NeuralNetwork>("NeuralNetwork", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
-    qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
-    qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
-    qmlRegisterInterface<GameMenue>("GameMenue", 1);
-    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
-    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
-    qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
     qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);
     qmlRegisterInterface<COSpriteManager>("COSpriteManager", 1);
     qmlRegisterInterface<UnitSpriteManager>("UnitSpriteManager", 1);
     qmlRegisterInterface<BuildingSpriteManager>("BuildingSpriteManager", 1);
     qmlRegisterInterface<TerrainManager>("TerrainManager", 1);
     qmlRegisterInterface<COPerkManager>("COPerkManager", 1);
+    qmlRegisterInterface<WikiView>("WikiView", 1);
+    qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
+    qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
+    qmlRegisterInterface<GameMenue>("GameMenue", 1);
+    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
+    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
+    qmlRegisterInterface<CreditsMenue>("CreditsMenue", 1);
+    qmlRegisterInterface<Achievementmenu>("Achievementmenu", 1);
+    qmlRegisterInterface<OptionMenue>("OptionMenue", 1);
+    qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
 }
 
 int main(qint32 argc, char* argv[])
@@ -199,6 +206,8 @@ int main(qint32 argc, char* argv[])
     window.shutdown();
     Console::print("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
+    // give os time to save the settings
+    QThread::currentThread()->msleep(100);
     if (MainServer::exists())
     {
         Console::print("Shutting dwon game server", Console::eDEBUG);

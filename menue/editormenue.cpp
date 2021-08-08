@@ -204,8 +204,23 @@ EditorMenue::EditorMenue()
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
-
     pApp->continueRendering();
+    connect(this, &EditorMenue::sigOnEnter, this, &EditorMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void EditorMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "mapEditorMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 EditorMenue::~EditorMenue()

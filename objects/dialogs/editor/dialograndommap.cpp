@@ -254,6 +254,29 @@ DialogRandomMap::DialogRandomMap()
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
+
+
+    // cancel button
+    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
+    pSpriteBox->addChild(m_ExitButton);
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        emit sigCancel();
+    });
+    generatorChanged(m_GeneratorFile->getCurrentText());
+
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        emit sigFinish();
+    });
+    connect(this, &DialogRandomMap::sigCancel, this, &DialogRandomMap::remove, Qt::QueuedConnection);
+    connect(this, &DialogRandomMap::sigClose, this, &DialogRandomMap::remove, Qt::QueuedConnection);
+    connect(this, &DialogRandomMap::sigFinish, this, &DialogRandomMap::generatorFinished, Qt::QueuedConnection);
+}
+
+void DialogRandomMap::generatorFinished()
+{
     auto* pTerrainChances = m_TerrainChances.get();
     auto* pBuildingChances = m_BuildingChances.get();
     auto* pOwnerDistribution = m_OwnerDistribution.get();
@@ -270,60 +293,45 @@ DialogRandomMap::DialogRandomMap()
     auto* pUnitCount = m_unitCount.get();
     auto* pUnitsNearHq = m_unitsNearHq.get();
     auto* pUnitDistributionSelection = m_unitDistributionSelection.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    QVector<std::tuple<QString, float>> terrains;
+    for (qint32 i = 0; i < m_TerrainIDs.size(); i++)
     {
-        QVector<std::tuple<QString, float>> terrains;
-        for (qint32 i = 0; i < m_TerrainIDs.size(); i++)
-        {
-            terrains.append(std::tuple<QString, float>(m_TerrainIDs[i], pTerrainChances->getSliderValue(i)));
-        }
-        QVector<std::tuple<QString, float>> buildings;
-        for (qint32 i = 0; i < m_BuildingIDs.size(); i++)
-        {
-            buildings.append(std::tuple<QString, float>(m_BuildingIDs[i], pBuildingChances->getSliderValue(i)));
-        }
-        QVector<float> ownedBaseSize;
-        qint32 player = m_MapPlayerCount->getCurrentValue();
-        for (qint32 i = 0; i < player; i++)
-        {
-            ownedBaseSize.append(pOwnerDistribution->getSliderValue(i + 1));
-        }
-
-        QVector<std::tuple<QString, float>> units;
-        for (qint32 i = 0; i < m_UnitIDs.size(); i++)
-        {
-            units.append(std::tuple<QString, float>(m_UnitIDs[i], pUnitChances->getSliderValue(i)));
-        }
-        QVector<float> unitDistribution;
-        for (qint32 i = 0; i < player; i++)
-        {
-            unitDistribution.append(pUnitDistribution->getSliderValue(i));
-        }
-
-        emit sigFinished(pMapName->getCurrentText(), pMapAuthor->getCurrentText(),
-                         pMapDescription->getCurrentText(),
-                         static_cast<qint32>(pMapWidth->getCurrentValue()), static_cast<qint32>(pMapHeigth->getCurrentValue()),
-                         player, pCreateRoad->getChecked(), static_cast<qint32>(pSeed->getCurrentValue()),
-                         terrains, buildings, ownedBaseSize,
-                         pBaseSize->getCurrentValue(),
-                         units, pUnitCount->getCurrentValue(),
-                         pUnitsNearHq->getCurrentValue(),
-                         unitDistribution,
-                         (pUnitDistributionSelection->getCurrentItem() == 1));
-        emit sigClose();
-    });
-
-    // cancel button
-    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
-    pSpriteBox->addChild(m_ExitButton);
-    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        terrains.append(std::tuple<QString, float>(m_TerrainIDs[i], pTerrainChances->getSliderValue(i)));
+    }
+    QVector<std::tuple<QString, float>> buildings;
+    for (qint32 i = 0; i < m_BuildingIDs.size(); i++)
     {
-        emit sigCancel();
-    });
-    generatorChanged(m_GeneratorFile->getCurrentText());
-    connect(this, &DialogRandomMap::sigCancel, this, &DialogRandomMap::remove, Qt::QueuedConnection);
-    connect(this, &DialogRandomMap::sigClose, this, &DialogRandomMap::remove, Qt::QueuedConnection);
+        buildings.append(std::tuple<QString, float>(m_BuildingIDs[i], pBuildingChances->getSliderValue(i)));
+    }
+    QVector<float> ownedBaseSize;
+    qint32 player = m_MapPlayerCount->getCurrentValue();
+    for (qint32 i = 0; i < player; i++)
+    {
+        ownedBaseSize.append(pOwnerDistribution->getSliderValue(i + 1));
+    }
+
+    QVector<std::tuple<QString, float>> units;
+    for (qint32 i = 0; i < m_UnitIDs.size(); i++)
+    {
+        units.append(std::tuple<QString, float>(m_UnitIDs[i], pUnitChances->getSliderValue(i)));
+    }
+    QVector<float> unitDistribution;
+    for (qint32 i = 0; i < player; i++)
+    {
+        unitDistribution.append(pUnitDistribution->getSliderValue(i));
+    }
+
+    emit sigFinished(pMapName->getCurrentText(), pMapAuthor->getCurrentText(),
+                     pMapDescription->getCurrentText(),
+                     static_cast<qint32>(pMapWidth->getCurrentValue()), static_cast<qint32>(pMapHeigth->getCurrentValue()),
+                     player, pCreateRoad->getChecked(), static_cast<qint32>(pSeed->getCurrentValue()),
+                     terrains, buildings, ownedBaseSize,
+                     pBaseSize->getCurrentValue(),
+                     units, pUnitCount->getCurrentValue(),
+                     pUnitsNearHq->getCurrentValue(),
+                     unitDistribution,
+                     (pUnitDistributionSelection->getCurrentItem() == 1));
+    emit sigClose();
 }
 
 void DialogRandomMap::remove()

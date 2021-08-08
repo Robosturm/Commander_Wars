@@ -255,7 +255,6 @@ Mainwindow::Mainwindow()
         });
         connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     }
-    connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
 
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue obj = pInterpreter->newQObject(this);
@@ -264,9 +263,9 @@ Mainwindow::Mainwindow()
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
-
-    emit sigOnEnter();
     pApp->continueRendering();
+    connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
 }
 
 void Mainwindow::import()

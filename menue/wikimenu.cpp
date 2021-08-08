@@ -10,8 +10,6 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
-#include "wiki/wikiview.h"
-
 Wikimenu::Wikimenu()
     : Basemenu()
 {
@@ -45,9 +43,26 @@ Wikimenu::Wikimenu()
     {
         emit sigExitMenue();
     });
-    addChild(spWikiView::create(Settings::getWidth(), Settings::getHeight()));
+    m_pWikiView = spWikiView::create(Settings::getWidth(), Settings::getHeight());
+    addChild(m_pWikiView);
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
     pApp->continueRendering();
+    connect(this, &Wikimenu::sigOnEnter, this, &Wikimenu::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void Wikimenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "wikiMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void Wikimenu::exitMenue()

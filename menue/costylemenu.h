@@ -18,11 +18,13 @@ public:
 signals:
     void sigExitMenue();
     void sigEditCOStyle();
+    void sigOnEnter();
 public slots:
     void exitMenue();
     void selectedCOIDChanged(QString coid);
     void editCOStyle();
     void reloadMenue();
+    void onEnter();
 private:
 
     QString m_currentCOID;

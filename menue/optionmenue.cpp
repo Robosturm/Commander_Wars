@@ -144,6 +144,22 @@ OptionMenue::OptionMenue()
     addChild(m_ModSelector);
     showSettings();
     pApp->continueRendering();
+    connect(this, &OptionMenue::sigOnEnter, this, &OptionMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
+}
+
+void OptionMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "optionMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void OptionMenue::exitMenue()

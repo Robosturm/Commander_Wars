@@ -397,7 +397,7 @@ void Console::extractResources()
 void Console::createfunnymessage(qint32 message){
     if (message < 0)
     {
-        message = GlobalUtils::randIntBase(0,327);
+        message = GlobalUtils::randIntBase(0,337);
     }
     QString printmessage;
     switch(message)
@@ -1389,6 +1389,26 @@ void Console::createfunnymessage(qint32 message){
         case 328:
             printmessage = "We need to train tanks to talk. So we can get another Advance Wars game.";
             break;
+        case 329:
+            printmessage = "I invented a new word! Plagiarism!";
+        case 330:
+            printmessage = "Why don’t scientists trust atoms? Because they make up everything.";
+        case 331:
+            printmessage = "What did the 0 say to the 8? Nice belt!";
+        case 332:
+            printmessage = "Kanbei needs bases!!!";
+        case 333:
+            printmessage = "Andy: What's an airport?";
+        case 334:
+            printmessage = "Wait I can't refill myself? An APC";
+        case 335:
+            printmessage = "Damn those submerged submarines are blocking our way. A fighter pilot";
+        case 336:
+            printmessage = "Advance Wars is dead early 2021. Now we have a living zombie-tank.";
+        case 337:
+            printmessage = "Advance Wars 1 shoot that APC. SHOOOOT IT. Why? I said shoot it. It can create infinite supply. Only evil things can do that.";
+        case 338:
+            printmessage = "One day Flak will get indirect bombers and this day is near.";
         default:
             printmessage = "No more funny Messages found. Delete your Harddisk instead";
             break;

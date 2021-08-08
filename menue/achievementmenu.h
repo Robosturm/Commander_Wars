@@ -20,10 +20,12 @@ public:
 signals:
     void sigExitMenue();
     void sigSearch();
+    void sigOnEnter();
 public slots:
     void exitMenue();
     void search();
     void searchChanged(QString);
+    void onEnter();
 private:
     spPanel m_MainPanel;
     spTextbox m_SearchString;

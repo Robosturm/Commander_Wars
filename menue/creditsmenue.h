@@ -21,10 +21,10 @@ public:
     virtual void doUpdate(const oxygine::UpdateState&) override;
 signals:
     void sigExitMenue();
-
+    void sigOnEnter();
 public slots:
     void exitMenue();
-
+    void onEnter();
 private:
     QElapsedTimer m_speedTimer;
     QVector<QString> m_Headlines;

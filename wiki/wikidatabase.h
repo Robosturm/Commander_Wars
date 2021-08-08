@@ -18,14 +18,21 @@ class WikiDatabase : public QObject, public RessourceManagement<WikiDatabase>
 {
     Q_OBJECT
 public:
+    struct PageData
+    {
+        explicit PageData() = default;
+        PageData (QString name, QString id, QStringList tags)
+            : m_name(name),
+              m_id(id),
+              m_tags(tags)
+        {
+        }
+        QString m_name;
+        QString m_id;
+        QStringList m_tags;
+    };
+
     virtual ~WikiDatabase() = default;
-    /**
-     * @brief m_Entries
-     * 0 = Name
-     * 1 = ID
-     * 2 = Tags
-     */
-    using pageData = std::tuple<QString, QString, QStringList> ;
     /**
      * @brief load
      */
@@ -35,19 +42,19 @@ public:
      * @param data
      * @return
      */
-    spWikipage getPage(pageData data);
+    spWikipage getPage(PageData data);
     /**
      * @brief getEntries
      * @param searchTerm
      * @return
      */
-    QVector<pageData> getEntries(QString searchTerm, bool onlyTag);
+    QVector<PageData> getEntries(QString searchTerm, bool onlyTag);
     /**
      * @brief getEntries
      * @param entry
      * @return
      */
-    pageData getEntry(qint32 entry);
+    PageData getEntry(qint32 entry);
     /**
      * @brief hasEntry
      * @param file1
@@ -59,7 +66,7 @@ public:
      * @param id
      * @return
      */
-    WikiDatabase::pageData getEntry(QString id);
+    WikiDatabase::PageData getEntry(QString id);
     /**
      * @brief tagMatches
      * @param tags
@@ -88,7 +95,7 @@ private:
     explicit WikiDatabase();
 
 private:
-    QVector<pageData> m_Entries;
+    QVector<PageData> m_Entries;
 };
 
 #endif // WIKIDATABASE_H

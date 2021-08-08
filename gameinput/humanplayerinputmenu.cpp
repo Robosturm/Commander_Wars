@@ -549,8 +549,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 else
                 {
                     WikiDatabase* pDatabase = WikiDatabase::getInstance();
-                    WikiDatabase::pageData data = pDatabase->getEntry(id);
-                    if (std::get<1>(data) != "")
+                    WikiDatabase::PageData data = pDatabase->getEntry(id);
+                    if (data.m_id != "")
                     {
                         spWikipage page = pDatabase->getPage(data);
                         pMenu->addChild(page);

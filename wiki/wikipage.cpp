@@ -107,8 +107,8 @@ void Wikipage::showLink(QString pageID)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     auto entry = pWikiDatabase->getEntry(pageID);
-    if (!std::get<0>(entry).isEmpty() &&
-        !std::get<1>(entry).isEmpty())
+    if (!entry.m_name.isEmpty() &&
+        !entry.m_id.isEmpty())
     {
         oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }

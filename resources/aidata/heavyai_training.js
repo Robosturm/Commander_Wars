@@ -1,5 +1,5 @@
 var Init =
-        {
+{
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Dragons in the Dark.map",    // map that will be used for training
@@ -15,11 +15,11 @@ var Init =
                         ["heavy_ai3",   8],
                         ["heavy_ai4",   9],
                         ["heavy_ai5",   10],
-//                        ["heavy_ai6",   11],
-//                        ["heavy_ai7",   12],
-//                        ["heavy_ai8",   13],
-//                        ["heavy_ai9",   14],
-                       ],
+                        //                        ["heavy_ai6",   11],
+                        //                        ["heavy_ai7",   12],
+                        //                        ["heavy_ai8",   13],
+                        //                        ["heavy_ai9",   14],
+    ],
     // internal data
     startAi = 0,
     rotationStartAi = 0,

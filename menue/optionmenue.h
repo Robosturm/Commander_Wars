@@ -8,7 +8,6 @@
 #include "objects/base/panel.h"
 #include "objects/gameplayandkeys.h"
 #include "objects/base/checkbox.h"
-
 #include "menue/basemenu.h"
 
 class OptionMenue;
@@ -30,6 +29,7 @@ signals:
     void sigChangeScreenSize(qint32 width, qint32 heigth);
     void sigReloadSettings();
     void sigUpdateModCheckboxes();
+    void sigOnEnter();
 public slots:
     void exitMenue();
     void showMods();
@@ -39,6 +39,7 @@ public slots:
     void selectMods(qint32 item);
     void reloadSettings();
     void updateModCheckboxes();
+    void onEnter();
 private:
     spGameplayAndKeys m_pGameplayAndKeys;
 

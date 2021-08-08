@@ -44,31 +44,31 @@ void WikiDatabase::load()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_Entries.append(pageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), "CO"));
+        m_Entries.append(PageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), {"CO"}));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(pageData(pTerrainManager->getName(terrainId), terrainId, "Terrain"));
+        m_Entries.append(PageData(pTerrainManager->getName(terrainId), terrainId, {"Terrain"}));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        m_Entries.append(pageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), "Building"));
+        m_Entries.append(PageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), {"Building"}));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(pageData(pUnitSpriteManager->getName(unitId), unitId, "Unit"));
+        m_Entries.append(PageData(pUnitSpriteManager->getName(unitId), unitId, {"Unit"}));
     }
 
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     QStringList perks = pCOPerkManager->getLoadedRessources();
     for (const auto& perk : perks)
     {
-        m_Entries.append(pageData(pCOPerkManager->getName(perk), perk, "Perk"));
+        m_Entries.append(PageData(pCOPerkManager->getName(perk), perk, {"Perk"}));
     }
 
     // load general wiki page
@@ -102,19 +102,19 @@ void WikiDatabase::load()
                 QStringList tags;
                 erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
                 tags = erg.toVariant().toStringList();
-                m_Entries.append(pageData(name, file, tags));
+                m_Entries.append(PageData(name, file, tags));
             }
         }
     }
 }
 
-QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
+QVector<WikiDatabase::PageData> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
 {
-    QVector<pageData> ret;
+    QVector<PageData> ret;
     for (qint32 i = 0; i < m_Entries.size(); i++)
     {
-        if ((std::get<0>(m_Entries[i]).contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
-            (tagMatches(std::get<2>(m_Entries[i]), searchTerm)))
+        if ((m_Entries[i].m_name.contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
+            (tagMatches(m_Entries[i].m_tags, searchTerm)))
         {
             ret.append(m_Entries[i]);
         }
@@ -130,7 +130,7 @@ bool WikiDatabase::hasEntry(QString file1)
     entry2 = entry2.remove(0, entry2.lastIndexOf("\\") + 1);
     for (auto & entryInfo : m_Entries)
     {
-        QString entry = std::get<1>(entryInfo);
+        QString entry = entryInfo.m_id;
         entry = entry.replace(".js", "");
         entry = entry.remove(0, entry.lastIndexOf("/") + 1);
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
@@ -147,7 +147,7 @@ QVector<QString> WikiDatabase::getTags()
     QVector<QString> ret;
     for (qint32 i = 0; i < m_Entries.size(); i++)
     {
-        QStringList tags = std::get<2>(m_Entries[i]);
+        QStringList tags = m_Entries[i].m_tags;
         for (qint32 i2 = 0; i2 < tags.size(); i2++)
         {
             if (!ret.contains(tags[i2]))
@@ -159,20 +159,20 @@ QVector<QString> WikiDatabase::getTags()
     return ret;
 }
 
-WikiDatabase::pageData WikiDatabase::getEntry(qint32 entry)
+WikiDatabase::PageData WikiDatabase::getEntry(qint32 entry)
 {
     if (entry >= 0 && entry < m_Entries.size())
     {
         return m_Entries[entry];
     }
-    return pageData("", "", QStringList());
+    return PageData("", "", QStringList());
 }
 
-WikiDatabase::pageData WikiDatabase::getEntry(QString id)
+WikiDatabase::PageData WikiDatabase::getEntry(QString id)
 {
     for (qint32 i = 0; i < m_Entries.size(); i++)
     {
-        QString entry = std::get<1>(m_Entries[i]);
+        QString entry = m_Entries[i].m_id;
         entry = entry.replace(".js", "");
         entry = entry.remove(0, entry.lastIndexOf("/") + 1);
         entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
@@ -185,7 +185,7 @@ WikiDatabase::pageData WikiDatabase::getEntry(QString id)
             return m_Entries[i];
         }
     }
-    return pageData("", id, QStringList());
+    return PageData("", id, QStringList());
 }
 
 bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
@@ -200,10 +200,10 @@ bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
     return false;
 }
 
-spWikipage WikiDatabase::getPage(pageData data)
+spWikipage WikiDatabase::getPage(PageData data)
 {
     spWikipage ret;
-    QString id = std::get<1>(data);
+    QString id = data.m_id;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();

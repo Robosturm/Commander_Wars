@@ -43,11 +43,13 @@ signals:
      */
     void sigShowGeneratorSelection();
     void sigClose();
+    void sigFinish();
 public slots:
     void generatorChanged(QString filename);
     void showGeneratorSelection();
     void playerChanged(qreal);
     void remove();
+    void generatorFinished();
 private:
     void createUnitChances();
 private:

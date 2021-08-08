@@ -45,7 +45,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        #-DMEMORYTRACING
+        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 
@@ -514,10 +514,15 @@ endif()
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE ResourceFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.qrc")
 FILE(GLOB_RECURSE TS_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "translation/*.ts")
+FILE(GLOB_RECURSE TestScripts "_test/*.js")
 
 add_custom_target(Resources SOURCES
     ${ResourceFiles}
     ${TS_FILES})
+
+add_custom_target(Test SOURCES
+    ${TestScripts}
+    )
 ##############################################################
 # Linking and executable section                             #
 ##############################################################
