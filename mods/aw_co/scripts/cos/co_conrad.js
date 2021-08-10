@@ -38,7 +38,7 @@ CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 visionCount += 1;
             }
         }
-
+        units.remove();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

@@ -134,6 +134,7 @@ var Constructor = function()
                     }
                 }
             }
+            fields.remove();
         }
         switch (co.getPowerMode())
         {

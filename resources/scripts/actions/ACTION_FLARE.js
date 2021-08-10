@@ -116,6 +116,7 @@ var Constructor = function()
                 ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
             }
         }
+        fields.remove();
         ACTION_FLARE.postAnimationTargetX = -1;
         ACTION_FLARE.postAnimationTargetY = -1;
         ACTION_FLARE.postAnimationPlayer = null;

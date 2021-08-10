@@ -101,11 +101,11 @@ var Constructor = function()
                     animation.setSound("explosion+water.wav");
                 }
             }
-            fields.remove();
             // we destroyed a unit
             map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
             unit.killUnit();
         }
+        fields.remove();
     };
     this.createExplosionAnimation = function(x, y, unit)
     {

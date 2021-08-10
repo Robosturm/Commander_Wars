@@ -84,7 +84,6 @@ var Constructor = function()
     this.kindleDamage = function(co, value, animations, powerNameAnimation)
     {
         var player = co.getOwner();
-        var units = player.getUnits();
         var counter = 0;
         var unit = null;
         var animation = null;
@@ -96,7 +95,7 @@ var Constructor = function()
                 (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
 
-                units = enemyPlayer.getUnits();
+                var units = enemyPlayer.getUnits();
                 units.randomize();
                 for (i = 0; i < units.size(); i++)
                 {

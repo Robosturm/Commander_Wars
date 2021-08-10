@@ -88,6 +88,7 @@ var Constructor = function()
                     }
                 }
             }
+            buildings.remove();
         }
     };
 

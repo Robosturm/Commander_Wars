@@ -39,6 +39,7 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 }
             }
         }
+        fields.remove();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

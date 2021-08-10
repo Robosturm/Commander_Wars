@@ -8,7 +8,9 @@ var Init =
              "shopTest",
              "coStyleTest",
              "mapEditorTest",
+             "simpleAiTest",
             ],
+    aiTest = false,
     main = function(menu)
     {
         var current = Init.step;
@@ -89,6 +91,39 @@ var Init =
     mapEditorMenu = function(menu)
     {
         menu.loadMap(":/maps/6_player/Stella di David.map");
+        menu.resizeMap(1, 1, 1, 1);
+        menu.resizeMap(-1, -1, -1, -1);
+        menu.changeMap("test", "test", "test", "", 30, 30, 5, 0, 0);
+        menu.newMap("test", "test", "test", "", 30, 30, 5, 0, 0);
         menu.exitEditor();
+    },
+    simpleAiTest = function(menu)
+    {
+        Init.aiTest = true;
+        menu.enterSingleplayer();
+    },
+    mapsSelection = function(menu)
+    {
+        if (Init.aiTest === true)
+        {
+            menu.selectMap("maps/2_player/", "Agitated.map");
+            menu.slotButtonNext();
+            menu.slotButtonNext();
+            var gameRules = map.getGameRules();
+            gameRules.setFogMode(GameEnums.Fog_OfWar);
+            var selection = menu.getPlayerSelection();
+            selection.selectPlayerAi(0, 1);
+            selection.selectPlayerAi(1, 2);
+            selection.playerCO1Changed("CO_RANDOM", 0);
+            selection.playerCO2Changed("CO_RANDOM", 0);
+            selection.playerCO1Changed("CO_RANDOM", 1);
+            selection.playerCO2Changed("CO_RANDOM", 1);
+            menu.startGame();
+        }
+    },
+    onVictory = function(menu)
+    {
+        Init.aiTest = false;
+        menu.exitMenue();
     },
 }

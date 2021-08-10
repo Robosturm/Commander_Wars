@@ -247,6 +247,7 @@ var Constructor = function()
                 }
             }
         }
+        fields.remove();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

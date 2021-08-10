@@ -38,6 +38,7 @@ CO_ALEXANDER.startOfTurn = function(co)
                     }
                 }
             }
+            buildings.remove();
         }
     }
 };

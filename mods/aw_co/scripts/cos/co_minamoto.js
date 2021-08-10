@@ -37,6 +37,7 @@ CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     }
                 }
             }
+            fields.remove();
         }
         switch (co.getPowerMode())
         {
