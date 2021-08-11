@@ -843,8 +843,17 @@ public slots:
      * @brief addScreenshake
      */
     void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    /**
+     * @brief showGrid
+     */
+    void showGrid(bool show);
+    /**
+     * @brief showMiddleCrossGrid
+     */
+    void showMiddleCrossGrid(bool show);
 private:
     void loadMapData();
+    QColor getGridColor();
 private:
     static spGameMap m_pInstance;
     QString m_mapName;
@@ -853,6 +862,8 @@ private:
     QString m_mapPath;
     QVector<QVector<spTerrain>> m_fields;
     QVector<spPlayer> m_players;
+    QVector<oxygine::spColorRectSprite> m_gridSprites;
+    QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;
     spPlayer m_CurrentPlayer;
     qint32 m_currentDay{0};
     spGameRules m_Rules;

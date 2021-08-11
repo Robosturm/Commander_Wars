@@ -1344,7 +1344,6 @@ void GameMap::changeSound()
     emit sigShowChangeSound();
 }
 
-
 void GameMap::surrenderGame()
 {
     emit sigSurrenderGame();
@@ -2164,4 +2163,80 @@ void GameMap::initPlayersAndSelectCOs()
 void GameMap::initPlayers()
 {
     m_CurrentPlayer = m_players[m_players.size() - 1];
+}
+
+void GameMap::showGrid(bool show)
+{
+    for (auto & sprite : m_gridSprites)
+    {
+        sprite->detach();
+    }
+    m_gridSprites.clear();
+    if (show)
+    {
+        qint32 mapWidth = getMapWidth();
+        qint32 mapHeight = getMapHeight();
+        QColor gridColor = getGridColor();
+        for (qint32 x = 1; x < mapWidth; ++x)
+        {
+            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            pSprite->setSize(1, mapHeight * m_imagesize + 1);
+            pSprite->setColor(gridColor);
+            pSprite->setPosition(x * m_imagesize - 1, 1);
+            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
+            addChild(pSprite);
+            m_gridSprites.append(pSprite);
+        }
+        for (qint32 y = 1; y < mapHeight; ++y)
+        {
+            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+            pSprite->setSize(mapWidth * m_imagesize + 1, 1);
+            pSprite->setPosition(1, y * m_imagesize - 1);
+            pSprite->setColor(gridColor);
+            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
+            addChild(pSprite);
+            m_gridSprites.append(pSprite);
+        }
+    }
+}
+
+void GameMap::showMiddleCrossGrid(bool show)
+{
+    for (auto & sprite : m_middleCrossGridSprites)
+    {
+        sprite->detach();
+    }
+    m_middleCrossGridSprites.clear();
+    if (show)
+    {
+        float mapWidth = getMapWidth();
+        float mapHeight = getMapHeight();
+        QColor gridColor = getGridColor();
+        oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
+        pSprite->setSize(3, mapHeight * m_imagesize + 1);
+        pSprite->setColor(gridColor);
+        pSprite->setPosition(mapWidth / 2.0f * m_imagesize, 1);
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
+        addChild(pSprite);
+        m_middleCrossGridSprites.append(pSprite);
+        pSprite = oxygine::spColorRectSprite::create();
+        pSprite->setSize(mapWidth * m_imagesize + 1, 3);
+        pSprite->setPosition(1, mapHeight / 2 * m_imagesize);
+        pSprite->setColor(gridColor);
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
+        addChild(pSprite);
+        m_middleCrossGridSprites.append(pSprite);
+    }
+}
+
+QColor GameMap::getGridColor()
+{
+    QColor gridColor = QColor(70, 70, 70, 180);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue ret = pInterpreter->doFunction("Global", "getGridColor");
+    if (ret.isString())
+    {
+        gridColor = QColor(ret.toString());
+    }
+    return gridColor;
 }

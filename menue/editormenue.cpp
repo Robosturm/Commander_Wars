@@ -104,6 +104,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1, tr("Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed."));
     m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1, tr("Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed."));
     m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1, tr("Creates a new random map."));
+    m_Topbar->addItem(tr("Toggle Grid Strg+G"), "TOGGLEGRID", 1, tr("Shows or hides a grid layout."));
+    m_Topbar->addItem(tr("Toggle Cross Strg+M"), "TOGGLEMIDDLECROSS", 1, tr("Shows or hides the cross marking the middle of the map."));
 
     m_Topbar->addGroup(tr("Commands"));
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
@@ -362,36 +364,38 @@ void EditorMenue::clickedTopbar(QString itemID)
     };
     QVector<MenuItem> items =
     {
-        MenuItem("EXIT",            &EditorMenue::showExit),
-        MenuItem("SAVEMAP",         &EditorMenue::showSaveMap),
-        MenuItem("LOADMAP",         &EditorMenue::showLoadMap),
-        MenuItem("UNDO",            &EditorMenue::editorUndo),
-        MenuItem("REDO",            &EditorMenue::editorRedo),
-        MenuItem("EDITSCRIPT",      &EditorMenue::showEditScript),
-        MenuItem("EDITCAMPAIGN",    &EditorMenue::showEditCampaign),
-        MenuItem("IMPORTCOWTXT",    &EditorMenue::showImportCoWTxTMap),
-        MenuItem("IMPORTAWDSAWS",   &EditorMenue::showImportAwdsAws),
-        MenuItem("EXPORTAWDSAWS",   &EditorMenue::showExportAwdsAws),
-        MenuItem("IMPORTAWDCAW4",   &EditorMenue::showImportAwdsAw4),
-        MenuItem("IMPORTAWBYWEB",   &EditorMenue::showImportAwByWeb),
-        MenuItem("NEWMAP",          &EditorMenue::showNewMap),
-        MenuItem("EDITMAP",         &EditorMenue::showEditMap),
-        MenuItem("FLIPX",           &EditorMenue::flipX),
-        MenuItem("FLIPY",           &EditorMenue::flipY),
-        MenuItem("ROTATEX",         &EditorMenue::rotateX),
-        MenuItem("ROTATEY",         &EditorMenue::rotateY),
-        MenuItem("RANDOMMAP",       &EditorMenue::showRandomMap),
-        MenuItem("PLACESELECTION",  &EditorMenue::changePlaceSelection),
-        MenuItem("DELETEUNITS",     &EditorMenue::deleteUnits),
-        MenuItem("EDITUNITS",       &EditorMenue::editUnits),
-        MenuItem("EDITTERRAIN",     &EditorMenue::editTerrains),
-        MenuItem("OPTIMIZEPLAYERS", &EditorMenue::optimizePlayers),
-        MenuItem("EDITPLAYERS",     &EditorMenue::showEditPlayers),
-        MenuItem("EDITRULES",       &EditorMenue::showEditRules),
-        MenuItem("COPY",            &EditorMenue::copy),
-        MenuItem("PASTE",           nullptr),
-        MenuItem("PASTEALL",        nullptr),
-        MenuItem("RESIZEMAP",       &EditorMenue::showResizeMap),
+        MenuItem("EXIT",                &EditorMenue::showExit),
+        MenuItem("SAVEMAP",             &EditorMenue::showSaveMap),
+        MenuItem("LOADMAP",             &EditorMenue::showLoadMap),
+        MenuItem("UNDO",                &EditorMenue::editorUndo),
+        MenuItem("REDO",                &EditorMenue::editorRedo),
+        MenuItem("EDITSCRIPT",          &EditorMenue::showEditScript),
+        MenuItem("EDITCAMPAIGN",        &EditorMenue::showEditCampaign),
+        MenuItem("IMPORTCOWTXT",        &EditorMenue::showImportCoWTxTMap),
+        MenuItem("IMPORTAWDSAWS",       &EditorMenue::showImportAwdsAws),
+        MenuItem("EXPORTAWDSAWS",       &EditorMenue::showExportAwdsAws),
+        MenuItem("IMPORTAWDCAW4",       &EditorMenue::showImportAwdsAw4),
+        MenuItem("IMPORTAWBYWEB",       &EditorMenue::showImportAwByWeb),
+        MenuItem("NEWMAP",              &EditorMenue::showNewMap),
+        MenuItem("EDITMAP",             &EditorMenue::showEditMap),
+        MenuItem("FLIPX",               &EditorMenue::flipX),
+        MenuItem("FLIPY",               &EditorMenue::flipY),
+        MenuItem("ROTATEX",             &EditorMenue::rotateX),
+        MenuItem("ROTATEY",             &EditorMenue::rotateY),
+        MenuItem("RANDOMMAP",           &EditorMenue::showRandomMap),
+        MenuItem("PLACESELECTION",      &EditorMenue::changePlaceSelection),
+        MenuItem("DELETEUNITS",         &EditorMenue::deleteUnits),
+        MenuItem("EDITUNITS",           &EditorMenue::editUnits),
+        MenuItem("EDITTERRAIN",         &EditorMenue::editTerrains),
+        MenuItem("OPTIMIZEPLAYERS",     &EditorMenue::optimizePlayers),
+        MenuItem("EDITPLAYERS",         &EditorMenue::showEditPlayers),
+        MenuItem("EDITRULES",           &EditorMenue::showEditRules),
+        MenuItem("COPY",                &EditorMenue::copy),
+        MenuItem("PASTE",               nullptr),
+        MenuItem("PASTEALL",            nullptr),
+        MenuItem("RESIZEMAP",           &EditorMenue::showResizeMap),
+        MenuItem("TOGGLEGRID",          &EditorMenue::toggleGridLayout),
+        MenuItem("TOGGLEMIDDLECROSS",   &EditorMenue::toggleMiddleCrossGrid),
     };
     for (auto & item : qAsConst(items))
     {
@@ -400,6 +404,36 @@ void EditorMenue::clickedTopbar(QString itemID)
         {
             (this->*(item.m_func))();
         }
+    }
+}
+
+void EditorMenue::toggleGridLayout()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        m_gridVisible = !m_gridVisible;
+        pMap->showGrid(m_gridVisible);
+    }
+}
+
+void EditorMenue::toggleMiddleCrossGrid()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        m_middleCrossGridVisible = !m_middleCrossGridVisible;
+        pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
+    }
+}
+
+void EditorMenue::updateGrids()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
+        pMap->showGrid(m_gridVisible);
     }
 }
 
@@ -700,6 +734,7 @@ void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom
 {    
     Console::print("EditorMenue::resizeMap", Console::eDEBUG);
     GameMap::getInstance()->resizeMap(left, top, right, bottom);    
+    updateGrids();
 }
 
 void EditorMenue::createRandomMap(QString mapName, QString author, QString description,
@@ -729,7 +764,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
     Mainapp::getInstance()->continueRendering();
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
-    
+    updateGrids();
 }
 
 void EditorMenue::playersChanged()
@@ -843,6 +878,16 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                                 pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, m_EditorSelection->getCurrentMode());
                             }
                         }
+                        break;
+                    }
+                    case Qt::Key_G:
+                    {
+                        toggleGridLayout();
+                        break;
+                    }
+                    case Qt::Key_M:
+                    {
+                        toggleMiddleCrossGrid();
                         break;
                     }
                     default:
@@ -1512,7 +1557,7 @@ void EditorMenue::loadMap(QString filename)
         }
     }
     setFocused(true);
-    
+    updateGrids();
 }
 
 void EditorMenue::importAWDCAw4Map(QString filename)
@@ -1529,6 +1574,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         }
     }
     setFocused(true);
+    updateGrids();
 }
 
 void EditorMenue::importAWByWeb(QString filename)
@@ -1545,6 +1591,7 @@ void EditorMenue::importAWByWeb(QString filename)
         }
     }
     setFocused(true);
+    updateGrids();
 }
 
 void EditorMenue::importAWDSAwsMap(QString filename)
@@ -1561,6 +1608,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
         }
     }
     setFocused(true);
+    updateGrids();
 }
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
@@ -1587,6 +1635,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
         }
     }
     setFocused(true);
+    updateGrids();
 }
 
 void EditorMenue::newMap(QString mapName, QString author, QString description, QString scriptFile,
@@ -1603,10 +1652,9 @@ void EditorMenue::newMap(QString mapName, QString author, QString description, Q
     pMap->newMap(mapWidth, mapHeigth, playerCount);
     pMap->getGameRecorder()->setDeployLimit(buildLimit);
     pMap->getGameRecorder()->setMapTime(turnLimit);
-
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
-    
+    updateGrids();
 }
 
 void EditorMenue::changeMap(QString mapName, QString author, QString description, QString scriptFile,
@@ -1625,6 +1673,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     pMap->getGameRecorder()->setMapTime(turnLimit);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
+    updateGrids();
 }
 
 void EditorMenue::selectionChanged()

@@ -99,6 +99,10 @@ var Init =
         menu.resizeMap(-1, -1, -1, -1);
         menu.changeMap("test", "test", "test", "", 30, 30, 5, 0, 0);
         menu.newMap("test", "test", "test", "", 30, 30, 5, 0, 0);
+        menu.toggleGridLayout();
+        menu.toggleGridLayout();
+        menu.toggleMiddleCrossGrid();
+        menu.toggleMiddleCrossGrid();
         menu.showResizeMap();
         menu.showSaveMap();
         menu.showLoadMap();

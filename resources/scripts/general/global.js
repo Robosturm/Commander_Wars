@@ -23,6 +23,12 @@ getFogOfMistColor = function()
     return "#64B4B4B4";
 }
 
+getGridColor = function()
+{
+    // the color used for the grid overlay
+    return "#B4464646";
+}
+
 getArmyNameFromPlayerTable = function(player, table)
 {
     return Global.getArmyNameFromTable(player.getArmy(), table);

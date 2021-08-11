@@ -243,7 +243,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Boost movement by 1 and increases the firepower of direct ground units.");
+        return qsTr("Boost movement by 1 and increases the firepower of ground units.");
     };
     this.getPowerName = function(co)
     {
@@ -251,7 +251,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Boost movement by 2 and firepower of direct ground units.");
+        return qsTr("Boost movement by 2 and firepower of ground units.");
     };
     this.getSuperPowerName = function(co)
     {

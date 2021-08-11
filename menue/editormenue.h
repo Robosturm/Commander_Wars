@@ -66,6 +66,14 @@ signals:
     void sigOnEnter();
 public slots:
     /**
+     * @brief toggleMiddleCrossGrid
+     */
+    void toggleMiddleCrossGrid();
+    /**
+     * @brief toggleGridLayout
+     */
+    void toggleGridLayout();
+    /**
      * @brief onEnter
      */
     void onEnter();
@@ -381,6 +389,8 @@ public slots:
      */
     void copy();
 private:
+    void updateGrids();
+private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
@@ -393,7 +403,8 @@ private:
     QRect m_copyRect{-1, -1, 0, 0};
     oxygine::spActor m_copyRectActor{oxygine::spActor::create()};
     oxygine::spActor m_cursorActor{oxygine::spActor::create()};
-
+    bool m_gridVisible{false};
+    bool m_middleCrossGridVisible{false};
     QTimer m_autosaveTimer;
 };
 

@@ -56,6 +56,7 @@ public:
         Terrain,
         // gap for stacking the terrain sprites
         CORange = std::numeric_limits<qint32>::max() - 200,
+        GridLayout,
         FogFields,
         MarkedFields,
         Weather,
@@ -133,7 +134,7 @@ public:
 
     bool getNoUi() const;
 
-    public slots:
+public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
