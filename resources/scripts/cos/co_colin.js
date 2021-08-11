@@ -30,7 +30,7 @@ var Constructor = function()
         if (funds > 0)
         {
             player.addFunds(player.getFunds() * 0.5);
-        }        
+        }
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -82,18 +82,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/colin.mp3", 6900, 75513)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/colin.mp3", 6900, 75513)
+            break;
         }
     };
 
@@ -113,18 +113,18 @@ var Constructor = function()
         return -baseCost * CO_COLIN.costModifier / 100;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                var bonus = attacker.getOwner().getFunds() / 1000 * 3.33 - 5;
-                return bonus;
-            case GameEnums.PowerMode_Power:
-                return -5;
-            default:
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            var bonus = attacker.getOwner().getFunds() / 1000 * 3.33 - 5;
+            return bonus;
+        case GameEnums.PowerMode_Power:
+            return -5;
+        default:
+            break;
         }
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {
@@ -151,8 +151,8 @@ var Constructor = function()
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ")
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
         {
             return ["ZCOUNIT_LOGIC_TRUCK"];
         }
@@ -178,8 +178,8 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nLogistic Truck\n") +
-                   qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
+                qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
+                qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
         text = replaceTextArgs(text, [CO_COLIN.costModifier, CO_COLIN.globalBoost, CO_COLIN.coZoneBoost]);
         return text;
     };
@@ -222,6 +222,18 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Colin");
+    };
+    this.getAiUsePowerAtStart = function(co, powerSurplus, turnMode)
+    {
+        // cop spam
+        if (turnMode === GameEnums.AiTurnMode_StartOfDay)
+        {
+            if (co.canUsePower())
+            {
+                return GameEnums.PowerMode_Power;
+            }
+        }
+        return GameEnums.PowerMode_Off;
     };
 }
 

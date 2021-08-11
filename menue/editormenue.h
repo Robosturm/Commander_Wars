@@ -43,10 +43,6 @@ public:
         return m_pInstance;
     }
     /**
-     * @brief optimizePlayers
-     */
-    void optimizePlayers();
-    /**
      * @brief cleanTemp clean ups undo and redo steps
      * @param step
      */
@@ -73,6 +69,10 @@ public slots:
      * @brief onEnter
      */
     void onEnter();
+    /**
+     * @brief optimizePlayers
+     */
+    void optimizePlayers();
     /**
      * @brief scriptFinished
      */

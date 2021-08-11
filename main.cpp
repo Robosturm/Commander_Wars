@@ -219,7 +219,11 @@ int main(qint32 argc, char* argv[])
     static constexpr qint32 finalObjects = 0;
     if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
     {
-        oxygine::handleErrorPolicy(oxygine::ep_show_error, "memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "c++ memory leak detected. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
+    }
+    else if (oxygine::ref_counter::getAlloctedJsObjectCount() != finalObjects)
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
     //end
     if (returncode == 1)

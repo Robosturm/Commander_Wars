@@ -11,6 +11,7 @@
 namespace oxygine
 {
     std::atomic<qint32> ref_counter::m_instanceCounter = 0;
+    std::atomic<qint32> ref_counter::m_jsInstanceCounter = 0;
 #ifdef MEMORYTRACING
     QMutex ref_counter::m_lock;
     QVector<ref_counter*> ref_counter::m_objects;

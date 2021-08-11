@@ -23,13 +23,17 @@ namespace oxygine
         {
             return m_instanceCounter;
         }
+        static qint32 getAlloctedJsObjectCount()
+        {
+            return m_jsInstanceCounter;
+        }
         static void addInstanceCounter()
         {
-            ++m_instanceCounter;
+            ++m_jsInstanceCounter;
         }
         static void releaseInstanceCounter()
         {
-            --m_instanceCounter;
+            --m_jsInstanceCounter;
         }
     private:
         template<typename T>
@@ -48,6 +52,7 @@ namespace oxygine
         std::atomic<qint32> m_ref_counter{0};
 
         static std::atomic<qint32> m_instanceCounter;
+        static std::atomic<qint32> m_jsInstanceCounter;
 #ifdef MEMORYTRACING
         static QMutex m_lock;
         static QVector<ref_counter*> m_objects;
