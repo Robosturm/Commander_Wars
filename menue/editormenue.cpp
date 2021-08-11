@@ -125,7 +125,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3, tr("Deletes the current map and imports an AWS Map Editor from a file."));
     m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
-    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
+    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
     m_Topbar->finishCreation();
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -350,220 +350,81 @@ void EditorMenue::editorRedo()
 void EditorMenue::clickedTopbar(QString itemID)
 {    
     Console::print("clickedTopbar(" + itemID + ")", Console::eDEBUG);
-    if (itemID == "EXIT")
+    struct MenuItem
     {
-        m_Focused = false;
-        spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
-        connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
-        connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+        MenuItem(const char* const id, void (EditorMenue::*func)())
+            : m_Id(id),
+              m_func(func)
         {
-            m_Focused = true;
-        });
-        addChild(pExit);
-    }
-    else if (itemID == "SAVEMAP")
+        }
+        const char* const m_Id;
+        void (EditorMenue::*m_func)();
+    };
+    QVector<MenuItem> items =
     {
-        QVector<QString> wildcards;
-        wildcards.append("*.map");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        MenuItem("EXIT",            &EditorMenue::showExit),
+        MenuItem("SAVEMAP",         &EditorMenue::showSaveMap),
+        MenuItem("LOADMAP",         &EditorMenue::showLoadMap),
+        MenuItem("UNDO",            &EditorMenue::editorUndo),
+        MenuItem("REDO",            &EditorMenue::editorRedo),
+        MenuItem("EDITSCRIPT",      &EditorMenue::showEditScript),
+        MenuItem("EDITCAMPAIGN",    &EditorMenue::showEditCampaign),
+        MenuItem("IMPORTCOWTXT",    &EditorMenue::showImportCoWTxTMap),
+        MenuItem("IMPORTAWDSAWS",   &EditorMenue::showImportAwdsAws),
+        MenuItem("EXPORTAWDSAWS",   &EditorMenue::showExportAwdsAws),
+        MenuItem("IMPORTAWDCAW4",   &EditorMenue::showImportAwdsAw4),
+        MenuItem("IMPORTAWBYWEB",   &EditorMenue::showImportAwByWeb),
+        MenuItem("NEWMAP",          &EditorMenue::showNewMap),
+        MenuItem("EDITMAP",         &EditorMenue::showEditMap),
+        MenuItem("FLIPX",           &EditorMenue::flipX),
+        MenuItem("FLIPY",           &EditorMenue::flipY),
+        MenuItem("ROTATEX",         &EditorMenue::rotateX),
+        MenuItem("ROTATEY",         &EditorMenue::rotateY),
+        MenuItem("RANDOMMAP",       &EditorMenue::showRandomMap),
+        MenuItem("PLACESELECTION",  &EditorMenue::changePlaceSelection),
+        MenuItem("DELETEUNITS",     &EditorMenue::deleteUnits),
+        MenuItem("EDITUNITS",       &EditorMenue::editUnits),
+        MenuItem("EDITTERRAIN",     &EditorMenue::editTerrains),
+        MenuItem("OPTIMIZEPLAYERS", &EditorMenue::optimizePlayers),
+        MenuItem("EDITPLAYERS",     &EditorMenue::showEditPlayers),
+        MenuItem("EDITRULES",       &EditorMenue::showEditRules),
+        MenuItem("COPY",            &EditorMenue::copy),
+        MenuItem("PASTE",           nullptr),
+        MenuItem("PASTEALL",        nullptr),
+        MenuItem("RESIZEMAP",       &EditorMenue::showResizeMap),
+    };
+    for (auto & item : qAsConst(items))
+    {
+        if (item.m_Id == itemID &&
+            item.m_func != nullptr)
+        {
+            (this->*(item.m_func))();
+        }
+    }
+}
 
-        setFocused(false);
-    }
-    else if (itemID == "LOADMAP")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.map");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "UNDO")
-    {
-        editorUndo();
-    }
-    else if (itemID == "REDO")
-    {
-        editorRedo();
-    }
-    else if (itemID == "EDITSCRIPT")
-    {
-        spScriptEditor scriptEditor = spScriptEditor::create();
-        addChild(scriptEditor);
-        connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "EDITCAMPAIGN")
-    {
-        spCampaignEditor campaignEditor = spCampaignEditor::create();
-        addChild(campaignEditor);
-        connect(campaignEditor.get(),  &CampaignEditor::sigFinished, this, &EditorMenue::campaignFinished, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "IMPORTCOWTXT")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.txt");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "IMPORTAWDSAWS")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.aws");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "EXPORTAWDSAWS")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.aws");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "IMPORTAWDCAW4")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.aw4");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "IMPORTAWDBYWEB")
-    {
-        QVector<QString> wildcards;
-        wildcards.append("*.txt");
-        QString path = Settings::getUserPath() + "maps";
-        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-        addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
-        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "NEWMAP")
-    {
-        spMapEditDialog mapEditDialog = spMapEditDialog::create("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
-        connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
-        connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        addChild(mapEditDialog);
-        setFocused(false);
-    }
-    else if (itemID == "EDITMAP")
-    {
-        spGameMap pGameMap = GameMap::getInstance();
-        spMapEditDialog mapEditDialog = spMapEditDialog::create(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
-                                                                pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
-                                                                pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
-                                                                pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
-        connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
-        connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
-        addChild(mapEditDialog);
-        setFocused(false);
-    }
-    else if (itemID == "FLIPX")
-    {
-        spGameMap pGameMap = GameMap::getInstance();
-        pGameMap->flipX();
-    }
-    else if (itemID == "FLIPY")
-    {
-        spGameMap  pGameMap = GameMap::getInstance();
-        pGameMap->flipY();
-    }
-    else if (itemID == "ROTATEX")
-    {
-        spGameMap  pGameMap = GameMap::getInstance();
-        pGameMap->rotateX();
-    }
-    else if (itemID == "ROTATEY")
-    {
-        spGameMap  pGameMap = GameMap::getInstance();
-        pGameMap->rotateY();
-    }
-    else if (itemID == "RANDOMMAP")
-    {
-        spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
-        addChild(pDialogRandomMap);
-        connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "PLACESELECTION")
-    {
-        m_EditorMode = EditorModes::PlaceEditorSelection;
-        selectionChanged();
-    }
-    else if (itemID == "DELETEUNITS")
-    {
-        m_EditorMode = EditorModes::RemoveUnits;
-        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
-    }
-    else if (itemID == "EDITUNITS")
-    {
-        m_EditorMode = EditorModes::EditUnits;
-        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
-    }
-    else if (itemID == "EDITTERRAIN")
-    {
-        m_EditorMode = EditorModes::EditTerrain;
-        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
-    }
-    else if (itemID == "OPTIMIZEPLAYERS")
-    {
-        optimizePlayers();
-    }
-    else if (itemID == "EDITPLAYERS")
-    {
-        spPlayerSelectionDialog pDialog = spPlayerSelectionDialog::create();
-        addChild(pDialog);
-        connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "EDITRULES")
-    {
-        spRuleSelectionDialog pDialog = spRuleSelectionDialog::create(RuleSelection::Mode::Editor);
-        addChild(pDialog);
-        connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
-        setFocused(false);
-    }
-    else if (itemID == "COPY")
-    {
-        m_EditorMode = EditorModes::CopySelection;
-        m_copyRect = QRect(-1, -1, 0, 0);
-    }
-    else if (itemID == "PASTE")
-    {
-        // do nothing
-    }
-    else if (itemID == "PASTEALL")
-    {
-        // do nothing
-    }
-    else if (itemID == "RESIZEMAP")
-    {
-        showResizeMap();
-    }
-    
+void EditorMenue::showSaveMap()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.map");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showLoadMap()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.map");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
 }
 
 void EditorMenue::showResizeMap()
@@ -645,6 +506,194 @@ void EditorMenue::showResizeMap()
                           pRightBox->getCurrentValue(), pBottomBox->getCurrentValue());
     });
     
+}
+
+void EditorMenue::showEditScript()
+{
+    spScriptEditor scriptEditor = spScriptEditor::create();
+    addChild(scriptEditor);
+    connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showEditCampaign()
+{
+    spCampaignEditor campaignEditor = spCampaignEditor::create();
+    addChild(campaignEditor);
+    connect(campaignEditor.get(),  &CampaignEditor::sigFinished, this, &EditorMenue::campaignFinished, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showImportCoWTxTMap()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.txt");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showImportAwdsAws()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.aws");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showExportAwdsAws()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.aws");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showImportAwdsAw4()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.aw4");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showImportAwByWeb()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.txt");
+    QString path = Settings::getUserPath() + "maps";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
+    connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showNewMap()
+{
+    spMapEditDialog mapEditDialog = spMapEditDialog::create("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
+    connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
+    connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    addChild(mapEditDialog);
+    setFocused(false);
+}
+
+void EditorMenue::showEditMap()
+{
+    spGameMap pGameMap = GameMap::getInstance();
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
+                                                            pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
+                                                            pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
+                                                            pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
+    connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
+    connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+    addChild(mapEditDialog);
+    setFocused(false);
+}
+
+void EditorMenue::flipX()
+{
+    spGameMap pGameMap = GameMap::getInstance();
+    pGameMap->flipX();
+}
+
+void EditorMenue::flipY()
+{
+    spGameMap  pGameMap = GameMap::getInstance();
+    pGameMap->flipY();
+}
+
+void EditorMenue::rotateX()
+{
+    spGameMap  pGameMap = GameMap::getInstance();
+    pGameMap->rotateX();
+}
+
+void EditorMenue::rotateY()
+{
+    spGameMap  pGameMap = GameMap::getInstance();
+    pGameMap->rotateY();
+}
+
+void EditorMenue::showRandomMap()
+{
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
+    addChild(pDialogRandomMap);
+    connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::changePlaceSelection()
+{
+    m_EditorMode = EditorModes::PlaceEditorSelection;
+    selectionChanged();
+}
+
+void EditorMenue::deleteUnits()
+{
+    m_EditorMode = EditorModes::RemoveUnits;
+    createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+}
+
+void EditorMenue::editUnits()
+{
+    m_EditorMode = EditorModes::EditUnits;
+    createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+}
+
+void EditorMenue::editTerrains()
+{
+    m_EditorMode = EditorModes::EditTerrain;
+    createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+}
+
+void EditorMenue::showEditPlayers()
+{
+    spPlayerSelectionDialog pDialog = spPlayerSelectionDialog::create();
+    addChild(pDialog);
+    connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showEditRules()
+{
+    spRuleSelectionDialog pDialog = spRuleSelectionDialog::create(RuleSelection::Mode::Editor);
+    addChild(pDialog);
+    connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
+    setFocused(false);
+}
+
+void EditorMenue::showExit()
+{
+    m_Focused = false;
+    spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
+    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pExit);
+}
+
+void EditorMenue::copy()
+{
+    m_EditorMode = EditorModes::CopySelection;
+    m_copyRect = QRect(-1, -1, 0, 0);
 }
 
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)

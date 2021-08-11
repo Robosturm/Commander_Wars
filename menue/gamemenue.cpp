@@ -106,6 +106,8 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
+    connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -127,6 +129,8 @@ GameMenue::GameMenue(QString map, bool saveGame)
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
+    connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
 }
 
 GameMenue::GameMenue()
@@ -138,6 +142,20 @@ GameMenue::GameMenue()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
+}
+
+void GameMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "gameMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

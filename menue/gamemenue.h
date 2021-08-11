@@ -98,7 +98,12 @@ signals:
     void sigShowExitGame();
     void sigShowSurrenderGame();
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
+    void sigOnEnter();
 public slots:
+    /**
+     * @brief onEnter
+     */
+    void onEnter();
     /**
      * @brief centerMapOnAction
      * @param pGameAction

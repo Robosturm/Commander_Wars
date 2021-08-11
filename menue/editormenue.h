@@ -284,6 +284,102 @@ public slots:
      * @brief autosave
      */
     void autosave();
+    /**
+     * @brief showSaveMap
+     */
+    void showSaveMap();
+    /**
+     * @brief showLoadMap
+     */
+    void showLoadMap();
+    /**
+     * @brief showEditScript
+     */
+    void showEditScript();
+    /**
+     * @brief showEditCampaign
+     */
+    void showEditCampaign();
+    /**
+     * @brief showImportCoWTxTMap
+     */
+    void showImportCoWTxTMap();
+    /**
+     * @brief showImportAwdsAws
+     */
+    void showImportAwdsAws();
+    /**
+     * @brief showExportAwdsAws
+     */
+    void showExportAwdsAws();
+    /**
+     * @brief showImportAwdsAw4
+     */
+    void showImportAwdsAw4();
+    /**
+     * @brief showImportAwByWeb
+     */
+    void showImportAwByWeb();
+    /**
+     * @brief showNewMap
+     */
+    void showNewMap();
+    /**
+     * @brief showEditMap
+     */
+    void showEditMap();
+    /**
+     * @brief flipX
+     */
+    void flipX();
+    /**
+     * @brief flipY
+     */
+    void flipY();
+    /**
+     * @brief rotateX
+     */
+    void rotateX();
+    /**
+     * @brief rotateY
+     */
+    void rotateY();
+    /**
+     * @brief showRandomMap
+     */
+    void showRandomMap();
+    /**
+     * @brief changePlaceSelection
+     */
+    void changePlaceSelection();
+    /**
+     * @brief deleteUnits
+     */
+    void deleteUnits();
+    /**
+     * @brief editUnits
+     */
+    void editUnits();
+    /**
+     * @brief editTerrains
+     */
+    void editTerrains();
+    /**
+     * @brief showEditPlayers
+     */
+    void showEditPlayers();
+    /**
+     * @brief showEditRules
+     */
+    void showEditRules();
+    /**
+     * @brief showExit
+     */
+    void showExit();
+    /**
+     * @brief copy
+     */
+    void copy();
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

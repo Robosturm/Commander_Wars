@@ -1,6 +1,7 @@
 var Init =
 {
     step = 0,
+    playTest = 0,
     steps = ["creditsTest",
              "achievementTest",
              "optionTest",
@@ -8,9 +9,12 @@ var Init =
              "shopTest",
              "coStyleTest",
              "mapEditorTest",
-             "simpleAiTest",
+             "simplePlayTest",
+             "simplePlayTest",
+             "simplePlayTest",
+             "simplePlayTest",
+             "simplePlayTest",
             ],
-    aiTest = false,
     main = function(menu)
     {
         var current = Init.step;
@@ -95,22 +99,60 @@ var Init =
         menu.resizeMap(-1, -1, -1, -1);
         menu.changeMap("test", "test", "test", "", 30, 30, 5, 0, 0);
         menu.newMap("test", "test", "test", "", 30, 30, 5, 0, 0);
+        menu.showResizeMap();
+        menu.showSaveMap();
+        menu.showLoadMap();
+        menu.showEditScript();
+        menu.showEditCampaign();
+        menu.showImportCoWTxTMap();
+        menu.showExportAwdsAws();
+        menu.showImportAwdsAw4();
+        menu.showImportAwByWeb();
+        menu.showEditMap();
+        menu.flipX();
+        menu.flipY();
+        menu.rotateX();
+        menu.rotateY();
+        menu.showRandomMap();
+        menu.changePlaceSelection();
+        menu.editUnits();
+        menu.editTerrains();
+        menu.optimizePlayers();
+        menu.showEditPlayers();
+        menu.showEditRules();
+        menu.copy();
+        menu.showExit();
         menu.exitEditor();
     },
-    simpleAiTest = function(menu)
+    simplePlayTest = function(menu)
     {
-        Init.aiTest = true;
         menu.enterSingleplayer();
     },
     mapsSelection = function(menu)
     {
-        if (Init.aiTest === true)
+        if (Init.playTest === 0)
         {
+            GameConsole.print("Testing ingame menus", 0);
+            menu.selectMap("maps/2_player/", "Agitated.map");
+            menu.slotButtonNext();
+            menu.slotButtonNext();
+            var selection = menu.getPlayerSelection();
+            selection.selectPlayerAi(0, 0);
+            selection.selectPlayerAi(1, 2);
+            selection.playerCO1Changed("CO_RANDOM", 0);
+            selection.playerCO2Changed("CO_RANDOM", 0);
+            selection.playerCO1Changed("CO_RANDOM", 1);
+            selection.playerCO2Changed("CO_RANDOM", 1);
+            menu.startGame();
+        }
+        else
+        {
+            GameConsole.print("Testing ai's and fog of war", 0);
             menu.selectMap("maps/2_player/", "Agitated.map");
             menu.slotButtonNext();
             menu.slotButtonNext();
             var gameRules = map.getGameRules();
-            gameRules.setFogMode(GameEnums.Fog_OfWar);
+            gameRules.setFogMode(Init.playTest - 1);
             var selection = menu.getPlayerSelection();
             selection.selectPlayerAi(0, 1);
             selection.selectPlayerAi(1, 2);
@@ -121,9 +163,31 @@ var Init =
             menu.startGame();
         }
     },
+    gameMenu = function(menu)
+    {
+        if (Init.playTest === 0)
+        {
+            GameConsole.print("Showing all ingame menus", 0);
+            menu.victoryInfo();
+            menu.showCOInfo();
+            menu.showGameInfo(0);
+            menu.showOptions();
+            menu.showChangeSound();
+            menu.showAttackLog(0);
+            menu.showRules();
+            menu.showUnitInfo(0);
+            menu.showUnitStatistics();
+            menu.showExitGame();
+            menu.showSurrenderGame();
+            menu.showSaveAndExitGame();
+            menu.showWiki();
+            menu.exitGame();
+        }
+    },
     onVictory = function(menu)
     {
-        Init.aiTest = false;
+        GameConsole.print("On Victory", 0);
+        ++Init.playTest;
         menu.exitMenue();
     },
 }
