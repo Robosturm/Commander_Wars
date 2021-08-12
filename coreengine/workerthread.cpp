@@ -119,6 +119,7 @@ void WorkerThread::start()
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
+    Player::getNeutralTableAnim();
 
     if (QFile::exists("init.js"))
     {

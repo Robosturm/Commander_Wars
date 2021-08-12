@@ -5214,5 +5214,6 @@
         <file>resources/aidata/heavy/heavy_ai9.js</file>
         <file>resources/images/battleanimations/mech/mech+ma+river.png</file>
         <file>resources/images/battleanimations/mech/mech+ma+river+mask.png</file>
+        <file>resources/objects/one_step.png</file>
     </qresource>
 </RCC>

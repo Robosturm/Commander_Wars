@@ -93,7 +93,7 @@ namespace oxygine
     {
         m_elapsed += us.dt;
 
-        if (m_current)
+        if (m_current.get() != nullptr)
         {
             qint32 next = m_tweens.indexOf(m_current);
             m_current->update(actor, us);
@@ -104,11 +104,15 @@ namespace oxygine
                     m_current = m_tweens[next + 1];
                     m_current->start(actor);
                 }
+                else
+                {
+                    m_current = nullptr;
+                }
             }
 
         }
 
-        if (!m_current)
+        if (m_current.get() == nullptr)
         {
             Event ev(EVENT_LOOP_END);
             dispatchEvent(&ev);

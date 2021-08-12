@@ -40,6 +40,7 @@ signals:
     void sigStopFastForward();
     void sigShowConfig();
     void sigOnEnter();
+    void sigOneStep();
 public slots:
     void onEnter();
     void showRecordInvalid();
@@ -69,6 +70,10 @@ public slots:
      * @brief togglePlayUi
      */
     void togglePlayUi();
+    /**
+     * @brief oneStep
+     */
+    void oneStep();
 protected:
     /**
      * @brief loadUIButtons
@@ -87,11 +92,13 @@ private:
     bool m_paused{false};
     bool m_uiPause{false};
     bool m_pauseRequested{false};
+    quint32 m_replayCounter{0};
     spV_Scrollbar m_progressBar;
     QRecursiveMutex m_replayMutex;
     oxygine::spButton m_playButton;
     oxygine::spButton m_pauseButton;
     oxygine::spButton m_fastForwardButton;
+    oxygine::spButton m_oneStepButton;
     oxygine::spButton m_configButton;
     GameEnums::AnimationMode m_StoredShowAnimations = GameEnums::AnimationMode_All;
     spHumanPlayerInput m_HumanInput;

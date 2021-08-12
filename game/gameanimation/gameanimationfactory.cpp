@@ -301,13 +301,13 @@ void GameAnimationFactory::removeAnimationFromQueue(spGameAnimation pAnimation)
     qint32 i = 0;
     while (i < m_Animations.size())
     {
-        if (m_Animations[i].get() == pAnimation)
+        if (m_Animations[i].get() == pAnimation.get())
         {
             m_Animations.removeAt(i);
         }
         else
         {
-            i++;
+            ++i;
         }
     }
 }
