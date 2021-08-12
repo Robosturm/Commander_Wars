@@ -27,8 +27,8 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
     changeBackground("replaymenu");
-    bool valid = m_ReplayRecorder.loadRecord(filename);
-    if (valid)
+    m_valid = m_ReplayRecorder.loadRecord(filename);
+    if (m_valid)
     {
         m_Viewplayer = spViewplayer::create();
         // store animation modes
@@ -46,14 +46,8 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init();
         m_gameStarted = true;
         Console::print("emitting sigActionPerformed()", Console::eDEBUG);
-        emit sigActionPerformed();
         connect(this, &ReplayMenu::sigOnEnter, this, &ReplayMenu::onEnter, Qt::QueuedConnection);
     }
-    else
-    {
-        emit sigShowRecordInvalid();
-    }
-    emit sigOnEnter();
 }
 
 void ReplayMenu::onEnter()
@@ -67,6 +61,10 @@ void ReplayMenu::onEnter()
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
         pInterpreter->doFunction(object, func, args);
+    }
+    if (m_valid)
+    {
+        emit sigActionPerformed();
     }
 }
 
@@ -101,7 +99,9 @@ void ReplayMenu::exitReplay()
         GameAnimationFactory::finishAllAnimations();
     }
     Console::print("Leaving Replay Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMainwindow::create());
+    auto window = spMainwindow::create();
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     GameMenue::deleteMenu();
 }
 
@@ -157,8 +157,7 @@ Player* ReplayMenu::getCurrentViewPlayer()
 }
 
 void ReplayMenu::loadUIButtons()
-{
-    
+{    
     loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -171,7 +170,7 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
-    pButtonBox->setSize(Settings::getWidth() - m_IngameInfoBar->getWidth(), 50);
+    pButtonBox->setSize(Settings::getWidth() - m_IngameInfoBar->getWidth() - m_IngameInfoBar->getDetailedViewBox()->getWidth(), 50);
     pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
@@ -257,8 +256,7 @@ void ReplayMenu::loadUIButtons()
 }
 
 void ReplayMenu::loadSeekUi()
-{
-    
+{    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -303,8 +301,7 @@ void ReplayMenu::startSeeking()
         GameAnimationFactory::finishAllAnimations();
     }
     Settings::setShowAnimations(m_StoredShowAnimations);
-    m_seeking = true;
-    
+    m_seeking = true;    
 }
 
 void ReplayMenu::seekChanged(float value)
@@ -326,8 +323,7 @@ void ReplayMenu::seekRecord(float value)
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
     m_seekActor->setVisible(false);
-    m_seeking = false;
-    
+    m_seeking = false;    
 }
 
 void ReplayMenu::seekToDay(qint32 day)
@@ -348,8 +344,16 @@ void ReplayMenu::seekToDay(qint32 day)
         Mainapp::getInstance()->continueRendering();
         connectMap();
         connectMapCursor();
-        swapPlay();
+        if (!m_uiPause)
+        {
+            swapPlay();
+        }
     }
+}
+
+bool ReplayMenu::getValid() const
+{
+    return m_valid;
 }
 
 void ReplayMenu::swapPlay()
@@ -376,6 +380,7 @@ void ReplayMenu::togglePlayUi()
         m_playButton->setVisible(false);
         m_pauseButton->setVisible(true);
         m_pauseRequested = false;
+        m_uiPause = false;
         if (m_paused)
         {
             swapPlay();
@@ -387,6 +392,7 @@ void ReplayMenu::togglePlayUi()
         m_playButton->setVisible(true);
         m_pauseButton->setVisible(false);
         m_pauseRequested = true;
+        m_uiPause = true;
     }
 }
 
@@ -407,8 +413,7 @@ void ReplayMenu::stopFastForward()
 }
 
 void ReplayMenu::showConfig()
-{
-    
+{    
     if (m_pauseButton->getVisible())
     {
         swapPlay();
@@ -520,7 +525,7 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     spSlider pAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
     pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
-    pAnimationSpeed->setPosition(width - 130, y);
+    pAnimationSpeed->setPosition(width - 150, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     pPanel->addItem(pAnimationSpeed);
     connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -536,7 +541,7 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     spSlider pWalkSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
     pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
-    pWalkSpeed->setPosition(width - 130, y);
+    pWalkSpeed->setPosition(width - 150, y);
     pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
     pPanel->addItem(pWalkSpeed);
     connect(pWalkSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -552,7 +557,7 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     spSlider pBattleAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
     pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
-    pBattleAnimationSpeed->setPosition(width - 130, y);
+    pBattleAnimationSpeed->setPosition(width - 150, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getBattleAnimationSpeedValue()));
     pPanel->addItem(pBattleAnimationSpeed);
     connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -564,8 +569,7 @@ void ReplayMenu::showConfig()
 }
 
 void ReplayMenu::setViewTeam(qint32 item)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
@@ -588,6 +592,5 @@ void ReplayMenu::setViewTeam(qint32 item)
             }
         }
     }
-    pMap->getGameRules()->createFogVision();
-    
+    pMap->getGameRules()->createFogVision();    
 }

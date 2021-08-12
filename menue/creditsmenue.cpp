@@ -128,7 +128,6 @@ CreditsMenue::CreditsMenue()
     UiFactory::getInstance().createUi("ui/creditsmenu.xml", this);
     pApp->continueRendering();
     connect(this, &CreditsMenue::sigOnEnter, this, &CreditsMenue::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 void CreditsMenue::doUpdate(const oxygine::UpdateState&)
@@ -161,6 +160,8 @@ void CreditsMenue::onEnter()
 void CreditsMenue::exitMenue()
 {    
     Console::print("Leaving Credits Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMainwindow::create());
+    auto window = spMainwindow::create();
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }

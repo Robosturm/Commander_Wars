@@ -107,7 +107,6 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
     connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -130,7 +129,6 @@ GameMenue::GameMenue(QString map, bool saveGame)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
     connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 GameMenue::GameMenue()
@@ -1157,6 +1155,7 @@ void GameMenue::autoScroll(QPoint cursorPosition)
     {
         spGameMap pMap = GameMap::getInstance();
         if (pMap.get() != nullptr && m_IngameInfoBar.get() != nullptr &&
+            pMap->getCurrentPlayer() != nullptr &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             qint32 moveX = 0;
@@ -1335,7 +1334,9 @@ void GameMenue::victory(qint32 team)
             }
             AchievementManager::getInstance()->onVictory(team, humanWin);
             Console::print("Leaving Game Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
+            auto window = spVictoryMenue::create(m_pNetworkInterface);
+            oxygine::getStage()->addChild(window);
+            emit window->sigOnEnter();
             deleteMenu();
         }
     }
@@ -1797,6 +1798,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
+                    emit pMenue->sigOnEnter();
                 }
             }
             else if (cur == Settings::getKey_quickload2())
@@ -1810,6 +1812,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
+                    emit pMenue->sigOnEnter();
                 }
             }
             else

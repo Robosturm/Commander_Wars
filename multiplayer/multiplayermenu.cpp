@@ -891,7 +891,9 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spGameMenue::create(m_saveGame, m_NetworkInterface));
+    auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     // send game started
     QString command = QString(NetworkCommands::CLIENTINITGAME);
     Console::print("Sending command " + command, Console::eDEBUG);
@@ -1303,7 +1305,9 @@ void Multiplayermenu::countdown()
             pMap->updateSprites(-1, -1, false, true);
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(spGameMenue::create(m_saveGame, m_NetworkInterface));
+            auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
+            oxygine::getStage()->addChild(window);
+            emit window->sigOnEnter();
             QThread::msleep(200);
             Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);

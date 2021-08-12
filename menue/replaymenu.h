@@ -26,6 +26,12 @@ public:
      * @return
      */
     virtual Player* getCurrentViewPlayer() override;
+    /**
+     * @brief getValid
+     * @return
+     */
+    bool getValid() const;
+
 signals:
     void sigShowRecordInvalid();
     void sigExitReplay();
@@ -79,6 +85,7 @@ protected:
     void seekToDay(qint32 day);
 private:
     bool m_paused{false};
+    bool m_uiPause{false};
     bool m_pauseRequested{false};
     spV_Scrollbar m_progressBar;
     QRecursiveMutex m_replayMutex;
@@ -96,6 +103,7 @@ private:
     quint32 m_storedBattleAnimationSpeed = 1;
 
     bool m_seeking{false};
+    bool m_valid{false};
     oxygine::spActor m_seekActor;
     spLabel m_seekDayLabel;
 };

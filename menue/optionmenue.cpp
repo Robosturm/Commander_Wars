@@ -145,7 +145,6 @@ OptionMenue::OptionMenue()
     showSettings();
     pApp->continueRendering();
     connect(this, &OptionMenue::sigOnEnter, this, &OptionMenue::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 void OptionMenue::onEnter()
@@ -175,7 +174,9 @@ void OptionMenue::exitMenue()
     else
     {
         Console::print("Leaving Option Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(spMainwindow::create());
+        auto window = spMainwindow::create();
+        oxygine::getStage()->addChild(window);
+        emit window->sigOnEnter();
         oxygine::Actor::detach();
     }
 }
@@ -196,6 +197,7 @@ void OptionMenue::reloadSettings()
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
     oxygine::getStage()->addChild(newMenu);
+    emit newMenu->sigOnEnter();
     oxygine::Actor::detach();
 }
 

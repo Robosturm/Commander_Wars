@@ -208,7 +208,6 @@ EditorMenue::EditorMenue()
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
     pApp->continueRendering();
     connect(this, &EditorMenue::sigOnEnter, this, &EditorMenue::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 void EditorMenue::onEnter()
@@ -1986,7 +1985,9 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 void EditorMenue::exitEditor()
 {    
     Console::print("Leaving Editor Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMainwindow::create());
+    auto window = spMainwindow::create();
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     oxygine::Actor::detach();
 }
 

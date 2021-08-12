@@ -138,7 +138,9 @@ LobbyMenu::~LobbyMenu()
 void LobbyMenu::exitMenue()
 {    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMainwindow::create());
+    auto window = spMainwindow::create();
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
 

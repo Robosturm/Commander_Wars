@@ -119,7 +119,6 @@ Shopmenu::Shopmenu()
     filterChanged(0);
     pApp->continueRendering();
     connect(this, &Shopmenu::sigOnEnter, this, &Shopmenu::onEnter, Qt::QueuedConnection);
-    emit sigOnEnter();
 }
 
 void Shopmenu::onEnter()
@@ -139,7 +138,9 @@ void Shopmenu::onEnter()
 void Shopmenu::exitMenue()
 {
     Console::print("Leaving Shop Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(spMainwindow::create());
+    auto window = spMainwindow::create();
+    oxygine::getStage()->addChild(window);
+    emit window->sigOnEnter();
     oxygine::Actor::detach();
 }
 
