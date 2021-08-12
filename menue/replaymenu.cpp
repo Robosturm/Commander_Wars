@@ -47,10 +47,26 @@ ReplayMenu::ReplayMenu(QString filename)
         m_gameStarted = true;
         Console::print("emitting sigActionPerformed()", Console::eDEBUG);
         emit sigActionPerformed();
+        connect(this, &ReplayMenu::sigOnEnter, this, &ReplayMenu::onEnter, Qt::QueuedConnection);
     }
     else
     {
         emit sigShowRecordInvalid();
+    }
+    emit sigOnEnter();
+}
+
+void ReplayMenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "replayMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
     }
 }
 
@@ -63,8 +79,7 @@ ReplayMenu::~ReplayMenu()
 }
 
 void ReplayMenu::showRecordInvalid()
-{
-    
+{    
     m_Focused = false;
     QString modList;
     QStringList mods = m_ReplayRecorder.getMods();
@@ -75,13 +90,11 @@ void ReplayMenu::showRecordInvalid()
     spDialogMessageBox pExit = spDialogMessageBox::create(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                     modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
-    addChild(pExit);
-    
+    addChild(pExit);   
 }
 
 void ReplayMenu::exitReplay()
-{
-    
+{    
     m_gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
@@ -89,8 +102,7 @@ void ReplayMenu::exitReplay()
     }
     Console::print("Leaving Replay Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(spMainwindow::create());
-    oxygine::Actor::detach();
-    
+    GameMenue::deleteMenu();
 }
 
 void ReplayMenu::nextReplayAction()
@@ -296,8 +308,7 @@ void ReplayMenu::startSeeking()
 }
 
 void ReplayMenu::seekChanged(float value)
-{
-    
+{    
     m_seekActor->setVisible(true);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = 0;
@@ -305,14 +316,12 @@ void ReplayMenu::seekChanged(float value)
     {
         day = m_ReplayRecorder.getDayFromPosition(count);
     }
-    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
-    
+    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));    
 }
 
 void ReplayMenu::seekRecord(float value)
 {
-    QMutexLocker locker(&m_replayMutex);
-    
+    QMutexLocker locker(&m_replayMutex);    
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
@@ -551,9 +560,7 @@ void ReplayMenu::showConfig()
         Settings::setBattleAnimationSpeed(static_cast<quint32>(value));
     });
     y += 40;
-
-    addChild(pBox);
-    
+    addChild(pBox);    
 }
 
 void ReplayMenu::setViewTeam(qint32 item)

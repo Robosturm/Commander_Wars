@@ -3,6 +3,7 @@ var Init =
     step = 0,
     playTest = 0,
     steps = ["creditsTest",
+             "replayTest",
              "achievementTest",
              "optionTest",
              "wikiTest",
@@ -193,5 +194,28 @@ var Init =
         GameConsole.print("On Victory", 0);
         ++Init.playTest;
         menu.exitMenue();
+    },
+    replayTest = function(menu)
+    {
+        menu.replayGame("testReplay.rec");
+    },
+    replayMenu = function(menu)
+    {
+        menu.togglePlayUi();
+        menu.startSeeking();
+        menu.seekRecord(0.5);
+
+        menu.startSeeking();
+        menu.seekRecord(0.25);
+
+        menu.startSeeking();
+        menu.seekRecord(0.0);
+
+        menu.startSeeking();
+        menu.seekRecord(0.75);
+
+        menu.showConfig();
+        menu.showExitGame();
+        menu.exitReplay();
     },
 }

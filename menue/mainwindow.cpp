@@ -387,7 +387,7 @@ void Mainwindow::enterCreditsmenue()
 
 void Mainwindow::enterAchievementmenue()
 {    
-     Mainapp::getInstance()->pauseRendering();
+    Mainapp::getInstance()->pauseRendering();
     oxygine::getStage()->addChild(spAchievementmenu::create());
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -402,15 +402,13 @@ void Mainwindow::enterShopMenu()
 }
 
 void Mainwindow::enterLoadGame()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
-    
 }
 
 void Mainwindow::enterLoadCampaign()
@@ -425,7 +423,7 @@ void Mainwindow::enterLoadCampaign()
 
 void Mainwindow::loadCampaign(QString filename)
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -437,10 +435,18 @@ void Mainwindow::loadCampaign(QString filename)
             pCampaign->deserializeObject(stream);
             spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);
             oxygine::getStage()->addChild(pMenu);
-            leaveMenue();
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadCampaign not existing savefile was selected");
         }
     }
-    
+    else
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadCampaign illegal savefile was selected");
+    }
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::enterReplayGame()
@@ -462,7 +468,7 @@ void Mainwindow::lastSaveGame()
 
 void Mainwindow::loadGame(QString filename)
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -473,30 +479,45 @@ void Mainwindow::loadGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
-            leaveMenue();
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadGame not existing savefile was selected");
         }
     }
-    
+    else
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadGame illegal savefile was selected");
+    }
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::replayGame(QString filename)
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     if (filename.endsWith(".rec"))
     {
         QFile file(filename);
         if (file.exists())
         {
             Console::print("Leaving Main Menue", Console::eDEBUG);
-            spReplayMenu pMenu = spReplayMenu::create(filename);
-            oxygine::getStage()->addChild(pMenu);
-
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
-            leaveMenue();
+            spReplayMenu pMenu = spReplayMenu::create(filename);
+            oxygine::getStage()->addChild(pMenu);
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::replayGame not existing record file was selected");
         }
     }
-    
+    else
+    {
+        oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::replayGame illegal record file was selected");
+    }
+    leaveMenue();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void Mainwindow::leaveMenue()

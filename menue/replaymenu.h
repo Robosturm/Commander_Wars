@@ -33,7 +33,9 @@ signals:
     void sigStartFastForward();
     void sigStopFastForward();
     void sigShowConfig();
+    void sigOnEnter();
 public slots:
+    void onEnter();
     void showRecordInvalid();
     void exitReplay();
     void nextReplayAction();

@@ -514,7 +514,7 @@ endif()
 # this sections adds custom targets to view resources in the ide which don't work with qt-creators ide creation
 FILE(GLOB_RECURSE ResourceFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.qrc")
 FILE(GLOB_RECURSE TS_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "translation/*.ts")
-FILE(GLOB_RECURSE TestScripts "_test/*.js")
+FILE(GLOB_RECURSE TestScripts "_test/*.*")
 
 add_custom_target(Resources SOURCES
     ${ResourceFiles}
