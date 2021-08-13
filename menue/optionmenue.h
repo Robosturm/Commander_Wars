@@ -30,6 +30,7 @@ signals:
     void sigReloadSettings();
     void sigUpdateModCheckboxes();
     void sigOnEnter();
+    void sigUpdateModFilter(QString tag);
 public slots:
     void exitMenue();
     void showMods();
@@ -40,6 +41,12 @@ public slots:
     void reloadSettings();
     void updateModCheckboxes();
     void onEnter();
+    void updateModFilter(QString tag);
+private:
+    void loadModInfo(oxygine::Box9Sprite* pPtrBox,
+                     QString name, QString description, QString version,
+                     QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
+                     bool isComsetic, QStringList modTags, QString thumbnail);
 private:
     spGameplayAndKeys m_pGameplayAndKeys;
 
@@ -50,6 +57,8 @@ private:
     oxygine::spTextField m_ModDescriptionText;
     QVector<oxygine::spActor> m_ModBoxes;
     QVector<spCheckbox> m_ModCheckboxes;
+    oxygine::spResAnim m_modThumbnailAnim;
+    oxygine::spSprite m_modThumbnail;
 
     QStringList languages;
 

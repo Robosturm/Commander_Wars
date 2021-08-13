@@ -5,3 +5,4 @@ compatible_mods=
 incompatible_mods=mods/cow_movement_mod
 required_mods=
 cosmetic=false
+tags=Advance Wars DS;Gameplay

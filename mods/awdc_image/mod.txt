@@ -5,3 +5,4 @@ CompatibleMods=
 IncompatibleMods=
 required_mods=
 cosmetic=true
+tags=Advance Wars DC;Visual

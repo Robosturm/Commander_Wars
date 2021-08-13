@@ -5,3 +5,5 @@ compatible_mods=
 incompatible_mods=mods/awdc_co;mods/aw2_co;mods/aw_co
 required_mods=
 cosmetic=false
+tags=Advance Wars DS;COs
+thumbnail=mods/awds_co/aw_dualstrike.png

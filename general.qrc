@@ -5215,5 +5215,7 @@
         <file>resources/images/battleanimations/mech/mech+ma+river.png</file>
         <file>resources/images/battleanimations/mech/mech+ma+river+mask.png</file>
         <file>resources/objects/one_step.png</file>
+        <file>resources/objects/panel_no_transparent.png</file>
+        <file>mods/awds_co/aw_dualstrike.png</file>
     </qresource>
 </RCC>

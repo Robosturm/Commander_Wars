@@ -5,3 +5,4 @@ compatible_mods=
 incompatible_mods=mods/awds_co;mods/aw2_co;mods/aw_co
 required_mods=
 cosmetic=false
+tags=Advance Wars DC;COs

@@ -1,6 +1,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 
@@ -11,6 +12,8 @@
 #include <qscreen.h>
 #include <qlocale.h>
 #include <QStandardPaths>
+#include <QDir>
+#include <QFileInfoList>
 #ifdef EnableMultimedia
 #include <QInputDevice>
 #include <QMediaDevices>
@@ -2025,7 +2028,9 @@ QString Settings::getModName(QString mod)
     QStringList incompatibleMods;
     QStringList requiredMods;
     bool isCosmetic = false;
-    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic);
+    QStringList tags;
+    QString thumbnail;
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic, tags, thumbnail);
     return name;
 }
 
@@ -2037,14 +2042,18 @@ bool Settings::getIsCosmetic(QString mod)
     QStringList compatibleMods;
     QStringList incompatibleMods;
     QStringList requiredMods;
+    QStringList tags;
+    QString thumbnail;
     bool isCosmetic = false;
-    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic);
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic,
+                tags, thumbnail);
     return isCosmetic;
 }
 
 void Settings::getModInfos(QString mod, QString & name, QString & description, QString & version,
                            QStringList & compatibleMods, QStringList & incompatibleMods,
-                           QStringList & requiredMods, bool & isCosmetic)
+                           QStringList & requiredMods, bool & isCosmetic,
+                           QStringList & tags, QString & thumbnail)
 {
     name = mod;
     QFile file(Settings::getUserPath() + mod + "/mod.txt");
@@ -2087,17 +2096,39 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
                 requiredMods = line.split("=")[1].split(";");
                 requiredMods.removeAll("");
             }
-            if (line.startsWith("required_mods="))
+            if (line.startsWith("tags="))
             {
-                requiredMods = line.split("=")[1].split(";");
-                requiredMods.removeAll("");
+                tags = line.split("=")[1].split(";");
+                tags.removeAll("");
             }
             if (line.startsWith("cosmetic=true"))
             {
                 isCosmetic = true;
             }
+            if (line.startsWith("thumbnail="))
+            {
+                thumbnail = line.split("=")[1];
+            }
         }
     }
+}
+
+QStringList Settings::getAvailableMods()
+{
+    QStringList mods;
+    QFileInfoList rccinfoList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "mods").entryInfoList(QDir::Dirs);
+    QFileInfoList infoList = QDir(Settings::getUserPath() + "mods").entryInfoList(QDir::Dirs);
+    infoList.append(rccinfoList);
+    for (const auto & info : infoList)
+    {
+        QString folder = GlobalUtils::makePathRelative(info.filePath());
+        if (!folder.endsWith("."))
+        {
+            QString mod = GlobalUtils::makePathRelative(info.filePath());
+            mods.append(mod);
+        }
+    }
+    return mods;
 }
 
 bool Settings::hasSmallScreen()

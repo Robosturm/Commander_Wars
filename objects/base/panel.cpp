@@ -4,7 +4,7 @@
 
 #include "objects/base/dropdownmenubase.h"
 
-Panel::Panel(bool useBox, QSize size, QSize contentSize)
+Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     : m_hideTimer(this)
 {
     setObjectName("Panel");
@@ -26,7 +26,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     if (useBox)
     {
         m_Panelbox = oxygine::spBox9Sprite::create();
-        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim(resAnim);
         m_Panelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         m_Panelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         m_Panelbox->setResAnim(pAnim);

@@ -408,8 +408,18 @@ public slots:
 
     static void getModInfos(QString mod, QString & name, QString & description, QString & version,
                             QStringList & compatibleMods, QStringList & incompatibleMods,
-                            QStringList & requiredMods, bool & isCosmetic);
-
+                            QStringList & requiredMods, bool & isCosmetic,
+                            QStringList & tags, QString & thumbnail);
+    /**
+     * @brief getAvailableMods
+     * @return
+     */
+    static QStringList getAvailableMods();
+    /**
+     * @brief getModName
+     * @param mod
+     * @return
+     */
     static QString getModName(QString mod);
     /**
      * @brief getIsCosmetic

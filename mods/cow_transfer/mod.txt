@@ -5,3 +5,4 @@ compatible_mods=
 incompatible_mods=
 required_mods=
 cosmetic=false
+tags=Gameplay

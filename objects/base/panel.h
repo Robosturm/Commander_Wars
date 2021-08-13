@@ -16,7 +16,7 @@ class Panel : public QObject, public oxygine::Actor
     Q_OBJECT
     static constexpr qint32 sliderSize = 33;
 public:
-    explicit Panel(bool useBox, QSize size, QSize contentSize);
+    explicit Panel(bool useBox, QSize size, QSize contentSize, QString resAnim = "panel");
     virtual ~Panel();
     void addItem(oxygine::spActor pActor);
     void removeItem(oxygine::spActor pActor);

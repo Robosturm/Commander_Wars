@@ -112,35 +112,20 @@ OptionMenue::OptionMenue()
     m_pGameplayAndKeys = spGameplayAndKeys::create(size.height());
     m_pGameplayAndKeys->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pGameplayAndKeys);
-    if (Settings::getSmallScreenDevice())
-    {
-        size.setWidth(Settings::getWidth() - 50);
-    }
-    else
-    {
-        size.setWidth(Settings::getWidth() / 2 - 50);
-    }
+
+    size.setWidth(Settings::getWidth() - 60);
+    size.setHeight(size.height() - 50);
     m_pMods = spPanel::create(true,  size - QSize(0, 50), size);
-    m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 50);
+    m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 100);
     addChild(m_pMods);
-    if (Settings::getSmallScreenDevice())
-    {
-        size.setHeight(Settings::getHeight() - 50);
-    }
-    m_pModDescription = spPanel::create(true,  size - QSize(0, 40), size);
-    if (Settings::getSmallScreenDevice())
-    {
-        m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
-        m_pModDescription->addChild(spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth()));
-    }
-    else
-    {
-        m_pModDescription->setPosition(Settings::getWidth() / 2 + 10, 20 + pButtonMods->getHeight() + 50);
-    }
+    size.setHeight(size.height() + 70);
+    m_pModDescription = spPanel::create(true,  size, size, "panel_no_transparent");
+    m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
+    m_pModDescription->addChild(spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth()));
     addChild(m_pModDescription);
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
-
+    connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     addChild(m_ModSelector);
     showSettings();
     pApp->continueRendering();
@@ -187,7 +172,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
     m_ModSelector->setVisible(false);
-    m_pGameplayAndKeys->setVisible(true);    
+    m_pGameplayAndKeys->setVisible(true);
 }
 
 void OptionMenue::reloadSettings()
@@ -731,9 +716,9 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pAudioDevice);
     connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-       auto item = QVariant::fromValue(deviceInfos[value]);
-       Settings::setAudioOutput(item);
-       pAudio->changeAudioDevice(item);
+        auto item = QVariant::fromValue(deviceInfos[value]);
+        Settings::setAudioOutput(item);
+        pAudio->changeAudioDevice(item);
     });
     y += 40;
 #endif
@@ -791,6 +776,8 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
 
 void OptionMenue::showMods()
 {    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     m_pMods->clearContent();
     m_pModDescription->clearContent();
     m_ModBoxes.clear();
@@ -802,10 +789,6 @@ void OptionMenue::showMods()
     m_pModDescription->setVisible(true);
     m_pGameplayAndKeys->setVisible(false);
     m_ModSelector->removeChildren();
-
-    QFileInfoList rccinfoList = QDir(QString(oxygine::Resource::RCC_PREFIX_PATH) + "mods").entryInfoList(QDir::Dirs);
-    QFileInfoList infoList = QDir(Settings::getUserPath() + "mods").entryInfoList(QDir::Dirs);
-    infoList.append(rccinfoList);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -815,6 +798,9 @@ void OptionMenue::showMods()
     m_ModDescriptionText = oxygine::spTextField::create();
     m_ModDescriptionText->setStyle(style);
     m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
+    m_modThumbnail = oxygine::spSprite::create();
+    m_modThumbnail->setPosition(5, 5);
+    m_pModDescription->addItem(m_modThumbnail);
     m_pModDescription->addItem(m_ModDescriptionText);
 
     spLabel pLabel = spLabel::create(250);
@@ -822,6 +808,7 @@ void OptionMenue::showMods()
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
+    qint32 y = 0;
     QVector<QString> versions = {tr("Unkown"),
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
@@ -831,108 +818,182 @@ void OptionMenue::showMods()
     pModSelection->setX(260);
     connect(pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
     m_ModSelector->addChild(pModSelection);
+    y += 50;
+    pLabel = spLabel::create(250);
+    style.multiline = false;
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Tag Filter:"));
+    pLabel->setY(y);
+    m_ModSelector->addChild(pLabel);
+    QVector<QString> tags;
 
     qint32 width = 0;
     qint32 mods = 0;
     QStringList currentMods = Settings::getMods();
     style.multiline = false;
-    for (const auto & info : infoList)
+    QStringList availableMods = Settings::getAvailableMods();
+    for (const auto & mod : qAsConst(availableMods))
     {
-        QString folder = GlobalUtils::makePathRelative(info.filePath());
-        if (!folder.endsWith("."))
+        QString name;
+        QString description;
+        QString version;
+        QStringList compatibleMods;
+        QStringList incompatibleMods;
+        QStringList requiredMods;
+        bool isComsetic = false;
+        QStringList modTags;
+        QString thumbnail;
+        Settings::getModInfos(mod, name, description, version,
+                              compatibleMods, incompatibleMods, requiredMods, isComsetic,
+                              modTags, thumbnail);
+        for (const auto & tag : qAsConst(modTags))
         {
-            QString name;
-            QString description;
-            QString version;
-            QStringList compatibleMods;
-            QStringList incompatibleMods;
-            QStringList requiredMods;
-            bool isComsetic = false;
-            Settings::getModInfos(folder, name, description, version,
-                                  compatibleMods, incompatibleMods, requiredMods, isComsetic);
-            oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
-            oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-            pBox->setResAnim(pAnim);
-            pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-            pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-
-            oxygine::spTextField pTextfield = oxygine::spTextField::create();
-            pTextfield->setStyle(style);
-            pTextfield->setHtmlText(name);
-            pTextfield->setPosition(50, 5);
-            pBox->addChild(pTextfield);
-            qint32 curWidth = pTextfield->getTextRect().getWidth() + 30;
-            spCheckbox modCheck = spCheckbox::create();
-            m_ModCheckboxes.append(modCheck);
-            modCheck->setPosition(10, 5);
-            pBox->addChild(modCheck);
-            curWidth += modCheck->getWidth() + 10;
-            if (currentMods.contains(folder))
+            if (!tags.contains(tag))
             {
-                modCheck->setChecked(true);
+                tags.append(tag);
             }
-            connect(modCheck.get(), &Checkbox::checkChanged, this, [=](bool checked)
-            {
-                if (checked)
-                {
-                    Settings::addMod(folder);
-                }
-                else
-                {
-                    Settings::removeMod(folder);
-                }
-                restartNeeded = true;
-                emit sigUpdateModCheckboxes();
-            });
-            if (curWidth > width)
-            {
-                width = curWidth;
-            }
-            pBox->setPosition(10, 10 + mods * 50);
-            pBox->setSize(curWidth + 20, 50);
-
-            auto* pPtrBox = pBox.get();
-            auto* pModDescriptionText = m_ModDescriptionText.get();
-            auto* pModDescription = m_pModDescription.get();
-            pBox->addClickListener([=](oxygine::Event* pEvent)
-            {
-                pEvent->stopPropagation();
-                for (qint32 i2 = 0; i2 < m_ModBoxes.size(); i2++)
-                {
-                    m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
-                }
-                pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-                QString cosmeticInfo;
-                if (isComsetic)
-                {
-                    cosmeticInfo = QString("\n\n") + tr("The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.");
-                }
-                QString modInfo = "\n\n" + tr("Compatible Mods:\n");
-                for (const auto & mod : compatibleMods)
-                {
-                    modInfo += Settings::getModName(mod) + "\n";
-                }
-                modInfo += "\n" + tr("Incompatible Mods:\n");
-                for (const auto & mod : incompatibleMods)
-                {
-                    modInfo += Settings::getModName(mod) + "\n";
-                }
-                modInfo += "\n" + tr("Required Mods:\n");
-                for (const auto & mod : requiredMods)
-                {
-                    modInfo += Settings::getModName(mod) + "\n";
-                }
-                pModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
-                pModDescription->setContentHeigth(pModDescriptionText->getTextRect().getHeight() + 40);
-            });
-            m_ModBoxes.append(pBox);
-            m_pMods->addItem(pBox);
-            mods++;
         }
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
+        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+        pBox->setResAnim(pAnim);
+        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+
+        spCheckbox modCheck = spCheckbox::create();
+        m_ModCheckboxes.append(modCheck);
+        modCheck->setPosition(10, 5);
+        pBox->addChild(modCheck);
+
+        spLabel pTextfield = spLabel::create(Settings::getWidth() - 190);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(name);
+        pTextfield->setPosition(50, 5);
+        pBox->addChild(pTextfield);
+        if (currentMods.contains(mod))
+        {
+            modCheck->setChecked(true);
+        }
+        connect(modCheck.get(), &Checkbox::checkChanged, this, [=](bool checked)
+        {
+            if (checked)
+            {
+                Settings::addMod(mod);
+            }
+            else
+            {
+                Settings::removeMod(mod);
+            }
+            restartNeeded = true;
+            emit sigUpdateModCheckboxes();
+        });
+        pBox->setPosition(10, 10 + mods * 50);
+        pBox->setSize(Settings::getWidth() - 130, 50);
+
+        auto* pPtrBox = pBox.get();
+        pBox->addClickListener([=](oxygine::Event* pEvent)
+        {
+            pEvent->stopPropagation();
+            loadModInfo(pPtrBox, name, description, version,
+                        compatibleMods, incompatibleMods, requiredMods, isComsetic,
+                        modTags, thumbnail);
+        });
+        m_ModBoxes.append(pBox);
+        m_pMods->addItem(pBox);
+        mods++;
     }
     m_pMods->setContentWidth(width);
     m_pMods->setContentHeigth(50 + mods * 50);
+
+    tags.sort();
+    tags.push_front(tr("All"));
+    spDropDownmenu pTagSelection = spDropDownmenu::create(300, tags);
+    pTagSelection->setTooltipText(tr("Filters the mods by the given tags"));
+    pTagSelection->setPosition(260, y);
+    connect(pTagSelection.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+    {
+        QString tag;
+        if (value > 0)
+        {
+            tag = tags[value];
+        }
+        emit sigUpdateModFilter(tag);
+    });
+    m_ModSelector->addChild(pTagSelection);
+    updateModFilter("");
     updateModCheckboxes();
+    pApp->continueRendering();
+}
+
+void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
+                              QString name, QString description, QString version,
+                              QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
+                              bool isComsetic, QStringList modTags, QString thumbnail)
+{
+    for (qint32 i2 = 0; i2 < m_ModBoxes.size(); i2++)
+    {
+        m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+    }
+    pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+    qint32 y = 0;
+    if (!thumbnail.isEmpty())
+    {
+        QImage img;
+        if (QFile::exists(Settings::getUserPath() + thumbnail))
+        {
+            img = QImage(Settings::getUserPath() + thumbnail);
+        }
+        else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + thumbnail))
+        {
+            img = QImage(oxygine::Resource::RCC_PREFIX_PATH + thumbnail);
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "unable to locate thumbnail for mod " + name);
+        }
+        m_modThumbnail->setVisible(true);
+        m_modThumbnailAnim = oxygine::spSingleResAnim::create();
+        Mainapp::getInstance()->loadResAnim(m_modThumbnailAnim, img, 1, 1, 1.0f, false);
+        m_modThumbnail->setResAnim(m_modThumbnailAnim.get());
+        if (m_modThumbnailAnim->getWidth() > m_pModDescription->getContentWidth() - 60)
+        {
+            m_modThumbnail->setScale(static_cast<float>(m_pModDescription->getContentWidth() - 60) / static_cast<float>(m_modThumbnailAnim->getWidth()));
+        }
+        y += m_modThumbnail->getY() + m_modThumbnail->getScaledHeight() + 10;
+    }
+    else
+    {
+        m_modThumbnail->setVisible(false);
+        m_modThumbnailAnim = nullptr;
+    }
+    QString cosmeticInfo;
+    if (isComsetic)
+    {
+        cosmeticInfo = QString("\n\n") + tr("The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.");
+    }
+    QString modInfo = "\n\n" + tr("Compatible Mods:\n");
+    for (const auto & mod : compatibleMods)
+    {
+        modInfo += Settings::getModName(mod) + "\n";
+    }
+    modInfo += "\n" + tr("Incompatible Mods:\n");
+    for (const auto & mod : incompatibleMods)
+    {
+        modInfo += Settings::getModName(mod) + "\n";
+    }
+    modInfo += "\n" + tr("Required Mods:\n");
+    for (const auto & mod : requiredMods)
+    {
+        modInfo += Settings::getModName(mod) + "\n";
+    }
+    modInfo += "\n" + tr("Tags:\n");
+    for (const auto & tag : modTags)
+    {
+        modInfo += tag + "\n";
+    }
+    m_ModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
+    m_ModDescriptionText->setHeight(m_ModDescriptionText->getTextRect().getHeight());
+    m_ModDescriptionText->setY(y);
+    m_pModDescription->setContentHeigth(y + m_ModDescriptionText->getTextRect().getHeight() + 40);
 }
 
 void OptionMenue::selectMods(qint32 item)
@@ -1003,7 +1064,7 @@ void OptionMenue::selectMods(qint32 item)
     }
     Console::print("Marking restart cause mods changed.", Console::eDEBUG);
     restartNeeded = true;
-    showMods();    
+    showMods();
 }
 
 void OptionMenue::restart()
@@ -1014,70 +1075,107 @@ void OptionMenue::restart()
 
 void OptionMenue::updateModCheckboxes()
 {
+    const auto availableMods = Settings::getAvailableMods();
     const auto mods = Settings::getActiveMods();
-    QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
-    QString name;
-    QString description;
-    QString version;
-    QStringList compatibleMods;
-    QStringList incompatibleMods;
-    QStringList requiredMods;
-    bool isComsetic = false;
     for (auto & checkbox : m_ModCheckboxes)
     {
         checkbox->setEnabled(true);
     }
     for (const auto & mod : mods)
     {
+        QString name;
+        QString description;
+        QString version;
+        QStringList compatibleMods;
+        QStringList incompatibleMods;
+        QStringList requiredMods;
+        QStringList tags;
+        QString thumbnail;
+        bool isComsetic = false;
         Settings::getModInfos(mod, name, description, version,
-                              compatibleMods, incompatibleMods, requiredMods, isComsetic);
+                              compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
         qint32 i2 = 0;
-        for (const auto & info : qAsConst(infoList))
+        for (const auto & checkBoxMod : qAsConst(availableMods))
         {
-            QString mod = GlobalUtils::makePathRelative(info.filePath());
-            if (!mod.endsWith("."))
+            if (incompatibleMods.contains(checkBoxMod))
             {
-                if (incompatibleMods.contains(mod))
-                {
-                    m_ModCheckboxes[i2]->setEnabled(false);
-                }
-                ++i2;
+                m_ModCheckboxes[i2]->setEnabled(false);
             }
+            ++i2;
         }
     }
     qint32 i = 0;
-    for (const auto & info : qAsConst(infoList))
+    for (const auto & mod : qAsConst(availableMods))
     {
-        QString mod = GlobalUtils::makePathRelative(info.filePath());
-        if (!mod.endsWith("."))
+        QString name;
+        QString description;
+        QString version;
+        QStringList compatibleMods;
+        QStringList incompatibleMods;
+        QStringList requiredMods;
+        QStringList tags;
+        QString thumbnail;
+        bool isComsetic = false;
+        Settings::getModInfos(mod, name, description, version,
+                              compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
+        for (const auto & incompatibleMod : qAsConst(incompatibleMods))
         {
-            Settings::getModInfos(mod, name, description, version,
-                                  compatibleMods, incompatibleMods, requiredMods, isComsetic);
-            for (const auto & incompatibleMod : qAsConst(incompatibleMods))
+            if (mods.contains(incompatibleMod))
             {
-                if (mods.contains(incompatibleMod))
+                m_ModCheckboxes[i]->setEnabled(false);
+                break;
+            }
+        }
+        if (m_ModCheckboxes[i]->getEnabled())
+        {
+            for (const auto & requiredMod : qAsConst(requiredMods))
+            {
+                if (!mods.contains(requiredMod))
                 {
+                    if (m_ModCheckboxes[i]->getChecked())
+                    {
+                        m_ModCheckboxes[i]->setChecked(false);
+                        Settings::removeMod(mod);
+                    }
                     m_ModCheckboxes[i]->setEnabled(false);
                     break;
                 }
             }
-            if (m_ModCheckboxes[i]->getEnabled())
-            {
-                for (const auto & requiredMod : qAsConst(requiredMods))
-                {
-                    if (!mods.contains(requiredMod))
-                    {
-                        if (m_ModCheckboxes[i]->getChecked())
-                        {
-                            m_ModCheckboxes[i]->setChecked(false);
-                            Settings::removeMod(mod);
-                        }
-                        m_ModCheckboxes[i]->setEnabled(false);
-                        break;
-                    }
-                }
-            }
-            ++i;
+        }
+        ++i;
+    }
+}
+
+void OptionMenue::updateModFilter(QString tag)
+{
+    const auto mods = Settings::getAvailableMods();
+    qint32 visibleCounter = 0;
+    for (qint32 i = 0; i < m_ModBoxes.size(); ++i)
+    {
+        QString name;
+        QString description;
+        QString version;
+        QStringList compatibleMods;
+        QStringList incompatibleMods;
+        QStringList requiredMods;
+        QStringList tags;
+        QString thumbnail;
+        bool isComsetic = false;
+        Settings::getModInfos(mods[i], name, description, version,
+                              compatibleMods, incompatibleMods, requiredMods, isComsetic, tags, thumbnail);
+
+
+        if (tag.isEmpty() ||
+            tags.contains(tag))
+        {
+            m_ModBoxes[i]->setY(visibleCounter * 50);
+            m_ModBoxes[i]->setVisible(true);
+            ++visibleCounter;
+        }
+        else
+        {
+            m_ModBoxes[i]->setVisible(false);
         }
     }
+    m_pMods->setContentHeigth(50 + visibleCounter * 50);
 }

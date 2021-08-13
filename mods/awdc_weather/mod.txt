@@ -5,3 +5,4 @@ compatible_mods=
 incompatible_mods=mods/awds_weather
 required_mods=
 cosmetic=false
+tags=Advance Wars DC;Gameplay
