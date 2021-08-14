@@ -202,9 +202,6 @@ namespace oxygine
         ++pv;
     }
 
-    class Material;
-    typedef intrusive_ptr<Material> spMaterialX;
-
     /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
     Matrix makeViewMatrix(qint32 w, qint32 h, bool flipU = false);
 }

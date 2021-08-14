@@ -7,25 +7,37 @@
 
 namespace oxygine
 {
-    spMaterialX Material::current;
-    spMaterialX Material::null;
+    spMaterial Material::current;
+    spMaterial Material::null;
 
-    bool STDMaterial::cmp(const STDMaterial& a, const STDMaterial& b)
+    Material::Material(const Material& other)
+        : m_hash(other.m_hash),
+          m_base(other.m_base),
+          m_table(other.m_table),
+          m_alpha(other.m_alpha),
+          m_blend(other.m_blend),
+          m_uberShader(other.m_uberShader),
+          m_addColor(other.m_addColor),
+          m_flags(other.m_flags)
     {
-        if (a.m_base != b.m_base ||
-            a.m_table != b.m_table ||
-            a.m_alpha != b.m_alpha ||
-            a.m_blend != b.m_blend ||
-            a.m_flags != b.m_flags ||
-            a.m_uberShader != b.m_uberShader ||
-            a.m_addColor != b.m_addColor)
+    }
+
+    bool Material::compare(const Material* matA, const Material* matB)
+    {
+        if (matA->m_base       != matB->m_base ||
+            matA->m_table      != matB->m_table ||
+            matA->m_alpha      != matB->m_alpha ||
+            matA->m_blend      != matB->m_blend ||
+            matA->m_flags      != matB->m_flags ||
+            matA->m_uberShader != matB->m_uberShader ||
+            matA->m_addColor   != matB->m_addColor)
         {
             return false;
         }
         return true;
     }
 
-    void STDMaterial::init()
+    void Material::init()
     {
         m_addColor = QColor(0, 0, 0, 0);
         m_blend = blend_premultiplied_alpha;
@@ -33,18 +45,18 @@ namespace oxygine
         m_uberShader = &STDRenderer::uberShader;
     }
 
-    void STDMaterial::rehash(size_t& hash) const
+    void Material::rehash(size_t& hash) const
     {
         hash_combine(hash, m_base.get());
         hash_combine(hash, m_alpha.get());
         hash_combine(hash, m_table.get());
-        hash_combine(hash, (int)m_blend);
+        hash_combine(hash, static_cast<qint32>(m_blend));
         hash_combine(hash, m_flags);
         hash_combine(hash, m_uberShader);
         hash_combine(hash, qRgba(m_addColor));
     }
 
-    void STDMaterial::xapply()
+    void Material::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(m_uberShader);
@@ -75,47 +87,20 @@ namespace oxygine
         rsCache().setBlendMode(m_blend);
     }
 
-    void STDMaterial::xflush()
+    void Material::xflush()
     {
         STDRenderer::getCurrent()->flush();
     }
 
-
-    void STDMaterial::render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
+    void Material::render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
-    void STDMaterial::render(const QColor& c, const RectF& src, const RectF& dest)
+    void Material::render(const QColor& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->addQuad(c, src, dest);
-    }
-
-
-    spSTDMaterial STDMaterial::cloneDefaultShader() const
-    {
-        STDMaterial mat(*this);
-        mat.m_uberShader = &STDRenderer::uberShader;
-        return MaterialCache::mc().cache(mat);
-    }
-
-    Material::Material(const Material& other)
-    {
-        m_hash = other.m_hash;
-        m_compare = other.m_compare;
-    }
-
-    Material::Material(compare cmp)
-        : m_hash(0),
-          m_compare(cmp)
-    {
-
-    }
-
-    Material::Material() : m_hash(0)
-    {
-
     }
 
     void Material::apply()
@@ -128,16 +113,8 @@ namespace oxygine
         }
     }
 
-
     void Material::flush()
     {
         xflush();
-    }
-
-    oxygine::Material& Material::operator=(const Material& r)
-    {
-        m_compare = r.m_compare;
-        m_hash = r.m_hash;
-        return *this;
     }
 }

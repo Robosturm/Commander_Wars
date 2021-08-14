@@ -12,7 +12,7 @@ namespace oxygine
     class ResAnim: public Resource
     {
     public:
-        explicit ResAnim(Resource* atlas = 0);
+        explicit ResAnim(Resource* atlas = nullptr);
         virtual ~ResAnim() = default;
 
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
@@ -27,10 +27,10 @@ namespace oxygine
 
         float                   getScaleFactor() const {return m_scaleFactor;}
         float                   getAppliedScale() const { return m_appliedScale; }
-        qint32                     getColumns() const {return m_columns;}
-        qint32                     getRows() const {return (int)m_frames.size() / m_columns;}
-        qint32                     getTotalFrames() const {return (int)m_frames.size();}
-        qint32                     getFrameRate() const { return m_framerate; }
+        qint32                  getColumns() const {return m_columns;}
+        qint32                  getRows() const {return (int)m_frames.size() / m_columns;}
+        qint32                  getTotalFrames() const {return (int)m_frames.size();}
+        qint32                  getFrameRate() const { return m_framerate; }
         const Resources*        getResources() const;
         const AnimationFrame&   getFrame(qint32 col, qint32 row) const;
         /**returns frame by index ignoring cols and rows*/

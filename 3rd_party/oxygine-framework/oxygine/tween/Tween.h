@@ -93,52 +93,50 @@ namespace oxygine
 
         void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
         void init2(const TweenOptions& opt);
-        /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
-
-        qint32                  getLoops() const
+        qint32 getLoops() const
         {
             return m_loops;
         }
-        timeMS                  getDuration() const
+        timeMS getDuration() const
         {
             return m_duration;
         }
-        void                    setElapsed(const timeMS &elapsed);
-        timeMS                  getElapsed() const
+        void setElapsed(const timeMS &elapsed);
+        timeMS getElapsed() const
         {
             return m_elapsed;
         }
-        EASE                    getEase() const
+        EASE getEase() const
         {
             return m_ease;
         }
-        EASE                    getGlobalEase() const
+        EASE getGlobalEase() const
         {
             return m_globalEase;
         }
-        timeMS                  getDelay() const
+        timeMS getDelay() const
         {
             return m_delay;
         }
-        Actor*                  getClient() const
+        Actor* getClient() const
         {
             return m_client;
         }
-        float                   getPercent() const
+        float getPercent() const
         {
             return m_percent;
         }
-        const EventCallback&    getDoneCallback() const
+        const EventCallback& getDoneCallback() const
         {
             return m_cbDone;
         }
 
-        bool        isStarted() const
+        bool isStarted() const
         {
             return m_status != status_not_started;
         }
-        bool        isDone() const
+        bool isDone() const
         {
             return m_status == status_remove;
         }
@@ -191,21 +189,12 @@ namespace oxygine
 
         void start(Actor& actor);
         void update(Actor& actor, const UpdateState& us);
-
         static float calcEase(EASE ease, float v);
-        typedef float (*easeHandler)(EASE ease, float v);
-        static void  setCustomEaseHandler(easeHandler);
 
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setDoneCallback(const EventCallback& cb);
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setStartCallback(const EventCallback& cb);
-
-        /** tween will freeze on 100% and never complete  */
-        void setDisabledStatusDone(bool disabled)
-        {
-            m_disabledStatusDone = disabled;
-        }
     private:
         void __start(Actor& actor, const UpdateState& us);
 
@@ -228,9 +217,8 @@ namespace oxygine
         };
 
     protected:
-        status m_status;
+        status m_status{status_not_started};
         timeMS m_elapsed;
-
         timeMS m_duration;
         timeMS m_delay;
         qint32 m_loops;
@@ -238,11 +226,8 @@ namespace oxygine
         EASE m_ease;
         EASE m_globalEase;
         bool m_twoSides;
-        bool m_disabledStatusDone;
-
         float m_percent;
         bool m_detach;
-
         EventCallback m_cbStart;
         EventCallback m_cbDone;
         Actor* m_client;
@@ -264,44 +249,36 @@ namespace oxygine
         }
         virtual ~TweenT() = default;
 
-        void _update(Actor& actor, const UpdateState& us)
+        virtual void _update(Actor& actor, const UpdateState& us) override
         {
-            TActor& rActor = *safeCast<TActor*>(&actor);
+            TActor& rActor = *oxygine::safeCast<TActor*>(&actor);
             m_property.update(rActor, m_percent, us);
         }
 
-        void _start(TActor& actor)
+        virtual void _start(Actor& actor) override
         {
-            TActor& rActor = *safeCast<TActor*>(&actor);
+            TActor& rActor = *oxygine::safeCast<TActor*>(&actor);
             m_property.init(rActor);
             UpdateState us;
             us.iteration = -1;
             m_property.update(rActor, _calcEase(0.0f), us);
         }
 
-        void _done(TActor& actor, const UpdateState&)
+        virtual void _done(Actor& actor, const UpdateState&) override
         {
-            TActor& rActor = *safeCast<TActor*>(&actor);
+            TActor& rActor = *oxygine::safeCast<TActor*>(&actor);
             m_property.done(rActor);
         }
     private:
         TProperty m_property;
     };
 
-
     template <typename TProperty>
-    spTweenT<TProperty> createTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
+    spTweenT<TProperty> createTween(const TProperty& property, timeMS duration, qint32 loops = 1,
+                                    bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
     {
         spTweenT<TProperty> pTween = spTweenT<TProperty>::create(property);
         pTween->init(duration, loops, twoSides, delay, ease);
-        return pTween;
-    }
-
-    template <typename TProperty>
-    spTweenT<TProperty> createTween2(const TProperty& property, const TweenOptions& opt)
-    {
-        spTweenT<TProperty> pTween = spTweenT<TProperty>::create(property);
-        pTween->init2(opt);
         return pTween;
     }
 

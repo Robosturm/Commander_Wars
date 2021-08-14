@@ -6,8 +6,7 @@
 class TweenWait
 {
 public:
-    typedef oxygine::Actor type;
-
+    using TActor = oxygine::Actor;
     explicit TweenWait();
     virtual ~TweenWait() = default;
     void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);

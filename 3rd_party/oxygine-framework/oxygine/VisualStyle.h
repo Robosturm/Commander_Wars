@@ -55,19 +55,19 @@ namespace oxygine
         QColor getDisableColor() const;
         void setDisableColor(const QColor &value);
 
-        inline spSTDMaterial & getMaterial()
+        inline spMaterial & getMaterial()
         {
             return m_mat;
         }
     protected:
         virtual void matChanged() {}
-        void setMaterial(spSTDMaterial mat);
+        void setMaterial(spMaterial mat);
     private:
         void changeAddColor(const QColor& color);
     protected:
         VisualStyle m_vstyle;
         QColor m_disableColor{75, 75, 75, 0};
-        spSTDMaterial m_mat;
+        spMaterial m_mat;
 
     };
 

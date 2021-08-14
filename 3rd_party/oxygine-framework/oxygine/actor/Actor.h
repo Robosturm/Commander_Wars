@@ -181,20 +181,11 @@ namespace oxygine
         virtual void updateStatePressed() {}
 
         spTween addTween(spTween);
-        spTween addTween2(spTween, const TweenOptions& opt);
-
-        template<class Prop>
-        spTween addTween(const Prop& prop, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
+        template<class TProperty>
+        spTween addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
         {
-            return addTween(createTween(prop, duration, loops, twoSides, delay, ease));
+            return addTween(createTween(property, duration, loops, twoSides, delay, ease));
         }
-
-        template<class Prop>
-        spTween addTween(const Prop& prop, const TweenOptions& opt)
-        {
-            return addTween(createTween2(prop, opt));
-        }
-
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
         qint32 addClickListener(const EventCallback& cb)
         {

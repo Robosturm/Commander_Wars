@@ -3,12 +3,6 @@
 
 namespace oxygine
 {
-    EventDispatcher::EventDispatcher()
-        : m_lastID(0)
-    {
-
-    }
-
     qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
         m_lastID++;

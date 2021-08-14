@@ -17,7 +17,7 @@ namespace oxygine
     private:
         QColor m_color;
         qint32 m_downsample;
-        spSTDMaterial m_matx;
+        spMaterial m_matx;
     };
 
     class TweenOutline : public TweenProxy<TweenOutlineImpl>

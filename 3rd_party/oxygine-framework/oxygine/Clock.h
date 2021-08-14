@@ -13,9 +13,9 @@ namespace oxygine
         virtual ~Clock() = default;
 
         timeMS  getTime() const;
-        qint32     getPauseCounter() const;
-        qint32     getFixedStep() const;
-        qint32     getLastDT() const;
+        qint32  getPauseCounter() const;
+        qint32  getFixedStep() const;
+        qint32  getLastDT() const;
         timeMS  getLastUpdateTime() const;
         float   getMultiplier() const;
 

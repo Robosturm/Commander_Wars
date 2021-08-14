@@ -57,8 +57,8 @@ namespace oxygine
             virtual void xresize(Aligner&) {}
             virtual void xfinalPass(Aligner&) {}
 
-            void updateMaterial(const STDMaterial& mat);
-            virtual void xupdateMaterial(const STDMaterial&) {}
+            void updateMaterial(const Material& mat);
+            virtual void xupdateMaterial(const Material&) {}
 
         public:
             spNode m_firstChild;
@@ -81,7 +81,7 @@ namespace oxygine
             void xresize(Aligner& rd) override;
             void xfinalPass(Aligner& rd) override;
             void draw(DrawContext& dc) override;
-            void xupdateMaterial(const STDMaterial& mat) override;
+            void xupdateMaterial(const Material& mat) override;
 
             Symbol* getSymbol(int& pos) override;
         };

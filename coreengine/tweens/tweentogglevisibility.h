@@ -6,7 +6,7 @@
 class TweenToggleVisibility
 {
 public:
-    typedef oxygine::Actor type;
+    using TActor = oxygine::Actor;
     /**
      * @brief TweenToggleVisibility. The sprite is visible between start and end
      * @param start fraction between 0 and 1

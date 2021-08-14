@@ -141,7 +141,6 @@ namespace oxygine
         return getFrame(0, 0);
     }
 
-
     const Resources* ResAnim::getResources() const
     {
         const Resource* parent = getParent()->getParent();

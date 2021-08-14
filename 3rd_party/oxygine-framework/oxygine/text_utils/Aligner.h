@@ -27,13 +27,13 @@ namespace oxygine
             qint32 code;
             glyph gl;
             RectF destRect;
-            spSTDMaterial mat;
+            spMaterial mat;
         };
 
         class Aligner
         {
         public:
-            explicit Aligner(const TextStyle& style, spSTDMaterial mat, const Font* font, float gscale, const Vector2& size);
+            explicit Aligner(const TextStyle& style, spMaterial mat, const Font* font, float gscale, const Vector2& size);
             virtual ~Aligner() = default;
 
 
@@ -51,7 +51,7 @@ namespace oxygine
             qint32 m_width;
             qint32 m_height;
             size_t m_options;
-            spSTDMaterial m_mat;
+            spMaterial m_mat;
             const Font* m_font;
 
         private:

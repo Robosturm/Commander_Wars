@@ -15,11 +15,11 @@ namespace oxygine
 
     VStyleActor::VStyleActor()
     {
-        STDMaterial mat;
+        Material mat;
         mat.m_blend = blend_premultiplied_alpha;
         mat.m_base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
-        m_mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(mat));
+        m_mat = MaterialCache::mc().cache(mat);
     }
 
     void VisualStyle::setColor(const QColor& color)
@@ -71,7 +71,7 @@ namespace oxygine
 
     void VStyleActor::changeAddColor(const QColor& color)
     {
-        m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
+        m_mat = m_mat->clone();
         m_mat->m_addColor = color;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
@@ -90,13 +90,13 @@ namespace oxygine
         }
         QMutexLocker lock(&m_Locked);
         m_vstyle.setBlendMode(mode);
-        m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
+        m_mat = m_mat->clone();
         m_mat->m_blend = mode;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
     }
 
-    void VStyleActor::setMaterial(spSTDMaterial mat)
+    void VStyleActor::setMaterial(spMaterial mat)
     {
         m_mat = mat;
         matChanged();

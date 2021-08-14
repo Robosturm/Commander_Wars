@@ -14,15 +14,11 @@ namespace oxygine
         static Input instance;
 
         explicit Input();
-        virtual ~Input();
-
+        virtual ~Input() = default;
         void cleanup();
-
         void multiTouchEnabled(bool en);
-
         /**index should be in range [1, MAX_TOUCHES]*/
         PointerState* getTouchByIndex(pointer_index index);
-
         qint32 touchID2index(qint64 id);
         PointerState* getTouchByID(qint64 id);
         void sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps);

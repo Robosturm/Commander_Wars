@@ -7,8 +7,7 @@
 namespace oxygine
 {
     Tween::Tween()
-        : m_status(status_not_started),
-          m_elapsed(0),
+        : m_elapsed(0),
           m_duration(0),
           m_delay(0),
           m_loops(1),
@@ -16,12 +15,10 @@ namespace oxygine
           m_ease(ease_linear),
           m_globalEase(ease_linear),
           m_twoSides(false),
-          m_disabledStatusDone(false),
           m_percent(0),
           m_detach(false),
           m_client(0)
     {
-
     }
 
     void Tween::reset()
@@ -217,11 +214,8 @@ namespace oxygine
                         else
                         {
                             m_percent = 1;
-                        }
-                        if (!m_disabledStatusDone)
-                        {
-                            m_status = status_done;
-                        }
+                        }                        
+                        m_status = status_done;
                     }
                 }
                 _update(*m_client, us);
@@ -284,8 +278,6 @@ namespace oxygine
         t = t - 0.954545454545f;
         return 7.5625f * t * t + 0.984375f;
     }
-
-    Tween::easeHandler _customEaseHandler = nullptr;
 
     float Tween::calcEase(EASE ease, float t)
     {
@@ -377,14 +369,9 @@ namespace oxygine
             case ease_outInBounce:
                 return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
             default:
-                t = _customEaseHandler(ease, t);
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "unkown ease in Tween::calcEase");
                 break;
         }
         return t;
-    }
-
-    void  Tween::setCustomEaseHandler(easeHandler h)
-    {
-        _customEaseHandler = h;
     }
 }

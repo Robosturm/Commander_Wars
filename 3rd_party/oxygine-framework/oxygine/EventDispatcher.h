@@ -33,7 +33,7 @@ namespace oxygine
               m_lastID(0)
         {
         }
-        explicit EventDispatcher();
+        explicit EventDispatcher() = default;
         virtual ~EventDispatcher() = default;
 
         qint32 addEventListener(eventType, const EventCallback&);
@@ -80,7 +80,7 @@ namespace oxygine
             eventType type;
         };
 
-        qint32 m_lastID;
+        qint32 m_lastID{0};
 
         using listeners = QVector<listener>;
         listeners m_listeners;

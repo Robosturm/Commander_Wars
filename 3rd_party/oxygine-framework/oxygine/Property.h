@@ -11,21 +11,20 @@ namespace oxygine
         using TActor = TClass;
         Property0(getValueRef dest)
             : m_dest(dest),
-              m_src(dest),
-              m_initialized(false)
+              m_src(dest)
         {
         }
 
         void init(TClass& t)
         {
-            m_initialized = true;
             m_src = (t.*GetFunction)();
+            m_initialized = true;
         }
 
         void init(getValueRef src)
         {
-            m_initialized = true;
             m_src = src;
+            m_initialized = true;
         }
 
         void setSrc(TClass& t)
@@ -66,7 +65,7 @@ namespace oxygine
     private:
         TValue m_dest;
         TValue m_src;
-        bool m_initialized;
+        bool m_initialized{false};
     };
 
     template<typename Value, typename valueRef, typename TClass, valueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(valueRef)>

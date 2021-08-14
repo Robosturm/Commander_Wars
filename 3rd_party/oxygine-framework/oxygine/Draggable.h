@@ -7,7 +7,10 @@ namespace oxygine
     class Draggable : public IClosureOwner
     {
     public:
-        enum { DragMoveEvent = sysEventID('D', 'M', 'E') };
+        enum
+        {
+            DragMoveEvent = sysEventID('D', 'M', 'E')
+        };
 
         explicit Draggable();
         virtual ~Draggable();
@@ -16,18 +19,37 @@ namespace oxygine
 
         void destroy();
 
-        Actor*          getDragClient() const {return m_dragClient;}
-        const RectF&    getDragBounds() const {return m_bounds;}
-        const Vector2&  getClientPos() const {return m_clientPos;}
-        bool            getDragEnabled() const { return m_dragEnabled; }
-        bool            isDragging() const {return m_pressed;}
-
-        void setDragEnabled(bool en) {m_dragEnabled = en;}
+        Actor*          getDragClient() const
+        {
+            return m_dragClient;
+        }
+        const RectF&    getDragBounds() const
+        {
+            return m_bounds;
+        }
+        const Vector2&  getClientPos() const
+        {
+            return m_clientPos;
+        }
+        bool            getDragEnabled() const
+        {
+            return m_dragEnabled;
+        }
+        bool            isDragging() const
+        {
+            return m_pressed;
+        }
+        void setDragEnabled(bool en)
+        {
+            m_dragEnabled = en;
+        }
         /**sets bounds position for dragged actor*/
         void setDragBounds(const RectF& bounds);
-        void setIgnoreTouchUp(bool ignore) { m_ignoreTouchUp = ignore; }
+        void setIgnoreTouchUp(bool ignore)
+        {
+            m_ignoreTouchUp = ignore;
+        }
         void snapClient2Bounds();
-
         bool getNoLockForMiddleButton() const;
         void setNoLockForMiddleButton(bool newNoLockForMiddleButton);
 

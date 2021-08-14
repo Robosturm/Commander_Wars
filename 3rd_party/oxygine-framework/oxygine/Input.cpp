@@ -5,6 +5,17 @@ namespace oxygine
 {
     Input Input::instance;
 
+    Input::Input()
+    {
+        m_pointerMouse.init(MAX_TOUCHES + 1);
+        for (qint32 i = 0; i < MAX_TOUCHES; ++i)
+        {
+            m_pointers[i].init(i + 1);
+        }
+        memset(m_ids, 0, sizeof(m_ids));
+        m_multiTouch = true;
+    }
+
     const PointerState* TouchEvent::getPointer() const
     {
         return Input::instance.getTouchByIndex(index);
@@ -66,22 +77,6 @@ namespace oxygine
         te.index = ps->getIndex();
         te.wheelDirection = dir;
         stage->handleEvent(&te);
-    }
-
-    Input::Input()
-    {
-        m_pointerMouse.init(MAX_TOUCHES + 1);
-        for (qint32 i = 0; i < MAX_TOUCHES; ++i)
-        {
-            m_pointers[i].init(i + 1);
-        }
-        memset(m_ids, 0, sizeof(m_ids));
-        m_multiTouch = true;
-    }
-
-    Input::~Input()
-    {
-
     }
 
     void Input::cleanup()

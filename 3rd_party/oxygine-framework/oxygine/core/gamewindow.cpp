@@ -64,8 +64,8 @@ namespace oxygine
         STDRenderer::release();
         STDRenderDelegate::instance = nullptr;
         IVideoDriver::instance = nullptr;
-        Material::null = nullptr;
-        Material::current = nullptr;
+        Material::null = spMaterial::create();
+        Material::current = spMaterial::create();
         Input::instance.cleanup();
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
@@ -210,7 +210,7 @@ namespace oxygine
 
         STDRenderer::instance = spSTDRenderer::create();
         STDRenderDelegate::instance = spSTDRenderDelegate::create();
-        Material::null = spNullMaterialX::create();
+        Material::null = spMaterial::create();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;

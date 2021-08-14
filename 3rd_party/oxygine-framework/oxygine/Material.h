@@ -5,41 +5,38 @@
 
 namespace oxygine
 {
-    class MaterialCache;
-
     class Material;
     using spMaterial = oxygine::intrusive_ptr<Material>;
 
     class Material : public ref_counter
     {
     public:
+        static spMaterial current;
+        static spMaterial null;
 
-        static spMaterialX current;
-        static spMaterialX null;
-
-        typedef bool(*compare)(const Material* a, const Material* b);
-
-        Material();
-
-        Material& operator = (const Material& r);
-        Material(compare cmp);
+        explicit Material()
+        {
+            init();
+        }
         Material(const Material& other);
-
-        virtual void init() {}
-
-        virtual void xapply() {}
-        virtual void xflush() {}
-
-        virtual spMaterial clone() const = 0;
-        virtual void update(size_t& hash, compare&) const = 0;
-        virtual void rehash(size_t& hash) const = 0;
-
-        virtual void render(const AffineTransform& , const QColor& , const RectF& , const RectF& ) {}
-        virtual void render(const QColor& , const RectF& , const RectF& ) {}
-
+        virtual ~Material() = default;
+        void init();
+        spMaterial clone() const
+        {
+            return spMaterial::create(*this);
+        }
+        void update(size_t &hash) const
+        {
+            hash = 0;
+            rehash(hash);
+        }
+        bool compare(const Material* a, const Material* b);
+        void rehash(size_t& hash) const;
         void apply();
         void flush();
 
+        void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
+        void render(const QColor& c, const RectF& src, const RectF& dest);
 
         template <class T>
         void apply2(const T& f)
@@ -47,81 +44,11 @@ namespace oxygine
             apply();
             f();
         }
-
+    private:
+        void xapply();
+        void xflush();
     public:
-        size_t m_hash;
-        compare m_compare;
-    };
-
-    typedef intrusive_ptr<Material> spMaterialX;
-
-    class NullMaterialX;
-    using spNullMaterialX = intrusive_ptr<NullMaterialX> ;
-
-    class NullMaterialX : public Material
-    {
-    public:
-        explicit NullMaterialX()
-        {
-            typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
-            fn f = &NullMaterialX::cmp;
-            m_compare = (compare)f;
-            init();
-        }
-        virtual ~NullMaterialX() = default;
-        void copyTo(NullMaterialX &d) const{d = *this;}
-        void copyFrom(const NullMaterialX &d) {*this = d;}
-        spMaterial clone() const override {return spNullMaterialX::create(*this);}
-        virtual void update(size_t &hash, compare &cm) const override
-        {
-            typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
-            fn f = &NullMaterialX::cmp;\
-            cm = (compare)f;\
-            hash = 0;\
-            rehash(hash);
-        }
-        static bool cmp(const NullMaterialX&, const NullMaterialX&) { return false; }
-        virtual void rehash(size_t&) const override {}
-    };
-
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
-    class STDMaterial : public Material
-    {
-    public:
-        explicit STDMaterial()
-        {
-            typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
-            fn f = &STDMaterial::cmp;
-            m_compare = (compare)f;
-            STDMaterial::init();
-        }
-        virtual ~STDMaterial() = default;
-        void copyTo(STDMaterial &d) const{d = *this;}
-        void copyFrom(const STDMaterial &d) {*this = d;}
-        spMaterial clone() const override {return spSTDMaterial::create(*this);}
-        virtual void update(size_t &hash, compare &cm) const override
-        {
-            typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
-            fn f = &STDMaterial::cmp;\
-            cm = (compare)f;\
-            hash = 0;\
-            rehash(hash);
-        }
-
-        static bool cmp(const STDMaterial& a, const STDMaterial& b);
-
-        virtual void init() override;
-        virtual void rehash(size_t& hash) const override;
-
-        virtual void xapply() override;
-        virtual void xflush() override;
-
-        virtual void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) override;
-        virtual void render(const QColor& c, const RectF& src, const RectF& dest) override;
-
-        spSTDMaterial cloneDefaultShader() const;
-
-    public:
+        size_t m_hash{0};
         spNativeTexture    m_base;
         spNativeTexture    m_table;
         spNativeTexture    m_alpha;

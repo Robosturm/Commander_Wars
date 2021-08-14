@@ -13,8 +13,7 @@ namespace oxygine
     class TweenAnim
     {
     public:
-        using type = Sprite;
-
+        using TActor = oxygine::Sprite;
         /**Row/Column mode. Plays single row. if resanim == 0 will be used current*/
         explicit TweenAnim(const ResAnim* resAnim, qint32 row = 0);
         explicit TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row);
@@ -25,10 +24,22 @@ namespace oxygine
         void init(Sprite& actor);
         void done(Sprite&) {}
 
-        const ResAnim*  getResAnim() const {return m_resAnim;}
-        qint32             getRow() const {return m_row;}
-        qint32             getStart() const {return m_start;}
-        qint32             getEnd() const {return m_end;}
+        const ResAnim*  getResAnim() const
+        {
+            return m_resAnim;
+        }
+        qint32          getRow() const
+        {
+            return m_row;
+        }
+        qint32          getStart() const
+        {
+            return m_start;
+        }
+        qint32          getEnd() const
+        {
+            return m_end;
+        }
 
         /**Changes ResAnim*/
         void setResAnim(const ResAnim* resAnim);

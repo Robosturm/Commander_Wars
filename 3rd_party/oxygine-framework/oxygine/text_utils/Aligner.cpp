@@ -6,7 +6,7 @@ namespace oxygine
 {
     namespace text
     {
-        Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size)
+        Aligner::Aligner(const TextStyle& Style, spMaterial mt, const Font* font, float gscale, const Vector2& size)
             : m_style(Style),
               m_bounds(0, 0, 0, 0),
               m_width((int)size.x),

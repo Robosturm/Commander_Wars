@@ -17,14 +17,14 @@ namespace oxygine
     {
         STDRenderer* renderer = STDRenderer::getCurrent();
         RenderState r = rs;
-        actor->setRenderDelegate(_prevMaterial);
+        actor->setRenderDelegate(m_prevMaterial);
         actor->render(r);
         actor->setRenderDelegate(this);
         RectF src(0, 0,
-                  _pp._screen.getWidth() / (float)_pp._rt->getWidth() / m_downsample,
-                  _pp._screen.getHeight() / (float)_pp._rt->getHeight() / m_downsample);
+                  m_pp._screen.getWidth() / (float)m_pp._rt->getWidth() / m_downsample,
+                  m_pp._screen.getHeight() / (float)m_pp._rt->getHeight() / m_downsample);
         rsCache().setBlendMode(blend_premultiplied_alpha);
-        AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
+        AffineTransform tr = m_pp._transform * m_actor->computeGlobalTransform();
         renderer->setTransform(tr);
         rsCache().setBlendMode(blend_add);
         renderer->flush();
@@ -34,14 +34,14 @@ namespace oxygine
     {
         PostProcess::initShaders();
 
-        qint32 w = _pp._screen.size.x;
-        qint32 h = _pp._screen.size.y;
+        qint32 w = m_pp._screen.size.x;
+        qint32 h = m_pp._screen.size.y;
 
 
         spIVideoDriver driver = IVideoDriver::instance;
         m_downsample = 1;
-        spNativeTexture rt = _pp._rt;
-        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, _pp._format);
+        spNativeTexture rt = m_pp._rt;
+        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, m_pp._format);
 
         Rect rc(0, 0, w, h);
 

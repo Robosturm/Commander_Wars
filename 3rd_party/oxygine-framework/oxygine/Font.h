@@ -27,7 +27,10 @@ namespace oxygine
 
         spNativeTexture texture;
 
-        bool operator == (const glyph& r) const {return ch == r.ch && opt == r.opt;}
+        bool operator == (const glyph& r) const
+        {
+            return ch == r.ch && opt == r.opt;
+        }
     };
 
     class Font;
@@ -46,17 +49,26 @@ namespace oxygine
 
         void clear();
 
-        void setScale(float scale) { m_scale = scale; }
-        void setBaselineDistance(qint32 d) { m_baselineDistance = d; }
+        void setScale(float scale)
+        {
+            m_scale = scale;
+        }
+        void setBaselineDistance(qint32 d)
+        {
+            m_baselineDistance = d;
+        }
 
         const glyph*    getGlyph(qint32 code, const glyphOptions& opt) const;
-        qint32             getBaselineDistance() const;
-        qint32             getSize() const;
+        qint32          getBaselineDistance() const;
+        qint32          getSize() const;
         float           getScale() const;
 
     protected:
         const glyph* findGlyph(qint32 code, const glyphOptions& opt) const;
-        virtual bool loadGlyph(int, glyph&, const glyphOptions&) { return false; }
+        virtual bool loadGlyph(int, glyph&, const glyphOptions&)
+        {
+            return false;
+        }
         typedef QSet<glyph> glyphs;
 
     protected:

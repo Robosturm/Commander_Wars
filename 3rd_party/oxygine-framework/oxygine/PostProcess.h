@@ -80,23 +80,21 @@ namespace oxygine
         explicit TweenPostProcess(const PostProcessOptions& opt);
         virtual ~TweenPostProcess();
 
-        void renderPP() override;
-        void addRefPP() override;
-        void releaseRefPP() override;
-
-        void init(Actor& actor) override;
-        void update(Actor& actor, float p, const UpdateState& us) override;
-        void done(Actor& actor) override;
+        virtual void renderPP() override;
+        virtual void addRefPP() override;
+        virtual void releaseRefPP() override;
+        virtual void init(Actor& actor) override;
+        virtual void update(Actor& actor, float p, const UpdateState& us) override;
+        virtual void done(Actor& actor) override;
     protected:
         virtual void _renderPP() {}
-
-
-        Actor* _actor;
+    protected:
+        Actor* m_actor;
         spActor m_pActorRef;
-        PostProcess _pp;
-        float _progress;
+        PostProcess m_pp;
+        float m_progress;
 
-        RenderDelegate* _prevMaterial;
+        RenderDelegate* m_prevMaterial;
     };
 
 

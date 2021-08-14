@@ -86,7 +86,7 @@ namespace oxygine
             drawChildren(dc);
         }
 
-        void Node::updateMaterial(const STDMaterial& mat)
+        void Node::updateMaterial(const Material& mat)
         {
             spNode node = m_firstChild;
             while (node)
@@ -135,7 +135,7 @@ namespace oxygine
             drawChildren(dc);
         }
 
-        void TextNode::xupdateMaterial(const STDMaterial& mat)
+        void TextNode::xupdateMaterial(const Material& mat)
         {
             for (qint32 i = 0; i < _data.size(); ++i)
             {
@@ -143,10 +143,8 @@ namespace oxygine
                 for (size_t i = 0; i < size; ++i)
                 {
                     Symbol& s = _data[i];
-
-                    spSTDMaterial m = dynamic_pointer_cast<STDMaterial>(mat.clone());
+                    spMaterial m = mat.clone();
                     m->m_base = s.mat->m_base;
-
                     s.mat = MaterialCache::mc().cache(*m.get());
                 }
             }
@@ -200,10 +198,10 @@ namespace oxygine
                             }
                             else
                             {
-                                spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(rd.m_mat->clone());
+                                spMaterial mat = dynamic_pointer_cast<Material>(rd.m_mat->clone());
                                 mat->m_base = gl->texture;
 
-                                s.mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(*mat.get()));
+                                s.mat = MaterialCache::mc().cache(*mat.get());
                                 rd.m_mat = s.mat;
                             }
                         }

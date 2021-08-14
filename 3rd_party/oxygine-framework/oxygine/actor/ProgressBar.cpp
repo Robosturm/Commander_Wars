@@ -92,7 +92,6 @@ namespace oxygine
 
         Vector2 newSize = m_originalFrame.getSize() * m_progress;
         m_frame.init(m_frame.getResAnim(), m_frame.getDiffuse(), newSrc, newDest, newSize);
-        //_vstyle._material.srcRect = newSrc;
     }
 
     void ProgressBar::doRender(const RenderState& rs)

@@ -12,33 +12,33 @@ namespace oxygine
           m_color(c),
           m_downsample(1)
     {
-        m_matx = spSTDMaterial::create();
+        m_matx = spMaterial::create();
         m_matx->m_blend = blend_premultiplied_alpha;
     }
 
     void TweenOutlineImpl::render(Actor* actor, const RenderState& rs)
     {
-        if (!_pp._rt)
+        if (!m_pp._rt)
         {
             return;
         }
-        spNativeTexture rt = _pp._rt;
+        spNativeTexture rt = m_pp._rt;
 
         m_matx->m_base = rt;
         m_matx->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
         RectF src(0, 0,
-                  _pp._screen.getWidth() / (float)rt->getWidth(),
-                  _pp._screen.getHeight() / (float)rt->getHeight());
-        RectF dest = _pp._screen.cast<RectF>();
-        AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
+                  m_pp._screen.getWidth() / (float)rt->getWidth(),
+                  m_pp._screen.getHeight() / (float)rt->getHeight());
+        RectF dest = m_pp._screen.cast<RectF>();
+        AffineTransform tr = m_pp._transform * m_actor->computeGlobalTransform();
         renderer->setTransform(tr);
         QColor color = Qt::white;
         color.setAlpha(255);
         renderer->addQuad(qRgba(premultiply(color)), src, dest);
         RenderState r = rs;
-        actor->setRenderDelegate(_prevMaterial);
+        actor->setRenderDelegate(m_prevMaterial);
         actor->render(r);
         actor->setRenderDelegate(this);
     }
@@ -46,16 +46,16 @@ namespace oxygine
     void TweenOutlineImpl::_renderPP()
     {
         PostProcess::initShaders();
-        qint32 w = _pp._screen.size.x;
-        qint32 h = _pp._screen.size.y;
+        qint32 w = m_pp._screen.size.x;
+        qint32 h = m_pp._screen.size.y;
         if (w < 0 || h < 0)
         {
             return;
         }
         spIVideoDriver driver = IVideoDriver::instance;
         m_downsample = 1;
-        spNativeTexture rt = _pp._rt;
-        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, _pp._format);
+        spNativeTexture rt = m_pp._rt;
+        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, m_pp._format);
 
         Rect rc(0, 0, w, h);
         driver->setShaderProgram(PostProcess::shaderBlurH.get());
@@ -63,9 +63,9 @@ namespace oxygine
         pass(rt, rc, rt2, rc);
 
 
-        qint32 alpha = lerp(0, 255, _progress);
+        qint32 alpha = lerp(0, 255, m_progress);
         QColor c;
-        if (_pp._options._flags & PostProcessOptions::flag_singleR2T)
+        if (m_pp._options._flags & PostProcessOptions::flag_singleR2T)
         {
             c = m_color;
         }

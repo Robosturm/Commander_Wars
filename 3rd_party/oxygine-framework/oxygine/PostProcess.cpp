@@ -480,35 +480,35 @@ namespace oxygine
     }
 
     TweenPostProcess::TweenPostProcess(const PostProcessOptions& opt)
-        : _actor(0),
-          _pp(opt),
-          _prevMaterial(0)
+        : m_actor(0),
+          m_pp(opt),
+          m_prevMaterial(0)
     {
     }
 
     TweenPostProcess::~TweenPostProcess()
     {
         removePostProcessItem(this);
-        if (_actor && _actor->getRenderDelegate())
+        if (m_actor && m_actor->getRenderDelegate())
         {
-            _actor->setRenderDelegate(_prevMaterial);
+            m_actor->setRenderDelegate(m_prevMaterial);
         }
     }
 
 
     void TweenPostProcess::renderPP()
     {
-        if (_pp._options._flags & PostProcessOptions::flag_singleR2T && _pp._rt)
+        if (m_pp._options._flags & PostProcessOptions::flag_singleR2T && m_pp._rt)
         {
             return;
         }
-        _pp.update(_actor);
+        m_pp.update(m_actor);
         _renderPP();
     }
 
     void TweenPostProcess::addRefPP()
     {
-        m_pActorRef = _actor;
+        m_pActorRef = m_actor;
     }
 
     void TweenPostProcess::releaseRefPP()
@@ -518,22 +518,22 @@ namespace oxygine
 
     void TweenPostProcess::init(Actor& actor)
     {
-        _actor = &actor;
-        _prevMaterial = _actor->getRenderDelegate();
-        _actor->setRenderDelegate(this);
+        m_actor = &actor;
+        m_prevMaterial = m_actor->getRenderDelegate();
+        m_actor->setRenderDelegate(this);
     }
 
     void TweenPostProcess::update(Actor&, float p, const UpdateState&)
     {
-        _progress = p;
+        m_progress = p;
         addPostProcessItem(this);
     }
 
     void TweenPostProcess::done(Actor&)
     {
-        if (_actor->getRenderDelegate())
+        if (m_actor->getRenderDelegate())
         {
-            _actor->setRenderDelegate(_prevMaterial);
+            m_actor->setRenderDelegate(m_prevMaterial);
         }
     }
 

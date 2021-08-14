@@ -10,9 +10,12 @@
 
 namespace oxygine
 {
-    static load_texture_hook _hook = nullptr;
+    void ResAtlas::load_texture(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    {
+        load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
+    }
 
-    void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void ResAtlas::load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spImage mt = spImage::create();
@@ -31,18 +34,6 @@ namespace oxygine
         opt.clamp2edge = clamp2edge;
         load_context->createTexture(opt);
     }
-
-    void load_texture(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
-    {
-        if (_hook)
-        {
-            _hook(file, nt, linearFilter, clamp2edge, load_context);
-            return;
-        }
-
-        load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
-    }
-
 
     void ResAtlas::init_resAnim(spResAnim rs, QString file, QDomElement node)
     {

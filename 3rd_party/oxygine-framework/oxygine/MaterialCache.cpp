@@ -13,27 +13,13 @@ namespace oxygine
         QMutexLocker alock(&m_lock);
 
         size_t hash;
-        Material::compare cm;
-        other.update(hash, cm);
+        other.update(hash);
         auto items = m_materials.values(hash);
-        if (items.size() > 0)
+        for (const auto & sec : items)
         {
-            Material* sec = items[0].get();
-            if (cm == sec->m_compare && cm(sec, &other))
+            if (sec->compare(sec.get(), &other))
             {
                 return spMaterial(sec);
-            }
-            //hash collision?
-            auto it = items.begin();
-            it++; //skip first, already checked
-
-            for (; it != items.end(); it++)
-            {
-                Material* sec = it->get();
-                if (cm == sec->m_compare && cm(sec, &other))
-                {
-                    return spMaterial(sec);
-                }
             }
         }
         m_addCounter++;
@@ -41,12 +27,9 @@ namespace oxygine
         {
             removeUnusedNoLock();
         }
-
         spMaterial copy = other.clone();
         copy->m_hash = hash;
-        copy->m_compare = cm;
         m_materials.insert(hash, copy);
-
         return copy;
     }
 

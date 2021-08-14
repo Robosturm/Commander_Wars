@@ -976,7 +976,7 @@ namespace oxygine
 
     spTween Actor::__addTween(spTween tween, bool)
     {
-        if (!tween)
+        if (tween.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::__addTween tween is nullptr");
             return spTween();
@@ -996,12 +996,6 @@ namespace oxygine
 
     spTween Actor::addTween(spTween tween)
     {
-        return __addTween(tween, false);
-    }
-
-    spTween Actor::addTween2(spTween tween, const TweenOptions& opt)
-    {
-        tween->init2(opt);
         return __addTween(tween, false);
     }
 

@@ -22,15 +22,27 @@ namespace oxygine
 
             /**Returns any attribute from xml resource definition. You could use it for defining for example per animation constants like duration, specific offsets, delays.*/
             QString             getAttribute(QString attr) const;
-            QDomElement         getNode() const {return m_node;}
-            bool                getUseLoadCounter() const {return m_useLoadCounter;}
-            qint32                 getLoadCounter() const { return m_loadCounter; }
+            QDomElement         getNode() const
+            {
+                return m_node;
+            }
+            bool                getUseLoadCounter() const
+            {
+                return m_useLoadCounter;
+            }
+            qint32              getLoadCounter() const
+            {
+                return m_loadCounter;
+            }
             Resource*           getParent() const {return m_parent;}
-
-
-            void setUseLoadCounter(bool v) {m_useLoadCounter = v;}
-            void setParent(Resource* p) {m_parent = p;}
-
+            void setUseLoadCounter(bool v)
+            {
+                m_useLoadCounter = v;
+            }
+            void setParent(Resource* p)
+            {
+                m_parent = p;
+            }
             /**returns id from xml node. Function is helper*/
             static QString extractID(const QDomElement& node, QString file, QString def);
             static QString extractID(QString file);

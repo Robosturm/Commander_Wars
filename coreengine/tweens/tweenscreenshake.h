@@ -8,10 +8,10 @@
 class TweenScreenshake
 {
 public:
-    using type = oxygine::Actor;
-    TweenScreenshake(qint32 startIntensity, float decay, oxygine::timeMS timeMs);
+    using TActor = oxygine::Actor;
+    explicit TweenScreenshake(qint32 startIntensity, float decay, oxygine::timeMS timeMs);
     virtual ~TweenScreenshake() = default;
-     void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
+    void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
 
     void init(oxygine::Actor& actor);
     void done(oxygine::Actor& actor);

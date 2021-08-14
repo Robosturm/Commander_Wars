@@ -4,14 +4,6 @@
 
 namespace oxygine
 {
-
-    Image::Image()
-        : m_offset(0)
-    {
-
-    }
-
-
     void Image::cleanup()
     {
         m_buffer.clear();
