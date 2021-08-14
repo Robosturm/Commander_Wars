@@ -94,7 +94,7 @@ void DropDownmenuColor::showColorDialog()
     if (getEnabled())
     {
         spColorSelectionDialog pDialog = spColorSelectionDialog::create(m_currentColor);
-        oxygine::getStage()->addChild(pDialog);
+        oxygine::Stage::getStage()->addChild(pDialog);
         connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
         
     }

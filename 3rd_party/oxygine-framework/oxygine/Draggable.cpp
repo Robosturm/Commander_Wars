@@ -26,7 +26,7 @@ namespace oxygine
     {
         if (m_dragClient != nullptr)
         {
-            oxygine::getStage()->removeEventListeners(this);
+            oxygine::Stage::getStage()->removeEventListeners(this);
             m_dragClient->removeEventListeners(this);
             m_dragClient->detach();
             m_dragClient = nullptr;
@@ -49,7 +49,7 @@ namespace oxygine
         m_pressed = true;
         m_dragPos = localCenter;
         m_clientPos = m_dragClient->getPosition();
-        oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
+        oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::onMove(const Vector2& position)
@@ -112,7 +112,7 @@ namespace oxygine
                 {
                     m_middleButton = false;
                     m_pressed = false;
-                    oxygine::getStage()->removeEventListeners(this);
+                    oxygine::Stage::getStage()->removeEventListeners(this);
                     if (Clock::getTimeMS() - m_startTm < timeMS(2))
                     {
                         m_dragClient->setPosition(m_clientPos);

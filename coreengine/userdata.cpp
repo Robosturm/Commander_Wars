@@ -163,7 +163,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             {
                 spAchievementBanner banner = spAchievementBanner::create(achievement);
                 banner->init();
-                oxygine::getStage()->addChild(banner);
+                oxygine::Stage::getStage()->addChild(banner);
                 
             }
         }

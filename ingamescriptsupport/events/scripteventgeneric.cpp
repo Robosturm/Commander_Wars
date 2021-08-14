@@ -198,6 +198,6 @@ void ScriptEventGeneric::showSelectFile(QString filter, QString startFolder, QSt
         pBox->setCurrentText(file);
         emit pBox->sigTextChanged(file);
     });
-    oxygine::getStage()->addChild(fileDialog);
+    oxygine::Stage::getStage()->addChild(fileDialog);
     
 }

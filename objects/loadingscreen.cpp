@@ -26,7 +26,7 @@ LoadingScreen::LoadingScreen()
 
 void LoadingScreen::show()
 {    
-    oxygine::getStage()->addChild(spLoadingScreen(this));
+    oxygine::Stage::getStage()->addChild(spLoadingScreen(this));
     removeChildren();
     oxygine::ResAnim* pBackground;
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

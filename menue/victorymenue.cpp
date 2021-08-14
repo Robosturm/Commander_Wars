@@ -710,13 +710,13 @@ void VictoryMenue::exitMenue()
     {
         GameMap::deleteMap();
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
-        oxygine::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
+        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer, true));
     }
     else
     {
         GameMap::deleteMap();
         auto window = spMainwindow::create();
-        oxygine::getStage()->addChild(window);
+        oxygine::Stage::getStage()->addChild(window);
         emit window->sigOnEnter();
     }
     oxygine::Actor::detach();

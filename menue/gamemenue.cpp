@@ -1335,7 +1335,7 @@ void GameMenue::victory(qint32 team)
             AchievementManager::getInstance()->onVictory(team, humanWin);
             Console::print("Leaving Game Menue", Console::eDEBUG);
             auto window = spVictoryMenue::create(m_pNetworkInterface);
-            oxygine::getStage()->addChild(window);
+            oxygine::Stage::getStage()->addChild(window);
             emit window->sigOnEnter();
             deleteMenu();
         }
@@ -1794,7 +1794,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     Mainapp* pApp = Mainapp::getInstance();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
                     spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
-                    oxygine::getStage()->addChild(pMenue);
+                    oxygine::Stage::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
@@ -1807,7 +1807,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 {
                     Console::print("Leaving Game Menue", Console::eDEBUG);
                     spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
-                    oxygine::getStage()->addChild(pMenue);
+                    oxygine::Stage::getStage()->addChild(pMenue);
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();

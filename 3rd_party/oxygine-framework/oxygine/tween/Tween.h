@@ -187,11 +187,9 @@ namespace oxygine
 
         /**removes self from Actor, complete callback not called*/
         void removeFromActor();
-
         void start(Actor& actor);
         void update(Actor& actor, const UpdateState& us);
         static float calcEase(EASE ease, float v);
-
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setDoneCallback(const EventCallback& cb);
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/

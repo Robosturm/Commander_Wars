@@ -837,7 +837,7 @@ void RuleSelection::showCOBannlist()
     
     spGameMap pMap = GameMap::getInstance();
     spCOBannListDialog pBannlist = spCOBannListDialog::create(pMap->getGameRules()->getCOBannlist());
-    oxygine::getStage()->addChild(pBannlist);
+    oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
     
 }
@@ -846,7 +846,7 @@ void RuleSelection::showPerkBannlist()
 {
     spGameMap pMap = GameMap::getInstance();
     spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(nullptr, -1, true, QStringList());
-    oxygine::getStage()->addChild(pBannlist);
+    oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }
 
@@ -854,7 +854,7 @@ void RuleSelection::showActionBannlist()
 {
     spGameMap pMap = GameMap::getInstance();
     spActionListDialog pBannlist = spActionListDialog::create(pMap->getGameRules()->getAllowedActions());
-    oxygine::getStage()->addChild(pBannlist);
+    oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
     
 }
@@ -865,7 +865,7 @@ void RuleSelection::showSelectScript()
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
-    oxygine::getStage()->addChild(fileDialog);
+    oxygine::Stage::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);
     
 }

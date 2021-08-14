@@ -542,6 +542,6 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
 void UnitInfo::showLink(QString pageID)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
     
 }

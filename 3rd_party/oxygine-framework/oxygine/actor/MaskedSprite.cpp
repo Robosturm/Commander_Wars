@@ -10,7 +10,7 @@ namespace oxygine
         return m_mask.get();
     }
 
-    bool    MaskedSprite::getUseRChannel() const
+    bool MaskedSprite::getUseRChannel() const
     {
         return m_useRChannel;
     }

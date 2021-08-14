@@ -92,7 +92,7 @@ void DropDownmenuBase::showDropDown()
     auto transform = computeGlobalTransform();
     setPosition(transform.x, transform.y);
     oxygine::spActor pMe = oxygine::spActor(this);
-    oxygine::getStage()->addChild(pMe);
+    oxygine::Stage::getStage()->addChild(pMe);
     if (getY() > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())

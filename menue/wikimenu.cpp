@@ -69,7 +69,7 @@ void Wikimenu::exitMenue()
     // save changed settings :)
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }

@@ -37,7 +37,7 @@ void GameAnimation::restart()
     m_previousAnimation = nullptr;
     for (auto & tween : m_stageTweens)
     {
-        oxygine::getStage()->addTween(tween);
+        oxygine::Stage::getStage()->addTween(tween);
     }
     GameMap::getInstance()->addChild(spGameAnimation(this));
     start();
@@ -483,6 +483,6 @@ void GameAnimation::addScreenshake(qint32 startIntensity, float decay, qint32 du
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
     m_stageTweens.append(tween);
-    oxygine::getStage()->addTween(tween);
+    oxygine::Stage::getStage()->addTween(tween);
 
 }

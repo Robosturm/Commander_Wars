@@ -117,7 +117,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     pGameAnimationDialog->setDialog(text);
     pGameAnimationDialog->setCO(coid, mood);
     pGameAnimationDialog->setColor(color);
-    oxygine::getStage()->addChild(pGameAnimationDialog);
+    oxygine::Stage::getStage()->addChild(pGameAnimationDialog);
     m_Animations.append(pGameAnimationDialog);
     return pGameAnimationDialog.get();
 }

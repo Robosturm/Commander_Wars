@@ -10,9 +10,11 @@ namespace oxygine
     {
     public:
 
-        enum { EVENT_LOOP_BEGIN = sysEventID('T', 'L', 'B'), };
-        enum { EVENT_LOOP_END = sysEventID('T', 'L', 'E'), };
-
+        enum
+        {
+            EVENT_LOOP_BEGIN = sysEventID('T', 'L', 'B'),
+            EVENT_LOOP_END = sysEventID('T', 'L', 'E'),
+        };
         explicit TweenQueue() = default;
         virtual ~TweenQueue() = default;
         /*Add tween to Queue, returns added tween*/

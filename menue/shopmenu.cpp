@@ -139,7 +139,7 @@ void Shopmenu::exitMenue()
 {
     Console::print("Leaving Shop Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();
 }
@@ -307,5 +307,5 @@ void Shopmenu::loadWikiInfo(oxygine::spButton pIcon, GameEnums::ShopItemType ite
 void Shopmenu::showWikipage(QString key)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(key)));
+    oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(key)));
 }

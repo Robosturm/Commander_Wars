@@ -164,7 +164,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
         dispatchEvent(&up);
     }
 
@@ -182,10 +182,10 @@ namespace oxygine
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
-        up.localPosition = stage2local(te->localPosition, oxygine::getStage().get());
+        up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
         dispatchEvent(&up);
         updateStateOvered();
-        oxygine::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
+        oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
         m_onGlobalTouchMoveEvent = -1;
     }
@@ -214,7 +214,7 @@ namespace oxygine
                     over.type = TouchEvent::OVER;
                     over.bubbles = false;
                     dispatchEvent(&over);
-                    m_onGlobalTouchMoveEvent = oxygine::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                    m_onGlobalTouchMoveEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
                 }
             }
 
@@ -225,7 +225,7 @@ namespace oxygine
                 {
                     if (m_pressedOvered == m_overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
                     {
-                        m_onGlobalTouchUpEvent = oxygine::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                        m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                     }
                     m_pressedButton[te->mouseButton] = te->index;
                     updateStatePressed();
@@ -903,8 +903,8 @@ namespace oxygine
 
     bool Actor::onScreen(RenderState& rs)
     {
-        float width = oxygine::getStage()->getScaledWidth();
-        float height = oxygine::getStage()->getScaledHeight();
+        float width = oxygine::Stage::getStage()->getScaledWidth();
+        float height = oxygine::Stage::getStage()->getScaledHeight();
         auto scaledWidth = m_size.x * rs.transform.a;
         auto scaledHeight = m_size.y * rs.transform.d;
         if (rs.transform.x > width ||
@@ -1026,7 +1026,7 @@ namespace oxygine
         }
     }
 
-    Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
+    Vector2 Actor::convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         if (child->getParent() && child->getParent() != parent)
         {
@@ -1036,12 +1036,12 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 convert_global2local(spActor child, spActor parent, const Vector2& pos)
+    Vector2 Actor::convert_global2local(spActor child, spActor parent, const Vector2& pos)
     {
         return convert_global2local_(child.get(), parent.get(), pos);
     }
 
-    Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos)
+    Vector2 Actor::convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         while (child && child != parent)
         {
@@ -1052,74 +1052,48 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 convert_local2global(spActor child, spActor parent, const Vector2& pos)
+    Vector2 Actor::convert_local2global(spActor child, spActor parent, const Vector2& pos)
     {
         return convert_local2global_(child.get(), parent.get(), pos);
     }
 
-    Vector2 convert_local2stage(spActor actor, const Vector2& pos, spActor root)
+    Vector2 Actor::convert_local2stage(spActor actor, const Vector2& pos, spActor root)
     {
         if (!root)
         {
-            root = getStage();
+            root = Stage::getStage();
         }
         return convert_local2global(actor, root, pos);
     }
 
-    Vector2 convert_local2stage(const Actor* actor, const Vector2& pos, const Actor* root)
+    Vector2 Actor::convert_local2stage(const Actor* actor, const Vector2& pos, const Actor* root)
     {
         if (!root)
         {
-            root = getStage().get();
+            root = Stage::getStage().get();
         }
         return convert_local2global_(actor, root, pos);
     }
 
-    Vector2 convert_stage2local(spActor actor, const Vector2& pos, spActor root)
+    Vector2 Actor::convert_stage2local(spActor actor, const Vector2& pos, spActor root)
     {
         if (!root)
         {
-            root = getStage();
+            root = Stage::getStage();
         }
         return convert_global2local(actor, root, pos);
     }
 
-    Vector2 convert_stage2local(const Actor* actor, const Vector2& pos, const Actor* root)
+    Vector2 Actor::convert_stage2local(const Actor* actor, const Vector2& pos, const Actor* root)
     {
         if (!root)
         {
-            root = getStage().get();
+            root = Stage::getStage().get();
         }
         return convert_global2local_(actor, root, pos);
     }
 
-    Transform getGlobalTransform(spActor child, spActor parent)
-    {
-        Transform t;
-        t.identity();
-        while (child && child != parent)
-        {
-            t = t * child->getTransform();
-            child = child->getParent();
-        }
-
-        return t;
-    }
-
-    Transform getGlobalTransform2(spActor child, Actor* parent)
-    {
-        Transform t;
-        t.identity();
-        while (child && (child.get() != parent))
-        {
-            t = t * child->getTransform();
-            child = child->getParent();
-        }
-
-        return t;
-    }
-
-    RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)
+    RectF Actor::getActorTransformedDestRect(Actor* actor, const Transform& tr)
     {
         RectF rect = actor->getDestRect();
         Vector2 tl = rect.pos;

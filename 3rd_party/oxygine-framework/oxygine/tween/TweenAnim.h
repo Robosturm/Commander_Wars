@@ -22,31 +22,31 @@ namespace oxygine
         virtual ~TweenAnim() = default;
 
         void init(Sprite& actor);
-        void done(Sprite&) {}
+        void done(Sprite&)
+        {
+        }
 
-        const ResAnim*  getResAnim() const
+        const ResAnim* getResAnim() const
         {
             return m_resAnim;
         }
-        qint32          getRow() const
+        qint32 getRow() const
         {
             return m_row;
         }
-        qint32          getStart() const
+        qint32 getStart() const
         {
             return m_start;
         }
-        qint32          getEnd() const
+        qint32 getEnd() const
         {
             return m_end;
         }
-
         /**Changes ResAnim*/
         void setResAnim(const ResAnim* resAnim);
 
         /**Play animation in interval [start, end]*/
         void setInterval(qint32 start, qint32 end);
-
         void update(Sprite& actor, float p, const UpdateState& us);
 
     protected:

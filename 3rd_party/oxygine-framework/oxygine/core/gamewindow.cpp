@@ -97,14 +97,14 @@ namespace oxygine
         updateData();
         if (m_pauseMutex.tryLock())
         {
-            oxygine::getStage()->updateStage();
+            oxygine::Stage::getStage()->updateStage();
             if (beginRendering())
             {
                 QColor clearColor(0, 0, 0, 255);
                 QSize size = oxygine::GameWindow::getWindow()->size();
                 oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
                 // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::getStage()->renderStage(clearColor, viewport);
+                oxygine::Stage::getStage()->renderStage(clearColor, viewport);
                 swapDisplayBuffers();
             }
             m_pauseMutex.unlock();

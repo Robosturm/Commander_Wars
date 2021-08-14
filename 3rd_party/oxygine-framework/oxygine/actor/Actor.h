@@ -259,6 +259,12 @@ namespace oxygine
 
         virtual bool getBounds(RectF&) const;
 
+
+        static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
+        static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
+        static RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
     protected:
         void added2stage(Stage*);
         void removedFromStage();
@@ -285,6 +291,10 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
         void insertActor(spActor actor);
+        static Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos);
+        static Vector2 convert_global2local(spActor child, spActor parent, const Vector2& pos);
+        static Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos);
+        static Vector2 convert_local2global(spActor child, spActor parent, const Vector2& pos);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;
@@ -334,11 +344,5 @@ namespace oxygine
         qint32 m_onGlobalTouchMoveEvent{-1};
         bool m_onScreen{true};
     };
-
-    Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
-    Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-    Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
-    Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-    RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
 }

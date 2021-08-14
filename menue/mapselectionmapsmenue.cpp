@@ -176,7 +176,7 @@ void MapSelectionMapsMenue::slotButtonBack()
         {
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             auto window = spMainwindow::create();
-            oxygine::getStage()->addChild(window);
+            oxygine::Stage::getStage()->addChild(window);
             emit window->sigOnEnter();
             oxygine::Actor::detach();
             break;
@@ -201,11 +201,11 @@ void MapSelectionMapsMenue::slotButtonBack()
                 Console::print("Leaving Map Selection Menue", Console::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
-                    oxygine::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
                 }
                 else
                 {
-                    oxygine::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
                 oxygine::Actor::detach();
             }
@@ -249,11 +249,11 @@ void MapSelectionMapsMenue::slotButtonNext()
                     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
                     if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                     {
-                        oxygine::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
+                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
                     }
                     else
                     {
-                        oxygine::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
+                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
                     }
                     oxygine::Actor::detach();
                 }
@@ -360,7 +360,7 @@ void MapSelectionMapsMenue::startGame()
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     auto window = spGameMenue::create(false, spNetworkInterface());
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();
 }

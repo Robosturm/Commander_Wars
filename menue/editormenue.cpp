@@ -1986,7 +1986,7 @@ void EditorMenue::exitEditor()
 {    
     Console::print("Leaving Editor Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();
 }

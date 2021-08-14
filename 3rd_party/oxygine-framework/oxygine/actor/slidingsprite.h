@@ -5,8 +5,7 @@
 namespace oxygine
 {
     class SlidingSprite;
-    typedef oxygine::intrusive_ptr<SlidingSprite> spSlidingSprite;
-
+    using spSlidingSprite = oxygine::intrusive_ptr<SlidingSprite>;
     class SlidingSprite : public oxygine::ClipRectActor
     {
     public:

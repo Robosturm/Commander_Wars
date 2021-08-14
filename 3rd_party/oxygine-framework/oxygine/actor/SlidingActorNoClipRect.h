@@ -17,11 +17,11 @@ namespace oxygine
             explicit SlidingActorNoClipRect();
             virtual ~SlidingActorNoClipRect();
 
-            spActor         getContent() const
+            spActor getContent() const
             {
                 return m_content;
             }
-            const RectF&    getDragBounds() const
+            const RectF& getDragBounds() const
             {
                 return m_drag.getDragBounds();
             }

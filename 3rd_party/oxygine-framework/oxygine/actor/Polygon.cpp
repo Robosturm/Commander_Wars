@@ -56,7 +56,6 @@ namespace oxygine
         }
         m_mat->apply2([=]()
         {
-
             STDRenderer* renderer = STDRenderer::getCurrent();
 
             static std::vector<unsigned char> buff;

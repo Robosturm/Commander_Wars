@@ -340,7 +340,7 @@ void Mainwindow::enterSingleplayer()
 {    
     Mainapp::getInstance()->pauseRendering();
     auto window = spMapSelectionMapsMenue::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -349,7 +349,7 @@ void Mainwindow::enterSingleplayer()
 void Mainwindow::enterMultiplayer()
 {
     Mainapp::getInstance()->pauseRendering();
-    oxygine::getStage()->addChild(spLobbyMenu::create());
+    oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -358,7 +358,7 @@ void Mainwindow::enterEditor()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spEditorMenue::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -368,7 +368,7 @@ void Mainwindow::enterOptionmenue()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spOptionMenue::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -378,7 +378,7 @@ void Mainwindow::enterWikimenue()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spWikimenu::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -388,7 +388,7 @@ void Mainwindow::enterCreditsmenue()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spCreditsMenue::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -398,7 +398,7 @@ void Mainwindow::enterAchievementmenue()
 {    
     Mainapp::getInstance()->pauseRendering();
     auto window = spAchievementmenu::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -408,7 +408,7 @@ void Mainwindow::enterShopMenu()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spShopmenu::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
@@ -447,7 +447,7 @@ void Mainwindow::loadCampaign(QString filename)
             file.open(QIODevice::ReadOnly);
             pCampaign->deserializeObject(stream);
             spCampaignMenu pMenu = spCampaignMenu::create(pCampaign, false);
-            oxygine::getStage()->addChild(pMenu);
+            oxygine::Stage::getStage()->addChild(pMenu);
         }
         else
         {
@@ -488,7 +488,7 @@ void Mainwindow::loadGame(QString filename)
         if (file.exists())
         {
             spGameMenue pMenu = spGameMenue::create(filename, true);
-            oxygine::getStage()->addChild(pMenu);
+            oxygine::Stage::getStage()->addChild(pMenu);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
@@ -519,7 +519,7 @@ void Mainwindow::replayGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             spReplayMenu pMenu = spReplayMenu::create(filename);
-            oxygine::getStage()->addChild(pMenu);
+            oxygine::Stage::getStage()->addChild(pMenu);
             if (!pMenu->getValid())
             {
                 emit pMenu->sigShowRecordInvalid();
@@ -549,7 +549,7 @@ void Mainwindow::enterCOStyleMenu()
 {
     Mainapp::getInstance()->pauseRendering();
     auto window = spCOStyleMenu::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();

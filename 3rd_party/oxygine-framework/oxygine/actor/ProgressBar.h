@@ -27,8 +27,8 @@ namespace oxygine
         explicit ProgressBar();
         virtual ~ProgressBar() = default;
 
-        float       getProgress() const;
-        direction   getDirection() const;
+        float getProgress() const;
+        direction getDirection() const;
 
         /** setProgress
         @param value range [0.0f, 1.0f]

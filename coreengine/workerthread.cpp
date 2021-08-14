@@ -52,7 +52,7 @@ void WorkerThread::start()
     spConsole pConsole = Console::getInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
-    oxygine::getStage()->addChild(pConsole);
+    oxygine::Stage::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance();
     pConsole->init();
     UiFactory::getInstance();
@@ -141,27 +141,27 @@ void WorkerThread::start()
 void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
+    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
                                   oxygine::TouchEvent::TOUCH_DOWN, &input->m_pointerMouse);
 }
 
 void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
+    input->sendPointerButtonEvent(oxygine::Stage::getStage(), button, x, y, 1.0f,
                                   oxygine::TouchEvent::TOUCH_UP, &input->m_pointerMouse);
 }
 
 void WorkerThread::wheelEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerWheelEvent(oxygine::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
+    input->sendPointerWheelEvent(oxygine::Stage::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
 }
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerMotionEvent(oxygine::getStage(), x, y, 1.0f, &input->m_pointerMouse);
+    input->sendPointerMotionEvent(oxygine::Stage::getStage(), x, y, 1.0f, &input->m_pointerMouse);
 }
 
 void WorkerThread::showMainwindow()
@@ -169,7 +169,7 @@ void WorkerThread::showMainwindow()
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     auto window = spMainwindow::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
 }
 
@@ -213,6 +213,6 @@ void WorkerThread::startSlaveGame()
     spLocalServer pServer = spLocalServer::create();
     spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);
     pMenu->connectNetworkSlots();
-    oxygine::getStage()->addChild(pMenu);
+    oxygine::Stage::getStage()->addChild(pMenu);
     emit pServer->sig_connect(Settings::getSlaveServerName(), 0);
 }

@@ -13,13 +13,13 @@ namespace oxygine
     public:
         explicit AtlasBuilder();
         virtual ~AtlasBuilder() = default;
-
         void init(qint32 w, qint32 h, qint32 skipSize = 3);
         void clean();
-
         bool add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset);
-
-        const Rect& getBounds() const { return m_bounds; }
+        const Rect& getBounds() const
+        {
+            return m_bounds;
+        }
 
     protected:
         using rects = QQueue<Rect>;

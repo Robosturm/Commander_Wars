@@ -16,12 +16,11 @@ namespace oxygine
 
         explicit SlidingActor();
         virtual ~SlidingActor();
-
-        spActor         getContent() const
+        spActor getContent() const
         {
             return m_content;
         }
-        const RectF&    getDragBounds() const
+        const RectF& getDragBounds() const
         {
             return m_drag.getDragBounds();
         }
@@ -42,7 +41,6 @@ namespace oxygine
         virtual void handleEvent(Event* event) override;
         virtual void sizeChanged(const Vector2& size) override;
         virtual void doUpdate(const UpdateState& us) override;
-
         void _newEvent(Event* event);
 
     protected:

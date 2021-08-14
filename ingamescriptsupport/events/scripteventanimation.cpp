@@ -282,7 +282,7 @@ void ScriptEventAnimation::showLoadDialog()
     QString path = Settings::getUserPath() + "resources/images/animations/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, sprite, true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEventAnimation::selectAnimation, Qt::QueuedConnection);
-    oxygine::getStage()->addChild(fileDialog);    
+    oxygine::Stage::getStage()->addChild(fileDialog);    
 }
 
 void ScriptEventAnimation::selectAnimation(QString id)

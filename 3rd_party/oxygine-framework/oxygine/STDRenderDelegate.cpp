@@ -52,7 +52,7 @@ namespace oxygine
         if (actor->getClipping())
         {
             renderer->flush();
-            RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
+            RectF ss_rect = Actor::getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
             clippedRect.clip(ss_rect);
             if (!clippedRect.isEmpty())

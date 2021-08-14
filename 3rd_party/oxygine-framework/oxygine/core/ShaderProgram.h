@@ -9,8 +9,9 @@ namespace oxygine
     class ShaderProgram: public Object
     {
     public:
+        explicit ShaderProgram() = default;
+        virtual ~ShaderProgram() = default;
         virtual void bind() = 0;
-
         virtual quint32 getID() const = 0;
     };
 }

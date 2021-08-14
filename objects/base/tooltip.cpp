@@ -114,7 +114,7 @@ void Tooltip::showTooltip()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();
         hideTooltip();
-        if (oxygine::getStage()->isDescendant(oxygine::spActor(this)) && m_enabled && pApp->hasCursor())
+        if (oxygine::Stage::getStage()->isDescendant(oxygine::spActor(this)) && m_enabled && pApp->hasCursor())
         {
             if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
             {
@@ -152,7 +152,7 @@ void Tooltip::showTooltip()
                 pSpriteBox->addChild(pText);
                 pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
 
-                oxygine::getStage()->addChild(m_Tooltip);
+                oxygine::Stage::getStage()->addChild(m_Tooltip);
                 if (curPos.x() + 10 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
                 {
                     m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getWidth());

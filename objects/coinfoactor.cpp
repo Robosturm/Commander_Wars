@@ -589,7 +589,7 @@ void COInfoActor::showLink(QString pageID)
     if (!entry.m_name.isEmpty() &&
         !entry.m_id.isEmpty())
     {
-        oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
+        oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
     
 }

@@ -93,7 +93,7 @@ void COStyleMenu::exitMenue()
 {    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
@@ -102,7 +102,7 @@ void COStyleMenu::reloadMenue()
 {
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spCOStyleMenu::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }

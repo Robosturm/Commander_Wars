@@ -180,7 +180,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
         cos[0] != "")
     {
         spCOSelectionDialog dialog = spCOSelectionDialog::create(coid, pMap->getPlayer(player)->getColor(), player, cos);
-        oxygine::getStage()->addChild(dialog);
+        oxygine::Stage::getStage()->addChild(dialog);
         m_pPlayerSelection->setVisible(false);
         if (co == 0)
         {
@@ -844,7 +844,7 @@ void PlayerSelection::slotShowAllBuildList()
     
     spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = spBuildListDialog::create(0, pMap->getPlayer(0)->getBuildList());
-    oxygine::getStage()->addChild(dialog);
+    oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
     
 }
@@ -854,7 +854,7 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
     
     spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = spBuildListDialog::create(player, pMap->getPlayer(player)->getBuildList());
-    oxygine::getStage()->addChild(dialog);
+    oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
     
 }
@@ -1133,7 +1133,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
         Userdata* pUserdata = Userdata::getInstance();
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
         spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
-        oxygine::getStage()->addChild(pPerkSelectionDialog);
+        oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
         {
             updateCOData(player);

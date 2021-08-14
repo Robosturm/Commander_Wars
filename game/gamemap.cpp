@@ -506,7 +506,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     }
 
     Console::print("synchronizing animations", Console::eDEBUG);
-    auto timeMs = oxygine::getStage()->getClock()->getTime();
+    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
     for (qint32 y = 0; y < heigth; y++)
     {
         if (showLoadingScreen)
@@ -543,7 +543,7 @@ void GameMap::syncUnitsAndBuildingAnimations()
     Console::print("Synchronizing units and building animations", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    auto timeMs = oxygine::getStage()->getClock()->getTime();
+    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -584,7 +584,7 @@ void GameMap::addScreenshake(qint32 startIntensity, float decay, qint32 duration
 {
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
-    oxygine::getStage()->addTween(tween);
+    oxygine::Stage::getStage()->addTween(tween);
 }
 
 bool GameMap::getSavegame() const

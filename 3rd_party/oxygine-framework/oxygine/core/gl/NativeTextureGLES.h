@@ -18,22 +18,17 @@ namespace oxygine
         virtual void init(const ImageData& src) override;
         virtual void release() override;
         virtual void swap(NativeTexture*)  override;
-
         virtual GLuint getHandle() const override;
-        virtual qint32    getWidth() const override;
-        virtual qint32    getHeight() const override;
+        virtual qint32 getWidth() const override;
+        virtual qint32 getHeight() const override;
         virtual ImageData::TextureFormat getFormat() const override;
-
         virtual ImageData lock(lock_flags, const Rect* src) override;
         virtual void unlock() override;
-
-        void setLinearFilter(quint32 filter) override;
+        virtual void setLinearFilter(quint32 filter) override;
         virtual void setClamp2Edge(bool clamp2edge) override;
-
         virtual void updateRegion(qint32 x, qint32 y, const ImageData& data) override;
         virtual void apply(const Rect* rect = 0) override;
-
-        GLuint getId() override
+        virtual GLuint getId() override
         {
             return m_id;
         }

@@ -892,7 +892,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     // send game started
     QString command = QString(NetworkCommands::CLIENTINITGAME);
@@ -1004,7 +1004,7 @@ void Multiplayermenu::disconnected(quint64)
     {
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(spLobbyMenu::create());
+        oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
 }
@@ -1017,7 +1017,7 @@ void Multiplayermenu::slotButtonBack()
     {
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(spLobbyMenu::create());
+        oxygine::Stage::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
     else if (m_Host)
@@ -1306,7 +1306,7 @@ void Multiplayermenu::countdown()
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
-            oxygine::getStage()->addChild(window);
+            oxygine::Stage::getStage()->addChild(window);
             emit window->sigOnEnter();
             QThread::msleep(200);
             Console::print("Sending init game to clients", Console::eDEBUG);

@@ -177,7 +177,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
 void TerrainInfo::showLink(QString pageID)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    oxygine::Stage::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
     
 }
 

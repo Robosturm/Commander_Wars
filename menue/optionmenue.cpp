@@ -162,7 +162,7 @@ void OptionMenue::exitMenue()
     {
         Console::print("Leaving Option Menue", Console::eDEBUG);
         auto window = spMainwindow::create();
-        oxygine::getStage()->addChild(window);
+        oxygine::Stage::getStage()->addChild(window);
         emit window->sigOnEnter();
         oxygine::Actor::detach();
     }
@@ -183,7 +183,7 @@ void OptionMenue::reloadSettings()
     spOptionMenue newMenu = spOptionMenue::create();
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
-    oxygine::getStage()->addChild(newMenu);
+    oxygine::Stage::getStage()->addChild(newMenu);
     emit newMenu->sigOnEnter();
     oxygine::Actor::detach();
 }

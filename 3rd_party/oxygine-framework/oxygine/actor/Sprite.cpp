@@ -41,7 +41,6 @@ namespace oxygine
         changeAnimFrame(f);
     }
 
-
     extern qint32 HIT_TEST_DOWNSCALE;
 
     bool Sprite::isOn(const Vector2& localPosition, float localScale)

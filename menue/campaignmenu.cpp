@@ -100,7 +100,7 @@ void CampaignMenu::exitMenue()
 {    
     Console::print("Leaving Option Menue", Console::eDEBUG);
     auto window = spMapSelectionMapsMenue::create();
-    oxygine::getStage()->addChild(window);
+    oxygine::Stage::getStage()->addChild(window);
     emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
@@ -149,7 +149,7 @@ void CampaignMenu::slotButtonNext()
         // start game
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spGameMenue::create(false, spNetworkInterface());
-        oxygine::getStage()->addChild(window);
+        oxygine::Stage::getStage()->addChild(window);
         emit window->sigOnEnter();
         oxygine::Actor::detach();
     }
@@ -161,7 +161,7 @@ void CampaignMenu::slotButtonNext()
     {
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
-        oxygine::getStage()->addChild(window);
+        oxygine::Stage::getStage()->addChild(window);
         emit window->sigOnEnter();
         oxygine::Actor::detach();
     }    

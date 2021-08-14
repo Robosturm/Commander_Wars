@@ -77,7 +77,7 @@ namespace oxygine
         void setHtmlText(QString str);
 
         virtual bool isOn(const Vector2& localPosition, float) override;
-        void doRender(const RenderState&) override;
+        virtual void doRender(const RenderState&) override;
         text::Node* getRootNode();
 
     protected:
