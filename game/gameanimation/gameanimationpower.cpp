@@ -270,7 +270,7 @@ void GameAnimationPower::restart()
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        pGameMenue->addChild(this);
+        pGameMenue->addChild(spGameAnimationPower(this));
         m_endTimer.start();
     }
 }

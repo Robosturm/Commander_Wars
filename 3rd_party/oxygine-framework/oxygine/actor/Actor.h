@@ -169,7 +169,6 @@ namespace oxygine
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
         void addChild(spActor actor);
-        void addChild(Actor* actor);//avoid conversion to spActor
         /**Remove one child*/
         void removeChild(spActor actor);
         /**Removes all children from Actor*/
@@ -186,18 +185,31 @@ namespace oxygine
 
         template<class Prop>
         spTween addTween(const Prop& prop, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
-        {return addTween(createTween(prop, duration, loops, twoSides, delay, ease));}
+        {
+            return addTween(createTween(prop, duration, loops, twoSides, delay, ease));
+        }
 
         template<class Prop>
         spTween addTween(const Prop& prop, const TweenOptions& opt)
-        {return addTween(createTween2(prop, opt));}
+        {
+            return addTween(createTween2(prop, opt));
+        }
 
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
-        qint32 addClickListener(const EventCallback& cb) { return addEventListener(TouchEvent::CLICK, cb); }
+        qint32 addClickListener(const EventCallback& cb)
+        {
+            return addEventListener(TouchEvent::CLICK, cb);
+        }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_DOWN, ...);*/
-        qint32 addTouchDownListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_DOWN, cb); }
+        qint32 addTouchDownListener(const EventCallback& cb)
+        {
+            return addEventListener(TouchEvent::TOUCH_DOWN, cb);
+        }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_UP, ...);*/
-        qint32 addTouchUpListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_UP, cb); }
+        qint32 addTouchUpListener(const EventCallback& cb)
+        {
+            return addEventListener(TouchEvent::TOUCH_UP, cb);
+        }
 
         void removeTween(spTween);
         /**remove all tweens and call Tween::complete to them if callComplete == true*/
@@ -273,7 +285,7 @@ namespace oxygine
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
-        void insertActor(Actor* actor);
+        void insertActor(spActor actor);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;

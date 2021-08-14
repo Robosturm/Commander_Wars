@@ -13,7 +13,6 @@ namespace oxygine
         virtual ~ColorRectSprite() = default;
 
         void doRender(const RenderState&) override;
-
         RectF getDestRect() const override;
 
     protected:

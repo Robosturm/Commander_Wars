@@ -4,116 +4,127 @@
 
 namespace oxygine
 {
-    template<typename Value, typename getValueRef, typename setValueRef, typename C, getValueRef(C::*GetF)() const, void (C::*SetF)(setValueRef)>
+    template<typename TValue, typename getValueRef, typename setValueRef, typename TClass, getValueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(setValueRef)>
     class Property0
     {
     public:
-        typedef C type;
-        typedef Value value;
-
+        using TActor = TClass;
         Property0(getValueRef dest)
-            : _dest(dest),
-              _src(dest),
-              _initialized(false)
+            : m_dest(dest),
+              m_src(dest),
+              m_initialized(false)
         {
         }
 
-        void init(type& t)
+        void init(TClass& t)
         {
-            _initialized = true;
-            _src = get(t);
+            m_initialized = true;
+            m_src = (t.*GetFunction)();
         }
 
         void init(getValueRef src)
         {
-            _initialized = true;
-            _src = src;
+            m_initialized = true;
+            m_src = src;
         }
 
-        void setSrc(type& t)
+        void setSrc(TClass& t)
         {
-            set(t, _src);
+            (t.*SetFunction)(m_src);
         }
 
-        void setDest(type& t)
+        void setDest(TClass& t)
         {
-            set(t, _dest);
+            (t.*SetFunction)(m_dest);
         }
 
-        const value& getDest() const
+        const TValue& getDest() const
         {
-            return _dest;
+            return m_dest;
         }
 
-        const value& getSrc() const
+        const TValue& getSrc() const
         {
-            return _src;
+            return m_src;
         }
 
-        void update(type& t, float p, const oxygine::UpdateState& us)
+        void update(TClass& t, float p, const oxygine::UpdateState& us)
         {
-            if (!_initialized)
+            if (!m_initialized)
             {
                 oxygine::handleErrorPolicy(oxygine::ep_show_error, "Property0::update not initialized");
                 return;
             }
-            value v = lerp(_src, _dest, p);
-            set(t, v);
+            TValue value = lerp(m_src, m_dest, p);
+            (t.*SetFunction)(value);
         }
 
-        void done(type&)
+        void done(TClass&)
         {
-        }
-
-        static getValueRef get(C& c)
-        {
-            return (c.*GetF)();
         }
 
     private:
-        value _dest;
-        value _src;
-        bool _initialized;
+        TValue m_dest;
+        TValue m_src;
+        bool m_initialized;
+    };
 
-        static void set(C& c, setValueRef v)
+    template<typename Value, typename valueRef, typename TClass, valueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(valueRef)>
+    class Property: public Property0<Value, valueRef, valueRef, TClass, GetFunction, SetFunction>
+    {
+    public:
+        Property(valueRef v)
+            : Property0<Value, valueRef, valueRef, TClass, GetFunction, SetFunction>(v)
         {
-            return (c.*SetF)(v);
         }
     };
 
-    template<typename Value, typename valueRef, typename C, valueRef(C::*GetF)() const, void (C::*SetF)(valueRef)>
-    class Property: public Property0<Value, valueRef, valueRef, C, GetF, SetF>
+    template<typename value0, typename value, typename valueRef, typename TClass, valueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(valueRef)>
+    class Property2Args : public Property < value, valueRef, TClass, GetFunction, SetFunction >
     {
+        using super = Property<value, valueRef, TClass, GetFunction, SetFunction>;
     public:
-        Property(valueRef v): Property0<Value, valueRef, valueRef, C, GetF, SetF>(v) {}
+        Property2Args(value0 v1, value0 v2)
+            : super(value(v1, v2))
+        {
+        }
+        Property2Args(valueRef v)
+            : super(v)
+        {
+        }
     };
 
-    template<typename value0, typename value, typename valueRef, typename C, valueRef(C::*GetF)() const, void (C::*SetF)(valueRef)>
-    class Property2Args : public Property < value, valueRef, C, GetF, SetF >
+    template<typename value0, typename value, typename getValueRef, typename setValueRef, typename TClass, getValueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(setValueRef)>
+    class Property2Args2 : public Property0 < value, getValueRef, setValueRef, TClass, GetFunction, SetFunction >
     {
-        typedef Property<value, valueRef, C, GetF, SetF> GS;
+        using super = Property0<value, getValueRef, setValueRef, TClass, GetFunction, SetFunction>;
     public:
-        Property2Args(value0 v1, value0 v2) : GS(value(v1, v2)) {}
-        Property2Args(valueRef v) : GS(v) {}
+        Property2Args2(value0 v1, value0 v2)
+            : super(value(v1, v2))
+        {
+        }
+        Property2Args2(getValueRef v)
+            : super(v)
+        {
+        }
     };
 
-
-    template<typename value0, typename value, typename getValueRef, typename setValueRef, typename C, getValueRef(C::*GetF)() const, void (C::*SetF)(setValueRef)>
-    class Property2Args2 : public Property0 < value, getValueRef, setValueRef, C, GetF, SetF >
+    template<typename value0, typename value, typename valueRef, typename TClass, valueRef(TClass::*GetFunction)() const, void (TClass::*SetFunction)(valueRef)>
+    class Property2Args1Arg : public Property < value, valueRef, TClass, GetFunction, SetFunction >
     {
-        typedef Property0<value, getValueRef, setValueRef, C, GetF, SetF> GS;
+        using super = Property<value, valueRef, TClass, GetFunction, SetFunction>;
     public:
-        Property2Args2(value0 v1, value0 v2) : GS(value(v1, v2)) {}
-        Property2Args2(getValueRef v) : GS(v) {}
-    };
-
-    template<typename value0, typename value, typename valueRef, typename C, valueRef(C::*GetF)() const, void (C::*SetF)(valueRef)>
-    class Property2Args1Arg : public Property < value, valueRef, C, GetF, SetF >
-    {
-        typedef Property<value, valueRef, C, GetF, SetF> GS;
-    public:
-        Property2Args1Arg(value0 v) : GS(value(v, v)) {}
-        Property2Args1Arg(value0 v1, value0 v2) : GS(value(v1, v2)) {}
-        Property2Args1Arg(valueRef v) : GS(v) {}
+        Property2Args1Arg(value0 v)
+            : super(value(v, v))
+        {
+        }
+        Property2Args1Arg(value0 v1, value0 v2)
+            : super(value(v1, v2))
+        {
+        }
+        Property2Args1Arg(valueRef v)
+            : super(v)
+        {
+        }
     };
 }

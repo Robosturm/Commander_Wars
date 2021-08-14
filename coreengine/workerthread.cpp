@@ -49,7 +49,7 @@ void WorkerThread::start()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
-    Console* pConsole = Console::getInstance();
+    spConsole pConsole = Console::getInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::getStage()->addChild(pConsole);

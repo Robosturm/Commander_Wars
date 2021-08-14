@@ -56,7 +56,7 @@ void Interpreter::init()
     globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());
     globalObject().setProperty("audio", audio);
-    QJSValue console = newQObject(Console::getInstance());
+    QJSValue console = newQObject(Console::getInstance().get());
     globalObject().setProperty("GameConsole", console);
     globalObject().setProperty("console", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());

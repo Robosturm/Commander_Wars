@@ -11,8 +11,14 @@ namespace oxygine
         explicit VisualStyle();
         virtual ~VisualStyle() = default;
 
-        const QColor&        getColor() const {return _color;}
-        blend_mode          getBlendMode() const {return _blend;}
+        const QColor&       getColor() const
+        {
+            return _color;
+        }
+        blend_mode          getBlendMode() const
+        {
+            return _blend;
+        }
 
         void setColor(const QColor& color);
         void setBlendMode(blend_mode mode);
@@ -29,9 +35,12 @@ namespace oxygine
         explicit VStyleActor();
         virtual ~VStyleActor() = default;
 
-        blend_mode              getBlendMode() const {return m_vstyle.getBlendMode();}
-        const QColor&            getColor() const;
-        const QColor&            getAddColor() const;
+        blend_mode              getBlendMode() const
+        {
+            return m_vstyle.getBlendMode();
+        }
+        const QColor&           getColor() const;
+        const QColor&           getAddColor() const;
 
         void                    setColor(const QColor& color);
         void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);

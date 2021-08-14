@@ -26,9 +26,6 @@ namespace oxygine
         @param is your "virtual" preferred size. You could change it to any size you need
         */
         void init(const Point& displaySize, const Point& gameSize);
-
-        /**use Scissor test for outer Stage area*/
-        void setClipOuterArea(bool clip) {m_clipOuter = clip;}
         /**Render all actors*/
         void renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
         /**Render all actors, simplified version*/
@@ -49,7 +46,6 @@ namespace oxygine
 
     protected:
         timeMS m_statUpdate;
-        bool   m_clipOuter;
         Rect   m_viewport;
     };
 

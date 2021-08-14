@@ -187,7 +187,7 @@ void GameAnimationNextDay::restart()
     {
         if (!m_permanent)
         {
-            pMenu->addChild(this);
+            pMenu->addChild(spGameAnimationNextDay(this));
             m_endTimer.start();
         }
     }

@@ -31,6 +31,10 @@ signals:
     void sigUpdateModCheckboxes();
     void sigOnEnter();
     void sigUpdateModFilter(QString tag);
+    void sigLoadModInfo(oxygine::Box9Sprite* pPtrBox,
+                        QString name, QString description, QString version,
+                        QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
+                        bool isComsetic, QStringList modTags, QString thumbnail);
 public slots:
     void exitMenue();
     void showMods();
@@ -42,7 +46,7 @@ public slots:
     void updateModCheckboxes();
     void onEnter();
     void updateModFilter(QString tag);
-private:
+private slots:
     void loadModInfo(oxygine::Box9Sprite* pPtrBox,
                      QString name, QString description, QString version,
                      QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,

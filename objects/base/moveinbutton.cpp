@@ -41,7 +41,7 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     {
         setY(pParent->getScaledHeight() / 2 - m_pButton->getScaledHeight() / 2);
     }
-    pParent->addChild(this);
+    pParent->addChild(spMoveInButton(this, true));
 }
 
 void MoveInButton::addMoveTween()

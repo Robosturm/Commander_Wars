@@ -5,7 +5,8 @@
 
 namespace oxygine
 {
-    MaskedSprite::MaskedSprite() : m_useRChannel(false)
+    MaskedSprite::MaskedSprite()
+        : m_useRChannel(false)
     {
     }
 

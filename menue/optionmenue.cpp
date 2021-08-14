@@ -121,11 +121,13 @@ OptionMenue::OptionMenue()
     size.setHeight(size.height() + 70);
     m_pModDescription = spPanel::create(true,  size, size, "panel_no_transparent");
     m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
-    m_pModDescription->addChild(spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth()));
+    auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth());
+    m_pModDescription->addChild(moveInButton);
     addChild(m_pModDescription);
     m_ModSelector = oxygine::spActor::create();
     m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
     addChild(m_ModSelector);
     showSettings();
     pApp->continueRendering();
@@ -893,9 +895,9 @@ void OptionMenue::showMods()
         pBox->addClickListener([=](oxygine::Event* pEvent)
         {
             pEvent->stopPropagation();
-            loadModInfo(pPtrBox, name, description, version,
-                        compatibleMods, incompatibleMods, requiredMods, isComsetic,
-                        modTags, thumbnail);
+            sigLoadModInfo(pPtrBox, name, description, version,
+                           compatibleMods, incompatibleMods, requiredMods, isComsetic,
+                           modTags, thumbnail);
         });
         m_ModBoxes.append(pBox);
         m_pMods->addItem(pBox);
@@ -963,7 +965,6 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
     else
     {
         m_modThumbnail->setVisible(false);
-        m_modThumbnailAnim = nullptr;
     }
     QString cosmeticInfo;
     if (isComsetic)

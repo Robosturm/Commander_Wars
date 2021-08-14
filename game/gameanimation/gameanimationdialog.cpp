@@ -293,7 +293,7 @@ void GameAnimationDialog::restart()
     if (pGameMenue.get() != nullptr)
     {
         m_stopped = false;
-        pGameMenue->addChild(this);
+        pGameMenue->addChild(spGameAnimationDialog(this));
     }
 }
 

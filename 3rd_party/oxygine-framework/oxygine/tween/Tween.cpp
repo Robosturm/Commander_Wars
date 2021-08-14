@@ -160,7 +160,6 @@ namespace oxygine
 
     void Tween::__start(Actor& actor, const UpdateState& us)
     {
-        m_status = status_started;
         TweenEvent ev(this, &us);
         ev.target = ev.currentTarget = &actor;
         ev.m_tween = this;
@@ -171,6 +170,7 @@ namespace oxygine
         }
         dispatchEvent(&ev);
         _start(*m_client);
+        m_status = status_started;
     }
 
     void Tween::update(Actor& actor, const UpdateState& us)

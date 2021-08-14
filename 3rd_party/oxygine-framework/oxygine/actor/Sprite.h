@@ -17,15 +17,39 @@ namespace oxygine
         explicit Sprite();
         virtual ~Sprite();
 
-        const AnimationFrame&   getAnimFrame() const {return m_frame;}
+        const AnimationFrame&   getAnimFrame() const
+        {
+            return m_frame;
+        }
         RectF                   getDestRect() const override;
-        const Diffuse&          getDiffuse() const {return m_frame.getDiffuse();}
-        bool                    getManageResAnim() const {return (m_flags & flag_manageResAnim) != 0;}
-        const RectF&            getSrcRect() const {return m_frame.getSrcRect();}
-        const ResAnim*          getResAnim() const {return m_frame.getResAnim();}
-        qint32                     getColumn() const {return m_frame.getColumn();}
-        qint32                     getRow() const {return m_frame.getRow();}
-        const Vector2&          getLocalScale() const { return m_localScale; }
+        const Diffuse&          getDiffuse() const
+        {
+            return m_frame.getDiffuse();
+        }
+        bool                    getManageResAnim() const
+        {
+            return (m_flags & flag_manageResAnim) != 0;
+        }
+        const RectF&            getSrcRect() const
+        {
+            return m_frame.getSrcRect();
+        }
+        const ResAnim*          getResAnim() const
+        {
+            return m_frame.getResAnim();
+        }
+        qint32                     getColumn() const
+        {
+            return m_frame.getColumn();
+        }
+        qint32                     getRow() const
+        {
+            return m_frame.getRow();
+        }
+        const Vector2&          getLocalScale() const
+        {
+            return m_localScale;
+        }
 
         /**load/unload atlas automatically or not*/
         void                    setManageResAnim(bool manage);

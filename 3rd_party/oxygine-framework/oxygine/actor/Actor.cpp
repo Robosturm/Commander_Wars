@@ -452,7 +452,7 @@ namespace oxygine
             QMutexLocker lock(&m_Locked);
             spActor me = spActor(this);
             m_parent->m_children.removeOne(me);
-            m_parent->insertActor(this);
+            m_parent->insertActor(me);
         }
     }
 
@@ -696,32 +696,9 @@ namespace oxygine
         }
     }
 
-    void Actor::addChild(Actor* actor)
-    {
-        if (!GameWindow::getWindow()->isWorker())
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread");
-        }
-        else if (!actor)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add empty actor");
-            return;
-        }
-        else if (actor == this)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
-        }
-        actor->detach();
-        QMutexLocker lock(&m_Locked);
-        QMutexLocker lockActor(&(actor->m_Locked));
-        insertActor(actor);
-        setParent(actor, this);
-    }
-
-    void Actor::insertActor(Actor* actor)
+    void Actor::insertActor(spActor actor)
     {
         qint32 z = actor->getPriority();
-        spActor insert = spActor(actor);
         auto iter = m_children.cend();
         auto insertBefore = iter;
         while (iter != m_children.cbegin())
@@ -733,12 +710,29 @@ namespace oxygine
             }
             insertBefore = iter;
         }
-        m_children.insert(insertBefore, insert);
+        m_children.insert(insertBefore, actor);
     }
 
     void Actor::addChild(spActor actor)
     {
-        addChild(actor.get());
+        if (!GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread");
+        }
+        else if (actor.get() == nullptr)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add empty actor");
+            return;
+        }
+        else if (actor.get() == this)
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add self");
+        }
+        actor->detach();
+        QMutexLocker lock(&m_Locked);
+        QMutexLocker lockActor(&(actor->m_Locked));
+        insertActor(actor);
+        setParent(actor.get(), this);
     }
 
     void Actor::removeChild(spActor actor)

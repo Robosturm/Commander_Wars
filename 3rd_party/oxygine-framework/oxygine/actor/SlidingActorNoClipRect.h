@@ -16,9 +16,14 @@ namespace oxygine
             explicit SlidingActorNoClipRect();
             virtual ~SlidingActorNoClipRect();
 
-            spActor         getContent() const {return m_content;}
-            const RectF&    getDragBounds() const {return m_drag.getDragBounds();}
-
+            spActor         getContent() const
+            {
+                return m_content;
+            }
+            const RectF&    getDragBounds() const
+            {
+                return m_drag.getDragBounds();
+            }
             /**max allowed radius of touch move when content could be clicked*/
             void setTouchThreshold(float rad);
             /**sets actor with scrollable data*/

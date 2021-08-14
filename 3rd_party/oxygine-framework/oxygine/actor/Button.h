@@ -13,7 +13,10 @@ namespace oxygine
         explicit Button();
         virtual ~Button() = default;
 
-        qint32 getRow() const {return m_row;}
+        qint32 getRow() const
+        {
+            return m_row;
+        }
 
         void setResAnim(const ResAnim* r, qint32  col = 0, qint32 row = 0) override;
 

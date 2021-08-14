@@ -14,14 +14,16 @@ namespace oxygine
         explicit ClipRectActor();
         virtual ~ClipRectActor() = default;
 
-        bool getClipping() const { return m_clipping; }
-
+        bool getClipping() const
+        {
+            return m_clipping;
+        }
         /**Enables clipping for children. By default is on*/
-        void setClipping(bool enable) {m_clipping = enable;}
-
+        void setClipping(bool enable)
+        {
+            m_clipping = enable;
+        }
         void render(const RenderState& rs) override;
-
-
         void handleEvent(Event* event) override;
     protected:
         bool m_clipping;

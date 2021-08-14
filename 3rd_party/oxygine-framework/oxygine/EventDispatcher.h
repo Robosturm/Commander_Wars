@@ -51,14 +51,19 @@ namespace oxygine
         void removeAllEventListeners();
 
         virtual void dispatchEvent(Event* event);
-        void dispatchEvent(Event& event) { dispatchEvent(&event); }
-
+        void dispatchEvent(Event& event)
+        {
+            dispatchEvent(&event);
+        }
         qint32 getListenersCount() const;
-        qint32 getLastListenerID() const { return m_lastID; }
-
-        const EventCallback& getListenerByIndex(qint32 index) const { return m_listeners[index].cb; }
-
-
+        qint32 getLastListenerID() const
+        {
+            return m_lastID;
+        }
+        const EventCallback& getListenerByIndex(qint32 index) const
+        {
+            return m_listeners[index].cb;
+        }
         bool getEnabled() const;
         virtual void setEnabled(bool enabled);
 
@@ -77,7 +82,7 @@ namespace oxygine
 
         qint32 m_lastID;
 
-        typedef QVector<listener> listeners;
+        using listeners = QVector<listener>;
         listeners m_listeners;
 
         bool m_enabled{true};

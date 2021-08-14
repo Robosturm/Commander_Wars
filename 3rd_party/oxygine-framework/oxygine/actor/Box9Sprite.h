@@ -20,10 +20,22 @@ namespace oxygine
         virtual ~Box9Sprite() = default;
         StretchMode getVerticalMode() const {return m_vertMode;}
         StretchMode getHorizontalMode() const {return m_horzMode;}
-        float       getGuideX1() const { return m_guideX[0]; }
-        float       getGuideX2() const { return m_guideX[1]; }
-        float       getGuideY1() const { return m_guideY[0]; }
-        float       getGuideY2() const { return m_guideY[1]; }
+        float       getGuideX1() const
+        {
+            return m_guideX[0];
+        }
+        float       getGuideX2() const
+        {
+            return m_guideX[1];
+        }
+        float       getGuideY1() const
+        {
+            return m_guideY[0];
+        }
+        float       getGuideY2() const
+        {
+            return m_guideY[1];
+        }
         RectF       getInnerArea() const;
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);

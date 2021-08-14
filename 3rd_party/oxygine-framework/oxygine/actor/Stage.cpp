@@ -12,7 +12,6 @@ namespace oxygine
 
     Stage::Stage()
         : m_statUpdate(0),
-          m_clipOuter(false),
           m_viewport(0, 0, 0, 0)
     {
         spClock clock = spClock::create();
@@ -86,12 +85,6 @@ namespace oxygine
 
         RectF clip(0.0f, 0.0f, (float)ds.width(), (float)ds.height());
         rs.clip = &clip;
-
-        if (m_clipOuter)
-        {
-            driver->setScissorRect(&m_viewport);
-            clip = m_viewport.cast<RectF>();
-        }
 
         Actor::render(rs);
         STDRenderer::getCurrent()->flush();

@@ -43,7 +43,7 @@ public:
         MAXLASTMSG = 20
     };
     virtual ~Console() = default;
-    static Console* getInstance();
+    static spConsole getInstance();
     static void dotask(QString message);
     static void draw();
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);

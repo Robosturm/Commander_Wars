@@ -372,7 +372,7 @@ void BattleAnimation::restart()
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        pGameMenue->addChild(this);
+        pGameMenue->addChild(spBattleAnimation(this));
         m_battleTimer.start();
     }
 }

@@ -96,39 +96,93 @@ namespace oxygine
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
 
-        qint32                  getLoops() const { return m_loops; }
-        timeMS                  getDuration() const { return m_duration; }
+        qint32                  getLoops() const
+        {
+            return m_loops;
+        }
+        timeMS                  getDuration() const
+        {
+            return m_duration;
+        }
         void                    setElapsed(const timeMS &elapsed);
-        timeMS                  getElapsed() const { return m_elapsed; }
-        EASE                    getEase() const { return m_ease; }
-        EASE                    getGlobalEase() const { return m_globalEase; }
-        timeMS                  getDelay() const { return m_delay; }
-        Actor*                  getClient() const { return m_client; }
-        float                   getPercent() const { return m_percent; }
-        const EventCallback&    getDoneCallback() const { return m_cbDone; }
+        timeMS                  getElapsed() const
+        {
+            return m_elapsed;
+        }
+        EASE                    getEase() const
+        {
+            return m_ease;
+        }
+        EASE                    getGlobalEase() const
+        {
+            return m_globalEase;
+        }
+        timeMS                  getDelay() const
+        {
+            return m_delay;
+        }
+        Actor*                  getClient() const
+        {
+            return m_client;
+        }
+        float                   getPercent() const
+        {
+            return m_percent;
+        }
+        const EventCallback&    getDoneCallback() const
+        {
+            return m_cbDone;
+        }
 
-        bool        isStarted() const { return m_status != status_not_started; }
-        bool        isDone() const { return m_status == status_remove; }
-
+        bool        isStarted() const
+        {
+            return m_status != status_not_started;
+        }
+        bool        isDone() const
+        {
+            return m_status == status_remove;
+        }
         /**add callback would be called when tween done.  Could be added more than one.
         setDoneCallback is faster because it doesn't allocate memory for list internally*/
         void addDoneCallback(const EventCallback& cb);
         /**set Easing function*/
-        void setEase(EASE ease) { m_ease = ease; }
+        void setEase(EASE ease)
+        {
+            m_ease = ease;
+        }
         /**set Global Easing function */
-        void setGlobalEase(EASE ease) { m_globalEase = ease; }
+        void setGlobalEase(EASE ease)
+        {
+            m_globalEase = ease;
+        }
         /**set Delay before starting tween*/
-        void setDelay(timeMS delay) { m_delay = delay; }
+        void setDelay(timeMS delay)
+        {
+            m_delay = delay;
+        }
         /** loops = -1 means infinity repeat cycles*/
-        void setLoops(qint32 loops) { m_loops = loops; }
+        void setLoops(qint32 loops)
+        {
+            m_loops = loops;
+        }
         /*set Duration of tween**/
-        void setDuration(timeMS duration) { m_duration = duration; }
-        void setClient(Actor* client) { m_client = client; }
-        void setTwoSides(bool ts) { m_twoSides = ts; }
-
+        void setDuration(timeMS duration)
+        {
+            m_duration = duration;
+        }
+        void setClient(Actor* client)
+        {
+            m_client = client;
+        }
+        void setTwoSides(bool ts)
+        {
+            m_twoSides = ts;
+        }
         /** remove actor from parent node when tween done*/
-        void detachWhenDone(bool detach = true) { m_detach = detach; }
-
+        void detachWhenDone(bool detach = true)
+        {
+            m_detach = detach;
+        }
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
         virtual void complete(timeMS deltaTime = timeMS(TWEEN_COMPLETE_DT));
 
@@ -148,7 +202,10 @@ namespace oxygine
         void setStartCallback(const EventCallback& cb);
 
         /** tween will freeze on 100% and never complete  */
-        void setDisabledStatusDone(bool disabled) { m_disabledStatusDone = disabled; }
+        void setDisabledStatusDone(bool disabled)
+        {
+            m_disabledStatusDone = disabled;
+        }
     private:
         void __start(Actor& actor, const UpdateState& us);
 
@@ -191,90 +248,92 @@ namespace oxygine
         Actor* m_client;
     };
 
-    template<class GS>
+    template<class TProperty>
     class TweenT;
-    template<class GS>
-    using spTweenT = oxygine::intrusive_ptr<TweenT<GS>>;
+    template<class TProperty>
+    using spTweenT = oxygine::intrusive_ptr<TweenT<TProperty>>;
 
-    template<class GS>
+    template<class TProperty>
     class TweenT : public Tween
     {
     public:
-        typedef typename GS::type type;
-
-        explicit TweenT(const GS& gs) : m_gs(gs) {}
+        using TActor = typename TProperty::TActor;
+        explicit TweenT(const TProperty& property)
+            : m_property(property)
+        {
+        }
         virtual ~TweenT() = default;
 
         void _update(Actor& actor, const UpdateState& us)
         {
-            type& t = *safeCast<type*>(&actor);
-            m_gs.update(t, m_percent, us);//todo fix cast
+            TActor& rActor = *safeCast<TActor*>(&actor);
+            m_property.update(rActor, m_percent, us);
         }
 
-        void _start(Actor& actor)
+        void _start(TActor& actor)
         {
-            type& t = *safeCast<type*>(&actor);
-            m_gs.init(t);
+            TActor& rActor = *safeCast<TActor*>(&actor);
+            m_property.init(rActor);
             UpdateState us;
             us.iteration = -1;
-            m_gs.update(t, _calcEase(0.0f), us);
+            m_property.update(rActor, _calcEase(0.0f), us);
         }
 
-        void _done(Actor& actor, const UpdateState&)
+        void _done(TActor& actor, const UpdateState&)
         {
-            type& t = *safeCast<type*>(&actor);
-            m_gs.done(t);
+            TActor& rActor = *safeCast<TActor*>(&actor);
+            m_property.done(rActor);
         }
-
-        GS& getGS() { return m_gs; }
-
     private:
-        GS m_gs;
+        TProperty m_property;
     };
 
 
-    template <typename GS>
-    spTweenT<GS> createTween(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
+    template <typename TProperty>
+    spTweenT<TProperty> createTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
     {
-        spTweenT<GS> p = spTweenT<GS>::create(gs);
-        p->init(duration, loops, twoSides, delay, ease);
-        return p;
+        spTweenT<TProperty> pTween = spTweenT<TProperty>::create(property);
+        pTween->init(duration, loops, twoSides, delay, ease);
+        return pTween;
     }
 
-    template <typename GS>
-    spTweenT<GS> createTween2(const GS& gs, const TweenOptions& opt)
+    template <typename TProperty>
+    spTweenT<TProperty> createTween2(const TProperty& property, const TweenOptions& opt)
     {
-        spTweenT<GS> p = spTweenT<GS>::create(gs);
-        p->init2(opt);
-        return p;
+        spTweenT<TProperty> pTween = spTweenT<TProperty>::create(property);
+        pTween->init2(opt);
+        return pTween;
     }
 
-    DECLARE_SMART(TweenObj, spTweenObj);
     class TweenBase
     {
     public:
-        typedef Actor type;
+        using TActor = oxygine::Actor;
         virtual void init(Actor&) {}
         virtual void done(Actor&) {}
         virtual void update(Actor&, float, const UpdateState&) {}
-    };
-
-    DECLARE_SMART(TweenObj, spTweenObj);
-    class TweenObj : public TweenBase, public Object
-    {
     };
 
     template<class TTween>
     class TweenProxy
     {
     public:
-        typedef Actor type;
-
-        TweenProxy(intrusive_ptr<TTween> o) { m_obj = o; }
-        void init(Actor& a) { m_obj->init(a); }
-        void done(Actor& a) { m_obj->done(a); }
-        void update(Actor& a, float p, const UpdateState& us) { m_obj->update(a, p, us); }
-
+        TweenProxy(intrusive_ptr<TTween> object)
+        {
+            m_obj = object;
+        }
+        void init(Actor& actor)
+        {
+            m_obj->init(actor);
+        }
+        void done(Actor& actor)
+        {
+            m_obj->done(actor);
+        }
+        void update(Actor& actor, float p, const UpdateState& us)
+        {
+            m_obj->update(actor, p, us);
+        }
         intrusive_ptr<TTween> m_obj;
     };
 }

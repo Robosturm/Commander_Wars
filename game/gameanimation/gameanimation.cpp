@@ -39,7 +39,7 @@ void GameAnimation::restart()
     {
         oxygine::getStage()->addTween(tween);
     }
-    GameMap::getInstance()->addChild(this);
+    GameMap::getInstance()->addChild(spGameAnimation(this));
     start();
 }
 

@@ -91,13 +91,13 @@ Console::Console()
     oxygine::Actor::setVisible(false);
 }
 
-Console* Console::getInstance()
+spConsole Console::getInstance()
 {
     if (m_pConsole.get() == nullptr)
     {
         m_pConsole = spConsole::create();
     }
-    return m_pConsole.get();
+    return m_pConsole;
 }
 
 void Console::init()
