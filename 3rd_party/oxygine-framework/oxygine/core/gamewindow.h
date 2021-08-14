@@ -1,7 +1,5 @@
-#ifndef GAMEWINDOW_H
-#define GAMEWINDOW_H
-
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#pragma once
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 #include <qopenglwindow.h>
@@ -181,5 +179,3 @@ namespace oxygine
         bool m_noUi{false};
     };
 }
-
-#endif // GAMEWINDOW_H

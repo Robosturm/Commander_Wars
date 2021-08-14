@@ -1,9 +1,6 @@
-#ifndef DECISIONQUESTION_H
-#define DECISIONQUESTION_H
-
+#pragma once
 #include "QObject"
 #include "QVector"
-
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -39,5 +36,3 @@ public slots:
 private:
         QVector<spQuestion> m_Questions;
 };
-
-#endif // DECISIONQUESTION_H

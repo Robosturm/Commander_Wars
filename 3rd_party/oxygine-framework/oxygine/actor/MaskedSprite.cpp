@@ -5,11 +5,6 @@
 
 namespace oxygine
 {
-    MaskedSprite::MaskedSprite()
-        : m_useRChannel(false)
-    {
-    }
-
     Sprite* MaskedSprite::getMask() const
     {
         return m_mask.get();

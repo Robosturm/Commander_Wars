@@ -1,15 +1,15 @@
 #pragma once
 #include <qopengl.h>
 
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 namespace oxygine
 {
     class VertexDeclarationGL;
-    DECLARE_SMART(NativeTextureGLES, spNativeTextureGLES);
-
+    class NativeTextureGLES;
+    using spNativeTextureGLES = intrusive_ptr<NativeTextureGLES>;
     /**intermediate gl driver with some shared gl code*/
     class VideoDriverGL: public IVideoDriver
     {

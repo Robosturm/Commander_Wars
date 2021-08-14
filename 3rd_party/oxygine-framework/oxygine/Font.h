@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include <QSet>
@@ -34,8 +34,7 @@ namespace oxygine
     };
 
     class Font;
-    typedef oxygine::intrusive_ptr<Font> spFont;
-
+    using spFont = oxygine::intrusive_ptr<Font>;
     class Font : public Object
     {
     public:
@@ -69,9 +68,8 @@ namespace oxygine
         {
             return false;
         }
-        typedef QSet<glyph> glyphs;
-
     protected:
+        using glyphs = QSet<glyph>;
         glyphs m_glyphs;
         bool m_ignoreOptions{false};
 

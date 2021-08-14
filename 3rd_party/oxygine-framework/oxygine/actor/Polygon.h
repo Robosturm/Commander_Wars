@@ -1,15 +1,17 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(Polygon, spPolygon);
+    class VertexDeclaration;
+    class Polygon;
+    using spPolygon = intrusive_ptr<Polygon>;
     class Polygon : public Sprite
     {
     public:
-        Polygon();
-        ~Polygon();
+        explicit Polygon();
+        virtual ~Polygon();
         /**
         if *own* is true Polygon will delete[] data array;
         */

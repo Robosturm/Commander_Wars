@@ -1,6 +1,4 @@
-#ifndef AI_LEAF
-#define AI_LEAF
-
+#pragma once
 #include <QObject>
 #include <QString>
 
@@ -31,5 +29,3 @@ private:
         QVector<float> m_Answers;
         qint32 m_totalChance{0};
 };
-
-#endif

@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
@@ -21,14 +21,12 @@ namespace oxygine
         virtual ~PointerState() = default;
 
         void init(pointer_index pointerIndex);
-
         bool            isPressed(MouseButton mb = MouseButton_Touch) const;
         pointer_index   getIndex() const {return m_index;}
         const Vector2&  getPosition() const {return m_position;}
 
     private:
         friend class Input;
-
         Vector2 m_position;
         qint32 m_pressed;
         pointer_index m_index;

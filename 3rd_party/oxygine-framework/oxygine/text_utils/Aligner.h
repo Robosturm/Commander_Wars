@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"

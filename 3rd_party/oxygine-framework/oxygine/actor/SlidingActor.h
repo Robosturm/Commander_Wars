@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Draggable.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
@@ -7,7 +7,8 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(SlidingActor, spSlidingActor);
+    class SlidingActor;
+    using spSlidingActor = intrusive_ptr<SlidingActor>;
     class SlidingActor: public Actor
     {
     public:

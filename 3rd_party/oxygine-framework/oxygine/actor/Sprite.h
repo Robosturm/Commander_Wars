@@ -1,6 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
@@ -10,7 +10,8 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Sprite, spSprite);
+    class Sprite;
+    using spSprite = intrusive_ptr<Sprite>;
     class Sprite : public VStyleActor
     {
     public:

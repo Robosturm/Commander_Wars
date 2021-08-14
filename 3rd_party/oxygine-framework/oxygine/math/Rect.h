@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include <limits>
 
@@ -207,6 +207,6 @@ namespace oxygine
         point2 size;
     };
 
-    typedef RectT<Point> Rect;
-    typedef RectT<Vector2> RectF;
+    using Rect = RectT<Point>;
+    using RectF = RectT<Vector2>;
 }

@@ -9,7 +9,6 @@ namespace oxygine
         : m_bounds(0, 0, 0, 0),
           m_skipSize(3)
     {
-
     }
 
     void AtlasBuilder::clean()

@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ImageData.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
@@ -7,19 +7,8 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-
-    inline quint32 nextPOT(quint32 v)
-    {
-        v = v - 1;
-        v = v | (v >> 1);
-        v = v | (v >> 2);
-        v = v | (v >> 4);
-        v = v | (v >> 8);
-        v = v | (v >> 16);
-        return v + 1;
-    }
-
+    class Texture;
+    using spTexture = intrusive_ptr<Texture>;
     class Texture : public Object
     {
     public:

@@ -133,10 +133,10 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     #core
     3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
     3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
-    3rd_party/oxygine-framework/oxygine/core/NativeTexture.cpp
+    3rd_party/oxygine-framework/oxygine/core/NativeTexture.h
     3rd_party/oxygine-framework/oxygine/core/Object.cpp
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
-    3rd_party/oxygine-framework/oxygine/core/Renderer.cpp
+    3rd_party/oxygine-framework/oxygine/core/Renderer.h
     3rd_party/oxygine-framework/oxygine/core/Restorable.cpp
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
     3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp

@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "RenderDelegate.h"
-#include "STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
 {
@@ -22,9 +22,6 @@ namespace oxygine
         void doRender(TextField*,       const RenderState& rs) override;
         void doRender(ColorRectSprite*, const RenderState& rs) override;
         void doRender(ProgressBar*,     const RenderState& rs) override;
-
-
-    protected:
     };
 
 }

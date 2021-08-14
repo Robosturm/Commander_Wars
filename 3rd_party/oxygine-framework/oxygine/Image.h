@@ -1,13 +1,13 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 
 #include <qimage.h>
 
 namespace oxygine
 {
-    DECLARE_SMART(Image, spImage);
-
+    class Image;
+    using spImage = intrusive_ptr<Image>;
     class Image : public Texture
     {
     public:

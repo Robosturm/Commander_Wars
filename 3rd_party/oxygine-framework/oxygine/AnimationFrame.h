@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
@@ -152,3 +152,4 @@ namespace oxygine
         HitTestData     m_hittest;
     };
 }
+

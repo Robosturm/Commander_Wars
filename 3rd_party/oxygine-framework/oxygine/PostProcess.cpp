@@ -16,9 +16,12 @@
 
 namespace oxygine
 {
-    spShaderProgram PostProcess::shaderBlurV ;
+    spShaderProgram PostProcess::shaderBlurV;
     spShaderProgram PostProcess::shaderBlurH;
     spShaderProgram PostProcess::shaderBlit;
+    QVector<PPTask*> PostProcess::m_postProcessItems;
+    RenderTargetsManager PostProcess::m_rtm;
+
     bool _ppBuilt = false;
 
     void PostProcess::initShaders()
@@ -120,14 +123,6 @@ namespace oxygine
     const qint32 ALIGN_SIZE = 256;
     const timeMS TEXTURE_LIVE = timeMS(3000);
     const qint32 MAX_FREE_TEXTURES = 3;
-
-    using namespace std;
-
-    DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
-
-    class PPTask;
-    vector<PPTask*> postProcessItems;
-
     qint32 alignTextureSize(qint32 v)
     {
         qint32 n = (v - 1) / ALIGN_SIZE;
@@ -201,7 +196,7 @@ namespace oxygine
 
         spNativeTexture result;
 
-        auto it = lower_bound(m_free.cbegin(), m_free.cend(), result, NTP(w, h, tf));
+        auto it = std::lower_bound(m_free.cbegin(), m_free.cend(), result, NTP(w, h, tf));
         if (it != m_free.end())
         {
             const spNativeTexture& t = *it;
@@ -231,7 +226,7 @@ namespace oxygine
             spNativeTexture& texture = m_rts[i];
             if (texture->getRefCounter() == 1)
             {
-                auto it = lower_bound(m_free.cbegin(), m_free.cend(), texture, NTP::cmp);
+                auto it = std::lower_bound(m_free.cbegin(), m_free.cend(), texture, NTP::cmp);
                 m_free.insert(it, texture);
                 m_rts.erase(m_rts.cbegin() + i);
                 --i;
@@ -270,77 +265,63 @@ namespace oxygine
         m_rts.clear();
     }
 
-    RenderTargetsManager _rtm;
-    RenderTargetsManager& getRTManager()
+    RenderTargetsManager& PostProcess::getRTManager()
     {
-        return _rtm;
+        return m_rtm;
     }
 
-
-    void addPostProcessItem(PPTask* task)
+    void PostProcess::addPostProcessItem(PPTask* task)
     {
-        if (find(postProcessItems.begin(), postProcessItems.end(), task) == postProcessItems.end())
+        if (std::find(m_postProcessItems.begin(), m_postProcessItems.end(), task) == m_postProcessItems.end())
         {
             task->addRefPP();
-            postProcessItems.push_back(task);
+            m_postProcessItems.push_back(task);
         }
     }
 
-
-    void removePostProcessItem(PPTask* t)
+    void PostProcess::removePostProcessItem(PPTask* t)
     {
-        vector<PPTask*>::iterator i = std::find(postProcessItems.begin(), postProcessItems.end(), t);
-        if (i == postProcessItems.end())
+        auto i = std::find(m_postProcessItems.cbegin(), m_postProcessItems.cend(), t);
+        if (i == m_postProcessItems.cend())
         {
             return;
         }
         t->releaseRefPP();
-        postProcessItems.erase(i);
+        m_postProcessItems.erase(i);
     }
 
-
-    bool _renderingPP = false;
-    bool isRenderingPostProcessItems()
+    void PostProcess::updatePortProcessItems()
     {
-        return _renderingPP;
-    }
-
-    void updatePortProcessItems()
-    {
-        if (!postProcessItems.empty())
+        if (!m_postProcessItems.empty())
         {
-            _renderingPP = true;
             spIVideoDriver driver = IVideoDriver::instance;
             spNativeTexture prevRT = driver->getRenderTarget();
             ShaderProgram* sp = driver->getShaderProgram();
 
-            for (size_t i = 0; i < postProcessItems.size(); ++i)
+            for (size_t i = 0; i < m_postProcessItems.size(); ++i)
             {
-                PPTask* p = postProcessItems[i];
+                PPTask* p = m_postProcessItems[i];
                 p->renderPP();
                 p->releaseRefPP();
             }
 
-            postProcessItems.clear();
+            m_postProcessItems.clear();
             driver->setRenderTarget(prevRT);
             if (sp)
             {
                 driver->setShaderProgram(sp);
             }
-            _renderingPP = false;
         }
-
-        _rtm.update();
+        m_rtm.update();
     }
 
-    void clearPostProcessItems()
+    void PostProcess::clearPostProcessItems()
     {
-        postProcessItems.clear();
-        _rtm.reset();
+        m_postProcessItems.clear();
+        m_rtm.reset();
     }
 
-
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
+    void PostProcess::pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
     {
         spIVideoDriver driver = IVideoDriver::instance;
 
@@ -368,38 +349,33 @@ namespace oxygine
     }
 
     PostProcess::PostProcess(const PostProcessOptions& opt)
-        : _extend(2, 2),
-          _format(ImageData::TF_R8G8B8A8),
-          _options(opt)
+        : m_extend(2, 2),
+          m_format(ImageData::TF_R8G8B8A8),
+          m_options(opt)
 
     {
-    }
-
-    void PostProcess::free()
-    {
-        _rt = 0;
     }
 
     Rect PostProcess::getScreenRect(const Actor& actor) const
     {
-        if (_options._flags & PostProcessOptions::flag_screen)
+        if (m_options.m_flags & PostProcessOptions::flag_screen)
         {
-            return _screen;
+            return m_screen;
         }
         GameWindow* window = oxygine::GameWindow::getWindow();
         QSize size = window->size();
 
         Rect display(Point(0, 0), Point(size.width(), size.height()));
 
-        if (_options._flags & PostProcessOptions::flag_fullscreen)
+        if (m_options.m_flags & PostProcessOptions::flag_fullscreen)
         {
             return display;
         }
         RectF bounds = RectF::invalidated();
         AffineTransform transform = actor.computeGlobalTransform();
-        if (_options._flags & PostProcessOptions::flag_fixedBounds)
+        if (m_options.m_flags & PostProcessOptions::flag_fixedBounds)
         {
-            const RectF& fb = _options._fixedBounds;
+            const RectF& fb = m_options.m_fixedBounds;
             bounds.unite(transform.transform(fb.getLeftTop()));
             bounds.unite(transform.transform(fb.getRightTop()));
             bounds.unite(transform.transform(fb.getRightBottom()));
@@ -413,9 +389,9 @@ namespace oxygine
         screen = bounds.cast<Rect>();
 
         screen.size += Point(1, 1);
-        screen.expand(_extend, _extend);
+        screen.expand(m_extend, m_extend);
 
-        if (!(_options._flags & PostProcessOptions::flag_singleR2T))
+        if (!(m_options.m_flags & PostProcessOptions::flag_singleR2T))
         {
             screen.clip(display);
         }
@@ -424,15 +400,15 @@ namespace oxygine
 
     void PostProcess::update(Actor* actor)
     {
-        _screen = getScreenRect(*actor);
-        if (_screen.isEmpty())
+        m_screen = getScreenRect(*actor);
+        if (m_screen.isEmpty())
         {
             return;
         }
-        _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
+        m_rt = PostProcess::getRTManager().get(m_rt, m_screen.getWidth(), m_screen.getHeight(), m_format);
 
 
-        _transform = actor->computeGlobalTransform().inverted();
+        m_transform = actor->computeGlobalTransform().inverted();
 
 
         Material::null->apply();
@@ -440,13 +416,13 @@ namespace oxygine
 
         spIVideoDriver driver = IVideoDriver::instance;
 
-        driver->setRenderTarget(_rt);
+        driver->setRenderTarget(m_rt);
 
-        Rect vp = _screen;
+        Rect vp = m_screen;
         vp.pos = Point(0, 0);
         driver->setViewport(vp);
 
-        driver->clear(_options._clearColor);
+        driver->clear(m_options.m_clearColor);
 
 
         RenderState rs;
@@ -461,11 +437,11 @@ namespace oxygine
         rs.transform = actor->getParent()->computeGlobalTransform();
 
 
-        if (!(_options._flags & PostProcessOptions::flag_fullscreen))
+        if (!(m_options.m_flags & PostProcessOptions::flag_fullscreen))
         {
             AffineTransform offset;
             offset.identity();
-            offset.translate(-_screen.pos);
+            offset.translate(-m_screen.pos);
             rs.transform = rs.transform * offset;
         }
         RenderDelegate* rd = actor->getRenderDelegate();
@@ -488,7 +464,7 @@ namespace oxygine
 
     TweenPostProcess::~TweenPostProcess()
     {
-        removePostProcessItem(this);
+        PostProcess::removePostProcessItem(this);
         if (m_actor && m_actor->getRenderDelegate())
         {
             m_actor->setRenderDelegate(m_prevMaterial);
@@ -498,7 +474,7 @@ namespace oxygine
 
     void TweenPostProcess::renderPP()
     {
-        if (m_pp._options._flags & PostProcessOptions::flag_singleR2T && m_pp._rt)
+        if (m_pp.m_options.m_flags & PostProcessOptions::flag_singleR2T && m_pp.m_rt)
         {
             return;
         }
@@ -526,7 +502,7 @@ namespace oxygine
     void TweenPostProcess::update(Actor&, float p, const UpdateState&)
     {
         m_progress = p;
-        addPostProcessItem(this);
+        PostProcess::addPostProcessItem(this);
     }
 
     void TweenPostProcess::done(Actor&)

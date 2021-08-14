@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include <qmutex.h>
 #include <qvector.h>
@@ -27,11 +27,8 @@ namespace oxygine
         void reg(RestoreCallback cb);
         void unreg();
 
-    protected:
     private:
         restorable::const_iterator findRestorable(Restorable* r);
-
-    private:
         //non copyable
         Restorable(const Restorable&);
         const Restorable& operator=(const Restorable&);

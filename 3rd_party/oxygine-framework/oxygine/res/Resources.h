@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
@@ -46,8 +46,7 @@ namespace oxygine
     public:
         using resources = QVector<spResource>;
         using resourcesMap = QMap<QString, spResource>;
-
-        typedef spResource (*createResourceCallback)(CreateResourceContext& context);
+        using createResourceCallback = spResource(*)(CreateResourceContext& context);
 
         /**Registers your own resource type.
         @param creation callback

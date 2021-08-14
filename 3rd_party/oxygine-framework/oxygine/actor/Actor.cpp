@@ -8,11 +8,8 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
-#include "3rd_party/oxygine-framework/oxygine/math/OBBox.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
-
 #include <qmath.h>
-
 
 namespace oxygine
 {
@@ -1140,65 +1137,5 @@ namespace oxygine
         ntl.y = std::min(tl.y, br.y);
 
         return RectF(ntl, size);
-    }
-
-    extern qint32 HIT_TEST_DOWNSCALE;
-
-    bool testIntersection(spActor objA, spActor objB, spActor parent, Vector2* contact)
-    {
-        float s1 = objB->getSize().x * objB->getSize().y;
-        float s2 = objA->getSize().x * objA->getSize().y;
-        bool swapped = false;
-        if (s2 < s1)
-        {
-            swapped = true;
-            std::swap(objA, objB);
-        }
-
-        Transform transA = objA->computeGlobalTransform(parent.get());
-        Transform transB = objB->computeGlobalTransform(parent.get());
-        //Transform transBInv = getGlobalTransform(objB, parent);
-        transB.invert();
-        Transform n = transA * transB;
-
-        AffineTransform ident;
-        ident.identity();
-
-        OBBox a(objB->getDestRect(), ident);
-        OBBox b(objA->getDestRect(), n);
-        if (!a.overlaps(b))
-        {
-            return false;
-        }
-        qint32 w = static_cast<qint32>(objA->getWidth());
-        qint32 h = static_cast<qint32>(objA->getHeight());
-
-
-        for (qint32 y = 0; y < h; y += HIT_TEST_DOWNSCALE)
-        {
-            for (qint32 x = 0; x < w; x += HIT_TEST_DOWNSCALE)
-            {
-                Vector2 posA = Vector2(float(x), float(y));
-
-                if (!objA->isOn(posA))
-                {
-                    continue;
-                }
-                Vector2 posB = n.transform(posA);
-
-                if (!objB->isOn(posB))
-                {
-                    continue;
-                }
-
-                if (contact)
-                {
-                    *contact = swapped ? posB : posA;
-                }
-                return true;
-            }
-        }
-
-        return false;
     }
 }

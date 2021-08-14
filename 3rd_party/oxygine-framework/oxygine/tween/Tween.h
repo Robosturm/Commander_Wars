@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
@@ -10,6 +10,9 @@
 
 namespace oxygine
 {
+    class Tween;
+    using spTween = intrusive_ptr<Tween>;
+
     class TweenEvent : public Event
     {
     public:
@@ -19,22 +22,21 @@ namespace oxygine
             DONE = Event::COMPLETE,
         };
 
-        TweenEvent(Tween* tween_, const UpdateState* us_) : Event(DONE, false), m_tween(tween_), m_us(us_) {}
+        TweenEvent(Tween* tween_, const UpdateState* us_)
+            : Event(DONE, false),
+              m_tween(tween_),
+              m_us(us_)
+        {
+        }
         Actor* getActor() const;
-
         Tween* m_tween;
         const UpdateState* m_us;
     };
 
-
-
-    const qint32 TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
-
-
-    DECLARE_SMART(Tween, spTween);
     class Tween : public EventDispatcher
     {
     public:
+        static constexpr qint32 TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
         enum EASE
         {
             ease_unknown,
@@ -90,8 +92,7 @@ namespace oxygine
 
         explicit Tween();
         virtual ~Tween() = default;
-
-        void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
+        void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);
         void init2(const TweenOptions& opt);
         void reset();
         qint32 getLoops() const
@@ -314,5 +315,3 @@ namespace oxygine
         intrusive_ptr<TTween> m_obj;
     };
 }
-
-

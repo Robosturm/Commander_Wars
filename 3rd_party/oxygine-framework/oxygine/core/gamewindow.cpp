@@ -55,17 +55,14 @@ namespace oxygine
         m_Timer.stop();
         rsCache().reset();
         rsCache().setDriver(nullptr);
-
-        clearPostProcessItems();
+        PostProcess::clearPostProcessItems();
         PostProcess::freeShaders();
-
         MaterialCache::mc().clear();
-
         STDRenderer::release();
         STDRenderDelegate::instance = nullptr;
         IVideoDriver::instance = nullptr;
-        Material::null = spMaterial::create();
-        Material::current = spMaterial::create();
+        Material::null = spMaterial();
+        Material::current = spMaterial();
         Input::instance.cleanup();
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
@@ -84,9 +81,9 @@ namespace oxygine
 
     void GameWindow::updateData()
     {
-        timeMS duration = IVideoDriver::_stats.duration;
-        IVideoDriver::_stats = IVideoDriver::Stats();
-        IVideoDriver::_stats.duration = duration;
+        timeMS duration = IVideoDriver::m_stats.duration;
+        IVideoDriver::m_stats = IVideoDriver::Stats();
+        IVideoDriver::m_stats.duration = duration;
     }
 
     void GameWindow::quitApp()
@@ -130,8 +127,8 @@ namespace oxygine
         if (ready)
         {
             rsCache().reset();
-            IVideoDriver::_stats.start = Clock::getTimeMS();
-            updatePortProcessItems();
+            IVideoDriver::m_stats.start = Clock::getTimeMS();
+            PostProcess::updatePortProcessItems();
             rsCache().reset();
         }
         else
@@ -153,7 +150,7 @@ namespace oxygine
 
     void GameWindow::swapDisplayBuffers()
     {
-        IVideoDriver::_stats.duration = Clock::getTimeMS() - IVideoDriver::_stats.start;
+        IVideoDriver::m_stats.duration = Clock::getTimeMS() - IVideoDriver::m_stats.start;
     }
 
     float GameWindow::getGamma() const

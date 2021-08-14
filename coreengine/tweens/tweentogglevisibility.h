@@ -1,7 +1,7 @@
 #ifndef TWEENTOGGLEVISIBILITY_H
 #define TWEENTOGGLEVISIBILITY_H
 
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
 class TweenToggleVisibility
 {

@@ -7,11 +7,6 @@
 namespace oxygine
 {
 
-    ClipRectActor::ClipRectActor(): m_clipping(true)
-    {
-
-    }
-
     void ClipRectActor::handleEvent(Event* event)
     {
         if (TouchEvent::isTouchEvent(event->type))

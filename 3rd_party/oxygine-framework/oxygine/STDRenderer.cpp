@@ -131,19 +131,6 @@ namespace oxygine
     {
     }
 
-    render_texture_hook _renderTextureHook = nullTextureHook;
-
-
-    render_texture_hook get_render_texture_hook()
-    {
-        return _renderTextureHook;
-    }
-
-    void set_render_texture_hook(render_texture_hook h)
-    {
-        _renderTextureHook = h;
-    }
-
     template<class V, class XY>
     void fillQuad(V* v, const RectF& uv, XY* positions, const QColor& color)
     {
@@ -402,18 +389,15 @@ namespace oxygine
         }
         m_verticesData.clear();
         m_transform.identity();
-
         Material::null->apply();
 
         xbegin();
-
         current = this;
     }
 
     void STDRenderer::end()
     {
         flush();
-
         if (m_prevRT)
         {
             m_driver->setRenderTarget(m_prevRT);

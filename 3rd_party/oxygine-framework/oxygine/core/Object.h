@@ -1,12 +1,13 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <qstring.h>
 #include <qmutex.h>
 
 namespace oxygine
 {
-    DECLARE_SMART(Object, spObject);
+    class Object;
+    using spObject = intrusive_ptr<Object>;
     class Object : public IClosureOwner, public ref_counter
     {
     public:

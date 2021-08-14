@@ -1,7 +1,6 @@
-#ifndef TWEENWAIT_H
-#define TWEENWAIT_H
+#pragma once
 
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
 class TweenWait
 {
@@ -15,5 +14,3 @@ public:
     void done(oxygine::Actor&){}
 protected:
 };
-
-#endif // TWEENWAIT_H

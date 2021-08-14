@@ -1,13 +1,12 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
-#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include <QVector>
 
 namespace oxygine
@@ -15,7 +14,16 @@ namespace oxygine
     class TweenOptions
     {
     public:
-        explicit TweenOptions(timeMS duration = timeMS(500)) : m_duration(duration), m_delay(timeMS(0)), m_ease(Tween::ease_linear), m_globalEase(Tween::ease_linear), m_loops(1), m_twoSides(false), m_detach(false) {}
+        explicit TweenOptions(timeMS duration = timeMS(500))
+            : m_duration(duration),
+              m_delay(timeMS(0)),
+              m_ease(Tween::ease_linear),
+              m_globalEase(Tween::ease_linear),
+              m_loops(1),
+              m_twoSides(false),
+              m_detach(false)
+        {
+        }
         virtual ~TweenOptions() = default;
         TweenOptions& duration(timeMS duration) { m_duration = duration; return *this; }
         TweenOptions& delay(timeMS delay) { m_delay = delay; return *this; }
@@ -36,8 +44,8 @@ namespace oxygine
         bool            m_detach;
     };
 
-    DECLARE_SMART(Actor, spActor);
-
+    class Actor;
+    using spActor = intrusive_ptr<Actor>;
     class Actor: public EventDispatcher
     {
     public:
@@ -331,9 +339,6 @@ namespace oxygine
     Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
     Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
     Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-
-    /*Tests 2 actors intersection and returns contact point in space of object1.*/
-    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = spActor(), Vector2* contact = nullptr);
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
 }

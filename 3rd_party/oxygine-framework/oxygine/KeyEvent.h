@@ -1,6 +1,5 @@
 #pragma once
-#include "Event.h"
-
+#include "3rd_party/oxygine-framework/oxygine/Event.h"
 #include "QKeyEvent"
 
 namespace oxygine

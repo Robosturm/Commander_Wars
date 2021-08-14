@@ -23,22 +23,22 @@ namespace oxygine
         virtual ~UberShaderProgramBase();
 
         void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
-
         void release();
-
-        virtual ShaderProgram*         getShaderProgram(qint32 flags) = 0;
-
+        virtual ShaderProgram* getShaderProgram(qint32 flags) = 0;
 
     protected:
-        Restorable* _getRestorableObject() {return this;}
+        Restorable* _getRestorableObject()
+        {
+            return this;
+        }
         void _restore(Restorable*);
+        virtual void releaseShaders() {}
 
     protected:
         QString m_fracShader;
         QString m_vertexShader;
         QString m_fracTableShader;
 
-        virtual void releaseShaders() {}
     };
 
     class UberShaderProgram : public UberShaderProgramBase

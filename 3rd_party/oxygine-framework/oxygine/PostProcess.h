@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
@@ -19,21 +19,70 @@ namespace oxygine
             flag_screen = 1 << 2,
             flag_fixedBounds = 1 << 3,
         };
-
-        PostProcessOptions(qint32 flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0) {}
-        PostProcessOptions& fullscreen(bool enable = true) { _flags = enable ? (_flags | flag_fullscreen) : (_flags  & (~flag_fullscreen)); return *this; }
-        PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
+        explicit PostProcessOptions(qint32 flags = 0)
+            : m_flags(flags),
+              m_downscale(1),
+              m_clearColor(0, 0, 0, 0)
+        {
+        }
+        PostProcessOptions& fullscreen(bool enable = true)
+        {
+            m_flags = enable ? (m_flags | flag_fullscreen) : (m_flags  & (~flag_fullscreen));
+            return *this;
+        }
+        PostProcessOptions& singleRender(bool enable = true)
+        {
+            m_flags = enable ? (m_flags | flag_singleR2T) : (m_flags  & (~flag_singleR2T));
+            return *this;
+        }
         //loops -(2, 3, 4, ...),  final size: 2^loops
-        PostProcessOptions& downscale(qint32 loops = 2) { _downscale = loops; return *this; }
-        PostProcessOptions& clear(const QColor& c) { _clearColor = c; return *this; }
-        PostProcessOptions& fixedBounds(const RectF& b) { _fixedBounds = b; _flags |= flag_fixedBounds; return *this; }
-
-        qint32 _flags;
-        qint32 _downscale;
-        RectF _fixedBounds;
-        QColor _clearColor;
+        PostProcessOptions& downscale(qint32 loops = 2)
+        {
+            m_downscale = loops;
+            return *this;
+        }
+        PostProcessOptions& clear(const QColor& c)
+        {
+            m_clearColor = c;
+            return *this;
+        }
+        PostProcessOptions& fixedBounds(const RectF& b)
+        {
+            m_fixedBounds = b; m_flags |= flag_fixedBounds;
+            return *this;
+        }
+        qint32 m_flags;
+        qint32 m_downscale;
+        RectF m_fixedBounds;
+        QColor m_clearColor;
     };
 
+    class PPTask
+    {
+    public:
+        explicit PPTask() = default;
+        virtual ~PPTask() = default;
+        virtual void addRefPP() = 0;
+        virtual void releaseRefPP() = 0;
+        virtual void renderPP() = 0;
+    };
+
+    class RenderTargetsManager
+    {
+    public:
+        explicit RenderTargetsManager() = default;
+        virtual ~RenderTargetsManager() = default;
+        spNativeTexture get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
+        void update();
+        void reset();
+    protected:
+        bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
+
+        using rts = QVector<spNativeTexture>;
+        rts m_rts;
+        using free = QVector<spNativeTexture>;
+        free m_free;
+    };
 
     class PostProcess
     {
@@ -45,35 +94,33 @@ namespace oxygine
 
         static void initShaders();
         static void freeShaders();
+        static void updatePortProcessItems();
+        static void addPostProcessItem(PPTask*);
+        static void removePostProcessItem(PPTask*);
+        static void clearPostProcessItems();
+        static RenderTargetsManager& getRTManager();
+        static void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);
 
         explicit PostProcess(const PostProcessOptions& opt);
         virtual ~PostProcess() = default;
 
-        void free();
-
         void update(Actor* actor);
         Rect getScreenRect(const Actor& actor) const;
 
-        Point _extend;
-        spNativeTexture _rt;
-        ImageData::TextureFormat _format;
-        Transform _transform;
-        Rect _screen;
+        Point m_extend;
+        spNativeTexture m_rt;
+        ImageData::TextureFormat m_format;
+        Transform m_transform;
+        Rect m_screen;
 
-        PostProcessOptions _options;
+        PostProcessOptions m_options;
+    private:
+        static QVector<PPTask*> m_postProcessItems;
+        static RenderTargetsManager m_rtm;
     };
 
-    class PPTask
-    {
-    public:
-        virtual ~PPTask() {}
-        virtual void addRefPP() = 0;
-        virtual void releaseRefPP() = 0;
-        virtual void renderPP() = 0;
-    };
-
-    DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
-
+    class TweenPostProcess;
+    using spTweenPostProcess = intrusive_ptr<TweenPostProcess>;
     class TweenPostProcess : public TweenBase, public RenderDelegate, public PPTask
     {
     public:
@@ -96,35 +143,4 @@ namespace oxygine
 
         RenderDelegate* m_prevMaterial;
     };
-
-
-    class RenderTargetsManager
-    {
-    public:
-        explicit RenderTargetsManager() = default;
-        virtual ~RenderTargetsManager() = default;
-
-        spNativeTexture get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
-        void update();
-        void reset();
-
-    protected:
-        bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
-
-        using rts = QVector<spNativeTexture>;
-        rts m_rts;
-
-        using free = QVector<spNativeTexture>;
-        free m_free;
-    };
-
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);
-
-    RenderTargetsManager& getRTManager();
-
-    void updatePortProcessItems();
-    bool isRenderingPostProcessItems();
-    void addPostProcessItem(PPTask*);
-    void removePostProcessItem(PPTask*);
-    void clearPostProcessItems();
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
@@ -9,7 +9,10 @@ namespace oxygine
     class Event
     {
     public:
-        enum { COMPLETE = sysEventID('C', 'M', 'P') };
+        enum
+        {
+            COMPLETE = sysEventID('C', 'M', 'P')
+        };
 
         enum Phase
         {
@@ -27,7 +30,7 @@ namespace oxygine
               stopsPropagation(false)
         {
         }
-        virtual ~Event() {}
+        virtual ~Event() = default;
 
         qint32 listenerID;
         eventType type;
@@ -41,9 +44,14 @@ namespace oxygine
         /**The object that is actively processing the Event object with an event listener*/
         spEventDispatcher currentTarget;
 
-        void stopPropagation() { stopsPropagation = true; }
-        void stopImmediatePropagation() { stopsPropagation = stopsImmediatePropagation = true; }
-
+        void stopPropagation()
+        {
+            stopsPropagation = true;
+        }
+        void stopImmediatePropagation()
+        {
+            stopsPropagation = stopsImmediatePropagation = true;
+        }
         /**
         removes self from EventDispatcher, usage example
         actor->addEventListener(...buttonClicked...);
@@ -52,7 +60,10 @@ namespace oxygine
             ev->removeListener();
         }
         */
-        void removeListener() { currentTarget->removeEventListener(listenerID); }
+        void removeListener()
+        {
+            currentTarget->removeEventListener(listenerID);
+        }
     };
 
     class SlidingEvent: public Event

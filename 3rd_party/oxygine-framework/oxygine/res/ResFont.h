@@ -1,10 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(ResFont, spResFont);
+    class ResFont;
+    using spResFont = intrusive_ptr<ResFont>;
     class ResFont : public Resource
     {
     public:

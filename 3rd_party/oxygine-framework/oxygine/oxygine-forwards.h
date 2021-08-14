@@ -1,119 +1,71 @@
-#pragma  once
+#pragma once
+
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include <chrono>
 #include <qglobal.h>
 
-#define DECLARE_SMART(class_name, spname) \
-    class class_name;\
-    typedef oxygine::intrusive_ptr<class_name> spname;
-
-namespace pugi
-{
-    class xml_node;
-}
-
-
 namespace oxygine
 {
-    typedef std::chrono::milliseconds timeMS;
-    typedef unsigned char pointer_index;
+    using timeMS = std::chrono::milliseconds;
+    using pointer_index = unsigned char;
 
-    namespace text
-    {
-        class Node;
-        struct Symbol;
-    }
+    class AnimationFrame;
+    class EventDispatcher;
+    class UpdateState;
+    class Actor;
+    class ClipRectActor;
+    class MaskedSprite;
+    class Sprite;
+    class TextField;
+    class ColorRectSprite;
+    class SlidingActor;
+    class SlidingActorNoClipRect;
+    class Button;
+    class Box9Sprite;
+    class Stage;
+    class ProgressBar;
+    class RenderState;
+    class RenderDelegate;
+    class VertexDeclaration;
+    class ShaderProgram;
+    class UberShaderProgram;
+    class Clock;
+    class NativeTexture;
+    class Tween;
+    class ResAnim;
+    class ResFont;
+    class TweenOptions;
+    class ResourcesLoadOptions;
+    class Resources;
+    class Image;
+    class LoadResourcesContext;
+    class IVideoDriver;
+    class Font;
+    class CreateResourceContext;
+    class Restorable;
+    class Event;
 
     template <class T>
     class intrusive_ptr;
-
-    DECLARE_SMART(Actor, spActor);
-    DECLARE_SMART(AsyncTask, spAsyncTask);
-    DECLARE_SMART(Box9Sprite, spBox9Sprite);
-    DECLARE_SMART(Button, spButton);
-    DECLARE_SMART(ClipRectActor, spClipRectActor);
-    DECLARE_SMART(Clock, spClock);
-    DECLARE_SMART(ColorRectSprite, spColorRectSprite);
-    DECLARE_SMART(DebugActor, spDebugActor);
-    DECLARE_SMART(DragHandler, spDragHandler);
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-    DECLARE_SMART(InputText, spInputText);
-    DECLARE_SMART(MaskedSprite, spMaskedSprite);
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    DECLARE_SMART(Object, spObject);
-    DECLARE_SMART(Polygon, spPolygon);
-    DECLARE_SMART(ProgressBar, spProgressBar);
-    DECLARE_SMART(RenderTexture, spRenderTexture);
-    DECLARE_SMART(ResAnim, spResAnim);
-    DECLARE_SMART(ResBuffer, spResBuffer);
-    DECLARE_SMART(ResFont, spResFont);
-    DECLARE_SMART(Resource, spResource);
-    DECLARE_SMART(STDRenderDelegate, spSTDRenderDelegate);
-    DECLARE_SMART(SlidingActor, spSlidingActor);
-    DECLARE_SMART(SlidingActorNoClipRect, spSlidingActorNoClipRect);
-    DECLARE_SMART(Sprite, spSprite);
-    DECLARE_SMART(Stage, spStage);
-    DECLARE_SMART(TextField, spTextField);
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(ThreadLoader, spThreadLoader);
-    DECLARE_SMART(Tween, spTween);
-    DECLARE_SMART(TweenQueue, spTweenQueue);
-
-    class Actor;
-    class AnimationFrame;
-    class ClipRectActor;
-    class Color;
-    class ColorRectSprite;
-    class CreateResourceContext;
-    class DebugActor;
-    class Event;
-    class EventState;
-    class Font;
-    class IVideoDriver;
-    class Image;
-    class ImageData;
-    class LoadResourcesContext;
-    class MaskedSprite;
-    class RenderDelegate;
-    class Mem2Native;
-    class Mutex;
-    class PointerState;
-    class PostProcessOptions;
-    class ProgressBar;
-    class RenderState;
-    class ResAnim;
-    class ResAtlas;
-    class ResFont;
-    class ResFontBM;
-    class Resource;
-    class Resources;
-    class ResourcesLoadOptions;
-    class Restorable;
-    class ShaderProgram;
-    class SingleResAnim;
-    class Sprite;
-    class TextField;
-    class ThreadDispatcher;
-    class TouchEvent;
-    class Tween;
-    class TweenOptions;
-    class UberShaderProgram;
-    class UpdateState;
-    class VertexDeclaration;
-    class XmlWalker;
-    struct deserializeLinkData;
-    struct deserializedata;
-    struct serializedata;
-
-    const qint32 cloneOptionsDoNotCloneClildren = 0x01;
-    const qint32 cloneOptionsResetTransform = 0x02;
+    using spClock = intrusive_ptr<Clock>;
+    using spNativeTexture = intrusive_ptr<NativeTexture>;
+    using spActor = intrusive_ptr<Actor>;
+    using spSprite = intrusive_ptr<Sprite>;
+    using spTextField = intrusive_ptr<TextField>;
+    using spStage = intrusive_ptr<Stage>;
+    using spClipRectActor = intrusive_ptr<ClipRectActor>;
+    using spButton = intrusive_ptr<Button>;
+    using spBox9Sprite = intrusive_ptr<Box9Sprite>;
+    using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
+    using spEventDispatcher = intrusive_ptr<EventDispatcher>;
+    using spSlidingActor = intrusive_ptr<SlidingActor>;
+    using spSlidingActorNoClipRect = intrusive_ptr<SlidingActorNoClipRect>;
+    using spResAnim = intrusive_ptr<ResAnim>;
+    using spTween = intrusive_ptr<Tween>;
+    using spResFont = intrusive_ptr<ResFont>;
 
     using EventCallback = OwnedClosure<void, Event*>;
-
-    typedef qint32 cloneOptions;
-    typedef qint32 copyOptions;//deprecated typedef
-    typedef qint32 eventType;
-    typedef qint32 glyphOptions;
+    using eventType = qint32;
+    using glyphOptions = qint32;
 }

@@ -1,9 +1,6 @@
-#ifndef ISLANDMAP_H
-#define ISLANDMAP_H
-
+#pragma once
 #include <QObject>
 #include <QVector>
-
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -57,5 +54,3 @@ private:
     QVector<QVector<qint32>> m_Islands;
     QString m_MovementType;
 };
-
-#endif // ISLANDMAP_H

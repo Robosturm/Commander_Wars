@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
@@ -28,7 +28,8 @@ namespace oxygine
         blend_mode _blend;
     };
 
-    DECLARE_SMART(VStyleActor, spVStyleActor);
+    class VStyleActor;
+    using spVStyleActor = intrusive_ptr<VStyleActor>;
     class VStyleActor : public Actor
     {
     public:
@@ -39,14 +40,14 @@ namespace oxygine
         {
             return m_vstyle.getBlendMode();
         }
-        const QColor&           getColor() const;
-        const QColor&           getAddColor() const;
+        const QColor& getColor() const;
+        const QColor& getAddColor() const;
 
-        void                    setColor(const QColor& color);
-        void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-        void                    setBlendMode(blend_mode mode);
-        void                    setAddColor(const QColor& color);
-        void                    setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
+        void setColor(const QColor& color);
+        void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+        void setBlendMode(blend_mode mode);
+        void setAddColor(const QColor& color);
+        void setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
 
         virtual void setEnabled(bool value) override;
 

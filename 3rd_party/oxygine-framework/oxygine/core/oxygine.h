@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QString>
 #include <atomic>
 

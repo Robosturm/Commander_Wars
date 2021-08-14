@@ -1,10 +1,15 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <QDomDocument>
 
 namespace oxygine
 {
+    class Image;
+    using spImage = intrusive_ptr<Image>;
+    class NativeTexture;
+    using spNativeTexture = intrusive_ptr<NativeTexture>;
+
     /**internal class*/
     class XmlWalker
     {
@@ -18,12 +23,12 @@ namespace oxygine
         bool empty() const {return m_root.isNull();}
 
         QString  getCurrentFolder() const { return m_path; }
-        QString         getPath(QString attrName) const;
-        QDomElement        getNode() const {return m_root;}
-        float               getScaleFactor() const {return m_scaleFactor;}
-        bool                getLoad() const {return m_load;}
-        bool                getAlphaHitTest() const { return m_alphaHitTest; }
-        QString         getType() const {return m_root.nodeName();}
+        QString     getPath(QString attrName) const;
+        QDomElement getNode() const {return m_root;}
+        float       getScaleFactor() const {return m_scaleFactor;}
+        bool        getLoad() const {return m_load;}
+        bool        getAlphaHitTest() const { return m_alphaHitTest; }
+        QString     getType() const {return m_root.nodeName();}
 
         void                checkSetAttributes();
 
@@ -46,8 +51,12 @@ namespace oxygine
     class CreateResourceContext
     {
     public:
-        explicit CreateResourceContext() : m_resources(0), m_xml_name(""), m_prebuilt_folder(""), m_options(0),
-            m_walker("", 1.0f, true, false, QDomElement())
+        explicit CreateResourceContext()
+            : m_resources(0),
+              m_xml_name(""),
+              m_prebuilt_folder(""),
+              m_options(0),
+              m_walker("", 1.0f, true, false, QDomElement())
         {
         }
         virtual ~CreateResourceContext() = default;
@@ -58,10 +67,6 @@ namespace oxygine
         const ResourcesLoadOptions* m_options;
         XmlWalker m_walker;
     };
-
-    DECLARE_SMART(Image, spImage);
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
 
     class CreateTextureTask
     {

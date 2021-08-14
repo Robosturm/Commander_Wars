@@ -1,11 +1,13 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include "qfile.h"
 
 namespace oxygine
 {
-    class ResBuffer: public Resource
+    class ResBuffer;
+    using spResBuffer = intrusive_ptr<ResBuffer>;
+    class ResBuffer : public Resource
     {
     public:
         static spResource create(CreateResourceContext&);

@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <QVector>
@@ -23,8 +23,8 @@ namespace oxygine
         return makefourcc(0xA, b, c, d);
     };
 
-
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
+    class EventDispatcher;
+    using spEventDispatcher = intrusive_ptr<EventDispatcher>;
     class EventDispatcher: public Object
     {
     public:

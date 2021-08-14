@@ -80,8 +80,6 @@ namespace oxygine
         }
     }
 
-
-
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, quint32 verticesDataSize)
     {
         Q_ASSERT(verticesDataSize > 0);

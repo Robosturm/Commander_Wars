@@ -1,17 +1,18 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(ClipRectActor, spClipRectActor);
+    class ClipRectActor;
+    using spClipRectActor = intrusive_ptr<ClipRectActor>;
     /**
     ClipRectActor clips all out of bound children. Rotation is not supported
     */
     class ClipRectActor : public Actor
     {
     public:
-        explicit ClipRectActor();
+        explicit ClipRectActor() = default;
         virtual ~ClipRectActor() = default;
 
         bool getClipping() const
@@ -26,6 +27,6 @@ namespace oxygine
         void render(const RenderState& rs) override;
         void handleEvent(Event* event) override;
     protected:
-        bool m_clipping;
+        bool m_clipping{true};
     };
 }

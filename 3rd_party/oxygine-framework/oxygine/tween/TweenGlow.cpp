@@ -21,10 +21,10 @@ namespace oxygine
         actor->render(r);
         actor->setRenderDelegate(this);
         RectF src(0, 0,
-                  m_pp._screen.getWidth() / (float)m_pp._rt->getWidth() / m_downsample,
-                  m_pp._screen.getHeight() / (float)m_pp._rt->getHeight() / m_downsample);
+                  m_pp.m_screen.getWidth() / (float)m_pp.m_rt->getWidth() / m_downsample,
+                  m_pp.m_screen.getHeight() / (float)m_pp.m_rt->getHeight() / m_downsample);
         rsCache().setBlendMode(blend_premultiplied_alpha);
-        AffineTransform tr = m_pp._transform * m_actor->computeGlobalTransform();
+        AffineTransform tr = m_pp.m_transform * m_actor->computeGlobalTransform();
         renderer->setTransform(tr);
         rsCache().setBlendMode(blend_add);
         renderer->flush();
@@ -34,26 +34,26 @@ namespace oxygine
     {
         PostProcess::initShaders();
 
-        qint32 w = m_pp._screen.size.x;
-        qint32 h = m_pp._screen.size.y;
+        qint32 w = m_pp.m_screen.size.x;
+        qint32 h = m_pp.m_screen.size.y;
 
 
         spIVideoDriver driver = IVideoDriver::instance;
         m_downsample = 1;
-        spNativeTexture rt = m_pp._rt;
-        spNativeTexture rt2 = getRTManager().get(spNativeTexture(), w, h, m_pp._format);
+        spNativeTexture rt = m_pp.m_rt;
+        spNativeTexture rt2 = PostProcess::getRTManager().get(spNativeTexture(), w, h, m_pp.m_format);
 
         Rect rc(0, 0, w, h);
 
         driver->setShaderProgram(PostProcess::shaderBlurH.get());
         driver->setUniform("step", 1.0f / rt->getWidth());
-        pass(rt, rc, rt2, rc);
+        PostProcess::pass(rt, rc, rt2, rc);
         QColor c = m_color;
         c.setAlpha(64);
         driver->setShaderProgram(PostProcess::shaderBlurV.get());
         driver->setUniform("step", 1.0f / rt2->getHeight());
 
-        pass(rt2, rc, rt, rc, qRgba(premultiply(c)));
+        PostProcess::pass(rt2, rc, rt, rc, qRgba(premultiply(c)));
     }
 
     TweenGlow::TweenGlow(const QColor& color, const PostProcessOptions& opt)

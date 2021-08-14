@@ -1,11 +1,12 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <chrono>
 
 namespace oxygine
 {
-    DECLARE_SMART(Clock, spClock);
+    class Clock;
+    using spClock = intrusive_ptr<Clock>;
     class Clock: public Object
     {
     public:

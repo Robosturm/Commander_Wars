@@ -26,57 +26,5 @@ namespace oxygine
         setUniform(id, &v, 1);
     }
 
-    IVideoDriver::Stats IVideoDriver::_stats;
-
-    spNativeTexture VideoDriverNull::createTexture()
-    {
-        return spNativeTexture();
-    }
-
-    void VideoDriverNull::begin(const Rect&, const QColor*)
-    {
-
-    }
-
-    void VideoDriverNull::getViewport(Rect&) const
-    {
-
-    }
-
-    bool VideoDriverNull::getScissorRect(Rect&) const
-    {
-        return false;
-    }
-
-    spNativeTexture VideoDriverNull::getRenderTarget() const
-    {
-        return m_rt;
-    }
-
-    const VertexDeclaration*    VideoDriverNull::getVertexDeclaration(bvertex_format bf) const
-    {
-        return IVideoDriver::instance->getVertexDeclaration(bf);
-    }
-
-    void VideoDriverNull::setScissorRect(const Rect*)
-    {
-
-    }
-
-    void VideoDriverNull::setDefaultSettings()
-    {
-
-    }
-    void VideoDriverNull::setRenderTarget(spNativeTexture rt)
-    {
-        m_rt = rt;
-    }
-    void VideoDriverNull::setShaderProgram(ShaderProgram*)
-    {
-
-    }
-    void VideoDriverNull::setTexture(int, spNativeTexture)
-    {
-
-    }
+    IVideoDriver::Stats IVideoDriver::m_stats;
 }

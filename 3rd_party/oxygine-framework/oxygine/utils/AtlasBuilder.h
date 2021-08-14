@@ -1,16 +1,13 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include <qqueue.h>
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-
-    class AnimationFrame;
-    typedef QVector<AnimationFrame> frames;
-
+    class Texture;
+    using spTexture = intrusive_ptr<Texture>;
     class AtlasBuilder
     {
     public:
@@ -30,8 +27,6 @@ namespace oxygine
         rects m_free;
         qint32 m_skipSize;
     };
-
-    typedef AtlasBuilder Atlas2;
 
     class MultiAtlas
     {

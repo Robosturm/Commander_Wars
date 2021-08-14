@@ -1,6 +1,4 @@
-#ifndef AI_DECISIONTREE
-#define AI_DECISIONTREE
-
+#pragma once
 #include <QObject>
 #include <QVector>
 #include <QString>
@@ -41,5 +39,3 @@ protected:
 private:
         spDecisionNode m_pRootNode;
 };
-
-#endif

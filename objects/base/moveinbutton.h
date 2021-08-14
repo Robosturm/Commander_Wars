@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MOVEINBUTTON_H
+#define MOVEINBUTTON_H
+
 
 #include <QObject>
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
@@ -27,3 +29,4 @@ private:
     oxygine::spButton m_pButton;
 };
 
+#endif

@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
@@ -7,7 +7,8 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(TextField, spTextField);
+    class TextField;
+    using spTextField = intrusive_ptr<TextField>;
     class TextField : public VStyleActor
     {
     public:

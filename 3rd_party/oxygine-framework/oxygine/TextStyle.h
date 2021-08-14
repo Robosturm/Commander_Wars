@@ -1,7 +1,5 @@
 #pragma once
-#include "oxygine-include.h"
-#include <string>
-
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "qcolor.h"
 
 namespace oxygine
@@ -25,7 +23,6 @@ namespace oxygine
             VALIGN_MIDDLE,
             VALIGN_BOTTOM
         };
-
 
         TextStyle(const ResFont* rs = 0): font(rs),
             hAlign(HALIGN_DEFAULT),

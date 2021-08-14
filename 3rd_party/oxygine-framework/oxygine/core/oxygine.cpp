@@ -27,7 +27,7 @@ namespace oxygine
         void reset()
         {
             Console::print("core::reset()", Console::eDEBUG);
-            clearPostProcessItems();
+            PostProcess::clearPostProcessItems();
             Restorable::releaseAll();
             PostProcess::freeShaders();
             STDRenderer::reset();

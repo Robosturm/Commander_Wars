@@ -1,11 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(Button, spButton);
-
+    class Button;
+    using spButton = intrusive_ptr<Button>;
     class Button: public Sprite
     {
     public:

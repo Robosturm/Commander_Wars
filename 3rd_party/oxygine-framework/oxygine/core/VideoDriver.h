@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Matrix.h"
@@ -9,7 +9,7 @@
 namespace oxygine
 {
     class IVideoDriver;
-    typedef oxygine::intrusive_ptr<IVideoDriver> spIVideoDriver;
+    using spIVideoDriver = oxygine::intrusive_ptr<IVideoDriver>;
 
     class IVideoDriver : public oxygine::ref_counter
     {
@@ -38,7 +38,7 @@ namespace oxygine
             timeMS start;
             timeMS duration;
         };
-        static Stats _stats;
+        static Stats m_stats;
 
         enum BLEND_TYPE
         {
@@ -111,49 +111,4 @@ namespace oxygine
         void setUniform(const char* id, const Vector2& v);
         void setUniform(const char* id, const Matrix&  v);
     };
-
-    class VideoDriverNull: public IVideoDriver
-    {
-    public:
-        spNativeTexture createTexture();
-
-        explicit VideoDriverNull() = default;
-        virtual ~VideoDriverNull() = default;
-        void clear(const Color& color) {}
-        void begin(const Rect& viewport, const QColor* clearColor);
-        bool isReady() const {return true;}
-        void getViewport(Rect& r) const;
-        bool getScissorRect(Rect&) const;
-        ShaderProgram*  getShaderProgram() const { return 0; }
-        spNativeTexture getRenderTarget() const;
-
-        const VertexDeclaration*    getVertexDeclaration(bvertex_format) const;
-
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize) {}
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize, const unsigned short* indicesData, quint32 indicesDataSize) {}
-
-
-        void setUniformInt(const char* id, qint32 v) {}
-        void setUniform(const char* id, const Vector4* v, qint32 num) {}
-        void setUniform(const char* id, const Vector3* v, qint32 num) {}
-        void setUniform(const char* id, const Vector2* v, qint32 num) {}
-        void setUniform(const char* id, const Matrix* mat, qint32 num) {}
-        void setUniform(const char* id, float val) {}
-
-        void setViewport(const Rect& viewport) {}
-        void setScissorRect(const Rect*);
-        void setDefaultSettings();
-        void setRenderTarget(spNativeTexture);
-        void setShaderProgram(ShaderProgram*);
-        void setTexture(qint32 sampler, spNativeTexture);
-        void setState(STATE, quint32 value) {}
-        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) {}
-        void setDebugStats(bool enable) {}
-
-        void reset() {}
-        void restore() {}
-    private:
-        spNativeTexture m_rt;
-    };
-
 }

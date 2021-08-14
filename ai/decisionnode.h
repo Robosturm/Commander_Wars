@@ -1,8 +1,5 @@
-#ifndef AI_DECISIONNODE
-#define AI_DECISIONNODE
-
+#pragma once
 #include "QObject"
-
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -46,5 +43,3 @@ private:
         spDecisionQuestion m_pQuestion;
         QVector<spDecisionNode> m_pNodes;
 };
-
-#endif

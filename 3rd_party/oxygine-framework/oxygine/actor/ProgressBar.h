@@ -1,15 +1,18 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(ProgressBar, spProgressBar);
-
+    class ProgressBar;
+    using spProgressBar = intrusive_ptr<ProgressBar>;
     class ProgressBar: public Sprite
     {
     public:
-        enum { PROGRESS_CHANGED = sysEventID('P', 'C', 'h') };
+        enum
+        {
+            PROGRESS_CHANGED = sysEventID('P', 'C', 'h')
+        };
 
         enum direction
         {
@@ -33,7 +36,7 @@ namespace oxygine
         void setProgress(float value);
         void setDirection(direction dir);
 
-        typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;
+        using TweenProgress = Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress>;
 
     private:
         void doRender(const RenderState&) override;

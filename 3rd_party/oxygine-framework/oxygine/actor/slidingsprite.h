@@ -1,6 +1,4 @@
-#ifndef SLIDINGSPRITE_H
-#define SLIDINGSPRITE_H
-
+#pragma once
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
@@ -26,5 +24,3 @@ namespace oxygine
         bool m_flipped{false};
     };
 }
-
-#endif // SLIDINGSPRITE_H

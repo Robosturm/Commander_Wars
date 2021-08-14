@@ -1,11 +1,12 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "QDomDocument"
 
 namespace oxygine
 {
-    DECLARE_SMART(Resource, spResource);
+    class Resource;
+    using spResource = intrusive_ptr<Resource>;
     class Resource: public Object
     {
         public:

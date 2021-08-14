@@ -1,6 +1,4 @@
-#ifndef HEAVYAI_H
-#define HEAVYAI_H
-
+#pragma once
 #include <QVector>
 #include <QTimer>
 
@@ -497,5 +495,3 @@ private:
     static const qint32 minSiloDamage;
     static const QStringList NeuralNetworkNames;
 };
-
-#endif // HEAVYAI_H

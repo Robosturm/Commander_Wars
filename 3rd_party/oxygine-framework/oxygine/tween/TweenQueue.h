@@ -1,10 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(TweenQueue, spTweenQueue);
+    class TweenQueue;
+    using spTweenQueue = intrusive_ptr<TweenQueue>;
     class TweenQueue : public Tween
     {
     public:

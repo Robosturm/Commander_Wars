@@ -1,6 +1,4 @@
-#ifndef Closure_HEADER_
-#define Closure_HEADER_
-
+#pragma once
 #include <functional>
 #include <memory>
 
@@ -95,6 +93,3 @@ namespace oxygine
     };
 
 }
-
-#endif
-

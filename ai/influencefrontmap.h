@@ -1,6 +1,4 @@
-#ifndef INFLUENCEFRONTMAP_H
-#define INFLUENCEFRONTMAP_H
-
+#pragma once
 #include <QObject>
 #include <QMap>
 #include <QVector>
@@ -116,5 +114,3 @@ private:
     QVector<oxygine::spActor> m_info;
     qint32 m_totalHighestInfluence{0};
 };
-
-#endif // INFLUENCEFRONTMAP_H

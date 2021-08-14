@@ -1,11 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(ColorRectSprite, spColorRectSprite);
-
+    class ColorRectSprite;
+    using spColorRectSprite = intrusive_ptr<ColorRectSprite>;
     class ColorRectSprite: public Sprite
     {
     public:

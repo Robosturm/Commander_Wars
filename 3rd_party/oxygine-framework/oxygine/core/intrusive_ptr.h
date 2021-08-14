@@ -1,8 +1,5 @@
 #pragma once
-#ifndef INTRUSIVE_PTR_HEADER
-#define INTRUSIVE_PTR_HEADER
-
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "QtGlobal"
 
@@ -176,5 +173,3 @@ namespace oxygine
         return intrusive_ptr<T>(dynamic_cast<T*>(p.get()));
     }
 }
-
-#endif

@@ -1,10 +1,11 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(Stage, spStage);
+    class Stage;
+    using spStage = intrusive_ptr<Stage>;
     class Stage : public Actor
     {
     public:
@@ -17,7 +18,6 @@ namespace oxygine
 
         static spStage instance;
         static Rect calcCenteredViewport(const Point& displaySize, const Point& gameSize);
-
         explicit Stage();
         virtual ~Stage() = default;
 
@@ -30,15 +30,10 @@ namespace oxygine
         void renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
         /**Render all actors, simplified version*/
         void renderStage(const QColor& clearColor, const Rect& viewport);
-
-        //const Rect    &getArea();
-
         /**Updates each children*/
         void updateStage();
-
         void cleanup();
-
-        RectF getDestRect() const override;
+        virtual RectF getDestRect() const override;
 
     protected:
         void onDeactivate(Event*);
@@ -49,5 +44,8 @@ namespace oxygine
         Rect   m_viewport;
     };
 
-    inline const spStage& getStage() {return Stage::instance;}
+    inline const spStage& getStage()
+    {
+        return Stage::instance;
+    }
 }

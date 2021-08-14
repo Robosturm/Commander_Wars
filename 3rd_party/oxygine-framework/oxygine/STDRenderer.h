@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include <functional>
@@ -14,7 +14,10 @@ namespace oxygine
 
         void setDriver(IVideoDriver* d);
 
-        const spNativeTexture& getTexture(qint32 sampler) { return _textures[sampler]; }
+        const spNativeTexture& getTexture(qint32 sampler)
+        {
+            return _textures[sampler];
+        }
 
         void setTexture(qint32 sampler, const spNativeTexture& t);
         void setBlendMode(blend_mode blend);
@@ -39,17 +42,18 @@ namespace oxygine
     class ShaderProgramChangedHook
     {
     public:
-        ShaderProgramChangedHook(): prev(0), next(0) {}
-
+        ShaderProgramChangedHook()
+            : prev(0),
+              next(0)
+        {
+        }
         ShaderProgramChangedHook* prev;
         ShaderProgramChangedHook* next;
-
         std::function< void() > hook;
     };    
 
     class STDRenderer;
     typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
-
     class STDRenderer : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
@@ -81,16 +85,23 @@ namespace oxygine
         static std::vector<unsigned short> indices16;
         static size_t maxVertices;
 
-
-
         explicit STDRenderer(IVideoDriver* driver = 0);
         virtual ~STDRenderer();
 
-        const Matrix&               getViewProjection() const;
-        IVideoDriver*               getDriver();
-        const AffineTransform&      getTransform() const { return m_transform; }
-        const VertexDeclaration*    getVertexDeclaration() const { return m_vdecl; }
-        quint32                     getBaseShaderFlags() const { return m_baseShaderFlags; }
+        const Matrix& getViewProjection() const;
+        IVideoDriver* getDriver();
+        const AffineTransform& getTransform() const
+        {
+            return m_transform;
+        }
+        const VertexDeclaration* getVertexDeclaration() const
+        {
+            return m_vdecl;
+        }
+        quint32 getBaseShaderFlags() const
+        {
+            return m_baseShaderFlags;
+        }
 
         void setShaderFlags(unsigned int);
         void setViewProj(const Matrix& viewProj);
@@ -121,7 +132,10 @@ namespace oxygine
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();
 
-        bool isEmpty() const { return m_verticesData.empty(); }
+        bool isEmpty() const
+        {
+            return m_verticesData.empty();
+        }
 
     protected:
         virtual void shaderProgramChanged() {}
@@ -144,9 +158,4 @@ namespace oxygine
         quint32 m_baseShaderFlags;
         spNativeTexture m_prevRT;
     };
-
-
-    typedef void(*render_texture_hook)(const spNativeTexture& nt);
-    void set_render_texture_hook(render_texture_hook);
-    render_texture_hook get_render_texture_hook();
 }

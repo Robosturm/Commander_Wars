@@ -1,6 +1,4 @@
-#ifndef COREAI_H
-#define COREAI_H
-
+#pragma once
 #include <qtextstream.h>
 #include <qvector.h>
 #include <qvector3d.h>
@@ -521,5 +519,3 @@ private:
     FlareInfo m_flareInfo;
     QStringList m_iniFiles;
 };
-
-#endif // COREAI_H

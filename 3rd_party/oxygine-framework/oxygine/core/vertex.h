@@ -1,8 +1,5 @@
 #pragma once
-#ifndef OXYGINE_VERTEX
-#define OXYGINE_VERTEX
-
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
@@ -139,4 +136,3 @@ namespace oxygine
         float u3, v3;
     };
 }
-#endif // OXYGINE_VERTEX

@@ -12,24 +12,24 @@ namespace oxygine
 
     void TweenAlphaFadeImpl::render(Actor*, const RenderState&)
     {
-        if (!m_pp._rt)
+        if (!m_pp.m_rt)
         {
             return;
         }
         spMaterial mat = spMaterial::create();
-        mat->m_base = m_pp._rt;
+        mat->m_base = m_pp.m_rt;
         mat->m_blend = blend_premultiplied_alpha;
         mat->apply();
 
         qint32 _a = lerp(m_fadeIn ? 0 : 255, m_fadeIn ? 255 : 0, m_progress);
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        spNativeTexture rt = m_pp._rt;
+        spNativeTexture rt = m_pp.m_rt;
         RectF src(0, 0,
-                  m_pp._screen.getWidth() / (float)rt->getWidth(),
-                  m_pp._screen.getHeight() / (float)rt->getHeight());
-        RectF dest = m_pp._screen.cast<RectF>();
-        AffineTransform tr = m_pp._transform * m_actor->computeGlobalTransform();
+                  m_pp.m_screen.getWidth() / (float)rt->getWidth(),
+                  m_pp.m_screen.getHeight() / (float)rt->getHeight());
+        RectF dest = m_pp.m_screen.cast<RectF>();
+        AffineTransform tr = m_pp.m_transform * m_actor->computeGlobalTransform();
         renderer->setTransform(tr);
         QColor color = QColor(Qt::white);
         color.setAlpha(_a);

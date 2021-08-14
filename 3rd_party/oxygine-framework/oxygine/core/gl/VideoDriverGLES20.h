@@ -1,5 +1,5 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGL.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
@@ -9,8 +9,7 @@
 namespace oxygine
 {
     class VideoDriverGLES20;
-    DECLARE_SMART(VideoDriverGLES20, spVideoDriverGLES20);
-
+    using spVideoDriverGLES20 = intrusive_ptr<VideoDriverGLES20>;
     class VideoDriverGLES20: public VideoDriverGL
     {
     public:

@@ -1,21 +1,15 @@
 #pragma once
-#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
 #include <qstring.h>
 #include <QDomElement>
 
-namespace pugi
-{
-    class xml_node;
-}
-
 namespace oxygine
 {
     class RenderState;
     struct glyph;
-
     class Aligner;
     class STDRenderer;
     class RenderState;
