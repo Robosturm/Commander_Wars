@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 
 namespace oxygine
@@ -8,7 +7,9 @@ namespace oxygine
     class RState
     {
     public:
-        RState(): alpha(255), clip(0)
+        RState()
+            : alpha(255),
+              clip(0)
         {
             transform.identity();
         }

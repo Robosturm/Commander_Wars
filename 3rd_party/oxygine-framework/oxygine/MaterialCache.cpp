@@ -11,7 +11,6 @@ namespace oxygine
     spMaterial MaterialCache::clone_(const Material& other)
     {
         QMutexLocker alock(&m_lock);
-
         size_t hash;
         other.update(hash);
         auto items = m_materials.values(hash);
@@ -22,7 +21,7 @@ namespace oxygine
                 return spMaterial(sec);
             }
         }
-        m_addCounter++;
+        ++m_addCounter;
         if (m_addCounter > 30)
         {
             removeUnusedNoLock();
@@ -37,14 +36,13 @@ namespace oxygine
     {
         m_addCounter = 0;
         materials fresh;
-        for (auto it = m_materials.begin(); it != m_materials.end(); it++)
+        for (const auto & material : qAsConst(m_materials))
         {
-            if (it.value()->getRefCounter() > 1)
+            if (material->getRefCounter() > 1)
             {
-                fresh.insert(it.value()->m_hash, it.value());
+                fresh.insert(material->m_hash, material);
             }
         }
-
         std::swap(fresh, m_materials);
     }
 
@@ -57,7 +55,6 @@ namespace oxygine
     MaterialCache::MaterialCache()
         : m_addCounter(0)
     {
-
     }
 
     void MaterialCache::clear()

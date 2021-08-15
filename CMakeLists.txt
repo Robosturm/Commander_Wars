@@ -45,7 +45,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 
@@ -127,7 +127,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/PointerState.cpp
     3rd_party/oxygine-framework/oxygine/PostProcess.cpp
     3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp
-    3rd_party/oxygine-framework/oxygine/STDRenderDelegate.cpp
     3rd_party/oxygine-framework/oxygine/STDRenderer.cpp
     3rd_party/oxygine-framework/oxygine/VisualStyle.cpp
     #core
@@ -145,9 +144,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     # core gl
     3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.cpp
     3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.cpp
-    3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.cpp
-    3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGL.cpp
-    3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.cpp
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp
@@ -155,8 +151,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp
     3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/Polygon.cpp
-    3rd_party/oxygine-framework/oxygine/actor/ProgressBar.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp
     3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp

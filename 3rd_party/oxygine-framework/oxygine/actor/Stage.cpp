@@ -1,10 +1,10 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
 {
@@ -67,7 +67,7 @@ namespace oxygine
     void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
 
-        spIVideoDriver driver = IVideoDriver::instance;
+        spVideoDriver driver = VideoDriver::instance;
         driver->setViewport(viewport);
 
         if (clearColor)
@@ -97,7 +97,7 @@ namespace oxygine
         //initialize projection and view matrix
         Matrix proj;
         Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0.2f, 10000);
-        Matrix view = makeViewMatrix(viewport.getWidth(), viewport.getHeight());
+        Matrix view = STDRenderer::makeViewMatrix(viewport.getWidth(), viewport.getHeight());
         renderStage(&clearColor, viewport, view, proj);
     }
 

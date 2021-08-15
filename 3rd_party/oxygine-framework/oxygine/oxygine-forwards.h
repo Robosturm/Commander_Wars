@@ -24,7 +24,6 @@ namespace oxygine
     class Button;
     class Box9Sprite;
     class Stage;
-    class ProgressBar;
     class RenderState;
     class RenderDelegate;
     class VertexDeclaration;
@@ -40,7 +39,7 @@ namespace oxygine
     class Resources;
     class Image;
     class LoadResourcesContext;
-    class IVideoDriver;
+    class VideoDriver;
     class Font;
     class CreateResourceContext;
     class Restorable;

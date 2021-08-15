@@ -1,11 +1,12 @@
 #include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
+
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
@@ -32,9 +33,9 @@ namespace oxygine
         }
         _ppBuilt = true;
 
-        spIVideoDriver driver = IVideoDriver::instance;
+        spVideoDriver driver = VideoDriver::instance;
 
-        const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
+        const VertexDeclaration* decl = VideoDriver::instance->getVertexDeclaration();
         // read shader data
         QString vs_h;
         QString vs_v;
@@ -294,7 +295,7 @@ namespace oxygine
     {
         if (!m_postProcessItems.empty())
         {
-            spIVideoDriver driver = IVideoDriver::instance;
+            spVideoDriver driver = VideoDriver::instance;
             spNativeTexture prevRT = driver->getRenderTarget();
             ShaderProgram* sp = driver->getShaderProgram();
 
@@ -323,28 +324,28 @@ namespace oxygine
 
     void PostProcess::pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
     {
-        spIVideoDriver driver = IVideoDriver::instance;
+        spVideoDriver driver = VideoDriver::instance;
 
-        const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(driver->getVertexDeclaration(vertexPCT2::FORMAT));
+        const VertexDeclaration* decl = driver->getVertexDeclaration();
         driver->setRenderTarget(destTexture);
         driver->clear(QColor(0, 0, 0, 0));
-
         driver->setViewport(destRect);
-
         driver->setTexture(0, srcTexture);
 
-
-        vertexPCT2 v[4];
-
-
+        std::vector<VertexPCT2> quad =
+        {
+            VertexPCT2(),
+            VertexPCT2(),
+            VertexPCT2(),
+            VertexPCT2()
+        };
         RectF dst = srcRect.cast<RectF>() / Vector2((float)srcTexture->getWidth(), (float)srcTexture->getHeight());
-        fillQuadT(v,
-                  dst,
-                  RectF(-1, -1, 2, 2),
-                  AffineTransform::getIdentity(), qRgba(color));
+        STDRenderer::fillQuad(quad,
+                              dst,
+                              RectF(-1, -1, 2, 2),
+                              AffineTransform::getIdentity(), qRgba(color));
 
-
-        driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));
+        driver->draw(VideoDriver::PT_TRIANGLE_STRIP, decl, &quad.front(), quad.size());
         driver->setTexture(0, spNativeTexture());
     }
 
@@ -414,7 +415,7 @@ namespace oxygine
         Material::null->apply();
 
 
-        spIVideoDriver driver = IVideoDriver::instance;
+        spVideoDriver driver = VideoDriver::instance;
 
         driver->setRenderTarget(m_rt);
 
@@ -445,11 +446,9 @@ namespace oxygine
             rs.transform = rs.transform * offset;
         }
         RenderDelegate* rd = actor->getRenderDelegate();
-        actor->setRenderDelegate(STDRenderDelegate::instance.get());
-        STDRenderDelegate::instance->RenderDelegate::render(actor, rs);
-
+        actor->setRenderDelegate(RenderDelegate::instance.get());
+        RenderDelegate::instance->RenderDelegate::render(actor, rs);
         STDRenderer::current->flush();
-
         actor->setRenderDelegate(rd);
 
         Material::null->apply();

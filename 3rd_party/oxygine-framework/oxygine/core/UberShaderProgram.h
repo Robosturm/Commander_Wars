@@ -69,7 +69,7 @@ namespace oxygine
 
         ShaderProgram*  getShaderProgram(qint32 flags) override;
 
-        void apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
+        void apply(VideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
 
     protected:
         void releaseShaders() override;

@@ -1,6 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenAlphaFade.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/Material.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
 {

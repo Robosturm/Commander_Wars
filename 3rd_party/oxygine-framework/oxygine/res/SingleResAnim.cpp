@@ -39,7 +39,7 @@ namespace oxygine
         {
             return;
         }
-        spNativeTexture texture = IVideoDriver::instance->createTexture();
+        spNativeTexture texture = VideoDriver::instance->createTexture();
         m_texture = texture;
 
         texture->init(original->lock());

@@ -4,16 +4,13 @@
 
 namespace oxygine
 {
-    class VertexDeclarationGL;
-
-
+    class VertexDeclaration;
     class ShaderProgramGL;
-    typedef oxygine::intrusive_ptr<ShaderProgramGL> spShaderProgramGL;
-
+    using spShaderProgramGL = oxygine::intrusive_ptr<ShaderProgramGL>;
     class ShaderProgramGL : public ShaderProgram
     {
     public:
-        explicit ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclarationGL* decl);
+        explicit ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclaration* decl);
         virtual ~ShaderProgramGL() = default;
         virtual quint32 getID() const override;
         qint32 getUniformLocation(const char* id) const;
@@ -25,6 +22,4 @@ namespace oxygine
         QOpenGLShader m_vsShader;
         QOpenGLShader m_fsShader;
     };
-
-
 }

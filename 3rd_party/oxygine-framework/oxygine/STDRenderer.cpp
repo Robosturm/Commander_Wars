@@ -2,12 +2,10 @@
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
@@ -22,18 +20,14 @@ namespace oxygine
     static bool _restored = false;
     spSTDRenderer STDRenderer::instance;
     spSTDRenderer STDRenderer::current;
-
-
     spNativeTexture STDRenderer::white;
     spNativeTexture STDRenderer::invisible;
-
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
     QString STDRenderer::fracShaderBody;
     QString STDRenderer::fracTableShaderBody;
     QString STDRenderer::vertexShaderBody;
-
 
     RenderStateCache& rsCache()
     {
@@ -42,27 +36,26 @@ namespace oxygine
     }
 
     RenderStateCache::RenderStateCache()
-        : _program(0),
-          _blend(blend_disabled)
+        : m_program(0),
+          m_blend(blend_disabled)
     {
         reset();
     }
 
-    void RenderStateCache::setDriver(IVideoDriver* d)
+    void RenderStateCache::setDriver(VideoDriver* d)
     {
-        _driver = d;
+        m_driver = d;
     }
 
     void RenderStateCache::reset()
     {
         resetTextures();
-
-        _blend = blend_disabled;
-        if (_driver)
+        m_blend = blend_disabled;
+        if (m_driver)
         {
-            _driver->setState(IVideoDriver::STATE_BLEND, 0);
+            m_driver->setState(VideoDriver::STATE_BLEND, 0);
         }
-        _program = 0;
+        m_program = 0;
     }
 
     void RenderStateCache::resetTextures()
@@ -85,109 +78,59 @@ namespace oxygine
             return;
         }
         _textures[sampler] = t;
-        _driver->setTexture(sampler, t);
+        m_driver->setTexture(sampler, t);
     }
-
 
     void RenderStateCache::setBlendMode(blend_mode blend)
     {
-        if (_blend == blend)
+        if (m_blend == blend)
         {
             return;
         }
         if (blend == 0)
         {
-            _driver->setState(IVideoDriver::STATE_BLEND, 0);
+            m_driver->setState(VideoDriver::STATE_BLEND, 0);
         }
         else
         {
-            IVideoDriver::BLEND_TYPE src = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
-            IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
-            _driver->setBlendFunc(src, dest);
-            _driver->setState(IVideoDriver::STATE_BLEND, 1);
+            VideoDriver::BLEND_TYPE src = static_cast<VideoDriver::BLEND_TYPE>(blend >> 16);
+            VideoDriver::BLEND_TYPE dest = static_cast<VideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+            m_driver->setBlendFunc(src, dest);
+            m_driver->setState(VideoDriver::STATE_BLEND, 1);
         }
-        _blend = blend;
-
+        m_blend = blend;
     }
-
-    void RenderStateCache::changeDriver(IVideoDriver* d)
-    {
-        _driver = d;
-    }
-
 
     bool RenderStateCache::setShader(ShaderProgram* prog)
     {
-        if (_program == prog)
+        if (m_program == prog)
         {
             return false;
         }
-        _program = prog;
-        _driver->setShaderProgram(prog);
+        m_program = prog;
+        m_driver->setShaderProgram(prog);
         return true;
-    }
-
-    void nullTextureHook(const spNativeTexture&)
-    {
-    }
-
-    template<class V, class XY>
-    void fillQuad(V* v, const RectF& uv, XY* positions, const QColor& color)
-    {
-        const XY& p1 = positions[0];
-        const XY& p2 = positions[1];
-        const XY& p3 = positions[2];
-        const XY& p4 = positions[3];
-
-        V vt;
-        vt.color = qRgba(color);
-        vt.z = 0;
-
-        vt.x = p1.x;
-        vt.y = p1.y;
-        vt.u = uv.pos.x;
-        vt.v = uv.pos.y;
-        *v = vt;
-        ++v;
-
-        vt.x = p2.x;
-        vt.y = p2.y;
-        vt.u = uv.pos.x;
-        vt.v = uv.getBottom();
-        *v = vt;
-        ++v;
-
-        vt.x = p3.x;
-        vt.y = p3.y;
-        vt.u = uv.getRight();
-        vt.v = uv.pos.y;
-        *v = vt;
-        ++v;
-
-        vt.x = p4.x;
-        vt.y = p4.y;
-        vt.u = uv.getRight();
-        vt.v = uv.getBottom();
-        *v = vt;
-        ++v;
     }
 
     void STDRenderer::initialize()
     {
-        indices16.reserve(3000 * 6);
-        for (qint32 t = 0; t < 3000; t += 1)
+        // load buffer with triangle quad information
+        constexpr size_t bufferSize = 3000;
+        constexpr size_t triangleInfoSize = 6;
+        indices16.reserve(bufferSize * triangleInfoSize);
+        for (quint16 t = 0; t < bufferSize; ++t)
         {
-            qint32 i = t * 4;
-            indices16.push_back(i + 0);
-            indices16.push_back(i + 1);
-            indices16.push_back(i + 2);
+            quint16 i = t * 4u;
+            indices16.push_back(i + 0u);
+            indices16.push_back(i + 1u);
+            indices16.push_back(i + 2u);
 
-            indices16.push_back(i + 2);
-            indices16.push_back(i + 1);
-            indices16.push_back(i + 3);
+            indices16.push_back(i + 2u);
+            indices16.push_back(i + 1u);
+            indices16.push_back(i + 3u);
         }
+        maxVertices = indices16.size() * 2u / 3u;
 
-        maxVertices = indices16.size() / 3 * 2;
         QString filepath = "system/frac_shader.glsl";
         if (!QFile::exists(filepath))
         {
@@ -283,14 +226,14 @@ namespace oxygine
         ImageData im = memwhite.lock();
         oxygine::operations::applyOperation(fill, im);
 
-        white = IVideoDriver::instance->createTexture();
+        white = VideoDriver::instance->createTexture();
         white->init(im);
         white->setLinearFilter(GL_LINEAR);
         white->setClamp2Edge(false);
 
 
         memwhite.fillZero();
-        invisible = IVideoDriver::instance->createTexture();
+        invisible = VideoDriver::instance->createTexture();
         invisible->init(im);
         invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
@@ -328,17 +271,6 @@ namespace oxygine
         }
     }
 
-
-    void STDRenderer::xdrawBatch()
-    {
-        size_t count = m_verticesData.size() / m_vdecl->size;
-        size_t indices = (count * 3) / 2;
-
-        getDriver()->draw(IVideoDriver::PT_TRIANGLES, m_vdecl, &m_verticesData.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
-
-        m_verticesData.clear();
-    }
-
     void STDRenderer::initCoordinateSystem(qint32 width, qint32 height, bool flipU)
     {
         Matrix view = makeViewMatrix(width, height, flipU);
@@ -350,7 +282,7 @@ namespace oxygine
         setViewProj(vp);
     }
 
-    IVideoDriver* STDRenderer::getDriver()
+    VideoDriver* STDRenderer::getDriver()
     {
         return m_driver;
     }
@@ -390,8 +322,6 @@ namespace oxygine
         m_verticesData.clear();
         m_transform.identity();
         Material::null->apply();
-
-        xbegin();
         current = this;
     }
 
@@ -415,26 +345,21 @@ namespace oxygine
         m_vdecl = decl;
     }
 
-    void STDRenderer::addVertices(const void* data, quint32 size)
+    void STDRenderer::addVertices(std::vector<VertexPCT2> & data)
     {
-        xaddVertices(data, size);
+        m_verticesData.insert(m_verticesData.end(), data.begin(), data.end());
         checkDrawBatch();
-    }
-
-    void STDRenderer::xaddVertices(const void* data, quint32 size)
-    {
-        m_verticesData.insert(m_verticesData.end(), (const unsigned char*)data, (const unsigned char*)data + size);
     }
 
     void STDRenderer::checkDrawBatch()
     {
-        if (m_verticesData.size() / sizeof(m_vdecl->size) >= maxVertices)
+        if (m_verticesData.size() >= maxVertices)
         {
             flush();
         }
     }
 
-    Matrix makeViewMatrix(qint32 w, qint32 h, bool flipU)
+    Matrix STDRenderer::makeViewMatrix(qint32 w, qint32 h, bool flipU)
     {
         Matrix view, scale, tr;
         float offset = 0.5f;
@@ -449,69 +374,18 @@ namespace oxygine
         return view;
     }
 
-
-
-
-    bool checkT2P(const Rect& viewport, const Matrix& vp, const vertexPCT2* v1, const vertexPCT2* v2, qint32 w, qint32 h)
-    {
-        Vector3 p1(v1->x, v1->y, 0);
-        Vector3 p2(v2->x, v2->y, 0);
-
-        p1 = vp.transformVec3(p1);
-        p2 = vp.transformVec3(p2);
-
-        Vector2 half = viewport.getSize().cast<Vector2>() / 2;
-        p1.x = p1.x * half.x + half.x;
-        p1.y = p1.y * half.y + half.y;
-
-        p2.x = p2.x * half.x + half.x;
-        p2.y = p2.y * half.y + half.y;
-
-        Vector2 tc1(v1->u, v1->v);
-        Vector2 tc2(v2->u, v2->v);
-        Vector3 dp_ = p1 - p2;
-        Vector2 dp(dp_.x, dp_.y);
-        dp.x = qAbs(dp.x);
-        dp.y = qAbs(dp.y);
-
-        Vector2 dtc = tc1 - tc2;
-        dtc.x = qAbs(dtc.x) * w;
-        dtc.y = qAbs(dtc.y) * h;
-
-        const float EPS = 0.05f;
-
-        Vector2 d = dp - dtc;
-        if (qAbs(d.x) >= EPS || qAbs(d.y) >= EPS)
-        {
-            return false;
-        }
-        p1.x = qAbs(p1.x);
-        p1.y = qAbs(p1.y);
-
-        if (qAbs(p1.x - int(p1.x + EPS)) > EPS ||
-            qAbs(p1.y - int(p1.y + EPS)) > EPS)
-        {
-            return false;
-        }
-        return true;
-    }
-
-
-
-    STDRenderer::STDRenderer(IVideoDriver* driver)
+    STDRenderer::STDRenderer(VideoDriver* driver)
         : m_vdecl(0),
           m_driver(driver),
           m_uberShader(0)
     {
         if (!driver)
         {
-            driver = IVideoDriver::instance.get();
+            driver = VideoDriver::instance.get();
         }
         m_driver = driver;
         m_vp.identity();
-
-        m_vdecl = m_driver->getVertexDeclaration(vertexPCT2::FORMAT);
-
+        m_vdecl = m_driver->getVertexDeclaration();
         m_uberShader = &uberShader;
         m_transform.identity();
         m_baseShaderFlags = 0;
@@ -525,34 +399,9 @@ namespace oxygine
         };
     }
 
-
-    template <class T>
-    void append(std::vector<unsigned char>& buff, const T& t)
-    {
-        const unsigned char* ptr = (const unsigned char*)&t;
-        buff.insert(buff.end(), ptr, ptr + sizeof(t));
-    }
-
-    bool _showTexel2PixelErrors = false;
-
-    void STDRenderer::swapVerticesData(STDRenderer& r)
-    {
-        std::swap(m_verticesData, r.m_verticesData);
-    }
-
-    void STDRenderer::swapVerticesData(std::vector<unsigned char>& data)
-    {
-        std::swap(data, m_verticesData);
-    }
-
-
     void STDRenderer::setTransform(const Transform& tr)
     {
         m_transform = tr;
-    }
-
-    void STDRenderer::xbegin()
-    {
     }
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
@@ -581,10 +430,15 @@ namespace oxygine
     void STDRenderer::addQuad(const QColor& clr, const RectF& srcRect, const RectF& destRect)
     {
         QColor color = clr;
-        vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, m_transform, qRgba(premultiply(color)));
-
-        addVertices(v, sizeof(v));
+        std::vector<VertexPCT2> quad =
+        {
+            VertexPCT2(),
+            VertexPCT2(),
+            VertexPCT2(),
+            VertexPCT2(),
+        };
+        fillQuad(quad, srcRect, destRect, m_transform, qRgba(premultiply(color)));
+        addVertices(quad);
     }
 
 
@@ -596,16 +450,14 @@ namespace oxygine
 
     void STDRenderer::flush()
     {
-        size_t indices = (m_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
-        if (!indices)
+        size_t count = (m_verticesData.size() * 3) >> 1;
+        if (count == 0)
         {
             return;
         }
-
-        m_driver->draw(IVideoDriver::PT_TRIANGLES, m_vdecl,
-                      &m_verticesData.front(), (unsigned int)m_verticesData.size(),
-                      &STDRenderer::indices16.front(), (unsigned int)indices);
-
+        m_driver->draw(VideoDriver::PT_TRIANGLES, m_vdecl,
+                      &m_verticesData.front(),
+                      &STDRenderer::indices16.front(), count);
         m_verticesData.clear();
     }
 

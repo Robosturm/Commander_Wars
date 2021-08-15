@@ -90,7 +90,7 @@ namespace oxygine
             return;
         }
 
-        spNativeTexture texture = IVideoDriver::instance->createTexture();
+        spNativeTexture texture = VideoDriver::instance->createTexture();
         texture->init(original->lock());
         texture->apply();
         init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);

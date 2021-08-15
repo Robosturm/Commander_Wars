@@ -1280,7 +1280,9 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
     {
         if (pMap->canBePlaced(terrainID, x, y))
         {
-            if (pMap->getTerrain(x, y)->getTerrainID() != terrainID ||
+            Terrain* pTerrain = pMap->getTerrain(x, y);
+            if (pTerrain->getTerrainID() != terrainID ||
+                pTerrain->getBuilding() != nullptr ||
                 m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
             {
                 ret = true;

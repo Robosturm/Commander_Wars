@@ -34,8 +34,7 @@ namespace oxygine
         }
     protected:
         virtual Restorable* _getRestorableObject() override {return this;}
-        friend class VideoDriverGL;
-        friend class VideoDriverGLES20;
+        friend class VideoDriver;
         friend class intrusive_ptr<NativeTextureGLES>;
         explicit NativeTextureGLES();
 

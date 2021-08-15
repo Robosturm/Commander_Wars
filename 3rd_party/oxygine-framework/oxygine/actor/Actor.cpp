@@ -14,7 +14,7 @@
 namespace oxygine
 {
     Actor::Actor()
-        : m_rdelegate(STDRenderDelegate::instance.get()),
+        : m_rdelegate(RenderDelegate::instance.get()),
           m_stage(nullptr),
           m_flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
           m_alpha(255),

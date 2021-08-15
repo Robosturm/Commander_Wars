@@ -168,7 +168,7 @@ namespace oxygine
             p.file += "//";
         }
         p.file += textureFile;
-        p.texture = IVideoDriver::instance->createTexture();
+        p.texture = VideoDriver::instance->createTexture();
 
         if (tw)
         {

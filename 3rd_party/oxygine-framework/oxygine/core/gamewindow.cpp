@@ -1,14 +1,10 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
-
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
@@ -17,7 +13,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 
 #include <QMouseEvent>
 #include <QTimerEvent>
@@ -59,8 +54,8 @@ namespace oxygine
         PostProcess::freeShaders();
         MaterialCache::mc().clear();
         STDRenderer::release();
-        STDRenderDelegate::instance = nullptr;
-        IVideoDriver::instance = nullptr;
+        RenderDelegate::instance = nullptr;
+        VideoDriver::instance = nullptr;
         Material::null = spMaterial();
         Material::current = spMaterial();
         Input::instance.cleanup();
@@ -81,9 +76,9 @@ namespace oxygine
 
     void GameWindow::updateData()
     {
-        timeMS duration = IVideoDriver::m_stats.duration;
-        IVideoDriver::m_stats = IVideoDriver::Stats();
-        IVideoDriver::m_stats.duration = duration;
+        timeMS duration = VideoDriver::m_stats.duration;
+        VideoDriver::m_stats = VideoDriver::Stats();
+        VideoDriver::m_stats.duration = duration;
     }
 
     void GameWindow::quitApp()
@@ -127,7 +122,7 @@ namespace oxygine
         if (ready)
         {
             rsCache().reset();
-            IVideoDriver::m_stats.start = Clock::getTimeMS();
+            VideoDriver::m_stats.start = Clock::getTimeMS();
             PostProcess::updatePortProcessItems();
             rsCache().reset();
         }
@@ -150,7 +145,7 @@ namespace oxygine
 
     void GameWindow::swapDisplayBuffers()
     {
-        IVideoDriver::m_stats.duration = Clock::getTimeMS() - IVideoDriver::m_stats.start;
+        VideoDriver::m_stats.duration = Clock::getTimeMS() - VideoDriver::m_stats.start;
     }
 
     float GameWindow::getGamma() const
@@ -195,18 +190,16 @@ namespace oxygine
         }
         // init oxygine engine
         Console::print("initialize oxygine", Console::eDEBUG);
-        IVideoDriver::instance = spVideoDriverGLES20::create();
-
-        IVideoDriver::instance->setDefaultSettings();
-
-        rsCache().setDriver(IVideoDriver::instance.get());
+        VideoDriver::instance = spVideoDriver::create();
+        VideoDriver::instance->setDefaultSettings();
+        rsCache().setDriver(VideoDriver::instance.get());
 
         STDRenderer::initialize();
 
         registerResourceTypes();
 
         STDRenderer::instance = spSTDRenderer::create();
-        STDRenderDelegate::instance = spSTDRenderDelegate::create();
+        RenderDelegate::instance = spRenderDelegate::create();
         Material::null = spMaterial::create();
         Material::current = Material::null;
 
@@ -220,7 +213,7 @@ namespace oxygine
     void GameWindow::resizeGL(qint32 w, qint32 h)
     {
         Console::print("core::restore()", Console::eDEBUG);
-        IVideoDriver::instance->restore();
+        VideoDriver::instance->restore();
         STDRenderer::restore();
         Restorable::restoreAll();
         oxygine::Stage::instance->setSize(w, h);

@@ -8,7 +8,8 @@ namespace oxygine
 {
     MaskedRenderer::MaskedRenderer(spNativeTexture mask,
                                    const RectF& srcRect, const RectF& destRect,
-                                   const Transform& t, bool channelR, IVideoDriver* driver) : STDRenderer(driver)
+                                   const Transform& t, bool channelR, VideoDriver* driver)
+        : STDRenderer(driver)
     {
         ClipUV clipUV = ClipUV(
                             t.transform(destRect.getLeftTop()),

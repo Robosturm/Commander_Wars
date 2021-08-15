@@ -35,16 +35,8 @@ namespace oxygine
         void rehash(size_t& hash) const;
         void apply();
         void flush();
-
         void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest);
         void render(const QColor& c, const RectF& src, const RectF& dest);
-
-        template <class T>
-        void apply2(const T& f)
-        {
-            apply();
-            f();
-        }
     private:
         void xapply();
         void xflush();

@@ -1,12 +1,12 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "coreengine/console.h"
 
 namespace oxygine
 {
-    ShaderProgramGL::ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclarationGL* decl)
+    ShaderProgramGL::ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclaration* decl)
         : m_program(oxygine::GameWindow::getWindow()),
           m_vsShader(QOpenGLShader::Vertex, oxygine::GameWindow::getWindow()),
           m_fsShader(QOpenGLShader::Fragment, oxygine::GameWindow::getWindow())
@@ -15,9 +15,9 @@ namespace oxygine
         compileShader(m_fsShader, fsShader);
         m_program.addShader(&m_vsShader);
         m_program.addShader(&m_fsShader);
-        for (qint32 i = 0; i < decl->numElements; ++i)
+        for (const auto & el : decl->m_elements)
         {
-            m_program.bindAttributeLocation(decl->m_elements[i].name, decl->m_elements[i].index);
+            m_program.bindAttributeLocation(el.name, el.index);
         }
         bool success = m_program.link();
         QString log = m_program.log();

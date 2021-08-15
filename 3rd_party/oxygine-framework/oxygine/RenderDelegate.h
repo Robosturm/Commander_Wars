@@ -3,18 +3,20 @@
 
 namespace oxygine
 {
+    class RenderDelegate;
+    using  spRenderDelegate = oxygine::intrusive_ptr<RenderDelegate>;
     class RenderDelegate : public oxygine::ref_counter
     {
     public:
+        static spRenderDelegate instance;
+
         explicit RenderDelegate() = default;
         virtual ~RenderDelegate() = default;
-
         virtual void render(Actor*, const RenderState&);
-        virtual void render(ClipRectActor*, const RenderState&);
-        virtual void render(MaskedSprite*, const RenderState&);
-        virtual void doRender(Sprite*, const RenderState&);
-        virtual void doRender(TextField*, const RenderState&);
-        virtual void doRender(ColorRectSprite*, const RenderState&);
-        virtual void doRender(ProgressBar*, const RenderState&);
+        void render(ClipRectActor*, const RenderState&);
+        void render(MaskedSprite*, const RenderState&);
+        void doRender(Sprite*, const RenderState&);
+        void doRender(TextField*, const RenderState&);
+        void doRender(ColorRectSprite*, const RenderState&);
     };
 }

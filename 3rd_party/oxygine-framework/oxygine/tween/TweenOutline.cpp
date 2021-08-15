@@ -1,8 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenOutline.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
 {
@@ -52,7 +51,7 @@ namespace oxygine
         {
             return;
         }
-        spIVideoDriver driver = IVideoDriver::instance;
+        spVideoDriver driver = VideoDriver::instance;
         m_downsample = 1;
         spNativeTexture rt = m_pp.m_rt;
         spNativeTexture rt2 = PostProcess::getRTManager().get(spNativeTexture(), w, h, m_pp.m_format);

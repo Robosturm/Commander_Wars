@@ -6,7 +6,7 @@
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
@@ -14,7 +14,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
 #include <qmutex.h>
 
 #include "coreengine/console.h"
@@ -31,7 +30,7 @@ namespace oxygine
             Restorable::releaseAll();
             PostProcess::freeShaders();
             STDRenderer::reset();
-            IVideoDriver::instance->reset();
+            VideoDriver::instance->reset();
             Console::print("core::reset() done", Console::eDEBUG);
         }
     }

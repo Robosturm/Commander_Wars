@@ -195,7 +195,7 @@ namespace oxygine
         }
         else
         {
-            ad.texture = IVideoDriver::instance->createTexture();
+            ad.texture = VideoDriver::instance->createTexture();
 
             atlas atl;
             atl.base = ad.texture;

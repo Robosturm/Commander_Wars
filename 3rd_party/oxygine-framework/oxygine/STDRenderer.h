@@ -12,7 +12,7 @@ namespace oxygine
     public:
         RenderStateCache();
 
-        void setDriver(IVideoDriver* d);
+        void setDriver(VideoDriver* d);
 
         const spNativeTexture& getTexture(qint32 sampler)
         {
@@ -26,15 +26,13 @@ namespace oxygine
         void reset();
         void resetTextures();
 
-        void changeDriver(IVideoDriver* d);//used for DebugActor
-
     protected:
         enum { MAX_TEXTURES = 8 };
 
         spNativeTexture _textures[MAX_TEXTURES];
-        ShaderProgram*  _program;
-        IVideoDriver*   _driver;
-        blend_mode      _blend;
+        ShaderProgram*  m_program;
+        VideoDriver*   m_driver;
+        blend_mode      m_blend;
     };
 
     RenderStateCache& rsCache();
@@ -82,14 +80,14 @@ namespace oxygine
         static QString fracShaderBody;
         static QString fracTableShaderBody;
         static QString vertexShaderBody;
-        static std::vector<unsigned short> indices16;
+        static std::vector<quint16> indices16;
         static size_t maxVertices;
 
-        explicit STDRenderer(IVideoDriver* driver = 0);
+        explicit STDRenderer(VideoDriver* driver = 0);
         virtual ~STDRenderer();
 
         const Matrix& getViewProjection() const;
-        IVideoDriver* getDriver();
+        VideoDriver* getDriver();
         const AffineTransform& getTransform() const
         {
             return m_transform;
@@ -123,11 +121,7 @@ namespace oxygine
 
         /**Draws existing batch immediately.*/
         void flush();
-
-        virtual void addVertices(const void* data, quint32 size);
-
-        void swapVerticesData(std::vector<unsigned char>& data);
-        void swapVerticesData(STDRenderer& r);
+        void addVertices(std::vector<VertexPCT2> & data);
 
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();
@@ -137,19 +131,64 @@ namespace oxygine
             return m_verticesData.empty();
         }
 
+        static inline void fillQuad(std::vector<VertexPCT2> & quad, const RectF& srcRect, const RectF& destRect, const AffineTransform& transform, quint32 rgba)
+        {
+            float u = srcRect.pos.x;
+            float v = srcRect.pos.y;
+            float du = srcRect.size.x;
+            float dv = srcRect.size.y;
+            VertexPCT2 vt;
+            vt.color = rgba;
+            const Vector2& pos = destRect.pos;
+            const Vector2& size = destRect.size;
+
+            Vector2 p1(pos.x, pos.y);
+            Vector2 p2(pos.x, pos.y + size.y);
+            Vector2 p3(pos.x + size.x, pos.y);
+            Vector2 p4(pos.x + size.x, pos.y + size.y);
+
+            p1 = transform.transform(p1);
+            p2 = transform.transform(p2);
+            p3 = transform.transform(p3);
+            p4 = transform.transform(p4);
+
+            vt.z = 0;
+            vt.x = p1.x;
+            vt.y = p1.y;
+            vt.u = u;
+            vt.v = v;
+            quad[0] = vt;
+
+            vt.x = p2.x;
+            vt.y = p2.y;
+            vt.u = u;
+            vt.v = v + dv;
+            quad[1] = vt;
+
+            vt.x = p3.x;
+            vt.y = p3.y;
+            vt.u = u + du;
+            vt.v = v;
+            quad[2] = vt;
+
+            vt.x = p4.x;
+            vt.y = p4.y;
+            vt.u = u + du;
+            vt.v = v + dv;
+            quad[3] = vt;
+        }
+        /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
+        static Matrix makeViewMatrix(qint32 w, qint32 h, bool flipU = false);
     protected:
         virtual void shaderProgramChanged() {}
-        virtual void xbegin();
         void setShader(ShaderProgram* prog);
-        void xdrawBatch();
-        void xaddVertices(const void* data, quint32 size);
         void checkDrawBatch();
 
     protected:
         Transform m_transform;
-        std::vector<unsigned char> m_verticesData;
+        std::vector<VertexPCT2> m_verticesData;
         const VertexDeclaration* m_vdecl;
-        IVideoDriver* m_driver;
+        VideoDriver* m_driver;
         Matrix m_vp;
         ShaderProgramChangedHook* m_sphookFirst;
         ShaderProgramChangedHook* m_sphookLast;

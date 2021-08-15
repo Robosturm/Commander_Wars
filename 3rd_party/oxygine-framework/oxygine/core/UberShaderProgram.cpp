@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 namespace oxygine
 {
@@ -37,7 +37,6 @@ namespace oxygine
 
         if (!s.program)
         {
-            bvertex_format bformat = vertexPCT2::FORMAT;
             s.flags = flags;
             QString prepend;
             if (flags & ALPHA_PREMULTIPLY)
@@ -70,8 +69,9 @@ namespace oxygine
                 fs  += m_fracShader;
             }
             QString vs = prepend + m_vertexShader;
-            VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance.get());
-            const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
+            VideoDriver* driver = VideoDriver::instance.get();
+            const VertexDeclaration* decl = driver->getVertexDeclaration();
+
             spShaderProgramGL pgl = spShaderProgramGL::create(vs, fs, decl);
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
@@ -102,7 +102,7 @@ namespace oxygine
         }
     }
 
-    void UberShaderProgram::apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha)
+    void UberShaderProgram::apply(VideoDriver* driver, spNativeTexture base, spNativeTexture alpha)
     {
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
         if (alpha)

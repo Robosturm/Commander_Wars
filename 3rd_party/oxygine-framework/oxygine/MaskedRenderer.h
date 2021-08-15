@@ -61,12 +61,11 @@ namespace oxygine
     class MaskedRenderer : public STDRenderer
     {
     public:
-        explicit MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver*);
+        explicit MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, VideoDriver*);
         virtual ~MaskedRenderer() = default;
-
     protected:
-        void shaderProgramChanged() override;
-
+        virtual void shaderProgramChanged() override;
+    protected:
         Vector3 m_msk[4];
         Vector4 m_clipMask;
     };
