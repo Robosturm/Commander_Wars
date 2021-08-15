@@ -612,6 +612,37 @@ void RuleSelection::showRuleSelection()
 
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
+    textField->setHtmlText(tr("Unit transfer: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked allied players can transfer units to each other."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    pCheckbox->setEnabled(m_ruleChangeEabled);
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getAllowUnitTransfer());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAllowUnitTransfer, Qt::QueuedConnection);
+    y += 40;
+
+    textField = spLabel::create(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Unit sell value: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pSpinbox = spSpinBox::create(200, 0, 1, SpinBox::Mode::Float);
+    pSpinbox->setTooltipText(tr("The amount of funds you get back for selling a unit."));
+    pSpinbox->setInfinityValue(-1.0);
+    pSpinbox->setSpinSpeed(0.1f);
+    pSpinbox->setUnit("%");
+    pSpinbox->setPosition(textWidth, textField->getY());
+    pSpinbox->setEnabled(m_ruleChangeEabled);
+    addChild(pSpinbox);
+    pSpinbox->setCurrentValue(pMap->getGameRules()->getResellValue());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setResellValue, Qt::QueuedConnection);
+    y += 40;
+
+    textField = spLabel::create(textWidth - 40);
+    textField->setStyle(style);
     textField->setHtmlText(tr("Team Facing :"));
     textField->setPosition(30, y);
     addChild(textField);

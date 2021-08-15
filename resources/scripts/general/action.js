@@ -29,7 +29,8 @@ var ACTION =
         // make the action infinite
         return false;
     },
-    emptyFieldActions : ["ACTION_ACTIVATE_POWER_CO_0", "ACTION_ACTIVATE_POWER_CO_1", "ACTION_ACTIVATE_SUPERPOWER_CO_0",
+    emptyFieldActions : ["ACTION_TRANSFER_UNIT", "ACTION_SELL_UNIT",
+                         "ACTION_ACTIVATE_POWER_CO_0", "ACTION_ACTIVATE_POWER_CO_1", "ACTION_ACTIVATE_SUPERPOWER_CO_0",
                          "ACTION_ACTIVATE_SUPERPOWER_CO_1", "ACTION_ACTIVATE_TAGPOWER", "ACTION_INFO",
                          "ACTION_NICKNAME_UNIT", "ACTION_DELETE_UNIT", "ACTION_SURRENDER",
                          "ACTION_OPTIONS", "ACTION_EXITGAME", "ACTION_SAVEGAME", "ACTION_NEXT_PLAYER", "ACTION_SWAP_COS"],
@@ -37,10 +38,10 @@ var ACTION =
     {
         return ACTION.emptyFieldActions;
     },
-
+    viewplayerActionList : ["ACTION_INFO", "ACTION_OPTIONS"],
     getViewplayerActionList : function()
     {
-        return ["ACTION_INFO", "ACTION_OPTIONS"];
+        return ACTION.viewplayerActionList;
     },
 
     getStepInputType : function(action)

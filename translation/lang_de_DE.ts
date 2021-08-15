@@ -4175,16 +4175,36 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="615"/>
-        <source>Team Facing :</source>
+        <source>Unit transfer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="619"/>
+        <source>If checked allied players can transfer units to each other.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="629"/>
+        <source>Unit sell value: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="633"/>
+        <source>The amount of funds you get back for selling a unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="646"/>
+        <source>Team Facing :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="650"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="632"/>
+        <location filename="../objects/ruleselection.cpp" line="663"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

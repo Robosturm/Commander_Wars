@@ -3,17 +3,38 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-        var currentPlayer = map.getCurrentPlayer();
-        for (var i = 0; i < map.getPlayerCount(); i++)
+        var ret = false;
+        var transferAllowed = map.getGameRules().getAllowUnitTransfer();
+        if (transferAllowed)
         {
-            var player = map.getPlayer(i);
-            if (player !== currentPlayer &&
-                currentPlayer.isAlly(player))
+            var currentPlayer = map.getCurrentPlayer();
+            for (var i = 0; i < map.getPlayerCount(); i++)
             {
-                return true;
+                var player = map.getPlayer(i);
+                if (player !== currentPlayer &&
+                    currentPlayer.isAlly(player))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            if (ret)
+            {
+                ret = false;
+                var units = map.getCurrentPlayer().getUnits();
+                for (var i = 0; i < units.size(); i++)
+                {
+                    var unit = units.at(i);
+                    if (unit.getHasMoved() === false)
+                    {
+                        ret = true;
+                        break;
+                    }
+                }
+                units.remove();
             }
         }
-        return false;
+        return ret;
     };
     
     this.getActionText = function()

@@ -62,7 +62,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 20;
+        return 21;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -81,14 +81,32 @@ public:
      */
     void init();
 
-
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
-
-
 signals:
     void signalVictory(qint32 team);
 public slots:
+
+    /**
+     * @brief getResellValue
+     * @return
+     */
+    float getResellValue() const;
+    /**
+     * @brief setResellValue
+     * @param newResellValue
+     */
+    void setResellValue(float newResellValue);
+    /**
+     * @brief getAllowUnitTransfer
+     * @return
+     */
+    bool getAllowUnitTransfer() const;
+    /**
+     * @brief setAllowUnitTransfer
+     * @param newAllowUnitTransfer
+     */
+    void setAllowUnitTransfer(bool newAllowUnitTransfer);
     /**
      * @brief getVictory
      * @return
@@ -524,6 +542,8 @@ private:
     float m_powerGainSpeed{1.0f};
     quint8 m_terrainDefense{10};
     bool m_victory{false};
+    float m_resellValue{0.0f};
+    bool m_allowUnitTransfer{false};
 
     Password m_password;
     QString m_description;

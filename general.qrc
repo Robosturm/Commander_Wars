@@ -3867,12 +3867,6 @@
         <file>mods/cow_movement_mod/scripts/movementtables/move_tire_a.js</file>
         <file>mods/cow_movement_mod/scripts/movementtables/move_tire_b.js</file>
         <file>mods/cow_movement_mod/mod.txt</file>
-        <file>mods/cow_resell/scripts/actions/ACTION_SELL_UNIT.js</file>
-        <file>mods/cow_resell/scripts/general/action.js</file>
-        <file>mods/cow_resell/mod.txt</file>
-        <file>mods/cow_transfer/scripts/actions/ACTION_TRANSFER_UNIT.js</file>
-        <file>mods/cow_transfer/scripts/general/action.js</file>
-        <file>mods/cow_transfer/mod.txt</file>
         <file>mods/cow_triangle_weapons/scripts/general/weapon.js</file>
         <file>mods/cow_triangle_weapons/scripts/weapons/weapon_air_to_air_missile.js</file>
         <file>mods/cow_triangle_weapons/scripts/weapons/weapon_airplane_mg.js</file>
@@ -5217,5 +5211,7 @@
         <file>resources/objects/one_step.png</file>
         <file>resources/objects/panel_no_transparent.png</file>
         <file>mods/awds_co/aw_dualstrike.png</file>
+        <file>resources/scripts/actions/ACTION_SELL_UNIT.js</file>
+        <file>resources/scripts/actions/ACTION_TRANSFER_UNIT.js</file>
     </qresource>
 </RCC>

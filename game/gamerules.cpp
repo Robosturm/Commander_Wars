@@ -973,6 +973,26 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getAllowUnitTransfer() const
+{
+    return m_allowUnitTransfer;
+}
+
+void GameRules::setAllowUnitTransfer(bool newAllowUnitTransfer)
+{
+    m_allowUnitTransfer = newAllowUnitTransfer;
+}
+
+float GameRules::getResellValue() const
+{
+    return m_resellValue;
+}
+
+void GameRules::setResellValue(float newResellValue)
+{
+    m_resellValue = newResellValue;
+}
+
 bool GameRules::getVictory() const
 {
     return m_victory;
@@ -1218,6 +1238,8 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_singleCo;
     pStream << m_cosmeticModsAllowed;
     pStream << m_terrainDefense;
+    pStream << m_resellValue;
+    pStream << m_allowUnitTransfer;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1490,5 +1512,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 19)
     {
         pStream >> m_terrainDefense;
+    }
+    if (version > 20)
+    {
+        pStream >> m_resellValue;
+        pStream >> m_allowUnitTransfer;
     }
 }

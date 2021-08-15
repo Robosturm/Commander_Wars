@@ -3,7 +3,23 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {		
-        return true;
+        var ret = false;
+        var resellValue = map.getGameRules().getResellValue();
+        if (resellValue > 0)
+        {
+            var units = map.getCurrentPlayer().getUnits();
+            for (var i = 0; i < units.size(); i++)
+            {
+                var unit = units.at(i);
+                if (unit.getHasMoved() === false)
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            units.remove();
+        }
+        return ret;
     };
     
     this.getActionText = function()
@@ -34,8 +50,9 @@ var Constructor = function()
         var unit = map.getTerrain(x, y).getUnit();
         if (unit !== null)
         {
+            var resellValue = map.getGameRules().getResellValue();
 			var funds = unit.getUnitCosts() * unit.getHp() / 10;
-			map.getCurrentPlayer().addFunds(funds / 2);
+            map.getCurrentPlayer().addFunds(funds * resellValue);
             unit.killUnit();
         }
     };
@@ -78,7 +95,7 @@ var Constructor = function()
     };
     this.getDescription = function()
 	{
-		return qsTr("Sells a unit for 50% of it's current value.");
+        return qsTr("Sells a unit for a fraction of it's current value.");
     };
 };
 
