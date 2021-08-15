@@ -18,7 +18,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack of units by 20% during rain.";
+        return qsTr("Increases the attack of units by 20% during rain.");
     };
     this.getIcon = function()
     {
@@ -26,7 +26,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "High and Dry";
+        return qsTr("High and Dry");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Weather");
     };
 };
 

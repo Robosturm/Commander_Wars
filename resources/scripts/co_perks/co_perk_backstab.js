@@ -15,7 +15,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the dive/hide attack by 15%.";
+        return qsTr("Increases the dive/hide attack by 15%.");
     };
     this.getIcon = function()
     {
@@ -23,7 +23,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Backstab";
+        return qsTr("Backstab");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Offensive");
     };
 };
 

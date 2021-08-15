@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the CO-Zone of the CO by 1.";
+        return qsTr("Increases the CO-Zone of the CO by 1.");
     };
     this.getIcon = function()
     {
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Leader";
+        return qsTr("Leader");
     };
 };
 

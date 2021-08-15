@@ -22,7 +22,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack from buildings by 10%.";
+        return qsTr("Increases the attack from buildings by 10%.");
     };
     this.getIcon = function()
     {
@@ -30,7 +30,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Urban Fighter";
+        return qsTr("Urban Fighter");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Terrain");
     };
 };
 

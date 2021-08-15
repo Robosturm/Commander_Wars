@@ -49,6 +49,20 @@ QString COPerkManager::getDescription(qint32 position)
     return "";
 }
 
+QString COPerkManager::getGroup(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedRessources.size()))
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue value = pInterpreter->doFunction(m_loadedRessources[position], "getGroup");
+        if (value.isString())
+        {
+            return value.toString();
+        }
+    }
+    return "";
+}
+
 void COPerkManager::removeRessource(QString id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); ++i)

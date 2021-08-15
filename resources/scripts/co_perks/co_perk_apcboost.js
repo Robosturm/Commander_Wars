@@ -14,7 +14,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the movement range of all transporters by 1.";
+        return qsTr("Increases the movement range of all transporters by 1.");
     };
     this.getIcon = function()
     {
@@ -22,7 +22,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Boost +1";
+        return qsTr("Boost +1");
     };
 };
 

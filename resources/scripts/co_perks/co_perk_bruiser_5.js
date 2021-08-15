@@ -15,7 +15,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the direct attack of units by 5%.";
+        return qsTr("Increases the direct attack of units by 5%.");
     };
     this.getIcon = function()
     {
@@ -23,7 +23,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Bruiser +5%";
+        return qsTr("Bruiser +5%");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Offensive");
     };
 };
 

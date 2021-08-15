@@ -6,8 +6,7 @@
 		<image file="apcboost.png" />
 		<image file="apcguard.png" />
 		<image file="brawler.png" />
-		<image file="combatpay.png" />
-		
+		<image file="combatpay.png" />		
 		<image file="dive.png" />
 		<image file="eagleeye.png" />
 		<image file="goldrush.png" />
@@ -32,7 +31,40 @@
 		<image file="towerpower.png" />		
 		<image file="co0.png" />
 		<image file="starpower.png" />
-		<image file="ration.png" />		
+		<image file="ration.png" />			
+		<image file="softie.png" />		
+		<image file="banshee.png" />
+		<image file="classic_apc.png" />
+		<image file="country_hick.png" />
+		<image file="cursed.png" />
+		<image file="drunk_driver.png" />
+		<image file="duct_tape.png" />
+		<image file="enflakenator.png" />
+		<image file="facestab.png" />
+		<image file="flat_tires.png" />
+		<image file="flimsy.png" />
+		<image file="frostbitten.png" />		
+		<image file="glass_eyes.png" />
+		<image file="glass_jaw.png" />
+		<image file="hippy.png" />
+		<image file="income_tax.png" />
+		<image file="intel_leak.png" />
+		<image file="light_mist.png" />
+		<image file="no_sherpa.png" />
+		<image file="null_luck.png" />
+		<image file="pacifist.png" />
+		<image file="reparations.png" />
+		<image file="sandy_eyes.png" />		
+		<image file="seasick.png" />
+		<image file="sickly.png" />
+		<image file="signal_loss.png" />
+		<image file="sopping_wet.png" />
+		<image file="star_drain.png" />
+		<image file="stumbler.png" />
+		<image file="surrender.png" />		
+		<image file="tax_hike.png" />
+		<image file="underpowered.png" />
+		<image file="unusual_hat.png" />
 	</atlas>
 </resources>
 

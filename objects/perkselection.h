@@ -15,6 +15,12 @@ typedef oxygine::intrusive_ptr<PerkSelection> spPerkSelection;
 class PerkSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    struct PerkGroup
+    {
+        QString name;
+        QVector<qint32> perks;
+    };
+
 public:
     explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList);
     virtual ~PerkSelection() = default;
@@ -56,6 +62,8 @@ public slots:
      * @brief selectRandomPerks
      */
     void selectRandomPerks(bool fill);
+private:
+    QVector<PerkGroup> getPerksGrouped();
 private:
     CO* m_pCO{nullptr};
     QVector<spCheckbox> m_Checkboxes;

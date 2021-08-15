@@ -12,7 +12,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Power meter fills up more quickly.";
+        return qsTr("Power meter fills up more quickly.");
     };
     this.getIcon = function()
     {
@@ -20,7 +20,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Star Power";
+        return qsTr("Star Power");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Power");
     };
 };
 

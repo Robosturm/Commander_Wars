@@ -14,7 +14,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Dive/Hide fuel cost -2.";
+        return qsTr("Dive/Hide fuel cost -2.");
     };
     this.getIcon = function()
     {
@@ -22,7 +22,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Stealthy";
+        return qsTr("Stealthy");
     };
 };
 

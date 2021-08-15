@@ -18,7 +18,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack of units by 20% during sandstorm.";
+        return qsTr("Increases the attack of units by 20% during sandstorm.");
     };
     this.getIcon = function()
     {
@@ -26,7 +26,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Sand Scorpion";
+        return qsTr("Sand Scorpion");
+    };    
+    this.getGroup = function()
+    {
+        return qsTr("Weather");
     };
 };
 

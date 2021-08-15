@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Production cost -5%.";
+        return qsTr("Production cost -5%.");
     };
     this.getIcon = function()
     {
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Sale Price -5%";
+        return qsTr("Sale Price -5%");
     };
 };
 

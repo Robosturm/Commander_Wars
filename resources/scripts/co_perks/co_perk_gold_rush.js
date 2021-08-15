@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the income from each building by 10%.";
+        return qsTr("Increases the income from each building by 10%.");
     };
     this.getIcon = function()
     {
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Gold Rush";
+        return qsTr("Gold Rush");
     };
 };
 

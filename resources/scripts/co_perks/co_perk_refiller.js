@@ -26,7 +26,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Refills ammo and fuel for all your units during Power and Superpower.";
+        return qsTr("Refills ammo and fuel for all your units during Power and Superpower.");
     };
     this.getIcon = function()
     {
@@ -34,7 +34,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Refiller";
+        return qsTr("Refiller");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Power");
     };
 };
 

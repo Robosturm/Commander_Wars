@@ -1,8 +1,0 @@
-name=Commander Wars Perk Debuffs
-description=This mod adds CO Perks with negativ effects. Ideas and Sprites from Xenesis
-version=1.0.0
-compatible_mods=
-incompatible_mods=
-required_mods=
-cosmetic=false
-tags=Perks

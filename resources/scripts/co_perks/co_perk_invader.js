@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the capture rate by 1.";
+        return qsTr("Increases the capture rate by 1.");
     };
     this.getIcon = function()
     {
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Invader";
+        return qsTr("Invader");
     };
 };
 

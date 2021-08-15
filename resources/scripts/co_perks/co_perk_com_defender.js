@@ -13,7 +13,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the defense boost per tower by 5%.";
+        return qsTr("Increases the defense boost per tower by 5%.");
     };
     this.getIcon = function()
     {
@@ -21,7 +21,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Com Defender";
+        return qsTr("Com Defender");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Defensive");
     };
 };
 

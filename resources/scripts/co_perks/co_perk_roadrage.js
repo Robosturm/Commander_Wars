@@ -25,7 +25,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack from roads by 10%.";
+        return qsTr("Increases the attack from roads by 10%.");
     };
     this.getIcon = function()
     {
@@ -33,7 +33,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Road Rage";
+        return qsTr("Road Rage");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Terrain");
     };
 };
 

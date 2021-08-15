@@ -28,7 +28,7 @@ var Constructor = function()
     // Perk - Intel
     this.getDescription = function()
     {
-        return "Sets movement costs on sea to 1.";
+        return qsTr("Sets movement costs on sea to 1.");
     };
     this.getIcon = function()
     {
@@ -36,7 +36,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Seawalker";
+        return qsTr("Seawalker");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Terrain");
     };
 };
 

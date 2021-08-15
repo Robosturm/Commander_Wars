@@ -11,7 +11,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the luck of units by 5%.";
+        return qsTr("Increases the luck of units by 5%.");
     };
     this.getIcon = function()
     {
@@ -19,7 +19,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Luck +5%";
+        return qsTr("Luck +5%");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Offensive");
     };
 };
 

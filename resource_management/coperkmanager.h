@@ -28,6 +28,12 @@ public:
      * @return
      */
     QString getDescription(qint32 position);
+    /**
+     * @brief getGroup
+     * @param position
+     * @return
+     */
+    QString getGroup(qint32 position);
 public slots:
     void removeRessource(QString id);
 private:

@@ -24,7 +24,7 @@ var Constructor = function()
     // Perk - Intel
     this.getDescription = function()
     {
-        return "Sets movement costs over plains to 1.";
+        return qsTr("Sets movement costs over plains to 1.");
     };
     this.getIcon = function()
     {
@@ -32,7 +32,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Prairie Dog";
+        return qsTr("Prairie Dog");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Terrain");
     };
 };
 

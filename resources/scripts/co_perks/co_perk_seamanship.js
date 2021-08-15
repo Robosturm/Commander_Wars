@@ -26,7 +26,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack from sea by 10%.";
+        return qsTr("Increases the attack from sea by 10%.");
     };
     this.getIcon = function()
     {
@@ -34,7 +34,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Seamanship";
+        return qsTr("Seamanship");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Terrain");
     };
 };
 

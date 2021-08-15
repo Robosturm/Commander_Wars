@@ -25,7 +25,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "During your Superpower you can build units from cities.";
+        return qsTr("During your Superpower you can build units from cities.");
     };
     this.getIcon = function()
     {
@@ -33,7 +33,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Hachi's Soul";
+        return qsTr("Hachi's Soul");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Power");
     };
 };
 

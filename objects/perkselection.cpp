@@ -40,24 +40,34 @@ void PerkSelection::updatePerksView(CO* pCO)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
-    qint32 count = pCOPerkManager->getCount();
+    oxygine::TextStyle largeStyle = FontManager::getMainFont48();
+    largeStyle.color = FontManager::getFontColor();
+    largeStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    largeStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
     qint32 y = 0;
     qint32 x = 0;
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     spGameMap pMap = GameMap::getInstance();
     const qint32 width = 370;
-    for (qint32 i = 0; i < count; i++)
+    auto perkGroups = getPerksGrouped();
+    for (const auto & group : perkGroups)
     {
-        QString id = pCOPerkManager->getID(i);
-        if (pCOPerkManager->isSelectable(i) &&
-            !m_hiddenPerks.contains(id) &&
-            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
+        spLabel textField = spLabel::create(getWidth() - 40);
+        textField->setStyle(largeStyle);
+        textField->setHtmlText(group.name);
+        textField->setPosition(0, y);
+        addChild(textField);
+        y += 70;
+        x = 0;
+        for (qint32 i = 0; i < group.perks.size(); ++i)
         {
-            QString name = pCOPerkManager->getName(i);
-            QString icon = pCOPerkManager->getIcon(i);
-
+            qint32 index = group.perks[i];
+            QString id = pCOPerkManager->getID(index);
+            QString name = pCOPerkManager->getName(index);
+            QString icon = pCOPerkManager->getIcon(index);
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-            QString description = pCOPerkManager->getDescription(i);
+            QString description = pCOPerkManager->getDescription(index);
 
             spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setPosition(x, y + 5);
@@ -103,18 +113,55 @@ void PerkSelection::updatePerksView(CO* pCO)
             pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y + 10);
             addChild(pLabel);
 
-
             x += width;
-            if (x + width > getWidth())
+            if (x + width > getWidth() &&
+                i < group.perks.size() - 1)
             {
                 x = 0;
                 y += GameMap::getImageSize() * 2 + 10;
             }
         }
+        y += GameMap::getImageSize() * 2 + 20;
     }
     y += GameMap::getImageSize() * 2 + 10;
     setHeight(y);
     updatePerkCount();    
+}
+
+QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
+{
+    QVector<PerkSelection::PerkGroup> ret;
+    spGameMap pMap = GameMap::getInstance();
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+    qint32 count = pCOPerkManager->getCount();
+    for (qint32 i = 0; i < count; i++)
+    {
+        QString id = pCOPerkManager->getID(i);
+        if (pCOPerkManager->isSelectable(i) &&
+            !m_hiddenPerks.contains(id) &&
+            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
+        {
+            QString groupName = pCOPerkManager->getGroup(i);
+            bool found = false;
+            for (auto & group : ret)
+            {
+                if (group.name == groupName)
+                {
+                    group.perks.append(i);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                PerkGroup newGroup;
+                newGroup.name = groupName;
+                newGroup.perks.append(i);
+                ret.append(newGroup);
+            }
+        }
+    }
+    return ret;
 }
 
 void PerkSelection::updatePerkCount()

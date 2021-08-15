@@ -16,7 +16,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the direct-fire defense by 8%.";
+        return qsTr("Increases the direct-fire defense by 8%.");
     };
     this.getIcon = function()
     {
@@ -24,7 +24,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Slam Guard +8%";
+        return qsTr("Slam Guard +8%");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Defensive");
     };
 };
 

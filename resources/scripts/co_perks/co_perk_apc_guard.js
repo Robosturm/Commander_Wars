@@ -15,7 +15,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the transporter defense by 10%.";
+        return qsTr("Increases the transporter defense by 10%.");
     };
     this.getIcon = function()
     {
@@ -23,7 +23,11 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Defense +10%";
+        return qsTr("Defense +10%");
+    };
+    this.getGroup = function()
+    {
+        return qsTr("Defensive");
     };
 };
 

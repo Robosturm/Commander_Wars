@@ -256,4 +256,8 @@ var CO_PERK =
     {
         return "";
     },
+    getGroup : function()
+    {
+        return qsTr("General");
+    },
 }
