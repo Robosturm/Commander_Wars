@@ -37,7 +37,7 @@ var Constructor = function()
     };
     this.getGroup = function()
     {
-        return qsTr("Offensive Debuff");
+        return qsTr("Terrain Debuff");
     };
 };
 
