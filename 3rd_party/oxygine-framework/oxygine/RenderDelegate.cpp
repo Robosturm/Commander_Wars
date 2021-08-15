@@ -111,9 +111,9 @@ namespace oxygine
         RectF maskSrc = maskSprite->getSrcRect();
 
 
-        bool useR           = sprite->getUseRChannel();
-        bool rchannel               = useR ? true    : (df.alpha ? true     : false);
-        spNativeTexture maskTexture = useR ? df.base : (df.alpha ? df.alpha : df.base);
+        bool useR             = sprite->getUseRChannel();
+        bool rchannel         = useR ? true    : (df.alpha ? true     : false);
+        spTexture maskTexture = useR ? df.base : (df.alpha ? df.alpha : df.base);
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 

@@ -17,12 +17,10 @@ namespace oxygine
 
         void nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad);
         void applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge);
-
         void loadAtlas(CreateResourceContext& context);
         void loadAtlas2(CreateResourceContext& context);
-
-        void _load(LoadResourcesContext*) override;
-        void _unload() override;
+        virtual void _load(LoadResourcesContext*) override;
+        virtual void _unload() override;
 
     private:
         qint32 m_current;

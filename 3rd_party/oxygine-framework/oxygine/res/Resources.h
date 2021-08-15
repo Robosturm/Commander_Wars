@@ -96,7 +96,10 @@ namespace oxygine
         ResFont* getResFont(QString id, error_policy ep = ep_show_error) const;
 
         template<class T>
-        T* getT(QString id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
+        T* getT(QString id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const
+        {
+            return safeCast<T*>(get(id, ep, defIfNotFound));
+        }
 
         /**collects all resources into vector*/
         void collect(resources&);
@@ -134,7 +137,7 @@ namespace oxygine
     protected:
         resources m_resources;
         resourcesMap m_resourcesMap;
-        typedef QVector<registeredResource> registeredResources;
+        using registeredResources = QVector<registeredResource>;
         static registeredResources m_registeredResources;
         QString m_name;
         QVector<QDomDocument> m_docs;

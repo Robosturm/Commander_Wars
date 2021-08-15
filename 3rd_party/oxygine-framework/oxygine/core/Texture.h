@@ -4,13 +4,21 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
+#include <QOpenGLShader>
 
 namespace oxygine
 {
     class Texture;
     using spTexture = intrusive_ptr<Texture>;
-    class Texture : public Object
+    class Texture : public Object, public Restorable
     {
+        struct glPixel
+        {
+            qint32 format;
+            qint32 type;
+            bool compressed;
+        };
     public:
         enum
         {
@@ -18,29 +26,64 @@ namespace oxygine
             lock_write = 0x2,
             lock_write_on_apply = 0x4,
         };
+        using lock_flags = qint32;
+        virtual ~Texture();
+        void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf);
+        void init(qint32 w, qint32 h, ImageData::TextureFormat tf);
+        void init(const ImageData& src);
 
-        typedef qint32 lock_flags;
-        explicit Texture() = default;
-        virtual ~Texture() = default;
-
-        virtual qint32 getWidth() const = 0;
-        virtual qint32 getHeight() const = 0;
-        virtual ImageData::TextureFormat getFormat() const = 0;
-
-        virtual ImageData lock(lock_flags, const Rect* src) = 0;
-        virtual void unlock() = 0;
-        virtual void updateRegion(qint32 x, qint32 y, const ImageData& data) = 0;
-        virtual void apply(const Rect* rect = 0) = 0;
+        qint32 getWidth() const
+        {
+            return m_width;
+        }
+        qint32 getHeight() const
+        {
+            return m_height;
+        }
+        GLuint getHandle() const
+        {
+            return m_id;
+        }
+        ImageData::TextureFormat getFormat() const
+        {
+            return m_format;
+        }
+        /**Disabled/Enables bilinear texture filter*/
+        void setLinearFilter(quint32 filter);
+        /**set wrap mode as clamp2edge or repeat (tiling)*/
+        void setClamp2Edge(bool clamp2edge);
+        ImageData lock(lock_flags, const Rect* src);
+        void unlock();
+        void updateRegion(qint32 x, qint32 y, const ImageData& data);
 
         timeMS getCreationTime()
         {
             return m_CreationTime;
         }
-
         void setCreationTime(timeMS time)
         {
             m_CreationTime = time;
         }
+
+        virtual void release() override;
+        virtual Restorable* _getRestorableObject() override
+        {
+            return this;
+        }
+    protected:
+        friend class VideoDriver;
+        friend class intrusive_ptr<Texture>;
+        explicit Texture() = default;
+        glPixel SurfaceFormat2GL(ImageData::TextureFormat format);
+        GLuint createTexture();
+    protected:
+        GLuint m_id{0};
+        qint32 m_width{0};
+        qint32 m_height{0};
+        ImageData::TextureFormat m_format{ImageData::TF_UNDEFINED};
+        qint32 m_lockFlags{0};
+        Rect m_lockRect;
+        QVector<unsigned char> m_data;
     private:
         timeMS m_CreationTime;
     };

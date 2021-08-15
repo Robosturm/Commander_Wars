@@ -21,12 +21,10 @@ namespace oxygine
     void Restorable::restoreAll()
     {
         restorable rs;
-
         {
             QMutexLocker al(&m_mutex);
             rs.swap(m_restorable);
         }
-
         for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
         {
             Restorable* r = *i;

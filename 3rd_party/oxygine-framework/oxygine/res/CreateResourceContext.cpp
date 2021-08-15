@@ -1,6 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <qvariant.h>
 
@@ -121,7 +121,7 @@ namespace oxygine
         opt.ready();
     }
 
-    bool RestoreResourcesContext::isNeedProceed(spNativeTexture)
+    bool RestoreResourcesContext::isNeedProceed(spTexture)
     {
         return true;
     }
@@ -134,7 +134,7 @@ namespace oxygine
         opt.ready();
     }
 
-    bool SingleThreadResourcesContext::isNeedProceed(spNativeTexture t)
+    bool SingleThreadResourcesContext::isNeedProceed(spTexture t)
     {
         return t->getHandle() == 0;
     }

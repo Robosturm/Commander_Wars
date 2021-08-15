@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
@@ -9,12 +8,12 @@ namespace oxygine
     class Diffuse
     {
     public:
-        Diffuse(): flags(0)
+        Diffuse()
+            : flags(0)
         {
         }
-        spNativeTexture base;
-        spNativeTexture alpha;
-        //bool premultiplied;
+        spTexture base;
+        spTexture alpha;
         qint32 flags;
     };
 
@@ -46,7 +45,7 @@ namespace oxygine
               m_column(0)
         {
         }
-        explicit AnimationFrame(spNativeTexture t);
+        explicit AnimationFrame(spTexture t);
         virtual ~AnimationFrame() = default;
 
         void init(ResAnim* rs, const Diffuse& df,
@@ -62,35 +61,35 @@ namespace oxygine
         {
             return m_frameSize;
         }
-        float           getWidth() const
+        float getWidth() const
         {
             return m_frameSize.x;
         }
-        float           getHeight() const
+        float getHeight() const
         {
             return m_frameSize.y;
         }
-        ResAnim*        getResAnim() const
+        ResAnim* getResAnim() const
         {
             return m_resAnim;
         }
-        short           getColumn() const
+        short getColumn() const
         {
             return m_column;
         }
-        short           getRow() const
+        short getRow() const
         {
             return m_row;
         }
-        const RectF&    getSrcRect() const
+        const RectF& getSrcRect() const
         {
             return m_srcRect;
         }
-        const RectF&    getDestRect() const
+        const RectF& getDestRect() const
         {
             return m_destRect;
         }
-        const Diffuse&  getDiffuse() const
+        const Diffuse& getDiffuse() const
         {
             return m_diffuse;
         }
@@ -98,44 +97,44 @@ namespace oxygine
         {
             return m_hittest;
         }
-        void            setSrcRect(const RectF& r)
+        void setSrcRect(const RectF& r)
         {
             m_srcRect = r;
         }
-        void            setDestRect(const RectF& r)
+        void setDestRect(const RectF& r)
         {
             m_destRect = r;
         }
-        void            setResAnim(ResAnim* rs)
+        void setResAnim(ResAnim* rs)
         {
             m_resAnim = rs;
         }
-        void            setDiffuse(const Diffuse& d)
+        void setDiffuse(const Diffuse& d)
         {
             m_diffuse = d;
         }
-        void            setSize(const Vector2& size)
+        void setSize(const Vector2& size)
         {
             m_frameSize = size;
         }
-        void            setSize(float w, float h)
+        void setSize(float w, float h)
         {
             setSize(Vector2(w, h));
         }
-        void            setHitTestData(const HitTestData& ad)
+        void setHitTestData(const HitTestData& ad)
         {
             m_hittest = ad;
         }
-        void            setRow(qint32 v)
+        void setRow(qint32 v)
         {
             m_row = v;
         }
-        void            setColumn(qint32 v)
+        void setColumn(qint32 v)
         {
             m_column = v;
         }
-        void            flipX();
-        void            flipY();
+        void flipX();
+        void flipY();
     private:
         enum flags
         {

@@ -1,7 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "spritingsupport/spritecreator.h"
 
@@ -17,7 +17,7 @@ namespace oxygine
     {
     }
 
-    void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void ResAnim::init(spTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         m_scaleFactor = scaleFactor;
         if (!texture)
@@ -90,9 +90,8 @@ namespace oxygine
             return;
         }
 
-        spNativeTexture texture = VideoDriver::instance->createTexture();
+        spTexture texture = VideoDriver::instance->createTexture();
         texture->init(original->lock());
-        texture->apply();
         init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
     }
 

@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 
 namespace oxygine
 {
@@ -42,9 +42,9 @@ namespace oxygine
         void xflush();
     public:
         size_t m_hash{0};
-        spNativeTexture    m_base;
-        spNativeTexture    m_table;
-        spNativeTexture    m_alpha;
+        spTexture    m_base;
+        spTexture    m_table;
+        spTexture    m_alpha;
         blend_mode         m_blend;
         UberShaderProgram* m_uberShader;
         QColor             m_addColor;

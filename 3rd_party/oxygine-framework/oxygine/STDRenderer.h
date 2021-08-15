@@ -14,12 +14,12 @@ namespace oxygine
 
         void setDriver(VideoDriver* d);
 
-        const spNativeTexture& getTexture(qint32 sampler)
+        const spTexture& getTexture(qint32 sampler)
         {
-            return _textures[sampler];
+            return m_textures[sampler];
         }
 
-        void setTexture(qint32 sampler, const spNativeTexture& t);
+        void setTexture(qint32 sampler, const spTexture& t);
         void setBlendMode(blend_mode blend);
         bool setShader(ShaderProgram* prog);
 
@@ -27,9 +27,8 @@ namespace oxygine
         void resetTextures();
 
     protected:
-        enum { MAX_TEXTURES = 8 };
-
-        spNativeTexture _textures[MAX_TEXTURES];
+        static constexpr quint32 MAX_TEXTURES = 8;
+        spTexture m_textures[MAX_TEXTURES];
         ShaderProgram*  m_program;
         VideoDriver*   m_driver;
         blend_mode      m_blend;
@@ -73,9 +72,8 @@ namespace oxygine
         static STDRenderer* getCurrent();
 
         /**White 4x4 Texture*/
-        static spNativeTexture white;
-        static spNativeTexture invisible;
-
+        static spTexture white;
+        static spTexture invisible;
         static UberShaderProgram uberShader;
         static QString fracShaderBody;
         static QString fracTableShaderBody;
@@ -113,7 +111,7 @@ namespace oxygine
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
-        void begin(spNativeTexture renderTarget, const Rect* viewport = 0);
+        void begin(spTexture renderTarget, const Rect* viewport = 0);
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
@@ -195,6 +193,6 @@ namespace oxygine
 
         UberShaderProgram* m_uberShader;
         quint32 m_baseShaderFlags;
-        spNativeTexture m_prevRT;
+        spTexture m_prevRT;
     };
 }

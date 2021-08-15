@@ -22,20 +22,23 @@ namespace oxygine
             void unload();
 
             /**Returns any attribute from xml resource definition. You could use it for defining for example per animation constants like duration, specific offsets, delays.*/
-            QString             getAttribute(QString attr) const;
-            QDomElement         getNode() const
+            QString getAttribute(QString attr) const;
+            QDomElement getNode() const
             {
                 return m_node;
             }
-            bool                getUseLoadCounter() const
+            bool getUseLoadCounter() const
             {
                 return m_useLoadCounter;
             }
-            qint32              getLoadCounter() const
+            qint32 getLoadCounter() const
             {
                 return m_loadCounter;
             }
-            Resource*           getParent() const {return m_parent;}
+            Resource* getParent() const
+            {
+                return m_parent;
+            }
             void setUseLoadCounter(bool v)
             {
                 m_useLoadCounter = v;
@@ -66,7 +69,10 @@ namespace oxygine
          */
             void setName(QString name);
         protected:
-            static void setNode(spResource res, const QDomElement& node) {res->m_node = node;}
+            static void setNode(spResource res, const QDomElement& node)
+            {
+                res->m_node = node;
+            }
             virtual void _load(LoadResourcesContext* context = 0) = 0;
             virtual void _unload() = 0;
 

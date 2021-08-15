@@ -16,8 +16,15 @@ namespace oxygine
 
     namespace text
     {
-        typedef QVector<Symbol> text_data;
-
+        using text_data = QVector<Symbol>;
+        class Node;
+        using spNode = oxygine::intrusive_ptr<Node>;
+        class DivNode;
+        using spDivNode = intrusive_ptr<DivNode>;
+        class BrNode;
+        using spBrNode = intrusive_ptr<BrNode>;
+        class TextNode;
+        using spTextNode = oxygine::intrusive_ptr<TextNode>;
 
         class DrawContext
         {
@@ -28,9 +35,6 @@ namespace oxygine
             QColor m_color;
             QColor m_primary;
         };
-
-        class Node;
-        typedef oxygine::intrusive_ptr<Node> spNode;
 
         class Node : public oxygine::ref_counter
         {
@@ -45,23 +49,17 @@ namespace oxygine
             void drawChildren(DrawContext& dc);
             void resizeChildren(Aligner& rd);
             virtual Symbol* getSymbol(int& pos);
-
             virtual void draw(DrawContext& dc);
-
             virtual void xresize(Aligner&) {}
             virtual void xfinalPass(Aligner&) {}
-
-            void updateMaterial(const Material& mat);
             virtual void xupdateMaterial(const Material&) {}
+            void updateMaterial(const Material& mat);
 
-        public:
+        private:
             spNode m_firstChild;
             spNode m_lastChild;
             spNode m_nextSibling;
         };
-
-        class TextNode;
-        typedef oxygine::intrusive_ptr<TextNode> spTextNode;
 
         class TextNode: public Node
         {
@@ -70,42 +68,33 @@ namespace oxygine
 
             explicit TextNode(QString v);
             virtual ~TextNode() = default;
-
-            text_data _data;
-            void xresize(Aligner& rd) override;
-            void xfinalPass(Aligner& rd) override;
-            void draw(DrawContext& dc) override;
-            void xupdateMaterial(const Material& mat) override;
-
-            Symbol* getSymbol(int& pos) override;
+            virtual void xresize(Aligner& rd) override;
+            virtual void xfinalPass(Aligner& rd) override;
+            virtual void draw(DrawContext& dc) override;
+            virtual void xupdateMaterial(const Material& mat) override;
+            virtual Symbol* getSymbol(int& pos) override;
+        private:
+            text_data m_data;
         };
-
-        class DivNode;
-        using spDivNode = intrusive_ptr<DivNode>;
 
         class DivNode: public Node
         {
         public:
             explicit DivNode(QDomElement& reader);
             virtual ~DivNode() = default;
-
-            void resize(Aligner& rd) override;
-            void draw(DrawContext& dc) override;
-
-        public:
+            virtual void resize(Aligner& rd) override;
+            virtual void draw(DrawContext& dc) override;
+        private:
             QColor m_color;
             quint32 m_options;
         };
-
-        class BrNode;
-        using spBrNode = intrusive_ptr<BrNode>;
 
         class BrNode: public Node
         {
         public:
             explicit BrNode() = default;
             virtual ~BrNode() = default;
-            void xresize(Aligner& rd)
+            virtual void xresize(Aligner& rd) override
             {
                 rd.nextLine();
             }

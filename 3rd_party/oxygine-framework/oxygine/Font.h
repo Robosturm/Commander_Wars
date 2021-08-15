@@ -25,7 +25,7 @@ namespace oxygine
         short advance_x{0};
         short advance_y{0};
 
-        spNativeTexture texture;
+        spTexture texture;
 
         bool operator == (const glyph& r) const
         {

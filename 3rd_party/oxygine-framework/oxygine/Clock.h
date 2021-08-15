@@ -13,22 +13,19 @@ namespace oxygine
         explicit Clock();
         virtual ~Clock() = default;
 
-        timeMS  getTime() const;
-        qint32  getPauseCounter() const;
-        qint32  getFixedStep() const;
-        qint32  getLastDT() const;
-        timeMS  getLastUpdateTime() const;
-        float   getMultiplier() const;
-
-        void    setFixedStep(float stepMS);
-        void    setMultiplier(float m);
-
-        void    pause();
-        void    resume();
-        void    resetPause();
-
-        void    update(timeMS globalTime = timeMS(-1));
-        timeMS  doTick();
+        timeMS getTime() const;
+        qint32 getPauseCounter() const;
+        qint32 getFixedStep() const;
+        qint32 getLastDT() const;
+        timeMS getLastUpdateTime() const;
+        float getMultiplier() const;
+        void setFixedStep(float stepMS);
+        void setMultiplier(float m);
+        void pause();
+        void resume();
+        void resetPause();
+        void update(timeMS globalTime = timeMS(-1));
+        timeMS doTick();
 
         static inline timeMS getTimeMS()
         {

@@ -39,8 +39,8 @@ namespace oxygine
 
         spVideoDriver driver = VideoDriver::instance;
         m_downsample = 1;
-        spNativeTexture rt = m_pp.m_rt;
-        spNativeTexture rt2 = PostProcess::getRTManager().get(spNativeTexture(), w, h, m_pp.m_format);
+        spTexture rt = m_pp.m_rt;
+        spTexture rt2 = PostProcess::getRTManager().get(spTexture(), w, h, m_pp.m_format);
 
         Rect rc(0, 0, w, h);
 

@@ -2,11 +2,11 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 
 namespace oxygine
 {
-    MaskedRenderer::MaskedRenderer(spNativeTexture mask,
+    MaskedRenderer::MaskedRenderer(spTexture mask,
                                    const RectF& srcRect, const RectF& destRect,
                                    const Transform& t, bool channelR, VideoDriver* driver)
         : STDRenderer(driver)

@@ -132,7 +132,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     #core
     3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
     3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
-    3rd_party/oxygine-framework/oxygine/core/NativeTexture.h
     3rd_party/oxygine-framework/oxygine/core/Object.cpp
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
     3rd_party/oxygine-framework/oxygine/core/Renderer.h
@@ -142,7 +141,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp
     # core gl
-    3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.cpp
     3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.cpp
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp

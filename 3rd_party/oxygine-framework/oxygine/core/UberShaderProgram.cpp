@@ -1,5 +1,4 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
@@ -102,7 +101,7 @@ namespace oxygine
         }
     }
 
-    void UberShaderProgram::apply(VideoDriver* driver, spNativeTexture base, spNativeTexture alpha)
+    void UberShaderProgram::apply(VideoDriver* driver, spTexture base, spTexture alpha)
     {
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
         if (alpha)

@@ -15,10 +15,9 @@ namespace oxygine
         static spResource create(CreateResourceContext& context);
         struct atlas
         {
-            spNativeTexture base;
+            spTexture base;
             QString base_path;
-
-            spNativeTexture alpha;
+            spTexture alpha;
             QString alpha_path;
         };
         explicit ResAtlas();
@@ -28,9 +27,9 @@ namespace oxygine
         {
             return m_atlasses[i];
         }
-        qint32          getNum() const
+        qint32 getNum() const
         {
-            return (int)m_atlasses.size();
+            return m_atlasses.size();
         }
         virtual void setLinearFilter(quint32 linearFilter) override;
         virtual quint32 getLinearFilter() const override;
@@ -43,8 +42,8 @@ namespace oxygine
         static void init_resAnim(spResAnim rs, QString file, QDomElement node);
         void loadBase(QDomElement node);
     private:
-        void load_texture(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
-        void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+        void load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+        void load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 
     protected:
         //settings from xml

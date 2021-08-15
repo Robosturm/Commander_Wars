@@ -7,8 +7,6 @@ namespace oxygine
 {
     class Image;
     using spImage = intrusive_ptr<Image>;
-    class NativeTexture;
-    using spNativeTexture = intrusive_ptr<NativeTexture>;
 
     /**internal class*/
     class XmlWalker
@@ -47,7 +45,6 @@ namespace oxygine
         bool m_alphaHitTest;
     };
 
-
     class CreateResourceContext
     {
     public:
@@ -74,7 +71,7 @@ namespace oxygine
         explicit CreateTextureTask();
         virtual ~CreateTextureTask() = default;
         spImage src;
-        spNativeTexture dest;
+        spTexture dest;
         quint32 linearFilter;
         bool clamp2edge;
 
@@ -91,7 +88,7 @@ namespace oxygine
 
 
         virtual void createTexture(const CreateTextureTask& opt) = 0;
-        virtual bool isNeedProceed(spNativeTexture t) = 0;
+        virtual bool isNeedProceed(spTexture t) = 0;
     };
 
     class SingleThreadResourcesContext: public LoadResourcesContext
@@ -100,7 +97,7 @@ namespace oxygine
         explicit SingleThreadResourcesContext() = default;
         virtual ~SingleThreadResourcesContext() = default;
         void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spNativeTexture t) override;
+        bool isNeedProceed(spTexture t) override;
     public:
         static SingleThreadResourcesContext m_instance;
     };
@@ -111,7 +108,7 @@ namespace oxygine
         explicit RestoreResourcesContext() = default;
         virtual ~RestoreResourcesContext() = default;
         void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spNativeTexture t) override;
+        bool isNeedProceed(spTexture t) override;
     public:
         static RestoreResourcesContext m_instance;
     };

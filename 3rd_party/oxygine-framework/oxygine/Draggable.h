@@ -19,23 +19,23 @@ namespace oxygine
 
         void destroy();
 
-        Actor*          getDragClient() const
+        Actor* getDragClient() const
         {
             return m_dragClient;
         }
-        const RectF&    getDragBounds() const
+        const RectF& getDragBounds() const
         {
             return m_bounds;
         }
-        const Vector2&  getClientPos() const
+        const Vector2& getClientPos() const
         {
             return m_clientPos;
         }
-        bool            getDragEnabled() const
+        bool getDragEnabled() const
         {
             return m_dragEnabled;
         }
-        bool            isDragging() const
+        bool isDragging() const
         {
             return m_pressed;
         }

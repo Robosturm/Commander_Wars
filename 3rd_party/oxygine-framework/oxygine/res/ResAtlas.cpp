@@ -10,12 +10,12 @@
 
 namespace oxygine
 {
-    void ResAtlas::load_texture(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void ResAtlas::load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
     }
 
-    void ResAtlas::load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void ResAtlas::load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spImage mt = spImage::create();
@@ -154,7 +154,7 @@ namespace oxygine
 
     void ResAtlas::_restore(Restorable* r)
     {
-        NativeTexture* texture = dynamic_cast<NativeTexture*>(r->_getRestorableObject());
+        Texture* texture = dynamic_cast<Texture*>(r->_getRestorableObject());
 
         for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {

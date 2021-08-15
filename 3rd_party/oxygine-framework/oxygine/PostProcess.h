@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
@@ -72,15 +72,15 @@ namespace oxygine
     public:
         explicit RenderTargetsManager() = default;
         virtual ~RenderTargetsManager() = default;
-        spNativeTexture get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
+        spTexture get(spTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
         void update();
         void reset();
     protected:
-        bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
+        bool isGood(const spTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
 
-        using rts = QVector<spNativeTexture>;
+        using rts = QVector<spTexture>;
         rts m_rts;
-        using free = QVector<spNativeTexture>;
+        using free = QVector<spTexture>;
         free m_free;
     };
 
@@ -99,7 +99,7 @@ namespace oxygine
         static void removePostProcessItem(PPTask*);
         static void clearPostProcessItems();
         static RenderTargetsManager& getRTManager();
-        static void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);
+        static void pass(spTexture srcTexture, const Rect& srcRect, spTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);
 
         explicit PostProcess(const PostProcessOptions& opt);
         virtual ~PostProcess() = default;
@@ -108,7 +108,7 @@ namespace oxygine
         Rect getScreenRect(const Actor& actor) const;
 
         Point m_extend;
-        spNativeTexture m_rt;
+        spTexture m_rt;
         ImageData::TextureFormat m_format;
         Transform m_transform;
         Rect m_screen;

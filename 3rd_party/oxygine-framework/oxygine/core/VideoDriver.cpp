@@ -1,7 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
@@ -32,7 +30,7 @@ namespace oxygine
 
     VideoDriver::VideoDriver()
     {
-        m_rt = spNativeTextureGLES::create();
+        m_rt = spTexture::create();
     }
 
     VideoDriver::~VideoDriver()
@@ -95,7 +93,7 @@ namespace oxygine
         return GL_ONE;
     }
 
-    spNativeTexture VideoDriver::getRenderTarget() const
+    spTexture VideoDriver::getRenderTarget() const
     {
         return m_rt;
     }
@@ -145,9 +143,9 @@ namespace oxygine
         return scrTest ? true : false;
     }
 
-    void VideoDriver::setRenderTarget(spNativeTexture rt)
+    void VideoDriver::setRenderTarget(spTexture rt)
     {
-        m_rt = safeSpCast<NativeTextureGLES>(rt);
+        m_rt = rt;
     }
 
     void VideoDriver::_begin(const Rect& viewport, const QColor* clearColor)
@@ -225,9 +223,9 @@ namespace oxygine
         return true;
     }
 
-    spNativeTexture VideoDriver::createTexture()
+    spTexture VideoDriver::createTexture()
     {
-        return spNativeTextureGLES::create();
+        return spTexture::create();
     }
 
     void VideoDriver::reset()
@@ -262,7 +260,7 @@ namespace oxygine
         m_pShaderProgram = prog_;
     }
 
-    void VideoDriver::setTexture(qint32 sampler, spNativeTexture t)
+    void VideoDriver::setTexture(qint32 sampler, spTexture t)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE0 + sampler);

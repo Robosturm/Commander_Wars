@@ -30,7 +30,7 @@ namespace oxygine
     class ShaderProgram;
     class UberShaderProgram;
     class Clock;
-    class NativeTexture;
+    class Texture;
     class Tween;
     class ResAnim;
     class ResFont;
@@ -48,7 +48,7 @@ namespace oxygine
     template <class T>
     class intrusive_ptr;
     using spClock = intrusive_ptr<Clock>;
-    using spNativeTexture = intrusive_ptr<NativeTexture>;
+    using spTexture = intrusive_ptr<Texture>;
     using spActor = intrusive_ptr<Actor>;
     using spSprite = intrusive_ptr<Sprite>;
     using spTextField = intrusive_ptr<TextField>;

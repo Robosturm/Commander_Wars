@@ -3,14 +3,12 @@
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 namespace oxygine
 {
     struct glyph;
     class Font;
-
 
     namespace text
     {
@@ -33,29 +31,48 @@ namespace oxygine
         class Aligner
         {
         public:
+            using line = QVector<Symbol*>;
             explicit Aligner(const TextStyle& style, spMaterial mat, const Font* font, float gscale, const Vector2& size);
             virtual ~Aligner() = default;
-
-
-            const TextStyle& getStyle() const {return m_style;}
+            const TextStyle& getStyle() const
+            {
+                return m_style;
+            }
             float getScale() const;
-
             void begin();
             void end();
             qint32 putSymbol(Symbol& s);
             void nextLine();
-
-        public:
-            TextStyle m_style;
-            Rect m_bounds;
-            qint32 m_width;
-            qint32 m_height;
-            size_t m_options;
-            spMaterial m_mat;
-            const Font* m_font;
+            const Rect &getBounds() const
+            {
+                return m_bounds;
+            }
+            void setBounds(const Rect &newBounds)
+            {
+                m_bounds = newBounds;
+            }
+            const Font *getFont() const
+            {
+                return m_font;
+            }
+            size_t getOptions() const
+            {
+                return m_options;
+            }
+            spMaterial getMat() const
+            {
+                return m_mat;
+            }
+            void setMat(spMaterial newMat)
+            {
+                m_mat = newMat;
+            }
+            void setOptions(size_t newOptions)
+            {
+                m_options = newOptions;
+            }
 
         private:
-            typedef QVector<Symbol*> line;
             qint32 getLineWidth()const;
             qint32 getLineSkip()const;
             void _alignLine(line& ln);
@@ -64,6 +81,13 @@ namespace oxygine
             qint32 _alignY(qint32 ry);
 
         private:
+            TextStyle m_style;
+            Rect m_bounds;
+            qint32 m_width;
+            qint32 m_height;
+            size_t m_options;
+            spMaterial m_mat;
+            const Font* m_font;
             float m_scale;
             qint32 m_x;
             qint32 m_y;

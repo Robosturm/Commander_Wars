@@ -8,7 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include <qopengl.h>
 
 namespace oxygine
@@ -78,14 +78,14 @@ namespace oxygine
         void reset();
         void restore();
         bool isReady() const;
-        spNativeTexture createTexture();
+        spTexture createTexture();
         void clear(const QColor& color);
         void begin(const Rect& viewport, const QColor* color);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, GLsizei primitives);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const VertexPCT2* verticesData, const quint16* indicesData, quint32 numIndices);
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;
-        spNativeTexture getRenderTarget() const;
+        spTexture getRenderTarget() const;
         ShaderProgram*  getShaderProgram() const
         {
             return m_pShaderProgram;
@@ -94,9 +94,9 @@ namespace oxygine
         void setScissorRect(const Rect*);
         void setDefaultSettings();
         void setViewport(const Rect& viewport);
-        void setRenderTarget(spNativeTexture);
+        void setRenderTarget(spTexture);
         void setShaderProgram(ShaderProgram*);
-        void setTexture(qint32 sampler, spNativeTexture);
+        void setTexture(qint32 sampler, spTexture);
         void setState(STATE, quint32 value);
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
         void setUniform(const char* id, const Vector4* v, qint32 num);
@@ -114,7 +114,7 @@ namespace oxygine
         quint32 getBT(VideoDriver::BLEND_TYPE pt);
         void _begin(const Rect& viewport, const QColor* clearColor);
     protected:
-        spNativeTextureGLES m_rt;
+        spTexture m_rt;
         static VertexDeclaration m_VertexDeclaration;
         qint32 m_programID{0};
         ShaderProgram* m_pShaderProgram{nullptr};

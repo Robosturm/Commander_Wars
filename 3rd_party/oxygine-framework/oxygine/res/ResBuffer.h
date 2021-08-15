@@ -17,7 +17,10 @@ namespace oxygine
 
         void init(QString file);
 
-        QString getBuffer() const {return m_buffer;}
+        QString getBuffer() const
+        {
+            return m_buffer;
+        }
 
     private:
         void _load(LoadResourcesContext*) override;

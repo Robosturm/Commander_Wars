@@ -20,7 +20,7 @@ namespace oxygine
 
     struct atlas_data
     {
-        spNativeTexture texture;
+        spTexture texture;
         Image mt;
         AtlasBuilder atlas;
     };

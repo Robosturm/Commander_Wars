@@ -20,8 +20,8 @@ namespace oxygine
     static bool _restored = false;
     spSTDRenderer STDRenderer::instance;
     spSTDRenderer STDRenderer::current;
-    spNativeTexture STDRenderer::white;
-    spNativeTexture STDRenderer::invisible;
+    spTexture STDRenderer::white;
+    spTexture STDRenderer::invisible;
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
@@ -62,22 +62,22 @@ namespace oxygine
     {
         for (qint32 i = 0; i < MAX_TEXTURES; ++i)
         {
-            _textures[i] = 0;
+            m_textures[i] = 0;
         }
     }
 
-    void RenderStateCache::setTexture(qint32 sampler, const spNativeTexture& t)
+    void RenderStateCache::setTexture(qint32 sampler, const spTexture& t)
     {
         if (sampler >= MAX_TEXTURES)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "RenderStateCache::setTexture texture error");
         }
 
-        if (_textures[sampler] == t)
+        if (m_textures[sampler] == t)
         {
             return;
         }
-        _textures[sampler] = t;
+        m_textures[sampler] = t;
         m_driver->setTexture(sampler, t);
     }
 
@@ -389,7 +389,6 @@ namespace oxygine
         m_uberShader = &uberShader;
         m_transform.identity();
         m_baseShaderFlags = 0;
-
         m_sphookFirst = this;
         m_sphookLast  = this;
 
@@ -404,7 +403,7 @@ namespace oxygine
         m_transform = tr;
     }
 
-    void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
+    void STDRenderer::begin(spTexture nt, const Rect* viewport)
     {
         if (m_prevRT != 0)
         {

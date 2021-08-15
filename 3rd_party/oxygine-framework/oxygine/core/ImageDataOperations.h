@@ -16,8 +16,10 @@ namespace oxygine
         class op_fill
         {
         public:
-            op_fill() {color.rgba = 0xffffffff;}
-
+            op_fill()
+            {
+                color.rgba = 0xffffffff;
+            }
             Pixel color;
 
             template<class Src, class Dest>

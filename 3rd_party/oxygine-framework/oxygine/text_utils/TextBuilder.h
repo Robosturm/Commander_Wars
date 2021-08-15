@@ -15,7 +15,6 @@ namespace oxygine
         public:
             explicit TextBuilder() = default;
             virtual ~TextBuilder() = default;
-
             text::spNode parse(QString str);
 
         private:

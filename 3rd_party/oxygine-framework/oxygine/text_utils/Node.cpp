@@ -102,26 +102,26 @@ namespace oxygine
             {
                 Symbol s;
                 s.code = v[i].unicode();
-                _data.push_back(s);
+                m_data.push_back(s);
             }
         }
 
         Symbol* TextNode::getSymbol(int& pos)
         {
-            if (_data.size() > pos)
+            if (m_data.size() > pos)
             {
-                return &_data[pos];
+                return &m_data[pos];
             }
-            pos -= _data.size();
+            pos -= m_data.size();
             return Node::getSymbol(pos);
         }
 
         void TextNode::draw(DrawContext& dc)
         {
-            qint32 size = _data.size();
+            qint32 size = m_data.size();
             for (qint32 i = 0; i < size; ++i)
             {
-                const Symbol& s = _data[i];
+                const Symbol& s = m_data[i];
                 if (!s.mat)
                 {
                     continue;
@@ -136,12 +136,12 @@ namespace oxygine
 
         void TextNode::xupdateMaterial(const Material& mat)
         {
-            for (qint32 i = 0; i < _data.size(); ++i)
+            for (qint32 i = 0; i < m_data.size(); ++i)
             {
-                size_t size = _data.size();
+                size_t size = m_data.size();
                 for (size_t i = 0; i < size; ++i)
                 {
-                    Symbol& s = _data[i];
+                    Symbol& s = m_data[i];
                     spMaterial m = mat.clone();
                     m->m_base = s.mat->m_base;
                     s.mat = MaterialCache::mc().cache(*m.get());
@@ -157,16 +157,15 @@ namespace oxygine
 
         void TextNode::xresize(Aligner& rd)
         {
-            if (!_data.empty())
+            if (!m_data.empty())
             {
                 qint32 i = 0;
-                const Font* font = rd.m_font;
+                const Font* font = rd.getFont();
+                const size_t opt = rd.getOptions();
 
-                const size_t opt = rd.m_options;
-
-                while (i != (int)_data.size())
+                while (i != (int)m_data.size())
                 {
-                    Symbol& s = _data[i];
+                    Symbol& s = m_data[i];
                     if (s.code == '\n')
                     {
                         rd.nextLine();
@@ -191,17 +190,16 @@ namespace oxygine
 
                         if (gl != nullptr)
                         {
-                            if (rd.m_mat->m_base.get() == gl->texture.get())
+                            if (rd.getMat()->m_base.get() == gl->texture.get())
                             {
-                                s.mat = rd.m_mat;
+                                s.mat = rd.getMat();
                             }
                             else
                             {
-                                spMaterial mat = dynamic_pointer_cast<Material>(rd.m_mat->clone());
+                                spMaterial mat = dynamic_pointer_cast<Material>(rd.getMat()->clone());
                                 mat->m_base = gl->texture;
-
                                 s.mat = MaterialCache::mc().cache(*mat.get());
-                                rd.m_mat = s.mat;
+                                rd.setMat(s.mat);
                             }
                         }
                     }
@@ -223,11 +221,11 @@ namespace oxygine
         {
             float scaleFactor = rd.getScale();
 
-            qint32 offsetY = rd.m_bounds.pos.y;
+            qint32 offsetY = rd.getBounds().pos.y;
 
-            for (qint32 i = 0; i < _data.size(); ++i)
+            for (qint32 i = 0; i < m_data.size(); ++i)
             {
-                Symbol& s = _data[i];
+                Symbol& s = m_data[i];
                 s.y += offsetY;
 
                 if (s.gl.texture)
@@ -249,10 +247,10 @@ namespace oxygine
                 return;
             }
 
-            size_t prevOpt = rd.m_options;
-            rd.m_options = m_options;
+            size_t prevOpt = rd.getOptions();
+            rd.setOptions(m_options);
             resizeChildren(rd);
-            rd.m_options = prevOpt;
+            rd.setOptions(prevOpt);
         }
 
         void DivNode::draw(DrawContext& dc)

@@ -25,7 +25,7 @@ namespace oxygine
         qint32 _a = lerp(m_fadeIn ? 0 : 255, m_fadeIn ? 255 : 0, m_progress);
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        spNativeTexture rt = m_pp.m_rt;
+        spTexture rt = m_pp.m_rt;
         RectF src(0, 0,
                   m_pp.m_screen.getWidth() / (float)rt->getWidth(),
                   m_pp.m_screen.getHeight() / (float)rt->getHeight());

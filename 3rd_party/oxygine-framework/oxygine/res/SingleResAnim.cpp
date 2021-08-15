@@ -1,6 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
@@ -39,11 +39,10 @@ namespace oxygine
         {
             return;
         }
-        spNativeTexture texture = VideoDriver::instance->createTexture();
+        spTexture texture = VideoDriver::instance->createTexture();
         m_texture = texture;
 
         texture->init(original->lock());
-        texture->apply();
         ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
         Point originalSize = original->getSize();
 
@@ -88,7 +87,7 @@ namespace oxygine
 
     }
 
-    spNativeTexture SingleResAnim::getTexture() const
+    spTexture SingleResAnim::getTexture() const
     {
         return m_texture;
     }

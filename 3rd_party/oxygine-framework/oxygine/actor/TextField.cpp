@@ -279,8 +279,8 @@ namespace oxygine
                 m_root->resize(rd);
                 rd.end();
                 m_root->finalPass(rd);
-                rd.m_bounds = (rd.m_bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
-                m_textRect = rd.m_bounds;
+                rd.setBounds((rd.getBounds().cast<RectF>() / rd.getScale()).cast<Rect>());
+                m_textRect = rd.getBounds();
             }
         }
     }

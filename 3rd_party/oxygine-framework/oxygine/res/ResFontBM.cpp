@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
-#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 #include <qfile.h>
@@ -19,14 +18,10 @@ namespace oxygine
     spResource ResFontBM::create(CreateResourceContext& context)
     {
         spResFontBM font = spResFontBM();
-
         font = spResFontBM::create();
         font->_createFont(&context, false, false, 1);
         setNode(font, context.m_walker.getNode());
         context.m_resources->add(font);
-
-        //context.meta = context.meta.next_sibling();
-
         return font;
     }
 
@@ -49,9 +44,6 @@ namespace oxygine
         font->_createFont(&context, true, false, 1);
         setNode(font, context.m_walker.getNode());
         context.m_resources->add(font);
-
-        //context.meta = context.meta.next_sibling();
-
         return font;
     }
 

@@ -136,9 +136,15 @@ namespace oxygine
         qint32 _w;
         qint32 _h;
         ImageData::TextureFormat _tf;
-        NTP(qint32 w, qint32 h, ImageData::TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
+        NTP(qint32 w, qint32 h, ImageData::TextureFormat tf)
+            :
+              _w(w),
+              _h(h),
+              _tf(tf)
+        {
+        }
 
-        bool operator()(const spNativeTexture& t1, const spNativeTexture&) const
+        bool operator()(const spTexture& t1, const spTexture&) const
         {
             if (t1->getFormat() < _tf)
             {
@@ -151,7 +157,7 @@ namespace oxygine
             return t1->getHeight() < _h;
         }
 
-        static bool cmp(const spNativeTexture& t2, const spNativeTexture& t1)
+        static bool cmp(const spTexture& t2, const spTexture& t1)
         {
             if (t1->getFormat() > t2->getFormat())
             {
@@ -165,7 +171,7 @@ namespace oxygine
         }
     };
 
-    bool RenderTargetsManager::isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const
+    bool RenderTargetsManager::isGood(const spTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const
     {
         if (!t)
         {
@@ -184,7 +190,7 @@ namespace oxygine
         return false;
     }
 
-    spNativeTexture RenderTargetsManager::get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf)
+    spTexture RenderTargetsManager::get(spTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf)
     {
         w = alignTextureSize(w);
         h = alignTextureSize(h);
@@ -195,12 +201,12 @@ namespace oxygine
         }
 
 
-        spNativeTexture result;
+        spTexture result;
 
         auto it = std::lower_bound(m_free.cbegin(), m_free.cend(), result, NTP(w, h, tf));
         if (it != m_free.end())
         {
-            const spNativeTexture& t = *it;
+            const spTexture& t = *it;
             if (isGood(t, w, h, tf))
             {
                 result = t;
@@ -224,7 +230,7 @@ namespace oxygine
         timeMS tm = Clock::getTimeMS();
         for (size_t i = 0, sz = m_rts.size(); i < sz; ++i)
         {
-            spNativeTexture& texture = m_rts[i];
+            spTexture& texture = m_rts[i];
             if (texture->getRefCounter() == 1)
             {
                 auto it = std::lower_bound(m_free.cbegin(), m_free.cend(), texture, NTP::cmp);
@@ -238,7 +244,7 @@ namespace oxygine
 
         for (size_t i = 0, sz = m_free.size(); i < sz; ++i)
         {
-            spNativeTexture& t = m_free[i];
+            spTexture& t = m_free[i];
             timeMS createTime = t->getCreationTime();
             if (createTime + TEXTURE_LIVE > tm)
             {
@@ -296,7 +302,7 @@ namespace oxygine
         if (!m_postProcessItems.empty())
         {
             spVideoDriver driver = VideoDriver::instance;
-            spNativeTexture prevRT = driver->getRenderTarget();
+            spTexture prevRT = driver->getRenderTarget();
             ShaderProgram* sp = driver->getShaderProgram();
 
             for (size_t i = 0; i < m_postProcessItems.size(); ++i)
@@ -322,7 +328,7 @@ namespace oxygine
         m_rtm.reset();
     }
 
-    void PostProcess::pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
+    void PostProcess::pass(spTexture srcTexture, const Rect& srcRect, spTexture destTexture, const Rect& destRect, const QColor& color)
     {
         spVideoDriver driver = VideoDriver::instance;
 
@@ -346,7 +352,7 @@ namespace oxygine
                               AffineTransform::getIdentity(), qRgba(color));
 
         driver->draw(VideoDriver::PT_TRIANGLE_STRIP, decl, &quad.front(), quad.size());
-        driver->setTexture(0, spNativeTexture());
+        driver->setTexture(0, spTexture());
     }
 
     PostProcess::PostProcess(const PostProcessOptions& opt)

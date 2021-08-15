@@ -6,7 +6,6 @@ namespace oxygine
 {
     class SingleResAnim;
     using spSingleResAnim = intrusive_ptr<SingleResAnim>;
-
     class SingleResAnim : public QObject, public ResAnim
     {
         Q_OBJECT
@@ -15,11 +14,10 @@ namespace oxygine
         virtual ~SingleResAnim();
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder) override;
-
-        spNativeTexture getTexture() const;
+        spTexture getTexture() const;
 
     protected:
         QVector<unsigned char> m_data;
-        spNativeTexture m_texture;
+        spTexture m_texture;
     };
 }
