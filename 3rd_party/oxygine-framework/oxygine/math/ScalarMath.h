@@ -18,22 +18,6 @@ namespace oxygine
     }
     namespace scalar
     {
-        inline float sign(float s)
-        {return s < 0 ? -1.0f : 1.0f;}
-
-        inline double sign(double s)
-        {return s < 0 ? -1.0 : 1.0;}
-
-        inline bool equal(double a, double b, const double eps = 10e-8)
-        {
-            return ((a < b + eps) && (a > b - eps)) ? true : false;
-        }
-
-        inline bool equal(float a, float b, const float eps = (float)(10e-6))
-        {
-            return ((a < b + eps) && (a > b - eps)) ? true : false;
-        }
-
         template <class T>
         inline T clamp(T v, T min_, T max_)
         {

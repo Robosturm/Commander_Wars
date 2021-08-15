@@ -140,8 +140,8 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp
-    # core gl
-    3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.cpp
+    3rd_party/oxygine-framework/oxygine/core/texture.cpp
+    3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp

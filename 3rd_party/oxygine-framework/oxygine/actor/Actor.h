@@ -25,14 +25,46 @@ namespace oxygine
         {
         }
         virtual ~TweenOptions() = default;
-        TweenOptions& duration(timeMS duration) { m_duration = duration; return *this; }
-        TweenOptions& delay(timeMS delay) { m_delay = delay; return *this; }
-        TweenOptions& loops(qint32 loops) { m_loops = loops; return *this; }
-        TweenOptions& twoSides(bool enabled = true) { m_twoSides = enabled; return *this; }
-        TweenOptions& ease(Tween::EASE ease) { m_ease = ease; return *this; }
-        TweenOptions& detach(bool detach_ = true) { m_detach = detach_; return *this; }
-        TweenOptions& globalEase(Tween::EASE ease) { m_globalEase = ease; return *this; }
-        TweenOptions& doneCallback(const EventCallback& cb) { m_callback = cb; return *this; }
+        TweenOptions& duration(timeMS duration)
+        {
+            m_duration = duration;
+            return *this;
+        }
+        TweenOptions& delay(timeMS delay)
+        {
+            m_delay = delay;
+            return *this;
+        }
+        TweenOptions& loops(qint32 loops)
+        {
+            m_loops = loops;
+            return *this;
+        }
+        TweenOptions& twoSides(bool enabled = true)
+        {
+            m_twoSides = enabled;
+            return *this;
+        }
+        TweenOptions& ease(Tween::EASE ease)
+        {
+            m_ease = ease;
+            return *this;
+        }
+        TweenOptions& detach(bool detach_ = true)
+        {
+            m_detach = detach_;
+            return *this;
+        }
+        TweenOptions& globalEase(Tween::EASE ease)
+        {
+            m_globalEase = ease;
+            return *this;
+        }
+        TweenOptions& doneCallback(const EventCallback& cb)
+        {
+            m_callback = cb;
+            return *this;
+        }
 
         EventCallback   m_callback;
         timeMS          m_duration;
@@ -71,31 +103,91 @@ namespace oxygine
             return m_tweens;
         }
 
-        const Vector2&      getAnchor() const {return m_anchor;}
-        float               getAnchorX() const {return m_anchor.x;}
-        float               getAnchorY() const {return m_anchor.y;}
-        bool                getIsAnchorInPixels() {return (m_flags & flag_anchorInPixels) != 0;}
-        const Vector2&      getPosition() const {return m_pos;}
-        float               getX() const {return m_pos.x;}
-        float               getY() const {return m_pos.y;}
-        const Vector2&      getScale() const {return m_scale;}
-        float               getScaleX() const {return m_scale.x;}
-        float               getScaleY() const {return m_scale.y;}
+        const Vector2& getAnchor() const
+        {
+            return m_anchor;
+        }
+        float getAnchorX() const
+        {
+            return m_anchor.x;
+        }
+        float getAnchorY() const
+        {
+            return m_anchor.y;
+        }
+        bool getIsAnchorInPixels()
+        {
+            return (m_flags & flag_anchorInPixels) != 0;
+        }
+        const Vector2& getPosition() const
+        {
+            return m_pos;
+        }
+        float getX() const
+        {
+            return m_pos.x;
+        }
+        float getY() const
+        {
+            return m_pos.y;
+        }
+        const Vector2& getScale() const
+        {
+            return m_scale;
+        }
+        float getScaleX() const
+        {
+            return m_scale.x;
+        }
+        float getScaleY() const
+        {
+            return m_scale.y;
+        }
         /**Returns rotation angle in radians*/
-        float               getRotation() const {return m_rotation;}
+        float getRotation() const
+        {
+            return m_rotation;
+        }
         /**Returns rotation angle in degrees*/
-        float               getRotationDegrees() const {return m_rotation / M_PI * 180.0f;}
-        qint32              getPriority() const {return m_zOrder;}
-        virtual bool        getVisible() const {return (m_flags & flag_visible) != 0;}
-        Actor*              getParent() {return m_parent;}
-        const Actor*        getParent() const {return m_parent;}
-        const Vector2&      getSize() const {return m_size;}
+        float getRotationDegrees() const
+        {
+            return m_rotation / M_PI * 180.0f;
+        }
+        qint32 getPriority() const
+        {
+            return m_zOrder;
+        }
+        virtual bool getVisible() const
+        {
+            return (m_flags & flag_visible) != 0;
+        }
+        Actor* getParent()
+        {
+            return m_parent;
+        }
+        const Actor* getParent() const
+        {
+            return m_parent;
+        }
+        const Vector2& getSize() const
+        {
+            return m_size;
+        }
         /**Returns Size*Scale*/
-        Vector2             getScaledSize() const { return m_size.mult(m_scale); }
-        float               getWidth() const;
-        float               getScaledWidth() const {return m_size.x * m_scale.x;}
-        float               getHeight() const;
-        float               getScaledHeight() const {return m_size.y * m_scale.y;}
+        Vector2 getScaledSize() const
+        {
+            return m_size.mult(m_scale);
+        }
+        float getWidth() const;
+        float getScaledWidth() const
+        {
+            return m_size.x * m_scale.x;
+        }
+        float getHeight() const;
+        float getScaledHeight() const
+        {
+            return m_size.y * m_scale.y;
+        }
         unsigned char       getAlpha() const;
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
@@ -253,10 +345,6 @@ namespace oxygine
         void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
-
-        /**recursively removes all event listeners and added tweens*/
-        void clean();
-
         virtual bool getBounds(RectF&) const;
 
 

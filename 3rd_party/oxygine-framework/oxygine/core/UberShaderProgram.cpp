@@ -1,6 +1,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 namespace oxygine
@@ -71,7 +71,7 @@ namespace oxygine
             VideoDriver* driver = VideoDriver::instance.get();
             const VertexDeclaration* decl = driver->getVertexDeclaration();
 
-            spShaderProgramGL pgl = spShaderProgramGL::create(vs, fs, decl);
+            spShaderProgram pgl = spShaderProgram::create(vs, fs, decl);
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);

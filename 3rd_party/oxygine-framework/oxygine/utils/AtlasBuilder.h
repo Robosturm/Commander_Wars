@@ -15,7 +15,7 @@ namespace oxygine
         virtual ~AtlasBuilder() = default;
         void init(qint32 w, qint32 h, qint32 skipSize = 3);
         void clean();
-        bool add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset);
+        bool add(Image* dest, const ImageData& src, Rect& srcRect, const Point& offset);
         const Rect& getBounds() const
         {
             return m_bounds;

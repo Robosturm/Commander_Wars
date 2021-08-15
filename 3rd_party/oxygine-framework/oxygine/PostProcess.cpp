@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
@@ -103,13 +103,13 @@ namespace oxygine
             fs_blit = stream.readAll();
         }
         // create shaders
-        shaderBlurV = spShaderProgramGL::create(vs_v, fs_blur, decl);
+        shaderBlurV = spShaderProgram::create(vs_v, fs_blur, decl);
         driver->setShaderProgram(shaderBlurV.get());
         driver->setUniformInt("s_texture", 0);
-        shaderBlurH = spShaderProgramGL::create(vs_h, fs_blur, decl);
+        shaderBlurH = spShaderProgram::create(vs_h, fs_blur, decl);
         driver->setShaderProgram(shaderBlurH.get());
         driver->setUniformInt("s_texture", 0);
-        shaderBlit = spShaderProgramGL::create(vs_blit, fs_blit, decl);
+        shaderBlit = spShaderProgram::create(vs_blit, fs_blit, decl);
         driver->setShaderProgram(shaderBlit.get());
         driver->setUniformInt("s_texture", 0);
     }

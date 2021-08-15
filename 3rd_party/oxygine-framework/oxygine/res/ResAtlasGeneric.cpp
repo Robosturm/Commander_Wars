@@ -159,7 +159,7 @@ namespace oxygine
 
     void ResAtlasGeneric::applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge)
     {
-        if (!ad.texture)
+        if (ad.texture.get() == nullptr)
         {
             return;
         }
@@ -428,7 +428,7 @@ namespace oxygine
 
                     Rect dest(0, 0, 0, 0);
 
-                    if (!ad.texture)
+                    if (ad.texture.get() == nullptr)
                     {
                         nextAtlas(w, h, tf, ad);
                     }

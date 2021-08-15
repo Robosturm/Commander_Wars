@@ -158,5 +158,5 @@ namespace oxygine
         T x, y;
     };
 
-    typedef AffineTransformT<float> AffineTransform;
+    using AffineTransform = AffineTransformT<float>;
 }

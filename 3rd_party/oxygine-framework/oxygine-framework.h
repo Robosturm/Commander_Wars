@@ -52,7 +52,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
-#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Matrix.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"

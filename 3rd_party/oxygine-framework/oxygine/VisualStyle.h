@@ -11,21 +11,21 @@ namespace oxygine
         explicit VisualStyle();
         virtual ~VisualStyle() = default;
 
-        const QColor&       getColor() const
+        const QColor& getColor() const
         {
-            return _color;
+            return m_color;
         }
-        blend_mode          getBlendMode() const
+        blend_mode getBlendMode() const
         {
-            return _blend;
+            return m_blend;
         }
 
         void setColor(const QColor& color);
         void setBlendMode(blend_mode mode);
 
     protected:
-        QColor _color;
-        blend_mode _blend;
+        QColor m_color;
+        blend_mode m_blend;
     };
 
     class VStyleActor;
@@ -36,7 +36,7 @@ namespace oxygine
         explicit VStyleActor();
         virtual ~VStyleActor() = default;
 
-        blend_mode              getBlendMode() const
+        blend_mode getBlendMode() const
         {
             return m_vstyle.getBlendMode();
         }
@@ -48,9 +48,7 @@ namespace oxygine
         void setBlendMode(blend_mode mode);
         void setAddColor(const QColor& color);
         void setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
-
         virtual void setEnabled(bool value) override;
-
         typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
         typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
         QColor getDisableColor() const;

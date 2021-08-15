@@ -1,13 +1,13 @@
-#pragma once
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
 
 namespace oxygine
 {
     Texture::~Texture()
     {
-        release();
+        Texture::release();
     }
 
     void Texture::setLinearFilter(quint32 filter)
@@ -137,11 +137,12 @@ namespace oxygine
     void Texture::updateRegion(qint32 x, qint32 y, const ImageData& data_)
     {
         if (data_.m_w == 0 || data_.m_h == 0)
+        {
             return;
-
+        }
         ImageData data = data_;
-        assert(m_width >= data.m_w - x);
-        assert(m_height >= data.m_h - y);
+        Q_ASSERT(m_width >= data.m_w - x);
+        Q_ASSERT(m_height >= data.m_h - y);
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE7);
         window->glBindTexture(GL_TEXTURE_2D, (GLuint) m_id);
@@ -164,7 +165,7 @@ namespace oxygine
     void Texture::release()
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        if (m_id)
+        if (m_id > 0)
         {
             GLuint ids[] = {m_id};
             window->glDeleteTextures(1, ids);

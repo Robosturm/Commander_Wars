@@ -29,10 +29,10 @@ namespace oxygine
         return std::min(a.size.x, a.size.y) < std::min(b.size.x, b.size.y);
     }
 
-    bool AtlasBuilder::add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset_)
+    bool AtlasBuilder::add(Image* dest, const ImageData& src, Rect& srcRect, const Point& offset_)
     {
         Point offset = offset_;
-        if (dest)
+        if (dest != nullptr)
         {
             if (src.m_w == dest->getWidth())
             {
@@ -67,7 +67,7 @@ namespace oxygine
                 {
                     m_bounds.unite(srcRect);
                 }
-                if (dest)
+                if (dest != nullptr)
                 {
                     dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);
                 }

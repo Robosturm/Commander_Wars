@@ -8,8 +8,8 @@
 namespace oxygine
 {
     VisualStyle::VisualStyle()
-        : _color(Qt::white),
-          _blend(blend_premultiplied_alpha)
+        : m_color(Qt::white),
+          m_blend(blend_premultiplied_alpha)
     {
 
     }
@@ -25,12 +25,12 @@ namespace oxygine
 
     void VisualStyle::setColor(const QColor& color)
     {
-        _color = color;
+        m_color = color;
     }
 
     void VisualStyle::setBlendMode(blend_mode mode)
     {
-        _blend = mode;
+        m_blend = mode;
     }
 
     const QColor& VStyleActor::getColor() const

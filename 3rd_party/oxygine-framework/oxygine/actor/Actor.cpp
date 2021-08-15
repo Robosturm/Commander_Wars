@@ -939,17 +939,6 @@ namespace oxygine
         return true;
     }
 
-    void Actor::clean()
-    {
-        removeTweens();
-        removeAllEventListeners();
-
-        for (auto & child : m_children)
-        {
-            child->clean();
-        }
-    }
-
     bool Actor::getBounds(RectF& bounds) const
     {
         if (m_flags & flag_actorHasBounds)

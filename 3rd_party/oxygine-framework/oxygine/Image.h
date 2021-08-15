@@ -13,36 +13,28 @@ namespace oxygine
     public:
         explicit Image() = default;
         virtual ~Image() = default;
-
         bool init(QImage bf, bool premultiplied);
         void init(const ImageData& src);
         void init(qint32 w, qint32 h, ImageData::TextureFormat Format);
-
         void cleanup();
-
         void fillZero()
         {
             fill(0);
         }
         void fill(quint32 val);
-
-        quint32    getSizeVRAM() const
-        {
-            return (unsigned int)m_buffer.size();
-        }
-        qint32             getWidth() const;
-        qint32             getHeight() const;
-        const Point&    getSize() const;
+        qint32 getWidth() const;
+        qint32 getHeight() const;
+        const Point& getSize() const;
         ImageData::TextureFormat   getFormat() const;
-        ImageData   lock(lock_flags f = 0, const Rect* pRect = 0);
-        ImageData   lock(const Rect* pRect);
-        ImageData   lock(const Rect& pRect);
-        ImageData   lock(qint32 x, qint32 y, qint32 w, qint32 h);
-        ImageData   lock(qint32 x, qint32 y);
-        void        unlock();
-        void        updateRegion(qint32 x, qint32 y, const ImageData& data);
-        void        apply(const Rect*);
-        void        swap(Image& r);
+        ImageData lock(lock_flags f = 0, const Rect* pRect = 0);
+        ImageData lock(const Rect* pRect);
+        ImageData lock(const Rect& pRect);
+        ImageData lock(qint32 x, qint32 y, qint32 w, qint32 h);
+        ImageData lock(qint32 x, qint32 y);
+        void unlock();
+        void updateRegion(qint32 x, qint32 y, const ImageData& data);
+        void apply(const Rect*);
+        void swap(Image& r);
 
     private:
         ImageData m_image;
