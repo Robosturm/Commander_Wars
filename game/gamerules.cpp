@@ -973,6 +973,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getTransporterRefresh() const
+{
+    return m_transporterRefresh;
+}
+
+void GameRules::setTransporterRefresh(bool newTransporterRefresh)
+{
+    m_transporterRefresh = newTransporterRefresh;
+}
+
 bool GameRules::getAllowUnitTransfer() const
 {
     return m_allowUnitTransfer;
@@ -1240,6 +1250,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_terrainDefense;
     pStream << m_resellValue;
     pStream << m_allowUnitTransfer;
+    pStream << m_transporterRefresh;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1517,5 +1528,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_resellValue;
         pStream >> m_allowUnitTransfer;
+        pStream >> m_transporterRefresh;
     }
 }

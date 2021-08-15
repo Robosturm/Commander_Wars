@@ -3292,9 +3292,6 @@
         <file>mods/aw_styled_icons/images/units/icons/veteran.png</file>
         <file>mods/aw_styled_icons/images/units/res.xml</file>
         <file>mods/aw_styled_icons/mod.txt</file>
-        <file>mods/aw_unloading/scripts/actions/ACTION_UNLOAD.js</file>
-        <file>mods/aw_unloading/scripts/general/unit.js</file>
-        <file>mods/aw_unloading/mod.txt</file>
         <file>mods/awdc_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js</file>
         <file>mods/awdc_co/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js</file>
         <file>mods/awdc_co/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js</file>
@@ -3375,8 +3372,6 @@
         <file>mods/awdc_co/scripts/cos/co_yukio.js</file>
         <file>mods/awdc_co/scripts/cos/co_zandra.js</file>
         <file>mods/awdc_co/mod.txt</file>
-        <file>mods/awdc_flare/scripts/actions/ACTION_FLARE.js</file>
-        <file>mods/awdc_flare/mod.txt</file>
         <file>mods/awdc_powergain/scripts/general/co.js</file>
         <file>mods/awdc_powergain/mod.txt</file>
         <file>mods/awdc_terrain/scripts/building/silo.js</file>

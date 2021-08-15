@@ -83,10 +83,20 @@ public:
 
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
+
 signals:
     void signalVictory(qint32 team);
 public slots:
-
+    /**
+     * @brief getTransporterRefresh
+     * @return
+     */
+    bool getTransporterRefresh() const;
+    /**
+     * @brief setTransporterRefresh
+     * @param newTransporterRefresh
+     */
+    void setTransporterRefresh(bool newTransporterRefresh);
     /**
      * @brief getResellValue
      * @return
@@ -544,6 +554,7 @@ private:
     bool m_victory{false};
     float m_resellValue{0.0f};
     bool m_allowUnitTransfer{false};
+    bool m_transporterRefresh{true};
 
     Password m_password;
     QString m_description;

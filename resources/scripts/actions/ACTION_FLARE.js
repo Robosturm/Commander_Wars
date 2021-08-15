@@ -6,19 +6,18 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-        if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        if (unit.getHasMoved() === true)
         {
             return false;
         }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-                (action.getMovementTarget() === null))
+        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y))
         {
             if (unit.hasAmmo1())
             {
                 return true;
             }
         }
+        return false;
     };
     this.getActionText = function()
     {

@@ -109,7 +109,11 @@ var UNIT =
             var transportUnit = unit.getLoadedUnit(i);
             var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
             transportUnit.refill(refillMaterial);
-            transportUnit.setHasMoved(false);
+            var refresh = map.getGameRules().getTransporterRefresh();
+            if (refresh)
+            {
+                transportUnit.setHasMoved(false);
+            }
         }
     },
 

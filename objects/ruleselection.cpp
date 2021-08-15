@@ -535,6 +535,20 @@ void RuleSelection::showRuleSelection()
 
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
+    textField->setHtmlText(tr("Transporter refresh: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked units can move after getting unload. If the unit remained in their transporter for more than one turn."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    pCheckbox->setEnabled(m_ruleChangeEabled);
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getTransporterRefresh());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setTransporterRefresh, Qt::QueuedConnection);
+    y += 40;
+
+    textField = spLabel::create(textWidth - 40);
+    textField->setStyle(style);
     textField->setHtmlText(tr("Round Time: "));
     textField->setPosition(30, y);
     addChild(textField);

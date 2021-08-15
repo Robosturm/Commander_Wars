@@ -1,8 +1,0 @@
-name=Advance Wars Action Flare 
-description=This Mod changes the action flare behaviour so it can only be used, when the unit didn't move. Created by Robosturm
-version=1.0.0
-compatible_mods=
-incompatible_mods=
-required_mods=
-cosmetic=false
-tags=Advance Wars DC;Gameplay
