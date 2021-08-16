@@ -75,14 +75,6 @@ namespace oxygine
         };
     };
 
-    /*
-    template<class T>
-    VectorT2<T>::operator VectorT2<float> ()const
-    {
-        return VectorT2<float>(float(x), float(y));
-    }
-    */
-
     template<class T>
     bool VectorT2<T>::operator == (const VectorT2<T>& r) const
     {
@@ -152,21 +144,10 @@ namespace oxygine
     {
         T norm = T(1.0) / qSqrt(v.x * v.x + v.y * v.y);
         out = v;
-        /*
-        if (norm < 0.0001)
-        {
-            return out;
-        }
-        */
-
         out.x *= norm;
         out.y *= norm;
         return out;
     }
-
-
     typedef VectorT2<float> Vector2;
-    typedef VectorT2<double> VectorD2;
     typedef VectorT2<int> Point;
-    typedef VectorT2<short> PointS;
 }

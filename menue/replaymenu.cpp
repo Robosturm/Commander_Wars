@@ -364,10 +364,19 @@ void ReplayMenu::seekToDay(qint32 day)
         Console::print("Seeking to day " + QString::number(day), Console::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
         spGameMap pMap = GameMap::getInstance();
+        // save map position and scale
+        auto scale = pMap->getScale();
+        auto slidingPos = m_mapSliding->getPosition();
+        auto actorPos = m_mapSlidingActor->getPosition();
+        // load map state during that day
         m_ReplayRecorder.seekToDay(day);
         pMap = GameMap::getInstance();
         pMap->registerMapAtInterpreter();
-        m_mapSlidingActor->addChild(pMap);
+        m_mapSlidingActor->addChild(pMap);        
+        // restore map position and scale
+        pMap->setScale(scale);
+        m_mapSliding->setPosition(slidingPos);
+        m_mapSlidingActor->setPosition(actorPos);
         pMap->updateSprites();
         pMap->getGameRules()->createFogVision();
         updatePlayerinfo();

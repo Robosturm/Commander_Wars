@@ -245,39 +245,6 @@ var PLAYER =
         var armies = PLAYER.getArmies();
         return armies[id];
     },
-
-    getArmyName : function (army)
-    {
-        switch (army)
-        {
-            case "OS":
-                return qsTr("Orange Star");
-            case "BM":
-                return qsTr("Blue Moon");
-            case "GE":
-                return qsTr("Green Earth");
-            case "YC":
-                return qsTr("Yellow Comet");
-            case "BH":
-                return qsTr("Black Hole");
-            case "BG":
-                return qsTr("Bolt Guard");
-            case "ML":
-                return qsTr("Metall Army");
-            case "AC":
-                return qsTr("Amber Corona");
-            case "BT":
-                return qsTr("Brown Desert");
-            case "GS":
-                return qsTr("Jade Sun");
-            case "PF":
-                return qsTr("Pink Crystal");
-            case "TI":
-                return qsTr("Teal Guard");
-            case "DM":
-                return qsTr("Dark Matters");
-        }
-    },
     armies : ["OS",
               "BM",
               "GE",
@@ -291,6 +258,23 @@ var PLAYER =
               "PF",
               "TI",
               "DM"],
+    armieNames : [  qsTr("Orange Star"),
+                    qsTr("Blue Moon"),
+                    qsTr("Green Earth"),
+                    qsTr("Yellow Comet"),
+                    qsTr("Black Hole"),
+                    qsTr("Bolt Guard"),
+                    qsTr("Metall Army"),
+                    qsTr("Amber Corona"),
+                    qsTr("Brown Desert"),
+                    qsTr("Golden Sun"),
+                    qsTr("Pink Frontier"),
+                    qsTr("Teal Isle"),
+                    qsTr("Dark Matters")],
+    getArmyNames : function ()
+    {
+        return PLAYER.armieNames;
+    },
     // co selection infos
     getArmies : function()
     {

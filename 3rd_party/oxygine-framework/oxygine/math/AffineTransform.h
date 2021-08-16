@@ -14,9 +14,18 @@ namespace oxygine
         typedef AffineTransformT<T> affineTransform;
         typedef MatrixT<T> matrix;
 
-        AffineTransformT() {}
-        AffineTransformT(T a_, T b_, T c_, T d_, T x_, T y_): a(a_), b(b_), c(c_), d(d_), x(x_), y(y_) {}
-
+        AffineTransformT()
+        {
+        }
+        AffineTransformT(T a_, T b_, T c_, T d_, T x_, T y_)
+            : a(a_),
+              b(b_),
+              c(c_),
+              d(d_),
+              x(x_),
+              y(y_)
+        {
+        }
 
         explicit AffineTransformT(const matrix& m)
         {
@@ -125,7 +134,6 @@ namespace oxygine
                    );
         }
 
-
         static affineTransform& multiply(affineTransform& out, const affineTransform& t1, const affineTransform& t2)
         {
             out.a = t1.a * t2.a + t1.b * t2.c;
@@ -137,7 +145,6 @@ namespace oxygine
 
             return out;
         }
-
 
         affineTransform operator * (const affineTransform& t2) const
         {

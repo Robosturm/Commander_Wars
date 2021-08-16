@@ -15,10 +15,9 @@ namespace oxygine
         typedef MatrixT<T> matrix;
 
     public:
-
-        MatrixT();
-        MatrixT(const T*);
-        MatrixT(
+        explicit MatrixT() = default;
+        explicit MatrixT(const T*);
+        explicit MatrixT(
             T _11, T _12, T _13, T _14,
             T _21, T _22, T _23, T _24,
             T _31, T _32, T _33, T _34,
@@ -31,59 +30,10 @@ namespace oxygine
         vector4& operator[](qint32 row);
 
         void identity();
-        void inverse();
-        void transpose();
-        void translate(const vector3&);
-        void scale(const vector3&);
-        void buildSRT(const vector3& scale, T angle, const vector3& t);
-
-        MatrixT inversed() const;
-        MatrixT transposed() const;
-
-        vector2 transform(const vector2&)const;
-        vector3 transformVec3(const vector3&)const;
-        vector4 transformVec4(const vector4&)const;
-        vector3 getTranslation()const;
-
-        static MatrixT& lookAtLH(
-            MatrixT& out,
-            const vector3& Eye,
-            const vector3& At,
-            const vector3& Up);
-
-        static MatrixT& lookAtRH(
-            MatrixT& out,
-            const vector3& Eye,
-            const vector3& At,
-            const vector3& Up);
-
-        static MatrixT ident();
-        static MatrixT& inverse(MatrixT& out, const MatrixT& in);
-        static MatrixT& transpose(MatrixT& out, const MatrixT& in);
-        static MatrixT& rotationX(MatrixT& out, T angle);
-        static MatrixT& rotationY(MatrixT& out, T angle);
-        static MatrixT& rotationZ(MatrixT& out, T angle);
-        static MatrixT& translation(MatrixT& out, const vector3& v);
-        static MatrixT& scaling(MatrixT& out, const vector3& v);
-
-        static MatrixT& perspectiveFovLH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
-        static MatrixT& perspectiveFovRH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
-
-        static MatrixT& perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
-        static MatrixT& perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
 
         static MatrixT& orthoLH(MatrixT& out, T width, T height, T zNear, T zFar);
-
-        static vector2& transformVec2(vector2& out, const vector2& in, const MatrixT& mat);
-        static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
-        static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
-
-        constexpr T rcDot4(const MatrixT<T>& n, qint32 r, qint32 c) const
-        {
-            const vector4* mrows = (vector4*)ml;
-            const vector4* nrows = (vector4*)n.ml;
-            return (mrows[r].x * nrows[0][c] + mrows[r].y * nrows[1][c] + mrows[r].z * nrows[2][c] + mrows[r].w * nrows[3][c]);
-        }
+        static MatrixT& scaling(MatrixT& out, const vector3& v);
+        static MatrixT& translation(MatrixT& out, const vector3& v);
 
         union
         {
@@ -104,19 +54,57 @@ namespace oxygine
                      m41, m42, m43, m44;
             };
         };
+    private:
+        void inverse();
+        void transpose();
+        void translate(const vector3&);
+        void scale(const vector3&);
+        void buildSRT(const vector3& scale, T angle, const vector3& t);
+        MatrixT inversed() const;
+        MatrixT transposed() const;
+        vector2 transform(const vector2&)const;
+        vector3 transformVec3(const vector3&)const;
+        vector4 transformVec4(const vector4&)const;
+        vector3 getTranslation()const;
+        static MatrixT& lookAtLH(
+            MatrixT& out,
+            const vector3& Eye,
+            const vector3& At,
+            const vector3& Up);
+        static MatrixT& lookAtRH(
+            MatrixT& out,
+            const vector3& Eye,
+            const vector3& At,
+            const vector3& Up);
+        static MatrixT ident();
+        static MatrixT& inverse(MatrixT& out, const MatrixT& in);
+        static MatrixT& transpose(MatrixT& out, const MatrixT& in);
+        static MatrixT& rotationX(MatrixT& out, T angle);
+        static MatrixT& rotationY(MatrixT& out, T angle);
+        static MatrixT& rotationZ(MatrixT& out, T angle);
+        static MatrixT& perspectiveFovLH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
+        static MatrixT& perspectiveFovRH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
+        static MatrixT& perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+        static MatrixT& perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+        static vector2& transformVec2(vector2& out, const vector2& in, const MatrixT& mat);
+        static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
+        static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
 
+        constexpr T rcDot4(const MatrixT<T>& n, qint32 r, qint32 c) const
+        {
+            const vector4* mrows = (vector4*)ml;
+            const vector4* nrows = (vector4*)n.ml;
+            return (mrows[r].x * nrows[0][c] + mrows[r].y * nrows[1][c] + mrows[r].z * nrows[2][c] + mrows[r].w * nrows[3][c]);
+        }
     };
-
-    template <class T>
-    MatrixT<T>::MatrixT()
-    {
-    }
 
     template <class T>
     MatrixT<T>::MatrixT(const T* p)
     {
         for (qint32 i = 0; i < 16; ++i)
+        {
             ml[i] = p[i];
+        }
     }
 
     template <class T>
@@ -548,6 +536,5 @@ namespace oxygine
 
 
     typedef MatrixT<float> Matrix;
-    typedef MatrixT<double> MatrixD;
 
 }

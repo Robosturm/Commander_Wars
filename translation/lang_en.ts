@@ -3736,137 +3736,137 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="470"/>
+        <location filename="../menue/replaymenu.cpp" line="479"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="471"/>
+        <location filename="../menue/replaymenu.cpp" line="480"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="472"/>
+        <location filename="../menue/replaymenu.cpp" line="481"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="486"/>
+        <location filename="../menue/replaymenu.cpp" line="495"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="491"/>
+        <location filename="../menue/replaymenu.cpp" line="500"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="511"/>
+        <location filename="../menue/replaymenu.cpp" line="520"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="518"/>
+        <location filename="../menue/replaymenu.cpp" line="527"/>
         <source>Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="521"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="521"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="521"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="521"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="521"/>
+        <location filename="../menue/replaymenu.cpp" line="530"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="522"/>
+        <location filename="../menue/replaymenu.cpp" line="531"/>
         <source>Only Detailed Battle All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="522"/>
+        <location filename="../menue/replaymenu.cpp" line="531"/>
         <source>Only Detailed Battle Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="523"/>
+        <location filename="../menue/replaymenu.cpp" line="532"/>
         <source>Only Detailed Battle Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="523"/>
+        <location filename="../menue/replaymenu.cpp" line="532"/>
         <source>Only Detailed Battle Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="527"/>
+        <location filename="../menue/replaymenu.cpp" line="536"/>
         <source>Select which ingame animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="537"/>
+        <location filename="../menue/replaymenu.cpp" line="546"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="540"/>
+        <location filename="../menue/replaymenu.cpp" line="549"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="540"/>
+        <location filename="../menue/replaymenu.cpp" line="549"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="542"/>
+        <location filename="../menue/replaymenu.cpp" line="551"/>
         <source>Selects which battle animations are played when fighting an enemy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="554"/>
+        <location filename="../menue/replaymenu.cpp" line="563"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="558"/>
+        <location filename="../menue/replaymenu.cpp" line="567"/>
         <source>Selects the speed at which animations are played. Except battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="570"/>
+        <location filename="../menue/replaymenu.cpp" line="579"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="574"/>
+        <location filename="../menue/replaymenu.cpp" line="583"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="586"/>
+        <location filename="../menue/replaymenu.cpp" line="595"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="590"/>
+        <location filename="../menue/replaymenu.cpp" line="599"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
