@@ -16,9 +16,14 @@ namespace oxygine
         return 0;
     }
 
-    ImageData::ImageData(): m_w(0), m_h(0), m_bytespp(0), m_pitch(0), m_data(0), m_format(TF_UNDEFINED)
+    ImageData::ImageData()
+        : m_w(0),
+          m_h(0),
+          m_bytespp(0),
+          m_pitch(0),
+          m_data(0),
+          m_format(TF_UNDEFINED)
     {
-
     }
 
     ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, unsigned char* pData)
@@ -64,6 +69,6 @@ namespace oxygine
 
     unsigned char* ImageData::getPixelPtr(qint32 x, qint32 y) const
     {
-        return (unsigned char*)m_data + x * m_bytespp + y * m_pitch;
+        return m_data + x * m_bytespp + y * m_pitch;
     }
 }

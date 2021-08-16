@@ -38,7 +38,6 @@ namespace oxygine
         void _loadPage(const page& p, LoadResourcesContext*);
         void _load(LoadResourcesContext*) override;
         void _unload() override;
-        void _restore(Restorable*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, qint32 downsample);
         void _finalize();
 

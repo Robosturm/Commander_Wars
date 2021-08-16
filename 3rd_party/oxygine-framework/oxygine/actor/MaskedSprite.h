@@ -11,11 +11,11 @@ namespace oxygine
     public:
         explicit MaskedSprite() = default;
         virtual ~MaskedSprite() = default;
-        Sprite*    getMask() const;
-        bool        getUseRChannel() const;
+        Sprite* getMask() const;
+        bool getUseRChannel() const;
         void setMask(spSprite, bool useRChannel = false);
     protected:
-        void render(const RenderState& parentRS) override;
+        virtual void render(const RenderState& parentRS) override;
 
     private:
         spSprite m_mask;

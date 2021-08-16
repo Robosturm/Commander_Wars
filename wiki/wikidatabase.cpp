@@ -254,7 +254,7 @@ spWikipage WikiDatabase::getPage(PageData data)
     {
         ret = spDefaultWikipage::create(id);
     }
-    
+    ret->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     return ret;
 }
 

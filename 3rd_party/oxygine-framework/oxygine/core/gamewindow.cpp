@@ -1,18 +1,19 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
-#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
-#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-#include "3rd_party/oxygine-framework/oxygine/Clock.h"
+
 
 #include <QMouseEvent>
 #include <QTimerEvent>
@@ -50,8 +51,6 @@ namespace oxygine
         m_Timer.stop();
         rsCache().reset();
         rsCache().setDriver(nullptr);
-        PostProcess::clearPostProcessItems();
-        PostProcess::freeShaders();
         MaterialCache::mc().clear();
         STDRenderer::release();
         RenderDelegate::instance = nullptr;
@@ -123,7 +122,6 @@ namespace oxygine
         {
             rsCache().reset();
             VideoDriver::m_stats.start = Clock::getTimeMS();
-            PostProcess::updatePortProcessItems();
             rsCache().reset();
         }
         else
@@ -215,7 +213,6 @@ namespace oxygine
         Console::print("core::restore()", Console::eDEBUG);
         VideoDriver::instance->restore();
         STDRenderer::restore();
-        Restorable::restoreAll();
         oxygine::Stage::instance->setSize(w, h);
         Console::print("core::restore() done", Console::eDEBUG);
     }

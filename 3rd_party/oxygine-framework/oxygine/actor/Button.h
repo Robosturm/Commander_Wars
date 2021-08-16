@@ -17,9 +17,7 @@ namespace oxygine
         {
             return m_row;
         }
-
-        void setResAnim(const ResAnim* r, qint32  col = 0, qint32 row = 0) override;
-
+        virtual void setResAnim(const ResAnim* r, qint32  col = 0, qint32 row = 0) override;
         /**Sets which row from ResAnim should be used. Default value is 0. Could be used for CheckBoxes*/
         void setRow(qint32 row);
 
@@ -31,7 +29,7 @@ namespace oxygine
             statePressed
         };
         virtual void updateButtonState(state s);
-
+    protected:
         state m_state;
         const ResAnim* m_resAnim;
         qint32 m_row;

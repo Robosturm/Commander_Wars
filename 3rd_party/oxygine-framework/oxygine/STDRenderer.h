@@ -194,5 +194,7 @@ namespace oxygine
         UberShaderProgram* m_uberShader;
         quint32 m_baseShaderFlags;
         spTexture m_prevRT;
+    private:
+        static bool m_restored;
     };
 }

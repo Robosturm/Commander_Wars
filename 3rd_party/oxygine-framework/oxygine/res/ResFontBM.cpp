@@ -92,19 +92,6 @@ namespace oxygine
         m_loadCounter = 0;
     }
 
-    void ResFontBM::_restore(Restorable* r)
-    {
-        Restorable* object = r->_getRestorableObject();
-        for (pages::iterator i = m_pages.begin(); i != m_pages.end(); ++i)
-        {
-            const page& p = *i;
-            if (p.texture.get() == object)
-            {
-                _loadPage(p, &RestoreResourcesContext::m_instance);
-            }
-        }
-    }
-
     void ResFontBM::_loadPage(const page& p, LoadResourcesContext* load_context)
     {
         if (!load_context->isNeedProceed(p.texture))
@@ -130,7 +117,6 @@ namespace oxygine
         opt.linearFilter = m_linearFilter;
         opt.clamp2edge = m_clamp2edge;
         load_context->createTexture(opt);
-        p.texture->reg(Restorable::RestoreCallback(this, &ResFontBM::_restore));
     }
 
     void ResFontBM::_load(LoadResourcesContext* load_context)

@@ -28,7 +28,6 @@ namespace oxygine
         qint32 m_h;
         qint32 m_bytespp;
         qint32 m_pitch;
-
         unsigned char* m_data;
         TextureFormat m_format;
     };

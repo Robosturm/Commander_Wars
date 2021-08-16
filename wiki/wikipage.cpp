@@ -19,6 +19,7 @@ Wikipage::Wikipage()
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();

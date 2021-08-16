@@ -17,7 +17,7 @@ typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
 
 namespace oxygine
 {
-    static bool _restored = false;
+    bool STDRenderer::m_restored = false;
     spSTDRenderer STDRenderer::instance;
     spSTDRenderer STDRenderer::current;
     spTexture STDRenderer::white;
@@ -196,7 +196,7 @@ namespace oxygine
 
     void STDRenderer::reset()
     {
-        _restored = false;
+        m_restored = false;
         if (white)
         {
             white->release();
@@ -214,7 +214,7 @@ namespace oxygine
 
     bool STDRenderer::isReady()
     {
-        return _restored;
+        return m_restored;
     }
 
     void STDRenderer::restore()
@@ -238,7 +238,7 @@ namespace oxygine
         invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
 
-        _restored = true;
+        m_restored = true;
     }
 
 

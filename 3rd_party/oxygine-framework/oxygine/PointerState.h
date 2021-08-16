@@ -21,9 +21,15 @@ namespace oxygine
         virtual ~PointerState() = default;
 
         void init(pointer_index pointerIndex);
-        bool            isPressed(MouseButton mb = MouseButton_Touch) const;
-        pointer_index   getIndex() const {return m_index;}
-        const Vector2&  getPosition() const {return m_position;}
+        bool isPressed(MouseButton mb = MouseButton_Touch) const;
+        pointer_index getIndex() const
+        {
+            return m_index;
+        }
+        const Vector2&  getPosition() const
+        {
+            return m_position;
+        }
 
     private:
         friend class Input;

@@ -1,52 +1,17 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 
 namespace oxygine
 {
-
-    class UberShaderProgramBase: public Restorable
+    class UberShaderProgram
     {
     public:
         struct shader
         {
-            shader()
-                : flags(0)
-            {
-            }
             spShaderProgram program;
-            qint32 flags;
+            qint32 flags{0};
         };
-
-        explicit UberShaderProgramBase() = default;
-        virtual ~UberShaderProgramBase();
-
-        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
-        void release();
-        virtual ShaderProgram* getShaderProgram(qint32 flags) = 0;
-
-    protected:
-        Restorable* _getRestorableObject()
-        {
-            return this;
-        }
-        void _restore(Restorable*);
-        virtual void releaseShaders() {}
-
-    protected:
-        QString m_fracShader;
-        QString m_vertexShader;
-        QString m_fracTableShader;
-
-    };
-
-    class UberShaderProgram : public UberShaderProgramBase
-    {
-    public:
-        explicit UberShaderProgram();
-        virtual ~UberShaderProgram();
-
         enum
         {
             ALPHA_PREMULTIPLY = 1,
@@ -57,7 +22,6 @@ namespace oxygine
             COLOR_TABLE = 1 << 5,
             _SIZE = 1 << 6
         };
-
         enum
         {
             SAMPLER_BASE,
@@ -66,15 +30,18 @@ namespace oxygine
             SAMPLER_MASK,
             SAMPLER_NUM,
         };
-
-        ShaderProgram*  getShaderProgram(qint32 flags) override;
-
+        explicit UberShaderProgram() = default;
+        virtual ~UberShaderProgram();
+        ShaderProgram* getShaderProgram(qint32 flags);
         void apply(VideoDriver* driver, spTexture base, spTexture alpha);
-
+        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
+        void release();
     protected:
-        void releaseShaders() override;
-
+        void releaseShaders();
     protected:
+        QString m_fracShader;
+        QString m_vertexShader;
+        QString m_fracTableShader;
         shader m_shaders[_SIZE];
     };
 }

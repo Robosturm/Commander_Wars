@@ -20,7 +20,7 @@ namespace oxygine
             spTexture alpha;
             QString alpha_path;
         };
-        explicit ResAtlas();
+        explicit ResAtlas() = default;
         virtual ~ResAtlas();
         void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, qint32 w, qint32 h);
         const atlas& getAtlas(qint32 i) const
@@ -35,7 +35,6 @@ namespace oxygine
         virtual quint32 getLinearFilter() const override;
 
     protected:
-        void _restore(Restorable* r);
         void _load(LoadResourcesContext*) override;
         void _unload() override;
         spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
@@ -47,8 +46,8 @@ namespace oxygine
 
     protected:
         //settings from xml
-        quint32 m_linearFilter;
-        bool m_clamp2edge;
+        quint32 m_linearFilter{GL_LINEAR};
+        bool m_clamp2edge{true};
         QVector<unsigned char> m_hitTestBuffer;
         using atlasses = QVector<atlas>;
         atlasses m_atlasses;

@@ -4,14 +4,13 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include <QOpenGLShader>
 
 namespace oxygine
 {
     class Texture;
     using spTexture = intrusive_ptr<Texture>;
-    class Texture : public QObject, public Object, public Restorable
+    class Texture : public QObject, public Object
     {
         Q_OBJECT
         struct glPixel
@@ -65,12 +64,7 @@ namespace oxygine
         {
             m_CreationTime = time;
         }
-
-        virtual void release() override;
-        virtual Restorable* _getRestorableObject() override
-        {
-            return this;
-        }
+        void release();
         static GLuint getHighestTextureCount();
 
     protected:

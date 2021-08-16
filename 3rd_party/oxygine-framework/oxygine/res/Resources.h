@@ -139,6 +139,7 @@ namespace oxygine
         resourcesMap m_resourcesMap;
         using registeredResources = QVector<registeredResource>;
         static registeredResources m_registeredResources;
+        static ResAnim* m_defaultMissingRS;
         QString m_name;
         QVector<QDomDocument> m_docs;
     };

@@ -14,7 +14,7 @@
 namespace oxygine
 {
     Resources::registeredResources Resources::m_registeredResources;
-    ResAnim* _defaultMissingRS = nullptr;
+    ResAnim* Resources::m_defaultMissingRS = nullptr;
 
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, QString resTypeID)
     {
@@ -50,7 +50,7 @@ namespace oxygine
 
     void Resources::setDefaultMissingResAnim(ResAnim* rs)
     {
-        _defaultMissingRS = rs;
+        m_defaultMissingRS = rs;
     }
 
     Resources::Resources()
@@ -64,7 +64,7 @@ namespace oxygine
 
     ResAnim* Resources::getResAnim(QString id, error_policy ep) const
     {
-        return getT<ResAnim>(id, ep, _defaultMissingRS);
+        return getT<ResAnim>(id, ep, m_defaultMissingRS);
     }
 
     ResFont* Resources::getResFont(QString id, error_policy ep) const
@@ -207,7 +207,7 @@ namespace oxygine
 
     void Resources::add(spResource r, bool accessByShortenID)
     {
-        if (!r)
+        if (r.get() == nullptr)
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::add adding empty ressource");
             return;

@@ -5,29 +5,22 @@
 
 namespace oxygine
 {
-    void UberShaderProgramBase::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader)
+
+    UberShaderProgram::~UberShaderProgram()
+    {
+        releaseShaders();
+    }
+
+    void UberShaderProgram::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader)
     {
         m_fracShader = fracShader;
         m_vertexShader = vertexShader;
         m_fracTableShader = fracTableShader;
-
-        reg(RestoreCallback(this, &UberShaderProgramBase::_restore));
     }
 
-    UberShaderProgramBase::~UberShaderProgramBase()
-    {
-        UberShaderProgramBase::releaseShaders();
-    }
-
-    void UberShaderProgramBase::_restore(Restorable*)
-    {
-
-    }
-
-    void UberShaderProgramBase::release()
+    void UberShaderProgram::release()
     {
         releaseShaders();
-        unreg();
     }
 
     ShaderProgram* UberShaderProgram::getShaderProgram(qint32 flags)
@@ -80,16 +73,6 @@ namespace oxygine
             s.program = pgl;
         }
         return s.program.get();
-    }
-
-    UberShaderProgram::UberShaderProgram()
-    {
-
-    }
-
-    UberShaderProgram::~UberShaderProgram()
-    {
-        UberShaderProgram::releaseShaders();
     }
 
     void UberShaderProgram::releaseShaders()

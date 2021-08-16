@@ -9,6 +9,7 @@ namespace oxygine
         //based on memcpy
         void copy(const ImageData& src, const ImageData& dest);
         void blit(const ImageData& src, const ImageData& dest);
+        bool check(const ImageData& src, const ImageData& dest);
 
         template <class Op>
         void applyOperation(const Op& op, const ImageData& src, const ImageData& dest);
@@ -61,8 +62,6 @@ namespace oxygine
             }
         };
 
-        bool check(const ImageData& src, const ImageData& dest);
-
         template <class Op, class Src, class Dest>
         void applyOperationT(const Op& op, const Src& srcPixelFormat, Dest& destPixelFormat, const ImageData& src, const ImageData& dest)
         {
@@ -94,7 +93,6 @@ namespace oxygine
             }
         }
 
-
         template <class Op, class Dest>
         void applyOperationT(const Op& op, Dest& destPixelFormat, const ImageData& dest)
         {
@@ -122,7 +120,6 @@ namespace oxygine
             }
         }
 
-
         template<class Src, class Op>
         void SwitchSrcDestT(const Op& op, const Src& s, const ImageData& src, const ImageData& dest)
         {
@@ -148,8 +145,8 @@ namespace oxygine
                 {
                     PixelR8G8B8A8 s;
                     SwitchSrcDestT(op, s, src, dest);
-                }
                     break;
+                }
                 default:
                     oxygine::handleErrorPolicy(oxygine::ep_show_error, "applyOperation unknown format");
             }

@@ -42,7 +42,6 @@ namespace oxygine
     class VideoDriver;
     class Font;
     class CreateResourceContext;
-    class Restorable;
     class Event;
 
     template <class T>

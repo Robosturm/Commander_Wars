@@ -18,21 +18,27 @@ namespace oxygine
 
         explicit Box9Sprite();
         virtual ~Box9Sprite() = default;
-        StretchMode getVerticalMode() const {return m_vertMode;}
-        StretchMode getHorizontalMode() const {return m_horzMode;}
-        float       getGuideX1() const
+        StretchMode getVerticalMode() const
+        {
+            return m_vertMode;
+        }
+        StretchMode getHorizontalMode() const
+        {
+            return m_horzMode;
+        }
+        float getGuideX1() const
         {
             return m_guideX[0];
         }
-        float       getGuideX2() const
+        float getGuideX2() const
         {
             return m_guideX[1];
         }
-        float       getGuideY1() const
+        float getGuideY1() const
         {
             return m_guideY[0];
         }
-        float       getGuideY2() const
+        float getGuideY2() const
         {
             return m_guideY[1];
         }
@@ -45,15 +51,15 @@ namespace oxygine
         void setGuides(float x1, float x2, float y1, float y2);
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
-        bool isOn(const Vector2& localPosition, float localScale) override;
-        RectF getDestRect() const override;
+        virtual bool isOn(const Vector2& localPosition, float localScale) override;
+        virtual RectF getDestRect() const override;
 
     protected:
-        void sizeChanged(const Vector2& size)  override;
-        void animFrameChanged(const AnimationFrame& f) override;
-        void changeAnimFrame(const AnimationFrame& f) override;
+        virtual void sizeChanged(const Vector2& size)  override;
+        virtual void animFrameChanged(const AnimationFrame& f) override;
+        virtual void changeAnimFrame(const AnimationFrame& f) override;
+        virtual void doRender(const RenderState&) override;
         void prepare() const;
-        void doRender(const RenderState&) override;
 
     protected:
         mutable bool m_prepared;

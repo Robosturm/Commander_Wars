@@ -188,16 +188,25 @@ namespace oxygine
         {
             return m_size.y * m_scale.y;
         }
-        unsigned char       getAlpha() const;
-        const spClock&      getClock() const;
-        virtual RectF       getDestRect() const;
+        unsigned char getAlpha() const;
+        const spClock& getClock() const;
+        virtual RectF getDestRect() const;
         /**returns touch id if actor is pressed down*/
-        pointer_index       getPressed(MouseButton b = MouseButton_Touch) const;
+        pointer_index getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
-        pointer_index       getOvered() const;
-        bool                getTouchEnabled() const { return (m_flags & flag_touchEnabled) != 0; }
-        bool                getTouchChildrenEnabled() const { return (m_flags & flag_touchChildrenEnabled) != 0; }
-        RenderDelegate*     getRenderDelegate() { return m_rdelegate; }
+        pointer_index getOvered() const;
+        bool getTouchEnabled() const
+        {
+            return (m_flags & flag_touchEnabled) != 0;
+        }
+        bool getTouchChildrenEnabled() const
+        {
+            return (m_flags & flag_touchChildrenEnabled) != 0;
+        }
+        RenderDelegate* getRenderDelegate()
+        {
+            return m_rdelegate;
+        }
 
         /**return local actor transformation*/
         const Transform&      getTransform() const;

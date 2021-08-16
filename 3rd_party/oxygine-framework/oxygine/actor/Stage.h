@@ -40,7 +40,7 @@ namespace oxygine
         }
     protected:
         void onDeactivate(Event*);
-        bool isOn(const Vector2& localPosition, float localScale) override;
+        virtual bool isOn(const Vector2& localPosition, float localScale) override;
 
     protected:
         timeMS m_statUpdate;

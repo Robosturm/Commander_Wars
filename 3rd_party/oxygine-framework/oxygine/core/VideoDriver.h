@@ -6,7 +6,6 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector4.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include <qopengl.h>

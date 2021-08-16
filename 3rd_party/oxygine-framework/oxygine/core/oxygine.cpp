@@ -5,7 +5,6 @@
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
 #include "3rd_party/oxygine-framework/oxygine/PointerState.h"
-#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
@@ -22,13 +21,9 @@ namespace oxygine
 {
     namespace core
     {
-
         void reset()
         {
             Console::print("core::reset()", Console::eDEBUG);
-            PostProcess::clearPostProcessItems();
-            Restorable::releaseAll();
-            PostProcess::freeShaders();
             STDRenderer::reset();
             VideoDriver::instance->reset();
             Console::print("core::reset() done", Console::eDEBUG);

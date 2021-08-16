@@ -5961,7 +5961,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="36"/>
+        <location filename="../wiki/wikipage.cpp" line="37"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>

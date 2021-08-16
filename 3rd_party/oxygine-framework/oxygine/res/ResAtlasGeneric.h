@@ -23,6 +23,6 @@ namespace oxygine
         virtual void _unload() override;
 
     private:
-        qint32 m_current;
+        qint32 m_current{0};
     };
 }

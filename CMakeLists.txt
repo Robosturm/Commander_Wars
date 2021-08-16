@@ -125,7 +125,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Material.cpp
     3rd_party/oxygine-framework/oxygine/MaterialCache.cpp
     3rd_party/oxygine-framework/oxygine/PointerState.cpp
-    3rd_party/oxygine-framework/oxygine/PostProcess.cpp
     3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp
     3rd_party/oxygine-framework/oxygine/STDRenderer.cpp
     3rd_party/oxygine-framework/oxygine/VisualStyle.cpp
@@ -135,7 +134,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/Object.cpp
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
     3rd_party/oxygine-framework/oxygine/core/Renderer.h
-    3rd_party/oxygine-framework/oxygine/core/Restorable.cpp
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
     3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp
     3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
@@ -157,10 +155,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp
     # tween
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenAlphaFade.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenGlow.cpp
-    3rd_party/oxygine-framework/oxygine/tween/TweenOutline.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
