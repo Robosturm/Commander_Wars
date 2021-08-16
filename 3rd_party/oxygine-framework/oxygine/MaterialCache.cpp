@@ -46,6 +46,12 @@ namespace oxygine
         std::swap(fresh, m_materials);
     }
 
+    qint32 MaterialCache::getSize()
+    {
+        QMutexLocker alock(&m_lock);
+        return m_materials.size();
+    }
+
     void MaterialCache::removeUnused()
     {
         QMutexLocker alock(&m_lock);

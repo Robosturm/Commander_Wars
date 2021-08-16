@@ -25,138 +25,6 @@ namespace oxygine
         AtlasBuilder atlas;
     };
 
-    qint32 roundUp(qint32 numToRound, qint32 multiple)
-    {
-        if (multiple == 0)
-        {
-            return numToRound;
-        }
-        qint32 remainder = numToRound % multiple;
-        if (remainder == 0)
-        {
-            return numToRound;
-        }
-        return numToRound + multiple - remainder;
-    }
-
-
-    qint32 HIT_TEST_DOWNSCALE = 4;
-    const qint32 ALIGN = sizeof(int32_t);
-    const qint32 BITS = ALIGN * 8;
-
-    void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest)
-    {
-        qint32 w = srcImage.m_w;
-        qint32 h = srcImage.m_h;
-
-        size_t pos = alpha.size();
-        adata.data = reinterpret_cast<unsigned char*>(pos);
-        adata.w = roundUp(w, HIT_TEST_DOWNSCALE) / HIT_TEST_DOWNSCALE;
-        adata.h = roundUp(h, HIT_TEST_DOWNSCALE) / HIT_TEST_DOWNSCALE;
-
-
-        qint32 lineInts = roundUp(adata.w, BITS) / BITS;
-
-        qint32 destPitch = lineInts * ALIGN;
-
-        qint32 size = adata.h * destPitch;
-
-        alpha.resize(pos + size + 10);
-
-
-        const unsigned char* srcData = srcImage.m_data;
-        qint32 srcStep = srcImage.m_bytespp;
-        qint32 srcPitch = srcImage.m_pitch;
-
-        unsigned char* destData = &alpha[pos];
-
-        adata.pitch = destPitch;
-
-        const unsigned char* srcRow = srcData;
-        unsigned char* destRow = destData;
-
-
-        qint32 minX = w;
-        qint32 minY = h;
-        qint32 maxX = 0;
-        qint32 maxY = 0;
-
-        bool hasAlpha = false;
-
-        for (qint32 y = 0; y != h; y += 1)
-        {
-            const unsigned char* srcLine = srcRow;
-            int32_t* destLine = reinterpret_cast<int32_t*>(destRow);
-
-            bool lineWithAlpha = false;
-
-
-            for (qint32 x = 0; x != w; x += 1)
-            {
-                PixelR8G8B8A8 pd;
-                Pixel p;
-                pd.getPixel(srcLine, p);
-                if (p.a > 5)
-                {
-                    hasAlpha = true;
-
-                    qint32 dx = x / HIT_TEST_DOWNSCALE;
-                    qint32 n = dx / BITS;
-                    qint32 b = dx % BITS;
-
-                    destLine[n] |= 1 << b;
-
-                    lineWithAlpha = true;
-                    if (x > maxX)
-                    {
-                        maxX = x;
-                    }
-                    else if (x < minX)
-                    {
-                        minX = x;
-                    }
-                }
-                srcLine += srcStep;
-            }
-
-            if (lineWithAlpha)
-            {
-                if (minY == h)
-                    minY = y;
-                maxY = y;
-            }
-
-            if (y % HIT_TEST_DOWNSCALE == HIT_TEST_DOWNSCALE - 1)
-            {
-                //reset line
-                destRow += destPitch;
-            }
-
-            srcRow += srcPitch;
-        }
-
-        //if image is transparent
-        if (minX == w && maxX == 0)
-        {
-            minX = 0;
-            maxX = 0;
-        }
-
-        if (minY == h && maxY == 0)
-        {
-            minY = 0;
-            maxY = 0;
-        }
-
-        bounds = Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
-
-        if (!hasAlpha || !hittest)
-        {
-            alpha.resize(pos);
-            adata = HitTestData();
-        }
-    }
-
     void ResAtlasGeneric::applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge)
     {
         if (ad.texture.get() == nullptr)
@@ -422,7 +290,7 @@ namespace oxygine
                     Rect bounds(0, 0, srcImage_.m_w, srcImage_.m_h);
                     if (trim)
                     {
-                        makeAlpha(srcImage_, bounds, m_hitTestBuffer, adata, walker.getAlphaHitTest());
+                        Image::makeAlpha(srcImage_, bounds, m_hitTestBuffer, adata, walker.getAlphaHitTest());
                     }
                     src = srcImage_.getRect(bounds);
 

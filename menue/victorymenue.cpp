@@ -731,17 +731,17 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     {
         width = qSqrt(lineWidth * lineWidth * m * m / (m * m + 1));
     }
+
+    // initial rect
     oxygine::spColorRectSprite rect = oxygine::spColorRectSprite::create();
     rect->setColor(color);
-    rect->setPosition(0, 0);
+    rect->setPosition(-1, 0);
     rect->setSize(lineWidth + 1, lineWidth);
-    rect->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.5f, 0.5f));
     pRet->addChild(rect);
+    // tilted rect
     double angle = 0;
-
     rect = oxygine::spColorRectSprite::create();
     rect->setColor(color);
-    rect->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.5f, 0.5f));
     qint32 x = end.x() - width;
     if (x > 0)
     {
@@ -764,11 +764,11 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     rect->setSize(lineLength, lineWidth);
     rect->setRotation(angle);
     pRet->addChild(rect);
+    // finishing rect
     rect = oxygine::spColorRectSprite::create();
     rect->setColor(color);
-    rect->setPosition(end.x() - lineWidth - 1, end.y());
+    rect->setPosition(end.x() - lineWidth, end.y());
     rect->setSize(lineWidth + 1, lineWidth);
-    rect->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.5f, 0.5f));
     pRet->addChild(rect);
     return pRet;
 }

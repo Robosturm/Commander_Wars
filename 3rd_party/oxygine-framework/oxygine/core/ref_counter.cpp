@@ -29,7 +29,7 @@ namespace oxygine
             }
             else
             {
-                oxygine::ResAnim* pObj1 = dynamic_cast<oxygine::ResAnim*>(this);
+                oxygine::Texture* pObj1 = dynamic_cast<oxygine::Texture*>(this);
                 MapMover* pObj2 = dynamic_cast<MapMover*>(this);
                 NetworkInterface* pObj3 = dynamic_cast<NetworkInterface*>(this);
                 if (GameWindow::getWindow() != nullptr &&

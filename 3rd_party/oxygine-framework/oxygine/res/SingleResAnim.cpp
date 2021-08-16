@@ -10,8 +10,6 @@
 namespace oxygine
 {
 
-    void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest);
-
     SingleResAnim::SingleResAnim()
     {
         setObjectName("SingleResAnim");
@@ -35,15 +33,15 @@ namespace oxygine
     void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         m_scaleFactor = scaleFactor;
-        if (!original)
+        if (original == nullptr)
         {
             return;
         }
-        spTexture texture = VideoDriver::instance->createTexture();
-        m_texture = texture;
-
-        texture->init(original->lock());
-        ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
+        m_frames.clear();
+        m_texture = nullptr;
+        m_texture = VideoDriver::instance->createTexture();
+        m_texture->init(original->lock());
+        ResAnim::init(m_texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
         Point originalSize = original->getSize();
 
         qint32 frame_width = originalSize.x / columns;
@@ -63,7 +61,7 @@ namespace oxygine
                 Rect bounds;
                 HitTestData ht;
                 const ImageData& im = original->lock(src);
-                makeAlpha(im, bounds, m_data, ht, true);
+                Image::makeAlpha(im, bounds, m_data, ht, true);
 
                 m_frames[i].setHitTestData(ht);
                 ++i;

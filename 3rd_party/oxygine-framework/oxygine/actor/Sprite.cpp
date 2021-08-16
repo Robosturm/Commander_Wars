@@ -7,6 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
 
 namespace oxygine
 {
@@ -41,8 +42,6 @@ namespace oxygine
         changeAnimFrame(f);
     }
 
-    extern qint32 HIT_TEST_DOWNSCALE;
-
     bool Sprite::isOn(const Vector2& localPosition, float localScale)
     {
         if (!Actor::isOn(localPosition, localScale))
@@ -65,7 +64,7 @@ namespace oxygine
         {
             Vector2 pos = localPosition * m_frame.getResAnim()->getAppliedScale();
             pos = pos.div(m_localScale);
-            Point lp = pos.cast<Point>() / HIT_TEST_DOWNSCALE;
+            Point lp = pos.cast<Point>() / Image::HIT_TEST_DOWNSCALE;
             Rect r(0, 0, ad.w, ad.h);
             if (r.pointIn(lp))
             {
@@ -105,7 +104,7 @@ namespace oxygine
             }
         }
         auto & children = pActor->getChildren();
-        for (auto child : children)
+        for (auto & child : children)
         {
             oxygine::Sprite* pSprite1 = dynamic_cast<oxygine::Sprite*>(child.get());
             if (pSprite1 != nullptr)

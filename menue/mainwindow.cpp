@@ -563,7 +563,6 @@ void Mainwindow::quitGame()
 
 void Mainwindow::onEnter()
 {
-    Console::print("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()) + " C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "main";

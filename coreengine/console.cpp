@@ -60,6 +60,7 @@ const QString Console::functions[] =
     QString("version"),
     QString("setDeveloperMode"),
     QString("extractResources"),
+    QString("memoryUsage"),
     QString("")
 };
 const char* const Console::compileTime = __TIME__;
@@ -392,6 +393,14 @@ void Console::extractResources()
         }
     }
     Console::print("Extracting files done. Extracted: " + QString::number(count) + " files", Console::eINFO);
+}
+
+void Console::memoryUsage()
+{
+    Console::print("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()), Console::eINFO);
+    Console::print("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
+    Console::print("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
+    Console::print("Material Cache=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
 }
 
 void Console::createfunnymessage(qint32 message){

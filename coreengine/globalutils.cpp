@@ -130,6 +130,20 @@ qint32 GlobalUtils::roundUp(float value)
     }
 }
 
+qint32 GlobalUtils::roundUpInt(qint32 numToRound, qint32 multiple)
+{
+    if (multiple == 0)
+    {
+        return numToRound;
+    }
+    qint32 remainder = numToRound % multiple;
+    if (remainder == 0)
+    {
+        return numToRound;
+    }
+    return numToRound + multiple - remainder;
+}
+
 qint32 GlobalUtils::roundDown(float value)
 {
     qint32 roundDown = static_cast<qint32>(value);

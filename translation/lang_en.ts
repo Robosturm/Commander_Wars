@@ -2944,7 +2944,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="592"/>
+        <location filename="../menue/mainwindow.cpp" line="591"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>

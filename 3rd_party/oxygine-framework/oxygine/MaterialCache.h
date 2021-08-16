@@ -30,6 +30,7 @@ namespace oxygine
         }
         void clear();
         void removeUnused();
+        qint32 getSize();
         static MaterialCache& mc();
     protected:
         spMaterial clone_(const Material& other);

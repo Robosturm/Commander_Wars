@@ -11,8 +11,9 @@ namespace oxygine
 {
     class Texture;
     using spTexture = intrusive_ptr<Texture>;
-    class Texture : public Object, public Restorable
+    class Texture : public QObject, public Object, public Restorable
     {
+        Q_OBJECT
         struct glPixel
         {
             qint32 format;
@@ -70,6 +71,8 @@ namespace oxygine
         {
             return this;
         }
+        static GLuint getHighestTextureCount();
+
     protected:
         friend class VideoDriver;
         friend class intrusive_ptr<Texture>;
@@ -86,5 +89,6 @@ namespace oxygine
         QVector<unsigned char> m_data;
     private:
         timeMS m_CreationTime;
+        static GLuint m_highestTextureCount;
     };
 }

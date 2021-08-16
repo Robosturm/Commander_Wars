@@ -155,6 +155,10 @@ public slots:
      */
     void extractResources();
     /**
+     * @brief memoryUsage
+     */
+    void memoryUsage();
+    /**
      * @brief update
      * @param us
      */

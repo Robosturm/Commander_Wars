@@ -1,6 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 
 #include <qimage.h>
 
@@ -11,6 +12,10 @@ namespace oxygine
     class Image : public Texture
     {
     public:
+        static qint32 HIT_TEST_DOWNSCALE;
+        static const qint32 ALIGN = sizeof(int32_t);
+        static const qint32 BITS = ALIGN * 8;
+
         explicit Image() = default;
         virtual ~Image() = default;
         bool init(QImage bf, bool premultiplied);
@@ -35,7 +40,7 @@ namespace oxygine
         void updateRegion(qint32 x, qint32 y, const ImageData& data);
         void apply(const Rect*);
         void swap(Image& r);
-
+        static void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest);
     private:
         ImageData m_image;
         size_t m_offset{0};//buffer offset

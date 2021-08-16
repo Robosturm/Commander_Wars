@@ -5,6 +5,7 @@
 
 namespace oxygine
 {
+    GLuint Texture::m_highestTextureCount = 0;
     Texture::~Texture()
     {
         Texture::release();
@@ -118,6 +119,11 @@ namespace oxygine
         return ids[0];
     }
 
+    GLuint Texture::getHighestTextureCount()
+    {
+        return m_highestTextureCount;
+    }
+
     Texture::glPixel Texture::SurfaceFormat2GL(ImageData::TextureFormat format)
     {
         glPixel pixel;
@@ -179,7 +185,7 @@ namespace oxygine
 
         GameWindow* window = oxygine::GameWindow::getWindow();
 
-        GLuint id = createTexture();
+        GLuint id = Texture::createTexture();
 
         glPixel p = SurfaceFormat2GL(tf);
         window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
@@ -201,8 +207,11 @@ namespace oxygine
 
     void Texture::init(const ImageData& src)
     {
-        GLuint id = createTexture();
-
+        GLuint id = Texture::createTexture();
+        if (id > m_highestTextureCount)
+        {
+            m_highestTextureCount = id;
+        }
         glPixel p = SurfaceFormat2GL(src.m_format);
         GameWindow* window = oxygine::GameWindow::getWindow();
 
