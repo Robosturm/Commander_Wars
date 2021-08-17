@@ -226,7 +226,7 @@ void IngameInfoBar::updatePlayerInfo()
                 }
 
 
-                oxygine::TextStyle style = FontManager::getMainFont16();
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16());
                 style.color = FontManager::getFontColor();
                 style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
                 style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -500,7 +500,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
 
 void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 {
-    oxygine::TextStyle smallStyle = FontManager::getMainFont16();
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
     smallStyle.color = FontManager::getFontColor();
     smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
@@ -742,7 +742,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
 {
-    oxygine::TextStyle smallStyle = FontManager::getMainFont16();
+    oxygine::TextStyle smallStyle = oxygine::TextStyle(FontManager::getMainFont16());
     smallStyle.color = FontManager::getFontColor();
     smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     smallStyle.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;

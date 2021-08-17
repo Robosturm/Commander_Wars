@@ -136,7 +136,7 @@ EditorMenue::EditorMenue()
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -466,7 +466,7 @@ void EditorMenue::showResizeMap()
     spGameMap pMap = GameMap::getInstance();
     spGenericBox pBox = spGenericBox::create(true);
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

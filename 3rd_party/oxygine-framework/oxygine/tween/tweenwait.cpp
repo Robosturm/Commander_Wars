@@ -1,4 +1,4 @@
-#include "coreengine/tweens/tweenwait.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenwait.h"
 
 TweenWait::TweenWait()
 {

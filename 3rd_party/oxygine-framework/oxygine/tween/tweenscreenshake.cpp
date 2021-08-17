@@ -1,4 +1,4 @@
-#include "coreengine/tweens/tweenscreenshake.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 #include "coreengine/globalutils.h"
 #include <QtMath>
 

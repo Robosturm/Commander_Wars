@@ -2,9 +2,6 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-
-#include "coreengine/tweens/tweenscreenshake.h"
-
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 

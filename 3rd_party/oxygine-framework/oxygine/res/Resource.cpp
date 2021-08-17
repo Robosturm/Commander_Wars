@@ -7,35 +7,19 @@ namespace oxygine
     const char* const Resource::RCC_PREFIX_PATH = ":/";
 
     Resource::Resource()
-        : m_parent(0),
-          m_loadCounter(0),
-          m_useLoadCounter(false)
+        : m_parent(0)
     {
 
     }
 
-    void Resource::load(LoadResourcesContext* context /* = 0 */)
+    void Resource::load()
     {
-        if (!context)
-        {
-            context = LoadResourcesContext::get();
-        }
-
-        if (m_loadCounter == 0)
-        {
-            _load(context);
-        }
-
-        m_loadCounter = m_useLoadCounter ? m_loadCounter + 1 : 1;
+        _load();
     }
 
     void Resource::unload()
     {
-        if (m_loadCounter == 1)
-        {
-            _unload();
-        }
-        m_loadCounter = m_useLoadCounter ? m_loadCounter - 1 : 0;
+        _unload();
     }
 
     QString Resource::extractID(const QDomElement& node, QString file, QString def)

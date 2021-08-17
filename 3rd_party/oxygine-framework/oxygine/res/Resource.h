@@ -15,7 +15,7 @@ namespace oxygine
             virtual ~Resource() = default;
 
             /**Loads resource heavy data into memory*/
-            void load(LoadResourcesContext* context = 0);
+            void load();
             /**Unloads heavy data from memory.
             All internal Objects (fonts, textures, sounds etc) remain valid but not usable (can't be displayed, played etc).
             */
@@ -27,21 +27,9 @@ namespace oxygine
             {
                 return m_node;
             }
-            bool getUseLoadCounter() const
-            {
-                return m_useLoadCounter;
-            }
-            qint32 getLoadCounter() const
-            {
-                return m_loadCounter;
-            }
             Resource* getParent() const
             {
                 return m_parent;
-            }
-            void setUseLoadCounter(bool v)
-            {
-                m_useLoadCounter = v;
             }
             void setParent(Resource* p)
             {
@@ -73,13 +61,11 @@ namespace oxygine
             {
                 res->m_node = node;
             }
-            virtual void _load(LoadResourcesContext* context = 0) = 0;
+            virtual void _load() = 0;
             virtual void _unload() = 0;
 
         protected:
             Resource* m_parent;
-            qint32 m_loadCounter;
-            bool m_useLoadCounter;
             QDomElement m_node;
             QString m_name;
 

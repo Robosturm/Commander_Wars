@@ -1,20 +1,18 @@
 #include "qcolor.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/tweens/tweentogglevisibility.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
-#include "coreengine/tweens/tweenscreenshake.h"
 
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/player.h"
-#include "game/gameanimation/battleanimationsprite.h"
-#include "game/gameanimation/battleanimation.h"
 #include "game/co.h"
 
+#include "game/gameanimation/battleanimationsprite.h"
+#include "game/gameanimation/battleanimation.h"
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 const QString BattleAnimationSprite::impactUnitOverlayAnimation = "loadImpactUnitOverlayAnimation";

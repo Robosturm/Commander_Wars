@@ -18,8 +18,6 @@
 
 #include "menue/editormenue.h"
 
-#include "coreengine/tweens/tweentogglevisibility.h"
-
 const float Unit::animationSpeed = 1.5f;
 
 Unit::Unit()

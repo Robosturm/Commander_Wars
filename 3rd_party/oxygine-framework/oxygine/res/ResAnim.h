@@ -74,7 +74,7 @@ namespace oxygine
         void setResPath(const QString &value);
 
     protected:
-        virtual void _load(LoadResourcesContext* ctx = 0) override;
+        virtual void _load() override;
         virtual void _unload() override;
 
     protected:

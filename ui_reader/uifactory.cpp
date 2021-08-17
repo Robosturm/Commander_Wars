@@ -638,7 +638,7 @@ QString UiFactory::getStringValue(QString line)
 
 oxygine::TextStyle UiFactory::getStyle(QString styleName)
 {
-    oxygine::TextStyle style = FontManager::getInstance()->getResFont(styleName);
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont(styleName));
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

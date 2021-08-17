@@ -14,7 +14,7 @@ ProgressInfoBar::ProgressInfoBar(qint32 width, qint32 heigth, QString text, floa
     m_Progressbar->setColor(QColor(35, 180, 80, 255));
     addChild(m_Progressbar);
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;

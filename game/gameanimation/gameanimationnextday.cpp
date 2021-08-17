@@ -88,7 +88,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         }
     }
 
-    oxygine::TextStyle headline = FontManager::getMainFont72();
+    oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getMainFont72());
     headline.color = FontManager::getFontColor();
     headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;

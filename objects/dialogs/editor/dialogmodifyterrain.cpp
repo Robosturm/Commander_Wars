@@ -50,7 +50,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
 
     qint32 x = 20;
     qint32 y = 20;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

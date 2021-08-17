@@ -16,6 +16,11 @@ typedef oxygine::intrusive_ptr<BuildListDialog> spBuildListDialog;
 class BuildListDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    struct UnitGroup
+    {
+        QString name;
+        QStringList units;
+    };
 public:
     explicit BuildListDialog(qint32 player, QStringList buildList);
     virtual ~BuildListDialog() = default;
@@ -42,6 +47,7 @@ private slots:
     void remove();
 private:
     QVector<QString> getNameList();
+    QVector<UnitGroup> getUnitGroups();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;

@@ -14,7 +14,6 @@
 namespace oxygine
 {
     Resources::registeredResources Resources::m_registeredResources;
-    ResAnim* Resources::m_defaultMissingRS = nullptr;
 
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, QString resTypeID)
     {
@@ -48,11 +47,6 @@ namespace oxygine
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "can't find resource type");
     }
 
-    void Resources::setDefaultMissingResAnim(ResAnim* rs)
-    {
-        m_defaultMissingRS = rs;
-    }
-
     Resources::Resources()
     {
     }
@@ -64,7 +58,7 @@ namespace oxygine
 
     ResAnim* Resources::getResAnim(QString id, error_policy ep) const
     {
-        return getT<ResAnim>(id, ep, m_defaultMissingRS);
+        return getT<ResAnim>(id, ep);
     }
 
     ResFont* Resources::getResFont(QString id, error_policy ep) const
@@ -74,7 +68,7 @@ namespace oxygine
 
     void Resources::load()
     {
-        Resource::load(nullptr);
+        Resource::load();
     }
 
     void Resources::unload()
@@ -82,12 +76,12 @@ namespace oxygine
         Resource::unload();
     }
 
-    void Resources::_load(LoadResourcesContext* context)
+    void Resources::_load()
     {
         for (resources::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
         {
             Resource* res = (*i).get();
-            res->load(context);
+            res->load();
         }
     }
 
@@ -118,10 +112,9 @@ namespace oxygine
         setName(file.fileName());
     }
 
-    bool Resources::loadXML(const QString xmlFile, const ResourcesLoadOptions& opt)
+    bool Resources::loadXML(const QString xmlFile, bool addTransparentBorder)
     {
         m_name = xmlFile;
-        m_loadCounter = opt.m_loadCompletely ? 1 : 0;
         QFile file(xmlFile);
 
         if (!file.exists() || file.size() == 0)
@@ -142,11 +135,11 @@ namespace oxygine
         {
             QDomElement resources = doc.documentElement();
             Console::print("loading xml resources", Console::eDEBUG);
-            XmlWalker walker("", 1.0f, opt.m_loadCompletely, true, resources);
+            XmlWalker walker("", 1.0f, true, resources);
             while (true)
             {
                 CreateResourceContext context;
-                context.m_options = &opt;
+                context.m_addTransparentBorder = addTransparentBorder;
                 context.m_walker = walker.next();
                 if (context.m_walker.empty())
                 {
@@ -174,14 +167,9 @@ namespace oxygine
                 {
                     oxygine::handleErrorPolicy(oxygine::ep_show_error, "Resources::loadXML unable to load ressource");
                 }
-                res->setUseLoadCounter(opt.m_useLoadCounter);
-
                 if (res)
                 {
-                    if (context.m_walker.getLoad())
-                    {
-                        res->load(nullptr);
-                    }
+                    res->load();
                     res->setParent(this);
                     m_resources.push_back(res);
                 }
@@ -205,7 +193,7 @@ namespace oxygine
 
     }
 
-    void Resources::add(spResource r, bool accessByShortenID)
+    void Resources::add(spResource r)
     {
         if (r.get() == nullptr)
         {
@@ -215,16 +203,6 @@ namespace oxygine
         QString name = r->getName().toLower();
         r->setName(name);
         m_resourcesMap[name] = r;
-
-        if (accessByShortenID)
-        {
-            QFileInfo file(name);
-            QString shortName = file.fileName();
-            if (shortName != name)
-            {
-                m_resourcesMap[shortName] = r;
-            }
-        }
     }
 
     Resources::resources& Resources::_getResources()
@@ -237,22 +215,15 @@ namespace oxygine
         return m_resourcesMap;
     }
 
-    Resource* Resources::get(QString id_, error_policy ep, Resource* defIfNotFound) const
+    Resource* Resources::get(QString id_, error_policy ep) const
     {
         QString id = id_.toLower();
-
         resourcesMap::const_iterator it = m_resourcesMap.find(id);
-
         if (it != m_resourcesMap.end())
         {
             return it.value().get();
         }
-
         handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'");
-        if (ep == ep_show_error)
-        {
-            return defIfNotFound;
-        }
         return nullptr;
     }
 

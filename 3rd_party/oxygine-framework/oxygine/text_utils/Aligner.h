@@ -55,10 +55,6 @@ namespace oxygine
             {
                 return m_font;
             }
-            size_t getOptions() const
-            {
-                return m_options;
-            }
             spMaterial getMat() const
             {
                 return m_mat;
@@ -67,11 +63,6 @@ namespace oxygine
             {
                 m_mat = newMat;
             }
-            void setOptions(size_t newOptions)
-            {
-                m_options = newOptions;
-            }
-
         private:
             qint32 getLineWidth()const;
             qint32 getLineSkip()const;
@@ -85,7 +76,6 @@ namespace oxygine
             Rect m_bounds;
             qint32 m_width;
             qint32 m_height;
-            size_t m_options;
             spMaterial m_mat;
             const Font* m_font;
             float m_scale;

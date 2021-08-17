@@ -36,7 +36,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     {
         emit sigFinished();
     });
-    oxygine::TextStyle style = FontManager::getMainFont48();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

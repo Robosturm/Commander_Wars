@@ -97,6 +97,10 @@ var Constructor = function()
 	{
         return qsTr("Sells a unit for a fraction of it's current value.");
     };
+    this.getBannedByDefault = function()
+    {
+        return true;
+    };
 };
 
 Constructor.prototype = ACTION;

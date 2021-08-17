@@ -89,13 +89,13 @@ CreditsMenue::CreditsMenue()
     addChild(m_creditsActor);
     m_creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headstyle = FontManager::getMainFont48();
+    oxygine::TextStyle headstyle = oxygine::TextStyle(FontManager::getMainFont48());
     headstyle.color = FontManager::getFontColor();
     headstyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;

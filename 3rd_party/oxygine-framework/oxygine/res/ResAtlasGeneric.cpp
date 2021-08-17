@@ -41,13 +41,9 @@ namespace oxygine
 
         ImageData reg = ad.mt.lock().getRect(Rect(0, 0, aw, h));
         mt->init(reg);
-
-        CreateTextureTask task;
-        task.linearFilter = filter;
-        task.clamp2edge = clamp2edge;
-        task.src = mt;
-        task.dest = ad.texture;
-        LoadResourcesContext::get()->createTexture(task);
+        ad.texture->init(mt->lock());
+        ad.texture->setLinearFilter(filter);
+        ad.texture->setClamp2Edge(clamp2edge);
     }
 
     void ResAtlasGeneric::nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad)
@@ -76,7 +72,7 @@ namespace oxygine
     {
     }
 
-    void ResAtlasGeneric::_load(LoadResourcesContext*)
+    void ResAtlasGeneric::_load()
     {
     }
 
@@ -231,7 +227,7 @@ namespace oxygine
                     SpriteCreator::preProcessMask(img, overlay, columns, rows);
                 }
             }
-            SpriteCreator::addFrameBorders(img, columns, rows, context.m_options->m_addTransparentBorder);
+            SpriteCreator::addFrameBorders(img, columns, rows, context.m_addTransparentBorder);
             if (frame_width > 0)
             {
                 columns = img.width() / frame_width;
@@ -255,7 +251,7 @@ namespace oxygine
             qint32 height = frame_height;
             if (rows > 1 || columns > 1)
             {
-                if (context.m_options->m_addTransparentBorder)
+                if (context.m_addTransparentBorder)
                 {
                     frame_width -= 1;
                     frame_height -= 1;
@@ -371,7 +367,7 @@ namespace oxygine
 
             ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
             ra->setParent(this);
-            context.m_resources->add(ra, context.m_options->m_shortenIDS);
+            context.m_resources->add(ra);
         }
 
         applyAtlas(ad, m_linearFilter, m_clamp2edge);

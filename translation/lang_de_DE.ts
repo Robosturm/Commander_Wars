@@ -85,37 +85,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="107"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="114"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="240"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="282"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="248"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="290"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="249"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="291"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="250"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="292"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="251"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="293"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="252"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="294"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,37 +151,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="106"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="114"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="295"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="213"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="244"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="341"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="303"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="349"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="304"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="350"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="305"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="351"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="306"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="352"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="307"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="353"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1703,9 +1709,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="460"/>
-        <location filename="../game/gamemap.cpp" line="514"/>
-        <location filename="../game/gamemap.cpp" line="1237"/>
+        <location filename="../game/gamemap.cpp" line="458"/>
+        <location filename="../game/gamemap.cpp" line="512"/>
+        <location filename="../game/gamemap.cpp" line="1236"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1731,43 +1737,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="460"/>
-        <location filename="../game/gamemap.cpp" line="1237"/>
+        <location filename="../game/gamemap.cpp" line="458"/>
+        <location filename="../game/gamemap.cpp" line="1236"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="514"/>
+        <location filename="../game/gamemap.cpp" line="512"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="524"/>
+        <location filename="../game/gamemap.cpp" line="522"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1214"/>
+        <location filename="../game/gamemap.cpp" line="1213"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1264"/>
+        <location filename="../game/gamemap.cpp" line="1263"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1274"/>
+        <location filename="../game/gamemap.cpp" line="1273"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1282"/>
+        <location filename="../game/gamemap.cpp" line="1281"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1294"/>
+        <location filename="../game/gamemap.cpp" line="1293"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3552,7 +3558,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/playerselection.cpp" line="105"/>
         <location filename="../objects/playerselection.cpp" line="383"/>
-        <location filename="../objects/playerselection.cpp" line="1208"/>
+        <location filename="../objects/playerselection.cpp" line="1206"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3590,7 +3596,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/playerselection.cpp" line="224"/>
         <location filename="../objects/playerselection.cpp" line="354"/>
-        <location filename="../objects/playerselection.cpp" line="710"/>
+        <location filename="../objects/playerselection.cpp" line="708"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3669,37 +3675,37 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="557"/>
+        <location filename="../objects/playerselection.cpp" line="555"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="576"/>
+        <location filename="../objects/playerselection.cpp" line="574"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="655"/>
+        <location filename="../objects/playerselection.cpp" line="653"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="674"/>
+        <location filename="../objects/playerselection.cpp" line="672"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="693"/>
+        <location filename="../objects/playerselection.cpp" line="691"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="729"/>
+        <location filename="../objects/playerselection.cpp" line="727"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="754"/>
+        <location filename="../objects/playerselection.cpp" line="752"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4185,36 +4191,26 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="629"/>
-        <source>Unit transfer: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="633"/>
-        <source>If checked allied players can transfer units to each other.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="643"/>
         <source>Unit sell value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="647"/>
-        <source>The amount of funds you get back for selling a unit.</source>
+        <location filename="../objects/ruleselection.cpp" line="633"/>
+        <source>The amount of funds you get back for selling a unit. Only has an impact if the sell action is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="660"/>
+        <location filename="../objects/ruleselection.cpp" line="646"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="664"/>
+        <location filename="../objects/ruleselection.cpp" line="650"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="677"/>
+        <location filename="../objects/ruleselection.cpp" line="663"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5925,27 +5921,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WikiView</name>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="26"/>
+        <location filename="../wiki/wikiview.cpp" line="28"/>
         <source>Search: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="30"/>
+        <location filename="../wiki/wikiview.cpp" line="32"/>
         <source>Text that will be searched for in the title of each wikipage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="34"/>
+        <location filename="../wiki/wikiview.cpp" line="36"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="46"/>
+        <location filename="../wiki/wikiview.cpp" line="48"/>
         <source>Tags: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/wikiview.cpp" line="50"/>
+        <location filename="../wiki/wikiview.cpp" line="52"/>
         <source>Shows all pages grouped under a given tag. A page can be grouped in several groups at once.</source>
         <translation type="unfinished"></translation>
     </message>

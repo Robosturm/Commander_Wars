@@ -25,7 +25,7 @@ namespace oxygine
         m_path = file;
     }
 
-    void ResBuffer::_load(LoadResourcesContext*)
+    void ResBuffer::_load()
     {
         QFile file(m_path);
         file.open(QIODevice::ReadOnly);

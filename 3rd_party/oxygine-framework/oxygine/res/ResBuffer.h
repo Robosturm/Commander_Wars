@@ -23,8 +23,8 @@ namespace oxygine
         }
 
     private:
-        void _load(LoadResourcesContext*) override;
-        void _unload() override;
+        virtual void _load() override;
+        virtual void _unload() override;
 
     private:
         QString m_buffer;

@@ -35,13 +35,13 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     Interpreter::setCppOwnerShip(this);
     Console::print("Entering Victory Menue", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont72();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont72());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -325,7 +325,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     qint32 winnerTeam = pMap->getWinnerTeam();
     if (winnerTeam >= 0)
     {
-        oxygine::TextStyle style48 = FontManager::getMainFont48();
+        oxygine::TextStyle style48 = oxygine::TextStyle(FontManager::getMainFont48());
         style48.color = FontManager::getFontColor();
         style48.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style48.hAlign = oxygine::TextStyle::HALIGN_LEFT;

@@ -51,7 +51,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     clipRect->setSize(280, 40);
     oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
@@ -95,7 +95,7 @@ void Topbar::addGroup(QString text)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;

@@ -134,7 +134,7 @@ void CoPowermeter::drawPowerMeter()
             }
             case GameEnums::PowerMode_Power:
             {
-                oxygine::TextStyle style = FontManager::getMainFont24();
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
@@ -165,7 +165,7 @@ void CoPowermeter::drawPowerMeter()
             }
             case GameEnums::PowerMode_Superpower:
             {
-                oxygine::TextStyle style = FontManager::getMainFont24();
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);
@@ -196,7 +196,7 @@ void CoPowermeter::drawPowerMeter()
             }
             case GameEnums::PowerMode_Tagpower:
             {
-                oxygine::TextStyle style = FontManager::getMainFont24();
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
                 style.color = FontManager::getFontColor();
                 oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setStyle(style);

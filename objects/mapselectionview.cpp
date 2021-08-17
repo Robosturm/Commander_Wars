@@ -23,7 +23,7 @@ MapSelectionView::MapSelectionView()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -147,7 +147,7 @@ MapSelectionView::MapSelectionView()
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    oxygine::TextStyle styleMain16 = FontManager::getMainFont16();
+    oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
     styleMain16.color = FontManager::getFontColor();
     styleMain16.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -330,7 +330,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
 
 void MapSelectionView::loadMapVictoryInfo()
 {
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

@@ -50,7 +50,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_TextBackground->setPriority(1);
     addChild(m_TextBackground);
 
-    oxygine::TextStyle style = FontManager::getMainFont48();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont48());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

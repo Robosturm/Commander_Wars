@@ -639,7 +639,7 @@ public slots:
     void setZoom(float zoom);
     inline float getZoom() const
     {
-        return m_zoom;
+        return getScaleX();
     }
     void moveMap(qint32 x, qint32 y);
     /**
@@ -872,7 +872,6 @@ private:
     spGameScript m_GameScript{spGameScript::create()};
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
-    float m_zoom{1.0f};
     bool m_loaded{false};
     qint32 m_UniqueIdCounter{0};
     QString m_mapMusic;

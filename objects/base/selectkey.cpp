@@ -182,7 +182,7 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     }
     else if (code <= 255)
     {
-        const oxygine::glyph* pGlyph = pFont->getGlyph(code, oxygine::glyphOptions());
+        const oxygine::glyph* pGlyph = pFont->getGlyph(code);
         if (pGlyph != nullptr)
         {
             codeText = static_cast<char>(code);

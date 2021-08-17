@@ -215,7 +215,7 @@ void PlayerSelection::showPlayerSelection()
 
     spGameMap pMap = GameMap::getInstance();
     // font style
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -549,8 +549,6 @@ void PlayerSelection::showPlayerSelection()
         }
         //
         createArmySelection(ai, xPositions, y, itemIndex, i);
-
-
 
         itemIndex++;
         spDropDownmenuColor playerColor = spDropDownmenuColor::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
@@ -951,7 +949,7 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
         spGameMap pMap = GameMap::getInstance();
         CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
         if (coid == "" ||
-            coid == "CO_RANDOM" ||
+            coid == CO::CO_RANDOM ||
             pCO == nullptr ||
             pCO->getCoID() != coid)
         {
@@ -1008,7 +1006,7 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
         spGameMap pMap = GameMap::getInstance();
         CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
         if (coid == "" ||
-            coid == "CO_RANDOM" ||
+            coid == CO::CO_RANDOM ||
             pCO == nullptr ||
             pCO->getCoID() != coid)
         {
@@ -1115,11 +1113,11 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
     {
         if ((mode == 0) || mode < 0)
         {
-            playerCO1Changed("CO_RANDOM", i);
+            playerCO1Changed(CO::CO_RANDOM, i);
         }
         if ((mode == 1) || mode < 0)
         {
-            playerCO2Changed("CO_RANDOM", i);
+            playerCO2Changed(CO::CO_RANDOM, i);
         }
     }    
 }

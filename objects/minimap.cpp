@@ -1,16 +1,10 @@
-#include "minimap.h"
+#include "objects/minimap.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/unit.h"
-
 #include "game/building.h"
-
 #include "game/co.h"
-
-#include "coreengine/tweens/tweentogglevisibility.h"
 
 #include "resource_management/gamemanager.h"
 #include "menue/gamemenue.h"

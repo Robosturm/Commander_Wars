@@ -13,7 +13,9 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     setObjectName("WikiView");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -86,7 +88,7 @@ void WikiView::search(bool onlyTag)
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

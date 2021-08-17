@@ -1714,7 +1714,7 @@ void CO::setCoStyleFromUserdata()
         file = pCOSpriteManager->getResAnim(m_coID + "+nrm")->getResPath();
         file.replace("+nrm.png", "");
     }
-    if (m_coID != "CO_RANDOM")
+    if (m_coID != CO_RANDOM)
     {
         loadResAnim(m_coID, file, colorTable, maskTable, useColorBox);
         m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(m_coID, file, colorTable, maskTable, useColorBox));

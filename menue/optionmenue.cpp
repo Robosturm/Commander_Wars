@@ -197,7 +197,7 @@ void OptionMenue::showSettings()
     m_pGameplayAndKeys->setVisible(false);
     m_pOptions->clearContent();
     Mainapp* pApp = Mainapp::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -678,7 +678,7 @@ void OptionMenue::showSettings()
 void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y)
 {
     AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -792,7 +792,7 @@ void OptionMenue::showMods()
     m_pGameplayAndKeys->setVisible(false);
     m_ModSelector->removeChildren();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

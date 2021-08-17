@@ -157,6 +157,9 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
+    3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
+    3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp
+    3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
@@ -311,11 +314,6 @@ set(${PROJECT_NAME}_SRCS
     coreengine/filesupport.cpp
     coreengine/globalutils.cpp
     coreengine/scriptvariablefile.cpp
-
-    # tweens
-    coreengine/tweens/tweentogglevisibility.cpp
-    coreengine/tweens/tweenwait.cpp
-    coreengine/tweens/tweenscreenshake.cpp
 
     # network engine
     network/tcpclient.cpp

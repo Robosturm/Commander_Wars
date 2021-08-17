@@ -162,7 +162,7 @@ void PlayerInfo::updateData()
                 }
                 addChild(pSprite);
             }
-            oxygine::TextStyle style = FontManager::getMainFont24();
+            oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
 
             oxygine::spTextField Text = oxygine::spTextField::create();
 

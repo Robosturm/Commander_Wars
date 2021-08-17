@@ -53,7 +53,7 @@ Achievementmenu::Achievementmenu()
     });
     connect(this, &Achievementmenu::sigExitMenue, this, &Achievementmenu::exitMenue, Qt::QueuedConnection);
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -144,13 +144,13 @@ void Achievementmenu::searchChanged(QString text)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     Console::print("Achievementmenu::searchChanged " + text, Console::eDEBUG);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle styleLarge = FontManager::getMainFont48();
+    oxygine::TextStyle styleLarge = oxygine::TextStyle(FontManager::getMainFont48());
     styleLarge.color = FontManager::getFontColor();
     styleLarge.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     styleLarge.hAlign = oxygine::TextStyle::HALIGN_LEFT;

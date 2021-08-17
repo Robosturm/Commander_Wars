@@ -13,7 +13,7 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
     m_Textfield = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -86,7 +86,7 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
 {
     oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;

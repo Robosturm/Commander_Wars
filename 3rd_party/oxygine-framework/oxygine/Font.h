@@ -14,7 +14,6 @@ namespace oxygine
         RectF src;
 
         qint32 ch{0};
-        glyphOptions opt{0};
 
         short sw{0};
         short sh{0};
@@ -29,7 +28,7 @@ namespace oxygine
 
         bool operator == (const glyph& r) const
         {
-            return ch == r.ch && opt == r.opt;
+            return ch == r.ch;
         }
     };
 
@@ -41,7 +40,7 @@ namespace oxygine
         explicit Font();
         virtual ~Font() = default;
 
-        void init(qint32 size, qint32 baselineDistance, qint32 lineHeight, bool sdf = false);
+        void init(qint32 size, qint32 baselineDistance);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}
@@ -57,25 +56,21 @@ namespace oxygine
             m_baselineDistance = d;
         }
 
-        const glyph*    getGlyph(qint32 code, const glyphOptions& opt) const;
+        const glyph*    getGlyph(qint32 code) const;
         qint32          getBaselineDistance() const;
         qint32          getSize() const;
         float           getScale() const;
 
     protected:
-        const glyph* findGlyph(qint32 code, const glyphOptions& opt) const;
-        virtual bool loadGlyph(int, glyph&, const glyphOptions&)
+        const glyph* findGlyph(qint32 code) const;
+        virtual bool loadGlyph(int, glyph&)
         {
             return false;
         }
     protected:
         using glyphs = QSet<glyph>;
         glyphs m_glyphs;
-        bool m_ignoreOptions{false};
-
         float m_scale{0.0f};
-        bool m_sdf{false};
-
         qint32 m_size{0};
         qint32 m_baselineDistance{0};
     };

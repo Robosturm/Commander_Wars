@@ -13,8 +13,6 @@ namespace oxygine
     {
     public:
         static spResource create(CreateResourceContext& context);
-        static spResource createBM(CreateResourceContext& context);
-        static spResource createSD(CreateResourceContext& context);
 
         explicit ResFontBM();
         virtual ~ResFontBM();
@@ -35,17 +33,16 @@ namespace oxygine
             spTexture texture;
         };
         void addPage(qint32 tw, qint32 th, QString head, QString file);
-        void _loadPage(const page& p, LoadResourcesContext*);
-        void _load(LoadResourcesContext*) override;
-        void _unload() override;
-        void _createFont(CreateResourceContext* context, bool sd, bool bmc, qint32 downsample);
+        void _loadPage(const page& p);
+        virtual void _load() override;
+        virtual void _unload() override;
+        void _createFont(CreateResourceContext* context);
         void _finalize();
 
     private:
         typedef QVector<page> pages;
         pages m_pages;
         spFont m_font;
-        bool m_sdf;
         QString m_file;
         bool m_premultipliedAlpha;
 

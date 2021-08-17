@@ -19,7 +19,7 @@ namespace oxygine
         void applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge);
         void loadAtlas(CreateResourceContext& context);
         void loadAtlas2(CreateResourceContext& context);
-        virtual void _load(LoadResourcesContext*) override;
+        virtual void _load() override;
         virtual void _unload() override;
 
     private:

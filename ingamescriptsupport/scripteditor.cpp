@@ -32,7 +32,7 @@ ScriptEditor::ScriptEditor()
 
     m_Data = spScriptData::create();
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -276,7 +276,7 @@ void ScriptEditor::updateConditios()
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
     qint32 x = 450;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -371,7 +371,7 @@ void ScriptEditor::updateEvents()
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
 {
     qint32 x = 450;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

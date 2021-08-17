@@ -4,35 +4,31 @@ var Constructor = function()
     this.canBePerformed = function(action)
     {
         var ret = false;
-        var transferAllowed = map.getGameRules().getAllowUnitTransfer();
-        if (transferAllowed)
+        var currentPlayer = map.getCurrentPlayer();
+        for (var i = 0; i < map.getPlayerCount(); i++)
         {
-            var currentPlayer = map.getCurrentPlayer();
-            for (var i = 0; i < map.getPlayerCount(); i++)
-            {
-                var player = map.getPlayer(i);
-                if (player !== currentPlayer &&
+            var player = map.getPlayer(i);
+            if (player !== currentPlayer &&
                     currentPlayer.isAlly(player))
+            {
+                ret = true;
+                break;
+            }
+        }
+        if (ret)
+        {
+            ret = false;
+            var units = map.getCurrentPlayer().getUnits();
+            for (var i = 0; i < units.size(); i++)
+            {
+                var unit = units.at(i);
+                if (unit.getHasMoved() === false)
                 {
                     ret = true;
                     break;
                 }
             }
-            if (ret)
-            {
-                ret = false;
-                var units = map.getCurrentPlayer().getUnits();
-                for (var i = 0; i < units.size(); i++)
-                {
-                    var unit = units.at(i);
-                    if (unit.getHasMoved() === false)
-                    {
-                        ret = true;
-                        break;
-                    }
-                }
-                units.remove();
-            }
+            units.remove();
         }
         return ret;
     };
@@ -121,7 +117,11 @@ var Constructor = function()
 	this.getDescription = function()
 	{
 		return qsTr("Transfers a unit to another allied player.");
-    };	
+    };
+    this.getBannedByDefault = function()
+    {
+        return true;
+    };
 };
 
 Constructor.prototype = ACTION;

@@ -19,38 +19,14 @@ namespace oxygine
     {
         spResFontBM font = spResFontBM();
         font = spResFontBM::create();
-        font->_createFont(&context, false, false, 1);
+        font->_createFont(&context);
         setNode(font, context.m_walker.getNode());
         context.m_resources->add(font);
         return font;
     }
-
-    spResource ResFontBM::createBM(CreateResourceContext& context)
-    {
-        spResFontBM font = spResFontBM();
-
-        font = spResFontBM::create();
-        font->_createFont(&context, false, true, 1);
-        setNode(font, context.m_walker.getNode());
-        context.m_resources->add(font);
-
-        return font;
-    }
-
-    spResource ResFontBM::createSD(CreateResourceContext& context)
-    {
-        spResFontBM font = spResFontBM();
-        font = spResFontBM::create();
-        font->_createFont(&context, true, false, 1);
-        setNode(font, context.m_walker.getNode());
-        context.m_resources->add(font);
-        return font;
-    }
-
 
     ResFontBM::ResFontBM()
         : m_font(nullptr),
-          m_sdf(false),
           m_premultipliedAlpha(false)
     {
 
@@ -77,7 +53,7 @@ namespace oxygine
     {
         m_premultipliedAlpha = premultipliedAlpha;
         m_file = path;
-        _createFont(nullptr, false, false, 1);
+        _createFont(nullptr);
     }
 
     void ResFontBM::cleanup()
@@ -89,18 +65,11 @@ namespace oxygine
         }
         m_pages.clear();
         m_font = nullptr;
-        m_loadCounter = 0;
     }
 
-    void ResFontBM::_loadPage(const page& p, LoadResourcesContext* load_context)
+    void ResFontBM::_loadPage(const page& p)
     {
-        if (!load_context->isNeedProceed(p.texture))
-        {
-            return;
-        }
-
         spImage mt = spImage::create();
-
         QImage img;
         if (QFile::exists(Settings::getUserPath() +p.file))
         {
@@ -111,15 +80,12 @@ namespace oxygine
            img = QImage(RCC_PREFIX_PATH + p.file);
         }
         mt->init(img, !m_premultipliedAlpha);
-        CreateTextureTask opt;
-        opt.src = mt;
-        opt.dest = p.texture;
-        opt.linearFilter = m_linearFilter;
-        opt.clamp2edge = m_clamp2edge;
-        load_context->createTexture(opt);
+        p.texture->init(mt->lock());
+        p.texture->setLinearFilter(m_linearFilter);
+        p.texture->setClamp2Edge(m_clamp2edge);
     }
 
-    void ResFontBM::_load(LoadResourcesContext* load_context)
+    void ResFontBM::_load()
     {
         if (m_pages.empty())
         {
@@ -133,7 +99,7 @@ namespace oxygine
         for (pages::iterator i = m_pages.begin(); i != m_pages.end(); ++i)
         {
             const page& p = *i;
-            _loadPage(p, load_context);
+            _loadPage(p);
         }
     }
 
@@ -191,14 +157,13 @@ namespace oxygine
 
     void ResFontBM::_finalize()
     {
-        glyphOptions opt = 0;
-        const glyph* g = m_font->getGlyph(0xA0, opt);
+        const glyph* g = m_font->getGlyph(0xA0);
         if (g)
         {
             return;
         }
 
-        g = m_font->getGlyph(' ', opt);
+        g = m_font->getGlyph(' ');
         if (!g)
         {
             return;
@@ -210,10 +175,9 @@ namespace oxygine
 
     }
 
-    void ResFontBM::_createFont(CreateResourceContext* context, bool, bool bmc, qint32 downsample)
+    void ResFontBM::_createFont(CreateResourceContext* context)
     {
-        m_sdf = false;
-
+        qint32 downsample = 1;
         if (context)
         {
             QDomElement node = context->m_walker.getNode();
@@ -231,11 +195,6 @@ namespace oxygine
 
             m_file = context->m_walker.getPath("file");
             setName(Resource::extractID(node, m_file, ""));
-
-            if (bmc)
-            {
-                m_file = context->m_prebuilt_folder + getName() + ".fnt";
-            }
         }
 
         QString path = m_file;
@@ -271,7 +230,6 @@ namespace oxygine
         qint32 fontSize = info.attribute("size").toInt() / downsample;
 
         QDomElement common = root.firstChildElement("common");
-        qint32 lineHeight = common.attribute("lineHeight").toInt() / downsample;
         qint32 base = common.attribute("base").toInt() / downsample;
         qint32 tw = common.attribute("scaleW").toInt();
         qint32 th = common.attribute("scaleH").toInt();
@@ -290,12 +248,12 @@ namespace oxygine
 
         if (!tw)
         {
-            load(nullptr);
+            load();
         }
 
         fontSize = qAbs(fontSize);
         spFont font = spFont::create();
-        font->init(fontSize, fontSize, lineHeight + fontSize - base, m_sdf);
+        font->init(fontSize, fontSize);
         m_size = fontSize;
         m_font = font;
 
@@ -377,7 +335,6 @@ namespace oxygine
             gl.advance_x = xadvance / downsample;
             gl.advance_y = 0;
             gl.ch = charID;
-            gl.opt = 0;
             gl.texture = m_pages[page].texture;
 
             font->addGlyph(gl);

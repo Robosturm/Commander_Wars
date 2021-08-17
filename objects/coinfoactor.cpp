@@ -26,13 +26,13 @@ COInfoActor::COInfoActor(qint32 width)
 {
     setObjectName("COInfoActor");
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -264,7 +264,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowerDesc->setHtmlText(coSuperpowerDesc);
     m_SuperPowerDesc->setHeight(m_SuperPowerDesc->getTextRect().getHeight());
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -377,7 +377,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -483,7 +483,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
     m_PerkActors.clear();
     if (pCO.get() != nullptr)
     {
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

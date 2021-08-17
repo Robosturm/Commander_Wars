@@ -39,7 +39,7 @@ void VictoryRulePopup::updateInfo()
         qint32 x = 10;
         qint32 y = 10;
 
-        oxygine::TextStyle styleSmall = FontManager::getMainFont16();
+        oxygine::TextStyle styleSmall = oxygine::TextStyle(FontManager::getMainFont16());
         styleSmall.color = FontManager::getFontColor();
         styleSmall.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         styleSmall.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -52,7 +52,7 @@ void VictoryRulePopup::updateInfo()
         addItem(pTextfield);
         y += 30 + pTextfield->getTextRect().getHeight();
 
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

@@ -16,6 +16,11 @@ typedef oxygine::intrusive_ptr<COBannListDialog> spCOBannListDialog;
 class COBannListDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    struct CoGroup
+    {
+        QString name;
+        QStringList cos;
+    };
 public:
     explicit COBannListDialog(QStringList cobannlist);
     virtual ~COBannListDialog() = default;
@@ -38,6 +43,7 @@ private slots:
     void remove();
 private:
     QVector<QString> getNameList();
+    QVector<CoGroup> getCoGroups();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;

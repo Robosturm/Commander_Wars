@@ -83,7 +83,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
 
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -96,11 +96,19 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
+
+
+    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
+    largeStyle.color = FontManager::getFontColor();
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
     spLabel pLabel = spLabel::create(pPanel->getWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Bann List"));
@@ -110,108 +118,147 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         pLabel->setX(20);
     }
     pPanel->addItem(pLabel);
-
-    // load default army and co sets
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    QString function1 = "getArmies";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
-    QStringList m_Armies = ret.toVariant().toStringList();
-    QStringList coids;
-    // go through armies
-    for (qint32 i = 0; i < m_Armies.size(); i++)
-    {
-        // add default co order
-        ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + m_Armies[i]);
-        coids.append(ret.toVariant().toStringList());
-        // add unadded co's of this army
-        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
-        {
-            QString coID = pCOSpriteManager->getID(i2);
-            QString function1 = "getCOArmy";
-            QJSValue ret = pInterpreter->doFunction(coID, function1);
-            if (ret.isString())
-            {
-                QString COArmy = ret.toString();
-                if (COArmy == m_Armies[i] && !coids.contains(coID))
-                {
-                    coids.append(coID);
-                    break;
-                }
-            }
-        }
-    }
-    // add unadded co's
-    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
-    {
-        QString coID = pCOSpriteManager->getID(i);
-        if (!coids.contains(coID))
-        {
-            coids.append(coID);
-        }
-    }
-    // remove multiple appearance of random co from selection and add him last
-    coids.removeAll("CO_RANDOM");
-    coids.append("CO_RANDOM");
-    m_COIDs = coids;
-
-    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    qint32 y = 40 + pLabel->getTextRect().getHeight();
     qint32 x = 10;
-    for (qint32 i = 0; i < coids.size(); i++)
+
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    auto coGroups = getCoGroups();
+    for (const auto & group : coGroups)
     {
-        QString coID = coids[i];
-
-        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
-        oxygine::spSprite pCo = oxygine::spSprite::create();
-        pCo->setResAnim(pAnim, 0, 0);
-
-        pLabel = spLabel::create(250);
-        pLabel->setStyle(style);
-
-        pLabel->setHtmlText(pCOSpriteManager->getName(coID));
-
-        pLabel->setPosition(x + 80, y);
-        pCo->setPosition(x + 45, y);
-        pCo->setScale(0.75f);
-        spCheckbox pCheckbox = spCheckbox::create();
-        pCheckbox->setPosition(x, y);
-        m_Checkboxes.append(pCheckbox);
-
-        if (m_CurrentCOBannList.contains(coID))
+        spLabel textField = spLabel::create(pPanel->getWidth() - 40);
+        textField->setStyle(largeStyle);
+        textField->setHtmlText(group.name);
+        textField->setPosition(pPanel->getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        pPanel->addItem(textField);
+        y += 45;
+        x = 10;
+        for (qint32 i = 0; i < group.cos.size(); ++i)
         {
-            pCheckbox->setChecked(true);
-        }
-        else
-        {
-            pCheckbox->setChecked(false);
-        }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
-        {
-            if (checked)
+            QString coID = group.cos[i];
+
+            oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
+            oxygine::spSprite pCo = oxygine::spSprite::create();
+            pCo->setResAnim(pAnim, 0, 0);
+
+            pLabel = spLabel::create(250);
+            pLabel->setStyle(style);
+            pLabel->setHtmlText(pCOSpriteManager->getName(coID));
+            pLabel->setPosition(x + 90, y);
+            pCo->setPosition(x + 45, y);
+            pCo->setScale(0.75f);
+
+            spCheckbox pCheckbox = spCheckbox::create();
+            pCheckbox->setPosition(x, y);
+            m_Checkboxes.append(pCheckbox);
+            if (m_CurrentCOBannList.contains(coID))
             {
-                m_CurrentCOBannList.append(coID);
+                pCheckbox->setChecked(true);
             }
             else
             {
-                m_CurrentCOBannList.removeAll(coID);
+                pCheckbox->setChecked(false);
             }
-        });
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
+            {
+                if (checked)
+                {
+                    m_CurrentCOBannList.append(coID);
+                }
+                else
+                {
+                    m_CurrentCOBannList.removeAll(coID);
+                }
+            });
+            pPanel->addItem(pCheckbox);
+            pPanel->addItem(pLabel);
+            pPanel->addItem(pCo);
 
-        pPanel->addItem(pCheckbox);
-        pPanel->addItem(pLabel);
-        pPanel->addItem(pCo);
-
-        x += 340;
-        if (x + 340 > pPanel->getContentWidth())
-        {
-            y += 40;
-            x = 10;
+            x += 350;
+            if (x + 350 > pPanel->getContentWidth() &&
+                i < group.cos.size() - 1)
+            {
+                y += 40;
+                x = 10;
+            }
         }
+        y += 50;
     }
     pPanel->setContentHeigth(y + 50);
     connect(this, &COBannListDialog::canceled, this, &COBannListDialog::remove, Qt::QueuedConnection);
     connect(this, &COBannListDialog::sigFinished, this, &COBannListDialog::remove, Qt::QueuedConnection);
+}
+
+QVector<COBannListDialog::CoGroup> COBannListDialog::getCoGroups()
+{
+    QVector<COBannListDialog::CoGroup> retCoGroups;
+    // load default army and co sets
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmies");
+    QStringList armies = ret.toVariant().toStringList();
+    ret = pInterpreter->doFunction("PLAYER", "getArmyNames");
+    QStringList armyNames = ret.toVariant().toStringList();
+
+    QStringList coids;
+    // go through armies
+    for (qint32 i = 0; i < armies.size(); ++i)
+    {
+        CoGroup newGroup;
+        if (i < armyNames.size())
+        {
+            newGroup.name = armyNames[i];
+        }
+        else
+        {
+            newGroup.name = tr("Unknown");
+        }
+        // add default co order
+        ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + armies[i]);
+        auto coList = ret.toVariant().toStringList();
+        coList.removeAll(CO::CO_RANDOM);
+        coids.append(coList);
+        newGroup.cos.append(coList);
+
+        // add unadded co's of this army
+        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
+        {
+            QString coID = pCOSpriteManager->getID(i2);
+            if (coID != CO::CO_RANDOM)
+            {
+                QString function1 = "getCOArmy";
+                QJSValue ret = pInterpreter->doFunction(coID, function1);
+                if (ret.isString())
+                {
+                    QString COArmy = ret.toString();
+                    if (COArmy == armies[i] && !coids.contains(coID))
+                    {
+                        coids.append(coID);
+                        newGroup.cos.append(coID);
+                    }
+                }
+            }
+        }
+        retCoGroups.append(newGroup);
+    }
+    CoGroup unknownGroup;
+    unknownGroup.name = tr("Unknown");
+    // add unadded co's
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
+    {
+        QString coID = pCOSpriteManager->getID(i);
+        if (!coids.contains(coID) &&
+            coID != CO::CO_RANDOM)
+        {
+            coids.append(coID);
+            unknownGroup.cos.append(coids);
+        }
+    }
+    m_COIDs = coids;
+    if (unknownGroup.cos.length() > 0)
+    {
+        retCoGroups.append(unknownGroup);
+    }
+    return retCoGroups;
 }
 
 void COBannListDialog::remove()
@@ -234,7 +281,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
                            "CO_JUGGER", "CO_JULIA", "CO_KANBEI", "CO_KINDLE", "CO_KOAL",
                            "CO_LASH", "CO_LIN", "CO_MARY", "CO_MAX", "CO_MEIYO", "CO_MELANTHE",
                            "CO_MINA", "CO_MINAMOTO", "CO_NANA", "CO_NAPOLEON", "CO_NELL",
-                           "CO_OLAF", "CO_OZZY", "CO_PENNY", "CO_PETER", "CO_RACHEL", "CO_RANDOM",
+                           "CO_OLAF", "CO_OZZY", "CO_PENNY", "CO_PETER", "CO_RACHEL", CO::CO_RANDOM,
                            "CO_RATTIGAN", "CO_ROBOANDY", "CO_ROBOSTURM", "CO_SABAKI", "CO_SAMI",
                            "CO_SANJURO", "CO_SASHA", "CO_SENSEI", "CO_SMITAN", "CO_SONJA", "CO_SOPHIE",
                            "CO_STURM", "CO_TABITHA", "CO_TASHA", "CO_VARLOT", "CO_VON_BOLT",
@@ -243,12 +290,12 @@ void COBannListDialog::setCOBannlist(qint32 item)
     else if (item == 1) // advance wars dc
     {
         data = QStringList({"CO_BRENNER", "CO_CAULDER", "CO_FORSYTHE", "CO_GAGE", "CO_GREYFIELD",
-                            "CO_ISABELLA", "CO_LIN", "CO_PENNY", "CO_RANDOM","CO_TABITHA", "CO_TASHA",
+                            "CO_ISABELLA", "CO_LIN", "CO_PENNY", CO::CO_RANDOM,"CO_TABITHA", "CO_TASHA",
                             "CO_WAYLON", "CO_WILL"});
     }
     else if (item == 2) // advance wars ds
     {
-        data = QStringList({"CO_RANDOM", "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
+        data = QStringList({CO::CO_RANDOM, "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
                            "CO_FLAK", "CO_GRIMM", "CO_GRIT", "CO_HACHI", "CO_HAWKE",
                            "CO_JAKE", "CO_JAVIER", "CO_JESS", "CO_JUGGER", "CO_KANBEI", "CO_KINDLE",
                            "CO_KOAL", "CO_LASH", "CO_MAX", "CO_NELL", "CO_OLAF", "CO_RACHEL",
@@ -256,7 +303,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
     }
     else if (item == 3) // advance wars 2
     {
-        data = QStringList({"CO_RANDOM", "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
+        data = QStringList({CO::CO_RANDOM, "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
                            "CO_FLAK", "CO_GRIT", "CO_HACHI", "CO_HAWKE",
                            "CO_JESS", "CO_KANBEI", "CO_LASH", "CO_MAX", "CO_NELL",
                            "CO_OLAF", "CO_SAMI", "CO_SENSEI", "CO_SONJA",
@@ -264,7 +311,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
     }
     else if (item == 4)  // advance wars
     {
-        data = QStringList({"CO_RANDOM", "CO_ANDY", "CO_DRAKE", "CO_EAGLE", "CO_GRIT",
+        data = QStringList({CO::CO_RANDOM, "CO_ANDY", "CO_DRAKE", "CO_EAGLE", "CO_GRIT",
                             "CO_KANBEI", "CO_MAX", "CO_OLAF",
                             "CO_SAMI", "CO_SONJA", "CO_STURM"});
     }
@@ -274,7 +321,6 @@ void COBannListDialog::setCOBannlist(qint32 item)
         auto fileData = Filesupport::readList(file + ".bl", "data/cobannlist/");
         data = std::get<1>(fileData);
     }
-
     for (qint32 i = 0; i < m_COIDs.size(); i++)
     {
         if (data.contains(m_COIDs[i]))

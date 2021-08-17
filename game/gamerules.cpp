@@ -983,16 +983,6 @@ void GameRules::setTransporterRefresh(bool newTransporterRefresh)
     m_transporterRefresh = newTransporterRefresh;
 }
 
-bool GameRules::getAllowUnitTransfer() const
-{
-    return m_allowUnitTransfer;
-}
-
-void GameRules::setAllowUnitTransfer(bool newAllowUnitTransfer)
-{
-    m_allowUnitTransfer = newAllowUnitTransfer;
-}
-
 float GameRules::getResellValue() const
 {
     return m_resellValue;
@@ -1249,7 +1239,6 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_cosmeticModsAllowed;
     pStream << m_terrainDefense;
     pStream << m_resellValue;
-    pStream << m_allowUnitTransfer;
     pStream << m_transporterRefresh;
 }
 
@@ -1482,7 +1471,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
             if (!m_actionBannlistEdited)
             {
-                m_allowedActions = GameManager::getInstance()->getLoadedRessources();
+                m_allowedActions = GameManager::getInstance()->getDefaultActionbBannlist();
             }
         }
         else
@@ -1495,7 +1484,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     else
     {
         m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
-        m_allowedActions = GameManager::getInstance()->getLoadedRessources();
+        m_allowedActions = GameManager::getInstance()->getDefaultActionbBannlist();
     }
     m_GameRules.clear();
     if (version > 14)
@@ -1527,7 +1516,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 20)
     {
         pStream >> m_resellValue;
-        pStream >> m_allowUnitTransfer;
         pStream >> m_transporterRefresh;
     }
 }

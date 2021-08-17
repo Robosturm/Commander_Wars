@@ -429,8 +429,7 @@ void EditorSelection::createPlayerSelection()
 }
 
 void EditorSelection::changeSelectedPlayer(qint32 player)
-{
-    
+{    
     // update buildings
     if (player < 0)
     {
@@ -463,8 +462,7 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
         {
             m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getOwner());
         }
-    }
-    
+    }    
 }
 
 void EditorSelection::updateSelectedPlayer()
@@ -573,8 +571,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
 }
 
 void EditorSelection::updateTerrainView()
-{
-    
+{    
     hideSelection();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = m_StartIndex; i < pTerrainManager->getCount(); i++)
@@ -588,13 +585,11 @@ void EditorSelection::updateTerrainView()
     m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectTerrain(0);
-    
+    selectTerrain(0);    
 }
 
 void EditorSelection::updateBuildingView()
-{
-    
+{    
     hideSelection();
     for (qint32 i = m_StartIndex; i < m_Buildings.size(); i++)
     {
@@ -603,13 +598,11 @@ void EditorSelection::updateBuildingView()
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectBuilding(0);
-    
+    selectBuilding(0);    
 }
 
 void EditorSelection::updateUnitView()
-{
-    
+{    
     hideSelection();
     for (qint32 i = m_StartIndex; i < m_Units.size(); i++)
     {
@@ -622,8 +615,7 @@ void EditorSelection::updateUnitView()
     m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
     m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->updateDragBounds();
-    selectUnit(0);
-    
+    selectUnit(0);    
 }
 
 void EditorSelection::hideSelection()
@@ -717,7 +709,7 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         posY += GameMap::getImageSize();
         currentIdentifier = newIdentifier;
         xCounter = 0;
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -767,7 +759,7 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
         posY += GameMap::getImageSize();
         currentIdentifier = newIdentifier;
         xCounter = 0;
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

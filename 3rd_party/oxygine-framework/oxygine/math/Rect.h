@@ -193,15 +193,6 @@ namespace oxygine
             typedef typename R::type rect2type;
             return rect(pos.template cast<rect2type>(), size.template cast<rect2type>());
         }
-        /*
-        template<class R>
-        R cast() const
-        {
-            R r = R(pos.cast<R::type>(), size.cast<R::type>());
-            return r;
-        }
-        */
-
 
         point2 pos;
         point2 size;

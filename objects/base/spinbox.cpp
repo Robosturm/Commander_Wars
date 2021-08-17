@@ -24,7 +24,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

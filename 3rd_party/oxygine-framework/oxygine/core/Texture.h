@@ -4,7 +4,9 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+
 #include <QOpenGLShader>
+#include <QObject>
 
 namespace oxygine
 {

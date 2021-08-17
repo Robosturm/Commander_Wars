@@ -69,4 +69,8 @@ var ACTION =
     {
         return true;
     },
+    getBannedByDefault : function()
+    {
+        return false;
+    },
 };

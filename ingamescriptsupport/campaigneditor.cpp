@@ -51,7 +51,7 @@ CampaignEditor::CampaignEditor()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -262,7 +262,7 @@ void CampaignEditor::updateCampaignData()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
-        oxygine::TextStyle style = FontManager::getMainFont24();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -679,7 +679,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -751,7 +751,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -821,13 +821,13 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_TOP;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;

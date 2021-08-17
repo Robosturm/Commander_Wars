@@ -20,7 +20,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
 
     //Create Actor with Text and add it to button as child
     spLabel textField = spLabel::create(width - 10);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

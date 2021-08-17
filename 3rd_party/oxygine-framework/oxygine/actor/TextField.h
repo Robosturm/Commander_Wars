@@ -59,8 +59,6 @@ namespace oxygine
         void setFontSize(qint32 size);
         /**Overwrites TextStyle color*/
         void setStyleColor(const QColor&);
-        /**Overwrites TextStyle options*/
-        void setOptions(size_t opt);
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);

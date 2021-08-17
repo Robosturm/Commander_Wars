@@ -61,9 +61,7 @@ namespace oxygine
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
         Resources::unregisterResourceType("buffer");
-        Resources::unregisterResourceType("font");
-        Resources::unregisterResourceType("bmfc_font");
-        Resources::unregisterResourceType("sdfont");
+        Resources::unregisterResourceType("font");;
         m_window = nullptr;
     }
 
@@ -171,8 +169,6 @@ namespace oxygine
         Resources::registerResourceType(ResAtlas::create, "atlas");
         Resources::registerResourceType(ResBuffer::create, "buffer");
         Resources::registerResourceType(ResFontBM::create, "font");
-        Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
-        Resources::registerResourceType(ResFontBM::createSD, "sdfont");
     }
 
     void GameWindow::initializeGL()

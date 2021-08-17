@@ -27,12 +27,12 @@ namespace oxygine
         }
     }
 
-    void ResAtlas::load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void ResAtlas::load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge)
     {
-        load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
+        load_texture_internal(file, nt, linearFilter, clamp2edge);
     }
 
-    void ResAtlas::load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void ResAtlas::load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge)
     {
         ImageData im;
         spImage mt = spImage::create();
@@ -44,12 +44,9 @@ namespace oxygine
         im = mt->lock();
         Console::print("atlas size: " + QString::number(im.m_w) + " " + QString::number(im.m_h), Console::eDEBUG);
 
-        CreateTextureTask opt;
-        opt.src = mt;
-        opt.dest = nt;
-        opt.linearFilter = linearFilter;
-        opt.clamp2edge = clamp2edge;
-        load_context->createTexture(opt);
+        nt->init(mt->lock());
+        nt->setLinearFilter(linearFilter);
+        nt->setClamp2Edge(clamp2edge);
     }
 
     void ResAtlas::init_resAnim(spResAnim rs, QString file, QDomElement node)
@@ -145,19 +142,15 @@ namespace oxygine
         }
     }
 
-    void ResAtlas::_load(LoadResourcesContext* load_context)
+    void ResAtlas::_load()
     {
         for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {
             atlas& atl = *i;
-            if (!load_context->isNeedProceed(atl.base))
-            {
-                continue;
-            }
-            load_texture(atl.base_path, atl.base, m_linearFilter, m_clamp2edge, load_context);
+            load_texture(atl.base_path, atl.base, m_linearFilter, m_clamp2edge);
             if (atl.alpha)
             {
-                load_texture(atl.alpha_path, atl.alpha, m_linearFilter, m_clamp2edge, load_context);
+                load_texture(atl.alpha_path, atl.alpha, m_linearFilter, m_clamp2edge);
             }
         }
     }
@@ -181,7 +174,7 @@ namespace oxygine
     spResAnim ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
         spResAnim ra = spResAnim::create(this);
-        ra->init(nullptr, 0, 0, walker.getScaleFactor(), context.m_options->m_addTransparentBorder);
+        ra->init(nullptr, 0, 0, walker.getScaleFactor(), context.m_addTransparentBorder);
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);
         context.m_resources->add(ra);

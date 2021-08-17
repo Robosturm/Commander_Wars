@@ -18,7 +18,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     moveToThread(pApp->getWorkerthread());
 
     // font style
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

@@ -5,21 +5,18 @@ namespace oxygine
 {
     quint32 qHash(const oxygine::glyph& k, quint32 seed) noexcept
     {
-        return ::qHash(k.ch + k.opt, seed);
+        return ::qHash(k.ch, seed);
     }
 
     Font::Font()
-        : m_ignoreOptions(true),
-          m_scale(1.0f),
-          m_sdf(false),
+        : m_scale(1.0f),
           m_size(0),
           m_baselineDistance(0)
     {
     }
 
-    void Font::init(qint32 realSize, qint32 baselineDistance, int, bool sdf)
+    void Font::init(qint32 realSize, qint32 baselineDistance)
     {
-        m_sdf = sdf;
         m_size = realSize;
         m_baselineDistance = baselineDistance;
     }
@@ -44,11 +41,10 @@ namespace oxygine
         return ob1.ch < ob2.ch;
     }
 
-    const glyph* Font::findGlyph(qint32 code, const glyphOptions& opt) const
+    const glyph* Font::findGlyph(qint32 code) const
     {
         glyph g;
         g.ch = code;
-        g.opt = m_ignoreOptions ? 0 : opt;
         glyphs::const_iterator it = m_glyphs.find(g);
         if (it != m_glyphs.end())
         {
@@ -58,9 +54,9 @@ namespace oxygine
         return 0;
     }
 
-    const glyph* Font::getGlyph(qint32 code, const glyphOptions& opt) const
+    const glyph* Font::getGlyph(qint32 code) const
     {
-        const glyph* g = findGlyph(code, opt);
+        const glyph* g = findGlyph(code);
         if (g)
         {
             return g;
@@ -68,10 +64,10 @@ namespace oxygine
 
         glyph gl;
         Font* fn = const_cast<Font*>(this);
-        if (fn->loadGlyph(code, gl, opt))
+        if (fn->loadGlyph(code, gl))
         {
             fn->m_glyphs.insert(gl);
-            g = findGlyph(code, opt);
+            g = findGlyph(code);
             handleErrorPolicy(ep_show_error, "unable to find glyph Font::getGlyph");
         }
 

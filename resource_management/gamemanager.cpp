@@ -125,3 +125,19 @@ QString GameManager::getDescription(qint32 position)
     }
     return "";
 }
+
+QStringList GameManager::getDefaultActionbBannlist()
+{
+    QStringList ret;
+    for (const auto & action : qAsConst(m_loadedRessources))
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue value = pInterpreter->doFunction(action, "getBannedByDefault");
+        if (value.isBool() &&
+            value.toBool() == false)
+        {
+            ret.append(action);
+        }
+    }
+    return ret;
+}

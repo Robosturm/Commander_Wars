@@ -5,245 +5,140 @@ var PLAYER =
 
     getDefaultPlayerColors : function()
     {
-        return 21;
+        return PLAYER.defaultColors.length;
     },
+    defaultColors : [   "#f00008", // os
+                        "#0098f8", // bm
+                        "#00c010", // ge
+                        "#d08000", // yc
+                        "#6038a0", // bh
+                        "#5c5663", // bg
+                        "#797b78", // ma
+                        "#e88613", // ac
+                        "#bc8248", // bd
+                        "#bf901c", // gs
+                        "#ff33cc", // pf
+                        "#17a195", // ti
+                        "#800080", // dm
+                        "#01cbff",
+                        "#006400",
+                        "#ff0000",
+                        "#c4443d",
+                        "#a29db9",
+                        "#617c0e",
+                        "#2342ba",
+                        "#85927b",],
     getDefaultColor : function(index)
     {
         var color = "#000000";
-        switch (index)
+        if (index < PLAYER.defaultColors.length)
         {
-            case 0: // os
-                color = "#f00008";
-                break;
-            case 1: // bm
-                color = "#0098f8";
-                break;
-            case 2: // ge
-                color = "#00c010";
-                break;
-            case 3: // yc
-                color = "#d08000";
-                break;
-            case 4: // bh
-                color = "#6038a0";
-                break;
-            case 5: // bg
-                color = "#5c5663";
-                break;
-            case 6: // ma
-                color = "#797b78";
-                break;
-            case 7: // ac
-                color = "#e88613";
-                break;
-            case 8: // bd
-                color = "#bc8248";
-                break;
-            case 9: // gs
-                color = "#bf901c";
-                break;                
-            case 10: // pf
-                color = "#ff33cc";
-                break;                
-            case 11: // ti
-                color = "#17a195";
-                break;                
-            case 12: // dm
-                color = "#800080";
-                break;
-            case 13:
-                color = "#01cbff";
-                break;
-            case 14:
-                color = "#006400";
-                break;
-            case 15:
-                color = "#ff0000";
-                break;
-            case 16:
-                color = "#c4443d";
-                break;
-            case 17:
-                color = "#a29db9";
-                break;
-            case 18:
-                color = "#617c0e";
-                break;
-            case 19:
-                color = "#2342ba";
-                break;
-            case 20:
-                color = "#85927b";
-                break;
-            default:
-                // create a cool random color
-                var red = globals.randInt(0, 255);
-                if (red < 16)
-                {
-                    red = 16;
-                }
-                var green = globals.randInt(0, 255);
-                if (green < 16)
-                {
-                    green = 16;
-                }
-                var blue = globals.randInt(0, 255);
-                if (blue < 16)
-                {
-                    blue = 16;
-                }
-                color = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
-                break;
+            color = PLAYER.defaultColors[index];
+        }
+        else
+        {
+            // create a cool random color
+            var red = globals.randInt(0, 255);
+            if (red < 16)
+            {
+                red = 16;
+            }
+            var green = globals.randInt(0, 255);
+            if (green < 16)
+            {
+                green = 16;
+            }
+            var blue = globals.randInt(0, 255);
+            if (blue < 16)
+            {
+                blue = 16;
+            }
+            color = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
         }
         return color;
     },
-
+    colorTables : [ "orange_star",
+                    "blue_moon",
+                    "green_earth",
+                    "yellow_comet",
+                    "black_hole",
+                    "bolt_guard",
+                    "metal_army",
+                    "amber_corona",
+                    "brown_desert",
+                    "golden_sun",
+                    "pink_frontier",
+                    "teal_isle",
+                    "dark_matter",
+                    "cyan",
+                    "dark_green",
+                    "red",
+                    "red_fire",
+                    "light_grey",
+                    "olive",
+                    "cobalt_ice",
+                    "silver",],
     getColorTable : function(index)
     {
-        switch (index)
+        if (index < PLAYER.colorTables.length)
         {
-            case 0:
-                return "orange_star";
-            case 1:
-                return "blue_moon";
-            case 2:
-                return "green_earth";
-            case 3:
-                return "yellow_comet";
-            case 4:
-                return "black_hole";
-            case 5:
-                return "bolt_guard";
-            case 6:
-                return "metal_army";
-            case 7:
-                return "amber_corona"
-            case 8:
-                return "brown_desert";
-            case 9:
-                return "golden_sun";
-            case 10:
-                return "pink_frontier";
-            case 11:
-                return "teal_isle";
-            case 12:
-                return "dark_matter";
-            case 13:
-                return "cyan";
-            case 14:
-                return "dark_green";
-            case 15:
-                return "red";
-            case 16:
-                return "red_fire";
-            case 17:
-                return "light_grey";
-            case 18:
-                return "olive";
-            case 19:
-                return "cobalt_ice";
-            case 20:
-                return "silver";
-        };
+            return PLAYER.colorTables[index];
+        }
         return "";
     },
-
+    colorShades : [ 40,
+                    70,
+                    100,
+                    130,
+                    160,
+                    190,
+                    55,
+                    90,
+                    140,
+                    170,
+                    10,
+                    15,
+                    20,
+                    25,
+                    35,
+                    40,
+                    45,
+                    50,
+                    60,
+                    65,
+                    70,
+                    75,
+                    85,
+                    90,
+                    95,
+                    100,
+                    130,
+                    135,
+                    140,
+                    155,
+                    160,
+                    165,
+                    170,
+                    175,
+                    180,],
     getColorForTable(index)
     {
-        switch (index)
+        if (index < PLAYER.colorShades.length)
         {
-            case 0:
-                return 40;
-            case 1:
-                return 70;
-            case 2:
-                return 100;
-            case 3:
-                return 130;
-            case 4:
-                return 160;
-            case 5:
-                return 190;
-            case 6:
-                return 55;
-            case 7:
-                return 90;
-            case 8:
-                return 140;
-            case 9:
-                return 170;
-            case 10:
-                return 10;
-            case 11:
-                return 15;
-            case 12:
-                return 20;
-            case 13:
-                return 25;
-            case 14:
-                return 35;
-            case 15:
-                return 40;
-            case 16:
-                return 45;
-            case 17:
-                return 50;
-            case 18:
-                return 60;
-            case 19:
-                return 65;
-            case 20:
-                return 70;
-            case 21:
-                return 75;
-            case 22:
-                return 85
-            case 23:
-                return 90;
-            case 24:
-                return 95;
-            case 25:
-                return 100;
-            case 26:
-                return 130;
-            case 27:
-                return 135;
-            case 28:
-                return 140;
-            case 29:
-                return 155;
-            case 30:
-                return 160;
-            case 31:
-                return 165;
-            case 32:
-                return 170;
-            case 33:
-                return 175;
-            case 34:
-                return 180;
+            return PLAYER.colorShades[index];
         }
         return 100;
     },
-
     getColorTableCount : function()
     {
         // amount of different colors in the table (minus transparent)
-        return 35;
+        return PLAYER.colorShades.length;
     },
-
     // return the default set for colors
     loadDefaultPlayerColor : function (player)
     {
         var color = PLAYER.getDefaultColor(player.getPlayerID());
         player.setColor(color);
-    },
-
-    getDefaultArmy : function (player)
-    {
-        var id = player.getPlayerID() % 13;
-        var armies = PLAYER.getArmies();
-        return armies[id];
     },
     armies : ["OS",
               "BM",
@@ -258,22 +153,28 @@ var PLAYER =
               "PF",
               "TI",
               "DM"],
-    armieNames : [  qsTr("Orange Star"),
-                    qsTr("Blue Moon"),
-                    qsTr("Green Earth"),
-                    qsTr("Yellow Comet"),
-                    qsTr("Black Hole"),
-                    qsTr("Bolt Guard"),
-                    qsTr("Metall Army"),
-                    qsTr("Amber Corona"),
-                    qsTr("Brown Desert"),
-                    qsTr("Golden Sun"),
-                    qsTr("Pink Frontier"),
-                    qsTr("Teal Isle"),
-                    qsTr("Dark Matters")],
+    armyNames : [  qsTr("Orange Star"),
+                   qsTr("Blue Moon"),
+                   qsTr("Green Earth"),
+                   qsTr("Yellow Comet"),
+                   qsTr("Black Hole"),
+                   qsTr("Bolt Guard"),
+                   qsTr("Metal Army"),
+                   qsTr("Amber Corona"),
+                   qsTr("Brown Desert"),
+                   qsTr("Golden Sun"),
+                   qsTr("Pink Frontier"),
+                   qsTr("Teal Island"),
+                   qsTr("Dark Matter")],
+    getDefaultArmy : function (player)
+    {
+        var id = player.getPlayerID() % (PLAYER.armies.length);
+        var armies = PLAYER.getArmies();
+        return armies[id];
+    },
     getArmyNames : function ()
     {
-        return PLAYER.armieNames;
+        return PLAYER.armyNames;
     },
     // co selection infos
     getArmies : function()

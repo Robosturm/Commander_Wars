@@ -107,13 +107,13 @@ namespace oxygine
         m_appliedScale = appliedScale;
     }
 
-    void ResAnim::_load(LoadResourcesContext* c)
+    void ResAnim::_load()
     {
         if (!m_atlas)
         {
             return;
         }
-        m_atlas->load(c);
+        m_atlas->load();
     }
 
     void ResAnim::_unload()

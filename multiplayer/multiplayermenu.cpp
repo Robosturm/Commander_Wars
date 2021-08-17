@@ -122,7 +122,7 @@ void Multiplayermenu::showIPs()
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
     spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

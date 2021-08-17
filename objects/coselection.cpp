@@ -133,7 +133,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     addChild(pPanelbox);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -146,7 +146,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     m_CoDescription->addItem(m_COName);
 
     width -= 70;
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

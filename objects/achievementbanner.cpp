@@ -29,7 +29,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     pIcon->setPosition(5, 5);
     pButtonBox->addChild(pIcon);
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

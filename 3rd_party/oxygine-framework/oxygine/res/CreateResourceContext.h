@@ -5,17 +5,14 @@
 
 namespace oxygine
 {
-    class Image;
-    using spImage = intrusive_ptr<Image>;
-
     /**internal class*/
     class XmlWalker
     {
     public:
         explicit XmlWalker(QString path,
-                  float scaleFactor,
-                  bool load, bool alpha,
-                  QDomElement xml);
+                           float scaleFactor,
+                           bool alpha,
+                           QDomElement xml);
         virtual ~XmlWalker() = default;
         bool empty() const
         {
@@ -33,10 +30,6 @@ namespace oxygine
         float getScaleFactor() const
         {
             return m_scaleFactor;
-        }
-        bool getLoad() const
-        {
-            return m_load;
         }
         bool getAlphaHitTest() const
         {
@@ -58,72 +51,17 @@ namespace oxygine
         QDomElement m_last;
         bool m_notStarted;
         float m_scaleFactor;
-        bool m_load;
         bool m_alphaHitTest;
     };
 
     class CreateResourceContext
     {
     public:
-        explicit CreateResourceContext()
-            : m_resources(0),
-              m_xml_name(""),
-              m_prebuilt_folder(""),
-              m_options(0),
-              m_walker("", 1.0f, true, false, QDomElement())
-        {
-        }
+        explicit CreateResourceContext() = default;
         virtual ~CreateResourceContext() = default;
-
-        Resources* m_resources;
+        Resources* m_resources{nullptr};
         QString m_xml_name;
-        QString m_prebuilt_folder;
-        const ResourcesLoadOptions* m_options;
-        XmlWalker m_walker;
-    };
-
-    class CreateTextureTask
-    {
-    public:
-        explicit CreateTextureTask();
-        virtual ~CreateTextureTask() = default;
-        spImage src;
-        spTexture dest;
-        quint32 linearFilter;
-        bool clamp2edge;
-        void ready() const;
-    };
-
-    /**internal class*/
-    class LoadResourcesContext
-    {
-    public:
-        static LoadResourcesContext* get();
-        explicit LoadResourcesContext() = default;
-        virtual ~LoadResourcesContext() = default;
-        virtual void createTexture(const CreateTextureTask& opt) = 0;
-        virtual bool isNeedProceed(spTexture t) = 0;
-    };
-
-    class SingleThreadResourcesContext: public LoadResourcesContext
-    {
-    public:
-        explicit SingleThreadResourcesContext() = default;
-        virtual ~SingleThreadResourcesContext() = default;
-        void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spTexture t) override;
-    public:
-        static SingleThreadResourcesContext m_instance;
-    };
-
-    class RestoreResourcesContext: public LoadResourcesContext
-    {
-    public:
-        explicit RestoreResourcesContext() = default;
-        virtual ~RestoreResourcesContext() = default;
-        void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spTexture t) override;
-    public:
-        static RestoreResourcesContext m_instance;
+        bool m_addTransparentBorder{false};
+        XmlWalker m_walker{"", 1.0f, false, QDomElement()};
     };
 }

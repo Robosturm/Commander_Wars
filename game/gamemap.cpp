@@ -6,8 +6,6 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
 
-#include "coreengine/tweens/tweenscreenshake.h"
-
 #include "ai/coreai.h"
 
 #include "resource_management/terrainmanager.h"
@@ -953,13 +951,14 @@ void GameMap::limitPosition(InGameMenue* pMenu, qint32 & newX, qint32 & newY)
 
 void GameMap::setZoom(float zoom)
 {
+    float curZoom = getScaleX();
     if (zoom > 0)
     {
-        m_zoom *= 2.0f;
+        curZoom *= 2.0f;
     }
     else
     {
-        m_zoom /= 2.0f;
+        curZoom /= 2.0f;
     }
     // limit zoom
 
@@ -968,19 +967,19 @@ void GameMap::setZoom(float zoom)
     {
         minLimit = 0.5f;
     }
-    if (m_zoom > 16.0f)
+    if (curZoom > 16.0f)
     {
-        m_zoom = 16.0f;
+        curZoom = 16.0f;
     }
-    else if (m_zoom < minLimit)
+    else if (curZoom < minLimit)
     {
-        m_zoom = minLimit;
+        curZoom = minLimit;
     }
     else
     {
         // all fine
     }
-    setScale(m_zoom);
+    setScale(curZoom);
     InGameMenue* pMenu = InGameMenue::getMenuInstance();
     if (pMenu != nullptr)
     {
@@ -988,7 +987,7 @@ void GameMap::setZoom(float zoom)
     }
 
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
-    emit sigZoomChanged(m_zoom);
+    emit sigZoomChanged(curZoom);
 }
 
 void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
@@ -2100,11 +2099,11 @@ void GameMap::initPlayersAndSelectCOs()
             pPlayer->swapCOs();
         }
         // resolve random CO
-        if (pPlayer->getCO(0) != nullptr && pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
+        if (pPlayer->getCO(0) != nullptr && pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM)
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
-            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" ||
+            while (pPlayer->getCO(0)->getCoID() == CO::CO_RANDOM ||
                    pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
             {
                 pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
@@ -2126,11 +2125,11 @@ void GameMap::initPlayersAndSelectCOs()
         {
             bannList.removeAll(pPlayer->getCO(0)->getCoID());
         }
-        if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
+        if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM))
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
-            while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
+            while ((pPlayer->getCO(1)->getCoID() == CO::CO_RANDOM) ||
                    (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
                    (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
             {

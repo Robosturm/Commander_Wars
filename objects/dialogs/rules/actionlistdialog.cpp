@@ -85,7 +85,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
 
 
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -96,7 +96,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -125,7 +125,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
             pLabel = spLabel::create(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pGameManager->getName(i));
-            pLabel->setPosition(x + 80, y);
+            pLabel->setPosition(x + 90, y);
             QString tooltip = pGameManager->getDescription(i);
 
             spTooltip pTooltip = spTooltip::create();
@@ -165,8 +165,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
             pPanel->addItem(pLabel);
             pPanel->addItem(pTooltip);
 
-            x += 340;
-            if (x + 340 > pPanel->getContentWidth())
+            x += 350;
+            if (x + 350 > pPanel->getContentWidth())
             {
                 y += 40;
                 x = 10;

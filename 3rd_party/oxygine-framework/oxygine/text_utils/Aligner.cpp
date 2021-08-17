@@ -20,7 +20,6 @@ namespace oxygine
         {
             m_line.reserve(50);
             m_lineSkip = (int)(m_font->getBaselineDistance() * m_style.baselineScale) + m_style.linesOffset;
-            m_options = Style.options;
         }
 
         qint32 Aligner::_alignX(qint32 rx)
@@ -157,10 +156,6 @@ namespace oxygine
 
         qint32 Aligner::putSymbol(Symbol& s)
         {
-            if (m_line.empty() && s.code == ' ')
-            {
-                return 0;
-            }
             m_line.push_back(&s);
 
             //optional remove?
@@ -212,7 +207,6 @@ namespace oxygine
 
                 return 0;
             }
-            assert(m_x > -1000);
             return 0;
         }
     }

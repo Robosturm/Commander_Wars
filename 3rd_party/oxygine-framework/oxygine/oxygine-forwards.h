@@ -38,7 +38,6 @@ namespace oxygine
     class ResourcesLoadOptions;
     class Resources;
     class Image;
-    class LoadResourcesContext;
     class VideoDriver;
     class Font;
     class CreateResourceContext;
@@ -65,5 +64,4 @@ namespace oxygine
 
     using EventCallback = OwnedClosure<void, Event*>;
     using eventType = qint32;
-    using glyphOptions = qint32;
 }

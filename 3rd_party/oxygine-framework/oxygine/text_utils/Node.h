@@ -64,8 +64,7 @@ namespace oxygine
         class TextNode: public Node
         {
         public:
-            static void setDefaultMissingSymbol(int);
-
+            static qint32 m_defMissingGlyph;
             explicit TextNode(QString v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;

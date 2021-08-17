@@ -35,14 +35,14 @@ namespace oxygine
         virtual quint32 getLinearFilter() const override;
 
     protected:
-        void _load(LoadResourcesContext*) override;
-        void _unload() override;
+        virtual void _load() override;
+        virtual void _unload() override;
         spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
         static void init_resAnim(spResAnim rs, QString file, QDomElement node);
         void loadBase(QDomElement node);
     private:
-        void load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
-        void load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+        void load_texture(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge);
+        void load_texture_internal(QString file, spTexture nt, quint32 linearFilter, bool clamp2edge);
 
     protected:
         //settings from xml

@@ -106,7 +106,7 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
 {
     spGenericBox pBox = spGenericBox::create();
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

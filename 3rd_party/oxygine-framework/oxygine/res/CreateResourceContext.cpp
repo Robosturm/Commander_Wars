@@ -6,32 +6,14 @@
 
 namespace oxygine
 {
-    LoadResourcesContext* LoadResourcesContext::get()
-    {
-        LoadResourcesContext* scontext = &SingleThreadResourcesContext::m_instance;
-        return scontext;
-    }
-
-    CreateTextureTask::CreateTextureTask(): linearFilter(GL_LINEAR), clamp2edge(true)
-    {
-    }
-
-    void CreateTextureTask::ready() const
-    {
-        dest->setLinearFilter(linearFilter);
-        dest->setClamp2Edge(clamp2edge);
-    }
-
-    XmlWalker::XmlWalker(QString path, float scaleFactor, bool load, bool alpha, QDomElement xml)
+    XmlWalker::XmlWalker(QString path, float scaleFactor, bool alpha, QDomElement xml)
         : m_path(path),
           m_root(xml),
           m_notStarted(true),
           m_scaleFactor(scaleFactor),
-          m_load(load),
           m_alphaHitTest(alpha)
     {
     }
-
 
     QString XmlWalker::getPath(QString attrName) const
     {
@@ -71,7 +53,7 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(m_path, m_scaleFactor, m_load, m_alphaHitTest, m_last);
+        return XmlWalker(m_path, m_scaleFactor, m_alphaHitTest, m_last);
     }
 
     void XmlWalker::_checkSetAttributes(QDomElement node)
@@ -87,10 +69,6 @@ namespace oxygine
                 {
                     m_path += "/";
                 }
-            }
-            else if (node.nodeName() ==  "load")
-            {
-                m_load = QVariant(node.nodeValue()).toBool();
             }
             else if (node.nodeName() ==  "scale_factor")
             {
@@ -112,30 +90,5 @@ namespace oxygine
     void XmlWalker::checkSetAttributes()
     {
         _checkSetAttributes(m_root);
-    }
-
-    RestoreResourcesContext RestoreResourcesContext::m_instance;
-    void RestoreResourcesContext::createTexture(const CreateTextureTask& opt)
-    {
-        opt.dest->init(opt.src->lock());
-        opt.ready();
-    }
-
-    bool RestoreResourcesContext::isNeedProceed(spTexture)
-    {
-        return true;
-    }
-
-    SingleThreadResourcesContext SingleThreadResourcesContext::m_instance;
-
-    void SingleThreadResourcesContext::createTexture(const CreateTextureTask& opt)
-    {
-        opt.dest->init(opt.src->lock());
-        opt.ready();
-    }
-
-    bool SingleThreadResourcesContext::isNeedProceed(spTexture t)
-    {
-        return t->getHandle() == 0;
     }
 }

@@ -135,12 +135,12 @@ void RuleSelection::showRuleSelection()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     qint32 y = 20;
     // font style
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -626,25 +626,11 @@ void RuleSelection::showRuleSelection()
 
     textField = spLabel::create(textWidth - 40);
     textField->setStyle(style);
-    textField->setHtmlText(tr("Unit transfer: "));
-    textField->setPosition(30, y);
-    addChild(textField);
-    pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked allied players can transfer units to each other."));
-    pCheckbox->setPosition(textWidth, textField->getY());
-    pCheckbox->setEnabled(m_ruleChangeEabled);
-    addChild(pCheckbox);
-    pCheckbox->setChecked(pMap->getGameRules()->getAllowUnitTransfer());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAllowUnitTransfer, Qt::QueuedConnection);
-    y += 40;
-
-    textField = spLabel::create(textWidth - 40);
-    textField->setStyle(style);
     textField->setHtmlText(tr("Unit sell value: "));
     textField->setPosition(30, y);
     addChild(textField);
     pSpinbox = spSpinBox::create(200, 0, 1, SpinBox::Mode::Float);
-    pSpinbox->setTooltipText(tr("The amount of funds you get back for selling a unit."));
+    pSpinbox->setTooltipText(tr("The amount of funds you get back for selling a unit. Only has an impact if the sell action is active"));
     pSpinbox->setInfinityValue(-1.0);
     pSpinbox->setSpinSpeed(0.1f);
     pSpinbox->setUnit("%");
@@ -769,7 +755,7 @@ void RuleSelection::showRuleSelection()
 
 void RuleSelection::addCustomGamerules(qint32 & y)
 {
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

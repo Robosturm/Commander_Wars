@@ -108,16 +108,6 @@ public slots:
      */
     void setResellValue(float newResellValue);
     /**
-     * @brief getAllowUnitTransfer
-     * @return
-     */
-    bool getAllowUnitTransfer() const;
-    /**
-     * @brief setAllowUnitTransfer
-     * @param newAllowUnitTransfer
-     */
-    void setAllowUnitTransfer(bool newAllowUnitTransfer);
-    /**
      * @brief getVictory
      * @return
      */
@@ -552,8 +542,7 @@ private:
     float m_powerGainSpeed{1.0f};
     quint8 m_terrainDefense{10};
     bool m_victory{false};
-    float m_resellValue{0.0f};
-    bool m_allowUnitTransfer{false};
+    float m_resellValue{0.5f};
     bool m_transporterRefresh{true};
 
     Password m_password;

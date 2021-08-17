@@ -7,11 +7,8 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/tweens/tweenwait.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
-
-#include "coreengine/tweens/tweenscreenshake.h"
 
 GameAnimation::GameAnimation(quint32 frameTime)
     : QObject(),
@@ -325,7 +322,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 
 qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color, qint32 priority)
 {
-    oxygine::TextStyle style = FontManager::getMainFont72();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72());
     style.color = color;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

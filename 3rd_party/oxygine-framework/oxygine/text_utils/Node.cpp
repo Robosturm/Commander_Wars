@@ -8,7 +8,8 @@
 namespace oxygine
 {
     namespace text
-    {
+    {        
+        qint32 TextNode::m_defMissingGlyph = '?';
         Node::Node()
             : m_firstChild(0),
               m_lastChild(0),
@@ -149,21 +150,13 @@ namespace oxygine
             }
         }
 
-        qint32 _defMissing = '?';
-        void TextNode::setDefaultMissingSymbol(qint32 v)
-        {
-            _defMissing = v;
-        }
-
         void TextNode::xresize(Aligner& rd)
         {
             if (!m_data.empty())
             {
                 qint32 i = 0;
                 const Font* font = rd.getFont();
-                const size_t opt = rd.getOptions();
-
-                while (i != (int)m_data.size())
+                while (i != m_data.size())
                 {
                     Symbol& s = m_data[i];
                     if (s.code == '\n')
@@ -172,7 +165,7 @@ namespace oxygine
                     }
                     else
                     {
-                        const glyph* gl = font->getGlyph(s.code, opt);
+                        const glyph* gl = font->getGlyph(s.code);
                         if (gl)
                         {
                             s.gl = *gl;
@@ -180,7 +173,7 @@ namespace oxygine
                         }
                         else
                         {
-                            gl = font->getGlyph(_defMissing, opt);
+                            gl = font->getGlyph(m_defMissingGlyph);
                             if (gl)//even 'missing' symbol  could be missing
                             {
                                 s.gl = *gl;
@@ -246,11 +239,7 @@ namespace oxygine
                 resizeChildren(rd);
                 return;
             }
-
-            size_t prevOpt = rd.getOptions();
-            rd.setOptions(m_options);
             resizeChildren(rd);
-            rd.setOptions(prevOpt);
         }
 
         void DivNode::draw(DrawContext& dc)

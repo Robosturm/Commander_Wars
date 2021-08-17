@@ -35,12 +35,12 @@ void PerkSelection::updatePerksView(CO* pCO)
         m_perks =  pCO->getPerkList();
     }
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    oxygine::TextStyle largeStyle = FontManager::getMainFont32();
+    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
     largeStyle.color = FontManager::getFontColor();
     largeStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     largeStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -56,7 +56,7 @@ void PerkSelection::updatePerksView(CO* pCO)
         spLabel textField = spLabel::create(getWidth() - 40);
         textField->setStyle(largeStyle);
         textField->setHtmlText(group.name);
-        textField->setPosition(0, y);
+        textField->setPosition(getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
         addChild(textField);
         y += 45;
         x = 0;

@@ -45,6 +45,11 @@ public:
     {
         return m_loadedHeavyAis.size();
     }
+    /**
+     * @brief getDefaultActionbBannlist
+     * @return
+     */
+    QStringList getDefaultActionbBannlist();
 protected:
     friend RessourceManagement<GameManager>;
     GameManager();

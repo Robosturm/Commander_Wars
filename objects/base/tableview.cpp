@@ -24,7 +24,7 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
     setWidth(width);
     setHeight((data.size() + 1) * 45);
     QColor color(255, 127, 39);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -102,7 +102,7 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
 void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
 {
     QColor color(255, 127, 39);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

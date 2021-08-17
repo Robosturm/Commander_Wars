@@ -163,7 +163,7 @@ void ReplayMenu::loadUIButtons()
 {    
     loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -288,7 +288,7 @@ void ReplayMenu::oneStep()
 void ReplayMenu::loadSeekUi()
 {    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -461,7 +461,7 @@ void ReplayMenu::showConfig()
 
     spGenericBox pBox = spGenericBox::create();
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

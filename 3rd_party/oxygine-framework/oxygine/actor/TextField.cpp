@@ -75,12 +75,6 @@ namespace oxygine
         rebuildText();
     }
 
-    void TextField::setOptions(size_t opt)
-    {
-        m_style.options = opt;
-        rebuildText();
-    }
-
     const ResFont* TextField::getFont() const
     {
         return m_style.font;
@@ -220,11 +214,6 @@ namespace oxygine
     float TextField::getBaselineScale() const
     {
         return m_style.baselineScale;
-    }
-
-    size_t TextField::getOptions() const
-    {
-        return m_style.options;
     }
 
     text::Symbol* TextField::getSymbolAt(qint32 pos) const

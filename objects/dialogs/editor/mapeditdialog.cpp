@@ -33,7 +33,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     qint32 width = 250;
     // Label
     spLabel text = spLabel::create(width - 10);
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     text->setStyle(style);
     text->setHtmlText(tr("Name:"));

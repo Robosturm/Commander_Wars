@@ -86,7 +86,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
 
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -97,74 +97,116 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    oxygine::TextStyle headerStyle = oxygine::TextStyle(FontManager::getMainFont48());
     headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
+
+    oxygine::TextStyle largeStyle = oxygine::TextStyle(FontManager::getMainFont32());
+    largeStyle.color = FontManager::getFontColor();
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
     spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     pPanel->addItem(pLabel);
-
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    m_UnitList = pUnitSpriteManager->getUnitsSorted();
-
-    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    qint32 y = 40 + pLabel->getTextRect().getHeight();
     qint32 x = 10;
     spGameMap pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < m_UnitList.size(); i++)
+
+    auto unitGroups = getUnitGroups();
+
+    for (const auto & group : unitGroups)
     {
-        QString unitID = m_UnitList[i];
-
-        spUnit pUnit = spUnit::create(unitID, pMap->getPlayer(player), false);
-
-        pLabel = spLabel::create(250);
-        pLabel->setStyle(style);
-        pLabel->setHtmlText(pUnit->getName());
-
-        pLabel->setPosition(x + 80, y);
-        pUnit->setPosition(x + 45, y);
-        pUnit->setScale(pUnit->getScale() * 1.25f);
-        spCheckbox pCheckbox = spCheckbox::create();
-        pCheckbox->setPosition(x, y);
-        m_Checkboxes.append(pCheckbox);
-
-        if (m_CurrentBuildList.contains(unitID))
+        spLabel textField = spLabel::create(pPanel->getWidth() - 40);
+        textField->setStyle(largeStyle);
+        textField->setHtmlText(group.name);
+        textField->setPosition(pPanel->getWidth() / 2 - textField->getTextRect().getWidth() / 2, y);
+        pPanel->addItem(textField);
+        y += 45;
+        x = 10;
+        for (qint32 i = 0; i < group.units.size(); ++i)
         {
-            pCheckbox->setChecked(true);
-        }
-        else
-        {
-            pCheckbox->setChecked(false);
-        }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
-        {
-            if (checked)
+            QString unitID = group.units[i];
+            spUnit pUnit = spUnit::create(unitID, pMap->getPlayer(player), false);
+            pLabel = spLabel::create(250);
+            pLabel->setStyle(style);
+            pLabel->setHtmlText(pUnit->getName());
+            pLabel->setPosition(x + 90, y);
+            pUnit->setPosition(x + 45, y);
+            pUnit->setScale(pUnit->getScale() * 1.25f);
+            spCheckbox pCheckbox = spCheckbox::create();
+            pCheckbox->setPosition(x, y);
+            m_Checkboxes.append(pCheckbox);
+            if (m_CurrentBuildList.contains(unitID))
             {
-                m_CurrentBuildList.append(unitID);
+                pCheckbox->setChecked(true);
             }
             else
             {
-                m_CurrentBuildList.removeAll(unitID);
+                pCheckbox->setChecked(false);
             }
-        });
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
+            {
+                if (checked)
+                {
+                    m_CurrentBuildList.append(unitID);
+                }
+                else
+                {
+                    m_CurrentBuildList.removeAll(unitID);
+                }
+            });
+            pPanel->addItem(pCheckbox);
+            pPanel->addItem(pLabel);
+            pPanel->addItem(pUnit);
 
-        pPanel->addItem(pCheckbox);
-        pPanel->addItem(pLabel);
-        pPanel->addItem(pUnit);
-
-        x += 340;
-        if (x + 340 > pPanel->getContentWidth())
-        {
-            y += 40;
-            x = 10;
+            x += 350;
+            if (x + 350 > pPanel->getContentWidth() &&
+                i < group.units.size() - 1)
+            {
+                y += 40;
+                x = 10;
+            }
         }
+        y += 50;
     }
     pPanel->setContentHeigth(y + 50);
     connect(this, &BuildListDialog::canceled, this, &BuildListDialog::remove, Qt::QueuedConnection);
     connect(this, &BuildListDialog::sigFinished, this, &BuildListDialog::remove, Qt::QueuedConnection);
+}
+
+QVector<BuildListDialog::UnitGroup> BuildListDialog::getUnitGroups()
+{
+    QVector<BuildListDialog::UnitGroup> ret;
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    m_UnitList = pUnitSpriteManager->getUnitsSorted();
+    UnitGroup currentGroup;
+    qint32 currentIdentifier = std::numeric_limits<qint32>::min();
+    for (const auto & unit : qAsConst(m_UnitList))
+    {
+        qint32 newIdentifier = pUnitSpriteManager->getUnitType(unit);
+        if (newIdentifier != currentIdentifier)
+        {
+            currentIdentifier = newIdentifier;
+            if (currentGroup.units.size() > 0)
+            {
+                ret.append(currentGroup);
+            }
+            currentGroup.name = pUnitSpriteManager->getUnitTypeText(currentIdentifier);
+            currentGroup.units.clear();
+        }
+        currentGroup.units.append(unit);
+    }
+    if (currentGroup.units.size() > 0)
+    {
+        ret.append(currentGroup);
+    }
+    return ret;
 }
 
 void BuildListDialog::remove()
