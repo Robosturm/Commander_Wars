@@ -23,12 +23,4 @@ namespace oxygine
     {
         Actor::sizeChanged(size);
     }
-
-    RectF ColorRectSprite::getDestRect() const
-    {
-        auto ret = Actor::getDestRect();
-        ret.pos += m_DestRecModifier.pos;
-        ret.size += m_DestRecModifier.size;
-        return ret;
-    }
 }

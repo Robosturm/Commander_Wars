@@ -5,12 +5,6 @@
 
 namespace oxygine
 {
-    AtlasBuilder::AtlasBuilder()
-        : m_bounds(0, 0, 0, 0),
-          m_skipSize(3)
-    {
-    }
-
     void AtlasBuilder::clean()
     {
         m_free.clear();
@@ -112,11 +106,8 @@ namespace oxygine
     }
 
     MultiAtlas::MultiAtlas(createTextureCallback cb)
-        : m_cb(cb),
-          m_bounds(0, 0, 0, 0),
-          m_skipSize(3)
+        : m_cb(cb)
     {
-
     }
 
     void MultiAtlas::clean()

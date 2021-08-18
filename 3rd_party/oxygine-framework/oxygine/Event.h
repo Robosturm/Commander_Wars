@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Input.h"
-#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 
 namespace oxygine
 {

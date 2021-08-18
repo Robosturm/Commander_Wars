@@ -11,7 +11,7 @@ namespace oxygine
     {
         public:
             static const char* const RCC_PREFIX_PATH;
-            explicit Resource();
+            explicit Resource() = default;
             virtual ~Resource() = default;
 
             /**Loads resource heavy data into memory*/
@@ -65,7 +65,7 @@ namespace oxygine
             virtual void _unload() = 0;
 
         protected:
-            Resource* m_parent;
+            Resource* m_parent{nullptr};
             QDomElement m_node;
             QString m_name;
 

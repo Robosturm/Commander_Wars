@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    PointerState::PointerState(): m_index(1)
+    PointerState::PointerState()
     {
         init(m_index);
     }

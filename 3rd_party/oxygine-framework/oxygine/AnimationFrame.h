@@ -8,43 +8,27 @@ namespace oxygine
     class Diffuse
     {
     public:
-        Diffuse()
-            : flags(0)
-        {
-        }
+        explicit Diffuse() = default;
         spTexture base;
         spTexture alpha;
-        qint32 flags;
+        qint32 flags{0};
     };
 
     class HitTestData
     {
     public:
-        explicit HitTestData()
-            : data(0),
-              w(0),
-              h(0),
-              pitch(0)
-        {
-        }
+        explicit HitTestData() = default;
         virtual ~HitTestData() = default;
-
-        const unsigned char* data;
-        short w, h;
-        unsigned char pitch;
+        const unsigned char* data{nullptr};
+        short w{0};
+        short h{0};
+        unsigned char pitch{0};
     };
 
     class AnimationFrame
     {
     public:
-        explicit AnimationFrame()
-            : m_srcRect(0, 0, 1, 1),
-              m_destRect(0, 0, 1, 1),
-              m_resAnim(0),
-              m_row(0),
-              m_column(0)
-        {
-        }
+        explicit AnimationFrame() = default;
         explicit AnimationFrame(spTexture t);
         virtual ~AnimationFrame() = default;
 
@@ -142,12 +126,12 @@ namespace oxygine
         };
 
         Diffuse         m_diffuse;
-        RectF           m_srcRect;
-        RectF           m_destRect;
+        RectF           m_srcRect{0, 0, 1, 1};
+        RectF           m_destRect{0, 0, 1, 1};
         Vector2         m_frameSize;//real size without clipping
-        ResAnim*        m_resAnim;
-        short           m_row;
-        short           m_column;
+        ResAnim*        m_resAnim{nullptr};
+        short           m_row{0};
+        short           m_column{0};
         HitTestData     m_hittest;
     };
 }

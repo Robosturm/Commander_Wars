@@ -10,18 +10,6 @@ namespace oxygine
     spMaterial Material::current;
     spMaterial Material::null;
 
-    Material::Material(const Material& other)
-        : m_hash(other.m_hash),
-          m_base(other.m_base),
-          m_table(other.m_table),
-          m_alpha(other.m_alpha),
-          m_blend(other.m_blend),
-          m_uberShader(other.m_uberShader),
-          m_addColor(other.m_addColor),
-          m_flags(other.m_flags)
-    {
-    }
-
     bool Material::compare(const Material* matA, const Material* matB)
     {
         if (matA->m_base       != matB->m_base ||

@@ -6,9 +6,7 @@ namespace oxygine
 {
     TweenAnim::TweenAnim(const ResAnim* resAnim, qint32 row):
         m_resAnim(resAnim),
-        m_row(row),
-        m_start(0),
-        m_end(0)
+        m_row(row)
     {
         if (m_resAnim)
         {

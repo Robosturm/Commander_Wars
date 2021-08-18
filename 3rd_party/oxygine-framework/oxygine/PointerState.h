@@ -34,7 +34,7 @@ namespace oxygine
     private:
         friend class Input;
         Vector2 m_position;
-        qint32 m_pressed;
-        pointer_index m_index;
+        qint32 m_pressed{0};
+        pointer_index m_index{1};
     };
 }

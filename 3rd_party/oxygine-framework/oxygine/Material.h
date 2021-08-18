@@ -20,12 +20,22 @@ namespace oxygine
         {
             init();
         }
-        Material(const Material& other);
+        explicit Material(const Material* other)
+            : m_hash(other->m_hash),
+              m_base(other->m_base),
+              m_table(other->m_table),
+              m_alpha(other->m_alpha),
+              m_blend(other->m_blend),
+              m_uberShader(other->m_uberShader),
+              m_addColor(other->m_addColor),
+              m_flags(other->m_flags)
+        {
+        }
         virtual ~Material() = default;
         void init();
         spMaterial clone() const
         {
-            return spMaterial::create(*this);
+            return spMaterial::create(this);
         }
         void update(size_t &hash) const
         {

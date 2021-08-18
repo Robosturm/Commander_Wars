@@ -15,12 +15,12 @@ namespace oxygine
         enum
         {
             ALPHA_PREMULTIPLY = 1,
-            SEPARATE_ALPHA = 1 << 1,
-            MASK_R_CHANNEL = 1 << 2,
-            MASK = 1 << 3,
-            ADD_COLOR = 1 << 4,
-            COLOR_TABLE = 1 << 5,
-            _SIZE = 1 << 6
+            SEPARATE_ALPHA =    1 << 1,
+            MASK_R_CHANNEL =    1 << 2,
+            MASK =              1 << 3,
+            ADD_COLOR =         1 << 4,
+            COLOR_TABLE =       1 << 5,
+            _SIZE =             1 << 6
         };
         enum
         {

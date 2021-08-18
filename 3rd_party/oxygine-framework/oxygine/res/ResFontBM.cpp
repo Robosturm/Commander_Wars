@@ -25,13 +25,6 @@ namespace oxygine
         return font;
     }
 
-    ResFontBM::ResFontBM()
-        : m_font(nullptr),
-          m_premultipliedAlpha(false)
-    {
-
-    }
-
     ResFontBM::~ResFontBM()
     {
         cleanup();

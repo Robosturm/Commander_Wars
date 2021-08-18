@@ -20,7 +20,7 @@ namespace oxygine
         virtual ~GameWindow() = default;
 
         static QOpenGLContext* getGLContext();
-        static GameWindow*  getWindow();
+        static GameWindow* getWindow();
         bool isReady2Render();
         /**
          * @brief quitGame quits this game
@@ -30,7 +30,6 @@ namespace oxygine
             m_quit = true;
         }
         void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
-
         virtual bool isWorker() = 0;
         /**
          * @brief isEvenScale

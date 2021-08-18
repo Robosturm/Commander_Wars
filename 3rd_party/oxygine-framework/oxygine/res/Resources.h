@@ -1,6 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <QDomDocument>
@@ -23,7 +23,7 @@ namespace oxygine
         static void registerResourceType(createResourceCallback creationCallback, QString resTypeID);
         static void unregisterResourceType(QString resTypeID);
 
-        explicit Resources();
+        explicit Resources() = default;
         virtual ~Resources();
 
         /**Loads resources from xml file. Load could be called multiple times for different xml files.

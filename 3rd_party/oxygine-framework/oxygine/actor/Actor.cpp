@@ -24,8 +24,6 @@ namespace oxygine
           m_rotation(0),
           m_zOrder(0)
     {
-        m_transform.identity();
-        m_transformInvert.identity();
         m_pressedOvered = 0;
     }
 
@@ -51,7 +49,6 @@ namespace oxygine
         {
             child->added2stage(stage);
         }
-        onAdded2Stage();
     }
 
     void Actor::removedFromStage()
@@ -61,7 +58,6 @@ namespace oxygine
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::removedFromStage trying to remove from stage while not on a stage");
             return;
         }
-        onRemovedFromStage();
         m_stage->removeEventListeners(this);
         m_stage = nullptr;
 
@@ -70,10 +66,6 @@ namespace oxygine
         {
             child->removedFromStage();
         }
-    }
-
-    void Actor::transformUpdated()
-    {
     }
 
     void Actor::calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const
@@ -117,7 +109,6 @@ namespace oxygine
     AffineTransform Actor::computeGlobalTransform(Actor* parent) const
     {
         AffineTransform t;
-        t.identity();
         const Actor* actor = this;
         while (actor && actor != parent)
         {
@@ -149,8 +140,6 @@ namespace oxygine
                 stage->removeEventListener(m_onGlobalTouchUpEvent);
             }
         }
-
-        updateStatePressed();
     }
 
     void Actor::_onGlobalTouchUpEvent(Event* ev)
@@ -184,7 +173,6 @@ namespace oxygine
         up.bubbles = false;
         up.localPosition = stage2local(te->localPosition, oxygine::Stage::getStage().get());
         dispatchEvent(&up);
-        updateStateOvered();
         oxygine::Stage::getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
         m_overred = 0;
         m_onGlobalTouchMoveEvent = -1;
@@ -208,8 +196,6 @@ namespace oxygine
                     {
                         oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::dispatchEvent hover state is 0");
                     }
-                    updateStateOvered();
-
                     TouchEvent over = *te;
                     over.type = TouchEvent::OVER;
                     over.bubbles = false;
@@ -228,7 +214,6 @@ namespace oxygine
                         m_onGlobalTouchUpEvent = oxygine::Stage::getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
                     }
                     m_pressedButton[te->mouseButton] = te->index;
-                    updateStatePressed();
                 }
             }
 
@@ -642,12 +627,8 @@ namespace oxygine
         }
 
         tr.translate(offset);
-
-
         m_transform = tr;
         m_flags &= ~flag_transformDirty;
-
-        const_cast<Actor*>(this)->transformUpdated();
     }
 
     bool Actor::isOn(const Vector2& localPosition, float)
@@ -955,9 +936,19 @@ namespace oxygine
         m_rdelegate->render(this, parentRS);
     }
 
+    oxygine::RectF Actor::getDestRecModifier() const
+    {
+        return m_DestRecModifier;
+    }
+
+    void Actor::setDestRecModifier(const oxygine::RectF &DestRecModifier)
+    {
+        m_DestRecModifier = DestRecModifier;
+    }
+
     RectF Actor::getDestRect() const
     {
-        return RectF(Vector2(0, 0), getSize());
+        return RectF(m_DestRecModifier.pos, getSize() + m_DestRecModifier.size);
     }
 
     spTween Actor::__addTween(spTween tween, bool)

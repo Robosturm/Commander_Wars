@@ -58,11 +58,6 @@ namespace oxygine
         removeUnusedNoLock();
     }
 
-    MaterialCache::MaterialCache()
-        : m_addCounter(0)
-    {
-    }
-
     void MaterialCache::clear()
     {
         QMutexLocker alock(&m_lock);

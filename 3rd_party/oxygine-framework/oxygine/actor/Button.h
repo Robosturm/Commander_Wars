@@ -28,7 +28,7 @@ namespace oxygine
             stateOvered,
             statePressed
         };
-        virtual void updateButtonState(state s);
+        void updateButtonState(state s);
     protected:
         state m_state;
         const ResAnim* m_resAnim;

@@ -14,7 +14,7 @@ namespace oxygine
         static intrusive_ptr<T> create(TArgs... args)
         {
             intrusive_ptr<T> pRet;
-            pRet.m_pPointer =  new T(args...);
+            pRet.m_pPointer = new T(args...);
             oxygine::ref_counter::trackObject(pRet.m_pPointer);
             pRet.m_pPointer->addRef();
             return pRet;

@@ -10,12 +10,6 @@ namespace oxygine
     namespace text
     {        
         qint32 TextNode::m_defMissingGlyph = '?';
-        Node::Node()
-            : m_firstChild(0),
-              m_lastChild(0),
-              m_nextSibling(0)
-        {
-        }
 
         void Node::appendNode(spNode tn)
         {

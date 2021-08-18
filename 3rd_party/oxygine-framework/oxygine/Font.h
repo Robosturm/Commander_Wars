@@ -37,7 +37,7 @@ namespace oxygine
     class Font : public Object
     {
     public:
-        explicit Font();
+        explicit Font() = default;
         virtual ~Font() = default;
 
         void init(qint32 size, qint32 baselineDistance);
@@ -70,7 +70,7 @@ namespace oxygine
     protected:
         using glyphs = QSet<glyph>;
         glyphs m_glyphs;
-        float m_scale{0.0f};
+        float m_scale{1.0f};
         qint32 m_size{0};
         qint32 m_baselineDistance{0};
     };

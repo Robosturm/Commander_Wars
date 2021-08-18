@@ -12,7 +12,7 @@ namespace oxygine
         typedef VectorT2<T> vector2;
     public:
         typedef T type;
-        explicit VectorT2();
+        explicit VectorT2() = default;
         explicit VectorT2(T, T);
 
         VectorT2& operator+=(const VectorT2&);
@@ -123,7 +123,8 @@ namespace oxygine
 
         static T dot(const VectorT2& v1, const VectorT2& v2);
         static VectorT2& normalize(VectorT2& out, const VectorT2& v);
-        T x, y;
+        T x{0};
+        T y{0};
     };
 
     template<class T>
@@ -143,11 +144,6 @@ namespace oxygine
             return true;
         return false;
     }
-
-    template <class T>
-    VectorT2<T>::VectorT2(): x(0), y(0)
-    {}
-
     template <class T>
     VectorT2<T>::VectorT2(T X, T Y):
         x(X), y(Y)

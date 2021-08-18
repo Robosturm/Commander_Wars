@@ -16,30 +16,27 @@ namespace oxygine
         virtual ~TextField() = default;
 
         /**Returns current text style*/
-        const TextStyle&            getStyle() const
+        const TextStyle& getStyle() const
         {
             return m_style;
         }
         /**Returns text bounds*/
-        const Rect&                 getTextRect() const;
+        const Rect& getTextRect() const;
         /**Returns current text*/
-        QString                     getText() const;
-        const ResFont*              getFont() const;
-        qint32                      getFontSize() const;
-        qint32                      getLinesOffset() const;
-        qint32                      getKerning() const;
-        TextStyle::VerticalAlign    getVAlign() const;
-        TextStyle::HorizontalAlign  getHAlign() const;
-        bool                        getMultiline() const;
-        bool                        getBreakLongWords() const;
-        text::Symbol*               getSymbolAt(qint32 pos) const;
-        const QColor&               getStyleColor() const;
-        float                       getBaselineScale() const;
-        size_t                      getOptions() const;
-
-
-        bool getBounds(RectF&) const override;
-
+        QString getText() const;
+        const ResFont* getFont() const;
+        qint32 getFontSize() const;
+        qint32 getLinesOffset() const;
+        qint32 getKerning() const;
+        TextStyle::VerticalAlign getVAlign() const;
+        TextStyle::HorizontalAlign getHAlign() const;
+        bool getMultiline() const;
+        bool getBreakLongWords() const;
+        text::Symbol* getSymbolAt(qint32 pos) const;
+        const QColor& getStyleColor() const;
+        float getBaselineScale() const;
+        size_t getOptions() const;
+        virtual bool getBounds(RectF&) const override;
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);
         /**Overwrites TextStyle Horizontal align*/

@@ -14,7 +14,7 @@ namespace oxygine
     public:
         static spResource create(CreateResourceContext& context);
 
-        explicit ResFontBM();
+        explicit ResFontBM() = default;
         virtual ~ResFontBM();
 
         /**loads "fnt" font from file, supported XML */
@@ -40,14 +40,14 @@ namespace oxygine
         void _finalize();
 
     private:
-        typedef QVector<page> pages;
+        using pages = QVector<page>;
         pages m_pages;
         spFont m_font;
         QString m_file;
-        bool m_premultipliedAlpha;
-
+        bool m_premultipliedAlpha{false};
         //settings from xml
-        quint32 m_linearFilter;
-        bool m_clamp2edge;
+        quint32 m_linearFilter{0};
+        bool m_clamp2edge{false};
+
     };
 }

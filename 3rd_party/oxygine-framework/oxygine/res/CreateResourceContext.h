@@ -18,11 +18,11 @@ namespace oxygine
         {
             return m_root.isNull();
         }
-        QString  getCurrentFolder() const
+        QString getCurrentFolder() const
         {
             return m_path;
         }
-        QString     getPath(QString attrName) const;
+        QString getPath(QString attrName) const;
         QDomElement getNode() const
         {
             return m_root;

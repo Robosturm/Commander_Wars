@@ -213,7 +213,7 @@ namespace oxygine
         /**computes global actor transformation*/
         AffineTransform computeGlobalTransform(Actor* parent = nullptr) const;
         /**computes actor Bounds rectangle. Iterates children*/
-        RectF computeBounds(const AffineTransform& transform = AffineTransform::getIdentity()) const;
+        RectF computeBounds(const AffineTransform& transform = AffineTransform()) const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -256,23 +256,61 @@ namespace oxygine
         void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
-        virtual void setVisible(bool vis) {m_flags &= ~flag_visible; if (vis) m_flags |= flag_visible;}
+        virtual void setVisible(bool vis)
+        {
+            m_flags &= ~flag_visible;
+            if (vis)
+            {
+                m_flags |= flag_visible;
+            }
+        }
         /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
         void setCull(bool enable) {m_flags &= ~flag_cull; if (enable) m_flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
         /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
-        void setHasOwnBounds(bool enable = true) { m_flags &= ~flag_actorHasBounds; if (enable) m_flags |= flag_actorHasBounds; }
+        void setHasOwnBounds(bool enable = true)
+        {
+            m_flags &= ~flag_actorHasBounds;
+            if (enable)
+            {
+                m_flags |= flag_actorHasBounds;
+            }
+        }
         /**by default actor with Alpha = 0 not clickable*/
-        void setClickableWithZeroAlpha(bool enable) { m_flags &= ~flag_clickableWithZeroAlpha; if (enable) m_flags |= flag_clickableWithZeroAlpha; }
+        void setClickableWithZeroAlpha(bool enable)
+        {
+            m_flags &= ~flag_clickableWithZeroAlpha;
+            if (enable)
+            {
+                m_flags |= flag_clickableWithZeroAlpha;
+            }
+        }
         /**Enables/Disables Touch events for Actor.*/
-        void setTouchEnabled(bool enabled) { m_flags &= ~flag_touchEnabled; if (enabled) m_flags |= flag_touchEnabled; }
+        void setTouchEnabled(bool enabled)
+        {
+            m_flags &= ~flag_touchEnabled;
+            if (enabled)
+            {
+                m_flags |= flag_touchEnabled;
+            }
+        }
         /**Enables/Disables Touch events for children of Actor.*/
-        void setTouchChildrenEnabled(bool enabled) { m_flags &= ~flag_touchChildrenEnabled; if (enabled) m_flags |= flag_touchChildrenEnabled; }
+        void setTouchChildrenEnabled(bool enabled)
+        {
+            m_flags &= ~flag_touchChildrenEnabled;
+            if (enabled)
+            {
+                m_flags |= flag_touchChildrenEnabled;
+            }
+        }
         /**setTouchEnabled + setTouchChildrenEnabled*/
-        void setTouchEnabled(bool enabled, bool childrenEnabled) { setTouchEnabled(enabled); setTouchChildrenEnabled(childrenEnabled); }
-
+        void setTouchEnabled(bool enabled, bool childrenEnabled)
+        {
+            setTouchEnabled(enabled);
+            setTouchChildrenEnabled(childrenEnabled);
+        }
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
@@ -284,9 +322,7 @@ namespace oxygine
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
         Actor* detach();
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
-        void dispatchEvent(Event* event) override;
-        virtual void updateStateOvered() {}
-        virtual void updateStatePressed() {}
+        virtual void dispatchEvent(Event* event) override;
 
         spTween addTween(spTween);
         template<class TProperty>
@@ -322,17 +358,35 @@ namespace oxygine
         virtual void doRender(const RenderState&) {}
 
         //converts position in parent space to local space
-        virtual Vector2 parent2local(const Vector2& pos) const;
+        Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space
-        virtual Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
+        Vector2 local2parent(const Vector2& pos = Vector2()) const;
 
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = nullptr) const;
+        Vector2 local2stage(const Vector2& pos = Vector2(), Actor* stage = nullptr) const;
         Vector2 local2stage(float x, float y, Actor* stage = nullptr) const;
         //converts global position (position in Stage space) to local space
-        Vector2 stage2local(const Vector2& pos = Vector2(0, 0), Actor* stage = nullptr) const;
+        Vector2 stage2local(const Vector2& pos = Vector2(), Actor* stage = nullptr) const;
         Vector2 stage2local(float x, float y, Actor* stage = nullptr) const;
 
+        /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
+        Stage* __getStage();
+
+        void setNotPressed(MouseButton b);
+
+        bool internalRender(RenderState& rs, const RenderState& parentRS);
+        virtual bool getBounds(RectF&) const;
+        oxygine::RectF getDestRecModifier() const;
+        void setDestRecModifier(const oxygine::RectF &DestRecModifier);
+
+        static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
+        static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
+        static RectF getActorTransformedDestRect(Actor* actor, const AffineTransform& tr);
+        /*****************************************************************************************/
+        // properties for tweens
+        /*****************************************************************************************/
         typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
         typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
         typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>                                       TweenY;
@@ -346,34 +400,18 @@ namespace oxygine
         typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
         typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
-
-        /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
-        Stage*              __getStage();
-
-        void setNotPressed(MouseButton b);
-
-        bool internalRender(RenderState& rs, const RenderState& parentRS);
-        virtual bool getBounds(RectF&) const;
-
-
-        static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
-        static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
-        static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static RectF getActorTransformedDestRect(Actor* actor, const AffineTransform& tr);
     protected:
         void added2stage(Stage*);
         void removedFromStage();
-        virtual void onAdded2Stage() {}
-        virtual void onRemovedFromStage() {}
-        virtual void transformUpdated();
-
-        virtual void calcBounds2(RectF& bounds, const AffineTransform& transform) const;
+        void calcBounds2(RectF& bounds, const AffineTransform& transform) const;
         void calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const;
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
-        const Vector2& _getSize() const { return m_size; }
+        const Vector2& _getSize() const
+        {
+            return m_size;
+        }
         void __setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         spTween __addTween(spTween tween, bool rel);
@@ -419,6 +457,7 @@ namespace oxygine
         Actor* m_parent;
         tweens m_tweens;
         children m_children;
+        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f)};
         union
         {
             //dont change order!!! or brake statements: if (_pressedOvered == _overred)
@@ -439,6 +478,7 @@ namespace oxygine
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
         bool m_onScreen{true};
+
     };
 
 }

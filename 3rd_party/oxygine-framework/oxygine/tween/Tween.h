@@ -4,7 +4,7 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Property.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
-#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <limits>
 
@@ -29,8 +29,8 @@ namespace oxygine
         {
         }
         Actor* getActor() const;
-        Tween* m_tween;
-        const UpdateState* m_us;
+        Tween* m_tween{nullptr};
+        const UpdateState* m_us{nullptr};
     };
 
     class Tween : public EventDispatcher
@@ -90,7 +90,7 @@ namespace oxygine
             ease_count
         };
 
-        explicit Tween();
+        explicit Tween() = default;
         virtual ~Tween() = default;
         void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);
         void init2(const TweenOptions& opt);
@@ -217,19 +217,19 @@ namespace oxygine
 
     protected:
         status m_status{status_not_started};
-        timeMS m_elapsed;
-        timeMS m_duration;
-        timeMS m_delay;
-        qint32 m_loops;
-        qint32 m_loopsDone;
-        EASE m_ease;
-        EASE m_globalEase;
-        bool m_twoSides;
-        float m_percent;
-        bool m_detach;
+        timeMS m_elapsed{0};
+        timeMS m_duration{0};
+        timeMS m_delay{0};
+        qint32 m_loops{1};
+        qint32 m_loopsDone{0};
+        EASE m_ease{ease_linear};
+        EASE m_globalEase{ease_linear};
+        bool m_twoSides{false};
+        float m_percent{0};
+        bool m_detach{false};
         EventCallback m_cbStart;
         EventCallback m_cbDone;
-        Actor* m_client;
+        Actor* m_client{nullptr};
     };
 
     template<class TProperty>

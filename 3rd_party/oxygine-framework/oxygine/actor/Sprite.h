@@ -19,7 +19,7 @@ namespace oxygine
         explicit Sprite();
         virtual ~Sprite();
 
-        const AnimationFrame&   getAnimFrame() const
+        const AnimationFrame& getAnimFrame() const
         {
             return m_frame;
         }
@@ -66,8 +66,14 @@ namespace oxygine
         void setColumnRow(qint32 column, qint32 row);
         void setLocalScale(const Vector2& s);
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
-        bool isFlippedX() const {return (m_flags & flag_flipX) != 0;}
-        bool isFlippedY() const {return (m_flags & flag_flipY) != 0;}
+        bool isFlippedX() const
+        {
+            return (m_flags & flag_flipX) != 0;
+        }
+        bool isFlippedY() const
+        {
+            return (m_flags & flag_flipY) != 0;
+        }
         void setFlippedX(bool flippedX);
         virtual void flipActorsX(bool flippedX)
         {
@@ -78,9 +84,7 @@ namespace oxygine
         void setFlipped(bool flippedX, bool flippedY);
         bool getInvertFlipX() const;
         void setInvertFlipX(bool value);
-        void doRender(const RenderState&) override;
-        oxygine::RectF getDestRecModifier() const;
-        void setDestRecModifier(const oxygine::RectF &DestRecModifier);
+        virtual void doRender(const RenderState&) override;
 
     protected:
         enum
@@ -97,7 +101,6 @@ namespace oxygine
         Vector2 m_localScale;
         AnimationFrame m_frame;
         oxygine::spResAnim m_colorTable;
-        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f)};
         bool m_invertFlipX{false};
     };
 }

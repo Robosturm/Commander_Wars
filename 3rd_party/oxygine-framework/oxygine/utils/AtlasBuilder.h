@@ -11,7 +11,7 @@ namespace oxygine
     class AtlasBuilder
     {
     public:
-        explicit AtlasBuilder();
+        explicit AtlasBuilder() = default;
         virtual ~AtlasBuilder() = default;
         void init(qint32 w, qint32 h, qint32 skipSize = 3);
         void clean();
@@ -23,9 +23,9 @@ namespace oxygine
 
     protected:
         using rects = QQueue<Rect>;
-        Rect m_bounds;
+        Rect m_bounds{0, 0, 0, 0};
         rects m_free;
-        qint32 m_skipSize;
+        qint32 m_skipSize{3};
     };
 
     class MultiAtlas
@@ -55,8 +55,8 @@ namespace oxygine
     protected:
         createTextureCallback m_cb;
         using rects = QQueue<rect>;
-        Rect m_bounds;
+        Rect m_bounds{0, 0, 0, 0};
         rects m_free;
-        qint32 m_skipSize;
+        qint32 m_skipSize{3};
     };
 }

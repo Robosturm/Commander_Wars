@@ -242,7 +242,6 @@ namespace oxygine
         }
     }
 
-
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
         if (m_flags & flag_manageResAnim)
@@ -297,7 +296,6 @@ namespace oxygine
 
     void Sprite::animFrameChanged(const AnimationFrame&)
     {
-
     }
 
     void Sprite::sizeChanged(const Vector2& size)
@@ -323,16 +321,6 @@ namespace oxygine
         }
     }
 
-    oxygine::RectF Sprite::getDestRecModifier() const
-    {
-        return m_DestRecModifier;
-    }
-
-    void Sprite::setDestRecModifier(const oxygine::RectF &DestRecModifier)
-    {
-        m_DestRecModifier = DestRecModifier;
-    }
-
     bool Sprite::getInvertFlipX() const
     {
         return m_invertFlipX;
@@ -349,14 +337,11 @@ namespace oxygine
         {
             return Actor::getDestRect();
         }
-
         RectF r = m_frame.getDestRect();
         r.pos = r.pos.mult(m_localScale);
         r.size = r.size.mult(m_localScale);
-
         r.pos += m_DestRecModifier.pos;
         r.size += m_DestRecModifier.size;
-
         return r;
     }
 

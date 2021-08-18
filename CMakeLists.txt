@@ -129,6 +129,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/STDRenderer.cpp
     3rd_party/oxygine-framework/oxygine/VisualStyle.cpp
     3rd_party/oxygine-framework/oxygine/RenderState.h
+    3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     #core
     3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
     3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
@@ -140,6 +141,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/core/ref_counter.cpp
     3rd_party/oxygine-framework/oxygine/core/texture.cpp
     3rd_party/oxygine-framework/oxygine/core/ShaderProgram.cpp
+    3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h
     # actor
     3rd_party/oxygine-framework/oxygine/actor/Actor.cpp
     3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp
@@ -177,6 +179,8 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
     # text utils
     3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.cpp
+    # closure
+    3rd_party/oxygine-framework/oxygine/core/closure.h
     # math
     3rd_party/oxygine-framework/oxygine/math/AffineTransform.h
     3rd_party/oxygine-framework/oxygine/math/Rect.h

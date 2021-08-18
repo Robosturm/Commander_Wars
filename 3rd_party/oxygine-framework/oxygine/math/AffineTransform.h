@@ -12,10 +12,8 @@ namespace oxygine
         typedef VectorT2<T> vector2;
         typedef AffineTransformT<T> affineTransform;
 
-        AffineTransformT()
-        {
-        }
-        AffineTransformT(T a_, T b_, T c_, T d_, T x_, T y_)
+        explicit AffineTransformT() = default;
+        explicit AffineTransformT(T a_, T b_, T c_, T d_, T x_, T y_)
             : a(a_),
               b(b_),
               c(c_),
@@ -33,13 +31,6 @@ namespace oxygine
             d = T(1);
             x = T(0);
             y = T(0);
-        }
-
-        static affineTransform getIdentity()
-        {
-            affineTransform t;
-            t.identity();
-            return t;
         }
 
         void translate(const vector2& v)
@@ -132,10 +123,12 @@ namespace oxygine
                        a * v.x + c * v.y + x,
                        b * v.x + d * v.y + y);
         }
-
-
-        T a, b, c, d;
-        T x, y;
+        T a{1};
+        T b{0};
+        T c{0};
+        T d{1};
+        T x{0};
+        T y{0};
     };
 
     using AffineTransform = AffineTransformT<float>;

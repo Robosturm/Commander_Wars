@@ -53,10 +53,10 @@ namespace oxygine
         virtual void _setAnimFrame(Sprite&, const AnimationFrame&);
 
     protected:
-        const ResAnim* m_resAnim;
-        qint32 m_row;
-        qint32 m_start;
-        qint32 m_end;
+        const ResAnim* m_resAnim{nullptr};
+        qint32 m_row{0};
+        qint32 m_start{0};
+        qint32 m_end{0};
         float m_initFrame{0.0f};
     };
 }

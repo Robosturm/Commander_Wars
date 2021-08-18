@@ -50,7 +50,7 @@ namespace oxygine
         static std::vector<quint16> indices16;
         static size_t maxVertices;
 
-        explicit STDRenderer(VideoDriver* driver = 0);
+        explicit STDRenderer(VideoDriver* driver = nullptr);
         virtual ~STDRenderer();
 
         const QMatrix4x4& getViewProjection() const;
@@ -147,13 +147,13 @@ namespace oxygine
     protected:
         AffineTransform m_transform;
         std::vector<VertexPCT2> m_verticesData;
-        const VertexDeclaration* m_vdecl;
+        const VertexDeclaration* m_vdecl{nullptr};
         VideoDriver* m_driver;
         QMatrix4x4 m_vp;
         ShaderProgramChangedHook* m_sphookFirst;
         ShaderProgramChangedHook* m_sphookLast;
 
-        UberShaderProgram* m_uberShader;
+        UberShaderProgram* m_uberShader{nullptr};
         quint32 m_baseShaderFlags;
         spTexture m_prevRT;
     private:
@@ -182,9 +182,9 @@ namespace oxygine
     protected:
         static constexpr quint32 MAX_TEXTURES = 8;
         spTexture m_textures[MAX_TEXTURES];
-        ShaderProgram*  m_program;
-        VideoDriver*   m_driver;
-        VideoDriver::blend_mode m_blend;
+        ShaderProgram* m_program{nullptr};
+        VideoDriver* m_driver{nullptr};
+        VideoDriver::blend_mode m_blend{VideoDriver::blend_disabled};
     };
 
     RenderStateCache& rsCache();

@@ -42,7 +42,7 @@ namespace oxygine
         {
             return m_guideY[1];
         }
-        RectF       getInnerArea() const;
+        RectF getInnerArea() const;
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
         /**
@@ -52,7 +52,6 @@ namespace oxygine
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
-        virtual RectF getDestRect() const override;
 
     protected:
         virtual void sizeChanged(const Vector2& size)  override;

@@ -6,18 +6,6 @@
 
 namespace oxygine
 {
-
-    Draggable::Draggable()
-        : m_bounds(0, 0, -1, -1),
-          m_dragClient(nullptr),
-          m_startTm(0),
-          m_dragEnabled(true),
-          m_pressed(false),
-          m_ignoreTouchUp(false)
-    {
-
-    }
-
     Draggable::~Draggable()
     {
         destroy();
@@ -174,7 +162,6 @@ namespace oxygine
     {
         Vector2 locPos = pos;
         AffineTransform t;
-        t.identity();
         while (src != dest && src)
         {
             t = src->getTransform() * t;
@@ -194,7 +181,6 @@ namespace oxygine
     {
         Vector2 locPos = pos;
         AffineTransform t;
-        t.identity();
         t = src->getTransform();
         while (src != dest && src)
         {

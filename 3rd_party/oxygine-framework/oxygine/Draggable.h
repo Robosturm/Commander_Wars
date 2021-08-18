@@ -12,7 +12,7 @@ namespace oxygine
             DragMoveEvent = sysEventID('D', 'M', 'E')
         };
 
-        explicit Draggable();
+        explicit Draggable() = default;
         virtual ~Draggable();
 
         void init(Actor* actor);
@@ -64,17 +64,15 @@ namespace oxygine
         Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction);
         Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction);
     protected:
-        RectF m_bounds;
+        RectF m_bounds{0, 0, -1, -1};
         Vector2 m_dragPos;
         Vector2 m_clientPos;
-
-        Actor* m_dragClient;
-        timeMS m_startTm;
-
-        bool m_dragEnabled;
+        Actor* m_dragClient{nullptr};
+        timeMS m_startTm{0};
+        bool m_dragEnabled{true};
         bool m_noLockForMiddleButton{false};
         bool m_middleButton{false};
-        bool m_pressed;
-        bool m_ignoreTouchUp;
+        bool m_pressed{false};
+        bool m_ignoreTouchUp{false};
     };
 }

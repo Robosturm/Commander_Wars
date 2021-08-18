@@ -140,11 +140,6 @@ namespace oxygine
         Sprite::animFrameChanged(f);
     }
 
-    RectF Box9Sprite::getDestRect() const
-    {
-        return Actor::getDestRect();
-    }
-
     bool Box9Sprite::isOn(const Vector2& localPosition, float localScale)
     {
         return Actor::isOn(localPosition, localScale);

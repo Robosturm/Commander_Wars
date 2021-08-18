@@ -36,8 +36,6 @@ namespace oxygine
     }
 
     RenderStateCache::RenderStateCache()
-        : m_program(0),
-          m_blend(VideoDriver::blend_disabled)
     {
         reset();
     }
@@ -55,14 +53,14 @@ namespace oxygine
         {
             m_driver->setState(VideoDriver::STATE_BLEND, 0);
         }
-        m_program = 0;
+        m_program = nullptr;
     }
 
     void RenderStateCache::resetTextures()
     {
         for (qint32 i = 0; i < MAX_TEXTURES; ++i)
         {
-            m_textures[i] = 0;
+            m_textures[i] = nullptr;
         }
     }
 
@@ -336,9 +334,6 @@ namespace oxygine
     }
 
     STDRenderer::STDRenderer(VideoDriver* driver)
-        : m_vdecl(0),
-          m_driver(driver),
-          m_uberShader(0)
     {
         if (!driver)
         {
@@ -348,7 +343,6 @@ namespace oxygine
         m_vp.setToIdentity();
         m_vdecl = m_driver->getVertexDeclaration();
         m_uberShader = &uberShader;
-        m_transform.identity();
         m_baseShaderFlags = 0;
         m_sphookFirst = this;
         m_sphookLast  = this;

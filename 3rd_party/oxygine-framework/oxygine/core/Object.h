@@ -18,7 +18,6 @@ namespace oxygine
         mutable QMutex m_Locked;
     };
 
-
     template <class dest, class src>
     dest safeCast(src ptr)
     {

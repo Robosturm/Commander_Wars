@@ -2,18 +2,6 @@
 
 namespace oxygine
 {
-
-    Clock::Clock()
-        : m_counter(0),
-          m_destTime(0),
-          m_srcTime(0),
-          m_multiplier(1.0f),
-          m_fixedStep(0),
-          m_lastDT(0),
-          m_lastUpdateTime(-1)
-    {
-    }
-
     float Clock::getMultiplier() const
     {
         return m_multiplier;
@@ -21,7 +9,7 @@ namespace oxygine
 
     qint32 Clock::getFixedStep() const
     {
-        return (int)m_fixedStep;
+        return m_fixedStep;
     }
 
     qint32 Clock::getLastDT() const

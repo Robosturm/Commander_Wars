@@ -9,20 +9,18 @@ namespace oxygine
     class RenderState
     {
     public:
-        explicit RenderState()
-      {
-          transform.identity();
-      }
+        explicit RenderState() = default;
+        virtual ~RenderState() = default;
 
-      QColor getFinalColor(const QColor& clr) const
-      {
-          QColor color = clr;
-          color.setAlpha((color.alpha() * static_cast<qint32>(alpha)) / 255);
-          return color;
-      }
+        QColor getFinalColor(const QColor& clr) const
+        {
+            QColor color = clr;
+            color.setAlpha((color.alpha() * static_cast<qint32>(alpha)) / 255);
+            return color;
+        }
 
-      AffineTransform transform;
-      unsigned char alpha{255};
-      const RectF* clip{nullptr};
+        AffineTransform transform;
+        unsigned char alpha{255};
+        const RectF* clip{nullptr};
     };
 }

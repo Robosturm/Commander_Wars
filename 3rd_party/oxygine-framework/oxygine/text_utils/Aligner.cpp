@@ -9,8 +9,8 @@ namespace oxygine
         Aligner::Aligner(const TextStyle& Style, spMaterial mt, const Font* font, float gscale, const Vector2& size)
             : m_style(Style),
               m_bounds(0, 0, 0, 0),
-              m_width((int)size.x),
-              m_height((int)size.y),
+              m_width(size.x),
+              m_height(size.y),
               m_mat(mt),
               m_font(font),
               m_scale(gscale),
@@ -19,7 +19,7 @@ namespace oxygine
               m_lineWidth(0)
         {
             m_line.reserve(50);
-            m_lineSkip = (int)(m_font->getBaselineDistance() * m_style.baselineScale) + m_style.linesOffset;
+            m_lineSkip = (m_font->getBaselineDistance() * m_style.baselineScale) + m_style.linesOffset;
         }
 
         qint32 Aligner::_alignX(qint32 rx)
@@ -69,8 +69,8 @@ namespace oxygine
             m_x = 0;
             m_y = 0;
 
-            m_width = int(m_width * m_scale);
-            m_height = int(m_height * m_scale);
+            m_width = (m_width * m_scale);
+            m_height = (m_height * m_scale);
 
             m_bounds = Rect(_alignX(0), _alignY(0), 0, 0);
             nextLine();
@@ -173,7 +173,7 @@ namespace oxygine
 
             if (m_lineWidth > m_width && getStyle().multiline && (m_width > 0) && m_line.size() > 1)
             {
-                qint32 lastWordPos = (int)m_line.size() - 1;
+                qint32 lastWordPos = m_line.size() - 1;
                 for (; lastWordPos > 0; --lastWordPos)
                 {
                     if (m_line[lastWordPos]->code == ' ' && m_line[lastWordPos - 1]->code != ' ')
@@ -186,7 +186,7 @@ namespace oxygine
                 {
                     if (m_style.breakLongWords)
                     {
-                        lastWordPos = (int)m_line.size() - 1;
+                        lastWordPos = m_line.size() - 1;
                     }
                     else
                     {
@@ -194,7 +194,7 @@ namespace oxygine
                     }
                 }
 
-                qint32 delta = (int)m_line.size() - lastWordPos;
+                qint32 delta = m_line.size() - lastWordPos;
                 line leftPart;
                 leftPart.resize(delta + 1);
                 leftPart = line(m_line.begin() + lastWordPos, m_line.end());

@@ -9,9 +9,8 @@ namespace oxygine
     class VisualStyle
     {
     public:
-        explicit VisualStyle();
+        explicit VisualStyle() = default;
         virtual ~VisualStyle() = default;
-
         const QColor& getColor() const
         {
             return m_color;
@@ -20,13 +19,12 @@ namespace oxygine
         {
             return m_blend;
         }
-
         void setColor(const QColor& color);
         void setBlendMode(VideoDriver::blend_mode mode);
 
     protected:
-        QColor m_color;
-        VideoDriver::blend_mode m_blend;
+        QColor m_color{Qt::white};
+        VideoDriver::blend_mode m_blend{VideoDriver::blend_premultiplied_alpha};
     };
 
     class VStyleActor;

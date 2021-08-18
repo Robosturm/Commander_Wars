@@ -6,21 +6,6 @@
 
 namespace oxygine
 {
-    Tween::Tween()
-        : m_elapsed(0),
-          m_duration(0),
-          m_delay(0),
-          m_loops(1),
-          m_loopsDone(0),
-          m_ease(ease_linear),
-          m_globalEase(ease_linear),
-          m_twoSides(false),
-          m_percent(0),
-          m_detach(false),
-          m_client(0)
-    {
-    }
-
     void Tween::reset()
     {
         m_elapsed = timeMS(0);

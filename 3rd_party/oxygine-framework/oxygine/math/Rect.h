@@ -288,8 +288,6 @@ namespace oxygine
             r.size.y /= v;
             return r;
         }
-
-
         template<typename R>
         R cast() const
         {

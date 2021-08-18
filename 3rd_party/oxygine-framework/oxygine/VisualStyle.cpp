@@ -7,13 +7,6 @@
 
 namespace oxygine
 {
-    VisualStyle::VisualStyle()
-        : m_color(Qt::white),
-          m_blend(VideoDriver::blend_premultiplied_alpha)
-    {
-
-    }
-
     VStyleActor::VStyleActor()
     {
         Material mat;

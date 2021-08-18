@@ -6,12 +6,6 @@ namespace oxygine
 {
     const char* const Resource::RCC_PREFIX_PATH = ":/";
 
-    Resource::Resource()
-        : m_parent(0)
-    {
-
-    }
-
     void Resource::load()
     {
         _load();

@@ -22,7 +22,7 @@ namespace oxygine
     class MaterialCache
     {
     public:
-        explicit MaterialCache();
+        explicit MaterialCache() = default;
         virtual ~MaterialCache() = default;
         spMaterial cache(const Material& other)
         {
@@ -41,7 +41,7 @@ namespace oxygine
         materials m_materials;
 
         QMutex m_lock;
-        qint32 m_addCounter;
+        qint32 m_addCounter{0};
 
     private:
         static MaterialCache mcache;

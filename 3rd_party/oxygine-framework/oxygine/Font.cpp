@@ -8,13 +8,6 @@ namespace oxygine
         return ::qHash(k.ch, seed);
     }
 
-    Font::Font()
-        : m_scale(1.0f),
-          m_size(0),
-          m_baselineDistance(0)
-    {
-    }
-
     void Font::init(qint32 realSize, qint32 baselineDistance)
     {
         m_size = realSize;

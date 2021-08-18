@@ -1426,12 +1426,12 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="108"/>
-        <source>Shows or hides the cross marking the middle of the map.</source>
+        <source>Toggle Cross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="108"/>
-        <source>Toggle Cross Strg+M</source>
+        <source>Shows or hides the cross marking the middle of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1595,11 +1595,6 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="717"/>
-        <source>Do you want to exit the map editor?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="480"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
@@ -1637,6 +1632,11 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="523"/>
         <source>Change of the map size on the bottom map border.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="717"/>
+        <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3470,6 +3470,16 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/optionmenue.cpp" line="910"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="912"/>
+        <source>Filters the mods by the given tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/optionmenue.cpp" line="972"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
@@ -3501,16 +3511,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../menue/optionmenue.cpp" line="994"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="910"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="912"/>
-        <source>Filters the mods by the given tags</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

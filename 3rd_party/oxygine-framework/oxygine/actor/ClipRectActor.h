@@ -24,8 +24,8 @@ namespace oxygine
         {
             m_clipping = enable;
         }
-        void render(const RenderState& rs) override;
-        void handleEvent(Event* event) override;
+        virtual void render(const RenderState& rs) override;
+        virtual void handleEvent(Event* event) override;
     protected:
         bool m_clipping{true};
     };

@@ -39,7 +39,7 @@ namespace oxygine
         class Node : public oxygine::ref_counter
         {
         public:
-            explicit Node();
+            explicit Node() = default;
             virtual ~Node() = default;
 
             void appendNode(spNode tn);

@@ -47,10 +47,6 @@ namespace oxygine
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "can't find resource type");
     }
 
-    Resources::Resources()
-    {
-    }
-
     Resources::~Resources()
     {
         free();

@@ -10,9 +10,8 @@ namespace oxygine
     class Clock: public Object
     {
     public:
-        explicit Clock();
+        explicit Clock() = default;
         virtual ~Clock() = default;
-
         timeMS getTime() const;
         qint32 getPauseCounter() const;
         qint32 getFixedStep() const;
@@ -32,12 +31,12 @@ namespace oxygine
             return std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::system_clock::now().time_since_epoch()));
         }
     private:
-        qint32  m_counter;
-        double  m_destTime;
-        double  m_srcTime;
-        float   m_multiplier;
-        float   m_fixedStep;
-        qint32  m_lastDT;
-        timeMS  m_lastUpdateTime;
+        qint32  m_counter{0};
+        double  m_destTime{0};
+        double  m_srcTime{0};
+        float   m_multiplier{1.0f};
+        float   m_fixedStep{0};
+        qint32  m_lastDT{0};
+        timeMS  m_lastUpdateTime{-1};
     };
 }
