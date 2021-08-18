@@ -1,41 +1,11 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include <functional>
 #include <vector>
 
 namespace oxygine
 {
-    class RenderStateCache
-    {
-    public:
-        RenderStateCache();
-
-        void setDriver(VideoDriver* d);
-
-        const spTexture& getTexture(qint32 sampler)
-        {
-            return m_textures[sampler];
-        }
-
-        void setTexture(qint32 sampler, const spTexture& t);
-        void setBlendMode(blend_mode blend);
-        bool setShader(ShaderProgram* prog);
-
-        void reset();
-        void resetTextures();
-
-    protected:
-        static constexpr quint32 MAX_TEXTURES = 8;
-        spTexture m_textures[MAX_TEXTURES];
-        ShaderProgram*  m_program;
-        VideoDriver*   m_driver;
-        blend_mode      m_blend;
-    };
-
-    RenderStateCache& rsCache();
-
     class ShaderProgramChangedHook
     {
     public:
@@ -54,7 +24,6 @@ namespace oxygine
     class STDRenderer : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
-
         static spSTDRenderer current;
         static spSTDRenderer instance;
         /**Initializes internal classes. Called automatically from oxygine::init();*/
@@ -190,4 +159,34 @@ namespace oxygine
     private:
         static bool m_restored;
     };
+
+    class RenderStateCache
+    {
+    public:
+        RenderStateCache();
+
+        void setDriver(VideoDriver* d);
+
+        const spTexture& getTexture(qint32 sampler)
+        {
+            return m_textures[sampler];
+        }
+
+        void setTexture(qint32 sampler, const spTexture& t);
+        void setBlendMode(VideoDriver::blend_mode blend);
+        bool setShader(ShaderProgram* prog);
+
+        void reset();
+        void resetTextures();
+
+    protected:
+        static constexpr quint32 MAX_TEXTURES = 8;
+        spTexture m_textures[MAX_TEXTURES];
+        ShaderProgram*  m_program;
+        VideoDriver*   m_driver;
+        VideoDriver::blend_mode m_blend;
+    };
+
+    RenderStateCache& rsCache();
+
 }

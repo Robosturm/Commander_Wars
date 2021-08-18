@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 namespace oxygine
 {
@@ -15,17 +16,17 @@ namespace oxygine
         {
             return m_color;
         }
-        blend_mode getBlendMode() const
+        VideoDriver::blend_mode getBlendMode() const
         {
             return m_blend;
         }
 
         void setColor(const QColor& color);
-        void setBlendMode(blend_mode mode);
+        void setBlendMode(VideoDriver::blend_mode mode);
 
     protected:
         QColor m_color;
-        blend_mode m_blend;
+        VideoDriver::blend_mode m_blend;
     };
 
     class VStyleActor;
@@ -36,7 +37,7 @@ namespace oxygine
         explicit VStyleActor();
         virtual ~VStyleActor() = default;
 
-        blend_mode getBlendMode() const
+        VideoDriver::blend_mode getBlendMode() const
         {
             return m_vstyle.getBlendMode();
         }
@@ -45,7 +46,7 @@ namespace oxygine
 
         void setColor(const QColor& color);
         void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-        void setBlendMode(blend_mode mode);
+        void setBlendMode(VideoDriver::blend_mode mode);
         void setAddColor(const QColor& color);
         void setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
         virtual void setEnabled(bool value) override;

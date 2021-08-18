@@ -31,18 +31,6 @@ namespace oxygine
             PT_COUNT,
         };
 
-        class Stats
-        {
-        public:
-            explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
-            virtual  ~Stats() = default;
-            qint32 batches;
-            qint32 elements[PT_COUNT];
-            timeMS start;
-            timeMS duration;
-        };
-        static Stats m_stats;
-
         enum BLEND_TYPE
         {
             BT_ZERO,
@@ -70,6 +58,31 @@ namespace oxygine
             STATE_CULL_FACE,
             STATE_NUM
         };
+
+        enum blend_mode
+        {
+            blend_disabled              = 0,
+            blend_premultiplied_alpha   = ((BT_ONE                 << 16) | BT_ONE_MINUS_SRC_ALPHA),
+            blend_alpha                 = ((BT_SRC_ALPHA           << 16) | BT_ONE_MINUS_SRC_ALPHA),
+            blend_add                   = ((BT_ONE                 << 16) | BT_ONE),
+            blend_screen                = ((BT_ONE                 << 16) | BT_ONE_MINUS_SRC_COLOR),
+            blend_multiply              = ((BT_DST_COLOR           << 16) | BT_ONE_MINUS_SRC_ALPHA),
+            blend_inverse               = ((BT_ONE_MINUS_DST_COLOR << 16) | BT_ZERO),
+        };
+
+        class Stats
+        {
+        public:
+            explicit Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
+            virtual  ~Stats() = default;
+            qint32 batches;
+            qint32 elements[PT_COUNT];
+            timeMS start;
+            timeMS duration;
+        };
+        static Stats m_stats;
+
+
 
         static spVideoDriver instance;
         explicit VideoDriver();

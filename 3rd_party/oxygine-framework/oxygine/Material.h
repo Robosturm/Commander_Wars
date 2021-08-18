@@ -1,8 +1,9 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 
 namespace oxygine
 {
@@ -45,7 +46,7 @@ namespace oxygine
         spTexture    m_base;
         spTexture    m_table;
         spTexture    m_alpha;
-        blend_mode         m_blend;
+        VideoDriver::blend_mode m_blend;
         UberShaderProgram* m_uberShader;
         QColor             m_addColor;
         qint32             m_flags;

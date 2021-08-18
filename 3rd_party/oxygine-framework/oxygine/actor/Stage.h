@@ -1,6 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+#include<QMatrix4x4>
 
 namespace oxygine
 {

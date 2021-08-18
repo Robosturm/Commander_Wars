@@ -37,7 +37,7 @@ namespace oxygine
 
     RenderStateCache::RenderStateCache()
         : m_program(0),
-          m_blend(blend_disabled)
+          m_blend(VideoDriver::blend_disabled)
     {
         reset();
     }
@@ -50,7 +50,7 @@ namespace oxygine
     void RenderStateCache::reset()
     {
         resetTextures();
-        m_blend = blend_disabled;
+        m_blend = VideoDriver::blend_disabled;
         if (m_driver)
         {
             m_driver->setState(VideoDriver::STATE_BLEND, 0);
@@ -81,7 +81,7 @@ namespace oxygine
         m_driver->setTexture(sampler, t);
     }
 
-    void RenderStateCache::setBlendMode(blend_mode blend)
+    void RenderStateCache::setBlendMode(VideoDriver::blend_mode blend)
     {
         if (m_blend == blend)
         {

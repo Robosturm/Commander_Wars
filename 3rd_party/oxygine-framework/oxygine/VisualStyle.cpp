@@ -9,7 +9,7 @@ namespace oxygine
 {
     VisualStyle::VisualStyle()
         : m_color(Qt::white),
-          m_blend(blend_premultiplied_alpha)
+          m_blend(VideoDriver::blend_premultiplied_alpha)
     {
 
     }
@@ -17,7 +17,7 @@ namespace oxygine
     VStyleActor::VStyleActor()
     {
         Material mat;
-        mat.m_blend = blend_premultiplied_alpha;
+        mat.m_blend = VideoDriver::blend_premultiplied_alpha;
         mat.m_base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
         m_mat = MaterialCache::mc().cache(mat);
@@ -28,7 +28,7 @@ namespace oxygine
         m_color = color;
     }
 
-    void VisualStyle::setBlendMode(blend_mode mode)
+    void VisualStyle::setBlendMode(VideoDriver::blend_mode mode)
     {
         m_blend = mode;
     }
@@ -83,7 +83,7 @@ namespace oxygine
         setAddColor(QColor(r, g, b, a));
     }
 
-    void VStyleActor::setBlendMode(blend_mode mode)
+    void VStyleActor::setBlendMode(VideoDriver::blend_mode mode)
     {
         if (getBlendMode() == mode)
         {

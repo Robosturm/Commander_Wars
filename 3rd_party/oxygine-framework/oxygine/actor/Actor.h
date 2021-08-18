@@ -4,7 +4,6 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include <QVector>

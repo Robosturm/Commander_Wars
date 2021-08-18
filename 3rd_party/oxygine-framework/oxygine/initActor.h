@@ -57,7 +57,7 @@ namespace oxygine
         typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;
         typedef argT<bool, bool, Actor, &Actor::setTouchEnabled> input;
         typedef argT<QColor, const QColor&, VStyleActor, &VStyleActor::setColor> color;
-        typedef argT<blend_mode, blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
+        typedef argT<VideoDriver::blend_mode, VideoDriver::blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
         typedef argT<qint32, qint32, Actor, &Actor::setPriority> priority;
         typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 

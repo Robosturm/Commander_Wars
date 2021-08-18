@@ -45,7 +45,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/core/pixel.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
