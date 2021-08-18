@@ -76,19 +76,19 @@ namespace oxygine
     {
     }
 
-    void Actor::calcChildrenBounds(RectF& bounds, const Transform& transform) const
+    void Actor::calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const
     {
         for (auto & child : m_children)
         {
             if (child->getVisible())
             {
-                Transform tr = child->getTransform() * transform;
+                AffineTransform tr = child->getTransform() * transform;
                 child->calcBounds2(bounds, tr);
             }
         }
     }
 
-    void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
+    void Actor::calcBounds2(RectF& bounds, const AffineTransform& transform) const
     {
         if (!(m_flags & flag_boundsNoChildren))
         {
@@ -105,7 +105,7 @@ namespace oxygine
         }
     }
 
-    RectF Actor::computeBounds(const Transform& transform) const
+    RectF Actor::computeBounds(const AffineTransform& transform) const
     {
         RectF bounds = RectF::invalidated();
 
@@ -114,9 +114,9 @@ namespace oxygine
         return bounds;
     }
 
-    Transform Actor::computeGlobalTransform(Actor* parent) const
+    AffineTransform Actor::computeGlobalTransform(Actor* parent) const
     {
-        Transform t;
+        AffineTransform t;
         t.identity();
         const Actor* actor = this;
         while (actor && actor != parent)
@@ -563,13 +563,13 @@ namespace oxygine
         m_rdelegate = mat;
     }
 
-    const Transform& Actor::getTransform() const
+    const AffineTransform& Actor::getTransform() const
     {
         updateTransform();
         return m_transform;
     }
 
-    const Transform& Actor::getTransformInvert() const
+    const AffineTransform& Actor::getTransformInvert() const
     {
         if (m_flags & flag_transformInvertDirty)
         {
@@ -876,7 +876,7 @@ namespace oxygine
         rs.alpha = alpha;
 
 
-        const Transform& tr = getTransform();
+        const AffineTransform& tr = getTransform();
         if (m_flags & flag_fastTransform)
         {
             rs.transform = parentRS.transform;
@@ -884,7 +884,7 @@ namespace oxygine
         }
         else
         {
-            Transform::multiply(rs.transform, tr, parentRS.transform);
+            AffineTransform::multiply(rs.transform, tr, parentRS.transform);
         }
 
         if (m_flags & flag_cull)
@@ -1082,7 +1082,7 @@ namespace oxygine
         return convert_global2local_(actor, root, pos);
     }
 
-    RectF Actor::getActorTransformedDestRect(Actor* actor, const Transform& tr)
+    RectF Actor::getActorTransformedDestRect(Actor* actor, const AffineTransform& tr)
     {
         RectF rect = actor->getDestRect();
         Vector2 tl = rect.pos;

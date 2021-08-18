@@ -21,7 +21,7 @@ namespace oxygine
             return color;
         }
 
-        Transform transform;
+        AffineTransform transform;
         unsigned char alpha;
         const RectF* clip;
     };

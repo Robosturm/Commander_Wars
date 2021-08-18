@@ -252,7 +252,7 @@ namespace oxygine
         flush();
     }
 
-    const oxygine::Matrix& STDRenderer::getViewProjection() const
+    const QMatrix4x4& STDRenderer::getViewProjection() const
     {
         return m_vp;
     }
@@ -271,28 +271,16 @@ namespace oxygine
         }
     }
 
-    void STDRenderer::initCoordinateSystem(qint32 width, qint32 height, bool flipU)
-    {
-        Matrix view = makeViewMatrix(width, height, flipU);
-        Matrix proj;
-        //initialize projection matrix
-        Matrix::orthoLH(proj, (float)width, (float)height, 0, 1);
-
-        Matrix vp = view * proj;
-        setViewProj(vp);
-    }
-
     VideoDriver* STDRenderer::getDriver()
     {
         return m_driver;
     }
 
 
-    void STDRenderer::setViewProj(const Matrix& viewProj)
+    void STDRenderer::setViewProj(const QMatrix4x4& viewProj)
     {
-        m_vp = viewProj;
         flush();
-
+        m_vp = viewProj;
         if (!m_driver->getShaderProgram())
         {
             return;
@@ -311,18 +299,6 @@ namespace oxygine
     {
         m_sphookLast = m_sphookLast->prev;
         m_sphookLast->next = 0;
-    }
-
-    void STDRenderer::begin()
-    {
-        if (m_verticesData.empty() == false)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "STDRenderer::begin wasn't cleared");
-        }
-        m_verticesData.clear();
-        m_transform.identity();
-        Material::null->apply();
-        current = this;
     }
 
     void STDRenderer::end()
@@ -359,21 +335,6 @@ namespace oxygine
         }
     }
 
-    Matrix STDRenderer::makeViewMatrix(qint32 w, qint32 h, bool flipU)
-    {
-        Matrix view, scale, tr;
-        float offset = 0.5f;
-
-        offset = 0;
-
-        Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, (flipU ? -1.0f : 1.0f) * (float)h / 2.0f + offset, 0.0f));
-        Matrix::scaling(scale, Vector3(1.0f, flipU ? 1.0f : -1.0f, 1.0f));
-
-        view = scale * tr;
-
-        return view;
-    }
-
     STDRenderer::STDRenderer(VideoDriver* driver)
         : m_vdecl(0),
           m_driver(driver),
@@ -384,7 +345,7 @@ namespace oxygine
             driver = VideoDriver::instance.get();
         }
         m_driver = driver;
-        m_vp.identity();
+        m_vp.setToIdentity();
         m_vdecl = m_driver->getVertexDeclaration();
         m_uberShader = &uberShader;
         m_transform.identity();
@@ -398,33 +359,10 @@ namespace oxygine
         };
     }
 
-    void STDRenderer::setTransform(const Transform& tr)
+    void STDRenderer::setTransform(const AffineTransform& tr)
     {
         m_transform = tr;
     }
-
-    void STDRenderer::begin(spTexture nt, const Rect* viewport)
-    {
-        if (m_prevRT != 0)
-        {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "STDRenderer::begin render target wasn't reseted");
-        }
-        m_prevRT = m_driver->getRenderTarget();
-        m_driver->setRenderTarget(nt);
-
-        Rect vp;
-        if (!viewport)
-        {
-            vp = Rect(0, 0, nt->getWidth(), nt->getHeight());
-            viewport = &vp;
-        }
-        m_driver->setViewport(*viewport);
-
-
-        initCoordinateSystem(viewport->getWidth(), viewport->getHeight(), true);
-        begin();
-    }
-
 
     void STDRenderer::addQuad(const QColor& clr, const RectF& srcRect, const RectF& destRect)
     {

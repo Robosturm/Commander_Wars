@@ -12,9 +12,8 @@ namespace oxygine
         typedef VectorT2<T> vector2;
     public:
         typedef T type;
-        //////////////
-        VectorT2();
-        VectorT2(T, T);
+        explicit VectorT2();
+        explicit VectorT2(T, T);
 
         VectorT2& operator+=(const VectorT2&);
         VectorT2& operator-=(const VectorT2&);
@@ -23,23 +22,59 @@ namespace oxygine
         VectorT2 operator - (const VectorT2&) const;
         VectorT2 operator - () const;
 
-        void set(T x_, T y_) {x = x_; y = y_;}
-        void setZero() {x = 0; y = 0;}
-
+        void set(T x_, T y_)
+        {
+            x = x_;
+            y = y_;
+        }
+        void setZero()
+        {
+            x = 0;
+            y = 0;
+        }
         template <class R>
-        VectorT2 operator * (R s) const {VectorT2 r(*this); r.x = type(r.x * s); r.y = type(r.y * s); return r;}
+        VectorT2 operator * (R s) const
+        {
+            VectorT2 r(*this);
+            r.x = type(r.x * s);
+            r.y = type(r.y * s);
+            return r;
+        }
         template <class R>
-        VectorT2 operator / (R s) const {VectorT2 r(*this); r.x /= s; r.y /= s; return r;}
-
+        VectorT2 operator / (R s) const
+        {
+            VectorT2 r(*this);
+            r.x /= s;
+            r.y /= s;
+            return r;
+        }
         template <class R>
-        VectorT2 operator *= (R s) {x *= s; y *= s; return (*this);}
+        VectorT2 operator *= (R s)
+        {
+            x *= s;
+            y *= s;
+            return (*this);
+        }
         template <class R>
-        VectorT2 operator /= (R s) {x /= s; y /= s; return (*this);}
+        VectorT2 operator /= (R s)
+        {
+            x /= s;
+            y /= s;
+            return (*this);
+        }
+        VectorT2 mult(const VectorT2& r) const
+        {
+            return VectorT2(x * r.x, y * r.y);
+        }
+        VectorT2 div(const VectorT2& r) const
+        {
+            return VectorT2(x / r.x, y / r.y);
+        }
 
-        VectorT2 mult(const VectorT2& r) const {return VectorT2(x * r.x, y * r.y);}
-        VectorT2 div(const VectorT2& r) const {return VectorT2(x / r.x, y / r.y);}
-
-        operator VectorT2<float> () const {return cast< VectorT2<float> >();}
+        operator VectorT2<float> () const
+        {
+            return cast< VectorT2<float> >();
+        }
 
         template<typename R>
         R cast() const
@@ -53,26 +88,42 @@ namespace oxygine
         bool operator == (const VectorT2& r) const;
         bool operator != (const VectorT2& r) const;
 
-        //inline T &operator[](qint32 i){return m[i];}
-        //inline const T &operator[](qint32 i)const{return m[i];}
+        T length() const
+        {
+            return (T)qSqrt(x * x + y * y);
+        }
+        T sqlength() const
+        {
+            return dot(*this);
+        }
 
-        T length() const {return (T)qSqrt(x * x + y * y);}
-        T sqlength() const {return dot(*this);}
-
-        void normalize() { normalize(*this, *this); }
-        void normalizeTo(T len) { normalize(); *this *= len; }
-        VectorT2 normalized() const {VectorT2 t = *this; t.normalize(); return t;}
-
-        float distance(const VectorT2& v) const { return VectorT2(x - v.x, y - v.y).length();}
-        T dot(const VectorT2& vr) const {return dot(*this, vr);}
+        void normalize()
+        {
+            normalize(*this, *this);
+        }
+        void normalizeTo(T len)
+        {
+            normalize();
+            *this *= len;
+        }
+        VectorT2 normalized() const
+        {
+            VectorT2 t = *this;
+            t.normalize();
+            return t;
+        }
+        float distance(const VectorT2& v) const
+        {
+            return VectorT2(x - v.x, y - v.y).length();
+        }
+        T dot(const VectorT2& vr) const
+        {
+            return dot(*this, vr);
+        }
 
         static T dot(const VectorT2& v1, const VectorT2& v2);
         static VectorT2& normalize(VectorT2& out, const VectorT2& v);
-
-        struct
-        {
-            T x, y;
-        };
+        T x, y;
     };
 
     template<class T>

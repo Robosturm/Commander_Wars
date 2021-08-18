@@ -13,9 +13,9 @@ namespace oxygine
         typedef T type;
 
 
-        VectorT3();
-        VectorT3(const T*);
-        VectorT3(T, T, T);
+        explicit VectorT3();
+        explicit VectorT3(const T*);
+        explicit VectorT3(T, T, T);
 
         VectorT3& operator+=(const VectorT3&);
         VectorT3& operator-=(const VectorT3&);
@@ -242,7 +242,5 @@ namespace oxygine
 
         return out;
     }
-
     typedef VectorT3<float> Vector3;
-    typedef VectorT3<double> VectorD3;
 }

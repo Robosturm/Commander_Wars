@@ -2,13 +2,13 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Matrix.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector4.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include <qopengl.h>
+#include <QMatrix4x4>
 
 namespace oxygine
 {
@@ -101,13 +101,12 @@ namespace oxygine
         void setUniform(const char* id, const Vector4* v, qint32 num);
         void setUniform(const char* id, const Vector3* v, qint32 num);
         void setUniform(const char* id, const Vector2* v, qint32 num);
-        void setUniform(const char* id, const Matrix* v, qint32 num);
         void setUniform(const char* id, float v);
         void setUniformInt(const char* id, qint32 v);
         void setUniform(const char* id, const Vector4& v);
         void setUniform(const char* id, const Vector3& v);
         void setUniform(const char* id, const Vector2& v);
-        void setUniform(const char* id, const Matrix&  v);
+        void setUniform(const char* id, const QMatrix4x4&  v);
     protected:
         quint32 getPT(VideoDriver::PRIMITIVE_TYPE pt);
         quint32 getBT(VideoDriver::BLEND_TYPE pt);

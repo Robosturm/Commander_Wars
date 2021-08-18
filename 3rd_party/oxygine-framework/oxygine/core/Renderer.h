@@ -7,8 +7,6 @@
 
 namespace oxygine
 {
-    using Transform = AffineTransform;
-
     enum blend_mode
     {
         blend_disabled              = 0,

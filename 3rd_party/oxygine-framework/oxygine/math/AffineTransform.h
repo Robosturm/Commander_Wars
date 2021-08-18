@@ -1,6 +1,5 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Matrix.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
@@ -12,7 +11,6 @@ namespace oxygine
 
         typedef VectorT2<T> vector2;
         typedef AffineTransformT<T> affineTransform;
-        typedef MatrixT<T> matrix;
 
         AffineTransformT()
         {
@@ -25,16 +23,6 @@ namespace oxygine
               x(x_),
               y(y_)
         {
-        }
-
-        explicit AffineTransformT(const matrix& m)
-        {
-            a = m.ml[0];
-            b = m.ml[1];
-            c = m.ml[4];
-            d = m.ml[5];
-            x = m.ml[12];
-            y = m.ml[13];
         }
 
         void identity()
@@ -117,21 +105,6 @@ namespace oxygine
             affineTransform t = *this;
             t.invert();
             return t;
-        }
-
-        operator matrix() const
-        {
-            return toMatrix();
-        }
-
-        matrix toMatrix() const
-        {
-            return matrix(
-                       a, b, 0, 0,
-                       c, d, 0, 0,
-                       0, 0, 1, 0,
-                       x, y, 0, 1
-                   );
         }
 
         static affineTransform& multiply(affineTransform& out, const affineTransform& t1, const affineTransform& t2)

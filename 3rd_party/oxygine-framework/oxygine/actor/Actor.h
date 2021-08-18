@@ -209,12 +209,12 @@ namespace oxygine
         }
 
         /**return local actor transformation*/
-        const Transform&      getTransform() const;
-        const Transform&      getTransformInvert() const;
+        const AffineTransform& getTransform() const;
+        const AffineTransform& getTransformInvert() const;
         /**computes global actor transformation*/
-        Transform           computeGlobalTransform(Actor* parent = nullptr) const;
+        AffineTransform computeGlobalTransform(Actor* parent = nullptr) const;
         /**computes actor Bounds rectangle. Iterates children*/
-        RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
+        RectF computeBounds(const AffineTransform& transform = AffineTransform::getIdentity()) const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -361,7 +361,7 @@ namespace oxygine
         static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
         static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
+        static RectF getActorTransformedDestRect(Actor* actor, const AffineTransform& tr);
     protected:
         void added2stage(Stage*);
         void removedFromStage();
@@ -369,8 +369,8 @@ namespace oxygine
         virtual void onRemovedFromStage() {}
         virtual void transformUpdated();
 
-        virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
-        void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
+        virtual void calcBounds2(RectF& bounds, const AffineTransform& transform) const;
+        void calcChildrenBounds(RectF& bounds, const AffineTransform& transform) const;
         static void setParent(Actor* actor, Actor* parent);
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
@@ -395,8 +395,8 @@ namespace oxygine
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;
-        mutable Transform m_transform;
-        mutable Transform m_transformInvert;
+        mutable AffineTransform m_transform;
+        mutable AffineTransform m_transformInvert;
         enum flags
         {
             flag_anchorInPixels         = 1,

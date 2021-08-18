@@ -27,7 +27,7 @@ namespace oxygine
         */
         void init(const Point& displaySize, const Point& gameSize);
         /**Render all actors*/
-        void renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
+        void renderStage(const QColor* clearColor, const Rect& viewport, const QMatrix4x4 & viewProjection);
         /**Render all actors, simplified version*/
         void renderStage(const QColor& clearColor, const Rect& viewport);
         /**Updates each children*/

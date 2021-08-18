@@ -8,9 +8,15 @@ namespace oxygine
     VideoDriver::Stats VideoDriver::m_stats;
     VertexDeclaration VideoDriver::m_VertexDeclaration;
 
-    void VideoDriver::setUniform(const char* id, const Matrix& v)
+    void VideoDriver::setUniform(const char* id, const QMatrix4x4& mat)
     {
-        setUniform(id, &v, 1);
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        GLint  p = window->glGetUniformLocation(m_programID, id);
+        if (p == -1)
+        {
+            return;
+        }
+        window->glUniformMatrix4fv(p, 1, GL_FALSE, mat.constData());
     }
 
     void VideoDriver::setUniform(const char* id, const Vector2& v)
@@ -157,8 +163,7 @@ namespace oxygine
         window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
-            Vector4 c = Vector4(clearColor->redF(), clearColor->greenF(), clearColor->blueF(), clearColor->alphaF());
-            window->glClearColor(c.x, c.y, c.z, c.w);
+            window->glClearColor(clearColor->redF(), clearColor->greenF(), clearColor->blueF(), clearColor->alphaF());
             window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
         else
@@ -240,8 +245,7 @@ namespace oxygine
     void VideoDriver::clear(const QColor& color)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        Vector4 c = Vector4(color.redF(), color.greenF(), color.blueF(), color.alphaF());
-        window->glClearColor(c.x, c.y, c.z, c.w);
+        window->glClearColor(color.redF(), color.greenF(), color.blueF(), color.alphaF());
         window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -364,17 +368,6 @@ namespace oxygine
             return;
         }
         window->glUniform3fv(p, num, &v->x);
-    }
-
-    void VideoDriver::setUniform(const char* id, const Matrix* mat, qint32 num)
-    {
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        GLint  p = window->glGetUniformLocation(m_programID, id);
-        if (p == -1)
-        {
-            return;
-        }
-        window->glUniformMatrix4fv(p, num, GL_FALSE, mat->ml);
     }
 
     void VideoDriver::setUniform(const char* id, float val)

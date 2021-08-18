@@ -64,7 +64,7 @@ namespace oxygine
         return RectF(-getPosition(), s);
     }
 
-    void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
+    void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const QMatrix4x4 & viewProjection)
     {
 
         spVideoDriver driver = VideoDriver::instance;
@@ -74,9 +74,7 @@ namespace oxygine
         {
             driver->clear(*clearColor);
         }
-
-        Matrix vp = view * proj;
-        STDRenderer::instance->setViewProj(vp);
+        STDRenderer::instance->setViewProj(viewProjection);
 
         RenderState rs;
 
@@ -95,10 +93,17 @@ namespace oxygine
     void Stage::renderStage(const QColor& clearColor, const Rect& viewport)
     {
         //initialize projection and view matrix
-        Matrix proj;
-        Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0.2f, 10000);
-        Matrix view = STDRenderer::makeViewMatrix(viewport.getWidth(), viewport.getHeight());
-        renderStage(&clearColor, viewport, view, proj);
+        static constexpr float zNear = 0.2f;
+        static constexpr float zFar = 10000.0f;
+        static constexpr float m33 = 1 / (zFar - zNear);
+        static constexpr float m34 = zNear / (zNear - zFar);
+        const float width = viewport.getWidth();
+        const float height = viewport.getHeight();
+        QMatrix4x4 viewProjection(2.0f / width, 0, 0, -1,
+                                  0, -2.0f / height, 0, 1,
+                                  0, 0, m33, m34,
+                                  0, 0, 0, 1);
+        renderStage(&clearColor, viewport, viewProjection);
     }
 
     void Stage::cleanup()

@@ -30,7 +30,7 @@ namespace oxygine
             m_duvAC = c_uv - m_uvA;
         }
         virtual ~ClipUV() = default;
-        void get(Vector3* vec) const
+        void get(Vector3 vec[4]) const
         {
             vec[0] = Vector3(m_dac.x, m_dAC.y, m_dAC.x);
             vec[1] = Vector3(m_dac.y, m_dAB.y, m_dAB.x);
@@ -61,7 +61,7 @@ namespace oxygine
     class MaskedRenderer : public STDRenderer
     {
     public:
-        explicit MaskedRenderer(spTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, VideoDriver*);
+        explicit MaskedRenderer(spTexture mask, const RectF& srcRect, const RectF& destRect, const AffineTransform& t, bool channelR, VideoDriver*);
         virtual ~MaskedRenderer() = default;
     protected:
         virtual void shaderProgramChanged() override;

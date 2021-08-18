@@ -105,7 +105,7 @@ namespace oxygine
 
         Material::null->apply();
 
-        Transform world = maskSprite->computeGlobalTransform();
+        AffineTransform world = maskSprite->computeGlobalTransform();
 
         RectF maskDest = maskSprite->getDestRect();
         RectF maskSrc = maskSprite->getSrcRect();

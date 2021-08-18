@@ -14,10 +14,10 @@ namespace oxygine
 
     public:
 
-        VectorT4();
-        VectorT4(const T*);
-        VectorT4(const VectorT3<T>&, const T&);
-        VectorT4(const T&, const T&, const T&, const T&);
+        explicit VectorT4();
+        explicit VectorT4(const T*);
+        explicit VectorT4(const VectorT3<T>&, const T&);
+        explicit VectorT4(const T&, const T&, const T&, const T&);
 
         VectorT4& operator+=(const VectorT4&);
         VectorT4& operator-=(const VectorT4&);
@@ -34,18 +34,20 @@ namespace oxygine
         VectorT3<T> xyz()const;
         bool operator == (const VectorT4& r) const;
 
-        inline T& operator[](qint32 i) {return m[i];}
-        inline const T& operator[](qint32 i)const {return m[i];}
+        inline T& operator[](qint32 i)
+        {
+            return m[i];
+        }
+        inline const T& operator[](qint32 i)const
+        {
+            return m[i];
+        }
 
         operator T* ()const;
         operator const T* () const;
 
         static T dot(const VectorT4& v1, const VectorT4& v2);
         static VectorT4* planeFromPoints(VectorT4* pOut, const vector3& v1, const vector3& v2, const vector3& v3);
-
-        template<typename D> friend D& operator << (D& os, VectorT4<T>* p);
-        template<typename D> friend D& operator << (D& os, VectorT4<T>& p);
-
         union
         {
             struct
@@ -87,7 +89,11 @@ namespace oxygine
     }
 
     template <class T>
-    VectorT4<T>::VectorT4(const T* p): x(p[0]), y(p[1]), z(p[2]), w(p[3])
+    VectorT4<T>::VectorT4(const T* p)
+        : x(p[0]),
+          y(p[1]),
+          z(p[2]),
+          w(p[3])
     {
     }
 
@@ -172,6 +178,5 @@ namespace oxygine
         return pOut;
     }
 
-    typedef VectorT4<float> Vector4;
-    typedef VectorT4<double> VectorD4;
+    using Vector4 = VectorT4<float>;
 }

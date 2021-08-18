@@ -84,7 +84,7 @@ namespace oxygine
         explicit STDRenderer(VideoDriver* driver = 0);
         virtual ~STDRenderer();
 
-        const Matrix& getViewProjection() const;
+        const QMatrix4x4& getViewProjection() const;
         VideoDriver* getDriver();
         const AffineTransform& getTransform() const
         {
@@ -100,22 +100,17 @@ namespace oxygine
         }
 
         void setShaderFlags(unsigned int);
-        void setViewProj(const Matrix& viewProj);
+        void setViewProj(const QMatrix4x4& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(quint32 fl);
 
         /**Sets World transformation.*/
-        void setTransform(const Transform& world);
+        void setTransform(const AffineTransform& world);
         void addQuad(const QColor&, const RectF& srcRect, const RectF& destRect);
 
-        /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
-        void begin();
-        void begin(spTexture renderTarget, const Rect* viewport = 0);
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
-        /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
-        void initCoordinateSystem(qint32 width, qint32 height, bool flipU = false);
 
         /**Draws existing batch immediately.*/
         void flush();
@@ -175,19 +170,17 @@ namespace oxygine
             vt.v = v + dv;
             quad[3] = vt;
         }
-        /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
-        static Matrix makeViewMatrix(qint32 w, qint32 h, bool flipU = false);
     protected:
         virtual void shaderProgramChanged() {}
         void setShader(ShaderProgram* prog);
         void checkDrawBatch();
 
     protected:
-        Transform m_transform;
+        AffineTransform m_transform;
         std::vector<VertexPCT2> m_verticesData;
         const VertexDeclaration* m_vdecl;
         VideoDriver* m_driver;
-        Matrix m_vp;
+        QMatrix4x4 m_vp;
         ShaderProgramChangedHook* m_sphookFirst;
         ShaderProgramChangedHook* m_sphookLast;
 

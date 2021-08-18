@@ -177,6 +177,13 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
     # text utils
     3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.cpp
+    # math
+    3rd_party/oxygine-framework/oxygine/math/AffineTransform.h
+    3rd_party/oxygine-framework/oxygine/math/Rect.h
+    3rd_party/oxygine-framework/oxygine/math/ScalarMath.h
+    3rd_party/oxygine-framework/oxygine/math/Vector2.h
+    3rd_party/oxygine-framework/oxygine/math/Vector3.h
+    3rd_party/oxygine-framework/oxygine/math/Vector4.h
     )
 ###################################################################################
 # end oxygine stuff -> qoxygine
