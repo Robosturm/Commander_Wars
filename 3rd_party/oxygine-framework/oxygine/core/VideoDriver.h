@@ -3,7 +3,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector4.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
@@ -82,7 +81,30 @@ namespace oxygine
         };
         static Stats m_stats;
 
-
+        struct Uniform3f
+        {
+            explicit Uniform3f()
+                : data{0, 0, 0}
+            {
+            }
+            explicit Uniform3f(float x, float y, float z)
+                : data{x, y, z}
+            {
+            }
+            GLfloat data[3];
+        };
+        struct Uniform4f
+        {
+            explicit Uniform4f()
+                : data{0, 0, 0, 0}
+            {
+            }
+            explicit Uniform4f(float x, float y, float z , float w)
+                : data{x, y, z, w}
+            {
+            }
+            GLfloat data[4];
+        };
 
         static spVideoDriver instance;
         explicit VideoDriver();
@@ -111,13 +133,13 @@ namespace oxygine
         void setTexture(qint32 sampler, spTexture);
         void setState(STATE, quint32 value);
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
-        void setUniform(const char* id, const Vector4* v, qint32 num);
-        void setUniform(const char* id, const Vector3* v, qint32 num);
+        void setUniform(const char* id, const Uniform4f* v, qint32 num);
+        void setUniform(const char* id, const Uniform3f* v, qint32 num);
         void setUniform(const char* id, const Vector2* v, qint32 num);
         void setUniform(const char* id, float v);
         void setUniformInt(const char* id, qint32 v);
-        void setUniform(const char* id, const Vector4& v);
-        void setUniform(const char* id, const Vector3& v);
+        void setUniform(const char* id, const Uniform4f& v);
+        void setUniform(const char* id, const Uniform3f& v);
         void setUniform(const char* id, const Vector2& v);
         void setUniform(const char* id, const QMatrix4x4&  v);
     protected:

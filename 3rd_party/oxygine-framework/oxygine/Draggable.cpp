@@ -201,14 +201,11 @@ namespace oxygine
             t =  t * src->getTransform();
             src = src->getParent();
         }
-
-
         if (direction)
         {
             t.x = 0;
             t.y = 0;
         }
-
         locPos = t.transform(locPos);
         return locPos;
     }

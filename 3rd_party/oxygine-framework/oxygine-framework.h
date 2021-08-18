@@ -55,8 +55,6 @@
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector3.h"
-#include "3rd_party/oxygine-framework/oxygine/math/Vector4.h"
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"

@@ -30,22 +30,12 @@ namespace oxygine
             m_duvAC = c_uv - m_uvA;
         }
         virtual ~ClipUV() = default;
-        void get(Vector3 vec[4]) const
+        void get(VideoDriver::Uniform3f vec[4]) const
         {
-            vec[0] = Vector3(m_dac.x, m_dAC.y, m_dAC.x);
-            vec[1] = Vector3(m_dac.y, m_dAB.y, m_dAB.x);
-
-            vec[2] = Vector3(m_uvA.x, m_duvAB.x, m_duvAC.x);
-            vec[3] = Vector3(m_uvA.y, m_duvAB.y, m_duvAC.y);
-        }
-
-        Vector2 calc(const Vector2& pos) const
-        {
-            float a = Vector3(m_dac.x, m_dAC.y, m_dAC.x).dot(Vector3(1, pos.x, pos.y));
-            float b = Vector3(m_dac.y, m_dAB.y, m_dAB.x).dot(Vector3(1, pos.x, pos.y));
-            float u = Vector3(m_uvA.x, m_duvAB.x, m_duvAC.x).dot(Vector3(1, a, b));
-            float v = Vector3(m_uvA.y, m_duvAB.y, m_duvAC.y).dot(Vector3(1, a, b));
-            return Vector2(u, v);
+            vec[0] = VideoDriver::Uniform3f(m_dac.x, m_dAC.y, m_dAC.x);
+            vec[1] = VideoDriver::Uniform3f(m_dac.y, m_dAB.y, m_dAB.x);
+            vec[2] = VideoDriver::Uniform3f(m_uvA.x, m_duvAB.x, m_duvAC.x);
+            vec[3] = VideoDriver::Uniform3f(m_uvA.y, m_duvAB.y, m_duvAC.y);
         }
 
     protected:
@@ -66,7 +56,7 @@ namespace oxygine
     protected:
         virtual void shaderProgramChanged() override;
     protected:
-        Vector3 m_msk[4];
-        Vector4 m_clipMask;
+        VideoDriver::Uniform3f m_msk[4];
+        VideoDriver::Uniform4f m_clipMask;
     };
 }

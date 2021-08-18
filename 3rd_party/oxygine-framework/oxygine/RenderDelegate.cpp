@@ -138,10 +138,9 @@ namespace oxygine
         {
             baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
         }
-        Vector3 msk[4];
-
+        VideoDriver::Uniform3f msk[4];
         clipUV.get(msk);
-        Vector4 clipMask = Vector4(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
+        VideoDriver::Uniform4f clipMask = VideoDriver::Uniform4f(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
 

@@ -72,12 +72,12 @@ namespace oxygine
         r->setShaderFlags(m_flags | tempFlags);
         if (m_addColor.rgba())
         {
-            Vector4 vec = Vector4(m_addColor.redF(), m_addColor.greenF(), m_addColor.blueF(), m_addColor.alphaF());
+            VideoDriver::Uniform4f vec = VideoDriver::Uniform4f(m_addColor.redF(), m_addColor.greenF(), m_addColor.blueF(), m_addColor.alphaF());
             r->getDriver()->setUniform("add_color", vec);
         }
         float brightnessColor = GameWindow::getWindow()->getBrightness();
         float gamma = GameWindow::getWindow()->getGamma();
-        Vector4 brightness = Vector4(brightnessColor, brightnessColor, brightnessColor, 0);
+        VideoDriver::Uniform4f brightness = VideoDriver::Uniform4f(brightnessColor, brightnessColor, brightnessColor, 0);
         r->getDriver()->setUniform("brightness_color", brightness);
         r->getDriver()->setUniform("gamma", gamma);
 

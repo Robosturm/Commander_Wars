@@ -24,12 +24,12 @@ namespace oxygine
         setUniform(id, &v, 1);
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector3& v)
+    void VideoDriver::setUniform(const char* id, const Uniform3f& v)
     {
         setUniform(id, &v, 1);
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector4& v)
+    void VideoDriver::setUniform(const char* id, const Uniform4f& v)
     {
         setUniform(id, &v, 1);
     }
@@ -337,7 +337,7 @@ namespace oxygine
         window->glUniform1i(location, v);
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector4* v, qint32 num)
+    void VideoDriver::setUniform(const char* id, const Uniform4f* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint p = window->glGetUniformLocation(m_programID, id);
@@ -345,7 +345,7 @@ namespace oxygine
         {
             return;
         }
-        window->glUniform4fv(p, num, v->m);
+        window->glUniform4fv(p, num, v->data);
     }
 
     void VideoDriver::setUniform(const char* id, const Vector2* v, qint32 num)
@@ -359,7 +359,7 @@ namespace oxygine
         window->glUniform2fv(p, num, &v->x);
     }
 
-    void VideoDriver::setUniform(const char* id, const Vector3* v, qint32 num)
+    void VideoDriver::setUniform(const char* id, const Uniform3f* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLint  p = window->glGetUniformLocation(m_programID, id);
@@ -367,7 +367,7 @@ namespace oxygine
         {
             return;
         }
-        window->glUniform3fv(p, num, &v->x);
+        window->glUniform3fv(p, num, v->data);
     }
 
     void VideoDriver::setUniform(const char* id, float val)

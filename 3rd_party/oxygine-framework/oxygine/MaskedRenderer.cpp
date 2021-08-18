@@ -30,7 +30,7 @@ namespace oxygine
         }
 
         clipUV.get(m_msk);
-        m_clipMask = Vector4(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());
+        m_clipMask = VideoDriver::Uniform4f(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, mask);
     }
