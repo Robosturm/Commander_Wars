@@ -5,6 +5,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/audiothread.h"
 
 #include "resource_management/backgroundmanager.h"
 
@@ -19,6 +20,7 @@ InGameMenue::InGameMenue()
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    pApp->getAudioThread()->clearPlayList();
     m_pInstance = this;
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
@@ -32,6 +34,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    pApp->getAudioThread()->clearPlayList();
     m_pInstance = this;
     m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);

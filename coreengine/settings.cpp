@@ -14,11 +14,9 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileInfoList>
-#ifdef EnableMultimedia
 #include <QInputDevice>
 #include <QMediaDevices>
 #include <QAudioDevice>
-#endif
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";
@@ -1253,7 +1251,6 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_SoundVolume = 100;
     }
-#ifdef EnableMultimedia
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
     QString description = settings.value("AudioDevice", "").toString();
     const auto audioDevices = QMediaDevices::audioOutputs();
@@ -1269,7 +1266,6 @@ void Settings::loadSettings()
     {
         m_audioOutput = QVariant::fromValue(defaultDeviceInfo);
     }
-#endif
     settings.endGroup();
 
     // game

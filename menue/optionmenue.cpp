@@ -691,7 +691,6 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pTextfield);
     y += 40;
 
-#ifdef EnableMultimedia
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Audio Device: "));
@@ -711,7 +710,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
         }
     }
     spDropDownmenu pAudioDevice = spDropDownmenu::create(Settings::getWidth() - 20 - sliderOffset, items);
-    pAudioDevice->setTooltipText(tr("Selects the screen mode for the game"));
+    pAudioDevice->setTooltipText(tr("Selects the primary audio output device"));
     pAudioDevice->setPosition(sliderOffset - 130, y);
     pAudioDevice->setCurrentItem(currentItem);
     pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
@@ -723,7 +722,6 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
         pAudio->changeAudioDevice(item);
     });
     y += 40;
-#endif
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);

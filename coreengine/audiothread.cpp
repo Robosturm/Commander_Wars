@@ -7,69 +7,68 @@
 
 #include <QDir>
 #include <QList>
-
-#ifdef EnableMultimedia
 #include <QAudioDevice>
-#endif
-
 
 AudioThread::AudioThread()
-    :
-      #ifdef EnableMultimedia
-      m_player(this),
-      m_player2(this),
+    : m_player{Player(this), Player(this)},
       m_audioOutput(this),
-      #endif
-      m_doubleBufferTimer(this)
+      m_positionUpdateTimer(this)
 {
-
     setObjectName("AudioThread");
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
     moveToThread(Mainapp::getAudioWorker());
-    connect(this, &AudioThread::SignalPlayMusic,        this, &AudioThread::SlotPlayMusic, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalSetVolume,        this, &AudioThread::SlotSetVolume, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalAddMusic,         this, &AudioThread::SlotAddMusic, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalClearPlayList,    this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalPlayRandom,       this, &AudioThread::SlotPlayRandom, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalLoadFolder,       this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalPlaySound,        this, &AudioThread::SlotPlaySound, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalStopAllSounds,    this, &AudioThread::SlotStopAllSounds, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalChangeAudioDevice,this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
-#ifdef EnableMultimedia
+    connect(this, &AudioThread::SignalPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalSetVolume,         this, &AudioThread::SlotSetVolume, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalAddMusic,          this, &AudioThread::SlotAddMusic, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalPlaySound,         this, &AudioThread::SlotPlaySound, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalStopSound,         this, &AudioThread::SlotStopSound, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::sigInitAudio,            this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
     m_audioDevice = Settings::getAudioOutput().value<QAudioDevice>();
     m_audioOutput.setDevice(m_audioDevice);
-    m_player.setAudioOutput(&m_audioOutput);
-    m_player2.setAudioOutput(&m_audioOutput);
-#endif
+    m_player[0].m_player.setAudioOutput(&m_audioOutput);
+    m_player[0].m_player.setSourceDevice(&m_player[0].m_playerFile);
+    m_player[1].m_player.setAudioOutput(&m_audioOutput);
+    m_player[1].m_player.setSourceDevice(&m_player[1].m_playerFile);
 }
 
 AudioThread::~AudioThread()
 {
-#ifdef EnableMultimedia
-    m_player.stop();
-    m_player2.stop();
-#endif
-    m_doubleBufferTimer.stop();
+    m_positionUpdateTimer.stop();
+    m_player[0].m_player.stop();
+    m_player[1].m_player.stop();
 }
 
 void AudioThread::initAudio()
 {
     // everything needs to be created in the context of this thread
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
-#ifdef EnableMultimedia
-    connect(&m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged, Qt::QueuedConnection);
-    connect(&m_player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
-    connect(&m_player2, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged, Qt::QueuedConnection);
-    connect(&m_player2, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
-    connect(&m_player, &QMediaPlayer::errorOccurred, this, &AudioThread::reportReplayError, Qt::QueuedConnection);
-    connect(&m_player2, &QMediaPlayer::errorOccurred, this, &AudioThread::reportReplayError, Qt::QueuedConnection);
-#endif
-    m_doubleBufferTimer.setSingleShot(false);
-    m_doubleBufferTimer.setInterval(50);
-    connect(&m_doubleBufferTimer, &QTimer::timeout, this, &AudioThread::stopSecondPlayer, Qt::QueuedConnection);
+    connect(&m_player[0].m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
+    {
+        mediaStatusChanged(m_player[0].m_player, 0, newState);
+    });
+    connect(&m_player[1].m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
+    {
+        mediaStatusChanged(m_player[1].m_player, 1, newState);
+    });
+    connect(&m_player[0].m_player, &QMediaPlayer::errorOccurred, this, &AudioThread::reportReplayError, Qt::QueuedConnection);
+    connect(&m_player[1].m_player, &QMediaPlayer::errorOccurred, this, &AudioThread::reportReplayError, Qt::QueuedConnection);
+
+    m_positionUpdateTimer.setInterval(25);
+    m_positionUpdateTimer.setSingleShot(false);
+    connect(&m_positionUpdateTimer, &QTimer::timeout, this, [=]()
+    {
+        if (m_currentPlayer >= 0)
+        {
+            SlotCheckMusicEnded(m_player[m_currentPlayer].m_player.position());
+        }
+    });
+    m_positionUpdateTimer.start();
 }
 
 void AudioThread::changeAudioDevice(const QVariant& value)
@@ -79,13 +78,13 @@ void AudioThread::changeAudioDevice(const QVariant& value)
 
 void AudioThread::SlotChangeAudioDevice(const QVariant& value)
 {
-#ifdef EnableMultimedia
     m_audioDevice = value.value<QAudioDevice>();
     Console::print("Changing to audio device: " + m_audioDevice.description(), Console::eDEBUG);
     m_audioOutput.setDevice(m_audioDevice);
-    m_player.setAudioOutput(&m_audioOutput);
-    m_player2.setAudioOutput(&m_audioOutput);
-#endif
+    m_player[0].m_player.setAudioOutput(&m_audioOutput);
+    m_player[0].m_player.setSourceDevice(&m_player[0].m_playerFile);
+    m_player[1].m_player.setAudioOutput(&m_audioOutput);
+    m_player[1].m_player.setSourceDevice(&m_player[1].m_playerFile);
 }
 
 void AudioThread::playMusic(qint32 File)
@@ -100,11 +99,7 @@ void AudioThread::setVolume(qint32 value)
 
 qint32 AudioThread::getVolume()
 {
-#ifdef EnableMultimedia
     return m_audioOutput.volume();
-#else
-    return 0;
-#endif
 }
 
 void AudioThread::addMusic(QString File, qint64 startPointMs, qint64 endPointMs)
@@ -145,31 +140,30 @@ void AudioThread::loadFolder(QString folder)
 void AudioThread::SlotClearPlayList()
 {
     Console::print("AudioThread::SlotClearPlayList()", Console::eDEBUG);
-#ifdef EnableMultimedia
-    m_player.stop();
-    m_playList.clear();
-    m_player2.stop();
-    m_playList2.clear();
+    m_player[0].m_player.stop();
+    m_player[0].m_playListPostiton = -1;
+    m_player[1].m_player.stop();
+    m_player[1].m_playListPostiton = -1;
     m_PlayListdata.clear();
     m_currentPlayer = -1;
-    m_playListPostiton = -1;
-    m_playListPostiton2 = -1;
-#endif
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)
 {
-    if (file >= 0 && file < m_playList.size())
+    if (file >= 0 && file < m_PlayListdata.size())
     {
-        m_currentPlayer = -1;
-        m_playListPostiton = file;
-        m_playListPostiton2 = -1;
-#ifdef EnableMultimedia
-        Console::print("Starting music for player 1: " + m_playList[m_playListPostiton], Console::eDEBUG);
-        m_player.setSource(m_playList[m_playListPostiton]);
-        m_player2.stop();
-        m_player.play();
-#endif
+        Console::print("Starting music for player 0: " + m_PlayListdata[file].m_file, Console::eDEBUG);
+        m_currentPlayer = 0;
+        for (auto & player : m_player)
+        {
+            player.m_player.stop();
+        }
+        m_player[m_currentPlayer].m_playListPostiton = file;
+        m_player[m_currentPlayer].m_playerFile.close();
+        m_player[m_currentPlayer].m_playerFile.setFileName(m_PlayListdata[file].m_file);
+        m_player[m_currentPlayer].m_playerFile.open(QIODevice::ReadOnly);
+        m_player[m_currentPlayer].m_player.play();
+        bufferOtherPlayer();
         m_currentMedia = file;
     }
     else
@@ -180,122 +174,98 @@ void AudioThread::SlotPlayMusic(qint32 file)
 
 void AudioThread::SlotPlayRandom()
 {
-#ifdef EnableMultimedia
-    bufferAudio();
+    initialAudioBuffering();
+    // start buffered player
     if (m_currentPlayer == 0)
     {
-        // start buffered player
-        m_currentMedia = m_playListPostiton2;
-        Console::print("Starting player 2", Console::eDEBUG);
-        m_player2.play();
         m_currentPlayer = 1;
     }
     else
     {
-        // start buffered player
-        m_currentMedia = m_playListPostiton;
-        Console::print("Starting player 1", Console::eDEBUG);
-        m_player.play();
         m_currentPlayer = 0;
     }
-    m_doubleBufferTimer.start();
-#endif
+    m_currentMedia = m_player[m_currentPlayer].m_playListPostiton;
+    Console::print("Starting player " + QString::number(m_currentPlayer), Console::eDEBUG);
+    m_player[m_currentPlayer].m_player.play();
+    bufferOtherPlayer();
 }
 
-void AudioThread::bufferAudio()
+void AudioThread::initialAudioBuffering()
 {
-#ifdef EnableMultimedia
     if (m_currentPlayer < 0)
     {
-        qint32 size = m_playList.size();
+        Console::print("AudioThread::initialAudioBuffering", Console::eDEBUG);
+        qint32 size = m_PlayListdata.size();
         if (size > 0)
         {
-            qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
-            // load buffer on second player
-            qint32 newMedia2 = GlobalUtils::randIntBase(0, size - 1);
-            m_playListPostiton2 = newMedia2;
-            Console::print("Buffering music for player 2: " + m_playList2[m_playListPostiton2], Console::eDEBUG);
-            m_player2.setSource(m_playList2[m_playListPostiton2]);
-            if (m_PlayListdata[newMedia2].m_startpointMs > 0  && newMedia2 == newMedia)
+            m_player[0].m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
+            m_player[1].m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
+            for (auto & player : m_player)
             {
-                m_player2.setPosition(m_PlayListdata[newMedia2].m_startpointMs);
+                player.m_player.stop();
+                player.m_playerFile.close();
+                player.m_playerFile.setFileName(m_PlayListdata[player.m_playListPostiton].m_file);
+                player.m_playerFile.open(QIODevice::ReadOnly);
+                player.m_player.setSourceDevice(&player.m_playerFile, m_PlayListdata[player.m_playListPostiton].m_file);
+            }
+
+            m_player[0].m_playerStartPosition = 0;
+            if (m_PlayListdata[m_player[1].m_playListPostiton].m_startpointMs > 0  && m_player[0].m_playListPostiton == m_player[1].m_playListPostiton)
+            {
+                m_player[1].m_playerStartPosition = m_PlayListdata[m_player[1].m_playListPostiton].m_startpointMs;
             }
             else
             {
-                m_player2.setPosition(0);
+                m_player[1].m_playerStartPosition = 0;
             }
-            m_player2.stop();
-            m_playListPostiton = newMedia;
-            Console::print("Buffering music for player 1: " + m_playList2[m_playListPostiton], Console::eDEBUG);
-            m_player.setSource(m_playList[m_playListPostiton]);
-            if (m_PlayListdata[newMedia].m_startpointMs > 0  &&
-                m_currentPlayer >= 0 &&
-                newMedia2 == newMedia)
-            {
-                m_player.setPosition(m_PlayListdata[newMedia].m_startpointMs);
-            }
-            else
-            {
-                m_player.setPosition(0);
-            }
+            Console::print("Buffering music for player 0: " + m_PlayListdata[m_player[0].m_playListPostiton].m_file + " at position " + QString::number(m_player[0].m_playerStartPosition), Console::eDEBUG);
+            Console::print("Buffering music for player 1: " + m_PlayListdata[m_player[1].m_playListPostiton].m_file + " at position " + QString::number(m_player[1].m_playerStartPosition), Console::eDEBUG);
         }
     }
-#endif
 }
 
-void AudioThread::stopSecondPlayer()
+void AudioThread::bufferOtherPlayer()
 {
-#ifdef EnableMultimedia
-    Console::print("AudioThread::stopSecondPlayer()", Console::eDEBUG);
-    qint32 size = m_playList.size();
-    if (size > 0)
+    Console::print("AudioThread::bufferOtherPlayer()", Console::eDEBUG);
+    qint32 size = m_PlayListdata.size();
+    if (size > 0 && m_currentPlayer >= 0)
     {
         qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
+
+        qint32 bufferPlayer = 0;
         if (m_currentPlayer == 0)
         {
-            // load buffe on current player
-            m_player2.stop();
-            m_playListPostiton2 = newMedia;
-            Console::print("Buffering music for player 2: " + m_playList2[m_playListPostiton2], Console::eDEBUG);
-
-            m_player2.setSource(m_playList2[m_playListPostiton2]);
-            if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_playListPostiton)
-            {
-                m_player2.setPosition(m_PlayListdata[newMedia].m_startpointMs);
-            }
+            bufferPlayer = 1;
+        }
+        m_player[bufferPlayer].m_player.stop();
+        m_player[bufferPlayer].m_playListPostiton = newMedia;
+        m_player[bufferPlayer].m_playerFile.close();
+        m_player[bufferPlayer].m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
+        m_player[bufferPlayer].m_playerFile.open(QIODevice::ReadOnly);
+        m_player[bufferPlayer].m_player.setSourceDevice(&m_player[bufferPlayer].m_playerFile, m_PlayListdata[newMedia].m_file);
+        if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_player[m_currentPlayer].m_playListPostiton)
+        {
+            m_player[bufferPlayer].m_playerStartPosition = m_PlayListdata[newMedia].m_startpointMs;
         }
         else
         {
-            // load buffer on current player
-            m_player.stop();
-            m_playListPostiton = newMedia;
-            Console::print("Buffering music for player 1: " + m_playList2[m_playListPostiton], Console::eDEBUG);
-
-            m_player.setSource(m_playList[m_playListPostiton]);
-            if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_playListPostiton2)
-            {
-                m_player.setPosition(m_PlayListdata[newMedia].m_startpointMs);
-            }
+            m_player[bufferPlayer].m_playerStartPosition = 0;
         }
+        Console::print("Buffering music for player " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer].m_playerStartPosition), Console::eDEBUG);
+        m_player[bufferPlayer].m_player.play();
     }
-    m_doubleBufferTimer.stop();
-#endif
 }
 
 void AudioThread::SlotSetVolume(qint32 value)
 {
-#ifdef EnableMultimedia
     qreal sound = (static_cast<qreal>(value) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
     qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-
     m_audioOutput.setVolume(qRound(volume * 100));
-#endif
 }
 
 void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
 {
-#ifdef EnableMultimedia
     QString currentPath = file;
     if (!QFile::exists(currentPath))
     {
@@ -304,26 +274,44 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
     if (QFile::exists(currentPath))
     {
         Console::print("Adding " + currentPath + " to play list", Console::eDEBUG);
-        m_player.stop();
-        m_playList.append(currentPath);
-        m_player2.stop();
-        m_playList2.append(currentPath);
-        m_PlayListdata.append(PlaylistData(startPointMs, endPointMs));
+        for (auto & player : m_player)
+        {
+            player.m_player.stop();
+        }
+        m_PlayListdata.append(PlaylistData(currentPath, startPointMs, endPointMs));
     }
     else
     {
         Console::print("Unable to locate music file: " + currentPath, Console::eERROR);
     }
-#endif
 }
-#ifdef EnableMultimedia
-void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
+
+void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, QMediaPlayer::MediaStatus status)
 {
-    switch (status) {
+    Console::print("Media status changed for player " + QString::number(playerIndex) + " to " + QString::number(status), Console::eDEBUG);
+    switch (status)
+    {
+        case QMediaPlayer::LoadedMedia:
+        case QMediaPlayer::BufferedMedia:
+        {
+            if (playerIndex != m_currentPlayer &&
+                m_player[playerIndex].m_playerStartPosition != player.position())
+            {
+                Console::print("Seeking to media position " + QString::number(m_player[playerIndex].m_playerStartPosition) + " and pausing player again", Console::eDEBUG);
+                player.setPosition(m_player[playerIndex].m_playerStartPosition);
+                player.pause();
+            }
+            break;
+        }
         case QMediaPlayer::EndOfMedia:
         {
-            // shuffle through loaded media
-            SlotPlayRandom();
+            Console::print("Music stopped at position " + QString::number(m_player[playerIndex].m_player.position()), Console::eDEBUG);
+            if (m_PlayListdata[m_currentMedia].m_endpointMs < 0 &&
+                playerIndex == m_currentPlayer)
+            {
+                // shuffle through loaded media
+                SlotPlayRandom();
+            }
             break;
         }
         default:
@@ -332,7 +320,7 @@ void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
         }
     }
 }
-#endif
+
 void AudioThread::SlotLoadFolder(QString folder)
 {
     QStringList loadedSounds;
@@ -359,9 +347,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
             if (!loadedSounds.contains(file) && QFile::exists(folder + '/' + file))
             {
                 Console::print("Adding " + folder + '/' + file + " to play list", Console::eDEBUG);
-                m_playList.append(folder + '/' + file);
-                m_playList2.append(folder + '/' + file);
-                m_PlayListdata.append(PlaylistData(-1, -1));
+                m_PlayListdata.append(PlaylistData(folder + '/' + file));
                 loadedSounds.append(file);
             }
         }
@@ -387,9 +373,10 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
     if (m_currentMedia >= 0 && m_currentMedia < m_PlayListdata.size())
     {
         qint64 loopPos = m_PlayListdata[m_currentMedia].m_endpointMs;
-        if ((loopPos <= duration) &&
+        if ((duration >= loopPos) &&
             (loopPos > 0))
         {
+            Console::print("Player reached loop end desired position " + QString::number(loopPos) + " actual loop position " + QString::number(duration) + " for player " + QString::number(m_currentPlayer), Console::eDEBUG);
             // shuffle load new media
             SlotPlayRandom();
         }
@@ -421,7 +408,6 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
     if (url.isValid())
     {
         Console::print("Playing sound: " + url.toString(), Console::eDEBUG);
-#ifdef EnableMultimedia
         QSoundEffect* pSoundEffect = new QSoundEffect(this);
         pSoundEffect->setObjectName("SoundEffect");
         qreal value = QAudio::convertVolume(sound,
@@ -446,13 +432,11 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
         }
         m_Sounds.push_back(pSoundEffect);
         m_SoundTimers.push_back(pTimer);
-#endif
     }
 }
 
 void AudioThread::SlotSoundStart()
 {
-#ifdef EnableMultimedia
     QTimer* pSender = dynamic_cast<QTimer*>(sender());
     for (qint32 i = 0; i < m_SoundTimers.size(); i++)
     {
@@ -461,12 +445,10 @@ void AudioThread::SlotSoundStart()
             m_Sounds[i]->play();
         }
     }
-#endif
 }
 
 void AudioThread::SlotSoundEnded()
 {
-#ifdef EnableMultimedia
     QSoundEffect* pSender = dynamic_cast<QSoundEffect*>(sender());
     qint32 i = 0;
     while (i < m_Sounds.size())
@@ -485,12 +467,10 @@ void AudioThread::SlotSoundEnded()
             i++;
         }
     }
-#endif
 }
 
 void AudioThread::SlotStopSound(QString file, QString folder)
 {
-#ifdef EnableMultimedia
     QUrl url = QUrl::fromLocalFile(folder + file);
     for (qint32 i = 0; i < m_Sounds.size(); i++)
     {
@@ -505,12 +485,10 @@ void AudioThread::SlotStopSound(QString file, QString folder)
             break;
         }
     }
-#endif
 }
 
 void AudioThread::SlotStopAllSounds()
 {
-#ifdef EnableMultimedia
     for (qint32 i = 0; i < m_Sounds.size(); i++)
     {
         m_SoundTimers[i]->stop();
@@ -520,10 +498,8 @@ void AudioThread::SlotStopAllSounds()
     }
     m_Sounds.clear();
     m_SoundTimers.clear();
-#endif
 }
 
-#ifdef EnableMultimedia
 void AudioThread::reportReplayError(QMediaPlayer::Error error, const QString &errorString)
 {
     switch (error)
@@ -561,4 +537,3 @@ void AudioThread::reportReplayError(QMediaPlayer::Error error, const QString &er
     Console::print("Error in player1: " + errorString, Console::eERROR);
     Console::print("Error in player2: " + errorString, Console::eERROR);
 }
-#endif

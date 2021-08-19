@@ -130,7 +130,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             Mainapp::m_Audiothread = new AudioThread();
             m_AudioWorker.setObjectName("AudioThread");
-            m_AudioWorker.start(QThread::Priority::LowPriority);
+            m_AudioWorker.start(QThread::Priority::HighPriority);
             emit m_Audiothread->sigInitAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");

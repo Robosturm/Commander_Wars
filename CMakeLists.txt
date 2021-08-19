@@ -45,16 +45,12 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        -DEnableMultimedia
         #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
-        add_definitions(
-            -DEnableMultimedia
-        )
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()

@@ -3,14 +3,14 @@
 
 #include <QObject>
 #include <QVector>
-#ifdef EnableMultimedia
 #include <QSoundEffect>
 #include <QMediaPlayer>
 #include <QMediaDevices>
 #include <QAudioDevice>
 #include <QAudioOutput>
-#endif
+#include <QIODevice>
 #include <QTimer>
+
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class AudioThread : public QObject
@@ -107,9 +107,13 @@ protected slots:
     void SlotSetVolume(qint32 value);
     void SlotAddMusic(QString file, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void SlotClearPlayList();
-#ifdef EnableMultimedia
-    void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
-#endif
+
+    /**
+     * @brief mediaStatusChanged
+     * @param status
+     */
+    void mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, QMediaPlayer::MediaStatus status);
+
     void SlotPlayRandom();
     void SlotLoadFolder(QString folder);
     void SlotCheckMusicEnded(qint64 duration);
@@ -120,19 +124,13 @@ protected slots:
     void SlotSoundEnded();
     void SlotSoundStart();
     void initAudio();
-    /**
-     * @brief stopSecondPlayer
-     */
-    void stopSecondPlayer();
-    void bufferAudio();
-#ifdef EnableMultimedia
+
     /**
      * @brief reportReplayError
      * @param error
      * @param errorString
      */
     void reportReplayError(QMediaPlayer::Error error, const QString &errorString);
-#endif
     void SlotChangeAudioDevice(const QVariant& value);
 protected:
     /**
@@ -141,40 +139,55 @@ protected:
      * @param loadedSounds
      */
     void loadMusicFolder(QString folder, QStringList& loadedSounds);
+    /**
+     * @brief bufferOtherPlayer
+     */
+    void bufferOtherPlayer();
+    /**
+     * @brief initialAudioBuffering
+     */
+    void initialAudioBuffering();
 private:
+    // music playback data
     struct PlaylistData
     {
-        PlaylistData(qint32 startpointMs, qint32 endpointMs)
-            : m_startpointMs(startpointMs),
-              m_endpointMs(endpointMs)
+        explicit PlaylistData(QString file)
+            : m_file(file)
         {
         }
-        qint32 m_startpointMs;
-        qint32 m_endpointMs;
+        explicit PlaylistData(QString file, qint32 startpointMs, qint32 endpointMs)
+            : m_startpointMs(startpointMs),
+              m_endpointMs(endpointMs),
+              m_file(file)
+        {
+        }
+        qint32 m_startpointMs{-1};
+        qint32 m_endpointMs{-1};
+        QString m_file;
     };
-    // two players one is buffering the other one is actually playing
-#ifdef EnableMultimedia
-    QMediaPlayer m_player;
-#endif
-    QList<QString> m_playList;
-    qint32 m_playListPostiton{-1};
-#ifdef EnableMultimedia
-    QMediaPlayer m_player2;
-#endif
-    QList<QString> m_playList2;
-    qint32 m_playListPostiton2{-1};
-    qint32 m_currentPlayer{-1};
+    struct Player
+    {
+        Player(QObject* parent)
+            : m_playerFile(parent),
+              m_player(parent)
+        {
+        }
+        QFile m_playerFile;
+        QMediaPlayer m_player;
+        qint32 m_playerStartPosition{0};
+        qint32 m_playListPostiton{-1};
+    };
+    Player m_player[2];
     QVector<PlaylistData> m_PlayListdata;
+    qint32 m_currentPlayer{-1};
     qint32 m_currentMedia{-1};
-#ifdef EnableMultimedia
+    QTimer m_positionUpdateTimer;
+    // sound playback data
     QVector<QSoundEffect*> m_Sounds;
-#endif
     QVector<QTimer*> m_SoundTimers;
-#ifdef EnableMultimedia
+    // general audio info
     QAudioDevice m_audioDevice;
     QAudioOutput m_audioOutput;
-#endif
-    QTimer m_doubleBufferTimer;
     bool m_loadBaseGameFolders{true};
 };
 
