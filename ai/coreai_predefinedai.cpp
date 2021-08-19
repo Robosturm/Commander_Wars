@@ -186,7 +186,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
 bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransporters)
 {
     Console::print("CoreAI::moveSupport", Console::eDEBUG);
-    aiStep = step;
+    m_aiStep = step;
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {

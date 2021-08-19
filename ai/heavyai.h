@@ -81,22 +81,36 @@ class HeavyAi : public CoreAI
     enum AttackInfo
     {
         AttackInfoStart = BasicFieldInfoMaxSize,
-        AttackDealingHpDamage = BasicFieldInfoMaxSize,
+        AttackDealingHpDamage = AttackInfoStart,
         AttackReceavingHpDamage,
         AttackDealingAbsolutDamage,
         AttackReceicingAbsolutDamage,
         AttackDealingFundsDamage,
         AttackReceicingFundsDamage,
         AttackRemainingCaptureDays,
+        HqThread,
         AttackInfoMaxSize,
     };
 
     enum CaptureInfo
     {
         CaptureInfoStart = BasicFieldInfoMaxSize,
-        CaptureInfoMaxSize
-
+        CaptureInfoIsHq = CaptureInfoStart,
+        CaptureInfoIsComTower,
+        CaptureInfoProductionPotential,
+        CaptureInfoRemainingDays,
+        CaptureInfoCaptureOptions,
+        CaptureInfoUniqueCaptureBuilding,
+        CaptureInfoMaxSize,
     };
+
+    // flare?
+    // place watermine
+    // support repair and ration actions
+
+    // load
+    // unload always
+    // wait / stealth / unstealth
 
     enum NeuralNetworks
     {
@@ -109,13 +123,14 @@ public:
     ENUM_CLASS ThreadLevel
     {
         Normal,
-                High,
-                Hq,
+        High,
+        Hq,
+        Max,
     };
     ENUM_CLASS FunctionType
     {
         JavaScript,
-                CPlusPlus,
+        CPlusPlus,
     };
 
     struct UnitData
@@ -128,6 +143,8 @@ public:
         QPoint m_hqThread;
         spGameAction m_action;
         float m_score{0};
+        QVector<QPoint> m_capturePoints;
+        QStringList m_actions;
     };
     struct UnitBuildData
     {
@@ -136,7 +153,6 @@ public:
         qint32 cost{0};
         QVector<double> unitBuildingDataInput = QVector<double>(static_cast<qsizetype>(BuildingEntryMaxSize));
     };
-
     struct BuildingData
     {
         Building* m_pBuilding;
@@ -255,6 +271,7 @@ private:
     void addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool enemyUnits);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits);
+    void updateCaptureBuildings(UnitData & unitData);
     void findHqThreads(const spQmlVectorBuilding & buildings);
     bool isCaptureTransporterOrCanCapture(Unit* pUnit);
     void mutateActionForFields(UnitData & unit, const QVector<QPoint> & moveTargets,
@@ -263,6 +280,11 @@ private:
                                QVector<spGameAction> & bestActions);
     bool mutateAction(spGameAction pAction, UnitData & unitData, QVector<double> & baseData, FunctionType type, qint32 functionIndex,
                       qint32 & step, QVector<qint32> & stepPosition, float & score);
+    /**
+     * @brief scoreWait
+     * @param unit
+     */
+    void scoreMoveToTargets();
     /**
      * @brief performAction
      */
@@ -280,10 +302,29 @@ private:
      */
     float scoreFire(spGameAction action, UnitData & unitData, QVector<double> baseData);
     /**
-     * @brief scoreWait
-     * @param unit
+     * @brief scoreJoin
+     * @param action
+     * @param unitData
+     * @param baseData
+     * @return
      */
-    void scoreActionWait();
+    float scoreJoin(spGameAction action, UnitData & unitData, QVector<double> baseData);
+    /**
+     * @brief scoreMissile
+     * @param action
+     * @param unitData
+     * @param baseData
+     * @return
+     */
+    float scoreMissile(spGameAction action, UnitData & unitData, QVector<double> baseData);
+    /**
+     * @brief scoreLoad
+     * @param action
+     * @param unitData
+     * @param baseData
+     * @return
+     */
+    float scoreLoad(spGameAction action, UnitData & unitData, QVector<double> baseData);
     /**
      * @brief getMoveTargets
      * @param unit
@@ -447,6 +488,13 @@ private:
      * @return
      */
     bool isPrimaryEnemy(Building* pBuilding) const;
+    /**
+     * @brief isScoringAllowed
+     * @param action
+     * @param actions
+     * @return
+     */
+    bool isScoringAllowed(QString action, QStringList actions);
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action, UnitData & unitData, QVector<double> baseData)>;
@@ -464,9 +512,16 @@ private:
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
     Player* m_pPrimaryEnemy{nullptr};
-
     QTimer m_timer;
     bool m_pause{false};
+    QStringList m_secondyActions
+    {
+        ACTION_WAIT,
+        ACTION_LOAD,
+        ACTION_UNLOAD,
+        ACTION_STEALTH,
+        ACTION_UNSTEALTH,
+    };
 
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
     double m_minActionScore{0.2};
@@ -494,4 +549,6 @@ private:
     // static constants
     static const qint32 minSiloDamage;
     static const QStringList NeuralNetworkNames;
+    static const char* const NeuralNetworkFileEnding;
+    static const char* const NeuralNetworkPath;
 };

@@ -2562,6 +2562,13 @@ GameAnimation* Unit::killUnit()
 
 void Unit::increaseCapturePoints(QPoint position)
 {
+    m_capturePoints += getCaptureRate(position);
+    // update icons
+    setCapturePoints(m_capturePoints);
+}
+
+qint32 Unit::getCaptureRate(QPoint position)
+{
     qint32 modifier = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
@@ -2573,10 +2580,7 @@ void Unit::increaseCapturePoints(QPoint position)
     {
         modifier += pCO->getCaptureBonus(this, position);
     }
-
-    m_capturePoints += getHpRounded() + modifier;
-    // update icons
-    setCapturePoints(m_capturePoints);
+    return getHpRounded() + modifier;
 }
 
 void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)

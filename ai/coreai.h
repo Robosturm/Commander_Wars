@@ -35,12 +35,12 @@ public:
     ENUM_CLASS AISteps
     {
         moveUnits = 0,
-                moveToTargets,
-                loadUnits,
-                moveTransporters,
-                moveSupportUnits,
-                moveAway,
-                buildUnits,
+        moveToTargets,
+        loadUnits,
+        moveTransporters,
+        moveSupportUnits,
+        moveAway,
+        buildUnits,
     };
     Q_ENUM(AISteps)
     // static string list of actions so we only define them once
@@ -58,6 +58,7 @@ public:
     static const QString ACTION_CAPTURE;
     static const QString ACTION_MISSILE;
     static const QString ACTION_FIRE;
+    static const QString ACTION_JOIN;
     static const QString ACTION_UNLOAD;
     static const QString ACTION_LOAD;
     static const QString ACTION_NEXT_PLAYER;
@@ -497,8 +498,8 @@ protected:
     float m_buildingValue{1.0f};
     float m_ownUnitValue{1.0f};
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
-    AISteps aiStep;
-    bool usedTransportSystem{false};
+    AISteps m_aiStep;
+    bool m_usedTransportSystem{false};
     bool m_missileTarget{false};
     float m_fuelResupply{0.33f};
     float m_ammoResupply{0.25f};

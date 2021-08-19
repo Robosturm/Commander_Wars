@@ -520,23 +520,23 @@ void NormalAi::process()
             if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
-                if (aiStep == AISteps::buildUnits)
+                if (m_aiStep == AISteps::buildUnits)
                 {
-                    aiStep = AISteps::moveUnits;
+                    m_aiStep = AISteps::moveUnits;
                 }
                 if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
                 else
                 {
-                    if (aiStep == AISteps::buildUnits)
+                    if (m_aiStep == AISteps::buildUnits)
                     {
-                        aiStep = AISteps::moveUnits;
+                        m_aiStep = AISteps::moveUnits;
                     }
                     clearEnemyData();
                     m_IslandMaps.clear();
                     turnMode = GameEnums::AiTurnMode_EndOfDay;
                     if (useCOPower(pUnits, pEnemyUnits))
                     {
-                        usedTransportSystem = false;
+                        m_usedTransportSystem = false;
                         turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
                     else
@@ -560,35 +560,35 @@ void NormalAi::finishTurn()
 bool NormalAi::performActionSteps(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits,
                                   spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
-    if (aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
-    else if (aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
-    else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-    else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-    else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
-    else if (aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
+    if (m_aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
-    else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
     // direct units
-    else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-    else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
-    else if (aiStep <= AISteps::loadUnits && !usedTransportSystem && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveTransporters && !usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveToTargets && refillUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
+    else if (m_aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+    else if (m_aiStep <= AISteps::loadUnits && !m_usedTransportSystem && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (m_aiStep <= AISteps::moveTransporters && !m_usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
     else
     {
-        if (!usedTransportSystem)
+        if (!m_usedTransportSystem)
         {
-            usedTransportSystem = true;
-            aiStep = AISteps::moveUnits;
+            m_usedTransportSystem = true;
+            m_aiStep = AISteps::moveUnits;
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
-        else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
-        else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
-        else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
-        else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
-        else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
+        else if (m_aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+        else if (m_aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
+        else if (m_aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
+        else if (m_aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
+        else if (m_aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
         else
         {
             return false;
@@ -851,11 +851,11 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit pUnits, qint32 minfireRange, qint32
 bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
     Console::print("NormalAi::refillUnits()", Console::eDEBUG);
-    if (aiStep < AISteps::moveToTargets)
+    if (m_aiStep < AISteps::moveToTargets)
     {
         createMovementMap(pBuildings, pEnemyBuildings);
     }
-    aiStep = AISteps::moveToTargets;
+    m_aiStep = AISteps::moveToTargets;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -905,7 +905,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
                         return true;
                     }
                 }
-                else if (usedTransportSystem)
+                else if (m_usedTransportSystem)
                 {
                     Console::print("move to supply needed units", Console::eDEBUG);
                     QVector<QVector3D> targets;
@@ -1019,7 +1019,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if ((isUsingUnit(pUnit) || usedTransportSystem) &&
+        if ((isUsingUnit(pUnit) || m_usedTransportSystem) &&
             !pUnit->getHasMoved() &&
             pUnit->getBaseMaxRange() >= minfireRange &&
             pUnit->getBaseMaxRange() <= maxfireRange &&
@@ -1062,7 +1062,7 @@ bool NormalAi::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
 bool NormalAi::loadUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
     Console::print("NormalAi::loadUnits()", Console::eDEBUG);
-    aiStep = AISteps::loadUnits;
+    m_aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -1095,7 +1095,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
 bool NormalAi::moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
     Console::print("NormalAi::moveTransporters()", Console::eDEBUG);
-    aiStep = AISteps::moveTransporters;
+    m_aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -1275,7 +1275,7 @@ bool NormalAi::moveToUnloadArea(spGameAction pAction, Unit* pUnit, spQmlVectorUn
 bool NormalAi::repairUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
     Console::print("NormalAi::repairUnits()", Console::eDEBUG);
-    aiStep = AISteps::moveUnits;
+    m_aiStep = AISteps::moveUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -2005,11 +2005,11 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                           spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
     Console::print("NormalAi::buildUnits()", Console::eDEBUG);
-    if (aiStep < AISteps::buildUnits)
+    if (m_aiStep < AISteps::buildUnits)
     {
         m_productionData.clear();
     }
-    aiStep = AISteps::buildUnits;
+    m_aiStep = AISteps::buildUnits;
     spGameMap pMap = GameMap::getInstance();
 
     qint32 enemeyCount = 0;

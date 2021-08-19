@@ -43,6 +43,7 @@ const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
 const QString CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
 const QString CoreAI::ACTION_PLACE = "ACTION_PLACE";
 const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
+const QString CoreAI::ACTION_JOIN = "ACTION_JOIN";
 const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
 const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
 const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
@@ -612,7 +613,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit pUnits)
 {
     Console::print("CoreAI::moveAwayFromProduction", Console::eDEBUG);
-    aiStep = AISteps::moveAway;
+    m_aiStep = AISteps::moveAway;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1754,7 +1755,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
 void CoreAI::finishTurn()
 {
     Console::print("CoreAI::finishTurn(()", Console::eDEBUG);
-    usedTransportSystem = false;
+    m_usedTransportSystem = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);

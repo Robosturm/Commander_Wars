@@ -594,6 +594,12 @@ public slots:
      */
     void increaseCapturePoints(QPoint position);
     /**
+     * @brief getCaptureRate
+     * @param position
+     * @return
+     */
+    qint32 getCaptureRate(QPoint position);
+    /**
      * @brief loadIcon
      * @param iconID icon we want to load
      * @param x position of the icon

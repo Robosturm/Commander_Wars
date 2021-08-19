@@ -1,5 +1,5 @@
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
-#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 
 namespace oxygine
 {

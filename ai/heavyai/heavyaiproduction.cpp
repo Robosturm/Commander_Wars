@@ -11,6 +11,8 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/weaponmanager.h"
 
+// code for building units is here
+
 bool HeavyAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
                          spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
