@@ -183,7 +183,7 @@ int main(qint32 argc, char* argv[])
     QStringList args = app.arguments();
     window.loadArgs(args);
     // start crash report handler
-    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
+    CrashReporter::setSignalHandler(&Mainapp::showCrashReport);
     registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
@@ -197,7 +197,7 @@ int main(qint32 argc, char* argv[])
     // shutting down
     Settings::setX(window.x());
     Settings::setY(window.y());
-    crashReporter::setSignalHandler(nullptr);
+    CrashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
     Userdata::getInstance()->release();
     Console::getInstance()->release();

@@ -156,12 +156,12 @@ private:
 #ifdef EnableMultimedia
     QMediaPlayer m_player;
 #endif
-    QList<QUrl> m_playList;
+    QList<QString> m_playList;
     qint32 m_playListPostiton{-1};
 #ifdef EnableMultimedia
     QMediaPlayer m_player2;
 #endif
-    QList<QUrl> m_playList2;
+    QList<QString> m_playList2;
     qint32 m_playListPostiton2{-1};
     qint32 m_currentPlayer{-1};
     QVector<PlaylistData> m_PlayListdata;

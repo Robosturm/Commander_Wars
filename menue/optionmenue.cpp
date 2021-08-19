@@ -478,7 +478,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    showSoundOptions(m_pOptions, sliderOffset, y);
+    showSoundOptions(m_pOptions, sliderOffset, y, this);
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
@@ -675,7 +675,7 @@ void OptionMenue::showSettings()
     m_pOptions->setContentHeigth(20 + y);
 }
 
-void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y)
+void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y, QObject* pSignalOwner)
 {
     AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -710,13 +710,13 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
             currentItem = i;
         }
     }
-    spDropDownmenu pAudioDevice = spDropDownmenu::create(400, items);
+    spDropDownmenu pAudioDevice = spDropDownmenu::create(Settings::getWidth() - 20 - sliderOffset, items);
     pAudioDevice->setTooltipText(tr("Selects the screen mode for the game"));
     pAudioDevice->setPosition(sliderOffset - 130, y);
     pAudioDevice->setCurrentItem(currentItem);
     pAudioDevice->setEnabled(!Settings::getSmallScreenDevice());
     pOwner->addItem(pAudioDevice);
-    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    connect(pAudioDevice.get(), &DropDownmenu::sigItemChanged, pSignalOwner, [=](qint32 value)
     {
         auto item = QVariant::fromValue(deviceInfos[value]);
         Settings::setAudioOutput(item);

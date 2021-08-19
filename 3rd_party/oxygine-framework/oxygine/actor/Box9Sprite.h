@@ -52,7 +52,7 @@ namespace oxygine
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
         virtual bool isOn(const Vector2& localPosition, float localScale) override;
-
+        virtual RectF getDestRect() const override;
     protected:
         virtual void sizeChanged(const Vector2& size)  override;
         virtual void animFrameChanged(const AnimationFrame& f) override;

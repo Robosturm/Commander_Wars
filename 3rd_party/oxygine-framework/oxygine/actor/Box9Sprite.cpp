@@ -331,4 +331,9 @@ namespace oxygine
             }
         }
     }
+
+    RectF Box9Sprite::getDestRect() const
+    {
+        return Actor::getDestRect();
+    }
 }

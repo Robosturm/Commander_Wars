@@ -1427,7 +1427,7 @@ void GameMenue::showChangeSound()
     spPanel pPanel = spPanel::create(true, size, size);
     qint32 y = 10;
     qint32 sliderOffset = 400;
-    OptionMenue::showSoundOptions(pPanel, sliderOffset, y);
+    OptionMenue::showSoundOptions(pPanel, sliderOffset, y, this);
     pPanel->setContentHeigth(y + 40);
     pPanel->setPosition(10, 10);
     pDialogOptions->addItem(pPanel);

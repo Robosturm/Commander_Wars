@@ -1255,7 +1255,16 @@ void Settings::loadSettings()
     }
 #ifdef EnableMultimedia
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
-    m_audioOutput = settings.value("AudioDevice", QVariant::fromValue(defaultDeviceInfo));
+    QString description = settings.value("AudioDevice", "").toString();
+    const auto audioDevices = QMediaDevices::audioOutputs();
+    for (const auto & device : audioDevices)
+    {
+        if (device.description() == description)
+        {
+            m_audioOutput = QVariant::fromValue(device);
+            break;
+        }
+    }
     if (m_audioOutput.value<QAudioDevice>().isNull())
     {
         m_audioOutput = QVariant::fromValue(defaultDeviceInfo);
@@ -1531,7 +1540,8 @@ void Settings::saveSettings()
         settings.setValue("TotalVolume",               m_TotalVolume);
         settings.setValue("MusicVolume",               m_MusicVolume);
         settings.setValue("SoundVolume",               m_SoundVolume);
-        settings.setValue("AudioDevice",               m_audioOutput);
+        auto audioDevice = m_audioOutput.value<QAudioDevice>();
+        settings.setValue("AudioDevice",               audioDevice.description());
         settings.endGroup();
 
         settings.beginGroup("Game");
@@ -1540,7 +1550,7 @@ void Settings::saveSettings()
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(m_walkAnimationSpeed));
         settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(m_dialogAnimationSpeed));
-        settings.setValue("CaptureAnimationSpeed",           static_cast<qint32>(m_captureAnimationSpeed));
+        settings.setValue("CaptureAnimationSpeed",          static_cast<qint32>(m_captureAnimationSpeed));
         settings.setValue("AnimationSpeed",                 m_animationSpeed);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);

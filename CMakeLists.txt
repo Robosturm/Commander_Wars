@@ -45,7 +45,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        #-DEnableMultimedia
+        -DEnableMultimedia
         #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
@@ -80,9 +80,11 @@ add_definitions(
 ###################################################################################
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
-    set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
-    find_program(ADDR_2_LINE addr2line)
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        set(CMAKE_CXX_FLAGS "-Wa,-mbig-obj ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-Wa,-mbig-obj ${CMAKE_C_FLAGS}")
+    endif()
+    find_program(ADDR_2_LINE "")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(ADDR_2_LINE "")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
@@ -105,6 +107,8 @@ message("Qt-Dir: ${Qt6_DIR}")
 message("Addr2Line Path: ${ADDR_2_LINE}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
+message("C-Compiler ${CMAKEXX_COMPILER_ID}")
+message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("OS: ${CMAKE_SYSTEM_NAME}")
 message("CFlags: ${CMAKE_C_FLAGS}")
 message("CXX Flags: ${CMAKE_CXX_FLAGS}")
@@ -492,7 +496,29 @@ set(${PROJECT_NAME}_SRCS
     ui_reader/uifactory.cpp
     )
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+##############################################################################
+# OS Specific files #
+##############################################################################
+
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    set(${PROJECT_NAME}_OS_SRCS
+        coreengine/windows/crashreporter_os.cpp
+    )
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    set(${PROJECT_NAME}_OS_SRCS
+        coreengine/linux/crashreporter_os.cpp
+    )
+else()  # this branch works at least for linux
+    set(${PROJECT_NAME}_OS_SRCS
+        coreengine/android/crashreporter_os.cpp
+    )
+endif()
+
+##############################################################################
+# Resources files #
+##############################################################################
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
         "general.qrc"
     )
@@ -527,6 +553,7 @@ qt_add_executable(${PROJECT_NAME} MANUAL_FINALIZATION
     ${${PROJECT_NAME}_OXYGINE_SRCS}
     ${${PROJECT_NAME}_SRCS}
     ${${PROJECT_NAME}_Resource_SRCS}
+    ${${PROJECT_NAME}_OS_SRCS}
     ICON.rc
     )
 
@@ -640,41 +667,25 @@ message(${QT_BIN_DIR})
 
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/Qt6Qml.dll
-        ${QT_BIN_DIR}/Qt6Core.dll
-        ${QT_BIN_DIR}/Qt6Network.dll
-        ${QT_BIN_DIR}/Qt6Multimedia.dll
-        ${QT_BIN_DIR}/Qt6Gui.dll
-        ${QT_BIN_DIR}/Qt6Widgets.dll
-        ${QT_BIN_DIR}/Qt6Xml.dll
-        ${QT_BIN_DIR}/Qt6OpenGL.dll
+    set(LibNameStart "Qt6")
+    set(LibNameEnd ".dll")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        set(LibNameEnd "d.dll")
+    endif()
+    set(${PROJECT_NAME}_INSTALL_OS_LIBS
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/libgcc_s_seh-1.dll
-        ${ADDR_2_LINE}
-        )
-
+    )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-        ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
-        )
-#    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-#        ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
-#        )
+        ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
+    )
+
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
-
-    set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/../lib/libQt6Qml.so
-        ${QT_BIN_DIR}/../lib/libQt6Core.so
-        ${QT_BIN_DIR}/../lib/libQt6Network.so
-        ${QT_BIN_DIR}/../lib/libQt6Multimedia.so
-        ${QT_BIN_DIR}/../lib/libQt6Gui.so
-        ${QT_BIN_DIR}/../lib/libQt6Widgets.so
-        ${QT_BIN_DIR}/../lib/libQt6Xml.so
-        ${QT_BIN_DIR}/../lib/libQt6OpenGL.so
-        ${ADDR_2_LINE}
-        )
-
+    set(LibNameStart "../lib/libQt6")
+    set(LibNameEnd ".so")
+    set(${PROJECT_NAME}_INSTALL_OS_LIBS
+    )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
         ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
@@ -687,8 +698,21 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
-        )
+    )
 endif()
+message("using qt lib naming convention: ${LibNameStart}Libname${LibNameEnd}")
+
+set(${PROJECT_NAME}_INSTALL_QT_LIBS
+    ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+    ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+    ${ADDR_2_LINE}
+)
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
 
@@ -713,5 +737,6 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     endif()
     # install libs
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${CMAKE_BUILD_TYPE}/platforms" OPTIONAL)
 endif()

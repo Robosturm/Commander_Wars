@@ -7,6 +7,8 @@
 #include <QKeyEvent>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 class QString;
