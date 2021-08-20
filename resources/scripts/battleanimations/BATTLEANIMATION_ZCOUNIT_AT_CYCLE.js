@@ -32,7 +32,7 @@ var Constructor = function()
         sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("baazoka_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("baazoka_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -47,8 +47,8 @@ var Constructor = function()
                                 1, 1, 0, 0, true);
         for (i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("rocket_flying.wav", 1, 0);
+            sprite.loadSound("impact_explosion.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

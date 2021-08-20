@@ -46,7 +46,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_T_HELI.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800, false);
-        sprite.loadSound("airunit_dying.wav", 1, "resources/sounds/");
+        sprite.loadSound("airunit_dying.wav", 1);
     };
 
     this.getDyingDurationMS = function()

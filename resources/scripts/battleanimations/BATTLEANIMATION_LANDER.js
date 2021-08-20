@@ -53,7 +53,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_LANDER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
-        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
+        sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 

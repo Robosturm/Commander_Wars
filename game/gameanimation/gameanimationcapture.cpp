@@ -184,7 +184,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, m_jumpSprites - 1), oxygine::timeMS(m_jumpSprites * m_frameTime), m_jumpingCount);
             for (qint32 i = 0; i < m_jumpingCount; ++i)
             {
-                addSound("capture_jump.wav", 1, "resources/sounds/", m_jumpSprites * m_frameTime * i);
+                addSound("capture_jump.wav", 1, m_jumpSprites * m_frameTime * i);
             }
             queueAnimating->add(tween);
             // cool aye aye sir

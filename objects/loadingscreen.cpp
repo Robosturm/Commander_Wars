@@ -56,12 +56,12 @@ void LoadingScreen::show()
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     m_workText = oxygine::spTextField::create();
     m_workText->setStyle(style);
-    m_workText->setWidth(Settings::getWidth() / 3);
-    m_workText->setX(Settings::getWidth() / 3);
+    m_workText->setWidth(Settings::getWidth() - 20);
+    m_workText->setX(20);
     m_workText->setY(Settings::getHeight() / 2);
     addChild(m_workText);
     m_loadingProgress = oxygine::spTextField::create();

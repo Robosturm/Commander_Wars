@@ -140,67 +140,56 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             BackgroundManager::getInstance();
             spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
-            pLoadingScreen->setProgress(tr("Start Loading..."), step  * stepProgress);
-            if (!m_noUi)
-            {
-                update();
-            }
-            break;
-        }
-        case StartupPhase::Sound:
-        {
-            m_Audiothread->playRandom();
-            pLoadingScreen->setProgress(tr("Loading Sounds..."), step  * stepProgress);
-            if (!m_noUi)
-            {
-                update();
-                emit m_Audiothread->sigCreateSoundCache();
-            }
-            break;
-        }
-        case StartupPhase::Building:
-        {
             pLoadingScreen->setProgress(tr("Loading Building Textures..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
+            break;
+        }
+        case StartupPhase::Building:
+        {
+            if (!m_noUi)
+            {
+                m_Audiothread->playRandom();
+                update();
+            }
             BuildingSpriteManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::COSprites:
         {
-            pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             COSpriteManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameAnimations:
         {
-            pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             GameAnimationManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             GameManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::GameRuleManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
@@ -208,98 +197,108 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             GameRuleManager::getInstance();
             WeaponManager::getInstance();
             MovementTableManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::ObjectManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             ObjectManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::TerrainManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             TerrainManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::UnitSpriteManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             UnitSpriteManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::BattleAnimationManager:
         {
-            pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
 
             BattleAnimationManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::COPerkManager:
         {
-            pLoadingScreen->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             COPerkManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::WikiDatabase:
         {
-            pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             WikiDatabase::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Userdata:
         {
-            pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             Userdata::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::Achievementmanager:
         {
-            pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             AchievementManager::getInstance();
+            pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
             break;
         }
         case StartupPhase::ShopLoader:
         {
-            pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
             if (!m_noUi)
             {
                 update();
             }
             ShopLoader::getInstance();
+            pLoadingScreen->setProgress(tr("Loading sounds ..."), step  * stepProgress);
+            break;
+        }
+        case StartupPhase::Sound:
+        {
+            if (!m_noUi)
+            {
+                update();
+                emit m_Audiothread->sigCreateSoundCache();
+            }
+            pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             break;
         }
         case StartupPhase::LoadingScripts:
         {
-            pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
             applyFilter(Settings::getSpriteFilter());
             // start after ressource loading
             m_Networkthread.setObjectName("NetworkThread");

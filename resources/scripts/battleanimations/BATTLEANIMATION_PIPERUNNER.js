@@ -22,7 +22,7 @@ var Constructor = function()
             sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(82, 82),
                                           Qt.point(128, 64), 400, false,
                                           1, 1, -1, i * 150);
-            sprite.loadSound("pipecannon_weapon_fire.wav", 1, "resources/sounds/", i * 150);
+            sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 150);
         }
     };
 
@@ -51,8 +51,8 @@ var Constructor = function()
         }
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("rocket_flying.wav", 1, 0);
+            sprite.loadSound("impact_explosion.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

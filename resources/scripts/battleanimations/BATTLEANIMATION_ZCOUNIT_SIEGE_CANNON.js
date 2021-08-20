@@ -30,7 +30,7 @@ var Constructor = function()
                                           Qt.point(offset.x, offset.y),
                                           Qt.point(0, 0), 0, true,
                                           1, 1.0, 5, 500 * i, false);
-            sprite.loadSound("cannon_weapon_fire.wav", 1, "resources/sounds/", i * 500);
+            sprite.loadSound("cannon_weapon_fire.wav", 1, i * 500);
         }
     };
 
@@ -49,7 +49,7 @@ var Constructor = function()
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)
         {
-            sprite.loadSound("artillery_explode.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("artillery_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     }
 };

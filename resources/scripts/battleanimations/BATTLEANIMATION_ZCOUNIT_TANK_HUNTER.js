@@ -19,7 +19,7 @@ var Constructor = function()
                                 1, 1);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("heavy_tank_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("heavy_tank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -56,7 +56,7 @@ var Constructor = function()
                               1, 1.0, 0, 120);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 120 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("tank_shot.wav", 1, 120 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -68,9 +68,9 @@ var Constructor = function()
                               1, 1, 0, 0);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };

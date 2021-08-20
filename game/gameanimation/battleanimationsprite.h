@@ -335,7 +335,7 @@ public slots:
      * @param folder resource folder of the sound
      * @param delay before this sound is played after this function was called
      */
-    void loadSound(QString file, qint32 loops, QString folder = "resources/sounds/", qint32 delay = 0, float volume = 1.0f);
+    void loadSound(QString file, qint32 loops, qint32 delay = 0, float volume = 1.0f);
     /**
      * @brief stopSound
      */
@@ -379,7 +379,7 @@ private:
     qint32 m_hpRounded{0};
     qint32 m_maxUnitCount{-1};
 
-    QVector<std::tuple<QString, QString>> m_Sounds;
+    QVector<QString> m_Sounds;
     QVector<QTimer*> m_Timers;
 
     QVector<QVector<oxygine::spSprite>> m_currentFrame;

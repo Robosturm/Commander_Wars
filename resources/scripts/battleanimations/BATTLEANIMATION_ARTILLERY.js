@@ -68,8 +68,8 @@ var Constructor = function()
                           1, 1.0, 0, 500);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("artillery_weapon_load.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("cannon_weapon_fire.wav", 1, "resources/sounds/", 500 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("artillery_weapon_load.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("cannon_weapon_fire.wav", 1, 500 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -88,7 +88,7 @@ var Constructor = function()
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)
         {
-            sprite.loadSound("artillery_explode.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("artillery_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     }
 };

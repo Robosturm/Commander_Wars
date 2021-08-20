@@ -54,7 +54,7 @@ var Constructor = function()
                                       1, 1);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("infantry_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -148,7 +148,7 @@ var Constructor = function()
             }
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("baazoka_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("baazoka_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -195,8 +195,8 @@ var Constructor = function()
                                     1, 1, 0, 0, true);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("rocket_flying.wav", 1, 0);
+                sprite.loadSound("impact_explosion.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -205,7 +205,7 @@ var Constructor = function()
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };

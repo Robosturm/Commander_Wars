@@ -46,7 +46,7 @@ var BATTLEANIMATION =
         var endCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingEndHp()));
         for (var i = 0; i < startCount - endCount; i++)
         {
-            //sprite.loadSound("tank_explode.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            //sprite.loadSound("tank_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     },
 
@@ -89,7 +89,7 @@ var BATTLEANIMATION =
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -98,7 +98,7 @@ var BATTLEANIMATION =
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     },

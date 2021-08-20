@@ -188,7 +188,7 @@ qint32 BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
                                                               oxygine::timeMS(count * frameDelay / static_cast<qint32>(Settings::getBattleAnimationSpeed())));
                 sprite->addTween(tween);
             }
-            loadSound("dying_fadeout.wav", 1, "resources/sounds/", count * frameDelay);
+            loadSound("dying_fadeout.wav", 1, count * frameDelay);
             ++count;
         }
     }
@@ -673,14 +673,14 @@ void BattleAnimationSprite::setHpRounded(const qint32 &value)
     m_hpRounded = value;
 }
 
-void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder, qint32 delay, float volume)
+void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, float volume)
 {
     if (m_playSound)
     {
         Mainapp* pApp = Mainapp::getInstance();
         AudioThread* pAudio = pApp->getAudioThread();
-        m_Sounds.append(std::tuple<QString, QString>(file, folder));
-        pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()), volume);
+        m_Sounds.append(file);
+        pAudio->playSound(file, loops, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()), volume);
     }
 }
 
@@ -690,7 +690,7 @@ void BattleAnimationSprite::stopSound()
     AudioThread* pAudio = pApp->getAudioThread();
     for (qint32 i = 0; i < m_Sounds.size(); i++)
     {
-        pAudio->stopSound(std::get<0>(m_Sounds[i]), std::get<1>(m_Sounds[i]));
+        pAudio->stopSound(m_Sounds[i]);
     }
 }
 

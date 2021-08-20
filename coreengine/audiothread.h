@@ -96,15 +96,13 @@ public slots:
      * @brief playSound
      * @param file
      * @param loops
-     * @param folder
      */
-    void playSound(QString file, qint32 loops = 1, QString = "", qint32 delay = 0, float volume = 1.0f);
+    void playSound(QString file, qint32 loops = 1, qint32 delay = 0, float volume = 1.0f);
     /**
      * @brief stopSound
      * @param file
-     * @param folder
      */
-    void stopSound(QString file, QString);
+    void stopSound(QString file);
     /**
      * @brief stopAllSound
      */

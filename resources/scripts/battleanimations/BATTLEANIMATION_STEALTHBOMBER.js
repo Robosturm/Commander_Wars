@@ -44,7 +44,7 @@ var Constructor = function()
                                               Qt.point(128, -64), 400, false,
                                               1, 1, -1, i * 150);
             }
-            sprite.loadSound("stealthfighter_fire.wav", 1, "resources/sounds/", i * 150);
+            sprite.loadSound("stealthfighter_fire.wav", 1, i * 150);
         }
     };
 
@@ -73,8 +73,8 @@ var Constructor = function()
         }
         for (var i = 0; i < count; i++)
         {
-			sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("rockets_explode.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+			sprite.loadSound("rocket_flying.wav", 1, 0);
+            sprite.loadSound("rockets_explode.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
 		}
     };
 
@@ -87,7 +87,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800, false);
-        sprite.loadSound("airunit_dying.wav", 1, "resources/sounds/");
+        sprite.loadSound("airunit_dying.wav", 1);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

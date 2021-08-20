@@ -88,7 +88,7 @@ var Constructor = function()
                                                        offset.y + offset2.y),
                                               Qt.point(80, 40), 400, false,
                                               1, 1.0, 5, 200 * i, false);
-                sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 200 * i);
+                sprite.loadSound("rocket_launch.wav", 1, 200 * i);
             }
         }
         else
@@ -118,9 +118,9 @@ var Constructor = function()
             }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 200);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 400);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
         }
     };
 
@@ -149,8 +149,8 @@ var Constructor = function()
                                     1, 1, 0, 0, true);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 300 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("rocket_flying.wav", 1, 0);
+                sprite.loadSound("impact_explosion.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -159,7 +159,7 @@ var Constructor = function()
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };
@@ -191,7 +191,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
-        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
+        sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 

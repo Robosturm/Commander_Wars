@@ -139,7 +139,7 @@ public slots:
      * @param soundFile sound file
      * @param loops amount of loops to play this sound -1 till the animation is over;
      */
-    void setSound(QString soundFile, qint32 loops = 1, QString folder = "", qint32 delayMs = 0, float volume = 1.0f);
+    void setSound(QString soundFile, qint32 loops = 1, qint32 delayMs = 0, float volume = 1.0f);
     /**
      * @brief addSound
      * @param soundFile
@@ -147,7 +147,7 @@ public slots:
      * @param folder
      * @param volume
      */
-    void addSound(QString soundFile, qint32 loops = 1, QString folder = "", qint32 delayMs = 0, float volume = 1.0f);
+    void addSound(QString soundFile, qint32 loops = 1, qint32 delayMs = 0, float volume = 1.0f);
     /**
      * @brief addTweenScale adds a tween to change the scale of this animation
      * @param endScale final scaling of the animation

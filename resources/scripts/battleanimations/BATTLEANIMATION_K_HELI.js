@@ -63,7 +63,7 @@ var Constructor = function()
                                     1, 1, -1);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("missile_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("missile_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -96,9 +96,9 @@ var Constructor = function()
             sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };
@@ -129,8 +129,8 @@ var Constructor = function()
                                     1, 1, 0, 0, true);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-                sprite.loadSound("rockets_explode.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("rocket_flying.wav", 1, 0);
+                sprite.loadSound("rockets_explode.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -139,7 +139,7 @@ var Constructor = function()
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };

@@ -50,7 +50,7 @@ var Constructor = function()
                                                        offset.y + offset2.y),
                                               Qt.point(0, 0), 0, true,
                                               1, 1.0, 5, 200 * i, false);
-                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 200 * i);
+                sprite.loadSound("tank_shot.wav", 1, 200 * i);
             }
         }
         else
@@ -59,9 +59,9 @@ var Constructor = function()
             offset = Qt.point(80, 104);
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 200);
-            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 400);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
         }
     };
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
@@ -75,7 +75,7 @@ var Constructor = function()
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -84,7 +84,7 @@ var Constructor = function()
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
-                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };
@@ -109,7 +109,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
-        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
+        sprite.loadSound("ship_dying_move.wav", -2);
     };
 };
 

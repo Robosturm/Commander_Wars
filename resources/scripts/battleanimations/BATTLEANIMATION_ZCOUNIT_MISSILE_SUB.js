@@ -27,7 +27,7 @@ var Constructor = function()
             sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(50, 75),
                                           Qt.point(128, 64), 400, false,
                                           1, 1, -1, i * 150);
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * 150);
+            sprite.loadSound("rocket_launch.wav", 1, i * 150);
         }
     };
 
@@ -47,8 +47,8 @@ var Constructor = function()
                                 1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("rockets_explode.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("rocket_flying.wav", 1, 0);
+            sprite.loadSound("rockets_explode.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -61,7 +61,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
-        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
+        sprite.loadSound("ship_dying_move.wav", -2);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

@@ -31,7 +31,7 @@ var Constructor = function()
                                 Qt.point(65, 0), 600, false, 1, 1);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("recon_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -122,9 +122,9 @@ var Constructor = function()
         }
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -146,7 +146,7 @@ var Constructor = function()
                           1, 1.0, 0, 0);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)

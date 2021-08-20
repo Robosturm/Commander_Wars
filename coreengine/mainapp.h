@@ -27,7 +27,6 @@ public:
     {
         Start,
         General = Start,
-        Sound,
         Building,
         COSprites,
         GameAnimations,
@@ -42,6 +41,7 @@ public:
         Userdata,
         Achievementmanager,
         ShopLoader,
+        Sound,
         LoadingScripts,
         Finalizing,
     };

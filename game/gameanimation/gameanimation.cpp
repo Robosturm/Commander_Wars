@@ -51,7 +51,7 @@ void GameAnimation::start()
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, "", data.delayMs / Settings::getAnimationSpeed(), data.volume);
+            pAudioThread->playSound(data.soundFile, data.loops, data.delayMs / Settings::getAnimationSpeed(), data.volume);
         }
     }
 }
@@ -355,7 +355,7 @@ bool GameAnimation::onFinished(bool skipping)
             {
                 if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
                 {
-                    Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile, "");
+                    Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile);
                 }
             }
         }
@@ -384,11 +384,11 @@ bool GameAnimation::onFinished(bool skipping)
     return true;
 }
 
-void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder, qint32 delayMs, float volume)
+void GameAnimation::setSound(QString soundFile, qint32 loops, qint32 delayMs, float volume)
 {
     if (m_SoundData.size() == 0)
     {
-        addSound(soundFile, loops, folder, delayMs, volume);
+        addSound(soundFile, loops, delayMs, volume);
     }
     else
     {
@@ -401,7 +401,7 @@ void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder, qi
     }
 }
 
-void GameAnimation::addSound(QString soundFile, qint32 loops, QString folder, qint32 delayMs, float volume)
+void GameAnimation::addSound(QString soundFile, qint32 loops, qint32 delayMs, float volume)
 {
     SoundData data;
     data.soundFile = soundFile;
