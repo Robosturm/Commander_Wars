@@ -22,6 +22,7 @@ public:
     static float randFloatBase(float low, float high);
     static double randDoubleBase(double low, double high);
     static QFileInfoList getInfoList(QString folder, QStringList list = QStringList());
+    static QUrl getUrlForFile(QString file);
 public slots:
     static QString makePathRelative(QString file, bool full = true);
     /**

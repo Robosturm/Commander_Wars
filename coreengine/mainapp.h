@@ -27,6 +27,7 @@ public:
     {
         Start,
         General = Start,
+        Sound,
         Building,
         COSprites,
         GameAnimations,
@@ -104,6 +105,7 @@ public:
      */
     virtual void loadRessources() override;
     virtual bool isWorker() override;
+    virtual bool isWorkerRunning() override;
     /**
      * @brief getSlave
      * @return

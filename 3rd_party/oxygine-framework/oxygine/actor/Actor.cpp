@@ -694,7 +694,8 @@ namespace oxygine
     {
         if (!GameWindow::getWindow()->isWorker())
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread");
+            QString name = QThread::currentThread()->objectName();
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Actor::addChild trying to add actor from wrong thread. Thread: " + name + " worker running: " + QString::number(GameWindow::getWindow()->isWorkerRunning()));
         }
         else if (actor.get() == nullptr)
         {

@@ -25,7 +25,7 @@
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
 #else
-Console::eLogLevels Console::m_LogLevel = Console::eINFO;
+Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
 #endif
 
 bool Console::m_show = false;
@@ -399,10 +399,13 @@ void Console::extractResources()
 
 void Console::memoryUsage()
 {
+    Mainapp* pApp = Mainapp::getInstance();
     Console::print("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()), Console::eINFO);
     Console::print("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
     Console::print("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
-    Console::print("Material Cache=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
+    Console::print("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
+    Console::print("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), Console::eINFO);
+
 }
 
 void Console::createfunnymessage(qint32 message){

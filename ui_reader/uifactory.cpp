@@ -121,12 +121,12 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
                 }
                 else
                 {
-                    Console::print("Unable to load: " + uiFile + ".", Console::eERROR);
+                    Console::print("Unable to load: " + uiFile, Console::eERROR);
                 }
             }
             else
             {
-                Console::print("Unable to load: " + uiFile + ".", Console::eERROR);
+                Console::print("Unable to load: " + uiFile, Console::eERROR);
                 Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             }
         }

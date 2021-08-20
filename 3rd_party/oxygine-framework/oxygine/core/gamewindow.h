@@ -32,6 +32,11 @@ namespace oxygine
         void loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32  rows, float scaleFactor, bool addTransparentBorder);
         virtual bool isWorker() = 0;
         /**
+         * @brief isWorkerRunning
+         * @return
+         */
+        virtual bool isWorkerRunning() = 0;
+        /**
          * @brief isEvenScale
          * @param width1
          * @param width2

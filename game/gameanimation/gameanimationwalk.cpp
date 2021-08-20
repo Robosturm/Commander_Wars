@@ -42,7 +42,7 @@ void GameAnimationWalk::start()
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
         {
-            pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs / Settings::getWalkAnimationSpeed(), data.volume);
+            pAudioThread->playSound(data.soundFile, data.loops, "", data.delayMs / Settings::getWalkAnimationSpeed(), data.volume);
         }
     }
 }

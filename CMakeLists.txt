@@ -502,11 +502,11 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
-        coreengine/linux/crashreporter_os.cpp
+        coreengine/android/crashreporter_os.cpp
     )
 else()  # this branch works at least for linux
     set(${PROJECT_NAME}_OS_SRCS
-        coreengine/android/crashreporter_os.cpp
+        coreengine/linux/crashreporter_os.cpp
     )
 endif()
 

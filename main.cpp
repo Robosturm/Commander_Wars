@@ -171,7 +171,7 @@ int main(qint32 argc, char* argv[])
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
-
+    QThread::currentThread()->setObjectName("RenderThread");
     QApplication app(argc, argv);
     app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
@@ -207,7 +207,7 @@ int main(qint32 argc, char* argv[])
     Console::print("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
     // give os time to save the settings
-    QThread::currentThread()->msleep(100);
+    QThread::currentThread()->msleep(250);
     if (MainServer::exists())
     {
         Console::print("Shutting dwon game server", Console::eDEBUG);

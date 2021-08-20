@@ -30,26 +30,27 @@ class HeavyAi : public CoreAI
         TotalBuildingRatio      ,           // 4
         EnemyRatio              ,           // 5
         ProductionUsage         ,           // 6
+        DayProgression          ,           // 7
         LocalUnitData           ,           //
-        BasicAttackRange = LocalUnitData,   // 7
-        CaptureUnit             ,           // 8
-        CoUnitValue             ,           // 9
-        Movementpoints          ,           // 10
-        MapMovementpoints,                  // 11
-        FondsUsage              ,           // 12
-        FireRange               ,           // 13
-        Flying                  ,           // 14
-        LoadingPotential        ,           // 15
-        OwnInfluence,                       // 16
-        HighestEnemyInfluence,              // 17
-        DealingFundsDamage      ,           // 18
-        DealingHpDamage         ,           // 19
-        ReceivingFundsDamge     ,           // 20
-        ReceivingHpDamage       ,           // 21
-        CapturePotential        ,       	// 22
-        CanAttackImmuneUnitRatio,           // 23
-        UnitsToTransportRatio,              // 24
-        RequiredUnitsToTransportRatio,      // 25
+        BasicAttackRange = LocalUnitData,   // 8
+        CaptureUnit             ,           // 9
+        CoUnitValue             ,           // 10
+        Movementpoints          ,           // 11
+        MapMovementpoints,                  // 12
+        FondsUsage              ,           // 13
+        FireRange               ,           // 14
+        Flying                  ,           // 15
+        LoadingPotential        ,           // 16
+        OwnInfluence,                       // 17
+        HighestEnemyInfluence,              // 18
+        DealingFundsDamage      ,           // 19
+        DealingHpDamage         ,           // 20
+        ReceivingFundsDamge     ,           // 21
+        ReceivingHpDamage       ,           // 22
+        CapturePotential        ,       	// 23
+        CanAttackImmuneUnitRatio,           // 24
+        UnitsToTransportRatio,              // 25
+        RequiredUnitsToTransportRatio,      // 26
         MovementPotential,
         VisionPotential,
         MaxUnitValue,
@@ -541,6 +542,7 @@ private:
     double m_maxScore{10.0f};
     double m_maxTerrainDefense{15.0};
     double m_maxCapturePoints = 20;
+    double m_earlyGameDays{6.0f};
 
     // storable stuff
     QString m_aiName{"HEAVY_AI"};

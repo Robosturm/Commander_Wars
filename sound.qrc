@@ -135,5 +135,6 @@
         <file>resources/sounds/volcan_eruption.wav</file>
         <file>resources/sounds/volcan_hit.wav</file>
         <file>resources/sounds/vulcan_weapon_fire.wav</file>
+        <file>resources/sounds/res.xml</file>
     </qresource>
 </RCC>

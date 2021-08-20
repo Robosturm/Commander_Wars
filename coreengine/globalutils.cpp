@@ -453,3 +453,17 @@ QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
     }
     return infoList;
 }
+
+QUrl GlobalUtils::getUrlForFile(QString file)
+{
+    QUrl url;
+    if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
+    {
+        url = QUrl(oxygine::Resource::QRC_PREFIX + file);
+    }
+    else
+    {
+        url = QUrl::fromLocalFile(file);
+    }
+    return url;
+}

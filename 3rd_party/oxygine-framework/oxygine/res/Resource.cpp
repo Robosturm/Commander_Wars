@@ -4,8 +4,8 @@
 
 namespace oxygine
 {
+    const char* const Resource::QRC_PREFIX = "qrc";
     const char* const Resource::RCC_PREFIX_PATH = ":/";
-
     void Resource::load()
     {
         _load();

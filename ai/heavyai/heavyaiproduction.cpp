@@ -496,6 +496,14 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQm
             data[InfantryUnitRatio]     = static_cast<double>(infantryUnits) / count;
             data[TransportUnitRatio]    = static_cast<double>(transporterUnits) / count;
         }
+        if (pMap->getCurrentDay() >  m_earlyGameDays)
+        {
+            data[DayProgression] = 1.0 / static_cast<double>(pMap->getCurrentDay() - m_earlyGameDays);
+        }
+        else
+        {
+            data[DayProgression] = 1.0;
+        }
         double enemeyCount = 0;
         double playerCount = 0;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

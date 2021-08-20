@@ -69,14 +69,6 @@ Mainapp::Mainapp()
 
 Mainapp::~Mainapp()
 {
-    m_Audiothread->deleteLater();
-    m_Worker->deleteLater();
-    m_Workerthread.quit();
-    m_Workerthread.wait();
-    m_AudioWorker.quit();
-    m_AudioWorker.wait();
-    m_Networkthread.quit();
-    m_Networkthread.wait();
 }
 
 void Mainapp::shutdown()
@@ -104,7 +96,13 @@ void Mainapp::shutdown()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-            (QThread::currentThread() == m_pMainThread && (m_shuttingDown || !m_Worker->getStarted()));
+           (QThread::currentThread() == m_pMainThread &&
+           (m_shuttingDown || !m_Worker->getStarted()));
+}
+
+bool Mainapp::isWorkerRunning()
+{
+    return m_Worker->getStarted();
 }
 
 void Mainapp::loadRessources()
@@ -130,11 +128,13 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         {
             Mainapp::m_Audiothread = new AudioThread();
             m_AudioWorker.setObjectName("AudioThread");
-            m_AudioWorker.start(QThread::Priority::HighPriority);
-            emit m_Audiothread->sigInitAudio();
-            m_Audiothread->clearPlayList();
-            m_Audiothread->loadFolder("resources/music/hauptmenue");
-            m_Audiothread->playRandom();
+            if (!m_noUi)
+            {
+                m_AudioWorker.start(QThread::Priority::HighPriority);
+                emit m_Audiothread->sigInitAudio();
+                m_Audiothread->clearPlayList();
+                m_Audiothread->loadFolder("resources/music/hauptmenue");                
+            }
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
@@ -147,143 +147,154 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             }
             break;
         }
+        case StartupPhase::Sound:
+        {
+            m_Audiothread->playRandom();
+            pLoadingScreen->setProgress(tr("Loading Sounds..."), step  * stepProgress);
+            if (!m_noUi)
+            {
+                update();
+                emit m_Audiothread->sigCreateSoundCache();
+            }
+            break;
+        }
         case StartupPhase::Building:
         {
             pLoadingScreen->setProgress(tr("Loading Building Textures..."), step  * stepProgress);
-            BuildingSpriteManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            BuildingSpriteManager::getInstance();
             break;
         }
         case StartupPhase::COSprites:
         {
             pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
-            COSpriteManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            COSpriteManager::getInstance();
             break;
         }
         case StartupPhase::GameAnimations:
         {
             pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
-            GameAnimationManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            GameAnimationManager::getInstance();
             break;
         }
         case StartupPhase::GameManager:
         {
             pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
-            GameManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            GameManager::getInstance();
             break;
         }
         case StartupPhase::GameRuleManager:
         {
             pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
-            GameRuleManager::getInstance();
-            WeaponManager::getInstance();
-            MovementTableManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            GameRuleManager::getInstance();
+            WeaponManager::getInstance();
+            MovementTableManager::getInstance();
             break;
         }
         case StartupPhase::ObjectManager:
         {
             pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
-            ObjectManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            ObjectManager::getInstance();
             break;
         }
         case StartupPhase::TerrainManager:
         {
             pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
-            TerrainManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            TerrainManager::getInstance();
             break;
         }
         case StartupPhase::UnitSpriteManager:
         {
             pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
-            UnitSpriteManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            UnitSpriteManager::getInstance();
             break;
         }
         case StartupPhase::BattleAnimationManager:
         {
             pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
+
             BattleAnimationManager::getInstance();
-            if (!m_noUi)
-            {
-                update();
-            }
             break;
         }
         case StartupPhase::COPerkManager:
         {
             pLoadingScreen->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
+            if (!m_noUi)
+            {
+                update();
+            }
             COPerkManager::getInstance();
-            update();
             break;
         }
         case StartupPhase::WikiDatabase:
         {
             pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
-            WikiDatabase::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            WikiDatabase::getInstance();
             break;
         }
         case StartupPhase::Userdata:
         {
             pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
-            Userdata::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            Userdata::getInstance();
             break;
         }
         case StartupPhase::Achievementmanager:
         {
             pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
-            AchievementManager::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            AchievementManager::getInstance();
             break;
         }
         case StartupPhase::ShopLoader:
         {
             pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
-            ShopLoader::getInstance();
             if (!m_noUi)
             {
                 update();
             }
+            ShopLoader::getInstance();
             break;
         }
         case StartupPhase::LoadingScripts:
@@ -299,15 +310,12 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (!m_noUi)
             {
                 update();
+                m_Timer.start(m_timerCycle, this);
             }
             break;
         }
         case StartupPhase::Finalizing:
         {
-            if (!m_noUi)
-            {
-                m_Timer.start(m_timerCycle, this);
-            }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)
             {
@@ -322,7 +330,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             {
                 emit m_Worker->sigStartSlaveGame();
             }
-            update();
             break;
         }
     }
@@ -717,6 +724,12 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
     QApplication::processEvents();
+    m_Worker->deleteLater();
     m_Workerthread.quit();
     m_Workerthread.wait();
+    m_Audiothread->deleteLater();
+    m_AudioWorker.quit();
+    m_AudioWorker.wait();
+    m_Networkthread.quit();
+    m_Networkthread.wait();
 }

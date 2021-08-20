@@ -80,7 +80,6 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
     m_workText->setHtmlText(workText);
     m_loadingProgress->setHtmlText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
-
 }
 
 void LoadingScreen::setWorktext(QString workText)
