@@ -15,7 +15,7 @@
     <sound file="capture_ally.wav"              cachesize = "2"/>
     <sound file="capture_down.wav"              cachesize = "2"/>
     <sound file="capture_enemy.wav"             cachesize = "2"/>
-    <sound file="capture_jump.wav"              cachesize = "5"/>
+    <sound file="capture_jump.wav"              cachesize = "8"/>
     <sound file="checkbox.wav"                  cachesize = "2"/>
     <sound file="crystal_explode.wav"           cachesize = "2"/>
     <sound file="crystal_explode_2.wav"         cachesize = "2"/>

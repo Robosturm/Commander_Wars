@@ -42,7 +42,7 @@ QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
-AudioThread* Mainapp::m_Audiothread = new AudioThread();
+AudioThread* Mainapp::m_Audiothread = nullptr;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
 const char* const Mainapp::GAME_CONTEXT = "GAME";
@@ -126,6 +126,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
+            m_Audiothread = new AudioThread();
             if (!m_noUi)
             {
                 m_AudioWorker.start(QThread::Priority::HighPriority);
@@ -721,13 +722,21 @@ void Mainapp::createBaseDirs()
 void Mainapp::onQuit()
 {
     QApplication::processEvents();
-    m_Worker->deleteLater();
-    m_Workerthread.quit();
-    m_Workerthread.wait();
-
-    m_Audiothread->deleteLater();
-    m_AudioWorker.quit();
-    m_AudioWorker.wait();
-    m_Networkthread.quit();
-    m_Networkthread.wait();
+    if (m_Workerthread.isRunning())
+    {
+        m_Worker->deleteLater();
+        m_Workerthread.quit();
+        m_Workerthread.wait();
+    }
+    if (m_AudioWorker.isRunning())
+    {
+        m_Audiothread->deleteLater();
+        m_AudioWorker.quit();
+        m_AudioWorker.wait();
+    }
+    if (m_Networkthread.isRunning())
+    {
+        m_Networkthread.quit();
+        m_Networkthread.wait();
+    }
 }
