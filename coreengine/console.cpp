@@ -25,7 +25,7 @@
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
 #else
-Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
+Console::eLogLevels Console::m_LogLevel = Console::eINFO;
 #endif
 
 bool Console::m_show = false;

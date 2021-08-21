@@ -8,6 +8,7 @@
 #include <QDirIterator>
 #include <QList>
 #include <QAudioDevice>
+#include <QApplication>
 
 AudioThread::AudioThread()
     : m_audioOutput(this),
@@ -37,7 +38,7 @@ AudioThread::~AudioThread()
     {
         player->m_player.stop();
         player->m_playerFile.close();
-        qtWorkaround();
+        QApplication::processEvents();
     }
     for (auto & cache : m_soundCaches)
     {
@@ -48,8 +49,8 @@ AudioThread::~AudioThread()
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
                 cache->sound[i].reset();
-                cache->timer[i].reset();
-                qtWorkaround();
+                cache->timer[i].reset();                
+                QApplication::processEvents();
             }
         }
     }
@@ -197,16 +198,14 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         cache->timer[i]->setObjectName("SoundEffectTimer");
         connect(cache->timer[i].get(), &QTimer::timeout, cache->sound[i].get(), &QSoundEffect::play);
         cache->timer[i]->setSingleShot(true);
-        qtWorkaround();
-        qtWorkaround();
-        qtWorkaround();
+        // qt workaround wait for each sound to be loaded before going to the next one
+        // to prevent a crash in the process loading the sounds
+        while (!cache->sound[i]->isLoaded())
+        {
+            QApplication::processEvents();
+        }
     }
     m_soundCaches.insert(file, cache);
-}
-
-void AudioThread::qtWorkaround()
-{
-    QThread::currentThread()->msleep(10);
 }
 
 qint32 AudioThread::getSoundsBuffered()
@@ -323,6 +322,7 @@ void AudioThread::SlotPlayMusic(qint32 file)
         for (auto & player : m_player)
         {
             player->m_player.stop();
+            player->m_playListPostiton = -1;
         }
         m_player[m_currentPlayer]->m_playListPostiton = file;
         // m_player[m_currentPlayer]->m_playerFile.close();
@@ -393,12 +393,15 @@ void AudioThread::bufferOtherPlayer()
             bufferPlayer = 1;
         }
         m_player[bufferPlayer]->m_player.stop();
-        m_player[bufferPlayer]->m_playListPostiton = newMedia;
-        // m_player[bufferPlayer]->m_playerFile.close();
-        // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
-        // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
-        // m_player[bufferPlayer]->m_player.setSourceDevice(&m_player[bufferPlayer]->m_playerFile, m_PlayListdata[newMedia].getUrl());
-        m_player[bufferPlayer]->m_player.setSource(m_PlayListdata[newMedia].getUrl());
+        if (m_player[bufferPlayer]->m_playListPostiton != newMedia)
+        {
+            m_player[bufferPlayer]->m_playListPostiton = newMedia;
+            // m_player[bufferPlayer]->m_playerFile.close();
+            // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
+            // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
+            // m_player[bufferPlayer]->m_player.setSourceDevice(&m_player[bufferPlayer]->m_playerFile, m_PlayListdata[newMedia].getUrl());
+            m_player[bufferPlayer]->m_player.setSource(m_PlayListdata[newMedia].getUrl());
+        }
         if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_player[m_currentPlayer]->m_playListPostiton)
         {
             m_player[bufferPlayer]->m_playerStartPosition = m_PlayListdata[newMedia].m_startpointMs;
