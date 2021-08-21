@@ -35,6 +35,8 @@ public slots:
     void slotButtonNext();
     void showSaveCampaign();
     void saveCampaign(QString file);
+protected slots:
+    virtual void onEnter() override;
 private:
     void autosave();
 private:

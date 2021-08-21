@@ -762,12 +762,18 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
         QMutexLocker lock(&m_Locked);
-        for (auto & tween : m_tweens)
+        qint32 i = 0;
+        while (i < m_tweens.size())
         {
+            auto & tween = m_tweens[i];
             tween->update(*this, us);
             if (tween->isDone())
             {
-                m_tweens.removeOne(tween);
+                m_tweens.removeAt(i);
+            }
+            else
+            {
+                ++i;
             }
         }
         doUpdate(us);

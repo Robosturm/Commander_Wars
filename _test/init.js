@@ -3,7 +3,7 @@ var Init =
     step = 0,
     playTest = 0,
     steps = ["creditsTest",
-             "replayTest",
+             //"replayTest",
              "achievementTest",
              "optionTest",
              "wikiTest",

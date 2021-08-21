@@ -106,7 +106,6 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
-    connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -128,7 +127,6 @@ GameMenue::GameMenue(QString map, bool saveGame)
     }
     Mainapp* pApp = Mainapp::getInstance();
     pApp->continueRendering();
-    connect(this, &GameMenue::sigOnEnter, this, &GameMenue::onEnter, Qt::QueuedConnection);
 }
 
 GameMenue::GameMenue()
@@ -1336,7 +1334,6 @@ void GameMenue::victory(qint32 team)
             Console::print("Leaving Game Menue", Console::eDEBUG);
             auto window = spVictoryMenue::create(m_pNetworkInterface);
             oxygine::Stage::getStage()->addChild(window);
-            emit window->sigOnEnter();
             deleteMenu();
         }
     }
@@ -1798,7 +1795,6 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
-                    emit pMenue->sigOnEnter();
                 }
             }
             else if (cur == Settings::getKey_quickload2())
@@ -1812,7 +1808,6 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
-                    emit pMenue->sigOnEnter();
                 }
             }
             else

@@ -108,7 +108,6 @@ Achievementmenu::Achievementmenu()
 
     searchChanged("");
     pApp->continueRendering();
-    connect(this, &Achievementmenu::sigOnEnter, this, &Achievementmenu::onEnter, Qt::QueuedConnection);
 }
 
 void Achievementmenu::onEnter()
@@ -130,7 +129,6 @@ void Achievementmenu::exitMenue()
     Console::print("Leaving Achievement Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
 

@@ -170,7 +170,6 @@ void WorkerThread::showMainwindow()
     pLoadingScreen->hide();
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
 }
 
 bool WorkerThread::getStarted() const

@@ -47,7 +47,6 @@ ReplayMenu::ReplayMenu(QString filename)
         m_HumanInput->init();
         m_gameStarted = true;
         Console::print("emitting sigActionPerformed()", Console::eDEBUG);
-        connect(this, &ReplayMenu::sigOnEnter, this, &ReplayMenu::onEnter, Qt::QueuedConnection);
     }
 }
 
@@ -102,7 +101,6 @@ void ReplayMenu::exitReplay()
     Console::print("Leaving Replay Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     GameMenue::deleteMenu();
 }
 

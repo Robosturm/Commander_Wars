@@ -39,10 +39,8 @@ signals:
     void sigStartFastForward();
     void sigStopFastForward();
     void sigShowConfig();
-    void sigOnEnter();
     void sigOneStep();
 public slots:
-    void onEnter();
     void showRecordInvalid();
     void exitReplay();
     void nextReplayAction();
@@ -74,6 +72,8 @@ public slots:
      * @brief oneStep
      */
     void oneStep();
+protected slots:
+    virtual void onEnter() override;
 protected:
     /**
      * @brief loadUIButtons

@@ -49,7 +49,7 @@ AudioThread::~AudioThread()
                 cache->timer[i]->stop();
                 cache->sound[i]->stop();
                 cache->sound[i].reset();
-                cache->timer[i].reset();                
+                cache->timer[i].reset();
                 QApplication::processEvents();
             }
         }
@@ -311,6 +311,7 @@ void AudioThread::SlotClearPlayList()
     m_player[1]->m_playListPostiton = -1;
     m_PlayListdata.clear();
     m_currentPlayer = -1;
+    QApplication::processEvents();
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)
@@ -375,6 +376,7 @@ void AudioThread::initialAudioBuffering()
             m_player[0]->m_player.setSource(m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
             m_player[0]->m_playerStartPosition = 0;
             Console::print("Buffering music for player 0: " + m_PlayListdata[m_player[0]->m_playListPostiton].m_file + " at position " + QString::number(m_player[0]->m_playerStartPosition), Console::eDEBUG);
+            QApplication::processEvents();
         }
     }
 }
@@ -412,6 +414,7 @@ void AudioThread::bufferOtherPlayer()
         }
         Console::print("Buffering music for player " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
         m_player[bufferPlayer]->m_player.play();
+        QApplication::processEvents();
     }
 }
 

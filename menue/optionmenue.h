@@ -29,7 +29,6 @@ signals:
     void sigChangeScreenSize(qint32 width, qint32 heigth);
     void sigReloadSettings();
     void sigUpdateModCheckboxes();
-    void sigOnEnter();
     void sigUpdateModFilter(QString tag);
     void sigLoadModInfo(oxygine::Box9Sprite* pPtrBox,
                         QString name, QString description, QString version,
@@ -44,8 +43,9 @@ public slots:
     void selectMods(qint32 item);
     void reloadSettings();
     void updateModCheckboxes();
-    void onEnter();
     void updateModFilter(QString tag);
+protected slots:
+    virtual void onEnter() override;
 private slots:
     void loadModInfo(oxygine::Box9Sprite* pPtrBox,
                      QString name, QString description, QString version,

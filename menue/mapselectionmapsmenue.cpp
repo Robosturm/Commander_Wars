@@ -157,8 +157,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
-    connect(this, &MapSelectionMapsMenue::sigOnEnter, this, &MapSelectionMapsMenue::onEnter, Qt::QueuedConnection);
-
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
@@ -177,7 +175,6 @@ void MapSelectionMapsMenue::slotButtonBack()
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             auto window = spMainwindow::create();
             oxygine::Stage::getStage()->addChild(window);
-            emit window->sigOnEnter();
             oxygine::Actor::detach();
             break;
         }
@@ -361,7 +358,6 @@ void MapSelectionMapsMenue::startGame()
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     auto window = spGameMenue::create(false, spNetworkInterface());
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();
 }
 

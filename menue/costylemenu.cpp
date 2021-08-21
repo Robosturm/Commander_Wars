@@ -72,7 +72,6 @@ COStyleMenu::COStyleMenu()
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
     pApp->continueRendering();
-    connect(this, &COStyleMenu::sigOnEnter, this, &COStyleMenu::onEnter, Qt::QueuedConnection);
 }
 
 void COStyleMenu::onEnter()
@@ -94,7 +93,6 @@ void COStyleMenu::exitMenue()
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
 
@@ -103,7 +101,6 @@ void COStyleMenu::reloadMenue()
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spCOStyleMenu::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }
 

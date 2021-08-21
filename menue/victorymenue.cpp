@@ -496,7 +496,6 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     {
         AddScoreToUserdata();
     }
-    connect(this, &VictoryMenue::sigOnEnter, this, &VictoryMenue::onEnter, Qt::QueuedConnection);
 }
 
 void VictoryMenue::createStatisticsView()
@@ -717,7 +716,6 @@ void VictoryMenue::exitMenue()
         GameMap::deleteMap();
         auto window = spMainwindow::create();
         oxygine::Stage::getStage()->addChild(window);
-        emit window->sigOnEnter();
     }
     oxygine::Actor::detach();
 }

@@ -264,7 +264,6 @@ Mainwindow::Mainwindow()
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);
     pApp->continueRendering();
-    connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
 }
 
 void Mainwindow::import()
@@ -341,7 +340,6 @@ void Mainwindow::enterSingleplayer()
     Mainapp::getInstance()->pauseRendering();
     auto window = spMapSelectionMapsMenue::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -359,7 +357,6 @@ void Mainwindow::enterEditor()
     Mainapp::getInstance()->pauseRendering();
     auto window = spEditorMenue::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -369,7 +366,6 @@ void Mainwindow::enterOptionmenue()
     Mainapp::getInstance()->pauseRendering();
     auto window = spOptionMenue::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -379,7 +375,6 @@ void Mainwindow::enterWikimenue()
     Mainapp::getInstance()->pauseRendering();
     auto window = spWikimenu::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -389,7 +384,6 @@ void Mainwindow::enterCreditsmenue()
     Mainapp::getInstance()->pauseRendering();
     auto window = spCreditsMenue::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -399,7 +393,6 @@ void Mainwindow::enterAchievementmenue()
     Mainapp::getInstance()->pauseRendering();
     auto window = spAchievementmenu::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -409,7 +402,6 @@ void Mainwindow::enterShopMenu()
     Mainapp::getInstance()->pauseRendering();
     auto window = spShopmenu::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }
@@ -492,7 +484,6 @@ void Mainwindow::loadGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
-            emit pMenu->sigOnEnter();
         }
         else
         {
@@ -524,7 +515,6 @@ void Mainwindow::replayGame(QString filename)
             {
                 emit pMenu->sigShowRecordInvalid();
             }
-            emit pMenu->sigOnEnter();
         }
         else
         {
@@ -550,7 +540,6 @@ void Mainwindow::enterCOStyleMenu()
     Mainapp::getInstance()->pauseRendering();
     auto window = spCOStyleMenu::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     leaveMenue();
     Mainapp::getInstance()->continueRendering();
 }

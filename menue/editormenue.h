@@ -63,7 +63,6 @@ signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
     void sigResizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
-    void sigOnEnter();
 public slots:
     /**
      * @brief toggleMiddleCrossGrid
@@ -73,10 +72,6 @@ public slots:
      * @brief toggleGridLayout
      */
     void toggleGridLayout();
-    /**
-     * @brief onEnter
-     */
-    void onEnter();
     /**
      * @brief optimizePlayers
      */
@@ -388,6 +383,11 @@ public slots:
      * @brief copy
      */
     void copy();
+protected slots:
+    /**
+     * @brief onEnter
+     */
+    virtual void onEnter() override;
 private:
     void updateGrids();
 private:

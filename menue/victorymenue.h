@@ -60,7 +60,6 @@ signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
-    void sigOnEnter();
 public slots:
     void exitMenue();
     /**
@@ -76,10 +75,6 @@ public slots:
      * @brief finishGraph
      */
     void finishGraph();
-    /**
-     * @brief onEnter
-     */
-    void onEnter();
 protected slots:
     /**
      * @brief onProgressTimerStart
@@ -91,6 +86,10 @@ protected slots:
      * @param mode
      */
     void showPlayerStatistic(qint32 player);
+    /**
+     * @brief onEnter
+     */
+    virtual void onEnter() override;
 protected:
     /**
      * @brief drawGraphStep

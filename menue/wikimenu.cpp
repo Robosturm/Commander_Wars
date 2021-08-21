@@ -47,7 +47,6 @@ Wikimenu::Wikimenu()
     addChild(m_pWikiView);
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
     pApp->continueRendering();
-    connect(this, &Wikimenu::sigOnEnter, this, &Wikimenu::onEnter, Qt::QueuedConnection);
 }
 
 void Wikimenu::onEnter()
@@ -70,6 +69,5 @@ void Wikimenu::exitMenue()
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();    
 }

@@ -16,10 +16,9 @@ public:
     virtual ~Wikimenu() = default;
 signals:
     void sigExitMenue();
-    void sigOnEnter();
 public slots:
     void exitMenue();
-    void onEnter();
+    virtual void onEnter() override;
     WikiView* getWikiView()
     {
         return m_pWikiView.get();

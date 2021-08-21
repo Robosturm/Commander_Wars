@@ -207,7 +207,6 @@ EditorMenue::EditorMenue()
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/editormenu.xml", this);
     pApp->continueRendering();
-    connect(this, &EditorMenue::sigOnEnter, this, &EditorMenue::onEnter, Qt::QueuedConnection);
 }
 
 void EditorMenue::onEnter()
@@ -1989,7 +1988,6 @@ void EditorMenue::exitEditor()
     Console::print("Leaving Editor Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();
 }
 

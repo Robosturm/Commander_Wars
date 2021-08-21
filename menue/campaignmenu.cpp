@@ -101,8 +101,21 @@ void CampaignMenu::exitMenue()
     Console::print("Leaving Option Menue", Console::eDEBUG);
     auto window = spMapSelectionMapsMenue::create();
     oxygine::Stage::getStage()->addChild(window);
-    emit window->sigOnEnter();
     oxygine::Actor::detach();    
+}
+
+void CampaignMenu::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "campaignMenu";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
@@ -150,7 +163,6 @@ void CampaignMenu::slotButtonNext()
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spGameMenue::create(false, spNetworkInterface());
         oxygine::Stage::getStage()->addChild(window);
-        emit window->sigOnEnter();
         oxygine::Actor::detach();
     }
     else if (m_Multiplayer)
@@ -162,7 +174,6 @@ void CampaignMenu::slotButtonNext()
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
         oxygine::Stage::getStage()->addChild(window);
-        emit window->sigOnEnter();
         oxygine::Actor::detach();
     }    
 }

@@ -29,7 +29,6 @@ signals:
     void sigEnterLoadCampaign();
     void sigEnterAchievementmenue();
     void sigImport();
-    void sigOnEnter();
     void sigEnterShopMenu();
     void sigVersionClicked();
 public slots:
@@ -54,7 +53,7 @@ public slots:
     void enterAchievementmenue();
     void import();
     void importFromDirectory(QString file);
-    void onEnter();
+    virtual void onEnter() override;
     void versionClicked();
 protected slots:
     void cheatTimeout();
