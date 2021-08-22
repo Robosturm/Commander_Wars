@@ -639,6 +639,12 @@ protected:
 
 private:
     void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    /**
+     * @brief isJsFunctionEnabled
+     * @param objectId
+     * @return
+     */
+    bool isJsFunctionEnabled(QString perk) const;
 private:
     Player* m_Owner;
     QString m_coID;

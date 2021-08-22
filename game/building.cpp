@@ -503,8 +503,6 @@ QStringList Building::getActionList()
                 actionModifierList += result.split(",");
             }
         }
-
-
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {

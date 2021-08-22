@@ -983,6 +983,16 @@ void GameRules::setTransporterRefresh(bool newTransporterRefresh)
     m_transporterRefresh = newTransporterRefresh;
 }
 
+bool GameRules::getEnableDayToDayCoAbilities() const
+{
+    return m_enableDayToDayCoAbilities;
+}
+
+void GameRules::setEnableDayToDayCoAbilities(bool newEnableDayToDayCoAbilities)
+{
+    m_enableDayToDayCoAbilities = newEnableDayToDayCoAbilities;
+}
+
 bool GameRules::getShipBridges() const
 {
     return m_shipBridges;
@@ -1251,6 +1261,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_resellValue;
     pStream << m_transporterRefresh;
     pStream << m_shipBridges;
+    pStream << m_enableDayToDayCoAbilities;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1529,5 +1540,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> m_resellValue;
         pStream >> m_transporterRefresh;
         pStream >> m_shipBridges;
+        pStream >> m_enableDayToDayCoAbilities;
     }
 }

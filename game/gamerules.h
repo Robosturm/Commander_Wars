@@ -98,6 +98,16 @@ public slots:
      */
     void setTransporterRefresh(bool newTransporterRefresh);
     /**
+     * @brief GameRules::getEnableDayToDayCoAbilities
+     * @return
+     */
+    bool getEnableDayToDayCoAbilities() const;
+    /**
+     * @brief setEnableDayToDayCoAbilities
+     * @param newEnableDayToDayCoAbilities
+     */
+    void setEnableDayToDayCoAbilities(bool newEnableDayToDayCoAbilities);
+    /**
      * @brief getShipBridges
      * @return
      */
@@ -555,6 +565,7 @@ private:
     float m_resellValue{0.5f};
     bool m_transporterRefresh{true};
     bool m_shipBridges{true};
+    bool m_enableDayToDayCoAbilities{true};
 
     Password m_password;
     QString m_description;

@@ -313,8 +313,24 @@ void RuleSelection::showRuleSelection(bool advanced)
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
+
+    textField = spLabel::create(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Day to Day Abilities: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked CO's have their day to day abilities else only perks are active. This has no impact on co powers."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    pCheckbox->setEnabled(m_ruleChangeEabled);
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getEnableDayToDayCoAbilities());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setEnableDayToDayCoAbilities, Qt::QueuedConnection);
+    y += 40;
+
     if (advanced)
     {
+
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
         textField->setHtmlText(tr("Single CO's: "));

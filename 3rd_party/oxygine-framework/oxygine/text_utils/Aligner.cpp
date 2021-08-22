@@ -156,6 +156,10 @@ namespace oxygine
 
         qint32 Aligner::putSymbol(Symbol& s)
         {
+            if (m_line.empty() && s.code == ' ')
+            {
+                return 0;
+            }
             m_line.push_back(&s);
 
             //optional remove?
