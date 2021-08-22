@@ -18,11 +18,11 @@ AudioThread::AudioThread()
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
     moveToThread(Mainapp::getAudioWorker());
-    connect(this, &AudioThread::SignalPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalSetVolume,         this, &AudioThread::SlotSetVolume, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalAddMusic,          this, &AudioThread::SlotAddMusic, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalSetVolume,         this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalAddMusic,          this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::BlockingQueuedConnection);
+    connect(this, &AudioThread::SignalPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
     connect(this, &AudioThread::SignalPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
@@ -303,15 +303,20 @@ void AudioThread::loadFolder(QString folder)
 }
 
 void AudioThread::SlotClearPlayList()
-{
+{    
     Console::print("AudioThread::SlotClearPlayList()", Console::eDEBUG);
     m_player[0]->m_player.stop();
     m_player[0]->m_playListPostiton = -1;
     m_player[1]->m_player.stop();
     m_player[1]->m_playListPostiton = -1;
-    m_PlayListdata.clear();
+    m_PlayListdata.clear();    
     m_currentPlayer = -1;
-    QApplication::processEvents();
+    // wasting some time
+    for (qint32 i = 0; i < 20; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)

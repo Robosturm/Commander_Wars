@@ -5,4 +5,4 @@ compatible_mods=
 incompatible_mods=mods/awds_movement
 required_mods=
 cosmetic=false
-tags=Gameplay
+tags=Gameplay;CoW

@@ -28,6 +28,7 @@ public slots:
     void showSaveRules();
     void loadRules(QString filename);
     void saveRules(QString filename);
+    void ruleSelectionSizeChanged();
 protected slots:
     void pressedOk();
 private:

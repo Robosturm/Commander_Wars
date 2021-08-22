@@ -98,6 +98,7 @@ public slots:
     PlayerSelection* getPlayerSelection() const;
 protected slots:
     virtual void onEnter() override;
+    void ruleSelectionSizeChanged();
 protected:
 
     // buttons

@@ -98,6 +98,16 @@ public slots:
      */
     void setTransporterRefresh(bool newTransporterRefresh);
     /**
+     * @brief getShipBridges
+     * @return
+     */
+    bool getShipBridges() const;
+    /**
+     * @brief setShipBridges
+     * @param newShipBridges
+     */
+    void setShipBridges(bool newShipBridges);
+    /**
      * @brief getResellValue
      * @return
      */
@@ -544,6 +554,7 @@ private:
     bool m_victory{false};
     float m_resellValue{0.5f};
     bool m_transporterRefresh{true};
+    bool m_shipBridges{true};
 
     Password m_password;
     QString m_description;

@@ -25,7 +25,7 @@ public:
     };
     explicit RuleSelection(qint32 width, Mode mode, bool enabled = true);
     virtual ~RuleSelection() = default;
-    void showRuleSelection();
+    void showRuleSelection(bool advanced = false);
     void confirmRuleSelectionSetup();
     Mode getMode() const;
 
@@ -34,6 +34,7 @@ signals:
     void sigShowActionBannlist();
     void sigShowPerkBannlist();
     void sigShowSelectScript();
+    void sigSizeChanged();
 public slots:
     // slots for changing the rules
     void startWeatherChanged(qint32 value);

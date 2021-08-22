@@ -983,6 +983,16 @@ void GameRules::setTransporterRefresh(bool newTransporterRefresh)
     m_transporterRefresh = newTransporterRefresh;
 }
 
+bool GameRules::getShipBridges() const
+{
+    return m_shipBridges;
+}
+
+void GameRules::setShipBridges(bool newShipBridges)
+{
+    m_shipBridges = newShipBridges;
+}
+
 float GameRules::getResellValue() const
 {
     return m_resellValue;
@@ -1240,6 +1250,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_terrainDefense;
     pStream << m_resellValue;
     pStream << m_transporterRefresh;
+    pStream << m_shipBridges;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1517,5 +1528,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     {
         pStream >> m_resellValue;
         pStream >> m_transporterRefresh;
+        pStream >> m_shipBridges;
     }
 }

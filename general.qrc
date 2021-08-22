@@ -3675,9 +3675,6 @@
         <file>mods/awds_co/scripts/general/co_perk.js</file>
         <file>mods/awds_co/scripts/general/tagpower.js</file>
         <file>mods/awds_co/mod.txt</file>
-        <file>mods/awds_movement/scripts/movementtables/move_boat.js</file>
-        <file>mods/awds_movement/scripts/movementtables/move_ship.js</file>
-        <file>mods/awds_movement/mod.txt</file>
         <file>mods/awds_unit/scripts/actions/ACTION_EXPLODE.js</file>
         <file>mods/awds_unit/scripts/movementtables/move_boat.js</file>
         <file>mods/awds_unit/scripts/movementtables/move_ship.js</file>

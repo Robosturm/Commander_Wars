@@ -983,7 +983,7 @@ void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & da
 float HeavyAi::scoreCapture(spGameAction action, UnitData & unitData, QVector<double> baseData)
 {
     baseData.append(QList<double>(static_cast<qsizetype>(CaptureInfoMaxSize - CaptureInfoStart)));
-    Building* pBuilding = action->getTargetBuilding();
+    Building* pBuilding = action->getMovementBuilding();
     auto target = action->getActionTarget();
     baseData[CaptureInfoIsHq] = (pBuilding->getBuildingID() == "HQ");
     baseData[CaptureInfoIsComTower] = (pBuilding->getBuildingID() == "TOWER");
@@ -1142,7 +1142,7 @@ float HeavyAi::scoreLoad(spGameAction action, UnitData & unitData, QVector<doubl
 {
     float ret = -m_maxCapturePoints;
     // we got a transporter is it a good one
-    Unit* pTransporter = action->getTargetUnit();
+    Unit* pTransporter = action->getMovementTarget();
     if (pTransporter != nullptr &&
         !pTransporter->getHasMoved())
     {
@@ -1173,9 +1173,12 @@ void HeavyAi::scoreMoveToTargets()
                 FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
-                auto moveTargets = unit.m_pPfs->getAllNodePoints(unit.m_movepoints + 1);
-                mutateActionForFields(unit, moveTargets, action, type, index,
-                                      bestScore, bestScores, bestActions);
+                if (index >= 0)
+                {
+                    auto moveTargets = unit.m_pPfs->getAllNodePoints(unit.m_movepoints + 1);
+                    mutateActionForFields(unit, moveTargets, action, type, index,
+                                          bestScore, bestScores, bestActions);
+                }
                 if (bestActions.size() > 0)
                 {
                     qint32 item = GlobalUtils::randInt(0, bestScores.size() - 1);

@@ -129,7 +129,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Audiothread = new AudioThread();
             if (!m_noUi)
             {
-                m_AudioWorker.start(QThread::Priority::HighPriority);
+                m_AudioWorker.start(QThread::Priority::NormalPriority);
                 emit m_Audiothread->sigInitAudio();
                 m_Audiothread->clearPlayList();
                 m_Audiothread->loadFolder("resources/music/hauptmenue");                
@@ -303,7 +303,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
             m_Networkthread.start(QThread::Priority::NormalPriority);
-            m_Workerthread.start(QThread::Priority::HighestPriority);
+            m_Workerthread.start(QThread::Priority::NormalPriority);
             emit m_Worker->sigStart();
             if (!m_noUi)
             {
@@ -318,7 +318,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (Settings::getServer() && !m_slave)
             {
                 MainServer::getInstance();
-                m_GameServerThread.start(QThread::Priority::HighestPriority);
+                m_GameServerThread.start(QThread::Priority::NormalPriority);
             }
             if (!m_slave)
             {

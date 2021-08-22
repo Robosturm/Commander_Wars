@@ -1,4 +1,5 @@
 #include <QDirIterator>
+#include <QApplication>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -166,6 +167,9 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
+    QApplication::processEvents();
+    QThread::msleep(5);
+
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
     auto window = spMainwindow::create();

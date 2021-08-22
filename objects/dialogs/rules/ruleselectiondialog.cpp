@@ -57,6 +57,7 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
         connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
     }
     m_pRuleSelection = spRuleSelection::create(Settings::getWidth() - 80, mode, enabled);
+    connect(m_pRuleSelection.get(), &RuleSelection::sigSizeChanged, this, &RuleSelectionDialog::ruleSelectionSizeChanged, Qt::QueuedConnection);
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
     m_pPanel = spPanel::create(true,  size, size);
     m_pPanel->setPosition(10, 20);
@@ -66,6 +67,10 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
     pSpriteBox->addChild(m_pPanel);
 }
 
+void RuleSelectionDialog::ruleSelectionSizeChanged()
+{
+    m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
+}
 
 void RuleSelectionDialog::showLoadRules()
 {    

@@ -31,10 +31,7 @@ var Constructor = function()
                 }
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     };
 
     this.getCapturableBuildings = function()

@@ -2,8 +2,8 @@ var Init =
 {
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
-    trainingMap     = "Dragons in the Dark.map",    // map that will be used for training
-    mutationRate    = 0.1,                         // chance for a weight to mutate at random
+    trainingMap     = "NB4DS.map",                  // map that will be used for training
+    mutationRate    = 0.1,                          // chance for a weight to mutate at random
     fogOfWar        = GameEnums.Fog_OfWar,          // fog of war rule for training
     maxRuns         = 1000,                         // maximum amount of iterations
     turnLimit       = 30,

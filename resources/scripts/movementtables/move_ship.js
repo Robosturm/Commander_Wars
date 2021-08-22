@@ -15,7 +15,14 @@ var Constructor = function()
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
     {
-        if (terrain.getID() === "BRIDGE" && terrain.getBaseTerrainID() === "SEA")
+        var shipBridges = true;
+        if (typeof map !== 'undefined')
+        {
+            shipBridges = map.getGameRules().getShipBridges();
+        }
+        if (shipBridges &&
+            terrain.getID() === "BRIDGE" &&
+            terrain.getBaseTerrainID() === "SEA")
         {
             return 1;
         }
