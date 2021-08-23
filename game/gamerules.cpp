@@ -973,6 +973,26 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+GameEnums::PowerGainMode GameRules::getPowerGainMode() const
+{
+    return m_powerGainMode;
+}
+
+void GameRules::setPowerGainMode(const GameEnums::PowerGainMode &newPowerGainMode)
+{
+    m_powerGainMode = newPowerGainMode;
+}
+
+GameEnums::PowerGainZone GameRules::getPowerGainZone() const
+{
+    return m_powerGainZone;
+}
+
+void GameRules::setPowerGainZone(const GameEnums::PowerGainZone &newPowerGainZone)
+{
+    m_powerGainZone = newPowerGainZone;
+}
+
 bool GameRules::getTransporterRefresh() const
 {
     return m_transporterRefresh;
@@ -1011,6 +1031,16 @@ float GameRules::getResellValue() const
 void GameRules::setResellValue(float newResellValue)
 {
     m_resellValue = newResellValue;
+}
+
+float GameRules::getPowerUsageReduction() const
+{
+    return m_powerUsageReduction;
+}
+
+void GameRules::setPowerUsageReduction(float newPowerUsageReduction)
+{
+    m_powerUsageReduction = newPowerUsageReduction;
 }
 
 bool GameRules::getVictory() const
@@ -1262,6 +1292,9 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_transporterRefresh;
     pStream << m_shipBridges;
     pStream << m_enableDayToDayCoAbilities;
+    pStream << static_cast<qint32>(m_powerGainZone);
+    pStream << static_cast<qint32>(m_powerGainMode);
+    pStream << m_powerUsageReduction;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1541,5 +1574,11 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> m_transporterRefresh;
         pStream >> m_shipBridges;
         pStream >> m_enableDayToDayCoAbilities;
+        qint32 value;
+        pStream >> value;
+        m_powerGainZone = static_cast<GameEnums::PowerGainZone>(value);
+        pStream >> value;
+        m_powerGainMode = static_cast<GameEnums::PowerGainMode>(value);
+        pStream >> m_powerUsageReduction;
     }
 }

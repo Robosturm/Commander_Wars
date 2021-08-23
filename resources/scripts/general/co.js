@@ -204,19 +204,69 @@ var CO =
 
     getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
-        var powerGain = fundsDamage;
-        // reduce power meter filling based on power usages
-        powerGain *= 1 / (1.0 + co.getPowerUsed() * 0.2);
-        if (!co.inCORange(Qt.point(x, y), null))
+        var gamerules = map.getGameRules();
+        var powerCostIncrease = gamerules.getPowerUsageReduction();
+        var multiplier = 1 / (1.0 + co.getPowerUsed() * powerCostIncrease);
+        var gainMode = gamerules.getPowerGainMode();
+        var gainZone = gamerules.getPowerGainZone();
+        var baseValue = 0;
+        // select gain value
+        if (gainMode === GameEnums.PowerGainMode_Money)
         {
-           // reduce power meter gain when not in co range
-           powerGain *= 0.5;
+            baseValue = fundsDamage / 9000;
+            if (!defender)
+            {
+                // reduce damage for attacker
+                baseValue *= 0.5;
+            }
         }
-        if (!defender)
+        else if (gainMode === GameEnums.PowerGainMode_Money_OnlyAttacker)
         {
-            powerGain *= 0.75;
+            if (!defender)
+            {
+                // only charge for attacker
+                baseValue = fundsDamage / 9000;
+            }
         }
-        return powerGain / 9000;
+        else if (gainMode === GameEnums.PowerGainMode_Hp)
+        {
+            baseValue = hpDamage / 10.0;
+            if (!defender)
+            {
+                // reduce damage for attacker
+                baseValue *= 0.5;
+            }
+        }
+        else if (gainMode === GameEnums.PowerGainMode_Hp_OnlyAttacker)
+        {
+            if (!defender)
+            {
+                // only charge for attacker
+                baseValue = hpDamage / 10.0;
+            }
+        }
+        var powerGain = baseValue * multiplier;
+        if (gainZone === GameEnums.PowerGainZone_Global)
+        {
+            // do nothing
+        }
+        else if (gainZone === GameEnums.PowerGainZone_GlobalCoZoneBonus)
+        {
+            if (!co.inCORange(Qt.point(x, y), null))
+            {
+                // reduce power meter gain when not in co range
+                powerGain *= 0.5;
+            }
+        }
+        else if (gainZone === GameEnums.PowerGainZone_OnlyCoZone)
+        {
+            if (!co.inCORange(Qt.point(x, y), null))
+            {
+                // no power gain outside co-zone
+                powerGain = 0;
+            }
+        }
+        return powerGain;
     },
 
     gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)

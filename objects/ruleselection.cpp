@@ -252,7 +252,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setPosition(30, pCheckbox->getY() + 40);
     addChild(textField);
 
-    spDropDownmenu startWeather = spDropDownmenu::create(300, weatherStrings);
+    spDropDownmenu startWeather = spDropDownmenu::create(400, weatherStrings);
     startWeather->setTooltipText(tr("The weather at the start of the game."));
     startWeather->setPosition(textWidth, textField->getY());
     startWeather->setCurrentItem(pMap->getGameRules()->getStartWeather());
@@ -367,7 +367,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("CO Perks: "));
         textField->setPosition(30, y);
         addChild(textField);
-        spSpinBox pSpinbox = spSpinBox::create(300, 0, 900);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 900);
         pSpinbox->setTooltipText(tr("Selects the amount of CO Perks that can be assigned per CO."));
         pSpinbox->setPosition(textWidth, textField->getY());
         pSpinbox->setInfinityValue(-1);
@@ -382,7 +382,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("Unit Limit: "));
         textField->setPosition(30, y);
         addChild(textField);
-        pSpinbox = spSpinBox::create(200, 0, 9999);
+        pSpinbox = spSpinBox::create(400, 0, 9999);
         pSpinbox->setTooltipText(tr("The maximum amount of units a single player can own at any time."));
         pSpinbox->setInfinityValue(0.0);
         pSpinbox->setPosition(textWidth, textField->getY());
@@ -390,6 +390,87 @@ void RuleSelection::showRuleSelection(bool advanced)
         addChild(pSpinbox);
         pSpinbox->setCurrentValue(pMap->getGameRules()->getUnitLimit());
         connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
+        y += 40;
+    }
+
+    if (advanced)
+    {
+        textField = spLabel::create(800);
+        style.color = headerColor;
+        textField->setStyle(headerStyle);
+        style.color = FontManager::getFontColor();
+        textField->setHtmlText(tr("CO Powergain"));
+        textField->setPosition(30, y);
+        addChild(textField);
+        y += 60;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("CO Powergain zone: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        QVector<QString> zoneModes = {tr("Global"), tr("Global and CO Zone Bonus"), tr("Only CO Zone")};
+        spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, zoneModes);
+        pDropDownmenu->setTooltipText(tr("Defines where a player can gain power for his co powermeter."));
+        pDropDownmenu->setPosition(textWidth, textField->getY());
+        pDropDownmenu->setEnabled(m_ruleChangeEabled);
+        addChild(pDropDownmenu);
+        pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getPowerGainZone()));
+        GameMap* pPtrMap = pMap.get();
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+        {
+            pPtrMap->getGameRules()->setPowerGainZone(static_cast<GameEnums::PowerGainZone>(value));
+        }, Qt::QueuedConnection);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("CO Powergain mode: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        QVector<QString> gainModes = {tr("Money"), tr("Money only attacker"), tr("HP"), tr("HP only attacker")};
+        pDropDownmenu = spDropDownmenu::create(400, gainModes);
+        pDropDownmenu->setTooltipText(tr("Defines how the powermeter fills."));
+        pDropDownmenu->setPosition(textWidth, textField->getY());
+        pDropDownmenu->setEnabled(m_ruleChangeEabled);
+        addChild(pDropDownmenu);
+        pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getPowerGainMode()));
+        connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+        {
+            pPtrMap->getGameRules()->setPowerGainMode(static_cast<GameEnums::PowerGainMode>(value));
+        }, Qt::QueuedConnection);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Powergain reduction: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 100, SpinBox::Mode::Float);
+        pSpinbox->setTooltipText(tr("The reduction in powergain for each time a co powers was used. Making each consecutive power more expensive."));
+        pSpinbox->setInfinityValue(-1);
+        pSpinbox->setSpinSpeed(0.1);
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerUsageReduction());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerUsageReduction, Qt::QueuedConnection);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Powergain Speed: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        pSpinbox = spSpinBox::create(400, 0, 200, SpinBox::Mode::Float);
+        pSpinbox->setTooltipText(tr("The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode."));
+        pSpinbox->setInfinityValue(-1.0);
+        pSpinbox->setSpinSpeed(0.1f);
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerGainSpeed());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
         y += 40;
     }
     textField = spLabel::create(800);
@@ -407,7 +488,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setPosition(30, y);
     addChild(textField);
     QVector<QString> fogModes = {tr("Off"), tr("Mist of War"), tr("Fog of War"), tr("Shroud of War")};
-    spDropDownmenu fogOfWar = spDropDownmenu::create(300, fogModes);
+    spDropDownmenu fogOfWar = spDropDownmenu::create(400, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
     fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());
@@ -467,7 +548,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setPosition(30, y);
         addChild(textField);
         QVector<QString> dayModes = {tr("Default"), tr("Permanent")};
-        spDropDownmenu pDropDownmenu = spDropDownmenu::create(300, dayModes);
+        spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, dayModes);
         pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war."));
         pDropDownmenu->setPosition(textWidth, textField->getY());
         pDropDownmenu->setEnabled(m_ruleChangeEabled);
@@ -540,26 +621,10 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
-        textField->setHtmlText(tr("Powergain Speed: "));
-        textField->setPosition(30, y);
-        addChild(textField);
-        spSpinBox pSpinbox = spSpinBox::create(200, 0, 200, SpinBox::Mode::Float);
-        pSpinbox->setTooltipText(tr("The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode."));
-        pSpinbox->setInfinityValue(-1.0);
-        pSpinbox->setSpinSpeed(0.1f);
-        pSpinbox->setPosition(textWidth, textField->getY());
-        pSpinbox->setEnabled(m_ruleChangeEabled);
-        addChild(pSpinbox);
-        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerGainSpeed());
-        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
-        y += 40;
-
-        textField = spLabel::create(textWidth - 40);
-        textField->setStyle(style);
         textField->setHtmlText(tr("Terrain Defense: "));
         textField->setPosition(30, y);
         addChild(textField);
-        pSpinbox = spSpinBox::create(200, 0, 40, SpinBox::Mode::Int);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 40, SpinBox::Mode::Int);
         pSpinbox->setTooltipText(tr("The defense each terrain star grants a unit."));
         pSpinbox->setInfinityValue(-1.0);
         pSpinbox->setSpinSpeed(1.0f);
@@ -603,7 +668,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("Round Time: "));
         textField->setPosition(30, y);
         addChild(textField);
-        spTimeSpinBox pTimeSpinbox = spTimeSpinBox::create(200);
+        spTimeSpinBox pTimeSpinbox = spTimeSpinBox::create(400);
         pTimeSpinbox->setTooltipText(tr("The maximum amount of time in hh:mm::ss for each turn for each player."));
         pTimeSpinbox->setPosition(textWidth, textField->getY());
         pTimeSpinbox->setEnabled(m_ruleChangeEabled);
@@ -682,7 +747,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("Unit sell value: "));
         textField->setPosition(30, y);
         addChild(textField);
-        spSpinBox pSpinbox = spSpinBox::create(200, 0, 1, SpinBox::Mode::Float);
+        spSpinBox pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
         pSpinbox->setTooltipText(tr("The amount of funds you get back for selling a unit. Only has an impact if the sell action is active"));
         pSpinbox->setInfinityValue(-1.0);
         pSpinbox->setSpinSpeed(0.1f);

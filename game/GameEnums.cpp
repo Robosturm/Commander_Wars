@@ -125,12 +125,20 @@ void GameEnums::registerEnums()
     value.setProperty("WeaponType_Direct", WeaponType_Direct);
     value.setProperty("WeaponType_Indirect", WeaponType_Indirect);
 
-
     value.setProperty("ShopItemType_CO", ShopItemType_CO);
     value.setProperty("ShopItemType_CO_Skin", ShopItemType_CO_Skin);
     value.setProperty("ShopItemType_Map", ShopItemType_Map);
     value.setProperty("ShopItemType_Unit", ShopItemType_Unit);
     value.setProperty("ShopItemType_Perk", ShopItemType_Perk);
+
+    value.setProperty("PowerGainZone_Global", PowerGainZone_Global);
+    value.setProperty("PowerGainZone_GlobalCoZoneBonus", PowerGainZone_GlobalCoZoneBonus);
+    value.setProperty("PowerGainZone_OnlyCoZone", PowerGainZone_OnlyCoZone);
+
+    value.setProperty("PowerGainMode_Money", PowerGainMode_Money);
+    value.setProperty("PowerGainMode_Money_OnlyAttacker", PowerGainMode_Money_OnlyAttacker);
+    value.setProperty("PowerGainMode_Hp", PowerGainMode_Hp);
+    value.setProperty("PowerGainMode_Hp_OnlyAttacker", PowerGainMode_Hp_OnlyAttacker);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

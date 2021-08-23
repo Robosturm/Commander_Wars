@@ -84,9 +84,40 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getPowerUsageReduction
+     * @return
+     */
+    float getPowerUsageReduction() const;
+    /**
+     * @brief setPowerUsageReduction
+     * @param newPowerUsageReduction
+     */
+    void setPowerUsageReduction(float newPowerUsageReduction);
+    /**
+     * @brief getPowerGainZone
+     * @return
+     */
+    GameEnums::PowerGainZone getPowerGainZone() const;
+    /**
+     * @brief setPowerGainZone
+     * @param newPowerGainZone
+     */
+    void setPowerGainZone(const GameEnums::PowerGainZone &newPowerGainZone);
+    /**
+     * @brief getPowerGainMode
+     * @return
+     */
+    GameEnums::PowerGainMode getPowerGainMode() const;
+    /**
+     * @brief setPowerGainMode
+     * @param newPowerGainMode
+     */
+    void setPowerGainMode(const GameEnums::PowerGainMode &newPowerGainMode);
     /**
      * @brief getTransporterRefresh
      * @return
@@ -566,6 +597,9 @@ private:
     bool m_transporterRefresh{true};
     bool m_shipBridges{true};
     bool m_enableDayToDayCoAbilities{true};
+    GameEnums::PowerGainZone m_powerGainZone{GameEnums::PowerGainZone_GlobalCoZoneBonus};
+    GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
+    float m_powerUsageReduction{0.2f};
 
     Password m_password;
     QString m_description;

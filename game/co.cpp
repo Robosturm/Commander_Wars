@@ -135,6 +135,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
+        Console::print("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)

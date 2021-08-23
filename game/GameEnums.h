@@ -245,6 +245,23 @@ public:
     };
     Q_ENUM(ShopItemType)
 
+    enum PowerGainZone
+    {
+        PowerGainZone_Global,
+        PowerGainZone_GlobalCoZoneBonus,
+        PowerGainZone_OnlyCoZone,
+    };
+    Q_ENUM(PowerGainZone)
+
+    enum PowerGainMode
+    {
+        PowerGainMode_Money,
+        PowerGainMode_Money_OnlyAttacker,
+        PowerGainMode_Hp,
+        PowerGainMode_Hp_OnlyAttacker,
+    };
+    Q_ENUM(PowerGainMode)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

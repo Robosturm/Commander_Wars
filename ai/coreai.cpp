@@ -233,10 +233,8 @@ bool CoreAI::useCOPower(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
             }
             data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
 
-
-
             GameEnums::PowerMode result = pCO->getAiUsePower(data[2], pUnits->size(), repairUnits, indirectUnits,
-                    directUnits, pEnemyUnits->size(), turnMode);
+                                                             directUnits, pEnemyUnits->size(), turnMode);
             if (result == GameEnums::PowerMode_Unknown)
             {
                 result = static_cast<GameEnums::PowerMode>(m_COPowerTree.getDecision(data));

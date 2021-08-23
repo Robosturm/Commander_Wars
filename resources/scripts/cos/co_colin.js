@@ -223,12 +223,16 @@ var Constructor = function()
     {
         return qsTr("Colin");
     };
-    this.getAiUsePowerAtStart = function(co, powerSurplus, turnMode)
+    this.getAiUsePower = function(co, powerSurplus, turnMode)
     {
         // cop spam
         if (turnMode === GameEnums.AiTurnMode_StartOfDay)
         {
-            if (co.canUsePower())
+            if (co.canUseSuperpower())
+            {
+                return GameEnums.PowerMode_Superpower;
+            }
+            else if (co.canUsePower())
             {
                 return GameEnums.PowerMode_Power;
             }
