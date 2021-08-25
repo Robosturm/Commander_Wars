@@ -165,7 +165,7 @@ void GameMap::importTxtMap(QString file)
                     {
                         if (terrainIdMapping[i][0] == terraindID)
                         {
-                            replaceTerrain(terrainIdMapping[i][1], data[1].toInt(), data[2].toInt());
+                            replaceTerrain(terrainIdMapping[i][1], data[1].toInt(), data[2].toInt(), false, false, false);
                             getTerrain(data[1].toInt(), data[2].toInt())->setHp(data[5].toInt());
                             break;
                         }

@@ -110,7 +110,12 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     auto* pPtrDropDownmenu = m_DropDownmenu.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        QString file = m_pathPrefix + pCurrentFolder->getCurrentText() + "/" + pPtrCurrentFile->getCurrentText();
+        QString fileStart = m_pathPrefix + pCurrentFolder->getCurrentText();
+        if (!fileStart.isEmpty())
+        {
+             fileStart += "/";
+        }
+        QString file = fileStart + pPtrCurrentFile->getCurrentText();
         QStringList items = pPtrDropDownmenu->getCurrentItemText().split((";"));
         for (qint32 i = 0; i < items.size(); i++)
         {

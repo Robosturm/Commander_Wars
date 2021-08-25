@@ -1519,7 +1519,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
 
 void EditorMenue::saveMap(QString filename)
 {
-    Console::print("EditorMenue::saveMap", Console::eDEBUG);
+    Console::print("EditorMenue::saveMap " + filename, Console::eDEBUG);
     if (filename.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
     {
         filename.replace(oxygine::Resource::RCC_PREFIX_PATH, Settings::getUserPath());
@@ -1538,7 +1538,7 @@ void EditorMenue::saveMap(QString filename)
 
 void EditorMenue::loadMap(QString filename)
 {
-    Console::print("EditorMenue::loadMap", Console::eDEBUG);
+    Console::print("EditorMenue::loadMap " + filename, Console::eDEBUG);
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -1564,7 +1564,7 @@ void EditorMenue::loadMap(QString filename)
 
 void EditorMenue::importAWDCAw4Map(QString filename)
 {
-    Console::print("EditorMenue::importAWDCAw4Map", Console::eDEBUG);
+    Console::print("EditorMenue::importAWDCAw4Map " + filename, Console::eDEBUG);
     if (filename.endsWith(".aw4"))
     {
         QFile file(filename);
@@ -1581,7 +1581,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
 
 void EditorMenue::importAWByWeb(QString filename)
 {
-    Console::print("EditorMenue::importAWByWeb", Console::eDEBUG);
+    Console::print("EditorMenue::importAWByWeb " + filename, Console::eDEBUG);
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1598,7 +1598,7 @@ void EditorMenue::importAWByWeb(QString filename)
 
 void EditorMenue::importAWDSAwsMap(QString filename)
 {
-    Console::print("EditorMenue::importAWDSAwsMap", Console::eDEBUG);
+    Console::print("EditorMenue::importAWDSAwsMap " + filename, Console::eDEBUG);
     if (filename.endsWith(".aws"))
     {
         QFile file(filename);

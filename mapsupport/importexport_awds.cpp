@@ -165,7 +165,7 @@ void GameMap::importAWDSMap(QString file)
                     {
                         if (terrainChar2 != 4)
                         {
-                            replaceTerrain("REAF", x, y);
+                            replaceTerrain("REAF", x, y, false, false, false);
                         }
                         break;
                     }
@@ -591,7 +591,7 @@ void GameMap::importAWDSMap(QString file)
                     {
                         if (terrainChar2 == 0)
                         {
-                            replaceTerrain("PLAINS_DESTROYED", x, y);
+                            replaceTerrain("PLAINS_DESTROYED", x, y, false, false, false);
                         }
                         break;
                     }
@@ -684,7 +684,7 @@ void GameMap::importAWDSMap(QString file)
                     {
                         if (terrainChar2 != 3)
                         {
-                            replaceTerrain("WELD", x, y);
+                            replaceTerrain("WELD", x, y, false, false, false);
                         }
                         break;
                     }

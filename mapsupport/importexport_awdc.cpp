@@ -233,17 +233,17 @@ void GameMap::importAWDCMap(QString file)
                     }
                     case 7:
                     {
-                        replaceTerrain("REAF", x, y);
+                        replaceTerrain("REAF", x, y, false, false, false);
                         break;
                     }
                     case 8:
                     {
-                        replaceTerrain("ROUGH_SEA", x, y);
+                        replaceTerrain("ROUGH_SEA", x, y, false, false, false);
                         break;
                     }
                     case 9:
                     {
-                        replaceTerrain("FOG", x, y);
+                        replaceTerrain("FOG", x, y, false, false, false);
                         break;
                     }
                     case 10:

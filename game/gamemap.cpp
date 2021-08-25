@@ -1044,10 +1044,13 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
     }
 }
 
-void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites)
+void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
 {
     replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
-    updateTerrain(x, y);
+    if (checkPlacement)
+    {
+        updateTerrain(x, y);
+    }
     if (callUpdateSprites)
     {
         updateSprites(x, y);

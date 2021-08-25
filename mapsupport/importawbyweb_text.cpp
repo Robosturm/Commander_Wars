@@ -75,7 +75,7 @@ void GameMap::importAWByWebMap(QString file)
                 {
                     case std::numeric_limits<quint32>::max():
                     {
-                        replaceTerrain("TELEPORTTILE", x, y);
+                        replaceTerrain("TELEPORTTILE", x, y, false, false, false);
                         break;
                     }
                     case 0:
@@ -83,18 +83,18 @@ void GameMap::importAWByWebMap(QString file)
                         // plains
                     case 1:
                     {
-                        replaceTerrain("PLAINS", x, y);
+                        replaceTerrain("PLAINS", x, y, false, false, false);
                         break;
                     }
                     case 2:
                     {
-                        replaceTerrain("MOUNTAIN", x, y);
+                        replaceTerrain("MOUNTAIN", x, y, false, false, false);
                         break;
                     }
                         // forest
                     case 3:
                     {
-                        replaceTerrain("FOREST", x, y);
+                        replaceTerrain("FOREST", x, y, false, false, false);
                         break;
                     }
                     case 4:
@@ -109,7 +109,7 @@ void GameMap::importAWByWebMap(QString file)
                     case 13:
                     case 14:
                     {
-                        replaceTerrain("RIVER", x, y);
+                        replaceTerrain("RIVER", x, y, false, false, false);
                         break;
                     }
                     case 15:
@@ -124,18 +124,18 @@ void GameMap::importAWByWebMap(QString file)
                     case 24:
                     case 25:
                     {
-                        replaceTerrain("STREET", x, y);
+                        replaceTerrain("STREET", x, y, false, false, false);
                         break;
                     }
                     case 26:
                     case 27:
                     {
-                        replaceTerrain("BRIDGE", x, y);
+                        replaceTerrain("BRIDGE", x, y, false, false, false);
                         break;
                     }
                     case 28:
                     {
-                        replaceTerrain("SEA", x, y);
+                        replaceTerrain("SEA", x, y, false, false, false);
                         break;
                     }
                         // beach
@@ -144,13 +144,13 @@ void GameMap::importAWByWebMap(QString file)
                     case 31:
                     case 32:
                     {
-                        replaceTerrain("BEACH", x, y);
+                        replaceTerrain("BEACH", x, y, false, false, false);
                         break;
                     }
                         // reaf
                     case 33:
                     {
-                        replaceTerrain("REAF", x, y);
+                        replaceTerrain("REAF", x, y, false, false, false);
                         break;
                     }
                     case 34:
@@ -472,7 +472,7 @@ void GameMap::importAWByWebMap(QString file)
                     case 109:
                     case 110:
                     {
-                        replaceTerrain("PIPELINE", x, y);
+                        replaceTerrain("PIPELINE", x, y, false, false, false);
                         break;
                     }
                     case 111:
@@ -492,13 +492,13 @@ void GameMap::importAWByWebMap(QString file)
                     case 113:
                     case 114:
                     {
-                        replaceTerrain("WELD", x, y);
+                        replaceTerrain("WELD", x, y, false, false, false);
                         break;
                     }
                     case 115:
                     case 116:
                     {
-                        replaceTerrain("DESTROYEDWELD", x, y);
+                        replaceTerrain("DESTROYEDWELD", x, y, false, false, false);
                         break;
                     }
                     case 117:
