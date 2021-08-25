@@ -36,7 +36,8 @@ signals:
                      qint32 unitCount,
                      float startBaseUnitSize,
                      QVector<float> unitDistribution,
-                     bool unitsDistributed);
+                     bool unitsDistributed,
+                     bool mirrored);
     void sigCancel();
     /**
      * @brief sigShowGeneratorSelection
@@ -52,6 +53,7 @@ public slots:
     void generatorFinished();
 private:
     void createUnitChances();
+    void checkIfGenerationIsAllowed();
 private:
     spTextbox m_GeneratorFile;
     oxygine::spButton m_Generator;
@@ -64,6 +66,7 @@ private:
     spSpinBox m_MapWidth;
     spSpinBox m_MapHeigth;
     spSpinBox m_MapPlayerCount;
+    spCheckbox m_mirrored;
     spSpinBox m_Seed;
     spCheckbox m_CreateRoad;
     spSlider m_BaseSize;

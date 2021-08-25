@@ -12,7 +12,7 @@ class MoveInButton : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction = -1, qint32 startY = -1, float buttonScale = 2.0f);
+    explicit MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction = -1, qint32 startOffset = -1, float buttonScale = 2.0f, bool useY = false);
     virtual ~MoveInButton() = default;
     bool getMovedOut() const;
 signals:
@@ -26,6 +26,7 @@ private:
     qint32 m_direction{-1};
     bool m_finished{true};
     bool m_movedOut{false};
+    bool m_useY{false};
     oxygine::spButton m_pButton;
 };
 

@@ -29,7 +29,8 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                           qint32 unitCount,
                           float startBaseUnitSize,
                           QVector<float> unitDistribution,
-                          bool unitsDistributed)
+                          bool unitsDistributed,
+                          bool mirrored)
 {
     clearMap();
 

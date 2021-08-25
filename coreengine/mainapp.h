@@ -64,7 +64,7 @@ public:
         Cursor,
         Animation,
         Objects,
-        FocusedObjects,
+        FocusedObjects = Objects + 2,
         AnimationFullScreen,
         Dialogs,
         DropDownList,

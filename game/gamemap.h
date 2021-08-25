@@ -118,7 +118,8 @@ public:
                      qint32 unitCount,
                      float startBaseUnitSize,
                      QVector<float> unitDistribution,
-                     bool unitsDistributed);
+                     bool unitsDistributed,
+                     bool mirrored);
     /**
      * @brief placeGroup
      * @param startX

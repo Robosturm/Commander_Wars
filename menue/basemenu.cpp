@@ -8,7 +8,7 @@ Basemenu::Basemenu()
 {
     connect(&m_onEnterTimer, &QTimer::timeout, this, &Basemenu::onEnter);
     m_onEnterTimer.setSingleShot(true);
-    m_onEnterTimer.start(200);
+    m_onEnterTimer.start(500);
 }
 
 Basemenu::~Basemenu()

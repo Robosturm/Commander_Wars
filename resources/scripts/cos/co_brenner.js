@@ -77,7 +77,7 @@ var Constructor = function()
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(5);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-            if (globals.randInt(0, 1) === 0)
+            if (i % 2 === 0)
             {
                 animation.setSound("power12_1.wav");
             }

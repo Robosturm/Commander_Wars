@@ -87,7 +87,8 @@ public slots:
                          qint32 unitCount,
                          float startBaseUnitSize,
                          QVector<float> unitDistribution,
-                         bool unitsDistributed);
+                         bool unitsDistributed,
+                         bool mirrored);
     void showLoadRules();
     void showSaveRules();
     void loadRules(QString filename);

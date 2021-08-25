@@ -28,7 +28,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            if (globals.randInt(0, 1) === 0)
+            if (i % 2 === 0)
             {
                 animation.setSound("power2_1.wav");
             }
@@ -71,7 +71,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            if (globals.randInt(0, 1) === 0)
+            if (i % 2 === 0)
             {
                 animation.setSound("power12_1.wav");
             }

@@ -42,7 +42,7 @@ var Constructor = function()
             if (unit.getBaseMaxRange() > 1 || unit.getUnitType() === GameEnums.UnitType_Naval)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                if (globals.randInt(0, 1) === 0)
+                if (i % 2 === 0)
                 {
                     animation.setSound("power9_1.wav");
                 }
@@ -88,7 +88,7 @@ var Constructor = function()
             if (unit.getBaseMaxRange() > 1 || unit.getUnitType() === GameEnums.UnitType_Naval)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                if (globals.randInt(0, 1) === 0)
+                if (i % 2 === 0)
                 {
                     animation.setSound("power12_1.wav");
                 }

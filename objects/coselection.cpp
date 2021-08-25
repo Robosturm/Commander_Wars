@@ -7,6 +7,8 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/gamemanager.h"
 
+#include "objects/base/moveinbutton.h"
+
 COSelection::COSelection(QSize maxSize, QStringList coids)
     : QObject(),
       m_Coids(coids)
@@ -60,15 +62,28 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
             }
         }
     }
-
     m_ArmyBannerPanel = spPanel::create(true, QSize(maxSize.width(),  75 * scale + 22), QSize(m_Armies.size() * 20 * scale + 40, 53 * scale + 22));
+    m_ArmyBannerPanel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects) + 1);
     addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
         loadArmy(m_Armies[i], bannerX, y, i);
     }
-    m_CoFieldPanel = spPanel::create(true, QSize(51 * 3 * scale + 80, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()), QSize(51 * 3 * scale + 80, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()));
-    m_CoFieldPanel->setY(m_ArmyBannerPanel->getScaledHeight());
+    qint32 baseYSize = maxSize.height();
+    qint32 startY = m_ArmyBannerPanel->getScaledHeight();
+    if (Settings::getSmallScreenDevice())
+    {
+        auto moveInButton = spMoveInButton::create(m_ArmyBannerPanel.get(), m_ArmyBannerPanel->getScaledHeight(), 1, -1, 2.0f, true);
+        m_ArmyBannerPanel->setY(-m_ArmyBannerPanel->getScaledHeight() + 1);
+        startY = 0;
+    }
+    else
+    {
+        baseYSize -= m_ArmyBannerPanel->getScaledHeight();
+    }
+    m_CoFieldPanel = spPanel::create(true, QSize(51 * 3 * scale + 80, baseYSize), QSize(51 * 3 * scale + 80, baseYSize));
+    m_CoFieldPanel->setY(startY);
+
     addChild(m_CoFieldPanel);
 
     qint32 width = (maxSize.width() - m_CoFieldPanel->getScaledWidth());
@@ -76,8 +91,8 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     {
         width /= 2;
     }
-    m_CoDescription = spPanel::create(true, QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()), QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()));
-    m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
+    m_CoDescription = spPanel::create(true, QSize(width, baseYSize), QSize(width, baseYSize));
+    m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), startY);
     addChild(m_CoDescription);
 
     for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
@@ -113,8 +128,8 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     pPanelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pPanelbox->setResAnim(pAnim);
     pPanelbox->setX(m_CoDescription->getX() + m_CoDescription->getScaledWidth());
-    pPanelbox->setY(m_ArmyBannerPanel->getScaledHeight());
-    pPanelbox->setSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight());
+    pPanelbox->setY(startY);
+    pPanelbox->setSize(width, baseYSize);
 
     m_pCurrentCO = oxygine::spSprite::create();
     m_pCurrentCO->setPosition(10, 10);

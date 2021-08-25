@@ -4,13 +4,21 @@
 
 #include "coreengine/mainapp.h"
 
-MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction, qint32 startY, float buttonScale)
+MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 direction, qint32 startOffset, float buttonScale, bool useY)
     : m_pParent(pParent),
       m_moveInSize(moveInSize),
-      m_direction(direction)
+      m_direction(direction),
+      m_useY(useY)
 {
     m_pButton = oxygine::spButton::create();
-    m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    if (m_useY)
+    {
+        m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
+    }
+    else
+    {
+        m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    }
     m_pButton->setSize(m_pButton->getResAnim()->getSize());
     m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = m_pButton.get();
@@ -27,20 +35,55 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
         addMoveTween();
     });
     m_pButton->setScale(buttonScale);
-    if (direction < 0)
+    if (m_useY)
     {
-        m_pButton->setFlippedX(true);
-        setX(-m_pButton->getScaledWidth() - 5);
+        if (direction < 0)
+        {
+            m_pButton->setFlippedY(true);
+            setY(-m_pButton->getScaledHeight() - 5);
+        }
+        else
+        {
+            setY(pParent->getScaledHeight() + 5);
+        }
     }
     else
     {
-        setX(pParent->getScaledWidth() + 5);
+        if (direction < 0)
+        {
+            m_pButton->setFlippedX(true);
+            setX(-m_pButton->getScaledWidth() - 5);
+        }
+        else
+        {
+            setX(pParent->getScaledWidth() + 5);
+        }
     }
     addChild(m_pButton);
-    if (startY < 0)
+
+    if (startOffset < 0)
     {
-        setY(pParent->getScaledHeight() / 2 - m_pButton->getScaledHeight() / 2);
+        if (m_useY)
+        {
+            setX(pParent->getScaledWidth() / 2 - m_pButton->getScaledWidth() / 2);
+        }
+        else
+        {
+            setY(pParent->getScaledHeight() / 2 - m_pButton->getScaledHeight() / 2);
+        }
     }
+    else
+    {
+        if (m_useY)
+        {
+            setX(startOffset);
+        }
+        else
+        {
+            setY(startOffset);
+        }
+    }
+
     pParent->addChild(spMoveInButton(this, true));
 }
 
@@ -50,6 +93,10 @@ void MoveInButton::addMoveTween()
     {
         m_finished = false;
         qint32 endPos = m_pParent->getX();
+        if (m_useY)
+        {
+            endPos = m_pParent->getY();
+        }
         if (m_movedOut)
         {
             endPos -= m_moveInSize * m_direction;
@@ -58,18 +105,40 @@ void MoveInButton::addMoveTween()
         {
             endPos += m_moveInSize * m_direction;
         }
-        oxygine::spTween pTween = oxygine::createTween(oxygine::Actor::TweenX(endPos), oxygine::timeMS(200));
+        oxygine::spTween pTween;
+        if (m_useY)
+        {
+            pTween = oxygine::createTween(oxygine::Actor::TweenY(endPos), oxygine::timeMS(200));
+        }
+        else
+        {
+            pTween = oxygine::createTween(oxygine::Actor::TweenX(endPos), oxygine::timeMS(200));
+        }
         oxygine::Sprite* pActor = m_pButton.get();
         pTween->addDoneCallback([=](oxygine::Event*)
         {
             m_movedOut = !m_movedOut;
-            if (m_direction < 0)
+            if (m_useY)
             {
-                pActor->setFlippedX(!m_movedOut);
+                if (m_direction < 0)
+                {
+                    pActor->setFlippedY(!m_movedOut);
+                }
+                else
+                {
+                    pActor->setFlippedY(m_movedOut);
+                }
             }
             else
             {
-                pActor->setFlippedX(m_movedOut);
+                if (m_direction < 0)
+                {
+                    pActor->setFlippedX(!m_movedOut);
+                }
+                else
+                {
+                    pActor->setFlippedX(m_movedOut);
+                }
             }
             m_finished = true;
             emit sigMoved();

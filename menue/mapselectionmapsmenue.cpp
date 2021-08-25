@@ -401,14 +401,15 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             qint32 unitCount,
                                             float startBaseUnitSize,
                                             QVector<float> unitDistribution,
-                                            bool unitsDistributed)
+                                            bool unitsDistributed,
+                                            bool mirrored)
 {
     
     spGameMap pGameMap = spGameMap::create(width, heigth, playerCount);
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
-                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed);
+                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed, mirrored);
     pGameMap->setMapName(mapName);
     if (mapName.isEmpty())
     {

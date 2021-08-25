@@ -250,7 +250,8 @@ public slots:
                          qint32 unitCount,
                          float startBaseUnitSize,
                          QVector<float> unitDistribution,
-                         bool unitsDistributed);
+                         bool unitsDistributed,
+                         bool mirrored);
     /**
      * @brief showResizeMap
      */

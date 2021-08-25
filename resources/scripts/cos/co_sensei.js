@@ -67,7 +67,7 @@ var Constructor = function()
                     map.spawnUnit(building.getX(), building.getY(), unitID, co.getOwner());
                     map.getTerrain(building.getX(), building.getY()).getUnit().setHp(hp);
                     var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
-                    if (globals.randInt(0, 1) === 0)
+                    if (i % 2 === 0)
                     {
                         animation.setSound("power8_1.wav");
                     }

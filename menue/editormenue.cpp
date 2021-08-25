@@ -746,14 +746,16 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
                                   qint32 unitCount,
                                   float startBaseUnitSize,
                                   QVector<float> unitDistribution,
-                                  bool unitsDistributed)
+                                  bool unitsDistributed,
+                                  bool mirrored)
 {
     Console::print("EditorMenue::createRandomMap", Console::eDEBUG);
     cleanTemp(-1);
     spGameMap pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
-                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed);
+                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed,
+                        mirrored);
     pGameMap->setMapName(mapName);
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);

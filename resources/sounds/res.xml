@@ -96,7 +96,7 @@
     <sound file="power12_1.wav"                 cachesize = "10"/>
     <sound file="power12_2.wav"                 cachesize = "10"/>
     <sound file="powerready.wav"                cachesize = "2"/>
-    <sound file="power_activation.wav"          cachesize = "2"/>
+    <sound file="power_activation.wav"          cachesize = "10"/>
     <sound file="rain.wav"                      cachesize = "2"/>
     <sound file="recon_move.wav"                cachesize = "5"/>
     <sound file="repair_1.wav"                  cachesize = "10"/>

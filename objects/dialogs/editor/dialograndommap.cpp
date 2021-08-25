@@ -140,6 +140,19 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = spLabel::create(width - 10);
     text->setStyle(style);
+    text->setHtmlText(tr("Mirrored Map:"));
+    text->setPosition(30, 5 + y + text->getHeight());
+    m_pPanel->addItem(text);
+    m_mirrored = spCheckbox::create();
+    m_mirrored->setTooltipText(tr("If the map should be created in a mirrored/rotated base. This requires an even number of players to work."));
+    m_mirrored->setChecked(false);
+    m_mirrored->setPosition(text->getX() + width, text->getY());
+    m_pPanel->addItem(m_mirrored);
+
+    // Label
+    y += 40;
+    text = spLabel::create(width - 10);
+    text->setStyle(style);
     text->setHtmlText(tr("Seed:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
@@ -270,9 +283,22 @@ DialogRandomMap::DialogRandomMap()
     {
         emit sigFinish();
     });
+    connect(m_mirrored.get(), &Checkbox::checkChanged, this, [=](bool)
+    {
+        checkIfGenerationIsAllowed();
+    }, Qt::QueuedConnection);
+    connect(m_MapPlayerCount.get(), &SpinBox::sigValueChanged, this, [=](qreal)
+    {
+        checkIfGenerationIsAllowed();
+    }, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigCancel, this, &DialogRandomMap::remove, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigClose, this, &DialogRandomMap::remove, Qt::QueuedConnection);
     connect(this, &DialogRandomMap::sigFinish, this, &DialogRandomMap::generatorFinished, Qt::QueuedConnection);
+}
+
+void DialogRandomMap::checkIfGenerationIsAllowed()
+{
+    m_OkButton->setEnabled(!m_mirrored->getChecked() || static_cast<qint32>(m_MapPlayerCount->getCurrentValue()) % 2 == 0);
 }
 
 void DialogRandomMap::generatorFinished()
@@ -330,7 +356,8 @@ void DialogRandomMap::generatorFinished()
                      units, pUnitCount->getCurrentValue(),
                      pUnitsNearHq->getCurrentValue(),
                      unitDistribution,
-                     (pUnitDistributionSelection->getCurrentItem() == 1));
+                     (pUnitDistributionSelection->getCurrentItem() == 1),
+                     m_mirrored->getChecked());
     emit sigClose();
 }
 

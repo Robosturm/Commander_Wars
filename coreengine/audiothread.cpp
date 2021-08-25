@@ -312,7 +312,7 @@ void AudioThread::SlotClearPlayList()
     m_PlayListdata.clear();    
     m_currentPlayer = -1;
     // wasting some time
-    for (qint32 i = 0; i < 20; ++i)
+    for (qint32 i = 0; i < 30; ++i)
     {
         QApplication::processEvents();
         QThread::msleep(1);
