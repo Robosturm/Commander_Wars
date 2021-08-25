@@ -64,26 +64,35 @@ var Constructor = function()
             {
                 if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
                 {
-                    map.spawnUnit(building.getX(), building.getY(), unitID, co.getOwner());
-                    map.getTerrain(building.getX(), building.getY()).getUnit().setHp(hp);
                     var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
+                    animation.writeDataInt32(building.getX());
+                    animation.writeDataInt32(building.getY());
+                    animation.writeDataString(unitID);
+                    animation.writeDataInt32(co.getOwner().getPlayerID());
+                    animation.writeDataInt32(hp);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
+                    var delay = globals.randInt(135, 265);
+                    if (animations.length < 5)
+                    {
+                        delay *= i;
+                    }
                     if (i % 2 === 0)
                     {
-                        animation.setSound("power8_1.wav");
+                        animation.setSound("power8_1.wav", 1, delay);
                     }
                     else
                     {
-                        animation.setSound("power8_2.wav");
+                        animation.setSound("power8_2.wav", 1, delay);
                     }
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
                     {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

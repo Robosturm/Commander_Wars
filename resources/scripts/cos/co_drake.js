@@ -63,10 +63,15 @@ var Constructor = function()
                     var unit = units.at(i);
 
                     animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                    animation.setSound("power4.wav");
+                    var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                        delay *= i;
+                    }
+                    animation.setSound("power4.wav", 1, delay);
+                    if (animations.length < 5)
+                    {
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         if (animation2 !== null)
                         {
                             animation2.queueAnimation(animation);
@@ -75,7 +80,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

@@ -27,23 +27,28 @@ var Constructor = function()
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var delay = globals.randInt(135, 265);
+            if (animations.length < 5)
+            {
+                delay *= i;
+            }
             if (i % 2 === 0)
             {
-                animation.setSound("power10_1.wav");
+                animation.setSound("power10_1.wav", 1, delay);
             }
             else
             {
-                animation.setSound("power10_2.wav");
+                animation.setSound("power10_2.wav", 1, delay);
             }
             if (animations.length < 5)
             {
-                animation.addSprite("power10", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                animation.addSprite("power10", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power10", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                animation.addSprite("power10", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -87,16 +92,21 @@ var Constructor = function()
                     var unit = units.at(i);
 
                     animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                    animation.setSound("power4.wav");
+                    var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                        delay *= i;
+                    }
+                    animation.setSound("power4.wav", 1, delay);
+                    if (animations.length < 5)
+                    {
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animation2.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

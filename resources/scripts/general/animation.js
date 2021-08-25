@@ -61,4 +61,17 @@ var ANIMATION =
             }
         }
     },
+
+    postAnimationSpawnUnit : function(postAnimation)
+    {
+        postAnimation.seekBuffer();
+        var x = postAnimation.readDataInt32();
+        var y = postAnimation.readDataInt32();
+        var unitId = postAnimation.readDataString();
+        var owner = postAnimation.readDataInt32();
+        var hp = postAnimation.readDataInt32();
+        map.spawnUnit(x, y, unitId, map.getPlayer(owner));
+        map.getTerrain(x, y).getUnit().setHp(hp);
+    },
+
 };

@@ -57,16 +57,21 @@ var Constructor = function()
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                    animation.setSound("power4.wav");
+                    var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                        delay *= i;
+                    }
+                    animation.setSound("power4.wav", 1, delay);
+                    if (animations.length < 5)
+                    {
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
                     {
-                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                        animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;
@@ -94,25 +99,36 @@ var Constructor = function()
             {
                 if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
                 {
-                    map.spawnUnit(building.getX(), building.getY(), invasion[i % invasion.length], co.getOwner());
                     var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
+                    animation.writeDataInt32(building.getX());
+                    animation.writeDataInt32(building.getY());
+                    animation.writeDataString(invasion[i % invasion.length]);
+                    animation.writeDataInt32(co.getOwner().getPlayerID());
+                    animation.writeDataInt32(10);
+                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
+
+                    var delay = globals.randInt(135, 265);
+                    if (animations.length < 5)
+                    {
+                        delay *= i;
+                    }
                     if (i % 2 === 0)
                     {
-                        animation.setSound("power8_1.wav");
+                        animation.setSound("power8_1.wav", 1, delay);
                     }
                     else
                     {
-                        animation.setSound("power8_2.wav");
+                        animation.setSound("power8_2.wav", 1, delay);
                     }
                     if (animations.length < 5)
                     {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
                     {
-                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                        animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                         animations[counter].queueAnimation(animation);
                         animations[counter] = animation;
                         counter++;

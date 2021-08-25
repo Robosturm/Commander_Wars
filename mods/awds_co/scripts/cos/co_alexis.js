@@ -54,6 +54,8 @@ CO_ALEXIS.startOfTurn = function(co)
         var player = co.getOwner();
         if (!player.getIsDefeated())
         {
+            var animations = [];
+            var counter = 0;
             var buildings = co.getOwner().getBuildings();
             var fields = globals.getCircle(1, 1);
             var viewplayer = map.getCurrentViewPlayer();
@@ -75,9 +77,31 @@ CO_ALEXIS.startOfTurn = function(co)
                                 (unit.getOwner() === co.getOwner()))
                         {
                             UNIT.repairUnit(unit, 1);
+
                             animation = GameAnimationFactory.createAnimation(unitX, unitY);
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
-                            animation.setSound("power0.wav");
+                            var delay = globals.randInt(135, 265);
+                            if (animations.length < 5)
+                            {
+                                delay *= i;
+                            }
+                            animation.setSound("power0.wav", 1, delay);
+                            if (animations.length < 5)
+                            {
+                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                powerNameAnimation.queueAnimation(animation);
+                                animations.push(animation);
+                            }
+                            else
+                            {
+                                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                                animations[counter].queueAnimation(animation);
+                                animations[counter] = animation;
+                                counter++;
+                                if (counter >= animations.length)
+                                {
+                                    counter = 0;
+                                }
+                            }
                             if (!viewplayer.getFieldVisible(unitX, unitY))
                             {
                                 animation.setVisible(false);

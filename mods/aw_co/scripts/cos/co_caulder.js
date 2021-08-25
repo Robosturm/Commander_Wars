@@ -59,6 +59,8 @@ CO_CAULDER.startOfTurn = function(co)
         var player = co.getOwner();
         if (!player.getIsDefeated())
         {
+            var animations = [];
+            var counter = 0;
             var units = co.getOwner().getUnits();
             units.randomize();
             var viewplayer = map.getCurrentViewPlayer();
@@ -66,9 +68,30 @@ CO_CAULDER.startOfTurn = function(co)
             {
                 var unit = units.at(i);
                 UNIT.repairUnit(unit, 1);
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
-                animation.setSound("power0.wav");
+                var delay = globals.randInt(135, 265);
+                if (animations.length < 5)
+                {
+                    delay *= i;
+                }
+                var animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                animation.setSound("power0.wav", 1, delay);
+                if (animations.length < 5)
+                {
+                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                    powerNameAnimation.queueAnimation(animation);
+                    animations.push(animation);
+                }
+                else
+                {
+                    animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                    animations[counter].queueAnimation(animation);
+                    animations[counter] = animation;
+                    counter++;
+                    if (counter >= animations.length)
+                    {
+                        counter = 0;
+                    }
+                }
                 if (!viewplayer.getFieldVisible(unitX, unitY))
                 {
                     animation.setVisible(false);

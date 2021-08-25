@@ -26,16 +26,21 @@ CO_EAGLE.activatePower = function(co)
         if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
         {
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            animation.setSound("power1.wav");
+            var delay = globals.randInt(135, 265);
             if (animations.length < 5)
             {
-                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(135, 265) * i);
+                delay *= i;
+            }
+            animation.setSound("power1.wav", 1, delay);
+            if (animations.length < 5)
+            {
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, delay);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(135, 265));
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, delay);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;

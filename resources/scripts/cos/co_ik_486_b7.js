@@ -28,23 +28,28 @@ var Constructor = function()
             if (unit.getBaseMaxRange() === 1)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var delay = globals.randInt(135, 265);
+                if (animations.length < 5)
+                {
+                    delay *= i;
+                }
                 if (i % 2 === 0)
                 {
-                    animation.setSound("power9_1.wav");
+                    animation.setSound("power9_1.wav", 1, delay);
                 }
                 else
                 {
-                    animation.setSound("power9_2.wav");
+                    animation.setSound("power9_2.wav", 1, delay);
                 }
                 if (animations.length < 5)
                 {
-                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265) * i);
+                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                     powerNameAnimation.queueAnimation(animation);
                     animations.push(animation);
                 }
                 else
                 {
-                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
+                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                     animations[counter].queueAnimation(animation);
                     animations[counter] = animation;
                     counter++;
@@ -74,23 +79,28 @@ var Constructor = function()
             if (unit.getBaseMaxRange() === 1)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var delay = globals.randInt(135, 265);
+                if (animations.length < 7)
+                {
+                    delay *= i;
+                }
                 if (i % 2 === 0)
                 {
-                    animation.setSound("power12_1.wav");
+                    animation.setSound("power12_1.wav", 1, delay);
                 }
                 else
                 {
-                    animation.setSound("power12_2.wav");
+                    animation.setSound("power12_2.wav", 1, delay);
                 }
                 if (animations.length < 7)
                 {
-                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, globals.randInt(135, 265) * i);
+                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
                     powerNameAnimation.queueAnimation(animation);
                     animations.push(animation);
                 }
                 else
                 {
-                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, globals.randInt(135, 265));
+                    animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
                     animations[counter].queueAnimation(animation);
                     animations[counter] = animation;
                     counter++;
