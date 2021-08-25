@@ -76,7 +76,7 @@ CO_ALEXIS.startOfTurn = function(co)
                         {
                             UNIT.repairUnit(unit, 1);
                             animation = GameAnimationFactory.createAnimation(unitX, unitY);
-                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
+                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(135, 265));
                             animation.setSound("power0.wav");
                             if (!viewplayer.getFieldVisible(unitX, unitY))
                             {

@@ -48,15 +48,15 @@ var Constructor = function()
             {
                 animation.setSound("power12_2.wav");
             }
-            if (animations.length < 5)
+            if (animations.length < 7)
             {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, globals.randInt(0, 400));
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, globals.randInt(135, 265) * i);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2);
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, globals.randInt(135, 265));
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
