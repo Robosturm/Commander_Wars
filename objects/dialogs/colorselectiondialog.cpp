@@ -27,12 +27,6 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
-    auto* pColorSelector = m_pColorSelector.get();
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-    {
-        emit editFinished(pColorSelector->getCurrentColor());
-        emit sigFinished();
-    });
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
@@ -50,6 +44,12 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     pSpriteBox->addChild(m_pColorSelector);
     connect(this, &ColorSelectionDialog::sigFinished, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &ColorSelectionDialog::canceled, this, &ColorSelectionDialog::remove, Qt::QueuedConnection);
+    auto* pColorSelector = m_pColorSelector.get();
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        emit editFinished(pColorSelector->getCurrentColor());
+        emit sigFinished();
+    });
 }
 
 void ColorSelectionDialog::remove()

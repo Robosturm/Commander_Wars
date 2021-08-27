@@ -570,7 +570,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="32"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

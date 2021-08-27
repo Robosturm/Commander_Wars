@@ -321,12 +321,9 @@ bool Player::colorToTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
-    m_colorTable = QImage(256, 256, QImage::Format_RGBA8888);
-    m_colorTable.fill(Qt::black);
-    m_colorTable.setPixelColor(0, 0, QColor(0,0, 0, 0));
-    m_colorTable.setPixelColor(0, 1, QColor(0,0, 0, 0));
-    m_colorTable.setPixelColor(1, 0, QColor(0,0, 0, 0));
-    m_colorTable.setPixelColor(1, 1, QColor(0,0, 0, 0));
+    constexpr qint32 imageSize = 256;
+    m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
+    m_colorTable.fill(QColor(0, 0, 0, 0));
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTableCount");
     qint32 size = 0;
@@ -340,23 +337,43 @@ void Player::createTable(QColor baseColor)
         args << i;
         QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
         qint32 value = 100;
+        QColor color;
         if (erg.isNumber())
         {
             value = erg.toInt();
-        }        
-        QColor color;
-        if (value >= 100)
-        {
-            color = baseColor.lighter(value);
+            if (value >= 100)
+            {
+                color = baseColor.lighter(value);
+            }
+            else
+            {
+                color = baseColor.darker(200 - value);
+            }
         }
-        else
+        else if (erg.isString())
         {
-            color = baseColor.darker(200 - value);
+            color = QColor(erg.toString());
         }
 
-        m_colorTable.setPixelColor(1 + i * 3, 0, color);
-        m_colorTable.setPixelColor(2 + i * 3, 0, color);
-        m_colorTable.setPixelColor(3 + i * 3, 0, color);
+
+        erg = pInterpreter->doFunction("PLAYER", "getPositionForTable", args);
+
+        QPoint pos = erg.toVariant().toPoint();
+        for (qint32 x = -1; x <= 1; ++x)
+        {
+            qint32 pixelX = x + pos.x();
+            if (pixelX >= 0 && pixelX < imageSize)
+            {
+                for (qint32 y = -1; y <= 1; ++y)
+                {
+                    qint32 pixelY = y + pos.y();
+                    if (pixelY >= 0 && pixelY < imageSize)
+                    {
+                        m_colorTable.setPixelColor(pixelX, pixelY, color);
+                    }
+                }
+            }
+        }
     }
 }
 
