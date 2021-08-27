@@ -181,6 +181,7 @@ bool Player::loadTable(qint32 table)
 
 bool Player::loadTableFromFile(QString tablename)
 {
+    Console::print("Player::loadTableFromFile " + tablename, Console::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -195,7 +196,10 @@ bool Player::loadTableFromFile(QString tablename)
         if (QFile::exists(path + tablename + ".png"))
         {
             m_colorTable.load(path + tablename + ".png");
-            found = true;
+            if (m_colorTable.height() > 0)
+            {
+                found = true;
+            }
             break;
         }
     }
@@ -204,117 +208,166 @@ bool Player::loadTableFromFile(QString tablename)
 
 bool Player::colorToTable(QColor baseColor)
 {
+    Console::print("Player::colorToTable", Console::eDEBUG);
+    bool found = colorToTableInTable(baseColor);
+    if (!found)
+    {
+        if (baseColor == QColor("#ff5a00") ||
+            baseColor == QColor("#f85800"))
+        {
+            loadTableFromFile("orange_star");
+            found = true;
+        }
+        else if (baseColor == QColor("#0068e8"))
+        {
+            loadTableFromFile("blue_moon");
+            found = true;
+        }
+        else if (baseColor == QColor("#00c010"))
+        {
+            loadTableFromFile("green_earth");
+            found = true;
+        }
+        else if (baseColor == QColor("#f8c000"))
+        {
+            loadTableFromFile("yellow_comet");
+            found = true;
+        }
+        else if (baseColor == QColor("#5f11b7") ||
+                 baseColor == QColor("#6038a0"))
+        {
+            loadTableFromFile("black_hole");
+            found = true;
+        }
+        else if (baseColor == QColor("#2d2dd5") ||
+                 baseColor == QColor("#483d8b") ||
+                 baseColor == QColor("#5c5c5c"))
+        {
+            loadTableFromFile("bolt_guard");
+            found = true;
+        }
+        else if (baseColor == QColor("lightsteelblue"))
+        {
+            loadTableFromFile("metal_army");
+            found = true;
+        }
+        else if (baseColor == QColor("coral"))
+        {
+            loadTableFromFile("amber_corona");
+            found = true;
+        }
+        else if (baseColor == QColor("peru"))
+        {
+            loadTableFromFile("brown_desert");
+            found = true;
+        }
+        else if (baseColor == QColor("goldenrod") ||
+                 baseColor == QColor("#808000"))
+        {
+            loadTableFromFile("golden_sun");
+            found = true;
+        }
+        else if (baseColor == QColor("magenta"))
+        {
+            loadTableFromFile("pink_frontier");
+            found = true;
+        }
+        else if (baseColor == QColor("teal"))
+        {
+            loadTableFromFile("teal_isle");
+            found = true;
+        }
+        else if (baseColor == QColor("purple"))
+        {
+            loadTableFromFile("dark_matter");
+            found = true;
+        }
+        else if (baseColor == QColor("#cyan") ||
+                 baseColor == QColor("#00ffff"))
+        {
+            loadTableFromFile("cyan");
+            found = true;
+        }
+        else if (baseColor == QColor("#00FF00"))
+        {
+            loadTableFromFile("dark_green");
+            found = true;
+        }
+        else if (baseColor == QColor("#FF0000"))
+        {
+            loadTableFromFile("red");
+            found = true;
+        }
+        else if (baseColor == QColor("firebrick"))
+        {
+            loadTableFromFile("red_fire");
+            found = true;
+        }
+        else if (baseColor == QColor("#FFFF00"))
+        {
+            loadTableFromFile("light_grey");
+            found = true;
+        }
+        else if (baseColor == QColor("#olive"))
+        {
+            loadTableFromFile("olive");
+            found = true;
+        }
+        else if (baseColor == QColor("#0000FF"))
+        {
+            loadTableFromFile("cobalt_ice");
+            found = true;
+        }
+        else if (baseColor == QColor("silver"))
+        {
+            loadTableFromFile("silver");
+            found = true;
+        }
+    }
+    return found;
+}
+
+bool Player::colorToTableInTable(QColor baseColor)
+{
+    Console::print("Player::colorToTableInTable", Console::eDEBUG);
     bool found = false;
-    if (baseColor == QColor("#ff5a00") ||
-        baseColor == QColor("#f85800"))
+    QStringList searchPaths;
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        loadTableFromFile("orange_star");
-        found = true;
+        searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/images/colortables/");
+        searchPaths.append(Settings::getUserPath() + Settings::getMods().at(i) + "/images/colortables/");
     }
-    else if (baseColor == QColor("#0068e8"))
+    searchPaths.append(Settings::getUserPath() + "resources/images/colortables/");
+    searchPaths.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/images/colortables/");
+    for (qint32 i = 0; i < searchPaths.size(); i++)
     {
-        loadTableFromFile("blue_moon");
-        found = true;
-    }
-    else if (baseColor == QColor("#00c010"))
-    {
-        loadTableFromFile("green_earth");
-        found = true;
-    }
-    else if (baseColor == QColor("#f8c000"))
-    {
-        loadTableFromFile("yellow_comet");
-        found = true;
-    }
-    else if (baseColor == QColor("#5f11b7") ||
-             baseColor == QColor("#6038a0"))
-    {
-        loadTableFromFile("black_hole");
-        found = true;
-    }
-    else if (baseColor == QColor("#2d2dd5") ||
-             baseColor == QColor("#483d8b") ||
-             baseColor == QColor("#5c5c5c"))
-    {
-        loadTableFromFile("bolt_guard");
-        found = true;
-    }
-    else if (baseColor == QColor("lightsteelblue"))
-    {
-        loadTableFromFile("metal_army");
-        found = true;
-    }
-    else if (baseColor == QColor("coral"))
-    {
-        loadTableFromFile("amber_corona");
-        found = true;
-    }
-    else if (baseColor == QColor("peru"))
-    {
-        loadTableFromFile("brown_desert");
-        found = true;
-    }
-    else if (baseColor == QColor("goldenrod") ||
-             baseColor == QColor("#808000"))
-    {
-        loadTableFromFile("golden_sun");
-        found = true;
-    }
-    else if (baseColor == QColor("magenta"))
-    {
-        loadTableFromFile("pink_frontier");
-        found = true;
-    }
-    else if (baseColor == QColor("teal"))
-    {
-        loadTableFromFile("teal_isle");
-        found = true;
-    }
-    else if (baseColor == QColor("purple"))
-    {
-        loadTableFromFile("dark_matter");
-        found = true;
-    }
-    else if (baseColor == QColor("#cyan") ||
-             baseColor == QColor("#00ffff"))
-    {
-        loadTableFromFile("cyan");
-        found = true;
-    }
-    else if (baseColor == QColor("#00FF00"))
-    {
-        loadTableFromFile("dark_green");
-        found = true;
-    }
-    else if (baseColor == QColor("#FF0000"))
-    {
-        loadTableFromFile("red");
-        found = true;
-    }
-    else if (baseColor == QColor("firebrick"))
-    {
-        loadTableFromFile("red_fire");
-        found = true;
-    }
-    else if (baseColor == QColor("#FFFF00"))
-    {
-        loadTableFromFile("light_grey");
-        found = true;
-    }
-    else if (baseColor == QColor("#olive"))
-    {
-        loadTableFromFile("olive");
-        found = true;
-    }
-    else if (baseColor == QColor("#0000FF"))
-    {
-        loadTableFromFile("cobalt_ice");
-        found = true;
-    }
-    else if (baseColor == QColor("silver"))
-    {
-        loadTableFromFile("silver");
-        found = true;
+        QString path = searchPaths[i];
+        QStringList filter;
+        filter << "*.png";
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString path = dirIter.fileInfo().filePath();
+            QImage img(path);
+            if (QColor(img.pixel(8, 0)) == baseColor)
+            {
+                Console::print("load table " + path, Console::eDEBUG);
+                m_colorTable.load(path);
+                if (m_colorTable.height() > 0)
+                {
+                    found = true;
+                }
+            }
+            if (found)
+            {
+                break;
+            }
+        }
+        if (found)
+        {
+            break;
+        }
     }
     return found;
 }
@@ -1754,18 +1807,6 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_BuildList;
     pStream << m_BuildlistChanged;
     m_Variables.serializeObject(pStream);
-
-    width = m_colorTable.width();
-    heigth = m_colorTable.height();
-    pStream << width;
-    pStream << heigth;
-    for (qint32 x = 0; x < width; x++)
-    {
-        for (qint32 y = 0; y < heigth; y++)
-        {
-            pStream << m_colorTable.pixel(x, y);
-        }
-    }
     pStream << m_playerArmySelected;
 }
 
@@ -1920,25 +1961,17 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 12)
     {
-        qint32 width = 0;
-        pStream >> width;
-        qint32 heigth = 0;
-        pStream >> heigth;
         if (version > 14)
         {
-            m_colorTable = QImage(width, heigth, QImage::Format_RGBA8888);
-            QRgb rgb;
-            for (qint32 x = 0; x < width; x++)
+            if (!colorToTable(m_Color))
             {
-                for (qint32 y = 0; y < heigth; y++)
-                {
-                    pStream >> rgb;
-                    m_colorTable.setPixel(x, y, rgb);
-                }
+                createTable(m_Color.darker(160));
             }
         }
         else
         {
+            qint32 width = 0;
+            pStream >> width;
             QRgb rgb;
             for (qint32 x = 0; x < width; x++)
             {

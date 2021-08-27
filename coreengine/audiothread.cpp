@@ -24,7 +24,7 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
     connect(this, &AudioThread::SignalPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
-    connect(this, &AudioThread::SignalPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalPlaySound,         this, &AudioThread::SlotPlaySound, Qt::BlockingQueuedConnection);
     connect(this, &AudioThread::SignalStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
     connect(this, &AudioThread::sigInitAudio,            this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
@@ -568,34 +568,34 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
     {
         auto & soundCache = m_soundCaches[file];
         bool started = false;
-        for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
+        for (qint32 i = soundCache->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
-            if (soundCache->sound[i].get() != nullptr &&
-                !soundCache->sound[i]->isPlaying() &&
-                !soundCache->timer[i]->isActive())
+            if (soundCache->sound[i].get() == nullptr)
             {
-                Console::print("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
-                qreal value = QAudio::convertVolume(sound,
-                                                    QAudio::LogarithmicVolumeScale,
-                                                    QAudio::LinearVolumeScale);
-                soundCache->sound[i]->setVolume(value);
-                soundCache->sound[i]->setLoopCount(loops);
-                // start play
-                if (delay > 0)
-                {
-                    soundCache->timer[i]->start(delay);
-                }
-                else
-                {
-                    soundCache->sound[i]->play();
-                }
-                started = true;
                 break;
+            }
+            else if (tryPlaySoundAtCachePosition(soundCache, i,
+                                                 file, loops, delay, sound))
+            {
+                     started = true;
+                     break;
             }
         }
         if (!started)
         {
-            Console::print("no free cached sound found.", Console::eDEBUG);
+            for (qint32 i = 0; i < soundCache->nextSoundToUse; ++i)
+            {
+                if (tryPlaySoundAtCachePosition(soundCache, i,
+                                                file, loops, delay, sound))
+                {
+                    started = true;
+                    break;
+                }
+            }
+            if (!started)
+            {
+                Console::print("no free cached sound found.", Console::eDEBUG);
+            }
         }
     }
     else
@@ -604,10 +604,39 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
     }
 }
 
+bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
+                                              QString & file, qint32 loops, qint32 delay, qreal sound)
+{
+    bool started = false;
+    if (!soundCache->sound[i]->isPlaying() &&
+        !soundCache->timer[i]->isActive())
+    {
+        Console::print("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
+        qreal value = QAudio::convertVolume(sound,
+                                            QAudio::LogarithmicVolumeScale,
+                                            QAudio::LinearVolumeScale);
+        soundCache->sound[i]->setVolume(value);
+        soundCache->sound[i]->setLoopCount(loops);
+        // start play
+        if (delay > 0)
+        {
+            soundCache->timer[i]->start(delay);
+        }
+        else
+        {
+            soundCache->sound[i]->play();
+        }
+        started = true;
+        soundCache->nextSoundToUse = i + 1;
+    }
+    return started;
+}
+
 void AudioThread::SlotStopSound(QString file)
 {
     if (m_soundCaches.contains(file))
     {
+        Console::print("Stopping sound " + file, Console::eDEBUG);
         auto & soundCache = m_soundCaches[file];
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {

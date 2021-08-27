@@ -276,6 +276,15 @@ var Constructor = function()
     {
         return qsTr("Rachel");
     };
+    this.getAiUsePower = function(co, powerSurplus, turnMode)
+    {
+        // scop spam
+        if (co.canUseSuperpower())
+        {
+            return GameEnums.PowerMode_Superpower;
+        }
+        return GameEnums.PowerMode_Off;
+    };
 }
 
 Constructor.prototype = CO;

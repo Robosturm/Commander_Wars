@@ -29,7 +29,7 @@ public:
      */
     inline QString getCurrentText()
     {
-        return m_Text;
+        return m_Text.trimmed();
     }
     virtual void update(const oxygine::UpdateState& us) override;
     /**

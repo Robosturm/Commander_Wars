@@ -44,6 +44,8 @@ void HumanPlayerInput::init()
         connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
         connect(pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
         connect(this, &HumanPlayerInput::performAction, pMenu.get(), &GameMenue::performAction, Qt::QueuedConnection);
+        m_Fields.reserve(pMap->getMapWidth() * pMap->getMapHeight() / 4);
+        m_FieldPoints.reserve(pMap->getMapWidth() * pMap->getMapHeight() / 4);
     }
 }
 
@@ -292,6 +294,7 @@ void HumanPlayerInput::clearMenu()
 
 void HumanPlayerInput::clearMarkedFields()
 {
+    Mainapp::getInstance()->pauseRendering();
     for (qint32 i = 0; i < m_Fields.size(); i++)
     {
         m_Fields[i]->detach();
@@ -309,6 +312,7 @@ void HumanPlayerInput::clearMarkedFields()
         fields->detach();
     }
     m_InfoFields.clear();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
@@ -821,7 +825,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         pSprite->setResAnim(pAnim);
     }
     pSprite->setColor(color);
-    pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+    // pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {

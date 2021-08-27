@@ -20,6 +20,7 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/qmlvector.h"
 
+#include <vector>
 
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;
@@ -95,147 +96,7 @@ public:
      * @brief rotateY
      */
     void rotateY();
-    /**
-     * @brief randomMap
-     * @param width
-     * @param heigth
-     * @param playerCount
-     * @param roadSupport
-     * @param seed
-     * @param forestchance
-     * @param mountainChance
-     * @param seachance
-     * @param buildingchance
-     * @return seed used to create the map
-     */
-    qint32 randomMap(qint32 width, qint32 heigth, qint32 playerCount,
-                     bool roadSupport, qint32 seed,
-                     QVector<std::tuple<QString, float>> terrains,
-                     QVector<std::tuple<QString, float>> buildings,
-                     QVector<float> ownedBaseSize,
-                     float startBaseSize,
-                     QVector<std::tuple<QString, float>> units,
-                     qint32 unitCount,
-                     float startBaseUnitSize,
-                     QVector<float> unitDistribution,
-                     bool unitsDistributed,
-                     bool mirrored);
-    /**
-     * @brief placeGroup
-     * @param startX
-     * @param startY
-     * @param count
-     * @param terrainID
-     * @param terrainRadius
-     * @param randInt
-     */
-    qint32 randomMapPlaceGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
-    /**
-     * @brief randomMapTerrainPlaceable
-     * @param x
-     * @param y
-     * @param terrainID
-     * @return
-     */
-    bool randomMapTerrainPlaceable(qint32 x, qint32 y, QString terrainID);
-    /**
-     * @brief randomMapPlaceLine
-     * @param startX
-     * @param startY
-     * @param count
-     * @param terrainID
-     * @param randInt
-     * @return
-     */
-    qint32 randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, QString terrainID, QRandomGenerator& randInt);
-    /**
-     * @brief addTerrainPoint
-     * @param points
-     * @param x
-     * @param y
-     * @param terrainID
-     * @param terrainRadius
-     */
-    bool randomMapAddTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
-    /**
-     * @brief createBuildings
-     * @param buildings
-     * @param roadSupport
-     * @param randInt
-     * @param noHarbour
-     */
-    QVector<QPoint> randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
-                                             float startBaseSize, qint32& progress, qint32 maxProgess);
-    /**
-     * @brief createRoad
-     */
-    void randomMapCreateRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions);
-    /**
-     * @brief isBuildingPlace
-     * @param x
-     * @param y
-     * @return
-     */
-    bool randomMapIsBuildingPlace(QString buildingId, qint32 x, qint32 y);
-    /**
-     * @brief placeBuildings
-     * @param buildingId
-     * @param baseTerrainID
-     * @param buildings
-     * @param playerPositions
-     * @param ownedBaseSize
-     * @param chance
-     * @param startBaseSize
-     * @param randInt
-     */
-    void randomMapPlaceBuildings(QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions, QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt);
-    /**
-     * @brief randomMapPlaceTerain
-     * @param terrainID
-     * @param width
-     * @param heigth
-     * @param placeChance
-     * @param placeSize
-     * @param topTerrainIDs
-     * @param placeChances
-     * @param type
-     * @param randInt
-     */
-    void randomMapPlaceTerain(QString terrainID, qint32 width, qint32 heigth, float placeChance, QPoint placeSize, QStringList topTerrainIDs, QList<QVariant> placeChances, GameEnums::RandomMapTerrainType type, QRandomGenerator& randInt);
-    /**
-     * @brief placeOnTop
-     * @param terrainID
-     * @param topId
-     * @param chance
-     * @param randInt
-     */
-    void randomMapPlaceOnTop(QString terrainID, QString topId, float chance, QRandomGenerator& randInt);
-    /**
-     * @brief randomMapPlaceUnits
-     * @param units
-     * @param unitCount
-     * @param startBaseUnitSize
-     * @param unitDistribution
-     * @param progress
-     * @param maxProgess
-     */
-    void randomMapPlaceUnits(QVector<std::tuple<QString, float>> units,
-                             qint32 unitCount,
-                             float startBaseUnitSize,
-                             QVector<float> unitDistribution,
-                             QVector<QPoint> playerPositions,
-                             bool distributed,
-                             qint32& progress, qint32 maxProgess,
-                             QRandomGenerator& randInt);
-    /**
-     * @brief randomMapSpawnUnit
-     * @param unitId
-     * @param owner
-     * @param nearHq
-     * @param playerPositions
-     * @param randInt
-     */
-    void randomMapSpawnUnit(QString unitId, qint32 owner, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt);
+
     /**
      * @brief getInstance
      * @return
@@ -861,7 +722,7 @@ private:
     QString m_mapAuthor;
     QString m_mapDescription;
     QString m_mapPath;
-    QVector<QVector<spTerrain>> m_fields;
+    std::vector<std::vector<spTerrain>> m_fields;
     QVector<spPlayer> m_players;
     QVector<oxygine::spColorRectSprite> m_gridSprites;
     QVector<oxygine::spColorRectSprite> m_middleCrossGridSprites;

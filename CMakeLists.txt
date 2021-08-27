@@ -394,7 +394,7 @@ set(${PROJECT_NAME}_SRCS
     # and resizing etc.
     mapsupport/importcowtxt.cpp
     mapsupport/refactorMap.cpp
-    mapsupport/randomMap.cpp
+    mapsupport/randomMapGenerator.cpp
     mapsupport/importexport_awds.cpp
     mapsupport/importexport_awdc.cpp
     mapsupport/importawbyweb_text.cpp

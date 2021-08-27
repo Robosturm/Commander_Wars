@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
-#include <QVector>
+#include <vector>
 
 namespace oxygine
 {
@@ -83,8 +83,8 @@ namespace oxygine
     public:
         explicit Actor();
         virtual ~Actor();
-        using children = QVector<spActor>;
-        using tweens = QVector<spTween>;
+        using children = std::vector<spActor>;
+        using tweens = std::vector<spTween>;
 
         children& getChildren()
         {
@@ -92,11 +92,11 @@ namespace oxygine
         }
         oxygine::spActor getFirstChild()
         {
-            return m_children.first();
+            return m_children.front();
         }
         oxygine::spActor getLastChild()
         {
-            return m_children.last();
+            return m_children.back();
         }
         tweens& getTweens()
         {

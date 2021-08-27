@@ -18,6 +18,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
+#include "mapsupport/randomMapGenerator.h"
+
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
 
@@ -406,7 +408,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
 {
     
     spGameMap pGameMap = spGameMap::create(width, heigth, playerCount);
-    pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
+    RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed, mirrored);

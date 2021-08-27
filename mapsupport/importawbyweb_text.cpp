@@ -55,12 +55,12 @@ void GameMap::importAWByWebMap(QString file)
         for (qint32 y = 0; y < mapHeigth; y++)
         {
             pLoadingScreen->setProgress(tr("Loading Empty Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 10 + 20 * y / mapHeigth);
-            m_fields.append(QVector<spTerrain>());
+            m_fields.push_back(std::vector<spTerrain>());
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 addChild(pTerrain);
-                m_fields[y].append(pTerrain);
+                m_fields[y].push_back(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }

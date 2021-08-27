@@ -144,12 +144,12 @@ void GameMap::importTxtMap(QString file)
                 qint32 heigth = data[2].toInt();
                 for (qint32 y = 0; y < heigth; y++)
                 {
-                    m_fields.append(QVector<spTerrain>());
+                    m_fields.push_back(std::vector<spTerrain>());
                     for (qint32 x = 0; x < width; x++)
                     {
                         spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                         addChild(pTerrain);
-                        m_fields[y].append(pTerrain);
+                        m_fields[y].push_back(pTerrain);
                         pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                         pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     }

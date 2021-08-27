@@ -1011,7 +1011,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             {
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
-                m_fields[y].replace(x, pTerrain);
+                m_fields[y][x] = pTerrain;
                 addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
@@ -1019,7 +1019,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             else
             {
                 pTerrainOld->detach();
-                m_fields[y].replace(x, pTerrain);
+                m_fields[y][x] = pTerrain;
                 addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
@@ -1238,11 +1238,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
         }
-        m_fields.append(QVector<spTerrain>());
+        m_fields.push_back(std::vector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
-            m_fields[y].append(pTerrain);
+            m_fields[y].push_back(pTerrain);
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {

@@ -20,9 +20,10 @@ class AudioThread : public QObject
 private:
     struct SoundData
     {
-        static constexpr qint32 MAX_SAME_SOUNDS = 10;
+        static constexpr qint32 MAX_SAME_SOUNDS = 15;
         std::shared_ptr<QSoundEffect> sound[MAX_SAME_SOUNDS];
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
+        qint32 nextSoundToUse = 0;
     };
 public:
     explicit AudioThread();
@@ -171,6 +172,14 @@ protected:
      * @param newState
      */
     void mediaPlaybackStateChanged(qint32 playerIndex, QMediaPlayer::PlaybackState newState);
+    /**
+     * @brief playSoundAtCachePosition
+     * @param soundCache
+     * @param i
+     * @return
+     */
+    bool tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
+                                     QString & file, qint32 loops, qint32 delay, qreal sound);
     /**
      * @brief qtWorkaround
      */

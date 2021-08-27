@@ -3,7 +3,6 @@ var Init =
     step = 0,
     playTest = 0,
     steps = ["creditsTest",
-             //"replayTest",
              "achievementTest",
              "optionTest",
              "wikiTest",
@@ -15,6 +14,7 @@ var Init =
              "simplePlayTest",
              "simplePlayTest",
              "simplePlayTest",
+             "replayTest",
             ],
     main = function(menu)
     {

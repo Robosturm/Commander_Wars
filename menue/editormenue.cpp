@@ -34,6 +34,8 @@
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
+#include "mapsupport/randomMapGenerator.h"
+
 #include "wiki/fieldinfo.h"
 
 #include "ui_reader/uifactory.h"
@@ -752,7 +754,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
     Console::print("EditorMenue::createRandomMap", Console::eDEBUG);
     cleanTemp(-1);
     spGameMap pGameMap = GameMap::getInstance();
-    pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
+    RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed,
                         mirrored);

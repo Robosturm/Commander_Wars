@@ -530,6 +530,12 @@ private:
      */
     bool colorToTable(QColor baseColor);
     /**
+     * @brief colorToTableInTable
+     * @param baseColor
+     * @return
+     */
+    bool colorToTableInTable(QColor baseColor);
+    /**
      * @brief createTable
      * @param baseColor
      */

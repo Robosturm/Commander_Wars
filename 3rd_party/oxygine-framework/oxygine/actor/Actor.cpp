@@ -432,7 +432,16 @@ namespace oxygine
             QMutexLocker lockParent(&m_parent->m_Locked);
             QMutexLocker lock(&m_Locked);
             spActor me = spActor(this);
-            m_parent->m_children.removeOne(me);
+            auto iter = m_parent->m_children.cbegin();
+            while (iter != m_parent->m_children.cend())
+            {
+                if (iter->get() == me)
+                {
+                    m_parent->m_children.erase(iter);
+                    break;
+                }
+                ++iter;
+            }
             m_parent->insertActor(me);
         }
     }
@@ -730,7 +739,16 @@ namespace oxygine
             else
             {                
                 setParent(actor.get(), nullptr);
-                m_children.removeOne(actor);
+                auto iter = m_children.cbegin();
+                while (iter != m_children.cend())
+                {
+                    if (iter->get() == actor)
+                    {
+                        m_children.erase(iter);
+                        break;
+                    }
+                    ++iter;
+                }
             }
         }
         else
@@ -743,7 +761,7 @@ namespace oxygine
     {
         while (m_children.size() > 0)
         {
-            spActor child = m_children.last();
+            spActor child = m_children.back();
             removeChild(child);
         }
     }
@@ -762,18 +780,18 @@ namespace oxygine
     void Actor::internalUpdate(const UpdateState& us)
     {
         QMutexLocker lock(&m_Locked);
-        qint32 i = 0;
-        while (i < m_tweens.size())
+        auto iter = m_tweens.begin();
+        while (iter != m_tweens.end())
         {
-            auto & tween = m_tweens[i];
+            auto* tween = iter->get();
             tween->update(*this, us);
             if (tween->isDone())
             {
-                m_tweens.removeAt(i);
+                iter = m_tweens.erase(iter);
             }
             else
             {
-                ++i;
+                ++iter;
             }
         }
         doUpdate(us);
@@ -971,7 +989,7 @@ namespace oxygine
         }
         {
             QMutexLocker lock(&m_Locked);
-            m_tweens.append(tween);
+            m_tweens.push_back(tween);
         }
         tween->start(*this);
         return tween;
@@ -989,10 +1007,16 @@ namespace oxygine
         {
             return;
         }
-        if (m_tweens.contains(pTween))
+        auto iter = m_tweens.begin();
+        while (iter != m_tweens.end())
         {
-            pTween->setClient(nullptr);
-            m_tweens.removeOne(pTween);
+            if (iter->get() == pTween)
+            {
+                pTween->setClient(nullptr);
+                m_tweens.erase(iter);
+                break;
+            }
+            ++iter;
         }
     }
 
@@ -1000,7 +1024,7 @@ namespace oxygine
     {
         while (m_tweens.size() > 0)
         {
-            spTween tween = m_tweens.last();
+            spTween tween = m_tweens.back();
             if (callComplete)
             {
                 tween->complete();
