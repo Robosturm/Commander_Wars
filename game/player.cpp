@@ -321,9 +321,12 @@ bool Player::colorToTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
-    m_colorTable = QImage(256, 1, QImage::Format_RGBA8888);
+    m_colorTable = QImage(256, 256, QImage::Format_RGBA8888);
     m_colorTable.fill(Qt::black);
     m_colorTable.setPixelColor(0, 0, QColor(0,0, 0, 0));
+    m_colorTable.setPixelColor(0, 1, QColor(0,0, 0, 0));
+    m_colorTable.setPixelColor(1, 0, QColor(0,0, 0, 0));
+    m_colorTable.setPixelColor(1, 1, QColor(0,0, 0, 0));
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTableCount");
     qint32 size = 0;
@@ -340,7 +343,7 @@ void Player::createTable(QColor baseColor)
         if (erg.isNumber())
         {
             value = erg.toInt();
-        }
+        }        
         QColor color;
         if (value >= 100)
         {
@@ -350,6 +353,7 @@ void Player::createTable(QColor baseColor)
         {
             color = baseColor.darker(200 - value);
         }
+
         m_colorTable.setPixelColor(1 + i * 3, 0, color);
         m_colorTable.setPixelColor(2 + i * 3, 0, color);
         m_colorTable.setPixelColor(3 + i * 3, 0, color);
@@ -1735,10 +1739,15 @@ void Player::serializeObject(QDataStream& pStream) const
     m_Variables.serializeObject(pStream);
 
     width = m_colorTable.width();
+    heigth = m_colorTable.height();
     pStream << width;
+    pStream << heigth;
     for (qint32 x = 0; x < width; x++)
     {
-        pStream << m_colorTable.pixel(x, 0);
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            pStream << m_colorTable.pixel(x, y);
+        }
     }
     pStream << m_playerArmySelected;
 }
@@ -1896,12 +1905,33 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     {
         qint32 width = 0;
         pStream >> width;
-        m_colorTable = QImage(width, 1, QImage::Format_RGBA8888);
-        QRgb rgb;
-        for (qint32 x = 0; x < width; x++)
+        qint32 heigth = 0;
+        pStream >> heigth;
+        if (version > 14)
         {
-            pStream >> rgb;
-            m_colorTable.setPixel(x, 0, rgb);
+            m_colorTable = QImage(width, heigth, QImage::Format_RGBA8888);
+            QRgb rgb;
+            for (qint32 x = 0; x < width; x++)
+            {
+                for (qint32 y = 0; y < heigth; y++)
+                {
+                    pStream >> rgb;
+                    m_colorTable.setPixel(x, y, rgb);
+                }
+            }
+        }
+        else
+        {
+            QRgb rgb;
+            for (qint32 x = 0; x < width; x++)
+            {
+                pStream >> rgb;
+            }
+            if (!colorToTable(m_Color))
+            {
+                createTable(m_Color.darker(160));
+            }
+            m_Color = m_colorTable.pixel(8, 0);
         }
         if (!fast)
         {

@@ -11,11 +11,12 @@ namespace oxygine
         releaseShaders();
     }
 
-    void UberShaderProgram::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader)
+    void UberShaderProgram::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader, const QString& fracMatrixShader)
     {
         m_fracShader = fracShader;
         m_vertexShader = vertexShader;
         m_fracTableShader = fracTableShader;
+        m_fracMatrixShader = fracMatrixShader;
     }
 
     void UberShaderProgram::release()
@@ -52,7 +53,11 @@ namespace oxygine
                 prepend += "#define ADD_COLOR\n";
             }
             QString fs = prepend;
-            if (flags & COLOR_TABLE)
+            if (flags & COLOR_MATRIX)
+            {
+                fs += m_fracMatrixShader;
+            }
+            else if (flags & COLOR_TABLE)
             {
                 fs += m_fracTableShader;
             }

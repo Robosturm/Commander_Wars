@@ -20,7 +20,8 @@ namespace oxygine
             MASK =              1 << 3,
             ADD_COLOR =         1 << 4,
             COLOR_TABLE =       1 << 5,
-            _SIZE =             1 << 6
+            COLOR_MATRIX =      1 << 6,
+            _SIZE =             1 << 7
         };
         enum
         {
@@ -34,7 +35,7 @@ namespace oxygine
         virtual ~UberShaderProgram();
         ShaderProgram* getShaderProgram(qint32 flags);
         void apply(VideoDriver* driver, spTexture base, spTexture alpha);
-        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
+        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader, const QString& fracMatrixShader);
         void release();
     protected:
         void releaseShaders();
@@ -42,6 +43,7 @@ namespace oxygine
         QString m_fracShader;
         QString m_vertexShader;
         QString m_fracTableShader;
+        QString m_fracMatrixShader;
         shader m_shaders[_SIZE];
     };
 }

@@ -5202,5 +5202,6 @@
         <file>resources/images/co_perks/tax_hike.png</file>
         <file>resources/images/co_perks/underpowered.png</file>
         <file>resources/images/co_perks/unusual_hat.png</file>
+        <file>system/frac_matrix_shader.glsl</file>
     </qresource>
 </RCC>

@@ -117,6 +117,7 @@ void GameEnums::registerEnums()
     value.setProperty("Recoloring_None", Recoloring_None);
     value.setProperty("Recoloring_Mask", Recoloring_Mask);
     value.setProperty("Recoloring_Table", Recoloring_Table);
+    value.setProperty("Recoloring_Matrix", Recoloring_Matrix);
 
     value.setProperty("AutoFocusing_LastPos", AutoFocusing_LastPos);
     value.setProperty("AutoFocusing_Owned", AutoFocusing_Owned);

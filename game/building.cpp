@@ -196,6 +196,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setResAnim(pAnim);
         }
         // repaint the building?
+        bool matrixMode = mode == GameEnums::Recoloring_Matrix;
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -205,13 +206,13 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         {
             pSprite->setColor(QColor(150, 150, 150, 255));
         }
-        else if (mode == GameEnums::Recoloring_Table && m_pOwner != nullptr)
+        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr)
         {
-            pSprite->setColorTable(m_pOwner->getColorTableAnim());
+            pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
         }
-        else if (mode == GameEnums::Recoloring_Table)
+        else if (mode == GameEnums::Recoloring_Table || matrixMode)
         {
-            pSprite->setColorTable(Player::getNeutralTableAnim());
+            pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
         }
         else
         {
@@ -270,9 +271,11 @@ void Building::updatePlayerColor(bool visible)
                         QColor color = m_pOwner->getColor();
                         m_pBuildingSprites[i]->setColor(color);
                     }
-                    else if (m_addPlayerColor[i] == GameEnums::Recoloring_Table)
+                    else if (m_addPlayerColor[i] == GameEnums::Recoloring_Table ||
+                             m_addPlayerColor[i] == GameEnums::Recoloring_Matrix)
                     {
-                        m_pBuildingSprites[i]->setColorTable(m_pOwner->getColorTableAnim());
+                        bool matrixMode = m_addPlayerColor[i] == GameEnums::Recoloring_Matrix;
+                        m_pBuildingSprites[i]->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
                     }
                 }
             }

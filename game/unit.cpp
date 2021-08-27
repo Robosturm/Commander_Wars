@@ -253,10 +253,12 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
             QColor color = m_pOwner->getColor();
             pSprite->setColor(color);
         }
-        else if (mode == GameEnums::Recoloring_Table)
+        else if (mode == GameEnums::Recoloring_Table ||
+                 mode == GameEnums::Recoloring_Matrix)
         {
-            pSprite->setColorTable(m_pOwner->getColorTableAnim());
-            pWaitSprite->setColorTable(m_pOwner->getColorTableAnim());
+            bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+            pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+            pWaitSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
         }
         else
         {

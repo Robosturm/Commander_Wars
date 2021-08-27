@@ -7,6 +7,7 @@
 #include <QBuffer>
 #include <QDataStream>
 
+#include "game/GameEnums.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -99,7 +100,7 @@ public slots:
      * @param delay
      * @param frames
      */
-    void addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0);
+    void addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0, GameEnums::Recoloring mode = GameEnums::Recoloring_Table);
     /**
      * @brief addBox
      * @param spriteID
@@ -310,7 +311,7 @@ private:
      * @param scaleY
      * @param delay
      */
-    void loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
+    void loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, GameEnums::Recoloring mode);
     /**
      * @brief setPreviousAnimation
      * @param previousAnimation

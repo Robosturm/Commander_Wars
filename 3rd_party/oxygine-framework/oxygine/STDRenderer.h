@@ -46,6 +46,7 @@ namespace oxygine
         static UberShaderProgram uberShader;
         static QString fracShaderBody;
         static QString fracTableShaderBody;
+        static QString fracMatrixShaderBody;
         static QString vertexShaderBody;
         static std::vector<quint16> indices16;
         static size_t maxVertices;

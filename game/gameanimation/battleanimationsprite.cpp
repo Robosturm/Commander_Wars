@@ -531,9 +531,11 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
             QColor color = m_pUnit->getOwner()->getColor();
             pSprite->setColor(color);
         }
-        else if (mode == GameEnums::Recoloring_Table)
+        else if (mode == GameEnums::Recoloring_Table ||
+                 mode == GameEnums::Recoloring_Matrix)
         {
-            pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim());
+            bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+            pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim(), matrixMode);
         }
         else
         {

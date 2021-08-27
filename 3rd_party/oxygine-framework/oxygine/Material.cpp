@@ -44,6 +44,15 @@ namespace oxygine
         hash_combine(hash, qRgba(m_addColor));
     }
 
+    void Material::setMatrixMode(bool set)
+    {
+        m_flags &= ~UberShaderProgram::COLOR_MATRIX;
+        if (set)
+        {
+            m_flags |= UberShaderProgram::COLOR_MATRIX;
+        }
+    }
+
     void Material::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();

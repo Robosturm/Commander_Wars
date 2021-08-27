@@ -206,7 +206,8 @@ public:
     {
         Recoloring_None,
         Recoloring_Mask,
-        Recoloring_Table
+        Recoloring_Table,
+        Recoloring_Matrix
     };
     Q_ENUM(Recoloring)
 

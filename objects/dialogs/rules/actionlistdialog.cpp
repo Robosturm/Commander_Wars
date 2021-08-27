@@ -194,8 +194,8 @@ QVector<QString> ActionListDialog::getNameList()
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Filesupport::readList(file);
-        items.append(std::get<0>(data));
+        auto data = Filesupport::readList(file);
+        items.append(data.name);
     }
     return items;
 }
@@ -205,7 +205,7 @@ void ActionListDialog::setBuildlist(qint32)
     QStringList data;
     QString file = m_PredefinedLists->getCurrentItemText();
     auto fileData = Filesupport::readList(file + ".bl", "data/actionbannlist/");
-    data = std::get<1>(fileData);
+    data = fileData.items;
     m_CurrentActionList = data;
 }
 

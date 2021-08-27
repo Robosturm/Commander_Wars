@@ -185,13 +185,13 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
     {
         QString file = m_PredefinedLists->getCurrentItemText();
         auto fileData = Filesupport::readList(file + ".bl", "data/perkbannlist/");
-        m_pPerkSelection->setPerks(std::get<1>(fileData));
+        m_pPerkSelection->setPerks(fileData.items);
     }
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
         auto fileData = Filesupport::readList(file + ".bl", "data/perkselection/");
-        QStringList perks = std::get<1>(fileData);
+        QStringList perks = fileData.items;
         qint32 i = 0;
         spGameMap pMap = GameMap::getInstance();
         while (i < perks.size())
@@ -249,8 +249,8 @@ QVector<QString> PerkSelectionDialog::getNameList(QString path)
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Filesupport::readList(file);
-        items.append(std::get<0>(data));
+        auto data = Filesupport::readList(file);
+        items.append(data.name);
     }
     return items;
 }

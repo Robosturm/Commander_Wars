@@ -165,13 +165,13 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
     addSprite3(spriteID, offsetX, offsetY, QColor(255, 255, 255), sleepAfterFinish, scaleX, scaleY, delay, 0, loops);
 }
 
-void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32)
+void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        loadSpriteAnimTable(pAnim, offsetX, offsetY, pPlayer, sleepAfterFinish, scaleX, scaleY, delay);
+        loadSpriteAnimTable(pAnim, offsetX, offsetY, pPlayer, sleepAfterFinish, scaleX, scaleY, delay, mode);
     }
     else
     {
@@ -242,7 +242,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     }
 }
 
-void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
+void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, GameEnums::Recoloring mode)
 {
     if (pAnim != nullptr)
     {
@@ -258,13 +258,14 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
         pSprite->setScaleX(scaleX);
         pSprite->setScaleY(scaleY);
         pSprite->addTween(queuedAnim);
+        bool matrixMode = mode == GameEnums::Recoloring_Matrix;
         if (pPlayer != nullptr)
         {
-            pSprite->setColorTable(pPlayer->getColorTableAnim());
+            pSprite->setColorTable(pPlayer->getColorTableAnim(), matrixMode);
         }
         else
         {
-            pSprite->setColorTable(Player::getNeutralTableAnim());
+            pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
         }
         addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);

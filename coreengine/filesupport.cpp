@@ -84,25 +84,25 @@ void Filesupport::storeList(QString file, const QStringList & items, QString fol
     }
 }
 
-std::tuple<QString, QStringList> Filesupport::readList(QString file, QString folder)
+Filesupport::StringList Filesupport::readList(QString file, QString folder)
 {
     return readList(folder + file);
 }
 
-std::tuple<QString, QStringList> Filesupport::readList(QString file)
+Filesupport::StringList Filesupport::readList(QString file)
 {
     QFile dataFile(file);
     dataFile.open(QIODevice::ReadOnly);
     QDataStream stream(&dataFile);
-    std::tuple<QString, QStringList> ret;
-    stream >> std::get<0>(ret);
+    StringList ret;
+    stream >> ret.name;
     qint32 size = 0;
     stream >> size;
     for (qint32 i = 0; i < size; i++)
     {
         QString name;
         stream >> name;
-        std::get<1>(ret).append(name);
+        ret.items.append(name);
     }
     return ret;
 }

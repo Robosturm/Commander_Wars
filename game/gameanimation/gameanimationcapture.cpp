@@ -66,7 +66,8 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
 void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,
                                              QImage & preCaptureImage, QImage & captureImage)
 {
-    if (mode == GameEnums::Recoloring_Table)
+    if (mode == GameEnums::Recoloring_Table ||
+        mode == GameEnums::Recoloring_Matrix)
     {
         if (startPlayer == nullptr)
         {
@@ -231,9 +232,11 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
             pSprite->setColor(pPlayer->getColor());
             pSprite->setPriority(20);
         }
-        else if (mode == GameEnums::Recoloring_Table)
+        else if (mode == GameEnums::Recoloring_Table ||
+                 mode == GameEnums::Recoloring_Matrix)
         {
-            pSprite->setColorTable(pPlayer->getColorTableAnim());
+            bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+            pSprite->setColorTable(pPlayer->getColorTableAnim(), matrixMode);
             pSprite->setPriority(20);
         }
         else

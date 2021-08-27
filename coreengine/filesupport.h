@@ -8,6 +8,11 @@ class Filesupport : public QObject
 {
     Q_OBJECT
 public:
+    struct StringList
+    {
+        QString name;
+        QStringList items;
+    };
     virtual ~Filesupport() = default;
     /**
      * @brief getRuntimeHash
@@ -76,14 +81,14 @@ public:
      * @param file
      * @return
      */
-    static std::tuple<QString, QStringList> readList(QString file);
+    static StringList readList(QString file);
     /**
      * @brief readList
      * @param file
      * @param folder
      * @return
      */
-    static std::tuple<QString, QStringList> readList(QString file, QString folder);
+    static StringList readList(QString file, QString folder);
     /**
      *
      */

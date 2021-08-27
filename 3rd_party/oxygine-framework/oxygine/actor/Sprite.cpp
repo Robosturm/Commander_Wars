@@ -200,7 +200,7 @@ namespace oxygine
         setAnimFrame(resanim, col, row);
     }
 
-    void Sprite::setColorTable(const oxygine::spResAnim pAnim)
+    void Sprite::setColorTable(const oxygine::spResAnim pAnim, bool matrix)
     {
         QMutexLocker lock(&m_Locked);
         m_colorTable = pAnim;
@@ -211,6 +211,7 @@ namespace oxygine
             {
                 m_mat = m_mat->clone();
                 m_mat->m_table = frame.getDiffuse().base;
+                m_mat->setMatrixMode(matrix);
                 m_mat = MaterialCache::mc().cache(*m_mat.get());
                 matChanged();
             }
@@ -218,6 +219,7 @@ namespace oxygine
         else
         {
             m_mat->m_table = nullptr;
+            m_mat->setMatrixMode(false);
         }
     }
 

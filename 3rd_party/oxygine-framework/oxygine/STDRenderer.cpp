@@ -27,6 +27,7 @@ namespace oxygine
     UberShaderProgram STDRenderer::uberShader;
     QString STDRenderer::fracShaderBody;
     QString STDRenderer::fracTableShaderBody;
+    QString STDRenderer::fracMatrixShaderBody;
     QString STDRenderer::vertexShaderBody;
 
     RenderStateCache& rsCache()
@@ -165,7 +166,19 @@ namespace oxygine
             QTextStream stream(&file);
             fracTableShaderBody = stream.readAll();
         }
-        uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody);
+        filepath = "system/frac_matrix_shader.glsl";
+        if (!QFile::exists(filepath))
+        {
+            filepath = oxygine::Resource::RCC_PREFIX_PATH + filepath;
+        }
+        if (QFile::exists(filepath))
+        {
+            QFile file(filepath);
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            fracMatrixShaderBody = stream.readAll();
+        }
+        uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody, fracMatrixShaderBody);
 
         restore();
     }

@@ -59,7 +59,7 @@ namespace oxygine
         void setAnimFrame(const AnimationFrame& f);
         /**Takes AnimationFrame from ResAnim and set it as current to Sprite. Shows assert is resanim is null. Using this method is more safe than 'setAnimFrame(const AnimationFrame &f)'*/
         void setAnimFrame(const ResAnim* resanim, qint32 col = 0, qint32 row = 0);
-        void setColorTable(const oxygine::spResAnim pAnim);
+        void setColorTable(const oxygine::spResAnim pAnim, bool matrix);
         virtual void setResAnim(const ResAnim* resanim, qint32 col = 0, qint32 row = 0);
         void setRow(qint32 row);
         void setColumn(qint32 column);

@@ -60,7 +60,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 14;
+        return 15;
     }
     /**
      * @brief setBaseGameInput sets the player input

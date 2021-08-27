@@ -260,7 +260,7 @@ void BuildListDialog::setBuildlist(qint32 item)
     {
         QString file = m_PredefinedLists->getCurrentItemText();
         auto fileData = Filesupport::readList(file + ".bl", "data/unitbannlist/");
-        data = std::get<1>(fileData);
+        data = fileData.items;
     }
     for (qint32 i = 0; i < m_UnitList.size(); i++)
     {
@@ -299,8 +299,8 @@ QVector<QString> BuildListDialog::getNameList()
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Filesupport::readList(file);
-        items.append(std::get<0>(data));
+        auto data = Filesupport::readList(file);
+        items.append(data.name);
     }
     return items;
 }
