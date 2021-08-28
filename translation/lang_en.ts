@@ -3724,16 +3724,16 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
 <context>
     <name>RandomMapGenerator</name>
     <message>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="112"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="172"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="609"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="682"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="686"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="815"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="907"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="911"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="975"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1016"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="117"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="177"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="625"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="698"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="702"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="850"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="935"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="939"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1131"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1173"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>

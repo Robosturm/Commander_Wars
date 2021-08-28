@@ -107,6 +107,23 @@ private:
     static QVector<QPoint> randomMapCreateBuildings(qint32 width, qint32 heigth, qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
                                                     float startBaseSize, qint32& progress, qint32 maxProgess, MirrorMode mirrorX, MirrorMode mirrorY);
     /**
+     * @brief RandomMapGenerator::randomMapPlaceBuildings
+     * @param width
+     * @param heigth
+     * @param buildingId
+     * @param baseTerrainID
+     * @param buildings
+     * @param playerPositions
+     * @param ownedBaseSize
+     * @param chance
+     * @param startBaseSize
+     * @param randInt
+     * @param mirrorX
+     * @param mirrorY
+     */
+    static void randomMapPlaceBuildings(qint32 width, qint32 heigth, QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions,
+                                        QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt, MirrorMode mirrorX, MirrorMode mirrorY);
+    /**
      * @brief createRoad
      */
     static void randomMapCreateRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions);
@@ -166,7 +183,8 @@ private:
                                     QVector<QPoint> playerPositions,
                                     bool distributed,
                                     qint32& progress, qint32 maxProgess,
-                                    QRandomGenerator& randInt);
+                                    QRandomGenerator& randInt,
+                                    MirrorMode mirrorX, MirrorMode mirrorY);
     /**
      * @brief randomMapSpawnUnit
      * @param unitId
@@ -175,7 +193,7 @@ private:
      * @param playerPositions
      * @param randInt
      */
-    static void randomMapSpawnUnit(QString unitId, qint32 owner, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt);
+    static void randomMapSpawnUnit(QString unitId, qint32 hqPos, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt, MirrorMode mirrorX, MirrorMode mirrorY);
     /**
      * @brief getMirroredPosition
      * @param index
@@ -185,4 +203,39 @@ private:
      * @return
      */
     static QPoint getMirroredPosition(qint32 index, QPoint position, MirrorMode mirrorX, MirrorMode mirrorY);
+    /**
+     * @brief getMirroredPlayer
+     * @param rotation
+     * @param mirrorCount
+     * @param mirrorX
+     * @param mirrorY
+     * @return
+     */
+    static qint32 getMirroredPlayer(qint32 rotation, qint32 mirrorCount, MirrorMode mirrorX, MirrorMode mirrorY);
+    /**
+     * @brief getPlayerForHqPos
+     * @param hqPos
+     * @param mirrorX
+     * @param mirrorY
+     * @return
+     */
+    static qint32 getPlayerForHqPos(qint32 hqPos, MirrorMode mirrorX, MirrorMode mirrorY);
+    /**
+     * @brief randomMapCreateRoad
+     * @param randInt
+     * @param playerPositions
+     * @param mirrorX
+     * @param mirrorY
+     */
+    static void randomMapCreateRoad(qint32 width, qint32 heigth, QRandomGenerator& randInt, QVector<QPoint>& playerPositions, MirrorMode mirrorX, MirrorMode mirrorY);
+    /**
+     * @brief connectPositionsWithRoad
+     * @param randInt
+     * @param position
+     * @param endPoint
+     * @param mirrorX
+     * @param mirrorY
+     * @param mirrorPlacing
+     */
+    static void connectPositionsWithRoad(QRandomGenerator& randInt, QPoint position, QPoint endPoint, MirrorMode mirrorX, MirrorMode mirrorY, qint32 mirrorPlacing);
 };

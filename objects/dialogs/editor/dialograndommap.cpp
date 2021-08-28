@@ -183,7 +183,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_BaseSize = spSlider::create(Settings::getWidth() - 220 - width, 0, 100);
-    m_BaseSize->setCurrentValue(33);
+    m_BaseSize->setCurrentValue(10);
     m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + width, y);
     m_pPanel->addItem(m_BaseSize);
