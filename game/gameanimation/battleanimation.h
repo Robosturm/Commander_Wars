@@ -171,6 +171,34 @@ private:
      * @param pSprite
      */
     void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
+    /**
+     * @brief createBattleFrame
+     * @param pAtkUnit
+     * @param pDefUnit
+     */
+    void createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit);
+    /**
+     * @brief createCoInfoBackImages
+     * @param pAtkUnit
+     * @param atkStartHp
+     * @param pDefUnit
+     * @param defStartHp
+     */
+    void createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp);
+    /**
+     * @brief createCoInfoFrontImages
+     * @param pAtkUnit
+     * @param pDefUnit
+     */
+    void createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit);
+    /**
+     * @brief createHealthbar
+     * @param pAtkUnit
+     * @param atkStartHp
+     * @param pDefUnit
+     * @param defStartHp
+     */
+    void createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp);
 private:
     QTimer m_battleTimer;
 

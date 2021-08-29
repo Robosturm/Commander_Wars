@@ -134,7 +134,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar_active");
+            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar_active");
             pSlider->setResAnim(pAnimState);
             pSlider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }

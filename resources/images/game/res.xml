@@ -1,248 +1,248 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "resources/images/game/" />
-	<atlas linearFilter="false">
-		<!-- battle sprite -->
-		<image file="battlesprites/base_air.png" />
-		<image file="battlesprites/base_forest.png" />
-		<image file="battlesprites/base_desertforest.png" />
-		<image file="battlesprites/base_snowforest.png" />
-		
-		<image file="battlesprites/foreground/fore_airport.png" />
-		<image file="battlesprites/foreground/fore_beach.png" />
-		<image file="battlesprites/foreground/fore_bridge.png" />
-		<image file="battlesprites/foreground/fore_factory.png" />
-		<image file="battlesprites/foreground/fore_forest.png" />
-		<image file="battlesprites/foreground/fore_forest+0.png" />
-		<image file="battlesprites/foreground/fore_harbour.png" />
-		<image file="battlesprites/foreground/fore_hq+bh.png" />
-		<image file="battlesprites/foreground/fore_hq+bm.png" />
-		<image file="battlesprites/foreground/fore_hq+ge.png" />
-		<image file="battlesprites/foreground/fore_hq+os.png" />
-		<image file="battlesprites/foreground/fore_hq+yc.png" />
-		<image file="battlesprites/foreground/fore_mountain.png" />
-		<image file="battlesprites/foreground/fore_pipeline.png" />
-		<image file="battlesprites/foreground/fore_plains.png" />
-		<image file="battlesprites/foreground/fore_plains+0.png" />
-		<image file="battlesprites/foreground/fore_plains+1.png" />
-		<image file="battlesprites/foreground/fore_river.png" />
-		<image file="battlesprites/foreground/fore_sea.png" />
-		<image file="battlesprites/foreground/fore_street.png" />
-		<image file="battlesprites/foreground/fore_town.png" />
-		<image file="battlesprites/foreground/fore_town+0.png" />
-		<image file="battlesprites/foreground/fore_desert.png" />
-		<image file="battlesprites/foreground/fore_desertforest.png" />
-		<image file="battlesprites/foreground/fore_desertmountain.png" />
-		<image file="battlesprites/foreground/fore_desertpipe.png" />
-		<image file="battlesprites/foreground/fore_desertroad.png" />
-		<image file="battlesprites/foreground/fore_snowforest.png" />
-		<image file="battlesprites/foreground/fore_snowmountain.png" />
-		<image file="battlesprites/foreground/fore_snowpipe.png" />
-		<image file="battlesprites/foreground/fore_snow+0.png" />
-		<image file="battlesprites/foreground/fore_walltop.png" />
-		
-		<image file="battlesprites/background/back_airport.png" />
-		<image file="battlesprites/background/back_beach.png" />
-		<image file="battlesprites/background/back_bridge.png" />
-		<image file="battlesprites/background/back_cliff.png" />
-		<image file="battlesprites/background/back_factory.png" />
-		<image file="battlesprites/background/back_forest.png" />
-		<image file="battlesprites/background/back_forest+0.png" />
-		<image file="battlesprites/background/back_harbour.png" />
-		<image file="battlesprites/background/back_hq+bh.png" />
-		<image file="battlesprites/background/back_hq+bm.png" />
-		<image file="battlesprites/background/back_hq+ge.png" />
-		<image file="battlesprites/background/back_hq+os.png" />
-		<image file="battlesprites/background/back_hq+yc.png" />
-		<image file="battlesprites/background/back_mountain.png" />
-		<image file="battlesprites/background/back_mountain+0.png" />
-		<image file="battlesprites/background/back_plains.png" />
-		<image file="battlesprites/background/back_river.png" />
-		<image file="battlesprites/background/back_sea.png" />
-		<image file="battlesprites/background/back_street.png" />
-		<image file="battlesprites/background/back_town.png" />
-		<image file="battlesprites/background/back_town+0.png" />
-		<image file="battlesprites/background/back_desert.png" />
-		<image file="battlesprites/background/back_desertforest.png" />
-		<image file="battlesprites/background/back_desertmountain.png" />
-		<image file="battlesprites/background/back_snowforest.png" />
-		<image file="battlesprites/background/back_snowmountain.png" />
-		<image file="battlesprites/background/back_snow_mountain+0.png" />
-		<image file="battlesprites/background/back_ruin.png" />
-		<image file="battlesprites/background/back_snow.png" />
-		<!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
-		<image file="battlesprites/fullscreen_battlebackground.png" />		
-		-->
-		
-		<!-- battle animation -->
-		<image file="battlesprites/battle_back.png" />
-		<image file="battlesprites/battle_front.png" />
-		<image file="battlesprites/co_back.png" />
-		<image file="battlesprites/co_front.png" />
-		
-		<!-- weather stuff -->
-		<image file="weather/weather_sandstorm.png" cols = "16" />
-		<image file="weather/weather_rain.png" cols = "16" />
-		<image file="weather/weather_snow.png" cols = "16" />		
-		<image file="weather/weather_symbol_sandstorm.png" />
-		<image file="weather/weather_symbol_rain.png" />
-		<image file="weather/weather_symbol_snow.png" />
-		<image file="weather/weather_symbol_sun.png" />
-		<!-- player info stuff -->
-		<image file="2co.png" />
-		<image file="co.png" />
-		<!-- power star stuff -->
-		<image file="powerstar.png" />
-		<image file="powerstarfull.png" cols = "13" />
-		<image file="powerstarhalf.png" cols = "13" />
-		<image file="superpowerstar.png" />
-		<image file="superpowerstarfull.png" cols = "13" />
-		<image file="superpowerstarhalf.png" cols = "13" />
-		
-		<!-- on map stuff -->
-		<image file="marked+field.png" cols = "4" />
-		<image file="defenseStar.png" />
-		
-		<image file="arrow+unit.png" cols = "10" />
-		<!-- Human Player menu -->
-		<image file="cursor+menu.png" cols = "4" />
-		<image file="menu+top.png" guideX1="3" guideX2="57" guideY1="2" guideY2="4"/>
-		<image file="menu+middle.png" guideX1="3" guideX2="57" guideY1="2" guideY2="14"/>
-		<image file="menu+bottom.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
-		<!-- Human Player menu icons -->
-		<image file="wait.png" />
-		<image file="fire.png" />
-		<image file="capture.png" />
-		<image file="next_player.png" />
-		<image file="join.png" />
-		<image file="destroy.png" />
-		<image file="dive.png" />
-		<image file="heal.png" />
-		<image file="load.png" />
-		<image file="power.png" />
-		<image file="ration.png" />
-		<image file="superpower.png" />
-		<image file="tagpower.png" />
-		<image file="unhide.png" />
-		<image file="build.png" />
-		<image file="co0.png" />
-		<image file="co1.png" />
-		<image file="missile_icon.png" />	
-		<image file="exitgame.png" />
-		<image file="savegame.png" />
-		<image file="co_info.png" />	
-		<image file="swap.png" />
-		<image file="help.png" />
-		<image file="repair.png" />
-		<image file="surrender.png" />
-		<image file="intel.png" />		
-		<image file="hq+captured.png" />
-		<image file="hq+lost.png" />
-		<image file="flareshot.png" />
-		<image file="unit_info.png" />
-		<image file="options.png" />
-		<image file="nickname.png" />
-		<image file="music.png" />
-		<image file="wiki.png" />
-		<image file="statistics.png" />		
-		
-		<!-- z information label -->
-		<image file="z_information_label.png" cols = "8" />
-		<image file="z_information_label+mask.png" cols = "8" />
-		
-		<!-- minimap -->
-		<image file="minimap/minimap_beach.png" />
-		<image file="minimap/minimap_bridge.png" />
-		<image file="minimap/minimap_building.png" />
-		<image file="minimap/minimap_fire.png" />
-		<image file="minimap/minimap_fog.png" />
-		<image file="minimap/minimap_forest.png" />
-		<image file="minimap/minimap_hq.png" />
-		<image file="minimap/minimap_meteor.png" />
-		<image file="minimap/minimap_mountain.png" />
-		<image file="minimap/minimap_pipeline.png" />
-		<image file="minimap/minimap_plains.png" />
-		<image file="minimap/minimap_plasma.png" />
-		<image file="minimap/minimap_reaf.png" />
-		<image file="minimap/minimap_river.png" />
-		<image file="minimap/minimap_rough_sea.png" />		
-		<image file="minimap/minimap_ruin.png" />
-		<image file="minimap/minimap_sea.png" />
-		<image file="minimap/minimap_silo.png" />
-		<image file="minimap/minimap_street.png" />
-		<image file="minimap/minimap_unit.png" />
-		<image file="minimap/minimap_wasteland.png" />
-		<image file="minimap/minimap_weld.png" />
-		<image file="minimap/minimap_blackholebuilding.png" />		
-		<image file="minimap/minimap_desert.png" />
-		<image file="minimap/minimap_desert_forest.png" />
-		<image file="minimap/minimap_desert_path.png" />
-		<image file="minimap/minimap_desert_rock.png" />
-		<image file="minimap/minimap_desert_try_river.png" />
-		<image file="minimap/minimap_desert_wasteland.png" />
-		<image file="minimap/minimap_snow.png" />
-		<image file="minimap/minimap_snow_forest.png" />
-		<image file="minimap/minimap_snow_mountain.png" />
-		<image file="minimap/minimap_snow_wasteland.png" />
-		<image file="minimap/minimap_teleport.png" />
-		<image file="minimap/minimap_volcan.png" />
-		
-		<!-- dialogue stuff -->
-		<image file="dialogfield.png" />	
-		<image file="dialogfield+mask.png" />	
-		<image file="nextday.png" />
-		<image file="tagaffinitystar.png" />		
-		
-		<!-- powert stuff -->
-		<image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
-		<image file="superpower_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
-			
-		
-		<!-- score rang images -->
-		<image file="victory_screen/s_rang.png" />
-		<image file="victory_screen/a_rang.png" />
-		<image file="victory_screen/b_rang.png" />
-		<image file="victory_screen/c_rang.png" />
-		<image file="victory_screen/d_rang.png" />
-		<image file="victory_screen/graph.png" />		
-		
-		<!-- co selection -->
-		<image file="os.png"/>
-		<image file="bm.png"/>
-		<image file="ge.png"/>
-		<image file="yc.png"/>
-		<image file="bh.png"/>
-		<image file="bg.png"/>
-		<image file="ma.png"/>
-		<image file="ac.png"/>
-		<image file="bd.png"/>
-		<image file="gs.png"/>
-		<image file="pf.png"/>
-		<image file="ti.png"/>
-		<image file="dm.png"/>
-		<!-- aw dc armies -->
-		<image file="ib.png"/>
-		<image file="lz.png"/>
-		<image file="nr.png"/>
-		<image file="dv.png"/>
-		
-		
-		<!-- army icons -->
-		<image file="icon_os.png"/>
-		<image file="icon_bm.png"/>
-		<image file="icon_ge.png"/>
-		<image file="icon_yc.png"/>
-		<image file="icon_bh.png"/>
-		<image file="icon_bg.png"/>
-		<image file="icon_ma.png"/>
-		<image file="icon_ac.png"/>
-		<image file="icon_bd.png"/>
-		<image file="icon_gs.png"/>
-		<image file="icon_pf.png"/>
-		<image file="icon_ti.png"/>
-		<image file="icon_dm.png"/>
-		<image file="icon_co_army.png"/>
-		
-	</atlas>
+    <set path = "resources/images/game/" />
+    <atlas linearFilter="false">
+        <!-- battle sprite -->
+        <image file="battlesprites/base_air.png" />
+        <image file="battlesprites/base_forest.png" />
+        <image file="battlesprites/base_desertforest.png" />
+        <image file="battlesprites/base_snowforest.png" />
+        
+        <image file="battlesprites/foreground/fore_airport.png" />
+        <image file="battlesprites/foreground/fore_beach.png" />
+        <image file="battlesprites/foreground/fore_bridge.png" />
+        <image file="battlesprites/foreground/fore_factory.png" />
+        <image file="battlesprites/foreground/fore_forest.png" />
+        <image file="battlesprites/foreground/fore_forest+0.png" />
+        <image file="battlesprites/foreground/fore_harbour.png" />
+        <image file="battlesprites/foreground/fore_hq+bh.png" />
+        <image file="battlesprites/foreground/fore_hq+bm.png" />
+        <image file="battlesprites/foreground/fore_hq+ge.png" />
+        <image file="battlesprites/foreground/fore_hq+os.png" />
+        <image file="battlesprites/foreground/fore_hq+yc.png" />
+        <image file="battlesprites/foreground/fore_mountain.png" />
+        <image file="battlesprites/foreground/fore_pipeline.png" />
+        <image file="battlesprites/foreground/fore_plains.png" />
+        <image file="battlesprites/foreground/fore_plains+0.png" />
+        <image file="battlesprites/foreground/fore_plains+1.png" />
+        <image file="battlesprites/foreground/fore_river.png" />
+        <image file="battlesprites/foreground/fore_sea.png" />
+        <image file="battlesprites/foreground/fore_street.png" />
+        <image file="battlesprites/foreground/fore_town.png" />
+        <image file="battlesprites/foreground/fore_town+0.png" />
+        <image file="battlesprites/foreground/fore_desert.png" />
+        <image file="battlesprites/foreground/fore_desertforest.png" />
+        <image file="battlesprites/foreground/fore_desertmountain.png" />
+        <image file="battlesprites/foreground/fore_desertpipe.png" />
+        <image file="battlesprites/foreground/fore_desertroad.png" />
+        <image file="battlesprites/foreground/fore_snowforest.png" />
+        <image file="battlesprites/foreground/fore_snowmountain.png" />
+        <image file="battlesprites/foreground/fore_snowpipe.png" />
+        <image file="battlesprites/foreground/fore_snow+0.png" />
+        <image file="battlesprites/foreground/fore_walltop.png" />
+        
+        <image file="battlesprites/background/back_airport.png" />
+        <image file="battlesprites/background/back_beach.png" />
+        <image file="battlesprites/background/back_bridge.png" />
+        <image file="battlesprites/background/back_cliff.png" />
+        <image file="battlesprites/background/back_factory.png" />
+        <image file="battlesprites/background/back_forest.png" />
+        <image file="battlesprites/background/back_forest+0.png" />
+        <image file="battlesprites/background/back_harbour.png" />
+        <image file="battlesprites/background/back_hq+bh.png" />
+        <image file="battlesprites/background/back_hq+bm.png" />
+        <image file="battlesprites/background/back_hq+ge.png" />
+        <image file="battlesprites/background/back_hq+os.png" />
+        <image file="battlesprites/background/back_hq+yc.png" />
+        <image file="battlesprites/background/back_mountain.png" />
+        <image file="battlesprites/background/back_mountain+0.png" />
+        <image file="battlesprites/background/back_plains.png" />
+        <image file="battlesprites/background/back_river.png" />
+        <image file="battlesprites/background/back_sea.png" />
+        <image file="battlesprites/background/back_street.png" />
+        <image file="battlesprites/background/back_town.png" />
+        <image file="battlesprites/background/back_town+0.png" />
+        <image file="battlesprites/background/back_desert.png" />
+        <image file="battlesprites/background/back_desertforest.png" />
+        <image file="battlesprites/background/back_desertmountain.png" />
+        <image file="battlesprites/background/back_snowforest.png" />
+        <image file="battlesprites/background/back_snowmountain.png" />
+        <image file="battlesprites/background/back_snow_mountain+0.png" />
+        <image file="battlesprites/background/back_ruin.png" />
+        <image file="battlesprites/background/back_snow.png" />
+        <!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
+        <image file="battlesprites/fullscreen_battlebackground.png" />        
+        -->
+        
+        <!-- battle animation -->
+        <image file="battlesprites/battle_back.png" />
+        <image file="battlesprites/battle_front.png" />
+        <image file="battlesprites/co_back.png" />
+        <image file="battlesprites/co_front.png" />
+        
+        <!-- weather stuff -->
+        <image file="weather/weather_sandstorm.png" cols = "16" />
+        <image file="weather/weather_rain.png" cols = "16" />
+        <image file="weather/weather_snow.png" cols = "16" />        
+        <image file="weather/weather_symbol_sandstorm.png" />
+        <image file="weather/weather_symbol_rain.png" />
+        <image file="weather/weather_symbol_snow.png" />
+        <image file="weather/weather_symbol_sun.png" />
+        <!-- player info stuff -->
+        <image file="2co.png" />
+        <image file="co.png" />
+        <!-- power star stuff -->
+        <image file="powerstar.png" />
+        <image file="powerstarfull.png" cols = "13" />
+        <image file="powerstarhalf.png" cols = "13" />
+        <image file="superpowerstar.png" />
+        <image file="superpowerstarfull.png" cols = "13" />
+        <image file="superpowerstarhalf.png" cols = "13" />
+        
+        <!-- on map stuff -->
+        <image file="marked+field.png" cols = "4" />
+        <image file="defenseStar.png" />
+        
+        <image file="arrow+unit.png" cols = "10" />
+        <!-- Human Player menu -->
+        <image file="cursor+menu.png" cols = "4" />
+        <image file="menu+top.png" guideX1="3" guideX2="57" guideY1="2" guideY2="4"/>
+        <image file="menu+middle.png" guideX1="3" guideX2="57" guideY1="2" guideY2="14"/>
+        <image file="menu+bottom.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
+        <!-- Human Player menu icons -->
+        <image file="wait.png" />
+        <image file="fire.png" />
+        <image file="capture.png" />
+        <image file="next_player.png" />
+        <image file="join.png" />
+        <image file="destroy.png" />
+        <image file="dive.png" />
+        <image file="heal.png" />
+        <image file="load.png" />
+        <image file="power.png" />
+        <image file="ration.png" />
+        <image file="superpower.png" />
+        <image file="tagpower.png" />
+        <image file="unhide.png" />
+        <image file="build.png" />
+        <image file="co0.png" />
+        <image file="co1.png" />
+        <image file="missile_icon.png" />    
+        <image file="exitgame.png" />
+        <image file="savegame.png" />
+        <image file="co_info.png" />    
+        <image file="swap.png" />
+        <image file="help.png" />
+        <image file="repair.png" />
+        <image file="surrender.png" />
+        <image file="intel.png" />        
+        <image file="hq+captured.png" />
+        <image file="hq+lost.png" />
+        <image file="flareshot.png" />
+        <image file="unit_info.png" />
+        <image file="options.png" />
+        <image file="nickname.png" />
+        <image file="music.png" />
+        <image file="wiki.png" />
+        <image file="statistics.png" />        
+        
+        <!-- z information label -->
+        <image file="z_information_label.png" cols = "8" />
+        <image file="z_information_label+mask.png" cols = "8" />
+        
+        <!-- minimap -->
+        <image file="minimap/minimap_beach.png" />
+        <image file="minimap/minimap_bridge.png" />
+        <image file="minimap/minimap_building.png" />
+        <image file="minimap/minimap_fire.png" />
+        <image file="minimap/minimap_fog.png" />
+        <image file="minimap/minimap_forest.png" />
+        <image file="minimap/minimap_hq.png" />
+        <image file="minimap/minimap_meteor.png" />
+        <image file="minimap/minimap_mountain.png" />
+        <image file="minimap/minimap_pipeline.png" />
+        <image file="minimap/minimap_plains.png" />
+        <image file="minimap/minimap_plasma.png" />
+        <image file="minimap/minimap_reaf.png" />
+        <image file="minimap/minimap_river.png" />
+        <image file="minimap/minimap_rough_sea.png" />        
+        <image file="minimap/minimap_ruin.png" />
+        <image file="minimap/minimap_sea.png" />
+        <image file="minimap/minimap_silo.png" />
+        <image file="minimap/minimap_street.png" />
+        <image file="minimap/minimap_unit.png" />
+        <image file="minimap/minimap_wasteland.png" />
+        <image file="minimap/minimap_weld.png" />
+        <image file="minimap/minimap_blackholebuilding.png" />        
+        <image file="minimap/minimap_desert.png" />
+        <image file="minimap/minimap_desert_forest.png" />
+        <image file="minimap/minimap_desert_path.png" />
+        <image file="minimap/minimap_desert_rock.png" />
+        <image file="minimap/minimap_desert_try_river.png" />
+        <image file="minimap/minimap_desert_wasteland.png" />
+        <image file="minimap/minimap_snow.png" />
+        <image file="minimap/minimap_snow_forest.png" />
+        <image file="minimap/minimap_snow_mountain.png" />
+        <image file="minimap/minimap_snow_wasteland.png" />
+        <image file="minimap/minimap_teleport.png" />
+        <image file="minimap/minimap_volcan.png" />
+        
+        <!-- dialogue stuff -->
+        <image file="dialogfield.png" />    
+        <image file="dialogfield+mask.png" />    
+        <image file="nextday.png" />
+        <image file="tagaffinitystar.png" />        
+        
+        <!-- powert stuff -->
+        <image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
+        <image file="superpower_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
+            
+        
+        <!-- score rang images -->
+        <image file="victory_screen/s_rang.png" />
+        <image file="victory_screen/a_rang.png" />
+        <image file="victory_screen/b_rang.png" />
+        <image file="victory_screen/c_rang.png" />
+        <image file="victory_screen/d_rang.png" />
+        <image file="victory_screen/graph.png" />        
+        
+        <!-- co selection -->
+        <image file="os.png"/>
+        <image file="bm.png"/>
+        <image file="ge.png"/>
+        <image file="yc.png"/>
+        <image file="bh.png"/>
+        <image file="bg.png"/>
+        <image file="ma.png"/>
+        <image file="ac.png"/>
+        <image file="bd.png"/>
+        <image file="gs.png"/>
+        <image file="pf.png"/>
+        <image file="ti.png"/>
+        <image file="dm.png"/>
+        <!-- aw dc armies -->
+        <image file="ib.png"/>
+        <image file="lz.png"/>
+        <image file="nr.png"/>
+        <image file="dv.png"/>
+        
+        
+        <!-- army icons -->
+        <image file="icon_os.png"/>
+        <image file="icon_bm.png"/>
+        <image file="icon_ge.png"/>
+        <image file="icon_yc.png"/>
+        <image file="icon_bh.png"/>
+        <image file="icon_bg.png"/>
+        <image file="icon_ma.png"/>
+        <image file="icon_ac.png"/>
+        <image file="icon_bd.png"/>
+        <image file="icon_gs.png"/>
+        <image file="icon_pf.png"/>
+        <image file="icon_ti.png"/>
+        <image file="icon_dm.png"/>
+        <image file="icon_co_army.png"/>
+        
+    </atlas>
 </resources>
 

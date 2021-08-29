@@ -364,7 +364,8 @@ QImage SpriteCreator::recolorImageWithTable(QImage & image, QImage & colorTable)
             if (pixel.alpha() == 255)
             {
                 qint32 red = pixel.red();
-                image.setPixel(x, y, colorTable.pixel(red, 0));
+                qint32 green = pixel.green();
+                image.setPixel(x, y, colorTable.pixel(red, green));
             }
         }
     }

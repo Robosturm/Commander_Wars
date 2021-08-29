@@ -1,149 +1,149 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "resources/images/building/" />
-	<atlas linearFilter = "false">
-		<!-- factory -->
-		<image file="factory.png" cols = "2" />
-		<image file="factory+mask.png" cols = "2" />
-		<image file="factory+neutral.png" />
-		
-		<!-- harbour -->
-		<image file="harbour.png" cols = "2" />
-		<image file="harbour+mask.png" cols = "2" />
-		<image file="harbour+neutral.png" />
-		
-		<!-- temporary harbour -->
-		<image file="temporary_harbour.png" cols = "2" />
-		<image file="temporary_harbour+mask.png" cols = "2" />
-		<image file="temporary_harbour+neutral.png" cols = "2" />
-		
-		<!-- mine -->
-		<image file="mine.png" cols = "2" />
-		<image file="mine+mask.png" cols = "2" />
-		<image file="mine+neutral.png" />
-		
-		<!-- oilrig -->
-		<image file="oilrig.png" cols = "2" />
-		<image file="oilrig+mask.png" cols = "2" />
-		<image file="oilrig+neutral.png" />
-		
-		<!-- pipestation -->
-		<image file="pipestation.png" cols = "2" />
-		<image file="pipestation+mask.png" cols = "2" />
-		<image file="pipestation+neutral.png" />
-		
-		<!-- radar -->
-		<image file="radar.png" cols = "2" />
-		<image file="radar+mask.png" cols = "2" />
-		<image file="radar+neutral.png" />
-		
-		<!-- tower -->
-		<image file="tower.png" cols = "2" />
-		<image file="tower+mask.png" cols = "2" />
-		<image file="tower+neutral.png" />
-		
-		<!-- town -->
-		<image file="town.png" cols = "2" />
-		<image file="town+mask.png" cols = "2" />
-		<image file="town+neutral.png" />
-		
-		<!-- airport -->
-		<image file="airport.png" cols = "2" />
-		<image file="airport+mask.png" cols = "2" />
-		<image file="airport+neutral.png" />
-		
-		<!-- temporary airport -->
-		<image file="temporary_airport.png" cols = "2" />
-		<image file="temporary_airport+mask.png" cols = "2" />
-		<image file="temporary_airport+neutral.png" cols = "2" />
-		
-		<!-- labor -->
-		<image file="labor.png" cols = "2" />
-		<image file="labor+mask.png" cols = "2" />
-		<image file="labor+neutral.png" />
-		
-		<!-- labor -->
-		<image file="silo.png" />
-		<image file="silo+rocket.png" />
-		
-		<!-- gate -->
-		<image file="gate+e+w.png" />
-		<image file="gate+e+w+mask.png" />
-		<image file="gate+n+s.png" />
-		<image file="gate+n+s+mask.png" />
-		
-		<!-- hq -->
-		<image file="hq+ac.png" cols = "2" />
-		<image file="hq+ac+mask.png" cols = "2" />
-		<image file="hq+bd.png" cols = "2" />
-		<image file="hq+bd+mask.png" cols = "2" />
-		<image file="hq+bh.png" cols = "2" />
-		<image file="hq+bh+mask.png" cols = "2" />
-		<image file="hq+bm.png" cols = "2" />
-		<image file="hq+bm+mask.png" cols = "2" />
-		<image file="hq+dm.png" cols = "2" />
-		<image file="hq+dm+mask.png" cols = "2" />
-		<image file="hq+ge.png" cols = "2" />
-		<image file="hq+ge+mask.png" cols = "2" />
-		<image file="hq+gs.png" cols = "2" />
-		<image file="hq+gs+mask.png" cols = "2" />
-		<image file="hq+ma.png" cols = "2" />
-		<image file="hq+ma+mask.png" cols = "2" />
-		<image file="hq+os.png" cols = "2" />
-		<image file="hq+os+mask.png" cols = "2" />
-		<image file="hq+pf.png" cols = "2" />
-		<image file="hq+pf+mask.png" cols = "2" />
-		<image file="hq+ti.png" cols = "2" />
-		<image file="hq+ti+mask.png" cols = "2" />
-		<image file="hq+yc.png" cols = "2" />
-		<image file="hq+yc+mask.png" cols = "2" />		
-		<image file="hq+neutral.png" />
-		
-		<!-- Block Hole Stuff -->
-		<image file="black_cannon+E.png" cols = "2" />
-		<image file="black_cannon+E+mask.png" cols = "2" />
-		<image file="black_cannon+S.png" cols = "2" />
-		<image file="black_cannon+S+mask.png" cols = "2" />
-		<image file="black_cannon+N.png" cols = "2" />
-		<image file="black_cannon+N+mask.png" cols = "2" />
-		<image file="black_cannon+W.png" cols = "2" />
-		<image file="black_cannon+W+mask.png" cols = "2" />
-		<image file="crystall.png" />
-		<image file="crystall+mask.png" />
-		<image file="laser.png" cols = "2" />
-		<image file="laser+mask.png" cols = "2" />
-		<image file="deathray+E.png" cols = "2" />
-		<image file="deathray+E+mask.png" cols = "2" />
-		<image file="deathray+S.png" cols = "2" />
-		<image file="deathray+S+mask.png" cols = "2" />
-		<image file="deathray+N.png" cols = "2" />
-		<image file="deathray+N+mask.png" cols = "2" />
-		<image file="deathray+W.png" cols = "2" />
-		<image file="deathray+W+mask.png" cols = "2" />
-		<image file="fortress.png" cols = "2" />
-		<image file="fortress+mask.png" cols = "2" />
-		<image file="fortress+neutral.png" />		
-		<image file="minicannon+E.png" />
-		<image file="minicannon+E+mask.png" />
-		<image file="minicannon+S.png" />
-		<image file="minicannon+S+mask.png" />
-		<image file="minicannon+W.png" />
-		<image file="minicannon+W+mask.png" />
-		<image file="minicannon+N.png" />
-		<image file="minicannon+N+mask.png" />		
-		<image file="monolith.png" cols = "2" />
-		<image file="monolith+mask.png" cols = "2" />
-		<image file="omega+base.png" cols = "2" />
-		<image file="omega+base+mask.png" cols = "2" />
-		<image file="omega+base+neutral.png" />	
-		<image file="blackhole+factory.png" cols = "2" />
-		<image file="blackhole+factory+mask.png" cols = "2" />		
-		<image file="blackhole+factory+neutral.png" />
-		<image file="volcan.png" />
-		<image file="black_building_destroyed.png" />		
-		<image file="talon+gun.png" cols = "2" />		
-		<image file="talon+gun+mask.png" cols = "2" />		
-		<image file="talon+gun+destroyed.png" />		
-		
-	</atlas>
+    <set path = "resources/images/building/" />
+    <atlas linearFilter = "false">
+        <!-- factory -->
+        <image file="factory.png" cols = "2" />
+        <image file="factory+mask.png" cols = "2" />
+        <image file="factory+neutral.png" />
+        
+        <!-- harbour -->
+        <image file="harbour.png" cols = "2" />
+        <image file="harbour+mask.png" cols = "2" />
+        <image file="harbour+neutral.png" />
+        
+        <!-- temporary harbour -->
+        <image file="temporary_harbour.png" cols = "2" />
+        <image file="temporary_harbour+mask.png" cols = "2" />
+        <image file="temporary_harbour+neutral.png" cols = "2" />
+        
+        <!-- mine -->
+        <image file="mine.png" cols = "2" />
+        <image file="mine+mask.png" cols = "2" />
+        <image file="mine+neutral.png" />
+        
+        <!-- oilrig -->
+        <image file="oilrig.png" cols = "2" />
+        <image file="oilrig+mask.png" cols = "2" />
+        <image file="oilrig+neutral.png" />
+        
+        <!-- pipestation -->
+        <image file="pipestation.png" cols = "2" />
+        <image file="pipestation+mask.png" cols = "2" />
+        <image file="pipestation+neutral.png" />
+        
+        <!-- radar -->
+        <image file="radar.png" cols = "2" />
+        <image file="radar+mask.png" cols = "2" />
+        <image file="radar+neutral.png" />
+        
+        <!-- tower -->
+        <image file="tower.png" cols = "2" />
+        <image file="tower+mask.png" cols = "2" />
+        <image file="tower+neutral.png" />
+        
+        <!-- town -->
+        <image file="town.png" cols = "2" />
+        <image file="town+mask.png" cols = "2" />
+        <image file="town+neutral.png" />
+        
+        <!-- airport -->
+        <image file="airport.png" cols = "2" />
+        <image file="airport+mask.png" cols = "2" />
+        <image file="airport+neutral.png" />
+        
+        <!-- temporary airport -->
+        <image file="temporary_airport.png" cols = "2" />
+        <image file="temporary_airport+mask.png" cols = "2" />
+        <image file="temporary_airport+neutral.png" cols = "2" />
+        
+        <!-- labor -->
+        <image file="labor.png" cols = "2" />
+        <image file="labor+mask.png" cols = "2" />
+        <image file="labor+neutral.png" />
+        
+        <!-- labor -->
+        <image file="silo.png" />
+        <image file="silo+rocket.png" />
+        
+        <!-- gate -->
+        <image file="gate+e+w.png" />
+        <image file="gate+e+w+mask.png" />
+        <image file="gate+n+s.png" />
+        <image file="gate+n+s+mask.png" />
+        
+        <!-- hq -->
+        <image file="hq+ac.png" cols = "2" />
+        <image file="hq+ac+mask.png" cols = "2" />
+        <image file="hq+bd.png" cols = "2" />
+        <image file="hq+bd+mask.png" cols = "2" />
+        <image file="hq+bh.png" cols = "2" />
+        <image file="hq+bh+mask.png" cols = "2" />
+        <image file="hq+bm.png" cols = "2" />
+        <image file="hq+bm+mask.png" cols = "2" />
+        <image file="hq+dm.png" cols = "2" />
+        <image file="hq+dm+mask.png" cols = "2" />
+        <image file="hq+ge.png" cols = "2" />
+        <image file="hq+ge+mask.png" cols = "2" />
+        <image file="hq+gs.png" cols = "2" />
+        <image file="hq+gs+mask.png" cols = "2" />
+        <image file="hq+ma.png" cols = "2" />
+        <image file="hq+ma+mask.png" cols = "2" />
+        <image file="hq+os.png" cols = "2" />
+        <image file="hq+os+mask.png" cols = "2" />
+        <image file="hq+pf.png" cols = "2" />
+        <image file="hq+pf+mask.png" cols = "2" />
+        <image file="hq+ti.png" cols = "2" />
+        <image file="hq+ti+mask.png" cols = "2" />
+        <image file="hq+yc.png" cols = "2" />
+        <image file="hq+yc+mask.png" cols = "2" />        
+        <image file="hq+neutral.png" />
+        
+        <!-- Block Hole Stuff -->
+        <image file="black_cannon+E.png" cols = "2" />
+        <image file="black_cannon+E+mask.png" cols = "2" />
+        <image file="black_cannon+S.png" cols = "2" />
+        <image file="black_cannon+S+mask.png" cols = "2" />
+        <image file="black_cannon+N.png" cols = "2" />
+        <image file="black_cannon+N+mask.png" cols = "2" />
+        <image file="black_cannon+W.png" cols = "2" />
+        <image file="black_cannon+W+mask.png" cols = "2" />
+        <image file="crystall.png" />
+        <image file="crystall+mask.png" />
+        <image file="laser.png" cols = "2" />
+        <image file="laser+mask.png" cols = "2" />
+        <image file="deathray+E.png" cols = "2" />
+        <image file="deathray+E+mask.png" cols = "2" />
+        <image file="deathray+S.png" cols = "2" />
+        <image file="deathray+S+mask.png" cols = "2" />
+        <image file="deathray+N.png" cols = "2" />
+        <image file="deathray+N+mask.png" cols = "2" />
+        <image file="deathray+W.png" cols = "2" />
+        <image file="deathray+W+mask.png" cols = "2" />
+        <image file="fortress.png" cols = "2" />
+        <image file="fortress+mask.png" cols = "2" />
+        <image file="fortress+neutral.png" />        
+        <image file="minicannon+E.png" />
+        <image file="minicannon+E+mask.png" />
+        <image file="minicannon+S.png" />
+        <image file="minicannon+S+mask.png" />
+        <image file="minicannon+W.png" />
+        <image file="minicannon+W+mask.png" />
+        <image file="minicannon+N.png" />
+        <image file="minicannon+N+mask.png" />        
+        <image file="monolith.png" cols = "2" />
+        <image file="monolith+mask.png" cols = "2" />
+        <image file="omega+base.png" cols = "2" />
+        <image file="omega+base+mask.png" cols = "2" />
+        <image file="omega+base+neutral.png" />    
+        <image file="blackhole+factory.png" cols = "2" />
+        <image file="blackhole+factory+mask.png" cols = "2" />        
+        <image file="blackhole+factory+neutral.png" />
+        <image file="volcan.png" />
+        <image file="black_building_destroyed.png" />        
+        <image file="talon+gun.png" cols = "2" />        
+        <image file="talon+gun+mask.png" cols = "2" />        
+        <image file="talon+gun+destroyed.png" />        
+        
+    </atlas>
 </resources>

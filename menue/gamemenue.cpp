@@ -1409,6 +1409,7 @@ void GameMenue::showOptions()
     pDialogOptions->addItem(pGameplayAndKeys);
     connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
     {
+        Settings::saveSettings();
         m_Focused = true;
     });
     addChild(pDialogOptions);
@@ -1430,6 +1431,7 @@ void GameMenue::showChangeSound()
     pDialogOptions->addItem(pPanel);
     connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
     {
+        Settings::saveSettings();
         m_Focused = true;
     });
     addChild(pDialogOptions);

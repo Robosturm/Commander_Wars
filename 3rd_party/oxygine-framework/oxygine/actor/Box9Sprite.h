@@ -42,7 +42,7 @@ namespace oxygine
         {
             return m_guideY[1];
         }
-        RectF getInnerArea() const;
+        RectF getInnerArea();
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
         /**
@@ -58,17 +58,22 @@ namespace oxygine
         virtual void animFrameChanged(const AnimationFrame& f) override;
         virtual void changeAnimFrame(const AnimationFrame& f) override;
         virtual void doRender(const RenderState&) override;
-        void prepare() const;
+        void prepare();
 
+        inline bool isNormalSprite() const
+        {
+            return m_guideX[0] == 0 && m_guideX[1] == 0 &&
+                   m_guideY[0] == 0 && m_guideY[1] == 0;
+        }
     protected:
-        mutable bool m_prepared;
+        bool m_prepared;
         StretchMode m_vertMode;
         StretchMode m_horzMode;
-        mutable float m_guideX[2];
-        mutable float m_guideY[2];
-        mutable QVector<float> m_guidesX;
-        mutable QVector<float> m_guidesY;
-        mutable QVector<float> m_pointsX;
-        mutable QVector<float> m_pointsY;
+        float m_guideX[2];
+        float m_guideY[2];
+        QVector<float> m_guidesX;
+        QVector<float> m_guidesY;
+        QVector<float> m_pointsX;
+        QVector<float> m_pointsY;
     };
 }

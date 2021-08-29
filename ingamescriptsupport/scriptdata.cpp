@@ -12,11 +12,6 @@ const QString ScriptData::actionConditions = "actionConditions";
 
 quint32 ScriptData::m_variableCounter = 0;
 
-ScriptData::ScriptData()
-    : QObject()
-{
-}
-
 void ScriptData::clearData()
 {
     m_Victory.clear();

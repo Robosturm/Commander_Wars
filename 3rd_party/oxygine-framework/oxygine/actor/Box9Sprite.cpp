@@ -21,7 +21,7 @@ namespace oxygine
 
     }
 
-    oxygine::RectF Box9Sprite::getInnerArea() const
+    oxygine::RectF Box9Sprite::getInnerArea()
     {
         if (!m_prepared)
         {
@@ -78,7 +78,10 @@ namespace oxygine
     {
         Vector2 size = getSize();
         Sprite::changeAnimFrame(f);
-        setSize(size);
+        if (!isNormalSprite())
+        {
+            setSize(size);
+        }
     }
 
     void Box9Sprite::animFrameChanged(const AnimationFrame& f)
@@ -103,7 +106,7 @@ namespace oxygine
             m_guideX[1] = attr.toFloat(&ok);
             if (!ok)
             {
-                m_guideX[1] = resanim->getWidth();
+                m_guideX[1] = 0;
             }
             m_guideX[1] *= scaleFactor;
 
@@ -119,7 +122,7 @@ namespace oxygine
             m_guideY[1] = attr.toFloat(&ok);
             if (!ok)
             {
-                m_guideY[1] = resanim->getHeight();
+                m_guideY[1] = 0;
             }
             m_guideY[1] *= scaleFactor;
 
@@ -145,7 +148,7 @@ namespace oxygine
         return Actor::isOn(localPosition, localScale);
     }
 
-    void Box9Sprite::prepare() const
+    void Box9Sprite::prepare()
     {
         m_guidesX.resize(4);
         m_guidesY.resize(4);
@@ -269,63 +272,71 @@ namespace oxygine
 
     void Box9Sprite::doRender(const RenderState& rs)
     {
-        if (!m_prepared)
+        // no guides means we are a normal sprite
+        if (isNormalSprite())
         {
-            prepare();
+            Sprite::doRender(rs);
         }
-
-        m_mat->apply();
-
-        STDRenderer* renderer = STDRenderer::getCurrent();
-
-        if (m_mat->m_base)
+        else
         {
-            if (m_guidesX.size() >= 2 || m_guidesY.size() >= 2)
+            if (!m_prepared)
             {
-                renderer->setTransform(rs.transform);
+                prepare();
+            }
 
-                QColor color = rs.getFinalColor(getColor());
+            m_mat->apply();
 
-                // number of vertical blocks
-                qint32 vc = (int)m_pointsX.size() - 1;
-                // number of horizontal blocks
-                qint32 hc = (int)m_pointsY.size() - 1;
+            STDRenderer* renderer = STDRenderer::getCurrent();
 
-                qint32 xgi = 0; // x guide index
-                qint32 ygi = 0;
-                for (qint32 yc = 0; yc < hc; yc++)
+            if (m_mat->m_base)
+            {
+                if (m_guidesX.size() >= 2 || m_guidesY.size() >= 2)
                 {
-                    for (qint32 xc = 0; xc < vc; xc++)
+                    renderer->setTransform(rs.transform);
+
+                    QColor color = rs.getFinalColor(getColor());
+
+                    // number of vertical blocks
+                    qint32 vc = m_pointsX.size() - 1;
+                    // number of horizontal blocks
+                    qint32 hc = m_pointsY.size() - 1;
+
+                    qint32 xgi = 0; // x guide index
+                    qint32 ygi = 0;
+                    for (qint32 yc = 0; yc < hc; yc++)
                     {
-                        if (xc == 0) // select correct index for _guides% arrays
+                        for (qint32 xc = 0; xc < vc; xc++)
                         {
-                            xgi = 0;
-                        }
-                        else if (xc == (int)m_pointsX.size() - 2)
-                        {
-                            xgi = 2;
-                        }
-                        else
-                        {
-                            xgi = 1;
-                        }
-                        if (yc == 0)
-                        {
-                            ygi = 0;
-                        }
-                        else if (yc == (int)m_pointsY.size() - 2)
-                        {
-                            ygi = 2;
-                        }
-                        else
-                        {
-                            ygi = 1;
-                        }
-                        RectF srcRect(m_guidesX[xgi], m_guidesY[ygi], m_guidesX[xgi + 1] - m_guidesX[xgi], m_guidesY[ygi + 1] - m_guidesY[ygi]);
-                        RectF destRect(m_pointsX[xc], m_pointsY[yc], m_pointsX[xc + 1] - m_pointsX[xc], m_pointsY[yc + 1] - m_pointsY[yc]);
+                            if (xc == 0) // select correct index for _guides% arrays
+                            {
+                                xgi = 0;
+                            }
+                            else if (xc == m_pointsX.size() - 2)
+                            {
+                                xgi = 2;
+                            }
+                            else
+                            {
+                                xgi = 1;
+                            }
+                            if (yc == 0)
+                            {
+                                ygi = 0;
+                            }
+                            else if (yc == m_pointsY.size() - 2)
+                            {
+                                ygi = 2;
+                            }
+                            else
+                            {
+                                ygi = 1;
+                            }
+                            RectF srcRect(m_guidesX[xgi], m_guidesY[ygi], m_guidesX[xgi + 1] - m_guidesX[xgi], m_guidesY[ygi + 1] - m_guidesY[ygi]);
+                            RectF destRect(m_pointsX[xc], m_pointsY[yc], m_pointsX[xc + 1] - m_pointsX[xc], m_pointsY[yc + 1] - m_pointsY[yc]);
 
-                        renderer->addQuad(color, srcRect, destRect);
+                            renderer->addQuad(color, srcRect, destRect);
 
+                        }
                     }
                 }
             }
@@ -334,6 +345,13 @@ namespace oxygine
 
     RectF Box9Sprite::getDestRect() const
     {
-        return Actor::getDestRect();
+        if (isNormalSprite())
+        {
+            return Sprite::getDestRect();
+        }
+        else
+        {
+            return Actor::getDestRect();
+        }
     }
 }

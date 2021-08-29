@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "resources/fonts" />
-	<font file="main16.xml" />
-	<font file="main24.xml" />
+    <set path = "resources/fonts" />
+    <font file="main16.xml" />
+    <font file="main24.xml" />
     <font file="main32.xml" />
-	<font file="main48.xml" />
-	<font file="main72.xml" />
+    <font file="main48.xml" />
+    <font file="main72.xml" />
 </resources>

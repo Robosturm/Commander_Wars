@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "resources/images/achievements/" />
-	<atlas linearFilter="false">
-		
-	</atlas>
+    <set path = "resources/images/achievements/" />
+    <atlas linearFilter="false">
+        
+    </atlas>
 </resources>

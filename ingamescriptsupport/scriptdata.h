@@ -25,7 +25,8 @@ public:
     static constexpr auto campaignVariables = "campaignVariables";
     static constexpr auto variables = "variables";
 
-    explicit ScriptData();
+    explicit ScriptData() = default;
+    virtual ~ScriptData() = default;
     /**
      * @brief readScript
      * @param rStream

@@ -22,6 +22,7 @@
 #include "coreengine/userdata.h"
 
 #include "objects/dialogs/dialogvaluecounter.h"
+#include "objects/base/moveinbutton.h"
 
 
 VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
@@ -78,7 +79,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     qint32 heigthCount = 0;
     if (Settings::getSmallScreenDevice())
     {
-        heigthCount = (Settings::getHeight() - 120) / static_cast<qint32>(pAnim->getHeight());
+        heigthCount = (Settings::getHeight() - 50) / static_cast<qint32>(pAnim->getHeight());
     }
     else
     {
@@ -205,7 +206,8 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
     if (Settings::getSmallScreenDevice())
     {
-        panel->setPosition(10, Settings::getHeight() - 72);
+        panel->setPosition(10, Settings::getHeight() - 1);
+        auto moveInButton = spMoveInButton::create(panel.get(), panel->getScaledHeight(), -1, -1, 2.0f, true);
     }
     else
     {
@@ -298,7 +300,8 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     m_PlayerSelectPanel->setPosition(5, m_pGraphBackground->getY());
     if (Settings::getSmallScreenDevice())
     {
-        m_PlayerSelectPanel->setVisible(false);
+        m_PlayerSelectPanel->setX(-m_PlayerSelectPanel->getWidth() + 1);
+        auto moveButton = spMoveInButton::create(m_PlayerSelectPanel.get(), m_PlayerSelectPanel->getScaledWidth(), 1, -1);
     }
     addChild(m_PlayerSelectPanel);
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

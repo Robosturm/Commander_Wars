@@ -120,11 +120,11 @@ namespace oxygine
         }
         if (m_resAnim->getColumns() > s)
         {
-            Sprite::setAnimFrame(m_resAnim->getFrame(s, m_row));
+            Box9Sprite::setAnimFrame(m_resAnim->getFrame(s, m_row));
         }
         else
         {
-            Sprite::setAnimFrame(m_resAnim->getFrame(0, m_row));
+            Box9Sprite::setAnimFrame(m_resAnim->getFrame(0, m_row));
         }
     }
 }
