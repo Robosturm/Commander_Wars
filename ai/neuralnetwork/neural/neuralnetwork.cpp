@@ -60,6 +60,11 @@ QVector<double> NeuralNetwork::output()
     return (m_layers.back())->output();
 }
 
+double NeuralNetwork::output(qint32 index)
+{
+    return m_layers.back()->output()[index];
+}
+
 void NeuralNetwork::connectComplete()
 {
     for(qint32 i_layer = 0; i_layer < m_layers.size() - 1; ++i_layer)

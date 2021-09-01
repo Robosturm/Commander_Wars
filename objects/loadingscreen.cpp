@@ -44,7 +44,7 @@ void LoadingScreen::show()
     m_BackgroundBar = oxygine::spColorRectSprite::create();
     m_BackgroundBar->setSize(Settings::getWidth(), 60);
     m_BackgroundBar->setY(Settings::getHeight() - 60);
-    m_BackgroundBar->setColor(Qt::white);
+    m_BackgroundBar->setColor(Qt::gray);
     addChild(m_BackgroundBar);
 
     m_LoadingBar = oxygine::spColorRectSprite::create();

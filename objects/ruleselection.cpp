@@ -785,6 +785,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     y += 60;
 
     qint32 initCount = pMap->getGameRules()->getVictoryRuleSize();
+    Console::print("Creating ruleset number of initial rules " + QString::number(initCount), Console::eDEBUG);
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         qint32 xPos = 0;
@@ -792,6 +793,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
+            Console::print("Creating default ruleset for " + ruleID, Console::eDEBUG);
             pRule = spVictoryRule::create(ruleID);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)

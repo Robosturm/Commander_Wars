@@ -72,13 +72,17 @@
         <image file="battlesprites/background/back_snow.png" />
         <!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
         <image file="battlesprites/fullscreen_battlebackground.png" />        
-        -->
-        
+        -->        
         <!-- battle animation -->
         <image file="battlesprites/battle_back.png" />
         <image file="battlesprites/battle_front.png" />
         <image file="battlesprites/co_back.png" />
         <image file="battlesprites/co_front.png" />
+        <image file="battlesprites/battle_back+mask.png" />
+        <image file="battlesprites/battle_front+mask.png" />
+        <image file="battlesprites/co_back+mask.png" />
+        <image file="battlesprites/co_front+mask.png" />
+        <image file="battlesprites/healthbar.png" guideX1="4" guideX2="5" guideY1="1" guideY2="8"/>
         
         <!-- weather stuff -->
         <image file="weather/weather_sandstorm.png" cols = "16" />

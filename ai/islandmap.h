@@ -49,8 +49,20 @@ public slots:
      * @return
      */
     qint32 getIslandSize(qint32 island);
+    /**
+     * @brief getMovementType
+     * @return
+     */
     QString getMovementType() const;
+    /**
+     * @brief getValueOnIsland
+     * @param island
+     * @param ownValue
+     * @param enemyValue
+     */
+    void getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemyValue);
 private:
     QVector<QVector<qint32>> m_Islands;
     QString m_MovementType;
+    Player* m_pOwner;
 };

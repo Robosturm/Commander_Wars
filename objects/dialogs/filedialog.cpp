@@ -61,51 +61,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     {
         emit sigCancel();
     });
-    // go folder up
-    pAnim = pObjectManager->getResAnim("filedialogitems");
-    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setResAnim(pAnim);
-    oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = true;
-    textField->setStyle(style);
-    textField->setHtmlText("..");
-    pBox->addChild(textField);
-    pBox->setSize(m_MainPanel->getWidth() - 50, 40);
-    textField->setHeight(40);
-    textField->setWidth(pBox->getWidth() - 18);
-    textField->setX(8);
-    pBox->setPosition(0, 0);
-    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    m_MainPanel->addItem(pBox);
-    // add some event handling :)
-    auto* pPtrBox = pBox.get();
-    pBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
-    {
-        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-    });
-    pBox->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
-    {
-        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
-    });
     auto* pCurrentFolder = m_CurrentFolder.get();
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-    {
-        QDir dir(pCurrentFolder->getCurrentText());
-        if (pCurrentFolder->getCurrentText() != "")
-        {
-            emit sigShowFolder(dir.absolutePath() + "/..");
-        }
-        else
-        {
-            emit sigShowFolder(ROOT);
-        }
-    });
     auto* pPtrCurrentFile = m_CurrentFile.get();
     auto* pPtrDropDownmenu = m_DropDownmenu.get();
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
@@ -199,7 +155,7 @@ void FileDialog::showFolder(QString folder)
         infoList = GlobalUtils::getInfoList(folder, list);
     }
     qint32 itemCount = 0;
-    for (qint32 i = 1; i < infoList.size(); i++)
+    for (qint32 i = 0; i < infoList.size(); i++)
     {
         QString myPath;
         if (folder == ROOT)
@@ -252,7 +208,7 @@ void FileDialog::showFolder(QString folder)
         {
             pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
-        pBox->setPosition(0, 40 + itemCount * 40);
+        pBox->setPosition(0, itemCount * 40);
 
         // loop through all entries :)
         if (infoList[i].isDir())
@@ -263,7 +219,8 @@ void FileDialog::showFolder(QString folder)
             }
             else
             {
-                textField->setHtmlText(infoList[i].baseName());
+                QString path = GlobalUtils::makePathRelative(infoList[i].filePath()).replace(folder, "");
+                textField->setHtmlText(path);
             }
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
             {

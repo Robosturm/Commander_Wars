@@ -17,7 +17,8 @@ const char* const HeavyAi::NeuralNetworkFileEnding = ".net";
 const char* const HeavyAi::NeuralNetworkPath = "aidata/heavy/";
 const QStringList HeavyAi::NeuralNetworkNames = {"Production",
                                                  "ACTION_FIRE",
-                                                 "ACTION_CAPTURE"};
+                                                 "ACTION_CAPTURE"
+                                                 "WAIT_DISTANCE_MULTIPLIER"};
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
@@ -49,12 +50,14 @@ HeavyAi::HeavyAi(QString type)
 
 void HeavyAi::loadNeuralNetworks()
 {
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 3);
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 3);
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionCapture], m_neuralNetworks[NeuralNetworks::ActionCapture], static_cast<qint32>(CaptureInfo::CaptureInfoMaxSize), CaptureInfoMaxSize / 3);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 4);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 4);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionCapture], m_neuralNetworks[NeuralNetworks::ActionCapture], static_cast<qint32>(CaptureInfo::CaptureInfoMaxSize), CaptureInfoMaxSize / 4);
+    // todo
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::WaitDistanceMultiplier], m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier], 5, 5, WaitTargetTypesMaxSize);
 }
 
-void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth)
+void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, qint32 outputSize)
 {
     network = spNeuralNetwork::create();
     network->setNetworkName(netName);
@@ -94,7 +97,7 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
             network->addLayer(parameters);
         }
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT));
-        parameters[Layer::LAYER_PARAMETER_SIZE] = 1;
+        parameters[Layer::LAYER_PARAMETER_SIZE] = outputSize;
         network->addLayer(parameters);
         network->autogenerate();
         QFile file("resources/" + baseName);
@@ -112,91 +115,92 @@ void HeavyAi::readIni(QString name)
         settings.beginGroup("general");
         bool ok = false;
         m_minActionScore = settings.value("MinActionScore", 0.2f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_minActionScore <= 0)
         {
             m_minActionScore = 0.2f;
         }
         m_actionScoreVariant = settings.value("ActionScoreVariant", 0.05f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_actionScoreVariant <= 0)
         {
             m_actionScoreVariant = 0.05f;
         }
         m_stealthDistanceMultiplier = settings.value("StealthDistanceMultiplier", 2.00f).toFloat(&ok);
-        if(!ok)
+        if(!ok )
         {
-            m_actionScoreVariant = 2.0f;
+            m_stealthDistanceMultiplier = 2.0f;
         }
-        else if (m_stealthDistanceMultiplier < 1.0f)
+        if (m_stealthDistanceMultiplier < 1.0f)
         {
             m_stealthDistanceMultiplier = 1.0f;
         }
+
         m_alliedDistanceModifier = settings.value("AlliedDistanceModifier", 5.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_alliedDistanceModifier <= 0)
         {
-            m_actionScoreVariant = 5.0f;
+            m_alliedDistanceModifier = 5.0f;
         }
         m_maxMovementpoints = settings.value("MaxMovementpoints", 20.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxMovementpoints <= 0)
         {
             m_maxMovementpoints = 20.0f;
         }
         m_maxProductionTurnRange = settings.value("MaxProductionTurnRange", 4.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxProductionTurnRange <= 0)
         {
             m_maxProductionTurnRange = 4.0f;
         }
         m_maxFirerange = settings.value("MaxFirerange", 10).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxFirerange <= 0)
         {
             m_maxFirerange = 10.0f;
         }
         m_primaryEnemyMultiplier = settings.value("PrimaryEnemyMultiplier", 1.2f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_primaryEnemyMultiplier <= 0)
         {
             m_primaryEnemyMultiplier = 1.2f;
         }
         m_maxLoadingPlace = settings.value("MaxLoadingPlace", 4.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxLoadingPlace <= 0)
         {
             m_maxLoadingPlace = 4.0f;
         }
         m_notAttackableDamage = settings.value("NotAttackableDamage", 30.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_notAttackableDamage <= 0)
         {
             m_notAttackableDamage = 30.0f;
         }
         m_ownUnitProtection = settings.value("OwnUnitProtection", 5.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_ownUnitProtection <= 0)
         {
             m_ownUnitProtection = 5.0f;
         }
         m_enemyUnitThread = settings.value("EnemyUnitThread", 5.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_enemyUnitThread <= 0)
         {
             m_enemyUnitThread = 5.0f;
         }
         m_maxVision = settings.value("MaxVision", 10.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxVision <= 0)
         {
             m_maxVision = 10.0f;
         }
         m_maxUnitValue = settings.value("MaxUnitValue", 40000.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxUnitValue <= 0)
         {
             m_maxUnitValue = 40000.0f;
         }
         m_maxScore = settings.value("MaxScore", 10.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxScore <= 0)
         {
             m_maxScore = 10.0f;
         }
         m_maxTerrainDefense = settings.value("MaxTerrainDefense", 15.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxTerrainDefense <= 0)
         {
             m_maxTerrainDefense = 15.0f;
         }
         m_maxCapturePoints = settings.value("MaxCapturePoints", 20.0f).toFloat(&ok);
-        if(!ok)
+        if(!ok || m_maxCapturePoints <= 0)
         {
             m_maxCapturePoints = 20.0f;
         }
@@ -235,12 +239,18 @@ void HeavyAi::process()
         // actual heavy ai impl
         else if (!selectActionToPerform())
         {
-            m_aiStep = AISteps::moveToTargets;
-            scoreMoveToTargets();
+            if (m_aiStep < AISteps::moveToTargets)
+            {
+                m_aiStep = AISteps::moveToTargets;
+                scoreMoveToTargets();
+            }
             if (!selectActionToPerform())
             {
-                m_aiStep = AISteps::moveTransporters;
-                scoreMoveToTargets();
+                if (m_aiStep < AISteps::moveTransporters)
+                {
+                    m_aiStep = AISteps::moveTransporters;
+                    scoreMoveToTargets();
+                }
                 if (!selectActionToPerform())
                 {
                     if (!buildUnits(pBuildings, m_pUnits, m_pEnemyUnits, pEnemyBuildings))
@@ -647,9 +657,17 @@ void HeavyAi::scoreActions(UnitData & unit)
 bool HeavyAi::isScoringAllowed(QString action, QStringList actions)
 {
     bool ret = false;
-    if (m_aiStep >= AISteps::moveToTargets ||
-        !m_secondyActions.contains(action) ||
-        (action == ACTION_WAIT && actions.contains(ACTION_CAPTURE)))
+    if (m_aiStep >= AISteps::moveTransporters)
+    {
+        ret = true;
+    }
+    else if (m_aiStep >= AISteps::moveToTargets &&
+          m_secondyActions.contains(action))
+    {
+        ret = true;
+    }
+    else if (!m_secondyActions.contains(action) ||
+             (action == ACTION_WAIT && actions.contains(ACTION_CAPTURE)))
     {
         ret = true;
     }
@@ -1148,7 +1166,72 @@ float HeavyAi::scoreLoad(spGameAction action, UnitData & unitData, QVector<doubl
     {
         if (unitData.m_actions.contains(ACTION_CAPTURE))
         {
+            // score gets better for infantries with low movement
+            ret = m_maxScore / unitData.m_movepoints;
+        }
+        else
+        {
+            qint32 ownValue = 0;
+            qint32 enemyValue = 0;
+            qint32 island = getIsland(unitData.m_pUnit);
+            m_IslandMaps[island]->getValueOnIsland(getIslandIndex(unitData.m_pUnit), ownValue, enemyValue);
+            QVector<QPoint> ignoreList = {action->getActionTarget()};
+            qint32 targets = getNumberOfTargetsOnIsland(ignoreList);
+            QVector<QVector3D> transporterTargets;
+            appendTransporterTargets(unitData.m_pUnit, m_pUnits, transporterTargets);
+            // Is it a useful transporter at all?
+            if (CoreAI::contains(transporterTargets, action->getActionTarget()))
+            {
+                if (targets == 0)
+                {
+                    ret = m_maxScore * unitData.m_pUnit->getUnitValue() / m_maxUnitValue;
+                }
+                else
+                {
+                    float unitValue = unitData.m_pUnit->getUnitValue();
+                    float actionRatio = static_cast<float>(targets) / static_cast<float>(m_currentTargetedfPfs->getTargets().size());
+                    if (ownValue - unitValue > enemyValue ||
+                        actionRatio < 0.6f)
+                    {
+                        ret = m_maxScore;
+                    }
+                    else
+                    {
+                        ret = m_maxScore * actionRatio;
+                        if (ownValue > enemyValue)
+                        {
+                            ret *= static_cast<float>(enemyValue) / static_cast<float>(ownValue);
+                        }
+                        else
+                        {
+                            ret -= m_maxScore * (1 - static_cast<float>(ownValue) / static_cast<float>(enemyValue));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
 
+qint32 HeavyAi::getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList)
+{
+    qint32 ret = 0;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        const auto & targets = m_currentTargetedfPfs->getTargets();
+        for (const auto & point : targets)
+        {
+            if (!ignoreList.contains(QPoint(point.x(), point.y())))
+            {
+                Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+                if (pUnit == nullptr ||
+                    m_pPlayer->isEnemyUnit(pUnit))
+                {
+                    ++ret;
+                }
+            }
         }
     }
     return ret;
@@ -1219,6 +1302,11 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
         qint32 minFirerange = unit.m_pUnit->getMinRange(unit.m_pUnit->getPosition());
         qint32 maxFirerange = unit.m_pUnit->getMaxRange(unit.m_pUnit->getPosition());
         spQmlVectorPoint pTargetFields = spQmlVectorPoint(GlobalUtils::getCircle(minFirerange, maxFirerange));
+
+        QVector<double> input;
+        // todo create input vector
+        m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->predict(input);
+
         for (qint32 x = 0; x < mapWidth; ++x)
         {
             for (qint32 y = 0; y < mapHeight; ++y)
@@ -1229,19 +1317,17 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
                     Terrain* pTerrain = pMap->getTerrain(x, y);
                     addCaptureTargets(actions, pTerrain, targets);
                     addAttackTargets(unit.m_pUnit, pTerrain, pTargetFields.get(), targets);
+                    addCaptureTransporterTargets(unit.m_pUnit, actions, pTerrain, targets);
+                    addTransporterTargets(unit.m_pUnit, pTerrain, targets);
                     // todo implement that list
                     //                addRepairTargets();
                     //                addSupportTargets();
                     //                // transporting stuff
-                    //                addCaptureTransporterTargets();
-                    //                addTransporterTargets();
                     //                addUnloadTargets(); // capture and attack once
                     //                addLoadingTargets();
                     //                // we need reparing / supplying
                     //                addRepairTargets();
                     //                addRefillTargets();
-
-
                     //                addFlareTargets();                    
                     //                addOoziumTargets();
                     //                addBlackbombTargets();
@@ -1262,12 +1348,23 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
         qint32 y = pTerrain->Terrain::getY();
         bool missileTarget = hasMissileTarget();
         Building* pBuilding = pTerrain->getBuilding();
-        if (pBuilding != nullptr &&
-            pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
+        if (pBuilding != nullptr&&
             pBuilding->getTerrain()->getUnit() == nullptr &&
             pBuilding->isEnemyBuilding(m_pPlayer))
         {
-            qint32 captureDistanceModifier = getMovingToCaptureDistanceModifier();
+            qint32 captureDistanceModifier = 0;
+            if (pBuilding->isCaptureBuilding())
+            {
+                m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Capture);
+            }
+            else if (pBuilding->isMissile())
+            {
+                m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Silo);
+            }
+            else
+            {
+                return;
+            }
             if (captureDistanceModifier < 1)
             {
                 captureDistanceModifier = 1;
@@ -1279,12 +1376,6 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
             }
         }
     }
-}
-
-qint32 HeavyAi::getMovingToCaptureDistanceModifier()
-{
-    // todo
-    return 1.0f;
 }
 
 void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
@@ -1322,15 +1413,18 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                             stealthMalus /=  2;
                         }
                     }
-                    qint32 attackDistanceModifier = getMovingToAttackDistanceModifier();
+                    qint32 attackDistanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Enemy);
+                    if (attackDistanceModifier < 1)
+                    {
+                        attackDistanceModifier = 1;
+                    }
                     QVector3D possibleTarget(x, y, (stealthMalus + attackDistanceModifier) * alliedmultiplier);
                     if (!targets.contains(possibleTarget))
                     {
                         targets.append(possibleTarget);
-                        break;
                     }
                 }
-                else
+                else if (m_enableNeutralTerrainAttack)
                 {
                     Building* pBuilding = pTargetTerrain->getBuilding();
                     if ((pBuilding != nullptr &&
@@ -1348,12 +1442,11 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                         {
                             alliedmultiplier = m_alliedDistanceModifier;
                         }
-                        qint32 attackDistanceModifier = getMovingToAttackEnvironmentDistanceModifier();
+                        qint32 attackDistanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Enemy);
                         QVector3D possibleTarget(x, y, (attackDistanceModifier) * alliedmultiplier);
                         if (!targets.contains(possibleTarget))
                         {
                             targets.append(possibleTarget);
-                            break;
                         }
                     }
                 }
@@ -1362,21 +1455,62 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
     }
 }
 
-qint32 HeavyAi::getMovingToAttackDistanceModifier()
+void HeavyAi::addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
+                                  Terrain* pTerrain, QVector<QVector3D>& targets)
 {
-    // todo
-    return 1.0f;
+    if (actions.contains(ACTION_CAPTURE) ||
+        actions.contains(ACTION_MISSILE))
+    {
+        qint32 x = pTerrain->Terrain::getX();
+        qint32 y = pTerrain->Terrain::getY();
+        Unit* pTransporter = pTerrain->getUnit();
+        if (pTransporter != nullptr &&
+            pTransporter->getOwner() == m_pPlayer &&
+            pTransporter->canTransportUnit(pUnit))
+        {
+            qint32 distanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_CaptureLoad);
+            if (distanceModifier < 1)
+            {
+                distanceModifier = 1;
+            }
+            QVector3D possibleTarget(x, y, distanceModifier);
+            if (!targets.contains(possibleTarget))
+            {
+                targets.append(possibleTarget);
+            }
+        }
+    }
 }
 
-qint32 HeavyAi::getMovingToAttackEnvironmentDistanceModifier()
+void HeavyAi::addTransporterTargets(Unit* pUnit, Terrain* pTerrain, QVector<QVector3D>& targets)
 {
-    // todo
-    return 1.0f;
+    qint32 x = pTerrain->Terrain::getX();
+    qint32 y = pTerrain->Terrain::getY();
+    Unit* pTransporter = pTerrain->getUnit();
+    if (pTransporter != nullptr &&
+        pTransporter->getOwner() == m_pPlayer &&
+        pTransporter->canTransportUnit(pUnit))
+    {
+        qint32 distanceModifier = m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier]->output(WaitTargetTypes_Load);
+        if (distanceModifier < 1)
+        {
+            distanceModifier = 1;
+        }
+        QVector3D possibleTarget(x, y, distanceModifier);
+        if (!targets.contains(possibleTarget))
+        {
+            targets.append(possibleTarget);
+        }
+    }
 }
 
 float HeavyAi::scoreWait(spGameAction action, UnitData & unitData, QVector<double> baseData)
 {
     float score = 0.0f;
+    if (unitData.m_pUnit->getLoadedUnitCount() > 0)
+    {
+        // todo check if unloading can be performed in that case return a negativ result
+    }
     auto targetPath = m_currentTargetedfPfs->getTargetPath();
     QPoint target = action->getActionTarget();
     if (targetPath.contains(target))
@@ -1390,8 +1524,6 @@ float HeavyAi::scoreWait(spGameAction action, UnitData & unitData, QVector<doubl
     }
     return score;
 }
-
-
 
 bool HeavyAi::isPrimaryEnemy(Player* pPlayer) const
 {

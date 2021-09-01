@@ -127,13 +127,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread();
-            if (!m_noUi)
-            {
-                m_AudioWorker.start(QThread::Priority::NormalPriority);
-                emit m_Audiothread->sigInitAudio();
-                m_Audiothread->clearPlayList();
-                m_Audiothread->loadFolder("resources/music/hauptmenue");                
-            }
+            m_AudioWorker.start(QThread::Priority::NormalPriority);
+            emit m_Audiothread->sigInitAudio();
+            m_Audiothread->clearPlayList();
+            m_Audiothread->loadFolder("resources/music/hauptmenue");
             FontManager::getInstance();
             // load ressources by creating the singletons
             BackgroundManager::getInstance();
@@ -148,9 +145,9 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Building:
         {
+            m_Audiothread->playRandom();
             if (!m_noUi)
             {
-                m_Audiothread->playRandom();
                 update();
             }
             BuildingSpriteManager::getInstance();

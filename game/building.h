@@ -386,6 +386,16 @@ public slots:
      */
     bool isCaptureOrMissileBuilding(bool hasSiloTarget);
     /**
+     * @brief isCaptureBuilding
+     * @return
+     */
+    bool isCaptureBuilding();
+    /**
+     * @brief isMissile
+     * @return
+     */
+    bool isMissile();
+    /**
      * @brief isProductionBuilding
      * @return
      */

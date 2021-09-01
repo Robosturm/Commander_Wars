@@ -8,7 +8,7 @@
 #include "game/unitpathfindingsystem.h"
 
 IslandMap::IslandMap(QString unitID, Player* pOwner)
-    : QObject()
+      : m_pOwner(pOwner)
 {
     setObjectName("IslandMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -74,4 +74,37 @@ qint32 IslandMap::getIslandSize(qint32 island)
 QString IslandMap::getMovementType() const
 {
     return m_MovementType;
+}
+
+void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemyValue)
+{
+    ownValue = 0;
+    enemyValue = 0;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        qint32 width = pMap->getMapWidth();
+        qint32 heigth = pMap->getMapHeight();
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                if (m_Islands[x][y] == island)
+                {
+                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    if (pUnit != nullptr)
+                    {
+                        if (pUnit->getOwner() == m_pOwner)
+                        {
+                            ownValue += pUnit->getUnitValue();
+                        }
+                        else if (m_pOwner->isEnemyUnit(pUnit))
+                        {
+                            enemyValue += pUnit->getUnitValue();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

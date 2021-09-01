@@ -11,10 +11,6 @@
 
 namespace oxygine
 {
-    Sprite::Sprite(): m_localScale(1.0f, 1.0f)
-    {
-
-    }
 
     Sprite::~Sprite()
     {

@@ -105,6 +105,18 @@ class HeavyAi : public CoreAI
         CaptureInfoMaxSize,
     };
 
+    enum WaitTargetTypes
+    {
+        WaitTargetTypes_Capture,
+        WaitTargetTypes_Silo,
+        WaitTargetTypes_Enemy,
+        WaitTargetTypes_Terrain,
+        WaitTargetTypes_CaptureLoad,
+        WaitTargetTypes_Load,
+        WaitTargetTypes_Unload,
+        WaitTargetTypesMaxSize,
+    };
+
     // flare?
     // place watermine
     // support repair and ration actions
@@ -118,6 +130,7 @@ class HeavyAi : public CoreAI
         Production,
         ActionFire,
         ActionCapture,
+        WaitDistanceMultiplier,
         NeuralNetworksMax,
     };
 public:
@@ -166,7 +179,7 @@ public:
     explicit HeavyAi(QString type);
     virtual ~HeavyAi() = default;
 
-    void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth);
+    void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, qint32 outputSize = 1);
 public slots:
     /**
      * @brief process
@@ -348,11 +361,6 @@ private:
     void addCaptureTargets(const QStringList & actions,
                            Terrain* pTerrain, QVector<QVector3D>& targets);
     /**
-     * @brief getCaptureDistanceModifier
-     * @return
-     */
-    qint32 getMovingToCaptureDistanceModifier();
-    /**
      * @brief addAttackTargets
      * @param pUnit
      * @param pTargetFields
@@ -360,14 +368,14 @@ private:
      */
     void addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets);
     /**
-     * @brief getMovingToAttackDistanceModifier
+     * @brief addTransporterTargets
      */
-    qint32 getMovingToAttackDistanceModifier();
+    void addTransporterTargets(Unit* pUnit, Terrain* pTerrain, QVector<QVector3D>& targets);
     /**
-     * @brief getMovingToAttackEnvironmentDistanceModifier
-     * @return
+     * @brief addCaptureTransporterTargets
      */
-    qint32 getMovingToAttackEnvironmentDistanceModifier();
+    void addCaptureTransporterTargets(Unit* pUnit, const QStringList & actions,
+                                      Terrain* pTerrain, QVector<QVector3D>& targets);
     /**
      * @brief getBasicFieldInputVector
      * @param action
@@ -496,6 +504,12 @@ private:
      * @return
      */
     bool isScoringAllowed(QString action, QStringList actions);
+    /**
+     * @brief getNumberOfTargetsOnIsland
+     * @param ignoreList
+     * @return
+     */
+    qint32 getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList);
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action, UnitData & unitData, QVector<double> baseData)>;
@@ -509,6 +523,7 @@ private:
     QVector<UnitData> m_ownUnits;
     QVector<QPoint> m_updatePoints;
     QVector<BuildingData> m_BuildingData;
+    QVector<QPoint> m_planedCaptureTargets;
     InfluenceFrontMap m_InfluenceFrontMap;
     spQmlVectorUnit m_pUnits = spQmlVectorUnit();
     spQmlVectorUnit m_pEnemyUnits = spQmlVectorUnit();
@@ -519,12 +534,15 @@ private:
     {
         ACTION_WAIT,
         ACTION_LOAD,
-        ACTION_UNLOAD,
         ACTION_STEALTH,
         ACTION_UNSTEALTH,
     };
-
+    QStringList m_thirdActions
+    {
+        ACTION_UNLOAD,
+    };
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
+
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};
     double m_stealthDistanceMultiplier{2.0};

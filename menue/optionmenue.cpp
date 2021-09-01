@@ -119,7 +119,7 @@ OptionMenue::OptionMenue()
     m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 100);
     addChild(m_pMods);
     size.setHeight(size.height() + 70);
-    m_pModDescription = spPanel::create(true,  size, size, "panel_no_transparent");
+    m_pModDescription = spPanel::create(true,  size, size, "panel");
     m_pModDescription->setPosition(Settings::getWidth() - 1, 25);
     auto moveInButton = spMoveInButton::create(m_pModDescription.get(), m_pModDescription->getScaledWidth());
     m_pModDescription->addChild(moveInButton);

@@ -970,16 +970,29 @@ bool Building::canRepair(Unit* pUnit)
 
 bool Building::isCaptureOrMissileBuilding(bool hasSiloTarget)
 {
+    bool capturable = isCaptureBuilding();
+    if (!capturable && hasSiloTarget)
+    {
+        capturable = isMissile();
+    }
+    return capturable;
+}
+
+bool Building::isCaptureBuilding()
+{
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCapturableBuildings";
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
-    if (!capturable && hasSiloTarget)
-    {
-        function1 = "getMissileBuildings";
-        erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1);
-        capturable = erg.toVariant().toStringList().contains(m_BuildingID);
-    }
+    return capturable;
+}
+
+bool Building::isMissile()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMissileBuildings";
+    QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1);
+    bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
     return capturable;
 }
 

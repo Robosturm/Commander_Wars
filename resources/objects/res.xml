@@ -3,8 +3,8 @@
     <set path = "resources/objects/" />
     <atlas linearFilter="false">
         <!-- button -->
-        <image file="button.png" cols = "3" guideX1="8" guideX2="320" guideY1="6" guideY2="35"/>
-        <image file="button_square.png" cols = "3" guideX1="4" guideX2="25" guideY1="4" guideY2="25"/>
+        <image file="button.png" cols = "3" guideX1="9" guideX2="319" guideY1="6" guideY2="34"/>
+        <image file="button_square.png" cols = "3" guideX1="2" guideX2="24" guideY1="2" guideY2="28"/>
         <image file="checkbox.png" cols = "4" />
         <!-- button icons -->
         <image file="settings.png" />
@@ -45,9 +45,8 @@
         <image file="small_arrow+down.png" cols = "3" />
         <image file="small_arrow+right.png" cols = "3" />
         <!-- panel -->
-        <image file="panel.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="panel.png" guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
         <image file="panel_transparent.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
-        <image file="panel_no_transparent.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
         <!-- dropdownmenu -->
         <image file="dropdownmenu.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
         <image file="arrow+down.png" cols = "3" />
@@ -60,7 +59,7 @@
         <image file="mapSelectionTop.png" guideX1="4" guideX2="295" guideY1="6" guideY2="9"/>
         <image file="mapSelectionItem.png" guideX1="4" guideX2="290" guideY1="1" guideY2="18"/>
         <image file="mapSelectionBottom.png" guideX1="4" guideX2="295" guideY1="1" guideY2="4"/>
-        <image file="mapSelectionSelectedMap.png" guideX1="1" guideX2="283" guideY1="1" guideY2="19"/>
+        <image file="mapSelectionSelectedMap.png" guideX1="3" guideX2="281" guideY1="3" guideY2="17"/>
         <image file="mapSelectionBuildingInfo.png" guideX1="9" guideX2="20" guideY1="9" guideY2="32"/>
 
         <image file="no_co.png"/>

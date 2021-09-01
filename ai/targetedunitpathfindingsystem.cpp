@@ -112,6 +112,11 @@ void TargetedUnitPathFindingSystem::setAbortOnCostExceed(bool abortOnCostExceed)
     m_abortOnCostExceed = abortOnCostExceed;
 }
 
+const QVector<QVector3D> &TargetedUnitPathFindingSystem::getTargets() const
+{
+    return m_Targets;
+}
+
 QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
 {
     if (m_FinishNode >= 0)

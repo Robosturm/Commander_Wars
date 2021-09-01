@@ -236,7 +236,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
         qint32 x = getIntValue(getAttribute(childs, attrX));
         qint32 y = getIntValue(getAttribute(childs, attrY));
         QString sprite = getStringValue(getAttribute(childs, attrSprite));
-        oxygine::spButton pButton = ObjectManager::createIconButton(sprite);
+        oxygine::spButton pButton = ObjectManager::createIconButton(sprite, 36);
         pButton->setX(x);
         pButton->setY(y);
         QString onEvent = getAttribute(childs, attrOnEvent);

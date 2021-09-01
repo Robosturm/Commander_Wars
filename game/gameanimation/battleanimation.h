@@ -152,7 +152,7 @@ private:
      * @param enemyHp
      */
     void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
-                             oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp);
+                             oxygine::spBox9Sprite pHealthbar, float endHp, qint32 weapon, float enemyHp);
     /**
      * @brief loadDyingAnimation
      * @param pUnit1
@@ -207,8 +207,8 @@ private:
     oxygine::spSprite m_DefCO0;
     oxygine::spSprite m_DefCO1;
 
-    oxygine::spColorRectSprite m_HealthBar0;
-    oxygine::spColorRectSprite m_HealthBar1;
+    oxygine::spBox9Sprite m_HealthBar0;
+    oxygine::spBox9Sprite m_HealthBar1;
 
     spBattleAnimationSprite m_pAttackerAnimation;
     spBattleAnimationSprite m_pDefenderAnimation;

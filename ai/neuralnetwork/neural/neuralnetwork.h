@@ -65,6 +65,12 @@ public:
      */
     QVector<double> output();
     /**
+     * @brief NeuralNetwork::output
+     * @param index
+     * @return
+     */
+    double output(qint32 index);
+    /**
      * @brief toString for debugging
      * @return
      */

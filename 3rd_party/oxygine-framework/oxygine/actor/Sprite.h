@@ -16,7 +16,7 @@ namespace oxygine
     {
     public:
         using TweenAnim = oxygine::TweenAnim;
-        explicit Sprite();
+        explicit Sprite() = default;
         virtual ~Sprite();
 
         const AnimationFrame& getAnimFrame() const
@@ -86,6 +86,7 @@ namespace oxygine
         void setInvertFlipX(bool value);
         virtual void doRender(const RenderState&) override;
 
+
     protected:
         enum
         {
@@ -98,7 +99,7 @@ namespace oxygine
         virtual void sizeChanged(const Vector2& size) override;
 
     protected:
-        Vector2 m_localScale;
+        Vector2 m_localScale{1.0f, 1.0f};
         AnimationFrame m_frame;
         oxygine::spResAnim m_colorTable;
         bool m_invertFlipX{false};

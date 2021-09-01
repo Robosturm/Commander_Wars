@@ -19,8 +19,6 @@ public:
      * @return the remaining costs for this node to reach the target
      */
     virtual qint32 getRemainingCost(qint32 x, qint32 y, qint32) override;
-
-
     /**
      * @brief finished checks if this would be the target node to reach
      * @param x
@@ -65,6 +63,11 @@ public:
      * @param abortOnCostExceed
      */
     void setAbortOnCostExceed(bool abortOnCostExceed);
+    /**
+     * @brief getTargets
+     * @return
+     */
+    const QVector<QVector3D> &getTargets() const;
 
 private:
     bool m_useBasecosts{false};

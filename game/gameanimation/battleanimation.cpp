@@ -4,6 +4,7 @@
 #include "coreengine/globalutils.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
 
 #include "game/gameanimation/battleanimation.h"
 #include "game/gamemap.h"
@@ -72,24 +73,23 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
 {
 
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back");
+
+
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back+mask", oxygine::ep_ignore_error);
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnim);
+    pSprite->setPriority(priorityBack);
+    pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    addChild(pSprite);
+    pAnim = pGameManager->getResAnim("battle_back");
     if (pAnim != nullptr)
     {
         setSize(pAnim->getSize());
     }
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityBack);
     addChild(pSprite);
-    pAnim = pGameManager->getResAnim("battle_back+mask", oxygine::ep_ignore_error);
-    if (pAnim != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnim);
-        pSprite->setPriority(priorityBack);
-        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        addChild(pSprite);
-    }
 
     oxygine::spClipRectActor pAttackerClipRect = oxygine::spClipRectActor::create();
     pAttackerClipRect->setSize(127, 192);
@@ -142,26 +142,23 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     // co on the left upper corner
     /*********************************************************************************************/
     oxygine::spSprite pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOBack);
+    pSprite->setPosition(-35, -30);
+    if (getIsLeft(pAtkUnit, pDefUnit))
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    else
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
+    pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOBack);
-        pSprite->setPosition(-35, -30);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
-    }
 
     m_AtkCO0 = oxygine::spSprite::create();
     float coScale = 22.0f / 24.0f;
@@ -187,26 +184,23 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     // co on the left lower corner
     /*********************************************************************************************/
     pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOBack);
+    pSprite->setPosition(-35, getHeight() - 45);
+    if (getIsLeft(pAtkUnit, pDefUnit))
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    else
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
+    pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOBack);
-        pSprite->setPosition(-35, getHeight() - 45);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
-    }
 
     m_AtkCO1 = oxygine::spSprite::create();
     pCO = pPlayer->getCO(1);
@@ -231,28 +225,26 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     /*********************************************************************************************/
     // co on the right upper corner
     /*********************************************************************************************/
+    pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOBack);
+    pSprite->setPosition(getWidth() - 45, -30);
+    if (getIsLeft(pAtkUnit, pDefUnit))
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    else
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
     pPlayer = pDefUnit->getOwner();
     pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, -30);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOBack);
-        pSprite->setPosition(getWidth() - 45, -30);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
-    }
+
     pCO = pPlayer->getCO(0);
     m_DefCO0 = oxygine::spSprite::create();
     if (pCO != nullptr)
@@ -277,26 +269,24 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     // co on the right lower corner
     /*********************************************************************************************/
     pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOBack);
+    pSprite->setPosition(getWidth() - 45, getHeight() - 45);
+    if (getIsLeft(pAtkUnit, pDefUnit))
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    else
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
+    pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOBack);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOBack);
-        pSprite->setPosition(getWidth() - 45, getHeight() - 45);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
-    }
+
     pCO = pPlayer->getCO(1);
     m_DefCO1 = oxygine::spSprite::create();
     if (pCO != nullptr)
@@ -326,96 +316,90 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("co_front");
     oxygine::ResAnim* pAnimMask = pGameManager->getResAnim("co_front+mask", oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOFront);
+    pSprite->setPosition(-35, -30);
+    if (getIsLeft(pAtkUnit, pDefUnit))
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    else
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
+    pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
+
+    pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOFront);
+    pSprite->setPosition(-35, getHeight() - 45);
+    if (getIsLeft(pAtkUnit, pDefUnit))
     {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOFront);
-        pSprite->setPosition(-35, -30);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
     }
+    else
+    {
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
+
     pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
+
+    pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOFront);
+    pSprite->setPosition(getWidth() - 45, - 30);
+    if (getIsLeft(pAtkUnit, pDefUnit))
     {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOFront);
-        pSprite->setPosition(-35, getHeight() - 45);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
     }
+    else
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
     pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, - 30);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
+
+    pSprite = oxygine::spSprite::create();
+    pSprite->setResAnim(pAnimMask);
+    pSprite->setPriority(priorityCOFront);
+    pSprite->setPosition(getWidth() - 45, getHeight() - 45);
+    if (getIsLeft(pAtkUnit, pDefUnit))
     {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOFront);
-        pSprite->setPosition(getWidth() - 45, - 30);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
+        pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
     }
+    else
+    {
+        pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
+    }
+    addChild(pSprite);
     pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
     addChild(pSprite);
-    if (pAnimMask != nullptr)
-    {
-        pSprite = oxygine::spSprite::create();
-        pSprite->setResAnim(pAnimMask);
-        pSprite->setPriority(priorityCOFront);
-        pSprite->setPosition(getWidth() - 45, getHeight() - 45);
-        if (getIsLeft(pAtkUnit, pDefUnit))
-        {
-            pSprite->setColorTable(pDefUnit->getOwner()->getColorTableAnim(), true);
-        }
-        else
-        {
-            pSprite->setColorTable(pAtkUnit->getOwner()->getColorTableAnim(), true);
-        }
-        addChild(pSprite);
-    }
 }
 
 void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp)
 {
     // create health bar
-    m_HealthBar0 = oxygine::spColorRectSprite::create();
-    m_HealthBar0->setSize(spriteWidth * atkStartHp / Unit::MAX_UNIT_HP, 9);
+    auto* pAnim = GameManager::getInstance()->getResAnim("healthbar");
+    m_HealthBar0 = oxygine::spBox9Sprite::create();
+    m_HealthBar0->setResAnim(pAnim);
+    m_HealthBar0->setSize((spriteWidth - 8) * atkStartHp / Unit::MAX_UNIT_HP + 8, 9);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
         m_HealthBar0->setPosition(31, 25);
@@ -423,11 +407,13 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     else
     {
         m_HealthBar0->setPosition(162, 25);
+        m_HealthBar0->setFlippedX(true);
     }
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     addChild(m_HealthBar0);
-    m_HealthBar1 = oxygine::spColorRectSprite::create();
-    m_HealthBar1->setSize(spriteWidth * defStartHp / Unit::MAX_UNIT_HP, 9);
+    m_HealthBar1 = oxygine::spBox9Sprite::create();
+    m_HealthBar1->setResAnim(pAnim);
+    m_HealthBar1->setSize((spriteWidth - 8) * defStartHp / Unit::MAX_UNIT_HP + 8, 9);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
         m_HealthBar1->setPosition(31, 25);
@@ -435,6 +421,7 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     else
     {
         m_HealthBar1->setPosition(162, 25);
+        m_HealthBar1->setFlippedX(true);
     }
     m_HealthBar1->setColor(getHealthBarColor(defStartHp));
     addChild(m_HealthBar1);
@@ -741,17 +728,19 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
-                                          oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp)
+                                          oxygine::spBox9Sprite pHealthbar, float endHp, qint32 weapon, float enemyHp)
 {    
     if (endHp < 0.0f)
     {
         endHp = 0.0f;
+        oxygine::spTween visibleTween = oxygine::createTween(TweenToggleVisibility(0, 0.9), oxygine::timeMS(1), 1, false, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+        pHealthbar->addTween(visibleTween);
     }
-    oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
+    oxygine::VStyleActor::TweenColor tweenColor(getHealthBarColor(endHp));
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
-    pColorRect->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / Unit::MAX_UNIT_HP), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
-    pColorRect->addTween(posTween);
+    pHealthbar->addTween(colorTween);
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth((spriteWidth -  8) * endHp / Unit::MAX_UNIT_HP + 8), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    pHealthbar->addTween(posTween);
     if (m_currentState <= AnimationProgress::AttackerImpact)
     {
         setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);

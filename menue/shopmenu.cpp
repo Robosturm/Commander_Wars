@@ -179,7 +179,7 @@ void Shopmenu::filterChanged(qint32 item)
         });
         m_pPanel->addItem(pCheckbox);
         oxygine::spSprite icon = getIcon(item.itemType, item.key);
-        oxygine::spButton pButton = ObjectManager::createIconButton(icon);
+        oxygine::spButton pButton = ObjectManager::createIconButton(icon, 36);
         icon->setPosition(2, 2);
         loadWikiInfo(pButton, item.itemType, item.key);
         pButton->setPosition(55, y);

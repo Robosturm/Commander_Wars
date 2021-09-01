@@ -70,15 +70,17 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
 }
 
 
-oxygine::spButton ObjectManager::createIconButton(QString icon)
+oxygine::spButton ObjectManager::createIconButton(QString icon, qint32 size)
 {
     oxygine::spButton pButton = oxygine::spButton::create();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pButton->setSize(30, 30);
+    pButton->setSize(size, size);
 
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(ObjectManager::getInstance()->getResAnim(icon));
+    pSprite->setPosition((size - pSprite->getWidth()) / 2,
+                         (size - pSprite->getHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();
@@ -98,12 +100,14 @@ oxygine::spButton ObjectManager::createIconButton(QString icon)
     return pButton;
 }
 
-oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite)
+oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite, qint32 size)
 {
     oxygine::spButton pButton = oxygine::spButton::create();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pButton->setSize(37, 37);
+    pButton->setSize(size, size);
+    pSprite->setPosition((size - pSprite->getWidth()) / 2,
+                         (size - pSprite->getHeight()) / 2);
     pButton->addChild(pSprite);
 
     oxygine::Sprite* ptr = pButton.get();

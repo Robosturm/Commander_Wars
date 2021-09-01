@@ -192,9 +192,9 @@ void ReplayMenu::loadUIButtons()
     qint32 y = 9;
 
 
-    m_playButton = ObjectManager::createIconButton("play");
+    m_playButton = ObjectManager::createIconButton("play", 36);
     m_playButton->setVisible(false);
-    m_pauseButton = ObjectManager::createIconButton("pause");
+    m_pauseButton = ObjectManager::createIconButton("pause", 36);
     m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getWidth(), y);
     m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getWidth(), y);
     m_playButton->addClickListener([=](oxygine::Event * )
@@ -205,7 +205,7 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigSwapPlay();
     });
-    m_oneStepButton = ObjectManager::createIconButton("one_step");
+    m_oneStepButton = ObjectManager::createIconButton("one_step", 36);
     m_oneStepButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth(), y);
     pButtonBox->addChild(m_oneStepButton);
     m_oneStepButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
@@ -215,7 +215,7 @@ void ReplayMenu::loadUIButtons()
 
     pButtonBox->addChild(m_playButton);
     pButtonBox->addChild(m_pauseButton);
-    m_fastForwardButton = ObjectManager::createIconButton("fastforward");
+    m_fastForwardButton = ObjectManager::createIconButton("fastforward", 36);
     m_fastForwardButton->setPosition(m_playButton->getX() - 4 - m_oneStepButton->getWidth() - m_fastForwardButton->getWidth(), y);
     pButtonBox->addChild(m_fastForwardButton);
     m_fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
@@ -226,7 +226,7 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
-    m_configButton = ObjectManager::createIconButton("settings");
+    m_configButton = ObjectManager::createIconButton("settings", 36);
     m_configButton->setPosition(m_fastForwardButton->getX() - 4 - m_configButton->getWidth(), y);
     m_configButton->addClickListener([=](oxygine::Event*)
     {
