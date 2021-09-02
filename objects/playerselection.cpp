@@ -374,6 +374,7 @@ void PlayerSelection::showPlayerSelection()
     QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
     Interpreter* pInterpreter = Interpreter::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
+#if HEAVY_AI
     // heavy ai enable code
     for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
     {
@@ -381,6 +382,7 @@ void PlayerSelection::showPlayerSelection()
         QJSValue aiName = pInterpreter->doFunction(id, "getName");
         defaultAiList.append(aiName.toString());
     }
+#endif
     defaultAiList.append(tr("Closed"));
 
     QVector<QString> aiList = defaultAiList;
@@ -535,7 +537,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         oxygine::spButton pIconButton = ObjectManager::createIconButton("perk", 36);
-        pIconButton->setPosition(xPositions[itemIndex] + 67, y + 7);
+        pIconButton->setPosition(xPositions[itemIndex] + 67, y + 3);
         m_pPlayerSelection->addItem(pIconButton);
         m_playerPerks.append(pIconButton);
         pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)

@@ -3560,8 +3560,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="105"/>
-        <location filename="../objects/playerselection.cpp" line="384"/>
-        <location filename="../objects/playerselection.cpp" line="1207"/>
+        <location filename="../objects/playerselection.cpp" line="386"/>
+        <location filename="../objects/playerselection.cpp" line="1209"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3599,7 +3599,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../objects/playerselection.cpp" line="224"/>
         <location filename="../objects/playerselection.cpp" line="354"/>
-        <location filename="../objects/playerselection.cpp" line="709"/>
+        <location filename="../objects/playerselection.cpp" line="711"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3645,8 +3645,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="374"/>
-        <location filename="../objects/playerselection.cpp" line="389"/>
-        <location filename="../objects/playerselection.cpp" line="403"/>
+        <location filename="../objects/playerselection.cpp" line="391"/>
+        <location filename="../objects/playerselection.cpp" line="405"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3671,44 +3671,44 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="392"/>
-        <location filename="../objects/playerselection.cpp" line="399"/>
-        <location filename="../objects/playerselection.cpp" line="403"/>
+        <location filename="../objects/playerselection.cpp" line="394"/>
+        <location filename="../objects/playerselection.cpp" line="401"/>
+        <location filename="../objects/playerselection.cpp" line="405"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="556"/>
+        <location filename="../objects/playerselection.cpp" line="558"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="575"/>
+        <location filename="../objects/playerselection.cpp" line="577"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="654"/>
+        <location filename="../objects/playerselection.cpp" line="656"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="673"/>
+        <location filename="../objects/playerselection.cpp" line="675"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="692"/>
+        <location filename="../objects/playerselection.cpp" line="694"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="728"/>
+        <location filename="../objects/playerselection.cpp" line="730"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="753"/>
+        <location filename="../objects/playerselection.cpp" line="755"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>

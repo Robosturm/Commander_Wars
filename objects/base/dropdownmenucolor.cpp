@@ -19,8 +19,16 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setWidth(width);
+
+    oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();
+    colorField->setColor(Qt::black);
+    colorField->setWidth(m_pClipActor->getWidth() - 10);
+    colorField->setHeight(m_pClipActor->getHeight() - 13);
+    colorField->setY(7);
+    m_pClipActor->addChild(colorField);
+
     m_Colorfield = oxygine::spColorRectSprite::create();
-    if (Settings::getSmallScreenDevice())
+    if (!Settings::getSmallScreenDevice())
     {
         m_Colorfield->addClickListener([=](oxygine::Event* event)
         {
@@ -31,11 +39,12 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
         });
     }
     connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);
-    m_Colorfield->setWidth(m_Box->getWidth() - 20 - 45);
-    m_Colorfield->setHeight(m_Box->getHeight() - 20);
+    m_Colorfield->setWidth(m_pClipActor->getWidth() - 16);
+    m_Colorfield->setHeight(m_pClipActor->getHeight() - 19);
     m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
     m_Colorfield->setDisableColor(QColor(0, 0, 0, 0));
     m_Colorfield->setY(10);
+    m_Colorfield->setX(3);
     m_pClipActor->addChild(m_Colorfield);
 
     for (qint32 i = 0; i < m_ItemColors.size(); i++)
@@ -73,11 +82,16 @@ QColor DropDownmenuColor::getCurrentItemColor()
 
 void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
 {
-    oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();
-    colorField->setColor(color.red(), color.green(), color.blue(), 255);
-    auto size = addDropDownItem(colorField, id);
-    colorField->setSize(size.x - 20, size.y - 20);
-    colorField->setPosition(10, 10);
+    oxygine::spColorRectSprite colorField1 = oxygine::spColorRectSprite::create();
+    colorField1->setColor(Qt::black);
+    oxygine::spColorRectSprite colorField2 = oxygine::spColorRectSprite::create();
+    colorField2->setColor(color.red(), color.green(), color.blue(), 255);
+    colorField1->addChild(colorField2);
+    auto size = addDropDownItem(colorField1, id);
+    colorField1->setSize(size.x - 14, size.y - 14);
+    colorField1->setPosition(7, 7);
+    colorField2->setSize(size.x - 20, size.y - 20);
+    colorField2->setPosition(3, 3);
 }
 
 void DropDownmenuColor::itemChanged(qint32 item)

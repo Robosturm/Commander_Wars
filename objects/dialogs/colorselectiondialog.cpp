@@ -13,7 +13,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);

@@ -223,7 +223,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemies receive no income, and half of their current funs are diverted to Alexander.");
+        return qsTr("Enemies receive no income, and half of their current funds are diverted to Alexander.");
     };
     this.getSuperPowerName = function(co)
     {

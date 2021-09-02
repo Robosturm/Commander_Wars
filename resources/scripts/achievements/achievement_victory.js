@@ -96,9 +96,9 @@ var Constructor = function()
     };
     this.onVictory = function(team, humanWin)
     {
+        var count = map.getPlayerCount();
         if (humanWin && team >= 0)
         {
-            var count = map.getPlayerCount();
             for (var i = 0; i < count; ++i)
             {
                 var player = map.getPlayer(i);
@@ -118,9 +118,22 @@ var Constructor = function()
             }
             userdata.increaseAchievement("GAME_VICTORY", 1);
         }
-        else if (team >= 0 && !humanWin)
+        else if (team >= 0 && !humanWin )
         {
-            userdata.increaseAchievement("GAME_LOST", 1);
+            var humanMatch = false;
+            for (var i = 0; i < count; ++i)
+            {
+                var player = map.getPlayer(i);
+                if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    humanMatch = true;
+                    break;
+                }
+            }
+            if (humanMatch)
+            {
+                userdata.increaseAchievement("GAME_LOST", 1);
+            }
         }
     };
 };

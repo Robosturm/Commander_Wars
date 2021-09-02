@@ -189,11 +189,15 @@ int main(qint32 argc, char* argv[])
     registerInterfaceData();
     /*************************************************************************************************/
     // show window according to window mode
+    window.setPosition(Settings::getX(), Settings::getY());
     window.changeScreenMode(window.getScreenMode());
 
     window.setBrightness(Settings::getBrightness());
     window.setGamma(Settings::getGamma());
-    window.setPosition(Settings::getX(), Settings::getY());
+    if (window.getScreenMode() != 0)
+    {
+        window.setPosition(Settings::getX(), Settings::getY());
+    }
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down
