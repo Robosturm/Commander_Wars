@@ -65,7 +65,6 @@
         <file>resources/objects/mapSelectionTop.png</file>
         <file>resources/objects/no_co.png</file>
         <file>resources/objects/panel.png</file>
-        <file>resources/objects/panel_transparent.png</file>
         <file>resources/objects/pause.png</file>
         <file>resources/objects/perk.png</file>
         <file>resources/objects/play.png</file>
@@ -5206,5 +5205,6 @@
         <file>resources/images/game/battlesprites/co_back+mask.png</file>
         <file>resources/images/game/battlesprites/co_front+mask.png</file>
         <file>resources/images/game/battlesprites/healthbar.png</file>
+        <file>resources/objects/panel_transparent+mask.png</file>
     </qresource>
 </RCC>

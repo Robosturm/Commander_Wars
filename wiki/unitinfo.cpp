@@ -65,11 +65,12 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setPosition(width - 210, y);
+    pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
     addChild(pSpriteBox);
 
     spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);

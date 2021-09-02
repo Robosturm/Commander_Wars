@@ -88,7 +88,7 @@ IngameInfoBar::IngameInfoBar()
     }
     m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pAnim = pObjectManager->getResAnim("panel_transparent");
+    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
     m_pDetailedViewBox->setResAnim(pAnim);
     m_pDetailedViewBox->setSize(136, 200);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
@@ -106,6 +106,7 @@ void IngameInfoBar::updatePlayerInfo()
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
+        m_pDetailedViewBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
         spGameMenue pMenu = GameMenue::getInstance();
         if (pMenu.get() != nullptr)
         {
@@ -154,11 +155,12 @@ void IngameInfoBar::updatePlayerInfo()
 
                 // boxes for co's and weather
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
-                pAnim = pObjectManager->getResAnim("panel_transparent");
+                pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
                 pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
+                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(95, 95);
                 pBox->setPosition(104, 8);
                 m_pGameInfoBox->addChild(pBox);
@@ -166,6 +168,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
+                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(95, 95);
                 pBox->setPosition(7, 8);
                 m_pGameInfoBox->addChild(pBox);
@@ -174,6 +177,7 @@ void IngameInfoBar::updatePlayerInfo()
                 pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
+                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(95, 95);
                 pBox->setPosition(199, 8);
                 m_pGameInfoBox->addChild(pBox);
@@ -196,8 +200,9 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox = oxygine::spBox9Sprite::create();
                     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-                    pAnim = pObjectManager->getResAnim("panel_transparent");
+                    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
+                    pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(47, 47);
                     pBox->setPosition(200, 104);
                     m_pGameInfoBox->addChild(pBox);
@@ -218,8 +223,9 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox = oxygine::spBox9Sprite::create();
                     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-                    pAnim = pObjectManager->getResAnim("panel_transparent");
+                    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
+                    pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(47, 47);
                     pBox->setPosition(247, 104);
                     m_pGameInfoBox->addChild(pBox);
@@ -363,11 +369,11 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 }
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr && pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
+        m_pDetailedViewBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
@@ -713,9 +719,10 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
                 oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
                 pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent");
+                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 pBox->setResAnim(pAnim);
                 pBox->setSize(GameMap::defaultImageSize + 11, GameMap::defaultImageSize + 12);
+                pBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
                 pBox->setPosition(posX, posY);
                 m_pCursorInfoBox->addChild(pBox);
                 if (!transportHidden)

@@ -15,7 +15,7 @@
         <image file="perk.png" />
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
-        <image file="editorselection.png"           guideX1="25" guideX2="299" guideY1="25" guideY2="179"/>
+        <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
         <image file="editor+selector.png" cols = "4" />
         <image file="editor+big.png"/>
         <image file="editor+fill.png"/>
@@ -26,7 +26,6 @@
         <image file="editor+terrain.png"/>
         <image file="editor+unit.png"/>
         <image file="editor+building.png"/>
-
         <!-- color dialog -->
         <image file="colordialogcursor_1.png"/>
         <image file="colordialogcursor_2.png"/>
@@ -45,8 +44,8 @@
         <image file="small_arrow+down.png"  cols = "3" />
         <image file="small_arrow+right.png" cols = "3" />
         <!-- panel -->
-        <image file="panel.png"             guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
-        <image file="panel_transparent.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="panel.png"                     guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
+        <image file="panel_transparent+mask.png"    guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
         <!-- dropdownmenu -->
         <image file="dropdownmenu.png"      guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
         <image file="arrow+down.png"        cols = "3" />
@@ -61,7 +60,6 @@
         <image file="mapSelectionBottom.png"        guideX1="4" guideX2="295" guideY1="1"  guideY2="4"/>
         <image file="mapSelectionSelectedMap.png"   guideX1="3" guideX2="281" guideY1="3"  guideY2="17"/>
         <image file="mapSelectionBuildingInfo.png"  guideX1="9" guideX2="20"  guideY1="9"  guideY2="32"/>
-
         <image file="no_co.png"/>
         <image file="co_background.png"/>
         <image file="co_cursor.png"/>
