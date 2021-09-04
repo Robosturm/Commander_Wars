@@ -154,7 +154,15 @@ void Player::setColor(QColor color, qint32 table)
 {
     Console::print("Setting player color", Console::eDEBUG);
     m_Color = color;
-    bool loaded = loadTable(table);
+    bool loaded = false;
+    if (table >= 0)
+    {
+        loaded = loadTable(table);
+    }
+    else
+    {
+        loaded = colorToTable(color);
+    }
     if (!loaded)
     {
         createTable(m_Color);
@@ -165,6 +173,7 @@ void Player::setColor(QColor color, qint32 table)
 
 bool Player::loadTable(qint32 table)
 {
+    Console::print("Player::loadTable", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     args << table;
@@ -374,6 +383,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
+    Console::print("Player::createTable " + baseColor.name(), Console::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
     m_colorTable.fill(QColor(0, 0, 0, 0));

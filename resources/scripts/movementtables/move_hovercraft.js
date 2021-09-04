@@ -33,15 +33,15 @@ var Constructor = function()
                                 ["DESERT_TRY_RIVER", 1],
                                 ["SNOW", 1],
                                 ["SNOW_DESTROYEDWELD", 1],
-                                ["FOREST", 2],
-                                ["WASTELAND", 2],
-                                ["DESERT_FOREST", 2],
-                                ["DESERT_WASTELAND", 2],
-                                ["SNOW_FOREST", 2],
-                                ["SNOW_WASTELAND", 2],
+                                ["FOREST", 3],
+                                ["WASTELAND", 1],
+                                ["DESERT_FOREST", 3],
+                                ["DESERT_WASTELAND", 1],
+                                ["SNOW_FOREST", 3],
+                                ["SNOW_WASTELAND", 1],
                                 ["SEA", 2],
                                 ["FOG", 2],
-                                ["ROUGH_SEA", 3],
+                                ["ROUGH_SEA", 4],
                                 ["REAF", 3],
                                 ["TELEPORTTILE", 0]];
 
@@ -58,13 +58,39 @@ var Constructor = function()
         var costs = MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
         var currentGroup = currentTerrain.getTerrainGroup();
         var targetGroup = terrain.getTerrainGroup();
+        // sea tile near land?
+        if (currentGroup === 0)
+        {
+            var valid = false;
+            var fields = globals.getCircle(1, 3);
+            // check all fields we can attack
+            for (var i = 0; i < fields.size(); i++)
+            {
+                var x = fields.at(i).x + terrain.getX();
+                var y = fields.at(i).y + terrain.getY();
+                // check with which weapon we can attack and if we could deal damage with this weapon
+                if (map.onMap(x, y))
+                {
+                    if (map.getTerrain(x, y).getTerrainGroup() > 0)
+                    {
+                        // not a sea tile. -> land tile
+                        valid = true;
+                        break;
+                    }
+                }
+            }
+            fields.remove();
+            if (!valid)
+            {
+                return -1;
+            }
+        }
         if (currentGroup === targetGroup)
         {
             return costs;
         }
         else
         {
-
             // from sea to land or vice versa
             if (currentGroup === 0 || targetGroup === 0)
             {

@@ -255,7 +255,10 @@ void GameRules::checkVictory()
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
                 Player* pPlayer = pMap->getPlayer(i);
-                if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human && !pPlayer->getIsDefeated())
+                auto* baseGameInput = pPlayer->getBaseGameInput();
+                if (baseGameInput != nullptr &&
+                    baseGameInput->getAiType() == GameEnums::AiTypes_Human &&
+                    !pPlayer->getIsDefeated())
                 {
                     humanAlive = true;
                     break;

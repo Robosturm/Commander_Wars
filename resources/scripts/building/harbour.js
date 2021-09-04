@@ -26,8 +26,7 @@ var Constructor = function()
     };
 
     this.actionList = ["ACTION_BUILD_UNITS"];
-    this.constructionList = ["HOVERCRAFT", "ARTILLERYCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT",
-                             "CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+    this.constructionList = ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     this.getConstructionList = function(building)
     {
         return HARBOUR.constructionList;

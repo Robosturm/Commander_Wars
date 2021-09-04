@@ -3,6 +3,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "gameinput/mapmover.h"
+#include "network/rxtask.h"
+#include "network/txtask.h"
 #include "network/NetworkInterface.h"
 
 #include <qobject.h>
@@ -29,15 +31,19 @@ namespace oxygine
             }
             else
             {
-                oxygine::Texture* pObj1 = dynamic_cast<oxygine::Texture*>(this);
-                MapMover* pObj2 = dynamic_cast<MapMover*>(this);
-                NetworkInterface* pObj3 = dynamic_cast<NetworkInterface*>(this);
                 if (GameWindow::getWindow() != nullptr &&
                     !GameWindow::getWindow()->getShuttingDown())
                 {
+                    oxygine::Texture* pObj1 = dynamic_cast<oxygine::Texture*>(this);
+                    MapMover* pObj2 = dynamic_cast<MapMover*>(this);
+                    RxTask* pObj3 = dynamic_cast<RxTask*>(this);
+                    TxTask* pObj4 = dynamic_cast<TxTask*>(this);
+                    NetworkInterface* pObj5 = dynamic_cast<NetworkInterface*>(this);
                     if (pObj1 == nullptr &&
                         pObj2 == nullptr &&
-                        pObj3 == nullptr)
+                        pObj3 == nullptr &&
+                        pObj4 == nullptr &&
+                        pObj5 == nullptr)
                     {
                         handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
                     }

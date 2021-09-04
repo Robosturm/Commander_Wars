@@ -44,19 +44,14 @@ public:
         Max,
     };
 
-    NetworkInterface()
+    explicit NetworkInterface()
         : isServer(false),
           isConnected(false)
     {
-        m_pNetworkInterface = this;
         connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
-        connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
         connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
     }
-
-    virtual ~NetworkInterface()
-    {
-    }
+    virtual ~NetworkInterface() = default;
 
     static QString getIPAdresse()
     {
@@ -126,7 +121,6 @@ signals:
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);
     void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
-    void sig_close();
     /**
      * @brief sigDisconnectClient
      * @param socketID
@@ -177,7 +171,6 @@ public slots:
                 Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
-
     void displayLocalError(QLocalSocket::LocalSocketError socketError)
     {
         switch (socketError)
@@ -195,13 +188,7 @@ public slots:
                 Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
-protected slots:
-    void closeNetworkInterface()
-    {
-        m_pNetworkInterface = nullptr;
-    }
 protected:
-    spNetworkInterface m_pNetworkInterface;
     bool isServer;
     bool isConnected;
     quint64 m_socketID{0};

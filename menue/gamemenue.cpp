@@ -73,9 +73,11 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
+            auto* baseGameInput = pPlayer->getBaseGameInput();
+            if (baseGameInput != nullptr &&
+                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
-                dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput())->connectInterface(m_pNetworkInterface.get());
+                dynamic_cast<ProxyAi*>(baseGameInput)->connectInterface(m_pNetworkInterface.get());
             }
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
@@ -311,7 +313,6 @@ void GameMenue::disconnected(quint64 socketID)
         }
         if (m_pNetworkInterface.get() != nullptr)
         {
-            emit m_pNetworkInterface->sig_close();
             m_pNetworkInterface = nullptr;
         }
         if (showDisconnect)
@@ -349,7 +350,11 @@ void GameMenue::loadGameMenue()
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        pMap->getPlayer(i)->getBaseGameInput()->init();
+        auto* input = pMap->getPlayer(i)->getBaseGameInput();
+        if (input != nullptr)
+        {
+            input->init();
+        }
     }
     // back to normal code
     m_pPlayerinfo = spPlayerInfo::create();
@@ -634,9 +639,11 @@ void GameMenue::performAction(spGameAction pGameAction)
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
                            m_gameStarted;
-        spPlayer currentPlayer = spPlayer(pMap->getCurrentPlayer());
+        spPlayer pCurrentPlayer = spPlayer(pMap->getCurrentPlayer());
+        auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
         if (multiplayer &&
-            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
+            baseGameInput != nullptr &&
+            baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
         {
             m_gameStarted = false;
@@ -645,16 +652,17 @@ void GameMenue::performAction(spGameAction pGameAction)
         }
         else
         {
-            Player* pCurrentPlayer = pMap->getCurrentPlayer();
             if (multiplayer &&
-                pCurrentPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
+                baseGameInput != nullptr &&
+                baseGameInput->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
                 m_syncCounter = pGameAction->getSyncCounter();
             }
             m_pStoredAction = nullptr;
             pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
-                (pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
+                (baseGameInput != nullptr &&
+                 baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi))
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
@@ -662,7 +670,8 @@ void GameMenue::performAction(spGameAction pGameAction)
             doTrapping(pGameAction);
             // send action to other players if needed
             if (multiplayer &&
-                pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                baseGameInput != nullptr &&
+                baseGameInput->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 Console::print("Sending action to other players", Console::eDEBUG);
                 m_syncCounter++;
@@ -688,8 +697,10 @@ void GameMenue::performAction(spGameAction pGameAction)
                 pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
             }
 
-            pCurrentPlayer->getBaseGameInput()->centerCameraOnAction(pGameAction.get());
-
+            if (baseGameInput != nullptr)
+            {
+                baseGameInput->centerCameraOnAction(pGameAction.get());
+            }
             pGameAction->perform();
             // clean up the action
             m_pCurrentAction = pGameAction;
@@ -708,9 +719,11 @@ void GameMenue::performAction(spGameAction pGameAction)
                 performAction(pAction);
             }
         }
-        if (currentPlayer != pMap->getCurrentPlayer())
+        if (pCurrentPlayer != pMap->getCurrentPlayer())
         {
-            if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            auto* baseGameInput = pMap->getCurrentPlayer()->getBaseGameInput();
+            if (baseGameInput != nullptr &&
+                baseGameInput->getAiType() == GameEnums::AiTypes_Human)
             {
                 autoSaveMap();
             }

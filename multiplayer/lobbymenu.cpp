@@ -77,6 +77,11 @@ LobbyMenu::LobbyMenu()
         emit sigHostServer();
     });
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
+    if (m_pTCPClient.get() == nullptr ||
+        !m_pTCPClient->getIsConnected())
+    {
+        pButtonHostOnServer->setEnabled(false);
+    }
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
     addChild(pButtonJoin);
@@ -124,15 +129,6 @@ LobbyMenu::LobbyMenu()
     addChild(pChat);
 
     connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
-}
-
-LobbyMenu::~LobbyMenu()
-{
-    if (!Settings::getServer() && !m_usedForHosting)
-    {
-        emit m_pTCPClient->sig_close();
-        m_pTCPClient = nullptr;
-    }
 }
 
 void LobbyMenu::exitMenue()

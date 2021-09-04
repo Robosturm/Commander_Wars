@@ -434,6 +434,10 @@ void Multiplayermenu::requestRule(quint64 socketID)
                 {
                     sendStream << static_cast<qint32>(GameEnums::AiTypes_Open);
                 }
+                else if (m_pPlayerSelection->isClosedPlayer(i))
+                {
+                    sendStream << static_cast<qint32>(GameEnums::AiTypes_Closed);
+                }
                 else
                 {
                     sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
@@ -875,7 +879,12 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     stream >> seed;
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
-        GameEnums::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
+        GameEnums::AiTypes aiType = GameEnums::AiTypes::AiTypes_Closed;
+        auto* baseGameInput = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput();
+        if (baseGameInput != nullptr)
+        {
+            aiType = baseGameInput->getAiType();
+        }
         Console::print("Creating AI for player " + QString::number(i) + " of type " + QString::number(aiType), Console::eDEBUG);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
@@ -1125,7 +1134,6 @@ void Multiplayermenu::disconnectNetwork()
             m_Chat->detach();
             m_Chat = nullptr;
         }
-        emit m_NetworkInterface->sig_close();
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
         m_NetworkInterface = nullptr;
     }

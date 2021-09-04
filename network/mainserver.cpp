@@ -9,20 +9,20 @@
 
 #include "multiplayer/networkcommands.h"
 
-MainServer* MainServer::m_pInstance = nullptr;
+spMainServer MainServer::m_pInstance;
 
 MainServer* MainServer::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new MainServer();
+        m_pInstance = spMainServer::create();
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 bool MainServer::exists()
 {
-    return m_pInstance != nullptr;
+    return m_pInstance.get() != nullptr;
 }
 
 MainServer::MainServer()
@@ -34,9 +34,9 @@ MainServer::MainServer()
     m_updateTimer.setSingleShot(true);
     m_updateTimer.start(5000);
     moveToThread(Mainapp::getGameServerThread());
-    m_pGameServer = new TCPServer();
-    connect(m_pGameServer, &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
-    connect(m_pGameServer, &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
+    m_pGameServer = spTCPServer::create();
+    connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
+    connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     connect(this, &MainServer::sigRemoveGame, this, &MainServer::removeGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
@@ -44,7 +44,7 @@ MainServer::MainServer()
 
 MainServer::~MainServer()
 {
-    emit m_pGameServer->sig_close();
+    m_pGameServer->disconnectTCP();
     // clean up server and client games.
     for (qint32 i = 0; i < m_games.size(); i++)
     {
@@ -88,7 +88,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
                  !game->game.getData().getLaunched())
             {
                 game->game.addClient(m_pGameServer->getClient(socketID));
-                connect(&(game->game), &NetworkGame::sigDisconnectSocket, m_pGameServer, &TCPServer::disconnectClient, Qt::QueuedConnection);
+                connect(&(game->game), &NetworkGame::sigDisconnectSocket, m_pGameServer.get(), &TCPServer::disconnectClient, Qt::QueuedConnection);
             }
             found = true;
             break;

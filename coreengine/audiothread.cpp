@@ -568,29 +568,23 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
 {
     qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0) * volume;
-    if (m_soundCaches.contains(file))
+    sound = QAudio::convertVolume(sound,
+                                        QAudio::LogarithmicVolumeScale,
+                                        QAudio::LinearVolumeScale);
+    if (sound > 0)
     {
-        auto & soundCache = m_soundCaches[file];
-        bool started = false;
-        for (qint32 i = soundCache->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
+        if (m_soundCaches.contains(file))
         {
-            if (soundCache->sound[i].get() == nullptr)
+            auto & soundCache = m_soundCaches[file];
+            bool started = false;
+            for (qint32 i = soundCache->nextSoundToUse; i < SoundData::MAX_SAME_SOUNDS; ++i)
             {
-                break;
-            }
-            else if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                 file, loops, delay, sound))
-            {
-                     started = true;
-                     break;
-            }
-        }
-        if (!started)
-        {
-            for (qint32 i = 0; i < soundCache->nextSoundToUse; ++i)
-            {
-                if (tryPlaySoundAtCachePosition(soundCache, i,
-                                                file, loops, delay, sound))
+                if (soundCache->sound[i].get() == nullptr)
+                {
+                    break;
+                }
+                else if (tryPlaySoundAtCachePosition(soundCache, i,
+                                                     file, loops, delay, sound))
                 {
                     started = true;
                     break;
@@ -598,13 +592,25 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
             }
             if (!started)
             {
-                Console::print("no free cached sound found.", Console::eDEBUG);
+                for (qint32 i = 0; i < soundCache->nextSoundToUse; ++i)
+                {
+                    if (tryPlaySoundAtCachePosition(soundCache, i,
+                                                    file, loops, delay, sound))
+                    {
+                        started = true;
+                        break;
+                    }
+                }
+                if (!started)
+                {
+                    Console::print("no free cached sound found.", Console::eDEBUG);
+                }
             }
         }
-    }
-    else
-    {
-        Console::print("Unable to locate sound: " + file, Console::eERROR);
+        else
+        {
+            Console::print("Unable to locate sound: " + file, Console::eERROR);
+        }
     }
 }
 
@@ -616,10 +622,8 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         !soundCache->timer[i]->isActive())
     {
         Console::print("Playing sound: " + file + " using cache sound " + QString::number(i), Console::eDEBUG);
-        qreal value = QAudio::convertVolume(sound,
-                                            QAudio::LogarithmicVolumeScale,
-                                            QAudio::LinearVolumeScale);
-        soundCache->sound[i]->setVolume(value);
+
+        soundCache->sound[i]->setVolume(sound);
         soundCache->sound[i]->setLoopCount(loops);
         // start play
         if (delay > 0)

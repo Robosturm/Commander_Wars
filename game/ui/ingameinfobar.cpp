@@ -78,6 +78,10 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     m_pDetailedViewBox = oxygine::spBox9Sprite::create();
+    m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
+    m_pDetailedViewBox->setResAnim(pAnim);
     if (getScaleX() < 0.75f)
     {
         m_pDetailedViewBox->setScale(1 / getScaleX() * 0.5f);
@@ -86,10 +90,6 @@ IngameInfoBar::IngameInfoBar()
     {
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
-    m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pAnim = pObjectManager->getResAnim("panel_transparent+mask");
-    m_pDetailedViewBox->setResAnim(pAnim);
     m_pDetailedViewBox->setSize(136, 200);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
 
@@ -439,19 +439,19 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         speed = pTerrain->getTerrainAnimationMoveSpeed();
     }
     oxygine::spSlidingSprite pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(6, 3);
+    pTerrainSprite->setPosition(5, 3);
     pTerrainSprite->setResAnim(pAnimBase);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(6, 3);
+    pTerrainSprite->setPosition(5, 3);
     pTerrainSprite->setResAnim(pAnimBack);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(6, 3);
+    pTerrainSprite->setPosition(5, 3);
     pTerrainSprite->setResAnim(pAnimFore);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
@@ -464,7 +464,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
             hp = Unit::MAX_UNIT_HP;
         }
         spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, hp, false);
-        pBattleAnimationSprite->setPosition(6, 3);
+        pBattleAnimationSprite->setPosition(5, 3);
         pBattleAnimationSprite->setPriority(3);
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }

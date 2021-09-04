@@ -544,7 +544,9 @@ void VictoryMenue::addShopMoney()
     qint32 highestScore = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        if (pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+        auto* inputType = pMap->getPlayer(i)->getBaseGameInput();
+        if (inputType != nullptr &&
+            inputType->getAiType() == GameEnums::AiTypes_Human &&
             pMap->getPlayer(i)->getTeam() == pMap->getWinnerTeam())
         {
             qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
@@ -704,7 +706,6 @@ void VictoryMenue::exitMenue()
     Console::print("Leaving Victory Menue", Console::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
-        emit m_pNetworkInterface->sig_close();
         m_pNetworkInterface = nullptr;
     }
     spCampaign campaign = GameMap::getInstance()->getSpCampaign();
@@ -1007,7 +1008,9 @@ void VictoryMenue::AddScoreToUserdata()
         for (qint32 i = 0; i < playerCount; ++i)
         {
             Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human &&
+            auto* input = pPlayer->getBaseGameInput();
+            if (input != nullptr &&
+                input->getAiType() == GameEnums::AiTypes::AiTypes_Human &&
                 pPlayer->getTeam() == pMap->getWinnerTeam())
             {
                 qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
@@ -1059,15 +1062,19 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
         m_statisticsView->detach();
     }
     spGameMap pMap = GameMap::getInstance();
-    const auto & playerdata = pMap->getGameRecorder()->getPlayerDataRecords()[player];
-    if (Settings::getSmallScreenDevice())
+    const auto & data = pMap->getGameRecorder()->getPlayerDataRecords();
+    if (player >= 0 && data.size() < player)
     {
-        m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, pMap->getPlayer(player));
+        const auto & playerdata = data[player];
+        if (Settings::getSmallScreenDevice())
+        {
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 180, pMap->getPlayer(player));
+        }
+        else
+        {
+            m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+        }
+        m_statisticsView->setPosition(10, 60);
+        m_statisticsBox->addChild(m_statisticsView);
     }
-    else
-    {
-        m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
-    }
-    m_statisticsView->setPosition(10, 60);
-    m_statisticsBox->addChild(m_statisticsView);
 }

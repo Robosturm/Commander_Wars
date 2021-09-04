@@ -1959,7 +1959,8 @@ void GameMap::setMapName(const QString &value)
 
 void GameMap::nextTurnPlayerTimeout()
 {
-    if (m_CurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+    auto* input = m_CurrentPlayer->getBaseGameInput();
+    if (input == nullptr || input->getAiType() != GameEnums::AiTypes_ProxyAi)
     {
         nextTurn();
     }
@@ -1974,11 +1975,12 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     playMusic();
     bool permanent = false;
     bool found = false;
+    auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
          m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
-        m_CurrentPlayer->getBaseGameInput() != nullptr)
+         baseGameInput != nullptr)
     {
-        if (m_CurrentPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
         {
             // search for previous player
             qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();

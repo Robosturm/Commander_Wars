@@ -63,18 +63,21 @@ Mainwindow::Mainwindow()
     qint32 buttonWidth = 170;
     qint32 btnI = 0;
     QString lastSaveGame = Settings::getLastSaveGame();
-    if (QFile::exists(lastSaveGame) && lastSaveGame.endsWith(".sav"))
+
+    // create the ui for the main menue here :)
+    oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"), buttonWidth);
+    setButtonPosition(pButtonLastSaveGame, btnI);
+    addChild(pButtonLastSaveGame);
+    pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        // create the ui for the main menue here :)
-        oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"), buttonWidth);
-        setButtonPosition(pButtonLastSaveGame, btnI);
-        addChild(pButtonLastSaveGame);
-        pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-        {
-            emit sigLastSaveGame();
-        });
-        connect(this, &Mainwindow::sigLastSaveGame, this, &Mainwindow::lastSaveGame, Qt::QueuedConnection);
-        btnI++;
+        emit sigLastSaveGame();
+    });
+    connect(this, &Mainwindow::sigLastSaveGame, this, &Mainwindow::lastSaveGame, Qt::QueuedConnection);
+    btnI++;
+    if (!QFile::exists(lastSaveGame) ||
+        !lastSaveGame.endsWith(".sav"))
+    {
+        pButtonLastSaveGame->setEnabled(false);
     }
 
     // create the ui for the main menue here :)

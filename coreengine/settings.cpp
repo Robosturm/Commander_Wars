@@ -607,6 +607,20 @@ QStringList Settings::getActiveMods()
 void Settings::setActiveMods(const QStringList &activeMods)
 {
     m_activeMods = activeMods;
+    qint32 i = 0;
+    while (i < m_activeMods.size())
+    {
+        QDir dir(m_activeMods[i]);
+        if (!dir.exists())
+        {
+            Console::print("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", Console::eWARNING);
+            m_activeMods.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
     m_activeMods.sort();
     for (const auto & mod : qAsConst(m_activeMods))
     {

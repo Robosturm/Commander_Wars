@@ -46,7 +46,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_QML_DEBUG
         -DGAMEDEBUG
         -DHEAVY_AI
-        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 

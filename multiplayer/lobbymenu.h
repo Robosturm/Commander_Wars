@@ -20,7 +20,7 @@ class LobbyMenu : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit LobbyMenu();
-    virtual ~LobbyMenu();
+    virtual ~LobbyMenu() = default;
 
 signals:    
     void sigExitMenue();

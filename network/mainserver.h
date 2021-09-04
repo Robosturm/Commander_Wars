@@ -10,10 +10,15 @@
 #include "network/networkgamedata.h"
 #include "network/networkgame.h"
 
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+class MainServer;
+using spMainServer = oxygine::intrusive_ptr<MainServer>;
+
 /**
  * @brief The MainServer class handling the server and it's data.
  */
-class MainServer : public QObject
+class MainServer : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -23,11 +28,10 @@ public:
 
     inline TCPServer* getGameServer()
     {
-        return m_pGameServer;
+        return m_pGameServer.get();
     }
     inline void stopGameServer()
     {
-        m_pGameServer->deleteLater();
         m_pGameServer = nullptr;
     }    
 signals:
@@ -68,8 +72,10 @@ private:
     explicit MainServer();
 
 private:
-    static MainServer* m_pInstance;    
-    TCPServer* m_pGameServer{nullptr};
+    friend spMainServer;
+    static spMainServer m_pInstance;
+private:
+    spTCPServer m_pGameServer{nullptr};
     quint64 m_slaveGameIterator{0};
     // data for games currently run on the server
     QVector<spInternNetworkGame> m_games;

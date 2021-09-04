@@ -40,6 +40,7 @@ public:
     }
     void attachCampaign(spCampaign campaign);
     bool isOpenPlayer(qint32 player);
+    bool isClosedPlayer(qint32 player);
     bool hasOpenPlayer();
     QString getPlayerAiName(qint32 player);
     void setPlayerAiName(qint32 player, QString name);
