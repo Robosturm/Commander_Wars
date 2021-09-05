@@ -88,7 +88,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
         if (building.buildingDataInput[i].enabled)
         {
             auto score = m_neuralNetworks[NeuralNetworks::Production]->predict(building.buildingDataInput[i].unitBuildingDataInput);
-            double value = score[0];
+            double value = score[0] * BaseGameInputIF::getUnitBuildValue(building.buildingDataInput[i].unitId);
             if (value > m_maxScore)
             {
                 value = m_maxScore;

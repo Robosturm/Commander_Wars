@@ -24,7 +24,10 @@ public:
      * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
      * @param event
      */
-    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) {};
+    virtual bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+    {
+        return false;
+    };
 protected:
     virtual void focused(){};
     virtual void looseFocusInternal();

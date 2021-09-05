@@ -1782,20 +1782,13 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
             }
         }
     }
-    if (baseCosts >= 0)
+    if ((costs <= 0) && (baseCosts > 0))
     {
-        if ((costs <= 0) && (baseCosts > 0))
-        {
-            return 1;
-        }
-        else
-        {
-            return costs;
-        }
+        return 1;
     }
     else
     {
-        return -1;
+        return costs;
     }
 }
 

@@ -1,10 +1,11 @@
-#include "textbox.h"
+#include "objects/base/textbox.h"
 #include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "qguiapplication.h"
 #include "qclipboard.h"
+#include "coreengine/console.h"
 
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
@@ -154,14 +155,30 @@ void Textbox::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+bool Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
+    bool bRet = false;
+    Console::print("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
     if (event->queries() == Qt::ImTextBeforeCursor)
     {
         QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
         m_editPos = m_curmsgpos;
         event->setValue(Qt::ImTextBeforeCursor, textBefore);
+        bRet = true;
     }
+    else if (event->queries() == Qt::ImTextAfterCursor)
+    {
+        event->setValue(Qt::ImTextAfterCursor, "");
+        bRet = true;
+    }
+    else if (event->queries() == Qt::ImSurroundingText)
+    {
+        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
+        event->setValue(Qt::ImSurroundingText, textBefore);
+        event->setValue(Qt::ImCursorPosition, m_curmsgpos);
+        bRet = true;
+    }
+    return bRet;
 }
 
 void Textbox::handleTouchInput(oxygine::KeyEvent event)

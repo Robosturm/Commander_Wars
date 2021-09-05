@@ -538,11 +538,11 @@ bool Mainapp::event(QEvent *ev)
 
 bool Mainapp::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
-    if (FocusableObject::getFocusedObject() != nullptr && event->queries() == Qt::ImTextBeforeCursor)
+    if (FocusableObject::getFocusedObject() != nullptr)
     {
-        FocusableObject::getFocusedObject()->keyInputMethodQueryEvent(event);
+        bool bRet = FocusableObject::getFocusedObject()->keyInputMethodQueryEvent(event);
         event->accept();
-        return true;
+        return bRet;
     }
     return false;
 }

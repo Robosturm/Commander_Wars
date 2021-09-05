@@ -347,14 +347,30 @@ void SpinBox::setSpinSpeed(qreal SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-void SpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+bool SpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
+    bool bRet = false;
+    Console::print("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
     if (event->queries() == Qt::ImTextBeforeCursor)
     {
         QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
         m_editPos = m_curmsgpos;
         event->setValue(Qt::ImTextBeforeCursor, textBefore);
+        bRet = true;
     }
+    else if (event->queries() == Qt::ImTextAfterCursor)
+    {
+        event->setValue(Qt::ImTextAfterCursor, "");
+        bRet = true;
+    }
+    else if (event->queries() == Qt::ImSurroundingText)
+    {
+        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
+        event->setValue(Qt::ImSurroundingText, textBefore);
+        event->setValue(Qt::ImCursorPosition, m_curmsgpos);
+        bRet = true;
+    }
+    return bRet;
 }
 
 void SpinBox::handleTouchInput(oxygine::KeyEvent event)

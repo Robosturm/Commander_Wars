@@ -870,7 +870,8 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (isUsingUnit(pUnit))
+        if (isUsingUnit(pUnit) &&
+            pUnit->getLoadedUnitCount() == 0)
         {
             QStringList actions = pUnit->getActionList();
             if (actions.contains(ACTION_SUPPORTALL_RATION) ||

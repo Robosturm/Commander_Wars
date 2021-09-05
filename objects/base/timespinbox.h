@@ -39,7 +39,7 @@ public:
     void setSpinSpeed(qint32 SpinSpeed);
 
     virtual void setEnabled(bool value) override;
-    virtual void keyInputMethodQueryEvent(QInputMethodQueryEvent *event) override;
+    virtual bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event) override;
 signals:
     void sigValueChanged(qint32 value);
 public slots:
@@ -73,6 +73,7 @@ private:
     qint32 m_curmsgpos{0};
     qint32 m_spinDirection{0};
     qint32 m_SpinSpeed{1000 * 60};
+
     qint32 m_preeditSize{0};
     qint32 m_editPos{0};
 };
