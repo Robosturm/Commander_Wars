@@ -485,6 +485,16 @@ void NormalAi::readIni(QString name)
         {
             m_ProducingTransportMinLoadingTransportRatio = 3.0f;
         }
+        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 2.5f).toFloat(&ok);
+        if(!ok)
+        {
+            m_minSameIslandDistance = 2.5f;
+        }
+        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 4).toInt(&ok);
+        if(!ok)
+        {
+            m_slowUnitSpeed = 4;
+        }
         settings.endGroup();
     }
 }
@@ -1167,101 +1177,99 @@ bool NormalAi::moveToUnloadArea(spGameAction pAction, Unit* pUnit, spQmlVectorUn
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
     if (targetFields.x() >= 0)
     {
-        if (CoreAI::contains(targets, targetFields))
+        UnitPathFindingSystem turnPfs(pUnit);
+        turnPfs.explore();
+        QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+        pAction->setMovepath(path, turnPfs.getCosts(path));
+        pAction->setActionID(ACTION_UNLOAD);
+        if (pAction->canBePerformed())
         {
-            UnitPathFindingSystem turnPfs(pUnit);
-            turnPfs.explore();
-            QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
-            pAction->setMovepath(path, turnPfs.getCosts(path));
-            pAction->setActionID(ACTION_UNLOAD);
-            if (pAction->canBePerformed())
+            bool unloaded = false;
+            QVector<qint32> unloadedUnits;
+            do
             {
-                bool unloaded = false;
-                QVector<qint32> unloadedUnits;
-                do
+                unloaded = false;
+                spMenuData pDataMenu = pAction->getMenuStepData();
+                if (pDataMenu->validData())
                 {
-                    unloaded = false;
-                    spMenuData pDataMenu = pAction->getMenuStepData();
-                    if (pDataMenu->validData())
+                    QStringList actions = pDataMenu->getActionIDs();
+                    QVector<qint32> unitIDx = pDataMenu->getCostList();
+                    QVector<QList<QVariant>> unloadFields;
+                    for (qint32 i = 0; i < unitIDx.size() - 1; i++)
                     {
-                        QStringList actions = pDataMenu->getActionIDs();
-                        QVector<qint32> unitIDx = pDataMenu->getCostList();
-                        QVector<QList<QVariant>> unloadFields;
-                        for (qint32 i = 0; i < unitIDx.size() - 1; i++)
+                        QString function1 = "getUnloadFields";
+                        QJSValueList args1;
+                        QJSValue obj1 = pInterpreter->newQObject(pAction.get());
+                        args1 << obj1;
+                        args1 << unitIDx[i];
+                        QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
+                        unloadFields.append(ret.toVariant().toList());
+                    }
+                    if (actions.size() > 1)
+                    {
+                        for (qint32 i = 0; i < unloadFields.size(); i++)
                         {
-                            QString function1 = "getUnloadFields";
-                            QJSValueList args1;
-                            QJSValue obj1 = pInterpreter->newQObject(pAction.get());
-                            args1 << obj1;
-                            args1 << unitIDx[i];
-                            QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
-                            unloadFields.append(ret.toVariant().toList());
-                        }
-                        if (actions.size() > 1)
-                        {
-                            for (qint32 i = 0; i < unloadFields.size(); i++)
+                            if (!needsRefuel(pUnit->getLoadedUnit(i)))
                             {
-                                if (!needsRefuel(pUnit->getLoadedUnit(i)))
+                                if (!unloadedUnits.contains(unitIDx[i]))
                                 {
-                                    if (!unloadedUnits.contains(unitIDx[i]))
+                                    if (unloadFields[i].size() == 1)
                                     {
-                                        if (unloadFields[i].size() == 1)
+                                        addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                        spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
+                                        addSelectedFieldData(pAction, pFields->getPoints()->at(0));
+                                        unloaded = true;
+                                        unloadedUnits.append(unitIDx[i]);
+                                        break;
+                                    }
+                                    else if (unloadFields[i].size() > 0 &&
+                                             pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
+                                    {
+                                        for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
                                         {
-                                            addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                            spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                                            addSelectedFieldData(pAction, pFields->getPoints()->at(0));
-                                            unloaded = true;
-                                            unloadedUnits.append(unitIDx[i]);
-                                            break;
-                                        }
-                                        else if (unloadFields[i].size() > 0 &&
-                                                 pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
-                                        {
-                                            for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                            QPoint unloadField = unloadFields[i][i2].toPoint();
+                                            Building* pBuilding = pMap->getTerrain(unloadField.x(),
+                                                                                   unloadField.y())->getBuilding();
+                                            if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
                                             {
-                                                QPoint unloadField = unloadFields[i][i2].toPoint();
-                                                Building* pBuilding = pMap->getTerrain(unloadField.x(),
-                                                                                       unloadField.y())->getBuilding();
-                                                if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
-                                                {
-                                                    addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                                    addSelectedFieldData(pAction, unloadField);
-                                                    unloaded = true;
-                                                    unloadedUnits.append(unitIDx[i]);
-                                                    break;
-                                                }
+                                                addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                                addSelectedFieldData(pAction, unloadField);
+                                                unloaded = true;
+                                                unloadedUnits.append(unitIDx[i]);
+                                                break;
                                             }
-                                            break;
                                         }
+                                        break;
                                     }
                                 }
                             }
-                            if (unloaded == false &&
-                                !needsRefuel(pUnit->getLoadedUnit(0)))
-                            {
-                                qint32 costs = pDataMenu->getCostList()[0];
-                                addMenuItemData(pAction, actions[0], costs);
-                                unloaded = true;
-                                spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                                qint32 field = GlobalUtils::randIntBase(0, pFields->getPoints()->size() - 1);
-                                addSelectedFieldData(pAction, pFields->getPoints()->at(field));
-                            }
+                        }
+                        if (unloaded == false &&
+                            !needsRefuel(pUnit->getLoadedUnit(0)))
+                        {
+                            qint32 costs = pDataMenu->getCostList()[0];
+                            addMenuItemData(pAction, actions[0], costs);
+                            unloaded = true;
+                            spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
+                            qint32 field = GlobalUtils::randIntBase(0, pFields->getPoints()->size() - 1);
+                            addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                         }
                     }
-                    else
-                    {
-                        return false;
-                    }
                 }
-                while (unloaded);
-                addMenuItemData(pAction, ACTION_WAIT, 0);
-                m_updatePoints.append(pUnit->getPosition());
-                m_updatePoints.append(pAction->getActionTarget());
-                if (pAction->canBePerformed())
+                else
                 {
-                    emit performAction(pAction);
-                    return true;
+                    Console::print("Error invalid menu data received while unloading units",  Console::eERROR);
+                    return false;
                 }
+            }
+            while (unloaded);
+            addMenuItemData(pAction, ACTION_WAIT, 0);
+            m_updatePoints.append(pUnit->getPosition());
+            m_updatePoints.append(pAction->getActionTarget());
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
             }
         }
         else

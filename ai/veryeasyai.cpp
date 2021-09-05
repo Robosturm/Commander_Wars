@@ -105,10 +105,20 @@ void VeryEasyAI::readIni(QString name)
         {
             m_coUnitScoreMultiplier = 1.1f;
         }
-        m_minCoUnitCount = settings.value("MinCoUnitCount", 1.1f).toInt(&ok);
+        m_minCoUnitCount = settings.value("MinCoUnitCount", 5).toInt(&ok);
         if(!ok)
         {
             m_minCoUnitCount = 5;
+        }
+        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 2.5f).toFloat(&ok);
+        if(!ok)
+        {
+            m_minSameIslandDistance = 2.5f;
+        }
+        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 4).toInt(&ok);
+        if(!ok)
+        {
+            m_slowUnitSpeed = 4;
         }
         settings.endGroup();
     }

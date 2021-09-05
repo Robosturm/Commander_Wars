@@ -476,7 +476,9 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
         case QMediaPlayer::EndOfMedia:
         {
             Console::print("Music stopped at position " + QString::number(m_player[playerIndex]->m_player.position()), Console::eDEBUG);
-            if (m_PlayListdata[m_currentMedia].m_endpointMs < 0 &&
+            if (m_currentMedia < m_PlayListdata.size() &&
+                m_currentMedia >= 0 &&
+                m_PlayListdata[m_currentMedia].m_endpointMs < 0 &&
                 playerIndex == m_currentPlayer)
             {
                 // shuffle through loaded media

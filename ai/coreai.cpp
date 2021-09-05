@@ -234,7 +234,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
             data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
 
             GameEnums::PowerMode result = pCO->getAiUsePower(data[2], pUnits->size(), repairUnits, indirectUnits,
-                                                             directUnits, pEnemyUnits->size(), turnMode);
+                    directUnits, pEnemyUnits->size(), turnMode);
             if (result == GameEnums::PowerMode_Unknown)
             {
                 result = static_cast<GameEnums::PowerMode>(m_COPowerTree.getDecision(data));
@@ -863,7 +863,7 @@ void CoreAI::addSelectedFieldData(spGameAction pGameAction, QPoint point)
 
 QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
                                             spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
-                                            bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
+                                            bool addCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
                                             bool all)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
@@ -885,9 +885,11 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
                 qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
                 qint32 loadingIsland = getIsland(pLoadingUnit);
                 QPoint loadingUnitPos = pLoadingUnit->getPosition();
-                if (ignoreCaptureTargets && canCapture)
+                if (addCaptureTargets && canCapture)
                 {
                     // no targets found -> try to speed up those infis
+                    found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                             loadingIslandIdx, loadingIsland);
                 }
                 else
                 {
@@ -951,28 +953,55 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEn
                         qint32 loadingIslandIdx, qint32 loadingIsland)
 {
     bool found = false;
+    QPoint unitPos(pLoadingUnit->Unit::getX(), pLoadingUnit->Unit::getY());
+    float movementPoints = pLoadingUnit->getMovementpoints(unitPos);
+    qint32 minMovementDistance = movementPoints * m_minSameIslandDistance;
+    bool fastUnit = movementPoints > m_slowUnitSpeed;
     // check if we have anything to do here :)
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
         Unit* pEnemy = pEnemyUnits->at(i2);
-        if (m_IslandMaps[loadingIslandIdx]->getIsland(pEnemy->Unit::getX(), pEnemy->Unit::getY()) == loadingIsland &&
-            pLoadingUnit->isAttackable(pEnemy, true))
+        qint32 x = pEnemy->Unit::getX();
+        qint32 y = pEnemy->Unit::getY();
+        if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance ||
+            fastUnit)
         {
-            // this unit can do stuff skip it
-            found = true;
-            break;
+            if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
+                pLoadingUnit->isAttackable(pEnemy, true))
+            {
+                // this unit can do stuff skip it
+                found = true;
+                break;
+            }
         }
     }
     if (!found)
     {
-        // check for capturing or missiles next
-        if (canCapture)
+        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                 loadingIslandIdx, loadingIsland);
+    }
+    return found;
+}
+
+bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+                              qint32 loadingIslandIdx, qint32 loadingIsland)
+{
+    bool found = false;
+    // check for capturing or missiles next
+    if (canCapture)
+    {
+        QPoint unitPos(pLoadingUnit->Unit::getX(), pLoadingUnit->Unit::getY());
+        float movementPoints = pLoadingUnit->getMovementpoints(unitPos);
+        qint32 minMovementDistance = movementPoints * m_minSameIslandDistance;
+        bool missileTarget = hasMissileTarget();
+        for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
         {
-            bool missileTarget = hasMissileTarget();
-            for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
+            Building* pBuilding = pEnemyBuildings->at(i2);
+            qint32 x = pBuilding->Building::getX();
+            qint32 y = pBuilding->Building::getY();
+            if (GlobalUtils::getDistance(QPoint(x, y), unitPos) <= minMovementDistance)
             {
-                Building* pBuilding = pEnemyBuildings->at(i2);
-                if (m_IslandMaps[loadingIslandIdx]->getIsland(pBuilding->Building::getX(), pBuilding->Building::getY()) == loadingIsland &&
+                if (m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding(missileTarget))
                 {
                     // this unit can do stuff skip it

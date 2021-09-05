@@ -316,7 +316,7 @@ protected:
                                          spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets);
     QVector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
                                         spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
-                                        bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
+                                        bool addCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
                                         bool all = false);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
@@ -328,6 +328,18 @@ protected:
      */
     bool hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                     qint32 loadingIslandIdx, qint32 loadingIsland);
+    /**
+     * @brief hasCaptureTarget
+     * @param pLoadingUnit
+     * @param canCapture
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @param loadingIslandIdx
+     * @param loadingIsland
+     * @return
+     */
+    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+                                  qint32 loadingIslandIdx, qint32 loadingIsland);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit
@@ -509,6 +521,8 @@ protected:
     float m_coUnitRankReduction{1000.0f};
     float m_coUnitScoreMultiplier{1.1f};
     qint32 m_minCoUnitCount{5};
+    float m_minSameIslandDistance{2.5};
+    qint32 m_slowUnitSpeed{4};
 private:
     bool finish{false};
     struct FlareInfo

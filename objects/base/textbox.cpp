@@ -175,8 +175,17 @@ void Textbox::handleTouchInput(oxygine::KeyEvent event)
             {
                 m_Text.remove(m_editPos + event.getStart(), m_preeditSize);
             }
+            // workaround for wrong preEdit string from qt
+            QString dummy = msg;
+            dummy.remove(dummy.size() - 1, 1);
             m_preeditSize = msg.size();
+            if (!dummy.isEmpty() &&
+                dummy == m_Text)
+            {
+                m_editPos = 0;
+            }
             m_Text.insert(m_editPos + action.start, msg);
+
         }
         else if (action.type == QInputMethodEvent::AttributeType::Cursor)
         {
