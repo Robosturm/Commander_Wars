@@ -188,6 +188,34 @@ public slots:
                 Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
+    void displayStateChange(QAbstractSocket::SocketState socketState)
+    {
+        Console::print("State changed for " + QString::number(m_socketID), Console::eDEBUG);
+        switch (socketState)
+        {
+            case QAbstractSocket::UnconnectedState:
+                Console::print("State is now Unconnected.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::HostLookupState:
+                Console::print("State is now Lookup.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::ConnectingState:
+                Console::print("State is now Connecting.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::ConnectedState:
+                Console::print("State is now Connected.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::BoundState:
+                Console::print("State is now Bound.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::ListeningState:
+                Console::print("State is now Listening.", Console::eDEBUG);
+                break;
+            case QAbstractSocket::ClosingState:
+                Console::print("State is now Closing.", Console::eDEBUG);
+                break;
+        }
+    }
 protected:
     bool isServer;
     bool isConnected;

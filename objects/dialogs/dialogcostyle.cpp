@@ -36,10 +36,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // ok button
-    oxygine::spButton pOkButton = pObjectManager->createButton(tr("Apply"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
-    m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
+    m_pOkButton = pObjectManager->createButton(tr("Apply"), 150);
+    m_pOkButton->setPosition(Settings::getWidth() - m_pOkButton->getWidth() - 30, Settings::getHeight() - 10 - m_pOkButton->getHeight());
+    m_pSpriteBox->addChild(m_pOkButton);
+    m_pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
     {
         event->stopPropagation();
         Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
@@ -49,7 +49,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // cancel button
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    pExitButton->setPosition(30, Settings::getHeight() - 30 - pExitButton->getHeight());
+    pExitButton->setPosition(30, Settings::getHeight() - 10 - pExitButton->getHeight());
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
@@ -121,7 +121,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         style.multiline = false;
         textField->setStyle(style);
         textField->setHtmlText(tr("Predefined Styles"));
-        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight() - 70);
+        textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight()  - 10 - m_pOkButton->getHeight());
         m_pSpriteBox->addChild(textField);
     }
     connect(this, &DialogCOStyle::sigCOStyleChanged, this, &DialogCOStyle::changeCOStyle, Qt::QueuedConnection);
@@ -232,11 +232,11 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         }
         if (Settings::getSmallScreenDevice())
         {
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 70);
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 - m_pPredefinedStyles->getWidth() / 2, Settings::getHeight() - 10 - m_pOkButton->getHeight());
         }
         else
         {
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() -  10 - m_pOkButton->getHeight());
         }
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {

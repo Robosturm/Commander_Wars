@@ -75,6 +75,7 @@ void TCPServer::onConnect()
         QTcpSocket* nextSocket = m_pTCPServer->nextPendingConnection();
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
+        connect(nextSocket, &QAbstractSocket::stateChanged, this, &TCPServer::displayStateChange, Qt::QueuedConnection);
         m_idCounter++;
         if (m_idCounter == 0)
         {

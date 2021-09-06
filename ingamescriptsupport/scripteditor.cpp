@@ -140,7 +140,7 @@ ScriptEditor::ScriptEditor()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
@@ -148,14 +148,14 @@ ScriptEditor::ScriptEditor()
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 30 - pSaveButton->getHeight());
+    pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 10 - pSaveButton->getHeight());
     pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigSaveScript();
     });
     oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
-    pLoadButton->setPosition(30, Settings::getHeight() - 30 - pLoadButton->getHeight());
+    pLoadButton->setPosition(30, Settings::getHeight() - 10 - pLoadButton->getHeight());
     pSpriteBox->addChild(pLoadButton);
     pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {

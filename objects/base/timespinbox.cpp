@@ -1,5 +1,7 @@
-#include "timespinbox.h"
+#include "objects/base/timespinbox.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 

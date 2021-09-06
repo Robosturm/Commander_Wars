@@ -112,6 +112,8 @@ void registerInterfaceData()
     qRegisterMetaType<QVector<float>>("QVector<float>");
     qRegisterMetaType<QList<qint32>>("QList<qint32>");
     qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
+    qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
+    qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");
     qRegisterMetaType<spTextbox>("spTextbox");
     qRegisterMetaType<spGameAction>("spGameAction");
 

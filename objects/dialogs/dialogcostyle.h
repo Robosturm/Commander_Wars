@@ -38,6 +38,7 @@ private slots:
 private:
     void updateSprites();
 private:
+    oxygine::spButton m_pOkButton;
     oxygine::spBox9Sprite m_pSpriteBox;
     spColorSelector m_pColorSelector;
     spPanel m_pCOPanel;

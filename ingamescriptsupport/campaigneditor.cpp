@@ -137,7 +137,7 @@ CampaignEditor::CampaignEditor()
 
     // save campaign
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
-    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 30 - pSaveCampaignButton->getHeight());
+    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - pSaveCampaignButton->getHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
     pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
@@ -146,7 +146,7 @@ CampaignEditor::CampaignEditor()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 10 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
