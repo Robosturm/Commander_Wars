@@ -472,6 +472,22 @@ void RuleSelection::showRuleSelection(bool advanced)
         pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerGainSpeed());
         connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
         y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("CO Power loose: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        pSpinbox = spSpinBox::create(400, 0, 1, SpinBox::Mode::Float);
+        pSpinbox->setTooltipText(tr("The percentage of the co gauge lost when the co unit gets destroyed."));
+        pSpinbox->setInfinityValue(-1.0);
+        pSpinbox->setSpinSpeed(0.1f);
+        pSpinbox->setPosition(textWidth, textField->getY());
+        pSpinbox->setEnabled(m_ruleChangeEabled);
+        addChild(pSpinbox);
+        pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerLoose());
+        connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerLoose, Qt::QueuedConnection);
+        y += 40;
     }
     textField = spLabel::create(800);
     style.color = headerColor;

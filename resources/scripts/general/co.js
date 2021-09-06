@@ -9,7 +9,8 @@ var CO =
     onCOUnitLost : function(co)
     {
         // called when a co unit got destroyed
-        co.setPowerFilled(co.getPowerFilled() / 2.0);
+        var gamerules = map.getGameRules();
+        co.setPowerFilled(co.getPowerFilled() * gamerules.getPowerLoose());
     },
 
     loadCOMusic : function(co)

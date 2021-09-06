@@ -1046,6 +1046,16 @@ void GameRules::setPowerUsageReduction(float newPowerUsageReduction)
     m_powerUsageReduction = newPowerUsageReduction;
 }
 
+float GameRules::getPowerLoose() const
+{
+    return m_powerLoose;
+}
+
+void GameRules::setPowerLoose(float newPowerLoose)
+{
+    m_powerLoose = newPowerLoose;
+}
+
 bool GameRules::getVictory() const
 {
     return m_victory;
@@ -1298,6 +1308,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << static_cast<qint32>(m_powerGainZone);
     pStream << static_cast<qint32>(m_powerGainMode);
     pStream << m_powerUsageReduction;
+    pStream << m_powerLoose;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1583,5 +1594,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> value;
         m_powerGainMode = static_cast<GameEnums::PowerGainMode>(value);
         pStream >> m_powerUsageReduction;
+        pStream >> m_powerLoose;
     }
 }

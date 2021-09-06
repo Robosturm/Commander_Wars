@@ -3370,8 +3370,6 @@
         <file>mods/awdc_co/scripts/cos/co_yukio.js</file>
         <file>mods/awdc_co/scripts/cos/co_zandra.js</file>
         <file>mods/awdc_co/mod.txt</file>
-        <file>mods/awdc_powergain/scripts/general/co.js</file>
-        <file>mods/awdc_powergain/mod.txt</file>
         <file>mods/awdc_terrain/scripts/building/silo.js</file>
         <file>mods/awdc_terrain/scripts/building/silo_rocket.js</file>
         <file>mods/awdc_terrain/scripts/building/town.js</file>

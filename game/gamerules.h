@@ -99,6 +99,16 @@ public slots:
      */
     void setPowerUsageReduction(float newPowerUsageReduction);
     /**
+     * @brief getPowerUsageReduction
+     * @return
+     */
+    float getPowerLoose() const;
+    /**
+     * @brief setPowerUsageReduction
+     * @param newPowerUsageReduction
+     */
+    void setPowerLoose(float newPowerLoose);
+    /**
      * @brief getPowerGainZone
      * @return
      */
@@ -600,6 +610,7 @@ private:
     GameEnums::PowerGainZone m_powerGainZone{GameEnums::PowerGainZone_GlobalCoZoneBonus};
     GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
     float m_powerUsageReduction{0.2f};
+    float m_powerLoose{0.5f};
 
     Password m_password;
     QString m_description;

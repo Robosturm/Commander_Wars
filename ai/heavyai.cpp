@@ -204,15 +204,15 @@ void HeavyAi::readIni(QString name)
         {
             m_maxCapturePoints = 20.0f;
         }
-        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 2.5f).toFloat(&ok);
-        if(!ok)
+        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
+        if(!ok || m_minSameIslandDistance <= 0)
         {
-            m_minSameIslandDistance = 2.5f;
+            m_minSameIslandDistance = 3.0f;
         }
         m_slowUnitSpeed = settings.value("SlowUnitSpeed", 4).toInt(&ok);
         if(!ok)
         {
-            m_slowUnitSpeed = 4;
+            m_slowUnitSpeed = 3;
         }
     }
 }
