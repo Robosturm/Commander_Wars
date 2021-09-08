@@ -14,6 +14,16 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_FIGHTER.loadSprite(sprite, unit, defender, weapon, "");
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_FIGHTER.loadSprite(sprite, unit, defender, weapon, "+fire");
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
@@ -22,42 +32,42 @@ var Constructor = function()
         {
             offset = Qt.point(-50, 20);
         }
-        sprite.loadSprite("fighter+" + armyName,  false,
-                          BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        sprite.loadSpriteV2("fighter+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
+        sprite.loadSpriteV2("fighter+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset, -1);
     };
+
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_FIGHTER.loadStandingAnimation(sprite, unit, defender, weapon);
+        BATTLEANIMATION_FIGHTER.loadSprite(sprite, unit, defender, weapon, "+fire");
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
-        var offset = Qt.point(-5, 37);
+        var offset = Qt.point(-100, 15);
         var count = sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
-        // gun
         if (armyName === "yc")
         {
-            offset = Qt.point(4, 34);
+            offset = Qt.point(-95, 15);
         }
         else if (armyName === "ge")
         {
-            offset = Qt.point(3, 36);
+            offset = Qt.point(-95, 15);
         }
         else if (armyName === "bm")
         {
-            offset = Qt.point(0, 33);
+            offset = Qt.point(-102, 15);
         }
         else if (armyName === "bh")
         {
-            offset = Qt.point(0, 42);
+            offset = Qt.point(-95, 15);
+        }
+        else if (armyName === "ma")
+        {
+            offset = Qt.point(-80, 15);
         }
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
-                                Qt.point(127, 0), 400, false,
-                                1, 1, -1);
+                                Qt.point(227, 0), 800, false,
+                                -1, 1, -1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("missile_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -67,7 +77,7 @@ var Constructor = function()
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 500;
+        return 900;
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -83,7 +93,7 @@ var Constructor = function()
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                 Qt.point(-127, 0), 400, true,
-                                1, 1, 0, 0, true);
+                                -1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, 0);

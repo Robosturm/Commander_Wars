@@ -3768,17 +3768,11 @@
         <file>resources/images/battleanimations/destroyer/destroyer.png</file>
         <file>resources/images/battleanimations/duster/duster+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+bh+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+bh.png</file>
         <file>resources/images/battleanimations/fighter/fighter+bm+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+bm.png</file>
         <file>resources/images/battleanimations/fighter/fighter+ge+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+ge.png</file>
         <file>resources/images/battleanimations/fighter/fighter+ma+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+ma.png</file>
         <file>resources/images/battleanimations/fighter/fighter+os+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+os.png</file>
         <file>resources/images/battleanimations/fighter/fighter+yc+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+yc.png</file>
         <file>resources/images/battleanimations/flak/flak+bh+fire+air+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bh+fire+air.png</file>
         <file>resources/images/battleanimations/flak/flak+bh+fire+ground+mask.png</file>
@@ -4941,5 +4935,11 @@
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+os+mask.png</file>
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+yc.png</file>
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+yc+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+bh+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ma+fire+mask.png</file>
     </qresource>
 </RCC>

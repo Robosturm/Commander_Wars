@@ -13,15 +13,15 @@ var Constructor = function()
                      ["ma", "ma"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "");
+        BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);
     };
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
+        BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 1, 1);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, ending, startFrame = 0)
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, startFrame = 0, endFrame = -1)
     {
         var player = unit.getOwner();
         // get army name
@@ -32,7 +32,7 @@ var Constructor = function()
             offset = Qt.point(-35, 5);
         }
         sprite.loadSpriteV2("artillery+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, -1, startFrame);
+                            BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, endFrame, startFrame);
     };
 
 
