@@ -23,9 +23,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        sprite.loadMovingSprite("recon+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                Qt.point(65, 0), 600, false, 1, 1);
-        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-70, 5),
                                   Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
                                 Qt.point(65, 0), 600, false, 1, 1);
@@ -55,9 +53,7 @@ var Constructor = function()
         {
             offset = Qt.point(-15, 5);
         }
-        sprite.loadSprite("recon+" + armyName + ending,  false,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
     };
 

@@ -7,21 +7,9 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("hoellium",  false,
-                          BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSpriteV2("hoellium+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));
-    };
-
-    this.doWalkingAnimation = function(action)
-    {
-        var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true);
-        animation.loadSprite(unitID + "+walk", false);
-        animation.setSound("oozium_move.wav", -2);
-        return animation;
+        sprite.loadMovingSpriteV2("hoellium+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(-30, 10),
+                                  Qt.point(0, 0), 0, false, -1);
     };
 
 };

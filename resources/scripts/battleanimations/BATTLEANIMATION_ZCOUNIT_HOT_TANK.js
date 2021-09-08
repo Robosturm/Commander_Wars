@@ -8,9 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_HOT_TANK.getMaxUnitCount());
-        sprite.loadMovingSprite("hot_tank", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                Qt.point(65, 0), 600, false, 1, 1);
-        sprite.loadMovingSpriteV2("hot_tank+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+        sprite.loadMovingSpriteV2("hot_tank+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-70, 5),
                                   Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
                                 Qt.point(65, 0), 600, false, 1, 1);
@@ -35,9 +33,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit)
     {
         var offset = Qt.point(-5, 5);
-        sprite.loadSprite("hot_tank",  false,
-                          BATTLEANIMATION_ZCOUNIT_HOT_TANK.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("hot_tank+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("hot_tank+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ZCOUNIT_HOT_TANK.getMaxUnitCount(), offset);
     };
 

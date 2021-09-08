@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("oilrig", false);
-            building.loadSpriteV2("oilrig+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("oilrig+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {

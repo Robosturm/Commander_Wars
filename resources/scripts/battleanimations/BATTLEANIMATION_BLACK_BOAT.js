@@ -12,9 +12,7 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
-        sprite.loadMovingSprite("black_boat",  false,
-                                BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("black_boat+mask", GameEnums.Recoloring_Table,
+        sprite.loadMovingSpriteV2("black_boat+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 

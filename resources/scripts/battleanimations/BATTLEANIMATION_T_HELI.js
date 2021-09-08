@@ -22,13 +22,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_T_HELI.armyData);
-        sprite.loadMovingSpriteV2("t_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
-        if (alive)
-        {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        }
-        sprite.loadMovingSprite("t_heli+" + armyName,  false,
+        sprite.loadMovingSpriteV2("t_heli+" + armyName + "+mask",  GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime,
                           false, -1, 1.0, 0, 0, false, 50);
         if (alive)

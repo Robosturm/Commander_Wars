@@ -9,10 +9,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_CHAPERON.getMaxUnitCount());
         var startX = -70;
-        sprite.loadMovingSprite("chaperon", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
-        sprite.loadMovingSpriteV2("chaperon+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(startX, 5),
+        sprite.loadMovingSpriteV2("chaperon+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
@@ -35,9 +32,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit)
     {
         var offset = Qt.point(-5, 5);
-        sprite.loadSprite("chaperon",  false,
-                          BATTLEANIMATION_ZCOUNIT_CHAPERON.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("chaperon+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("chaperon+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_CHAPERON.getMaxUnitCount(), offset);
     };
 

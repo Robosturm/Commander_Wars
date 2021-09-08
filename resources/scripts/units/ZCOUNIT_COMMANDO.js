@@ -28,9 +28,7 @@ var Constructor = function()
 
     this.loadSprites = function(unit)
     {
-        // load sprites
-        unit.loadSprite("commando", false, 2);
-        unit.loadSpriteV2("commando+mask", GameEnums.Recoloring_Table, 2);
+        unit.loadSpriteV2("commando+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -41,12 +39,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        // none neutral player
-        var player = unit.getOwner();
-        // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
-        animation.loadSpriteV2("commando+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("commando+walk", false, 2);
+        animation.loadSpriteV2("commando+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveboots.wav", -2);
         return animation;
     };

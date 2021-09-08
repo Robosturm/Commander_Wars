@@ -14,7 +14,7 @@ var Constructor = function()
     {
         sprite.loadMovingSprite("cannonboat",  false,
                                 BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("cannonboat+mask", GameEnums.Recoloring_Table,
+        sprite.loadMovingSpriteV2("cannonboat+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
@@ -60,7 +60,7 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+        sprite.loadSprite("water_hit",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
         sprite.addSpriteScreenshake(8, 0.95, 800, 200);
         for (var i = 0; i < count; i++)

@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("airport", false);
-            building.loadSpriteV2("airport+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("airport+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {
@@ -18,8 +18,7 @@ var Constructor = function()
 
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("airport+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
-        animation.addBuildingSprite("airport", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+        animation.addBuildingSprite("airport+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     };
     this.getName = function()
     {

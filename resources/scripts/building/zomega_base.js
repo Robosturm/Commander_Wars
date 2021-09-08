@@ -11,7 +11,7 @@ var Constructor = function()
         if (building.getOwnerID() >= 0 && !neutral)
         {
             building.loadSprite("omega+base", false);
-            building.loadSpriteV2("omega+base+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("omega+base+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {

@@ -1,7 +1,6 @@
 var BATTLEANIMATION =
-        {
+{
     defaultFrameDelay : 75,
-
     getMaxUnitCount : function()
     {
         return 5;
@@ -84,7 +83,7 @@ var BATTLEANIMATION =
         var i = 0;
         if (weapon === 0)
         {
-            sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+            sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 0);
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
@@ -155,6 +154,4 @@ var BATTLEANIMATION =
         }
         return 0;
     },
-
-
 };

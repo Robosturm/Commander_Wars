@@ -7,9 +7,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("crystal_tank",  false,
-                          BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(5, 10));
-        sprite.loadSpriteV2("crystal_tank+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("crystal_tank+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(5, 10));
     };
 

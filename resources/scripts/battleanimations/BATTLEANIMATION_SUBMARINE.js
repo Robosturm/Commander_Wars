@@ -12,39 +12,36 @@ var Constructor = function()
                      ["bg", "bh"],
                      ["ma", "ma"],];
 
+    // todo load ship move sound
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-60, 20), Qt.point(0, 0), 0);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 20), Qt.point(-60, 0), 1200);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, startPos, movement, moveTime)
     {
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        if (armyName === "ma")
+        if(unit.getHidden() === true &&
+           armyName !== "ma")
         {
-            sprite.loadMovingSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-            sprite.loadMovingSprite("submarine+" + armyName,  false,
-                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+            sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+            sprite.loadMovingSprite("submarine+hidden+" + armyName,  false,
+                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
         }
         else
         {
-            if(unit.getHidden() === true)
-            {
-                sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-                sprite.loadMovingSprite("submarine+hidden+" + armyName,  false,
-                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-            }
-            else
-            {
-                sprite.loadMovingSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-                sprite.loadMovingSprite("submarine+" + armyName,  false,
-                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-            }
+            sprite.loadMovingSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+            sprite.loadMovingSprite("submarine+" + armyName,  false,
+                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
         }
     };
 
@@ -88,7 +85,7 @@ var Constructor = function()
                                               Qt.point(-70, 0), 400, true,
                                               1, 1, 2, i * 150, true);
 
-                sprite.loadSingleMovingSprite("unit_explosion",  false, Qt.point(45, 30),
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 30),
                                               Qt.point(0, 0), 0, false,
                                               1, 1.0, 2, 300 + i * 150);
             }
@@ -97,13 +94,24 @@ var Constructor = function()
                 sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 50),
                                               Qt.point(-60, 0), 400, true,
                                               1, 0.5, -1, i * 150);
-                sprite.loadSingleMovingSprite("unit_explosion",  false, Qt.point(57, 50),
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(57, 50),
                                               Qt.point(0, 0), 0, false,
                                               1, 0.5, -1, 300 + i * 150, true);
             }
             sprite.loadSound("torpedo_move.wav", 1);
             sprite.loadSound("impact_explosion.wav", 1, 300 + i * 150);
         }
+    };
+
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1210;
     };
 
     this.hasDyingAnimation = function()

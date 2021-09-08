@@ -9,9 +9,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         // get army name
-        sprite.loadSprite("at_cycle",  false,
-                          BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount(), Qt.point(-15, 5));
-        sprite.loadSpriteV2("at_cycle+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("at_cycle+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount(), Qt.point(-15, 5));
     };
 
@@ -39,7 +37,7 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
-        sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+        sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                           1, 1.0, 0, 300);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),

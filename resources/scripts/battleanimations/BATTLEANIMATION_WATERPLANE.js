@@ -7,11 +7,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("waterplane",  false,
-                          BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20), -1, 1.0, 0, 0,
-                          false, false, 30);
-        sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
-        sprite.loadSpriteV2("waterplane+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("waterplane+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20), -1, 1.0, 0, 0,
                             false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
@@ -47,21 +43,24 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
-        sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 300);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
+
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
+            sprite.loadSprite("rocket_hit_air",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                              1, 1.0, 0, 300);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
         }
         else
         {
+            sprite.loadSprite("rocket_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                              1, 1.0, 0, 300);
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
         }
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, 0);

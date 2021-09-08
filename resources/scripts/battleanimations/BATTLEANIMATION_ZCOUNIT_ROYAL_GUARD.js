@@ -8,10 +8,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_ROYAL_GUARD.getMaxUnitCount());
         var startX = -105;
-        sprite.loadMovingSprite("royal_guard", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
-        sprite.loadMovingSpriteV2("royal_guard+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(startX, 5),
+        sprite.loadMovingSpriteV2("royal_guard+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
@@ -38,9 +35,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
     {
         var offset = Qt.point(-40, 5);
-        sprite.loadSprite("royal_guard" + ending,  false,
-                          BATTLEANIMATION_ZCOUNIT_ROYAL_GUARD.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("royal_guard" + ending + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("royal_guard" + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_ROYAL_GUARD.getMaxUnitCount(), offset, count);
     };
 

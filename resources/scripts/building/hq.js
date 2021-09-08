@@ -13,7 +13,7 @@ var Constructor = function()
                 armyName = "bh"
             }
             building.loadSprite("hq+" + armyName, false);
-            building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {
@@ -40,8 +40,12 @@ var Constructor = function()
         {
             armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
-        animation.addBuildingSprite("hq+" + armyName + "+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
-        animation.addBuildingSprite("hq+" + armyName, startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+
+        animation.addBuildingSprite("hq+" + armyName + "+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
+        if (armyName === "bh")
+        {
+            animation.addBuildingSprite("hq+" + armyName, startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+        }
     };
     this.getDefense = function()
     {

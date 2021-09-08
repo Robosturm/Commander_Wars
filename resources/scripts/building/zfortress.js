@@ -11,7 +11,7 @@ var Constructor = function()
         if (building.getOwnerID() >= 0 && !neutral)
         {
             building.loadSprite("fortress", false);
-            building.loadSpriteV2("fortress+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("fortress+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {

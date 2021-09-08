@@ -7,9 +7,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("repair_tank",  false,
-                          BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSpriteV2("repair_tank+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("repair_tank+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
     };
 };

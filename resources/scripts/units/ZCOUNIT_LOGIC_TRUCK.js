@@ -24,9 +24,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
-        // load sprites
-        unit.loadSprite("logi_truck", false);
-        unit.loadSpriteV2("logi_truck+mask", GameEnums.Recoloring_Table);
+        unit.loadSpriteV2("logi_truck+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -45,8 +43,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("logi_truck+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("logi_truck+walk", false, 2);
+        animation.loadSpriteV2("logi_truck+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
     };

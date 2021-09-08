@@ -12,7 +12,7 @@ var Constructor = function()
         sprite.loadMovingSprite("auto_tank", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
-        sprite.loadMovingSpriteV2("auto_tank+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(startX, 5),
+        sprite.loadMovingSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
@@ -29,7 +29,7 @@ var Constructor = function()
         var offset = Qt.point(-5, 5);
         sprite.loadSprite("auto_tank",  false,
                           BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("auto_tank+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount(), offset);
     };
 

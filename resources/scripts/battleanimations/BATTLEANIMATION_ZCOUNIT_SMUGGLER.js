@@ -8,9 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount());
-        sprite.loadMovingSprite("smuggler", false, sprite.getMaxUnitCount(), Qt.point(-80, 5),
-                                Qt.point(65, 0), 600, false, 1, 1);
-        sprite.loadMovingSpriteV2("smuggler+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-80, 5),
+        sprite.loadMovingSpriteV2("smuggler+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-80, 5),
                                   Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-100, 7),
                                 Qt.point(65, 0), 600, false, 1, 1);
@@ -35,9 +33,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, count)
     {
         var offset = Qt.point(-15, 5);
-        sprite.loadSprite("smuggler",  false,
-                          BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("smuggler+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("smuggler+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount(), offset, count);
     };
 

@@ -29,9 +29,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
-        // load sprites
-        unit.loadSprite("at_cycle" , false);
-        unit.loadSpriteV2("at_cycle+mask", GameEnums.Recoloring_Table);
+        unit.loadSpriteV2("at_cycle+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -52,8 +50,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2("at_cycle+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("at_cycle+walk", false, 2);
+        animation.loadSpriteV2("at_cycle+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movebike.wav", -2);
         return animation;
     };

@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("labor", false);
-            building.loadSpriteV2("labor+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("labor+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {
@@ -17,8 +17,7 @@ var Constructor = function()
     };
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("labor+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
-        animation.addBuildingSprite("labor", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+        animation.addBuildingSprite("labor+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     };
     this.getName = function()
     {

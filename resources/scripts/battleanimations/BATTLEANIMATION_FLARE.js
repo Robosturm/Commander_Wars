@@ -17,9 +17,7 @@ var Constructor = function()
         {
             armyName = "";
         }
-        sprite.loadSprite("flare" + armyName,  false,
-                          BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
-        sprite.loadSpriteV2("flare" + armyName + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("flare" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
     };
 

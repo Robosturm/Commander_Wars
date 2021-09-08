@@ -58,8 +58,7 @@ var BUILDING =
 
     addCaptureAnimationBuilding : function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("town+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
-        animation.addBuildingSprite("town", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+        animation.addBuildingSprite("town+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     },
 
     canLargeBuildingPlaced : function(terrain, building, width, heigth)

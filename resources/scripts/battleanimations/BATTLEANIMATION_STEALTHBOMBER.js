@@ -12,13 +12,7 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
-        sprite.loadMovingSprite("stealthbomber",  false,
-                          BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
-        if (alive)
-        {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
-        }
-        sprite.loadMovingSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Table,
+        sprite.loadMovingSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
         if (alive)
         {
@@ -56,20 +50,23 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
 		var count = sprite.getUnitCount(5);
-        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
-                          1, 1.0, 0, 300);
+
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
             sprite.loadMovingSprite("rocket", false, 5, Qt.point(127, 60),
                                     Qt.point(-128, 0), 400, true,
                                     1, 1, 0, 0, true);
+            sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
+                              1, 1.0, 0, 300);
         }
         else
         {
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
+            sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
+                              1, 1.0, 0, 300);
         }
         for (var i = 0; i < count; i++)
         {

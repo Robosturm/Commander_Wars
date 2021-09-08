@@ -22,16 +22,12 @@ var Constructor = function()
         var offset = Qt.point(-10, 5);
         if (weapon === 1)
         {
-            sprite.loadSprite("partisan+alt",  false,
-                              BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
-            sprite.loadSpriteV2("partisan+alt+mask", GameEnums.Recoloring_Table,
+            sprite.loadSpriteV2("partisan+alt+mask", GameEnums.Recoloring_Matrix,
                               BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
         }
         else
         {
-            sprite.loadSprite("partisan",  false,
-                              BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
-            sprite.loadSpriteV2("partisan+mask", GameEnums.Recoloring_Table,
+            sprite.loadSpriteV2("partisan+mask", GameEnums.Recoloring_Matrix,
                                 BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
         }
     };
@@ -89,7 +85,7 @@ var Constructor = function()
         var i = 0;
         if (weapon === 1)
         {
-            sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+            sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 600);
             sprite.addSpriteScreenshake(8, 0.95, 1000, 600);
             sprite.loadMovingSprite("firebomb", false, sprite.getMaxUnitCount(), Qt.point(127, 64),

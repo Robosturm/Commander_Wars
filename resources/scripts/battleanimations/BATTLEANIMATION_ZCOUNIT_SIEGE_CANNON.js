@@ -9,9 +9,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var offset = Qt.point(-30, 5);
-        sprite.loadSprite("siege_cannon",  false,
-                          BATTLEANIMATION_ZCOUNIT_SIEGE_CANNON.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("siege_cannon+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("siege_cannon+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_SIEGE_CANNON.getMaxUnitCount(), offset);
     };
 
@@ -44,7 +42,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         var i = 0;
-        sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+        sprite.loadSprite("artillery_heavy_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                           1, 1.0, 0, 0);
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)

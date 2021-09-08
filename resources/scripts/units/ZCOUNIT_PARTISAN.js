@@ -26,9 +26,7 @@ var Constructor = function()
     };
     this.loadSprites = function(unit)
     {
-        // load sprites
-        unit.loadSprite("partisan", false);
-        unit.loadSpriteV2("partisan+mask", GameEnums.Recoloring_Table);
+        unit.loadSpriteV2("partisan+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -43,8 +41,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyData);
-        animation.loadSpriteV2("partisan+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("partisan+walk", false, 2);
+        animation.loadSpriteV2("partisan+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movewalk.wav", -2);
         return animation;
     };

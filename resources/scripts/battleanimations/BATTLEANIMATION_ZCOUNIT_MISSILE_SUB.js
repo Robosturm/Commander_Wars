@@ -14,7 +14,7 @@ var Constructor = function()
     {
         sprite.loadMovingSprite("missile_sub",  false,
                                 BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Table,
+        sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
@@ -39,7 +39,7 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+        sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 300);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),

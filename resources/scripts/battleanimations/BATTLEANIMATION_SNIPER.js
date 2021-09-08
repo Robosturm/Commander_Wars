@@ -23,9 +23,7 @@ var Constructor = function()
         {
             offset = Qt.point(-5, 5);
         }
-        sprite.loadSprite("sniper+" + armyName,  false,
-                          BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
     };
 

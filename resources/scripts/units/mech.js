@@ -42,8 +42,8 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyDataStanding);
         // load sprites
-        unit.loadSprite("mech+" + armyName, false, 2);
-        unit.loadSpriteV2("mech+" + armyName +"+mask", GameEnums.Recoloring_Table, 2);
+        unit.loadSpriteV2("mech+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
+        unit.loadSpriteV2("mech+" + armyName, GameEnums.Recoloring_None);
     };
     this.getMovementType = function()
     {
@@ -65,8 +65,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
-        animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("mech+" + armyName + "+walk", false, 2);
+        animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveboots.wav", -2);
         return animation;
     };

@@ -18,10 +18,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_APC.armyData);
-        sprite.loadSprite("apc+" + armyName,  false,
-                          BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSpriteV2("apc+" + armyName + "+mask",  GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
+        sprite.loadSpriteV2("apc+" + armyName + "+mask", GameEnums.Recoloring_Matrix, BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
+        sprite.loadSpriteV2("apc+" + armyName,  GameEnums.Recoloring_NOne, BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
     };
 };
 

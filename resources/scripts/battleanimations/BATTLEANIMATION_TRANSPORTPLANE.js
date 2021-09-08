@@ -12,13 +12,7 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
-        sprite.loadMovingSprite("transportplane",  false,
-                          BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
-        if (alive)
-        {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        }
-        sprite.loadMovingSpriteV2("transportplane+mask", GameEnums.Recoloring_Table,
+        sprite.loadMovingSpriteV2("transportplane+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
         if (alive)
         {

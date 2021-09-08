@@ -141,7 +141,7 @@ var Constructor = function()
         var i = 0;
         if (weapon === 0)
         {
-            sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+            sprite.loadSprite("water_hit",  false, 5, Qt.point(0, 20),
                               1, 1.0, 0, 300);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),

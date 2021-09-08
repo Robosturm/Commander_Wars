@@ -102,8 +102,7 @@ var Constructor = function()
                 armyName = "os";
             }
             Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, building.getOwner(), ACTION_CAPTURE.postAnimationUnit.getOwner());
-            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_Table);
-            captureAnimation.addSoldierSprite("soldier+" + armyName , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_None);
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_Matrix);
         }
 
         if (captured)

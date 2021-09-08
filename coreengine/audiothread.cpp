@@ -421,6 +421,7 @@ void AudioThread::bufferOtherPlayer()
         {
             m_player[bufferPlayer]->m_playerStartPosition = 0;
         }
+        m_player[bufferPlayer]->m_player.setPosition(0);
         Console::print("Buffering music for player " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
         m_player[bufferPlayer]->m_player.play();
         QApplication::processEvents();

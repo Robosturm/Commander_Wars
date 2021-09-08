@@ -34,21 +34,23 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
-                          1, 1.0, 0, 300);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
+            sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
+                              1, 1.0, 0, 300);
             sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                     Qt.point(-128, 64), 400, true,
                                     1, 1, 0, 0, true);
         }
         else
         {
+            sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
+                              1, 1.0, 0, 300);
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
         }
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, 0);

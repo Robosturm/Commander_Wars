@@ -8,10 +8,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_TANK_HUNTER.getMaxUnitCount());
         var startX = -105;
-        sprite.loadMovingSprite("tank_hunter", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
-        sprite.loadMovingSpriteV2("tank_hunter+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(startX, 5),
+        sprite.loadMovingSpriteV2("tank_hunter+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
@@ -38,9 +35,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
     {
         var offset = Qt.point(-40, 5);
-        sprite.loadSprite("tank_hunter" + ending,  false,
-                          BATTLEANIMATION_ZCOUNIT_TANK_HUNTER.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("tank_hunter" + ending + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("tank_hunter" + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_TANK_HUNTER.getMaxUnitCount(), offset, count);
     };
 

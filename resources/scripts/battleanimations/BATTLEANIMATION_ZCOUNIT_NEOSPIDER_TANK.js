@@ -7,9 +7,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("neospider_tank",  false,
-                          BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(-35, 0));
-        sprite.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(-35, 0));
     };
 
@@ -49,7 +47,7 @@ var Constructor = function()
         var i = 0;
         if (weapon === 0)
         {
-            sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+            sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
                               1, 1.0, 0, 0);
             sprite.addSpriteScreenshake(8, 0.95, 800, 200);
             for (i = 0; i < count; i++)

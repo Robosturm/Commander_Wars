@@ -25,16 +25,13 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
-        // load sprites
-        unit.loadSprite("tank_hunter", false);
-        unit.loadSpriteV2("tank_hunter+mask", GameEnums.Recoloring_Table);
+        unit.loadSpriteV2("tank_hunter+mask", GameEnums.Recoloring_Matrix);
     };
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSpriteV2("tank_hunter+walk+mask", GameEnums.Recoloring_Table, 2);
-        animation.loadSprite("tank_hunter+walk", false, 2);
+        animation.loadSpriteV2("tank_hunter+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;
     };

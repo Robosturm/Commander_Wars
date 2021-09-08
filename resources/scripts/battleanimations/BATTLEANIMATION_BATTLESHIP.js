@@ -101,7 +101,7 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+        sprite.loadSprite("artillery_heavy_hit",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
         sprite.addSpriteScreenshake(8, 0.95, 800, 200);
         for (var i = 0; i < count; i++)

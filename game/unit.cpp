@@ -227,7 +227,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite)
 void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipSprite)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -283,7 +283,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
     }
     else
     {
-        Console::print("Unable to load unit sprite: " + spriteID, Console::eERROR);
+        Console::print("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
     }
 }
 

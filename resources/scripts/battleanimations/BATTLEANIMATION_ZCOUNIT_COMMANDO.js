@@ -8,8 +8,8 @@ var Constructor = function()
     this.isMountain = function(terrainId)
     {
         if (terrainId === "MOUNTAIN" ||
-                terrainId === "SNOW_MOUNTAIN" ||
-                terrainId === "DESERT_ROCK")
+            terrainId === "SNOW_MOUNTAIN" ||
+            terrainId === "DESERT_ROCK")
         {
             return true
         }
@@ -30,9 +30,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         var offset = Qt.point(-10, 5);
-        sprite.loadSprite("commando",  false,
-                          BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("commando+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("commando+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount(), offset, count);
     };
 
@@ -102,7 +100,7 @@ var Constructor = function()
         var i = 0;
         if (weapon === 1)
         {
-            sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+            sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 300);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),

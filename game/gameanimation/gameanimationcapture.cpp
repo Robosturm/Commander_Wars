@@ -31,7 +31,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
 {
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (mode == GameEnums::Recoloring_Mask)
     {
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "GameAnimationCapture::addBuildingSprite " + spriteID + " recloring mode mask not supported!");
@@ -61,6 +61,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
         pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
         m_buildingSprites->setResAnim(m_buildingResAnim.get());
+    }
+    else
+    {
+        Console::print("Unable to load building sprite: " + spriteID, Console::eDEBUG);
     }
 }
 

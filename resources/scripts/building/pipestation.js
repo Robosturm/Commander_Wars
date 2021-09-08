@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("pipestation", false);
-            building.loadSpriteV2("pipestation+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("pipestation+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {

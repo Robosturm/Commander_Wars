@@ -8,10 +8,7 @@ var Constructor = function()
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_NEOTANK.getMaxUnitCount());
-        sprite.loadMovingSprite("neotank+move", false, sprite.getMaxUnitCount(), Qt.point(-80, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
-        sprite.loadMovingSpriteV2("neotank+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-80, 5),
+        sprite.loadMovingSpriteV2("neotank+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-80, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-100, 7),
@@ -38,9 +35,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, ending)
     {
         var offset = Qt.point(-15, 5);
-        sprite.loadSprite("neotank" + ending,  false,
-                          BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);
-        sprite.loadSpriteV2("neotank" + ending + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("neotank" + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);
     };
 

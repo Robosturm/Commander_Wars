@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("factory", false);
-            building.loadSpriteV2("factory+mask", GameEnums.Recoloring_Table);
+            building.loadSpriteV2("factory+mask", GameEnums.Recoloring_Matrix);
         }
         else
         {
@@ -21,8 +21,7 @@ var Constructor = function()
     };
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("factory+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
-        animation.addBuildingSprite("factory", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+        animation.addBuildingSprite("factory+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Matrix);
     };
 
     this.actionList = ["ACTION_BUILD_UNITS"];
