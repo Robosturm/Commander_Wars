@@ -4179,7 +4179,6 @@
         <file>resources/images/battleanimations/neotank/neotank+stop+mask.png</file>
         <file>resources/images/battleanimations/partisan/partisan+mask.png</file>
         <file>resources/images/battleanimations/piperunner/piperunner+mask.png</file>
-        <file>resources/images/battleanimations/piperunner/piperunner.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+fire+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+mask.png</file>
@@ -4928,5 +4927,14 @@
         <file>resources/images/battleanimations/missile/missile+ma+fire+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+os+fire+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/piperunner/piperunner+fire+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+ac+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+bm+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+dm+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+ge+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+os+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+pf+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+ti+mask.png</file>
+        <file>resources/images/battleanimations/spotter/spotter+yc+mask.png</file>
     </qresource>
 </RCC>

@@ -46,7 +46,7 @@ var Constructor = function()
         {
             BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "+cannon_fire");
             // gun
-            sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), Qt.point(22, 23),
+            sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), Qt.point(25, 23),
                               1, 1.0, 0, 120);
             for (var i = 0; i < count; i++)
             {
@@ -58,21 +58,15 @@ var Constructor = function()
             var offset = Qt.point(-15, 5);
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
-                sprite.loadSprite("neotank+mg_fire_air",  false,
-                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
-                sprite.loadSpriteV2("neotank+mg_fire_air+mask", GameEnums.Recoloring_Table,
+                sprite.loadSpriteV2("neotank+mg_fire_air+mask", GameEnums.Recoloring_Matrix,
                                     BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
-                // mg
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), Qt.point(26, 51),
                                   1, 1, 0, 0);
             }
             else
             {
-                sprite.loadSprite("neotank+mg_fire",  false,
-                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
-                sprite.loadSpriteV2("neotank+mg_fire+mask", GameEnums.Recoloring_Table,
+                sprite.loadSpriteV2("neotank+mg_fire+mask", GameEnums.Recoloring_Matrix,
                                     BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
-                // mg
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), Qt.point(26, 46),
                                   1, 1, 0, 0);
             }

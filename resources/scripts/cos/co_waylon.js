@@ -178,7 +178,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
-                    return 270;
+                    return 310;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:

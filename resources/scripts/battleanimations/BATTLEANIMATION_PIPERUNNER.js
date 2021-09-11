@@ -7,22 +7,25 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("piperunner",  false,
-                          BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(30, 30));
-        sprite.loadSpriteV2("piperunner+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(30, 30));
+        sprite.loadSpriteV2("piperunner+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(10, 30));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_PIPERUNNER.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
+        sprite.loadSpriteV2("piperunner+fire+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(10, 30),
+                            count);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(82, 82),
+            sprite.loadSingleMovingSprite("pipe_rocket_up", false, Qt.point(60, 82),
                                           Qt.point(128, 64), 400, false,
-                                          1, 1, -1, i * 150);
-            sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 150);
+                                          1, 1, -1, i * 300);
+            sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(51, 66),
+                                          Qt.point(0, 0), 0, false,
+                                          1, 1, 0, i * 300);
+            sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 300);
         }
     };
 
@@ -38,17 +41,17 @@ var Constructor = function()
         {
             sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
                               1, 1.0, 0, 300);
-            sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
+            sprite.loadMovingSprite("pipe_rocket_up", false, 5, Qt.point(127, 0),
                                     Qt.point(-128, 64), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
         }
         else
         {
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
                               1, 1.0, 0, 300);
-            sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),
+            sprite.loadMovingSprite("pipe_rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
         }
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         for (var i = 0; i < count; i++)
@@ -60,15 +63,12 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * 5;
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
+        return 550 + 300 * sprite.getUnitCount(5);
     };
 };
 

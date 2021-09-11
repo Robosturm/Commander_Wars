@@ -51,7 +51,7 @@ CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 		case GameEnums.PowerMode_Power:
             if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
-                return 270;
+                return 310;
             }
             return 10;
         default:

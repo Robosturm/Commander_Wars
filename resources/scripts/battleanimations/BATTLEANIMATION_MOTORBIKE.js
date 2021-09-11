@@ -35,17 +35,27 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        var offset = Qt.point(26, 20);
+        var offset = Qt.point(24, 19);
         if (armyName === "os")
         {
-            offset = Qt.point(27, 27);
+            offset = Qt.point(10, 21);
         }
         else if (armyName === "bm")
         {
-            offset = Qt.point(19, 28);
+            offset = Qt.point(11, 22);
         }
-        sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                          1, 1, 0, 0);
+        if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
+        {
+            sprite.loadSprite("mg_shot_air", false, sprite.getMaxUnitCount(), Qt.point(offset.x + 5, offset.y),
+                              1, 1, 0, 0);
+        }
+        else
+        {
+
+            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                              1, 1, 0, 0);
+        }
+
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

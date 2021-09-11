@@ -133,6 +133,30 @@ var BATTLEANIMATION =
         return 0;
     },
 
+    spotterArmyData = [["os", "os"],
+                       ["bm", "bm"],
+                       ["ge", "ge"],
+                       ["yc", "yc"],
+                       ["ac", "ac"],
+                       ["dm", "dm"],
+                       ["ti", "ti"],
+                       ["pf", "pf"],
+                       ["bh", "bh"],
+                       ["bg", "bg"],
+                       ["ma", "ma"],],
+    loadSpotter : function(sprite, unit)
+    {
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION.spotterArmyData);
+        if (armyName !== "bg" &&
+            armyName !== "bh" &&
+            armyName !== "ma")
+        {
+            sprite.loadSpriteV2("spotter+" + armyName + "+mask", GameEnums.Recoloring_Matrix, 1, Qt.point(90, 5),
+                                1, 1, 20);
+        }
+    },
+
     getRelativePosition : function(attacker, defender)
     {
         if (defender === null)

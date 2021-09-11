@@ -25,6 +25,9 @@
         <image file="GeneralSprites/rocket.png" cols = "7" />
         <image file="GeneralSprites/rocket_up.png" cols = "3" />
         <image file="GeneralSprites/rocket_down.png" cols = "3" />
+        <image file="GeneralSprites/pipe_rocket_up.png" cols = "3" />
+        <image file="GeneralSprites/pipe_rocket_down.png" cols = "3" />
+        <image file="GeneralSprites/pipe_shot.png" cols = "5" />
         <image file="GeneralSprites/torpedo.png" cols = "4" />
         <image file="GeneralSprites/rocket_hit_air.png" cols = "5" />
         <image file="GeneralSprites/water_hit.png" cols = "7" />
@@ -34,7 +37,16 @@
         <image file="GeneralSprites/vehicle_dust.png" cols = "4" />
         <image file="GeneralSprites/vehicle_dust_stop.png" cols = "5" />
         <image file="GeneralSprites/bazooka_launch.png" cols = "6" />
-        <image file="GeneralSprites/bazooka_launch_start.png" cols = "4" />        
+        <image file="GeneralSprites/bazooka_launch_start.png" cols = "4" />
+        <!-- spotters -->
+        <image file="spotter/spotter+ac+mask.png" />
+        <image file="spotter/spotter+bm+mask.png" />
+        <image file="spotter/spotter+dm+mask.png" />
+        <image file="spotter/spotter+ge+mask.png" />
+        <image file="spotter/spotter+os+mask.png" />
+        <image file="spotter/spotter+pf+mask.png" />
+        <image file="spotter/spotter+ti+mask.png" />
+        <image file="spotter/spotter+yc+mask.png" />
         <!-- aircraft carrier -->
         <image file="aircraftcarrier/aircraftcarrier.png" cols = "4" />
         <image file="aircraftcarrier/aircraftcarrier+mask.png" cols = "4" />        
@@ -660,7 +672,6 @@
         <image file="missile/missile+os+fire+mask.png"  cols = "2"/>
         <image file="missile/missile+yc+fire+mask.png"  cols = "2"/>
         <image file="missile/missile+ma+fire+mask.png" />
-        
         <!-- motorbike -->
         <image file="motorbike/motorbike+mask.png" />
         <image file="motorbike/motorbike+os+mask.png" />
@@ -671,12 +682,10 @@
         <image file="neotank/neotank+cannon_fire+mask.png" cols = "4" />
         <image file="neotank/neotank+move+mask.png" cols = "4" />
         <image file="neotank/neotank+mg_fire+mask.png" cols = "2" />
-        <image file="neotank/neotank+mg_fire_air+mask.png" cols = "2" />        
-        
+        <image file="neotank/neotank+mg_fire_air+mask.png" cols = "2" />
         <!-- piperunner -->
-        <image file="piperunner/piperunner.png" />
         <image file="piperunner/piperunner+mask.png" />
-        
+        <image file="piperunner/piperunner+fire+mask.png" cols = "3" />
         <!-- recon -->
         <image file="recon/recon+bh+mask.png" />
         <image file="recon/recon+bm+mask.png" />
@@ -726,8 +735,7 @@
         <image file="rocketthrower/rocketthrower+os+fire+mask.png" cols = "2" />
         <image file="rocketthrower/rocketthrower+ti+fire+mask.png" cols = "2" />
         <image file="rocketthrower/rocketthrower+yc+fire+mask.png" cols = "2" />
-        <image file="rocketthrower/rocketthrower+ma+fire+mask.png" cols = "2" />
-        
+        <image file="rocketthrower/rocketthrower+ma+fire+mask.png" cols = "2" />        
         <!-- submarine -->
         <image file="submarine/submarine+bh.png" cols = "4" />
         <image file="submarine/submarine+bh+mask.png" cols = "4" />
