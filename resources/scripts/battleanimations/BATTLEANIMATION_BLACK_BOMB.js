@@ -13,7 +13,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         sprite.loadMovingSpriteV2("black_bomb+mask", GameEnums.Recoloring_Matrix,
-                          BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime, false, -1);
+                          BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(-1, 40), movement, moveTime, false, -1);
         if (alive)
         {
             sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);

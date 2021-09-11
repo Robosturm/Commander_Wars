@@ -11,6 +11,34 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
+
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        var player = unit.getOwner();
+        var movement = Qt.point(-120, 0);
+        var moveTime = 1200;
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
+        var offset = Qt.point(20, 20);
+        if (armyName === "ma")
+        {
+            offset.x = 0;
+            movement = Qt.point(0, 0);
+            moveTime = 0;
+        }
+        sprite.loadMovingSprite("battleship+" + armyName,  false,
+                                BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
+        if (armyName !== "ma")
+        {
+            var frameTime = 200;
+            sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Matrix,
+                                      BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
+                                      movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, 0);
+        }
+    };
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(0, 0), 0);
@@ -21,22 +49,20 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
+        var offset = Qt.point(-100, 20);
+        if (armyName === "ma")
+        {
+            offset.x = 0;
+        }
         sprite.loadMovingSprite("battleship+" + armyName,  false,
-                                BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-        sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
         if (armyName !== "ma")
         {
-            var frameTime = 100;
-            if (typeof map !== 'undefined')
-            {
-                frameTime = map.getFrameTime();
-            }
-            sprite.loadMovingSprite("battleship+" + armyName + "+fire",  false,
-                                    BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
-                                    movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames);
-            sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Table,
-                                      BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
+            var frameTime = 200;
+            sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Matrix,
+                                      BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
                                       movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames);
         }
     };
@@ -48,25 +74,9 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var offset = Qt.point(70, 117);
+        var offset = Qt.point(88, 115);
         // gun
-        if (armyName === "yc")
-        {
-            offset = Qt.point(65, 113);
-        }
-        else if (armyName === "ge")
-        {
-            offset = Qt.point(70, 117);
-        }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(70, 115);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(70, 115);
-        }
-        else if (armyName === "ma")
+        if (armyName === "ma")
         {
             offset = Qt.point(54, 71);
         }
@@ -76,24 +86,24 @@ var Constructor = function()
             switch (i)
             {
             case 1:
-                offset2 = Qt.point(-7, -6);
+                offset2 = Qt.point(-8, -7);
                 break;
             case 2:
                 offset2 = Qt.point(20, -18);
                 break;
             case 3:
-                offset2 = Qt.point(16, -22);
+                offset2 = Qt.point(18, -23);
                 break;
             case 4:
-                offset2 = Qt.point(12, -26);
+                offset2 = Qt.point(13, -27);
                 break;
             }
 
-            sprite.loadSingleMovingSprite("artillery_shot", false,
+            sprite.loadSingleMovingSprite("battleship_shot", false,
                                           Qt.point(offset.x + offset2.x,
                                                    offset.y + offset2.y),
                                           Qt.point(0, 0), 0, true,
-                                          1, 1.0, 5, 200 * i, false);
+                                          1, 1.0, 5, 200 * i);
             sprite.loadSound("cannon_weapon_fire.wav", 1, i * 200);
         }
     };
@@ -110,28 +120,34 @@ var Constructor = function()
         }
     };
 
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        return true;
+    };
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 1210;
+    };
+
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(-140, 0), 600);
+        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(-140, 0), 2000);
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 1500;
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
+        return 2200;
     };
 };
 

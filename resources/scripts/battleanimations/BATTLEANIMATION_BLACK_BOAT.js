@@ -12,8 +12,10 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
+        sprite.loadMovingSpriteV2("black_boat", GameEnums.Recoloring_None,
+                                  BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(-25, 20), movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("black_boat+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(-25, 20), movement, moveTime, false, -1);
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

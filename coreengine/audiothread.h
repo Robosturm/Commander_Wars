@@ -20,7 +20,7 @@ class AudioThread : public QObject
 private:
     struct SoundData
     {
-        static constexpr qint32 MAX_SAME_SOUNDS = 15;
+        static constexpr qint32 MAX_SAME_SOUNDS = 30;
         std::shared_ptr<QSoundEffect> sound[MAX_SAME_SOUNDS];
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
         qint32 nextSoundToUse = 0;

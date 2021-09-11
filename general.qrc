@@ -3717,25 +3717,20 @@
         <file>resources/images/battleanimations/auto_tank/auto_tank+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh+fire+mask.png</file>
-        <file>resources/images/battleanimations/battleship/battleship+bh+fire.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bm+fire+mask.png</file>
-        <file>resources/images/battleanimations/battleship/battleship+bm+fire.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bm+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bm.png</file>
         <file>resources/images/battleanimations/battleship/battleship+ge+fire+mask.png</file>
-        <file>resources/images/battleanimations/battleship/battleship+ge+fire.png</file>
         <file>resources/images/battleanimations/battleship/battleship+ge+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+ge.png</file>
         <file>resources/images/battleanimations/battleship/battleship+ma+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+ma.png</file>
         <file>resources/images/battleanimations/battleship/battleship+os+fire+mask.png</file>
-        <file>resources/images/battleanimations/battleship/battleship+os+fire.png</file>
         <file>resources/images/battleanimations/battleship/battleship+os+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+os.png</file>
         <file>resources/images/battleanimations/battleship/battleship+yc+fire+mask.png</file>
-        <file>resources/images/battleanimations/battleship/battleship+yc+fire.png</file>
         <file>resources/images/battleanimations/battleship/battleship+yc+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+yc.png</file>
         <file>resources/images/battleanimations/black_boat/black_boat+mask.png</file>
@@ -3774,37 +3769,16 @@
         <file>resources/images/battleanimations/fighter/fighter+os+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+yc+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bh+fire+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bh+fire+air.png</file>
-        <file>resources/images/battleanimations/flak/flak+bh+fire+ground+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bh+fire+ground.png</file>
         <file>resources/images/battleanimations/flak/flak+bh+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bh.png</file>
         <file>resources/images/battleanimations/flak/flak+bm+fire+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bm+fire+air.png</file>
-        <file>resources/images/battleanimations/flak/flak+bm+fire+ground+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bm+fire+ground.png</file>
         <file>resources/images/battleanimations/flak/flak+bm+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bm.png</file>
         <file>resources/images/battleanimations/flak/flak+ge+fire+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+ge+fire+air.png</file>
-        <file>resources/images/battleanimations/flak/flak+ge+fire+ground+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+ge+fire+ground.png</file>
         <file>resources/images/battleanimations/flak/flak+ge+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+ge.png</file>
         <file>resources/images/battleanimations/flak/flak+ma+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+ma.png</file>
         <file>resources/images/battleanimations/flak/flak+os+fire+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+os+fire+air.png</file>
-        <file>resources/images/battleanimations/flak/flak+os+fire+ground+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+os+fire+ground.png</file>
         <file>resources/images/battleanimations/flak/flak+os+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+os.png</file>
         <file>resources/images/battleanimations/flak/flak+yc+fire+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+yc+fire+air.png</file>
-        <file>resources/images/battleanimations/flak/flak+yc+fire+ground+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+yc+fire+ground.png</file>
         <file>resources/images/battleanimations/flak/flak+yc+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+yc.png</file>
         <file>resources/images/battleanimations/flare/flare+bh+mask.png</file>
         <file>resources/images/battleanimations/flare/flare+mask.png</file>
         <file>resources/images/battleanimations/GeneralSprites/artillery_shot.png</file>
@@ -3831,81 +3805,29 @@
         <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+mask.png</file>
         <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire_mg_air.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+fire_mg_air.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+fire_mg_air.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+fire_mg_air.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mask+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mask+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mask+fire_mg_air.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mask+stop.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+fire_mg_air.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire_mg.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire_mg_air+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+fire_mg_air.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+move+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+move.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+stop+mask.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+stop.png</file>
-        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc.png</file>
         <file>resources/images/battleanimations/hoellium/hoellium+mask.png</file>
         <file>resources/images/battleanimations/hot_tank/hot_tank+mask.png</file>
         <file>resources/images/battleanimations/hovercraft/hovercraft+mask.png</file>
@@ -4083,65 +4005,29 @@
         <file>resources/images/battleanimations/lander/lander+yc+mask.png</file>
         <file>resources/images/battleanimations/lander/lander+yc.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bh+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bh+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bh+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bh+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bh.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bm+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bm+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bm+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+bm+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+bm.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ge+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ge+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ge+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ge+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ge.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ma+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ma+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ma+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ma+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+ma.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+os+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+os+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+os+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+os+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+os.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+yc+fire+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc+fire.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc+fire_mg+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc+fire_mg.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+yc+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+yc+move+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc+move.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+yc+stop+mask.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc+stop.png</file>
-        <file>resources/images/battleanimations/light_tank/light_tank+yc.png</file>
         <file>resources/images/battleanimations/logi_truck/logi_truck+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+bh+dying+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+bh+dying.png</file>
@@ -4274,31 +4160,12 @@
         <file>resources/images/battleanimations/mech/mech+yc+walk.png</file>
         <file>resources/images/battleanimations/mech/mech+yc.png</file>
         <file>resources/images/battleanimations/megatank/megatank+mask.png</file>
-        <file>resources/images/battleanimations/megatank/megatank.png</file>
-        <file>resources/images/battleanimations/missile/missile+bh+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+bh+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+bh+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+bh.png</file>
-        <file>resources/images/battleanimations/missile/missile+bm+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+bm+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+bm+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+bm.png</file>
-        <file>resources/images/battleanimations/missile/missile+ge+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+ge+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+ge+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+ge.png</file>
-        <file>resources/images/battleanimations/missile/missile+ma+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+ma+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+ma+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+ma.png</file>
-        <file>resources/images/battleanimations/missile/missile+os+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+os+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+os+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+os.png</file>
-        <file>resources/images/battleanimations/missile/missile+yc+fired+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+yc+fired.png</file>
         <file>resources/images/battleanimations/missile/missile+yc+mask.png</file>
-        <file>resources/images/battleanimations/missile/missile+yc.png</file>
         <file>resources/images/battleanimations/missile_sub/missile_sub+mask.png</file>
         <file>resources/images/battleanimations/missile_sub/missile_sub.png</file>
         <file>resources/images/battleanimations/motorbike/motorbike+bm+mask.png</file>
@@ -4941,5 +4808,125 @@
         <file>resources/images/battleanimations/fighter/fighter+os+fire+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+yc+fire+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bh+cannon+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bh+cannon+fire+ground+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bh+missile+fire+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bh+missile+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bm+cannon+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bm+cannon+fire+ground+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bm+missile+fire+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+bm+missile+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+ge+cannon+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+ge+cannon+fire+ground+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+ge+missile+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+os+cannon+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+os+cannon+fire+ground+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+os+missile+fire+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+os+missile+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+yc+cannon+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+yc+cannon+fire+ground+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+yc+missile+fire+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+yc+missile+mask.png</file>
+        <file>resources/images/battleanimations/cruiser/cruiser+ge+missile+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bh+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bm+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ge+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ma+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+os+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+yc+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bm+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ge+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+os+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ma+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bh+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+bm+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ge+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+ma+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+os+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bh+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bh+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+cannon+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+bh+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+yc+fire+mask.png</file>
     </qresource>
 </RCC>

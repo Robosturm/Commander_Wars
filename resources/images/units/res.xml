@@ -230,7 +230,9 @@
         <image file="at_cycle+mask.png" cols = "4"  />
         <image file="at_cycle+walk+mask.png" cols = "4" rows = "4"  />
         <!-- auto tank -->
+        <image file="auto_tank.png" cols = "4"  />
         <image file="auto_tank+mask.png" cols = "4"  />
+        <image file="auto_tank+walk.png" cols = "4" rows = "4"  />
         <image file="auto_tank+walk+mask.png" cols = "4" rows = "4"  />
         <!-- chaperon -->
         <image file="chaperon+mask.png" cols = "4"  />

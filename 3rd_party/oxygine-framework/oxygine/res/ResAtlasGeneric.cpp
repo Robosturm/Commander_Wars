@@ -188,6 +188,12 @@ namespace oxygine
             frame_width = child_node.attribute("frame_width").toInt();
             columns = child_node.attribute("cols").toInt();
             frame_height = child_node.attribute("frame_height").toInt();
+
+            float scaleFactor = child_node.attribute("scale_factor").toFloat(&ok);
+            if (!ok)
+            {
+                scaleFactor = 1.0f;
+            }
             bool maskExtend = true;
             if (child_node.hasAttribute("maskExtend"))
             {
@@ -346,14 +352,14 @@ namespace oxygine
 
                     RectF srcRect(dest.pos.x * iw, dest.pos.y * ih, dest.size.x * iw, dest.size.y * ih);
 
-                    Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * walker.getScaleFactor();
+                    Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * walker.getScaleFactor() * scaleFactor;
                     RectF destRect(bounds.pos.cast<Vector2>(), sizeScaled);
 
                     AnimationFrame frame;
                     Diffuse df;
                     df.base = ad.texture;
 
-                    Vector2 fsize = Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor();
+                    Vector2 fsize = Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor() * scaleFactor;
                     frame.init2(ra.get(), x, y, df,
                                 srcRect, destRect, fsize);
 
@@ -365,7 +371,7 @@ namespace oxygine
 
             init_resAnim(ra, file, child_node);
 
-            ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
+            ra->init(frames, columns, walker.getScaleFactor() * scaleFactor, 1.0f / (walker.getScaleFactor() * scaleFactor));
             ra->setParent(this);
             context.m_resources->add(ra);
         }

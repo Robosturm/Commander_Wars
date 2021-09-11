@@ -32,9 +32,9 @@ var Constructor = function()
         else
         {
             sprite.loadMovingSprite("lander+" + armyName,  false,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(-33, 20), movement, moveTime, false, -1);
             sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(-33, 20), movement, moveTime, false, -1);
         }
     };
 

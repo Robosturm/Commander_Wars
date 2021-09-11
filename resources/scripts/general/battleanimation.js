@@ -135,6 +135,10 @@ var BATTLEANIMATION =
 
     getRelativePosition : function(attacker, defender)
     {
+        if (defender === null)
+        {
+            return 0;
+        }
         var defHigh = defender.getTerrain().getVisionHigh();
         var atkHigh = attacker.getTerrain().getVisionHigh();
         if (defender.getUnitType() === GameEnums.UnitType_Air)

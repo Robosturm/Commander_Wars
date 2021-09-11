@@ -42,6 +42,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
                                                            GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
+    m_pAttackerAnimation->setFireHp(atkStartHp);
     setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
     m_pAttackerAnimation->clear();
     m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
@@ -52,6 +53,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);
+    m_pDefenderAnimation->setFireHp(defEndHp);
     if (!m_pAttackerAnimation->hasMoveInAnimation(pAtkUnit, pDefUnit, atkWeapon))
     {
         // skip move in
@@ -552,19 +554,19 @@ void BattleAnimation::stop()
 
 bool BattleAnimation::onFinished(bool skipping)
 {
-    stopSound();
+    stopSound(true);
     return GameAnimation::onFinished(skipping);
 }
 
-void BattleAnimation::stopSound()
+void BattleAnimation::stopSound(bool forceStop)
 {
     if (m_pAttackerAnimation.get() != nullptr)
     {
-        m_pAttackerAnimation->stopSound();
+        m_pAttackerAnimation->stopSound(forceStop);
     }
     if (m_pDefenderAnimation.get() != nullptr)
     {
-        m_pDefenderAnimation->stopSound();
+        m_pDefenderAnimation->stopSound(forceStop);
     }
 }
 
@@ -574,7 +576,6 @@ void BattleAnimation::nextAnimatinStep()
     {
         case AnimationProgress::MoveIn:
         {
-            stopSound();
             loadMoveInAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             loadStopAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             m_pAttackerAnimation->startNextFrame();
@@ -588,7 +589,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterIn:
         {
-            stopSound();
+            stopSound(true);
             m_battleTimer.start(500 / Settings::getBattleAnimationSpeed());
             break;
         }

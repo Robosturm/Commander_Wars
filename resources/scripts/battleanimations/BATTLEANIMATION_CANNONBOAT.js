@@ -5,85 +5,89 @@ var Constructor = function()
         return 1;
     };
 
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-58, 0), 580, Qt.point(20, 20));
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, Qt.point(-38, 20));
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, startPos)
     {
         sprite.loadMovingSprite("cannonboat",  false,
-                                BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("cannonboat+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadStandingAnimation(sprite, unit, defender, weapon);
-        // gun
-        var offset = Qt.point(61, 70);
+        BATTLEANIMATION_CANNONBOAT.loadStandingAnimation(sprite, unit, defender, weapon, Qt.point(-38, 20));
+        var offset = Qt.point(60, 65);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
         {
             var offset2 = Qt.point(0, 0);
-            switch (i)
+            if (i % 2 === 1)
             {
-            case 1:
-                offset2 = Qt.point(-4, -5);
-                break;
-            case 2:
-                offset2 = Qt.point(24, -10);
-                break;
-            case 3:
-                offset2 = Qt.point(0, 0);
-                break;
-            case 4:
-                offset2 = Qt.point(-4, -5);
-                break;
+                offset2 = Qt.point(10, 10);
             }
-            sprite.loadSingleMovingSprite("medium_shot", false,
+            sprite.loadSingleMovingSprite("rocket_hit", false,
                                           Qt.point(offset.x + offset2.x,
                                                    offset.y + offset2.y),
-                                          Qt.point(0, 0), 0, true,
-                                          1, 0.5, 5, 200 * i, false);
-            sprite.loadSound("cannon_weapon_fire.wav", 1, i * 200);
+                                          Qt.point(80, 40), 400, false,
+                                          -1, 1.0, 5, 100 * i, false);
+            sprite.loadSound("rocket_launch.wav", 1, 100 * i);
         }
+    };
+
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        return true;
+    };
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 860;
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 1500;
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
+        var i = 0;
         sprite.loadSprite("water_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 0);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 200);
-        for (var i = 0; i < count; i++)
+                          1, 1.0, 0, 300);
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
+        sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
+                                Qt.point(-127, -60), 400, true,
+                                -1, 1, 0, 0, true);
+        for (i = 0; i < count; i++)
         {
-            sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("rocket_flying.wav", 1, 0);
+            sprite.loadSound("impact_explosion.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2200;
     };
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
+        BATTLEANIMATION_CANNONBOAT.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, Qt.point(-38, 20));
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 };

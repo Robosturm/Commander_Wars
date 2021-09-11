@@ -18,13 +18,6 @@ var Constructor = function()
         BATTLEANIMATION_DUSTER.loadStandingAnimation(sprite, unit, defender, weapon);
         // mg
         var count = sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
-        var player = unit.getOwner();
-        // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
         var offset = Qt.point(26, 28);
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
@@ -56,7 +49,7 @@ var Constructor = function()
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_DUSTER.getMaxUnitCount();
+        return 410 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_DUSTER.getMaxUnitCount();
     };
 };
 

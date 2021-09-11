@@ -55,7 +55,7 @@ public slots:
     /**
      * @brief stopSound
      */
-    void stopSound();
+    void stopSound(bool forceStop = false);
     /**
      * @brief getPAtkUnit
      * @return

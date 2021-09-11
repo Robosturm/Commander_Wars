@@ -5,49 +5,59 @@ var Constructor = function()
         return 1;
     };
 
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
+    {
+        BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, 0);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = ""; // "+" + player.getArmy().toLowerCase();
-        //        if (armyName === "bg")
-        //        {
-        //            armyName = "bh"
-        //        }
-        //        if ((armyName !== "+os"))
-        //        {
-        //            armyName = "";
-        //        }
-        sprite.loadSprite("megatank" + armyName,  false,
-                          BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(5, 10));
-        sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(5, 10));
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg" ||
+            armyName === "bh" ||
+            armyName === "ma")
+        {
+            armyName = "+bh";
+        }
+        else
+        {
+            armyName = "";
+        }
+        sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(0, 10));
+        sprite.loadSpriteV2("megatank" + armyName + "+cannon+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(65, 10 + 33),
+                            1, 1, 0, 0,
+                            false, false, 200, endFrame, startFrame);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_MEGATANK.loadStandingAnimation(sprite, unit, defender, weapon);
+        var count = sprite.getUnitCount(5);
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
-            offset = Qt.point(95, 83);
-            var count = sprite.getUnitCount(5);
+            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, count);
+            offset = Qt.point(108, 85);
             for (var i = 0; i < count; i++)
             {
                 var offset2 = Qt.point(0, 0);
                 switch (i)
                 {
                 case 1:
-                    offset2 = Qt.point(-5, -2);
+                    offset2 = Qt.point(-6, -5);
                     break;
                 case 2:
-                    offset2 = Qt.point(-10, -4);
+                    offset2 = Qt.point(-11, -5);
                     break;
+                    //
                 case 3:
-                    offset2 = Qt.point(5, -30);
+                    offset2 = Qt.point(6, -32);
                     break;
                 case 4:
-                    offset2 = Qt.point(-13, -37);
+                    offset2 = Qt.point(-12, -38);
                     break;
                 }
 
@@ -61,14 +71,29 @@ var Constructor = function()
         }
         else
         {
-            // mg
-            offset = Qt.point(105, 73);
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                              1, 1, 0, 0, false, true);
+            // 43
+            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, 0);
+            if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
+            {
+                offset = Qt.point(72, 99);
+                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0, false, true);
+            }
+            else
+            {
+                offset = Qt.point(72, 94);
+                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0, false, true);
+            }
             sprite.loadSound("mg_weapon_fire.wav", 1, 0);
             sprite.loadSound("mg_weapon_fire.wav", 1, 200);
             sprite.loadSound("mg_weapon_fire.wav", 1, 400);
         }
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 6, 6);
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)

@@ -36,9 +36,9 @@
     <sound file="impossible.wav"                cachesize = "5"/>
     <sound file="infantry_move.wav"             cachesize = "5"/>
     <sound file="load.wav"                      cachesize = "5"/>
-    <sound file="megacannon_weapon_fire.wav"    cachesize = "5"/>
-    <sound file="mg_impact.wav"                 cachesize = "5"/>
-    <sound file="mg_weapon_fire.wav"            cachesize = "5"/>
+    <sound file="megacannon_weapon_fire.wav"    cachesize = "10"/>
+    <sound file="mg_impact.wav"                 cachesize = "10"/>
+    <sound file="mg_weapon_fire.wav"            cachesize = "30"/>
     <sound file="minicanon_hit.wav"             cachesize = "10"/>
     <sound file="minicanon_shot.wav"            cachesize = "10"/>
     <sound file="minimap.wav"                   cachesize = "10"/>
@@ -134,6 +134,6 @@
     <sound file="victory.wav"                   cachesize = "5"/>    
     <sound file="volcan_eruption.wav"           cachesize = "5"/>
     <sound file="volcan_hit.wav"                cachesize = "10"/>
-    <sound file="vulcan_weapon_fire.wav"        cachesize = "5"/>
+    <sound file="vulcan_weapon_fire.wav"        cachesize = "30"/>
 </sounds>
 

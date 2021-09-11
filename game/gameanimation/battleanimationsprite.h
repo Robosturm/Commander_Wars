@@ -76,6 +76,14 @@ public:
      */
     void setDyingEndHp(float dyingEndHp);
     /**
+     * @brief setFireHp
+     * @param fireHp
+     */
+    void setFireHp(float fireHp)
+    {
+        m_fireHp = fireHp;
+    }
+    /**
      * @brief setInvertStartPosition
      * @param invertStartPosition
      */
@@ -147,6 +155,12 @@ public slots:
      */
     qint32 getUnitCount(qint32 maxUnitCount);
     /**
+     * @brief getFireUnitCount
+     * @param maxUnitCount
+     * @return
+     */
+    qint32 getFireUnitCount(qint32 maxUnitCount);
+    /**
      * @brief getAnimationUnitCount
      * @return
      */
@@ -211,7 +225,8 @@ public slots:
      */
     void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
                       qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                      bool _invertFlipX = false, bool deleteAfter = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0);
+                      bool _invertFlipX = false, bool deleteAfter = false, qint32 frameTime = GameMap::frameTime,
+                      qint32 frames = -1, qint32 startFrame = 0);
     /**
      * @brief loadMovingSprite loads a moving sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
@@ -339,7 +354,7 @@ public slots:
     /**
      * @brief stopSound
      */
-    void stopSound();
+    void stopSound(bool forceStop = false);
     /**
      * @brief setUnitFrameDelay delay time between each individual unit animation start
      */
@@ -381,14 +396,19 @@ public slots:
 private slots:
     void startNextUnitFrames();
 private:
+    struct SoundData
+    {
+        QString sound;
+        qint32 loops;
+    };
     spUnit m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
     qint32 m_hpRounded{0};
     qint32 m_maxUnitCount{-1};
 
-    QVector<QString> m_Sounds;
-    QVector<QTimer*> m_Timers;
+
+    QVector<SoundData> m_Sounds;
 
     QVector<QVector<oxygine::spSprite>> m_currentFrame;
 
@@ -400,6 +420,7 @@ private:
 
     float m_dyingStartHp{10.0f};
     float m_dyingEndHp{10.0f};
+    float m_fireHp{10.0f};
     bool m_invertStartPosition{false};
     bool m_playSound{true};
 };

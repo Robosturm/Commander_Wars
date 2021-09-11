@@ -425,6 +425,11 @@ qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
     return getUnitCount(maxUnitCount, m_hpRounded);
 }
 
+qint32 BattleAnimationSprite::getFireUnitCount(qint32 maxUnitCount)
+{
+    return getUnitCount(maxUnitCount, m_fireHp);
+}
+
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount, qint32 hp)
 {
     qint32 count = GlobalUtils::roundUp(hp / Unit::MAX_UNIT_HP * maxUnitCount);
@@ -469,9 +474,11 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
 
         loadSingleMovingSpriteV2(spriteID, mode, offset + getUnitBasePosition(i, maxUnitCount, value), movement, moveTime, deleteAfter,
                                  loops, scale, i + priority, showDelay, _invertFlipX, frameTime, frames, startFrame);
-
-        m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
-        m_lastLoadedSprite->detach();
+        if (m_lastLoadedSprite.get() != nullptr)
+        {
+            m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
+            m_lastLoadedSprite->detach();
+        }
     }
 }
 
@@ -514,7 +521,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
             {
                 startFrame = 0;
             }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame) * frameTime + 1), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             pSprite->addTween(tween);
             if (deleteAfter && moveTime <= 0)
             {
@@ -693,18 +700,30 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, qint32 delay, 
     {
         Mainapp* pApp = Mainapp::getInstance();
         AudioThread* pAudio = pApp->getAudioThread();
-        m_Sounds.append(file);
+        SoundData data;
+        data.sound = file;
+        data.loops = loops;
+        m_Sounds.append(data);
         pAudio->playSound(file, loops, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()), volume);
     }
 }
 
-void BattleAnimationSprite::stopSound()
+void BattleAnimationSprite::stopSound(bool forceStop)
 {
     Mainapp* pApp = Mainapp::getInstance();
     AudioThread* pAudio = pApp->getAudioThread();
-    for (qint32 i = 0; i < m_Sounds.size(); i++)
+    qint32 i = 0;
+    while (i < m_Sounds.size())
     {
-        pAudio->stopSound(m_Sounds[i]);
+        if (m_Sounds[i].loops < 0 || forceStop)
+        {
+            pAudio->stopSound(m_Sounds[i].sound);
+            m_Sounds.removeAt(i);
+        }
+        else
+        {
+            ++i;
+        }
     }
 }
 

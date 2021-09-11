@@ -138,7 +138,7 @@ void AudioThread::createSoundCache()
             QString file = dirIter.fileName();
             if (!m_soundCaches.contains(file))
             {
-                fillSoundCache(SoundData::MAX_SAME_SOUNDS, folder, file);
+                fillSoundCache(SoundData::MAX_SAME_SOUNDS / 2, folder, file);
             }
         }
     }
@@ -382,6 +382,7 @@ void AudioThread::initialAudioBuffering()
             // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
             // m_player[0]->m_player.setSourceDevice(&m_player[0]->m_playerFile, m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
+            m_player[0]->m_player.setSource(QUrl(""));
             m_player[0]->m_player.setSource(m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
             m_player[0]->m_playerStartPosition = 0;
             Console::print("Buffering music for player 0: " + m_PlayListdata[m_player[0]->m_playListPostiton].m_file + " at position " + QString::number(m_player[0]->m_playerStartPosition), Console::eDEBUG);
@@ -404,6 +405,7 @@ void AudioThread::bufferOtherPlayer()
             bufferPlayer = 1;
         }
         m_player[bufferPlayer]->m_player.stop();
+        m_player[bufferPlayer]->m_player.setSource(QUrl(""));
         if (m_player[bufferPlayer]->m_playListPostiton != newMedia)
         {
             m_player[bufferPlayer]->m_playListPostiton = newMedia;

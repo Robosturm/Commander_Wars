@@ -11,9 +11,32 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        // get army name
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
+        var offset = Qt.point(20, 40);
+        var movement = Qt.point(-85, -1);
+        var moveTime = 850;
+        if (armyName === "ma")
+        {
+            offset = Qt.point(0, 40);
+            movement = Qt.point(0, 0);
+            moveTime = 0;
+        }
+        sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
+    };
+
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon, alive = true)
     {
         BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
+        }
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
@@ -21,8 +44,13 @@ var Constructor = function()
         // get army name
         var player = unit.getOwner();        
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
+        var offset = Qt.point(-65, 40);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(0, 40);
+        }
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+                                  BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -32,7 +60,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
         BATTLEANIMATION_BOMBER.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
-        var startPoint = Qt.point(70, 50);
+        var startPoint = Qt.point(70, 60);
         if (armyName === "ma")
         {
             startPoint = Qt.point(60, 50);
@@ -40,7 +68,7 @@ var Constructor = function()
         for (var i = 0; i < count; i++)
         {
             sprite.loadSingleMovingSprite("bombs_projectile", false, startPoint,
-                                          Qt.point(0, -70), 400, false,
+                                          Qt.point(0, -80), 400, false,
                                           1, 1, -1, i * 150);
             sprite.loadSound("falling_bomb.wav", 1, i * 150);
         }
@@ -79,6 +107,17 @@ var Constructor = function()
         return 1500;
     };
 
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 860;
+    };
+
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
@@ -93,7 +132,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800);
+        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800, false);
         sprite.loadSound("airunit_dying.wav", 1);
     };
 
