@@ -46,7 +46,7 @@ var Constructor = function()
         }
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
-            sprite.loadSprite("mg_shot_air", false, sprite.getMaxUnitCount(), Qt.point(offset.x + 5, offset.y),
+            sprite.loadSprite("mg_shot_air", false, sprite.getMaxUnitCount(), Qt.point(offset.x, offset.y + 5),
                               1, 1, 0, 0);
         }
         else

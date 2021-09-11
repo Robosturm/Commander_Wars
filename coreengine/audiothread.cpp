@@ -382,7 +382,6 @@ void AudioThread::initialAudioBuffering()
             // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
             // m_player[0]->m_player.setSourceDevice(&m_player[0]->m_playerFile, m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
-            m_player[0]->m_player.setSource(QUrl(""));
             m_player[0]->m_player.setSource(m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
             m_player[0]->m_playerStartPosition = 0;
             Console::print("Buffering music for player 0: " + m_PlayListdata[m_player[0]->m_playListPostiton].m_file + " at position " + QString::number(m_player[0]->m_playerStartPosition), Console::eDEBUG);
@@ -405,16 +404,12 @@ void AudioThread::bufferOtherPlayer()
             bufferPlayer = 1;
         }
         m_player[bufferPlayer]->m_player.stop();
-        m_player[bufferPlayer]->m_player.setSource(QUrl(""));
-        if (m_player[bufferPlayer]->m_playListPostiton != newMedia)
-        {
-            m_player[bufferPlayer]->m_playListPostiton = newMedia;
-            // m_player[bufferPlayer]->m_playerFile.close();
-            // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
-            // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
-            // m_player[bufferPlayer]->m_player.setSourceDevice(&m_player[bufferPlayer]->m_playerFile, m_PlayListdata[newMedia].getUrl());
-            m_player[bufferPlayer]->m_player.setSource(m_PlayListdata[newMedia].getUrl());
-        }
+        m_player[bufferPlayer]->m_playListPostiton = newMedia;
+        // m_player[bufferPlayer]->m_playerFile.close();
+        // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
+        // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
+        // m_player[bufferPlayer]->m_player.setSourceDevice(&m_player[bufferPlayer]->m_playerFile, m_PlayListdata[newMedia].getUrl());
+        m_player[bufferPlayer]->m_player.setSource(m_PlayListdata[newMedia].getUrl());
         if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_player[m_currentPlayer]->m_playListPostiton)
         {
             m_player[bufferPlayer]->m_playerStartPosition = m_PlayListdata[newMedia].m_startpointMs;
@@ -424,8 +419,7 @@ void AudioThread::bufferOtherPlayer()
             m_player[bufferPlayer]->m_playerStartPosition = 0;
         }
         m_player[bufferPlayer]->m_player.setPosition(0);
-        Console::print("Buffering music for player " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
-        m_player[bufferPlayer]->m_player.play();
+        Console::print("Buffering music for player: " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
         QApplication::processEvents();
     }
 }
@@ -465,6 +459,18 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
     Console::print("Media status changed for player " + QString::number(playerIndex) + " to " + QString::number(status), Console::eDEBUG);
     switch (status)
     {
+        case QMediaPlayer::NoMedia:
+        {
+            qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
+            if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
+            {
+                m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
+                m_player[playerIndex]->m_player.setPosition(0);
+                Console::print("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playerIndex].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
+                m_player[playerIndex]->m_player.play();
+            }
+            break;
+        }
         case QMediaPlayer::LoadedMedia:
         case QMediaPlayer::BufferedMedia:
         {

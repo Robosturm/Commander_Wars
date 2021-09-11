@@ -249,7 +249,7 @@ public slots:
     /**
      * @brief loadMovingSprite loads a moving sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
-    * @param mode how the player color is applied to the sprite
+     * @param mode how the player color is applied to the sprite
      * @param maxUnitCount maximum unit count. Needed to create the amount of models of this sprite based on the units hp
      * @param offset offset from the original model position
      * @param movement movement of the animation as point. Amount of pixels the sprite should move.

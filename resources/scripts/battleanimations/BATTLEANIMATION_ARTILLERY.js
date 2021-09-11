@@ -10,7 +10,8 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ac", "ac"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);
@@ -65,6 +66,10 @@ var Constructor = function()
         else if (armyName === "bh")
         {
             offset = Qt.point(30, 37);
+        }
+        else if (armyName === "ac")
+        {
+            offset = Qt.point(44, 35);
         }
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);

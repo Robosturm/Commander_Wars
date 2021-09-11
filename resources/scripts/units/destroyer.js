@@ -34,7 +34,7 @@ var Constructor = function()
 
     this.getName = function()
     {
-        return qsTr("Destroyer");
+        return qsTr("Battlecruiser");
     };
     this.startOfTurn = function(unit)
     {

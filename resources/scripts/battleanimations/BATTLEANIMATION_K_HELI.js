@@ -13,26 +13,31 @@ var Constructor = function()
                      ["ma", "ma"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon, 0, 0);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = 0, loops = 1)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_K_HELI.armyData);
-        var offset = Qt.point(-40, 30);
-        if (armyName === "ma")
+        var offset = Qt.point(-30, 30);
+        sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1, 0, 0, false,
+                            false, 50);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
+        if (armyName !== "ma")
         {
-            offset = Qt.point(-30, 20);
+            sprite.loadSpriteV2("k_heli+" + armyName + "+mg+fire+mask", GameEnums.Recoloring_Matrix,
+                                BATTLEANIMATION_K_HELI.getMaxUnitCount(), Qt.point(offset.x + 40, offset.y),
+                                loops, 1, 0, 0, false,
+                                false, 100, endFrame, startFrame);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
-        sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        sprite.loadSprite("k_heli+" + armyName,  false,
-                          BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1.0, 0, 0,
-                          false, false, 30);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-    };
+    }
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_K_HELI.loadStandingAnimation(sprite, unit, defender, weapon);
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_K_HELI.armyData);
@@ -40,27 +45,33 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
         if (weapon === 0)
         {
-            // gun
-            offset = Qt.point(-5, 41);
+            BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon);
+            // 30
+
+            offset = Qt.point(-43, 38);
             if (armyName === "yc")
             {
-                offset = Qt.point(-5, 45);
+                offset = Qt.point(-40, 40);
             }
             else if (armyName === "ge")
             {
-                offset = Qt.point(-5, 45);
+                offset = Qt.point(-43, 45);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(-5, 45);
+                offset = Qt.point(-39, 38);
             }
             else if (armyName === "bh")
             {
-                offset = Qt.point(-5, 45);
+                offset = Qt.point(-45, 45);
+            }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(-25, 45);
             }
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
-                                    Qt.point(127, -100), 400, false,
-                                    1, 1, -1);
+                                    Qt.point(130, -80), 600, false,
+                                    -1, 1, -1);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("missile_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -68,29 +79,28 @@ var Constructor = function()
         }
         else
         {
-            // mg
-            offset = Qt.point(35, 40);
+            BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon, 0, 1, 3);
+            offset = Qt.point(29, 34);
             if (armyName === "yc")
             {
-                offset = Qt.point(31, 45);
+                offset = Qt.point(26, 38);
             }
             else if (armyName === "ge")
             {
-                offset = Qt.point(40, 39);
+                offset = Qt.point(33, 33);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(37, 42);
+                offset = Qt.point(30, 35);
             }
             else if (armyName === "bh")
             {
-                offset = Qt.point(40, 37);
+                offset = Qt.point(33, 34);
             }
             else if (armyName === "ma")
             {
-                offset = Qt.point(41, 39);
+                offset = Qt.point(41, 49);
             }
-
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
             sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
@@ -126,7 +136,7 @@ var Constructor = function()
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 90),
                                     Qt.point(-127, -60), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("rocket_flying.wav", 1, 0);

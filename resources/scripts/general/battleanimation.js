@@ -165,7 +165,8 @@ var BATTLEANIMATION =
         }
         var defHigh = defender.getTerrain().getVisionHigh();
         var atkHigh = attacker.getTerrain().getVisionHigh();
-        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        if (defender.getUnitType() === GameEnums.UnitType_Air &&
+            attacker.getUnitType() !== GameEnums.UnitType_Air)
         {
             return 1;
         }

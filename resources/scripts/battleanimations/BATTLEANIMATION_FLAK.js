@@ -10,7 +10,8 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ac", "ac"],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -88,6 +89,10 @@ var Constructor = function()
                     offset = Qt.point(34, 46);
                     mgCount = 1;
                 }
+                else if (armyName === "ac")
+                {
+                    offset = Qt.point(38, 31);
+                }
                 for (var i2 = 0; i2 < mgCount; ++i2)
                 {
                     sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(),
@@ -97,9 +102,6 @@ var Constructor = function()
             }
             else
             {
-                // -10 5
-                //  44 29
-                //   0 5
                 var mgCount = 2;
                 if (armyName === "bh")
                 {
@@ -121,6 +123,10 @@ var Constructor = function()
                 {
                     offset = Qt.point(34, 29);
                     mgCount = 1;
+                }
+                else if (armyName === "ac")
+                {
+                    offset = Qt.point(38, 20);
                 }
                 for (var i2 = 0; i2 < mgCount; ++i2)
                 {

@@ -10,7 +10,11 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ac", "ac"],
+                     ["dm", "dm"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],];
 
     this.getRiverString = function(unit)
     {

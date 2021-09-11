@@ -517,9 +517,17 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
             {
                 frames = pAnim->getColumns() - 1;
             }
+            if (frames > pAnim->getColumns() - 1)
+            {
+                frames = pAnim->getColumns() - 1;
+            }
             if (startFrame < 0)
             {
                 startFrame = 0;
+            }
+            if (startFrame > pAnim->getColumns() - 1)
+            {
+                startFrame = pAnim->getColumns() - 1;
             }
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             pSprite->addTween(tween);

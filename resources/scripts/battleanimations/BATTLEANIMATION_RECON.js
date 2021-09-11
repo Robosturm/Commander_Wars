@@ -10,7 +10,8 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ac", "ac"],];
 
     this.getArmyName = function(unit)
     {
@@ -87,6 +88,10 @@ var Constructor = function()
             {
                 offset = Qt.point(38, 25);
             }
+            else if (armyName === "ac")
+            {
+                offset = Qt.point(41, 41);
+            }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
         }
@@ -113,6 +118,11 @@ var Constructor = function()
             {
                 offset = Qt.point(38, 20);
             }
+            else if (armyName === "ac")
+            {
+                offset = Qt.point(41, 33);
+            }
+            // 41 33
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
         }
