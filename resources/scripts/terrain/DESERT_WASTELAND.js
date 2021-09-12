@@ -33,13 +33,14 @@ var Constructor = function()
     {
         return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firerange of indirect units by 1.");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desert";
+        return "";
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        return "back_desertwasteland";
     };
 };
 Constructor.prototype = TERRAIN;

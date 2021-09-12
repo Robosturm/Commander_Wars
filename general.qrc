@@ -494,13 +494,10 @@
         <file>resources/images/game/battlesprites/co_front.png</file>
         <file>resources/images/game/battlesprites/background/back_airport.png</file>
         <file>resources/images/game/battlesprites/background/back_beach.png</file>
-        <file>resources/images/game/battlesprites/background/back_bridge.png</file>
-        <file>resources/images/game/battlesprites/background/back_cliff.png</file>
         <file>resources/images/game/battlesprites/background/back_desert.png</file>
         <file>resources/images/game/battlesprites/background/back_desertforest.png</file>
         <file>resources/images/game/battlesprites/background/back_desertmountain.png</file>
         <file>resources/images/game/battlesprites/background/back_factory.png</file>
-        <file>resources/images/game/battlesprites/background/back_forest.png</file>
         <file>resources/images/game/battlesprites/background/back_forest+0.png</file>
         <file>resources/images/game/battlesprites/background/back_harbour.png</file>
         <file>resources/images/game/battlesprites/background/back_hq+bh.png</file>
@@ -508,52 +505,13 @@
         <file>resources/images/game/battlesprites/background/back_hq+ge.png</file>
         <file>resources/images/game/battlesprites/background/back_hq+os.png</file>
         <file>resources/images/game/battlesprites/background/back_hq+yc.png</file>
-        <file>resources/images/game/battlesprites/background/back_mountain.png</file>
         <file>resources/images/game/battlesprites/background/back_mountain+0.png</file>
-        <file>resources/images/game/battlesprites/background/back_plains.png</file>
-        <file>resources/images/game/battlesprites/background/back_river.png</file>
         <file>resources/images/game/battlesprites/background/back_ruin.png</file>
         <file>resources/images/game/battlesprites/background/back_sea.png</file>
-        <file>resources/images/game/battlesprites/background/back_snow.png</file>
-        <file>resources/images/game/battlesprites/background/back_snow_mountain+0.png</file>
-        <file>resources/images/game/battlesprites/background/back_snow_town+0.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowforest.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowmountain.png</file>
         <file>resources/images/game/battlesprites/background/back_street.png</file>
-        <file>resources/images/game/battlesprites/background/back_town.png</file>
-        <file>resources/images/game/battlesprites/background/back_town+0.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_airport.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_beach.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_bridge.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_desert.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_desertforest.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_desertmountain.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_desertpipe.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_desertroad.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_factory.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_forest.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_forest+0.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_harbour.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_hq+bh.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_hq+bm.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_hq+ge.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_hq+os.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_hq+yc.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_mountain.png</file>
         <file>resources/images/game/battlesprites/foreground/fore_pipeline.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_plains.png</file>
         <file>resources/images/game/battlesprites/foreground/fore_plains+0.png</file>
         <file>resources/images/game/battlesprites/foreground/fore_plains+1.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_river.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_sea.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_snow+0.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_snow+1.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_snowforest.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_snowmountain.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_snowpipe.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_street.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_town.png</file>
-        <file>resources/images/game/battlesprites/foreground/fore_town+0.png</file>
         <file>resources/images/game/battlesprites/foreground/fore_walltop.png</file>
         <file>resources/images/game/victory_screen/a_rang.png</file>
         <file>resources/images/game/victory_screen/b_rang.png</file>
@@ -3698,20 +3656,7 @@
         <file>resources/images/battleanimations/apc/apc+ma+mask.png</file>
         <file>resources/images/battleanimations/apc/apc+os+mask.png</file>
         <file>resources/images/battleanimations/apc/apc+yc+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+bh+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+bh+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+bm+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+bm+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ge+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ge+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ma+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ma+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+os+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+os+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+yc+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+yc+mask.png</file>
         <file>resources/images/battleanimations/artillerycraft/artillerycraft+mask.png</file>
-        <file>resources/images/battleanimations/artillerycraft/artillerycraft.png</file>
         <file>resources/images/battleanimations/at_cycle/at_cycle+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank.png</file>
@@ -3802,7 +3747,6 @@
         <file>resources/images/battleanimations/GeneralSprites/vehicle_dust.png</file>
         <file>resources/images/battleanimations/GeneralSprites/vehicle_dust_stop.png</file>
         <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+mask.png</file>
-        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+move+mask.png</file>
@@ -3830,9 +3774,7 @@
         <file>resources/images/battleanimations/hoellium/hoellium+mask.png</file>
         <file>resources/images/battleanimations/hot_tank/hot_tank+mask.png</file>
         <file>resources/images/battleanimations/hovercraft/hovercraft+mask.png</file>
-        <file>resources/images/battleanimations/hovercraft/hovercraft.png</file>
         <file>resources/images/battleanimations/hoverflak/hoverflak+mask.png</file>
-        <file>resources/images/battleanimations/hoverflak/hoverflak.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+dying+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+fire+down+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+fire+mask.png</file>
@@ -4909,8 +4851,6 @@
         <file>resources/images/battleanimations/infantry/infantry+ti+stop+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+ti+walk+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+ti+river+stop.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ac+fire+mask.png</file>
-        <file>resources/images/battleanimations/artillery/artillery+ac+mask.png</file>
         <file>resources/images/battleanimations/cruiser/cruiser+ge+missile+fire+fire+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ac+fire+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ac+mask.png</file>
@@ -4997,5 +4937,136 @@
         <file>resources/images/battleanimations/mech/mech+ac+dying+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+dm+river+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+ma+river+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+bm+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+ge+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+os+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+yc+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+bm+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+bm+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ge+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ge+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+os+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+os+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+yc+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+yc+mg+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+bm+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+bm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+bm+mg+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ge+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ge+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ge+mg+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+os+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+os+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+os+mg+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+yc+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+yc+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+yc+mg+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+yc+prop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+yc+prop+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+bm+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+bm+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+bm+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ge+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ge+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ge+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+os+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+os+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+os+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+yc+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+yc+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+yc+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+yc+prop+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ac+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+bh+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+bh+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+bm+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ge+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ma+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+os+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+yc+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+yc+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+yc+prop+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_beach+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_bridge+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_bridge+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_desert+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbridge.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertruin.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserttown.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertwasteland.png</file>
+        <file>resources/images/game/battlesprites/background/back_forest+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_forest+2.png</file>
+        <file>resources/images/game/battlesprites/background/back_mountain+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_mountain+2.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+street.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_planes.png</file>
+        <file>resources/images/game/battlesprites/background/back_river+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_river+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbridge.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowforest+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowforest+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowmountain+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowmountain+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+street.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowwasteland.png</file>
+        <file>resources/images/game/battlesprites/background/back_street+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_street+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_street+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_street+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_street+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+bm+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+bm.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+ge+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+ge+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+os+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+os+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+yc+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+yc+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteland.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_factory+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_plains+2.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_plains+3.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowplains+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowplains+1.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowplains+2.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowplains+3.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowstreet+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_snowstreet+1.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_street+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_street+1.png</file>
+        <file>resources/images/game/battlesprites/base_snowair.png</file>
+        <file>resources/images/game/battlesprites/background/back_hq+.png</file>
     </qresource>
 </RCC>

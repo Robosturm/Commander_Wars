@@ -71,10 +71,12 @@ var Constructor = function()
     {
         return "base_desertforest";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desertforest";
+        return TERRAIN.getFactoryForeground(terrain);
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         return "back_desertforest";

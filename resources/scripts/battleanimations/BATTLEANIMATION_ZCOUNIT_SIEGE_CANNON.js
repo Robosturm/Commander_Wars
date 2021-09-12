@@ -42,7 +42,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         var i = 0;
-        sprite.loadSprite("artillery_heavy_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+        sprite.loadSprite("artillery_heavy_hit",  false, sprite.getMaxUnitCount(), Qt.point(-16, 20),
                           1, 1.0, 0, 0);
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)

@@ -60,11 +60,17 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_town+0";
+        return "";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_ruin";
+        var weatherModifier = "";
+        var baseId = terrain.getBaseTerrainID();
+        if (baseId === "DESERT")
+        {
+            baseId = "desert";
+        }
+        return "back_" + weatherModifier + "ruin";
     };
 };
 Constructor.prototype = TERRAIN;

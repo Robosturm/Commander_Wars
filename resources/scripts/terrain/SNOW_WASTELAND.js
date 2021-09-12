@@ -32,11 +32,11 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_snow+0";
+        return "";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_snow";
+        return "back_snowwasteland";
     };
 };
 Constructor.prototype = TERRAIN;

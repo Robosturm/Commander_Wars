@@ -30,6 +30,7 @@
         <image file="GeneralSprites/pipe_shot.png" cols = "5" />
         <image file="GeneralSprites/torpedo.png" cols = "4" />
         <image file="GeneralSprites/rocket_hit_air.png" cols = "5" />
+        <image file="GeneralSprites/rocket_hit.png" cols = "10" />
         <image file="GeneralSprites/water_hit.png" cols = "7" />
         <image file="GeneralSprites/unit_explosion.png" cols = "14" />
         <image file="GeneralSprites/unit_explosion_air.png" cols = "8" />
@@ -73,11 +74,13 @@
         <image file="apc/apc+os+mask.png" />
         <image file="apc/apc+yc+mask.png" />
         <image file="apc/apc+ma+mask.png" />
-        
         <!-- artillerycraft -->
-        <image file="artillerycraft/artillerycraft.png" />
-        <image file="artillerycraft/artillerycraft+mask.png" />        
-        
+        <image file="artillerycraft/artillerycraft+mask.png" />
+        <image file="artillerycraft/artillerycraft+bm+mask.png" />
+        <image file="artillerycraft/artillerycraft+ge+mask.png" />
+        <image file="artillerycraft/artillerycraft+os+mask.png" />
+        <image file="artillerycraft/artillerycraft+yc+prop+mask.png" cols = "2" />
+        <image file="artillerycraft/artillerycraft+yc+mask.png" />
         <!-- artillery -->
         <image file="artillery/artillery+ac+mask.png" cols = "2" />
         <image file="artillery/artillery+bh+mask.png" cols = "2" />
@@ -241,12 +244,18 @@
         <image file="flak/flak+ma+stop+mask.png" />        
         <!-- flare -->
         <image file="flare/flare+mask.png" />
-        <image file="flare/flare+bh+mask.png" />
-        
+        <image file="flare/flare+bh+mask.png" />        
         <!-- heavy_hovercraft -->
-        <image file="heavy_hovercraft/heavy_hovercraft.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+mask.png" />
-        
+        <image file="heavy_hovercraft/heavy_hovercraft+bm+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+ge+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+os+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+yc+prop+mask.png" cols = "2" />
+        <image file="heavy_hovercraft/heavy_hovercraft+yc+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+bm+mg+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+ge+mg+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+os+mg+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+yc+mg+mask.png" />
         <!-- heavy_tank -->
         <image file="heavy_tank/heavy_tank+ac+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+fire+mask.png" cols = "4" />
@@ -312,16 +321,45 @@
         <image file="heavy_tank/heavy_tank+yc+stop+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+ma+stop+mask.png" />
         <!-- hoellium -->
-        <image file="hoellium/hoellium+mask.png" cols = "4" />
-        
+        <image file="hoellium/hoellium+mask.png" cols = "4" />        
         <!-- hovercraft -->
-        <image file="hovercraft/hovercraft.png" />
         <image file="hovercraft/hovercraft+mask.png" />
-        
+        <image file="hovercraft/hovercraft+bm+mask.png" />
+        <image file="hovercraft/hovercraft+ge+mask.png" />
+        <image file="hovercraft/hovercraft+os+mask.png" />
+        <image file="hovercraft/hovercraft+yc+prop+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+yc+mask.png" />
+        <image file="hovercraft/hovercraft+bm+fire+mask.png" cols = "4" />
+        <image file="hovercraft/hovercraft+ge+fire+mask.png" cols = "4" />
+        <image file="hovercraft/hovercraft+os+fire+mask.png" cols = "4" />
+        <image file="hovercraft/hovercraft+yc+fire+mask.png" cols = "4" />
+        <image file="hovercraft/hovercraft+bm+mg+fire+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+ge+mg+fire+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+os+mg+fire+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+yc+mg+fire+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+bm+mg+mask.png" />
+        <image file="hovercraft/hovercraft+ge+mg+mask.png" />
+        <image file="hovercraft/hovercraft+os+mg+mask.png" />
+        <image file="hovercraft/hovercraft+yc+mg+mask.png" />
         <!-- hoverflak -->
-        <image file="hoverflak/hoverflak.png" />
         <image file="hoverflak/hoverflak+mask.png" />
-        
+        <image file="hoverflak/hoverflak+bm+mask.png" />
+        <image file="hoverflak/hoverflak+ge+mask.png" />
+        <image file="hoverflak/hoverflak+os+mask.png" />
+        <image file="hoverflak/hoverflak+yc+prop+mask.png" cols = "2" />
+        <image file="hoverflak/hoverflak+yc+mask.png" />
+        <image file="hoverflak/hoverflak+bm+air+mask.png" />
+        <image file="hoverflak/hoverflak+ge+air+mask.png" />
+        <image file="hoverflak/hoverflak+os+air+mask.png" />
+        <image file="hoverflak/hoverflak+yc+air+mask.png" />
+        <image file="hoverflak/hoverflak+bm+fire+air+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+ge+fire+air+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+os+fire+air+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+yc+fire+air+mask.png" cols = "2" />
+        <image file="hoverflak/hoverflak+bm+fire+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+ge+fire+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+os+fire+mask.png" cols = "4" />
+        <image file="hoverflak/hoverflak+yc+fire+mask.png" cols = "2" />
         <!-- infantry -->
         <image file="infantry/infantry+ac+dying+mask.png" />
         <image file="infantry/infantry+bh+dying+mask.png" cols = "3" />

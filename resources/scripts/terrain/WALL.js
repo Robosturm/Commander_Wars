@@ -70,10 +70,6 @@ var Constructor = function()
     {
         return "fore_walltop";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "";
-    };
     this.getDefense = function()
     {
         return 4;

@@ -100,10 +100,11 @@ var Constructor = function()
                 "desert_pipeline+S+W",
                 "desert_pipeline+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desertpipe";
+        return "fore_pipeline";
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         return "back_desert";

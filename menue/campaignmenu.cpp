@@ -152,7 +152,8 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 void CampaignMenu::slotButtonNext()
 {    
     m_pMapSelectionView->loadCurrentMap();
-    if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
+    if (m_pMapSelectionView->getCurrentMap() != nullptr &&
+        m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
         spGameMap pMap = GameMap::getInstance();
         pMap->initPlayersAndSelectCOs();

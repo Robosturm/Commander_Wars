@@ -19,8 +19,7 @@ var Constructor = function()
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
-        // get army name
-        return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_LIGHT_TANK.armyData);
+        return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_INFANTRY.armyData);
     };
 
     this.getRiverString = function(unit)
@@ -73,9 +72,12 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
-        sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
+        if (riverName !== "")
+        {
+            sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                    Qt.point(65, 0), 600, false,
+                                    1, 1);
+        }
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -89,8 +91,11 @@ var Constructor = function()
         var offset = Qt.point(-10, 5);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
-        sprite.loadSprite("infantry+" + armyName + riverName + ending,  false,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+        if (riverName !== "")
+        {
+            sprite.loadSprite("infantry+" + armyName + riverName + ending,  false,
+                              BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+        }
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)

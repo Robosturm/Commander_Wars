@@ -107,10 +107,10 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
     pDefenderClipRect->addChild(m_pDefenderSprite);
     addChild(pDefenderClipRect);
 
-    oxygine::spSprite pAtkTerrainSprite = loadTerrainSprite(pAtkUnit);
+    oxygine::spSprite pAtkTerrainSprite = loadTerrainSprite(pAtkUnit, pDefUnit);
     setSpriteFlipped(pAtkTerrainSprite, pAtkUnit, pDefUnit);
     m_pAttackerSprite->addChild(pAtkTerrainSprite);
-    oxygine::spSprite pDefTerrainSprite = loadTerrainSprite(pDefUnit);
+    oxygine::spSprite pDefTerrainSprite = loadTerrainSprite(pDefUnit, pAtkUnit);
     setSpriteFlipped(pDefTerrainSprite, pDefUnit, pAtkUnit);
     m_pDefenderSprite->addChild(pDefTerrainSprite);
 
@@ -472,16 +472,16 @@ void BattleAnimation::setSpriteFlipped(oxygine::spSprite pSprite, Unit* pUnit1, 
     }
 }
 
-oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
+oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefender)
 {
     oxygine::spSprite ret = oxygine::spSprite::create();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnimBase = nullptr;
     oxygine::ResAnim* pAnimFore = nullptr;
     oxygine::ResAnim* pAnimBack = nullptr;
-    pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
-    pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
-    pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
+    pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(pDefender), oxygine::ep_ignore_error);
+    pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(pDefender), oxygine::ep_ignore_error);
+    pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(pDefender), oxygine::ep_ignore_error);
     float speed = pUnit->getTerrainAnimationMoveSpeed();
     oxygine::spSlidingSprite pSprite = oxygine::spSlidingSprite::create();
     pSprite->setSize(spriteWidth, spriteHeigth);
@@ -787,8 +787,8 @@ void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAni
 
 void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 {
-    constexpr qint32 fadeoutTime = 1700;
-    qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 400);
+    constexpr qint32 fadeoutTime = 1200;
+    qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 100);
     m_battleTimer.start((fadeoutTime + sleep) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 

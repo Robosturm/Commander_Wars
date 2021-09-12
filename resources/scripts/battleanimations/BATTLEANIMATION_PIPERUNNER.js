@@ -22,9 +22,9 @@ var Constructor = function()
             sprite.loadSingleMovingSprite("pipe_rocket_up", false, Qt.point(60, 82),
                                           Qt.point(128, 64), 400, false,
                                           1, 1, -1, i * 300);
-            sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(51, 66),
+            sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(79, 78),
                                           Qt.point(0, 0), 0, false,
-                                          1, 1, 0, i * 300);
+                                          1, 1, 5, i * 300);
             sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 300);
         }
     };
@@ -47,7 +47,7 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
+            sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
                               1, 1.0, 0, 300);
             sprite.loadMovingSprite("pipe_rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,

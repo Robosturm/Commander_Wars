@@ -46,13 +46,16 @@ var Constructor = function()
     {
         return "minimap_bridge";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_bridge";
+        return TERRAIN.getFactoryForeground(terrain);
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_bridge";
+        var rand = globals.randInt(0, 1);
+        return "back_bridge+" + rand.toString();
     };
     this.getDescription = function()
     {

@@ -37,19 +37,6 @@ var Constructor = function()
         return true;
     };
 
-    this.getTerrainAnimationBase = function(unit, terrain)
-    {
-        return "base_forest";
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_forest";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "back_forest";
-    };
-
     this.getDescription = function()
     {
         return qsTr("<r>In Fog of War conditions, the woods provide ground unit</r><div c='#00ff00'>hiding places.</div>");
@@ -62,6 +49,32 @@ var Constructor = function()
                 "forest+E",
                 "forest+E+W",
                 "forest+W"];
+    };
+
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return "base_snowforest";
+        }
+        else
+        {
+            return "base_forest";
+        }
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var rand = globals.randInt(0, 1);
+        var weatherModifier = "";
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        return "back_" + weatherModifier + "forest+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_harbour";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)

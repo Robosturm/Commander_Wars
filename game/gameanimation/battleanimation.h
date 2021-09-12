@@ -107,7 +107,7 @@ private:
      * @param pUnit
      * @return
      */
-    oxygine::spSprite loadTerrainSprite(Unit* pUnit);
+    oxygine::spSprite loadTerrainSprite(Unit* pUnit, Unit* pDefender);
     /**
      * @brief setHealthBarColor
      * @param pColorBar

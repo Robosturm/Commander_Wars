@@ -72,6 +72,7 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units.");

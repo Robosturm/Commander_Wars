@@ -93,13 +93,27 @@ var Constructor = function()
                 "desert+6",
                 "desert+7"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desert";
+        return TERRAIN.getFactoryForeground(terrain);
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        switch (id)
+        {
+        case "DESERT_WELD":
+        case "SNOW_WELD":
+        case "WELD":
+        case "PIPELINE":
+        case "DESERT_PIPELINE":
+        case "SNOW_PIPELINE":
+            return "back_desert+pipe";
+        default:
+            return "back_desert";
+        }
     };
 };
 Constructor.prototype = TERRAIN;

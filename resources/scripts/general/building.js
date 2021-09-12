@@ -1,6 +1,6 @@
 // this is the base class for terrain
 var BUILDING =
-        {
+{
 
     // loader for stuff which needs C++ Support
     init : function (building)
@@ -210,16 +210,6 @@ var BUILDING =
         // called when the building is destroyed and replacing of this building starts
     },
 
-    getTerrainAnimationBase : function(unit, terrain)
-    {
-        return "base_air";
-    },
-
-    getTerrainAnimationMoveSpeed : function()
-    {
-        return 0;
-    },
-
     getDamage : function(building, unit)
     {
         return 0;
@@ -231,21 +221,44 @@ var BUILDING =
         return GameEnums.BuildingTarget_Own;
     },
 
+    getTerrainAnimationMoveSpeed : function()
+    {
+        return 0;
+    },
+
+    getTerrainAnimationBase : function(unit, terrain)
+    {
+        if (typeof map !== 'undefined' &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return "base_snowair";
+        }
+        return "base_air";
+    },
+
     getTerrainAnimationForeground : function(unit, terrain)
     {
-        if (globals.randInt(0, 1) === 0)
-        {
-            return "fore_town";
-        }
-        else
-        {
-            return "fore_town+0";
-        }
+        return "";
     },
+
+
+    armyData = [["os", "os"],
+                ["bm", "bm"],
+                ["ge", "ge"],
+                ["yc", "yc"],],
 
     getTerrainAnimationBackground : function(unit, terrain)
     {
-        return "back_town";
+        var rand = globals.randInt(0, 1);
+        var baseId = terrain.getBaseTerrainID();
+        var building = terrain.getBuilding();
+        var player = building.getOwner();
+        var army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
+        if (baseId === "DESERT")
+        {
+            return "back_deserttown";
+        }
+        return "back_town+" + army + "+" + rand.toString();
     },
 
     getDescription : function(building)

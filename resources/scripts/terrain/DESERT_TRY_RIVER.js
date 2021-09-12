@@ -75,13 +75,14 @@ var Constructor = function()
                 "desert_try_river+S+W",
                 "desert_try_river+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desert";
+        return "";
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        return "back_desertriver";
     };
 };
 Constructor.prototype = TERRAIN;

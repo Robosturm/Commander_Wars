@@ -38,10 +38,6 @@ var Constructor = function()
     {
         return "minimap_street";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_street";
-    };
     this.getDescription = function()
     {
         return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
@@ -66,6 +62,52 @@ var Constructor = function()
                 "street+S",
                 "street+S+W",
                 "street+W"];
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        var rand = globals.randInt(0, 1);
+        var weatherModifier = "";
+        var baseId = terrain.getBaseTerrainID();
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
+            baseId === "SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        return "fore_" + weatherModifier + "street+" + rand.toString();
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var weatherModifier = "";
+        var baseId = terrain.getBaseTerrainID();
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
+            baseId === "SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        switch (id)
+        {
+        case "SEA":
+        case "BEACH":
+        case "FOG":
+        case "REAF":
+        case "ROUGH_SEA":
+            return "back_" + weatherModifier + "street+sea";
+        case "SNOW_MOUNTAIN":
+        case "DESERT_ROCK":
+        case "MOUNTAIN":
+            return "back_" + weatherModifier + "street+mountain";
+        case "BUILDING":
+            return "back_" + weatherModifier + "street+town";
+        case "DESERT_WELD":
+        case "SNOW_WELD":
+        case "WELD":
+        case "PIPELINE":
+        case "DESERT_PIPELINE":
+        case "SNOW_PIPELINE":
+            return "back_" + weatherModifier + "street+pipe";
+        default:
+            return "back_" + weatherModifier + "street";
+        }
     };
 };
 Constructor.prototype = TERRAIN;

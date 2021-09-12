@@ -21,18 +21,19 @@ AudioThread::AudioThread()
     Mainapp* pApp = Mainapp::getInstance();
     if (!pApp->getNoUi())
     {
-        connect(this, &AudioThread::SignalPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalSetVolume,         this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalAddMusic,          this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::SignalPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::SignalPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
-        connect(this, &AudioThread::SignalStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigSetVolume,         this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigAddMusic,          this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigClearPlayList,     this, &AudioThread::SlotClearPlayList, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigPlayRandom,        this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigLoadFolder,        this, &AudioThread::SlotLoadFolder, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
         connect(this, &AudioThread::sigInitAudio,            this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigCreateSoundCache,     this, &AudioThread::createSoundCache, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::SignalChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigLoadNextAudioFile,     this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
     }
 }
 
@@ -234,7 +235,7 @@ qint32 AudioThread::getSoundsBuffered()
 
 void AudioThread::changeAudioDevice(const QVariant& value)
 {
-    emit SignalChangeAudioDevice(value);
+    emit sigChangeAudioDevice(value);
 }
 
 void AudioThread::SlotChangeAudioDevice(const QVariant& value)
@@ -258,12 +259,12 @@ void AudioThread::SlotChangeAudioDevice(const QVariant& value)
 
 void AudioThread::playMusic(qint32 File)
 {
-    emit SignalPlayMusic(File);
+    emit sigPlayMusic(File);
 }
 
 void AudioThread::setVolume(qint32 value)
 {
-    emit SignalSetVolume(value);
+    emit sigSetVolume(value);
 }
 
 qint32 AudioThread::getVolume()
@@ -273,37 +274,37 @@ qint32 AudioThread::getVolume()
 
 void AudioThread::addMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 {
-    emit SignalAddMusic(File, startPointMs, endPointMs);
+    emit sigAddMusic(File, startPointMs, endPointMs);
 }
 
 void AudioThread::clearPlayList()
 {
-    emit SignalClearPlayList();
+    emit sigClearPlayList();
 }
 
 void AudioThread::playRandom()
 {
-    emit SignalPlayRandom();
+    emit sigPlayRandom();
 }
 
 void AudioThread::playSound(QString file, qint32 loops, qint32 delay, float volume)
 {
-    emit SignalPlaySound(file, loops, delay, volume);
+    emit sigPlaySound(file, loops, delay, volume);
 }
 
 void AudioThread::stopSound(QString file)
 {
-    emit SignalStopSound(file);
+    emit sigStopSound(file);
 }
 
 void AudioThread::stopAllSounds()
 {
-    emit SignalStopAllSounds();
+    emit sigStopAllSounds();
 }
 
 void AudioThread::loadFolder(QString folder)
 {
-    emit SignalLoadFolder(folder);
+    emit sigLoadFolder(folder);
 }
 
 void AudioThread::SlotClearPlayList()
@@ -461,14 +462,6 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
     {
         case QMediaPlayer::NoMedia:
         {
-            qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
-            if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
-            {
-                m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
-                m_player[playerIndex]->m_player.setPosition(0);
-                Console::print("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playerIndex].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
-                m_player[playerIndex]->m_player.play();
-            }
             break;
         }
         case QMediaPlayer::LoadedMedia:
@@ -493,12 +486,28 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
                 // shuffle through loaded media
                 SlotPlayRandom();
             }
+            else
+            {
+                m_player[playerIndex]->m_player.setSource(QUrl());
+            }
             break;
         }
         default:
         {
             break;
         }
+    }
+}
+
+void AudioThread::loadNextAudioFile(qint32 playerIndex)
+{
+    qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
+    if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
+    {
+        m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
+        m_player[playerIndex]->m_player.setPosition(0);
+        Console::print("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playerIndex].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
+        m_player[playerIndex]->m_player.play();
     }
 }
 

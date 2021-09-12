@@ -49,13 +49,16 @@ var Constructor = function()
         {
             var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
-            var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
-            sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                    Qt.point(65, 0), 600, false,
-                                    1, 1);
-            sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+            var riverName = BATTLEANIMATION_MECH.getRiverString(unit);            
+            sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                       Qt.point(65, 0), 600, false,
                                       1, 1);
+            if (riverName !== "")
+            {
+                sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                        Qt.point(65, 0), 600, false,
+                                        1, 1);
+            }
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -78,7 +81,7 @@ var Constructor = function()
             }
             else
             {
-                BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+                BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+stop", 1, 0, 1);
             }
         }
         else
@@ -87,15 +90,19 @@ var Constructor = function()
         }
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, count, startFrame = 0, endFrame = 0)
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
         var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
         var offset = Qt.point(-10, 5);
-        sprite.loadSprite("mech+" + armyName + riverName + ending,  false,
-                          BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
+        sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
+                            false, false, 100, endFrame, startFrame);
+        if (riverName !== "")
+        {
+            sprite.loadSprite("mech+" + armyName + riverName + ending,  false,
+                              BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
+        }
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -115,41 +122,72 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         if (weapon === 1)
         {
-            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
+            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 0, 2);
             var weaponRes = "bazooka_os";
-            var player = unit.getOwner();
-            // get army name
-            var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
             var offset = Qt.point(11, 19);
-            if (armyName === "yc")
+            var player = unit.getOwner();
+            var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
+            if (armyName === "ac")
             {
-                offset = Qt.point(11, 20);
-            }
-            else if (armyName === "ge")
-            {
-                weaponRes = "bazooka_ge";
-                offset = Qt.point(5, 18);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(6, 20);
+                weaponRes = "bazooka_bm"
+                offset = Qt.point(20, 16);
             }
             else if (armyName === "bh")
             {
                 weaponRes = "bazooka_bh"
-                offset = Qt.point(4, 17);
+                offset = Qt.point(15, 12);
+            }
+            else if (armyName === "bm")
+            {
+                weaponRes = "bazooka_bm"
+                offset = Qt.point(17, 16);
+            }
+            else if (armyName === "dm")
+            {
+                weaponRes = "bazooka_ge";
+                offset = Qt.point(14, 9);
+            }
+            else if (armyName === "ge")
+            {
+                weaponRes = "bazooka_ge";
+                offset = Qt.point(15, 14);
+            }
+            else if (armyName === "ma")
+            {
+                weaponRes = "bazooka_os";
+                offset = Qt.point(20, 10);
+            }
+            else if (armyName === "os")
+            {
+                weaponRes = "bazooka_os";
+                offset = Qt.point(18, 17);
+            }
+            else if (armyName === "pf")
+            {
+                weaponRes = "bazooka_pf";
+                offset = Qt.point(17, 16);
+            }
+            else if (armyName === "ti")
+            {
+                weaponRes = "bazooka_yc"
+                offset = Qt.point(18, 17);
+            }
+            else if (armyName === "yc")
+            {
+                weaponRes = "bazooka_yc"
+                offset = Qt.point(19, 17);
             }
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, 0), 400, false,
                                     1, 1, -1);
-            offset.x = (offset.x - 20);
+            offset.x = (offset.x - 30);
+            offset.y = (offset.y + 3);
             sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-            if (armyName !== "ge")
-            {
-                offset.x = -37;
-                offset.y = (offset.y - 12);
-                sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-            }
+
+            // -25 - 21
+            offset.x = -30;
+            offset.y = (offset.y - 5);
+            sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("baazoka_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -165,7 +203,7 @@ var Constructor = function()
     {
         if (weapon === 1)
         {
-            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fired", 1);
+            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 2, 2);
         }
         else
         {
@@ -194,9 +232,54 @@ var Constructor = function()
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 300);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-            sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
+            var player = unit.getOwner();
+            var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
+            var weaponRes = "bazooka_os";
+            if (armyName === "ac")
+            {
+                weaponRes = "bazooka_bm"
+            }
+            else if (armyName === "bh")
+            {
+                weaponRes = "bazooka_bh"
+            }
+            else if (armyName === "bm")
+            {
+                weaponRes = "bazooka_bm"
+            }
+            else if (armyName === "dm")
+            {
+                weaponRes = "bazooka_ge";
+            }
+            else if (armyName === "ge")
+            {
+                weaponRes = "bazooka_ge";
+            }
+            else if (armyName === "ma")
+            {
+                weaponRes = "bazooka_os";
+            }
+            else if (armyName === "os")
+            {
+                weaponRes = "bazooka_os";
+            }
+            else if (armyName === "pf")
+            {
+                weaponRes = "bazooka_pf";
+            }
+            else if (armyName === "ti")
+            {
+                weaponRes = "bazooka_yc"
+            }
+            else if (armyName === "yc")
+            {
+                weaponRes = "bazooka_yc"
+            }
+
+            sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
+
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("rocket_flying.wav", 1, 0);

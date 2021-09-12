@@ -210,6 +210,7 @@ private:
     QElapsedTimer m_doubleClickTime;
 
     QPoint m_lastClickPoint;
+    QPoint m_lastCursorPosition;
 };
 
 #endif // HUMANPLAYERINPUT_H

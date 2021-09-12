@@ -68,14 +68,6 @@ var Constructor = function()
     {
         return "minimap_river";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_river";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "back_river";
-    };
     this.getDescription = function()
     {
         return qsTr("Most infantry and Hovercraft units are the only ground unit that can cross rivers.");
@@ -100,6 +92,20 @@ var Constructor = function()
                 "river+S",
                 "river+S+W",
                 "river+W"];
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var rand = globals.randInt(0, 1);
+        var weatherModifier = "";
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        return "back_" + weatherModifier + "river+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

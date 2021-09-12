@@ -101,10 +101,6 @@ var Constructor = function()
     {
         return "fore_walltop";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "";
-    };
 };
 Constructor.prototype = TERRAIN;
 var WEAK_WALL = new Constructor();

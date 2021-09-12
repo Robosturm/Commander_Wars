@@ -831,17 +831,17 @@ public slots:
      * @brief getTerrainAnimationBase
      * @return
      */
-    QString getTerrainAnimationBase();
+    QString getTerrainAnimationBase(Unit* pDefender = nullptr);
     /**
      * @brief getTerrainAnimationForeground
      * @return
      */
-    QString getTerrainAnimationForeground();
+    QString getTerrainAnimationForeground(Unit* pDefender = nullptr);
     /**
      * @brief getTerrainAnimationBackground
      * @return
      */
-    QString getTerrainAnimationBackground();
+    QString getTerrainAnimationBackground(Unit* pDefender = nullptr);
     /**
      * @brief getTerrainAnimationMoveSpeed
      * @return

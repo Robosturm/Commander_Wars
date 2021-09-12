@@ -128,6 +128,15 @@ var Constructor = function()
     {
         return "back_desert";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
+    {
+        return "fore_pipeline";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_WELD = new Constructor();

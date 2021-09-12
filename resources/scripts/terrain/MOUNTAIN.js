@@ -46,11 +46,12 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_mountain";
+        return "";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_mountain";
+        var rand = globals.randInt(0, 2);
+        return "back_mountain+" + rand.toString();
     };
     this.getDescription = function()
     {

@@ -373,10 +373,10 @@ void GameMenue::loadGameMenue()
     }
 
     float scale = m_IngameInfoBar->getScaleX();
-    m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getScaledWidth(), 50);
-    initSlidingActor(50, 75,
-                     Settings::getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth() * scale - 100,
-                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getScaledHeight() * scale - 125);
+    m_autoScrollBorder = QRect(100, 140, m_IngameInfoBar->getScaledWidth(), 100);
+    initSlidingActor(100, 165,
+                     Settings::getWidth() - m_IngameInfoBar->getScaledWidth() - m_IngameInfoBar->getDetailedViewBox()->getScaledWidth() * scale - 150,
+                     Settings::getHeight() - m_IngameInfoBar->getDetailedViewBox()->getScaledHeight() * scale - 175);
     m_mapSlidingActor->addChild(pMap);
     pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 

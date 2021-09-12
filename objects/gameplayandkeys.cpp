@@ -356,6 +356,10 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
         Settings::setAutoScrolling(value);
     });
     pCheckbox->setPosition(sliderOffset - 130, y);
+    if (Settings::getSmallScreenDevice())
+    {
+        pCheckbox->setEnabled(false);
+    }
     m_pOptions->addItem(pCheckbox);
     y += 40;
 

@@ -129,13 +129,13 @@ var Constructor = function()
         return "minimap_beach";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender)
     {
-        return "fore_beach";
-    };
-
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
+        if (defender !== null &&
+            defender.getUnitType() === GameEnums.UnitType_Naval)
+        {
+            return "back_beach+sea";
+        }
         return "back_beach";
     };
 

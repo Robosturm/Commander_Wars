@@ -119,11 +119,12 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_snowpipe";
+        return "fore_pipeline";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_snow";
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainAnimationBackground(id, "snow");
     };
 };
 Constructor.prototype = TERRAIN;

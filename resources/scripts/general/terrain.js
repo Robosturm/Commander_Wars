@@ -98,17 +98,27 @@ var TERRAIN =
         // called when the terrain is destroyed and replacing of this terrain starts
     },
 
-    getTerrainAnimationBase : function(unit, terrain)
+    getTerrainAnimationBase : function(unit, terrain, defender)
     {
+        if (typeof map !== 'undefined' &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return "base_snowair";
+        }
         return "base_air";
     },
 
-    getTerrainAnimationForeground : function(unit, terrain)
+    getTerrainAnimationForeground : function(unit, terrain, defender)
     {
-        var rand = globals.randInt(0, 2);
-        if (rand === 2)
+        var rand = globals.randInt(0, 3);
+        var foreground = TERRAIN.getFactoryForeground(terrain);
+        if (foreground !== "")
         {
-            return "fore_plains";
+            return foreground;
+        }
+        else if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return "fore_snowplains+" + rand.toString();
         }
         else
         {
@@ -116,16 +126,26 @@ var TERRAIN =
         }
     },
 
-    getTerrainAnimationMoveSpeed : function(terrain)
+    getFactoryForeground : function(terrain)
     {
-        return 0;
+        var y = terrain.getY() - 1;
+        var x = terrain.getX();
+        if (map.onMap(x, y))
+        {
+            var upTerrain = map.getTerrain(x, y);
+            var upBuilding = upTerrain.getBuilding();
+            if (upBuilding !== null &&
+                upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY")
+            {
+                rand = globals.randInt(0, 1);
+                return "fore_factory+" + rand.toString();
+            }
+        }
     },
 
-    getTerrainAnimationBackground : function(unit, terrain)
+    getTerrainAnimationId : function(terrain)
     {
-
         var id = "PLAINS";
-
         var y = terrain.getY() - 1;
         var x = terrain.getX();
         if (map.onMap(x, y))
@@ -137,27 +157,57 @@ var TERRAIN =
                 id = "BUILDING";
             }
         }
+        return id;
+    },
+
+    getTerrainAnimationBackground : function(unit, terrain, defender)
+    {
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var weatherModifier = "";
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        return TERRAIN.getTerrainAnimationBackground(id, weatherModifier);
+    },
+
+    getTerrainAnimationBackground : function(id, weatherModifier)
+    {
         switch (id)
         {
-            case "BRIDGE":
-                return "back_bridge";
-            case "SEA":
-            case "BEACH":
-            case "FOG":
-            case "REAF":
-            case "ROUGH_SEA":
-                return "back_cliff";
-            case "FOREST":
-                return "back_forest+0";
-            case "MOUNTAIN":
-                return "back_mountain+0";
-            case "BUILDING":
-                return "back_town+0";
-            case "STREET":
-                return "back_street";
-            default:
-                return "back_plains";
+        case "SEA":
+        case "BEACH":
+        case "FOG":
+        case "REAF":
+        case "ROUGH_SEA":
+            return "back_" + weatherModifier + "planes+sea";
+        case "FOREST":
+        case "DESERT_FOREST":
+        case "SNOW_FOREST":
+            return "back_" + weatherModifier + "planes+forest";
+        case "SNOW_MOUNTAIN":
+        case "DESERT_ROCK":
+        case "MOUNTAIN":
+            return "back_" + weatherModifier + "planes+mountain";
+        case "BUILDING":
+            return "back_" + weatherModifier + "planes+town";
+        case "STREET":
+            return "back_planes" + weatherModifier + "street";
+        case "DESERT_WELD":
+        case "SNOW_WELD":
+        case "WELD":
+        case "PIPELINE":
+        case "DESERT_PIPELINE":
+        case "SNOW_PIPELINE":
+            return "back_" + weatherModifier + "planes+pipe";
+        default:
+            return "back_" + weatherModifier + "planes";
         }
+    },
+
+    getTerrainAnimationMoveSpeed : function(terrain)
+    {
+        return 0;
     },
 
     getDescription : function(terrain)

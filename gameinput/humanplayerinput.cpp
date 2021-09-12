@@ -875,79 +875,84 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
     spGameMap pMap = GameMap::getInstance();
     auto mapPos = pMenu->getMapSlidingActor()->getPosition();
     m_lastMapView = QPoint(mapPos.x, mapPos.y);
-    if ((pMap->getCurrentPlayer() == m_pPlayer ||
-         m_pPlayer == nullptr) &&
-        pMap->onMap(x, y))
+    if (x != m_lastCursorPosition.x() ||
+        y != m_lastCursorPosition.y())
     {
-        Console::print("HumanPlayerInput::cursorMoved" , Console::eDEBUG);
-        if (m_pMarkedFieldData.get() != nullptr)
+        if ((pMap->getCurrentPlayer() == m_pPlayer ||
+             m_pPlayer == nullptr) &&
+            pMap->onMap(x, y))
         {
-            if (m_pMarkedFieldData->getShowZData())
+            Console::print("HumanPlayerInput::cursorMoved" , Console::eDEBUG);
+            if (m_pMarkedFieldData.get() != nullptr)
             {
-                // marked field?
-                if (m_pMarkedFieldData->getPoints()->contains(QPoint(x, y)))
+                if (m_pMarkedFieldData->getShowZData())
                 {
-                    if (m_ZInformationLabel.get() != nullptr)
+                    // marked field?
+                    if (m_pMarkedFieldData->getPoints()->contains(QPoint(x, y)))
                     {
-                        m_ZInformationLabel->detach();
-                        m_ZInformationLabel = nullptr;
-                    }
-                    QPoint field(x, y);
-                    const MarkedFieldData::ZInformation* pData = nullptr;
-                    for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
-                    {
-                        if (m_pMarkedFieldData->getPoints()->at(i) == field)
+                        if (m_ZInformationLabel.get() != nullptr)
                         {
-                            const auto* info = m_pMarkedFieldData->getZInformation();
-                            pData = &info->at(i);
-                            break;
+                            m_ZInformationLabel->detach();
+                            m_ZInformationLabel = nullptr;
+                        }
+                        QPoint field(x, y);
+                        const MarkedFieldData::ZInformation* pData = nullptr;
+                        for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
+                        {
+                            if (m_pMarkedFieldData->getPoints()->at(i) == field)
+                            {
+                                const auto* info = m_pMarkedFieldData->getZInformation();
+                                pData = &info->at(i);
+                                break;
+                            }
+                        }
+                        if (pData != nullptr)
+                        {
+                            if (pData->valueNames.size() == 0)
+                            {
+                                createSimpleZInformation(x, y, pData);
+                            }
+                            else
+                            {
+                                createComplexZInformation(x, y, pData);
+                            }
                         }
                     }
-                    if (pData != nullptr)
+                    else
                     {
-                        if (pData->valueNames.size() == 0)
+                        if (m_ZInformationLabel.get() != nullptr)
                         {
-                            createSimpleZInformation(x, y, pData);
-                        }
-                        else
-                        {
-                            createComplexZInformation(x, y, pData);
+                            m_ZInformationLabel->detach();
+                            m_ZInformationLabel = nullptr;
                         }
                     }
                 }
-                else
+            }
+            else if (m_pUnitPathFindingSystem.get() != nullptr)
+            {
+                if ((m_CurrentMenu.get() == nullptr) && m_pGameAction->getActionID() == "")
                 {
-                    if (m_ZInformationLabel.get() != nullptr)
+                    createCursorPath(x, y);
+                }
+            }
+            else
+            {
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                deleteArrow();
+                if (pUnit != nullptr)
+                {
+                    QVector<QPoint> multiTurnPath = pUnit->getMultiTurnPath();
+                    if (pUnit->getOwner() == m_pPlayer &&
+                        multiTurnPath.size() > 0)
                     {
-                        m_ZInformationLabel->detach();
-                        m_ZInformationLabel = nullptr;
+                        createArrow(multiTurnPath);
                     }
                 }
             }
+
         }
-        else if (m_pUnitPathFindingSystem.get() != nullptr)
-        {
-            if ((m_CurrentMenu.get() == nullptr) && m_pGameAction->getActionID() == "")
-            {
-                createCursorPath(x, y);
-            }
-        }
-        else
-        {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            deleteArrow();
-            if (pUnit != nullptr)
-            {
-                QVector<QPoint> multiTurnPath = pUnit->getMultiTurnPath();
-                if (pUnit->getOwner() == m_pPlayer &&
-                    multiTurnPath.size() > 0)
-                {
-                    createArrow(multiTurnPath);
-                }
-            }
-        }
-        
     }
+    m_lastCursorPosition = QPoint(x, y);
 }
 
 void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)

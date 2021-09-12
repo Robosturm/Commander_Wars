@@ -72,10 +72,11 @@ var Constructor = function()
                 "desert_rock+E+W",
                 "desert_rock+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
-        return "fore_desertmountain";
+        return "";
     };
+
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         return "back_desertmountain";

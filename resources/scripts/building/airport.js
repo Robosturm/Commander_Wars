@@ -34,7 +34,7 @@ var Constructor = function()
 
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_airport";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)

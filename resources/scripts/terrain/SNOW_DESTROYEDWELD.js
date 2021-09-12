@@ -105,11 +105,13 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_snow+0";
+        var rand = globals.randInt(0, 3);
+        return "fore_snowplains+" + rand.toString();
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_snow";
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainAnimationBackground(id, "snow");
     };
 };
 Constructor.prototype = TERRAIN;

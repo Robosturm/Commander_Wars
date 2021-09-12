@@ -102,10 +102,6 @@ var Constructor = function()
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("pipe_destroyed.wav");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_pipeline";
-    };
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
@@ -116,6 +112,10 @@ var Constructor = function()
         // array of sprites that can be selected as fix sprites for this terrain
         return ["weld+E+W",
                 "weld+N+S"];
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_pipeline";
     };
 };
 Constructor.prototype = TERRAIN;

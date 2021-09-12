@@ -1382,7 +1382,6 @@ void Settings::loadSettings()
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
-    m_autoScrolling = settings.value("AutoScrolling", true).toBool();
     m_autoCamera = settings.value("AutoCamera", true).toBool();    
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
@@ -1390,11 +1389,13 @@ void Settings::loadSettings()
     m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
     if (Settings::hasSmallScreen())
     {
+        m_autoScrolling = false;
         m_simpleDeselect = true;
         m_showDetailedBattleForcast = false;
     }
     else
     {
+        m_autoScrolling = settings.value("AutoScrolling", true).toBool();
         m_showDetailedBattleForcast = settings.value("ShowDetailedBattleForcast", true).toBool();
         m_simpleDeselect = settings.value("SimpleDeselect", false).toBool();
     }

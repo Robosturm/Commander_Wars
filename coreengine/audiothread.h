@@ -37,16 +37,17 @@ public:
 signals:
     void sigInitAudio();
     void sigCreateSoundCache();
-    void SignalPlayMusic(qint32 File);
-    void SignalSetVolume(qint32 value);
-    void SignalAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
-    void SignalClearPlayList();
-    void SignalPlayRandom();
-    void SignalLoadFolder(QString folder);
-    void SignalPlaySound(QString file, qint32 loops, qint32 delay, float volume = 1.0f);
-    void SignalStopSound(QString file);
-    void SignalStopAllSounds();
-    void SignalChangeAudioDevice(const QVariant& value);
+    void sigPlayMusic(qint32 File);
+    void sigSetVolume(qint32 value);
+    void sigAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
+    void sigClearPlayList();
+    void sigPlayRandom();
+    void sigLoadFolder(QString folder);
+    void sigPlaySound(QString file, qint32 loops, qint32 delay, float volume = 1.0f);
+    void sigStopSound(QString file);
+    void sigStopAllSounds();
+    void sigChangeAudioDevice(const QVariant& value);
+    void sigLoadNextAudioFile(qint32 playerIndex);
 public slots:
     /**
      * @brief getLoadBaseGameFolders
@@ -128,6 +129,11 @@ protected slots:
     void SlotStopAllSounds();
     void initAudio();
     void SlotChangeAudioDevice(const QVariant& value);
+    /**
+     * @brief loadNextAudioFile
+     * @param playerIndex
+     */
+    void loadNextAudioFile(qint32 playerIndex);
 protected:
     /**
      * @brief loadMusicFolder

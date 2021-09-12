@@ -36,7 +36,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_factory";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)

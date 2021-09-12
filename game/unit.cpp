@@ -685,7 +685,7 @@ qint32 Unit::getCosts() const
     }
 }
 
-QString Unit::getTerrainAnimationBase()
+QString Unit::getTerrainAnimationBase(Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBase";
@@ -694,6 +694,8 @@ QString Unit::getTerrainAnimationBase()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
@@ -705,7 +707,7 @@ QString Unit::getTerrainAnimationBase()
     }
 }
 
-QString Unit::getTerrainAnimationForeground()
+QString Unit::getTerrainAnimationForeground(Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationForeground";
@@ -714,6 +716,8 @@ QString Unit::getTerrainAnimationForeground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
@@ -725,7 +729,7 @@ QString Unit::getTerrainAnimationForeground()
     }
 }
 
-QString Unit::getTerrainAnimationBackground()
+QString Unit::getTerrainAnimationBackground(Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBackground";
@@ -734,6 +738,8 @@ QString Unit::getTerrainAnimationBackground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {

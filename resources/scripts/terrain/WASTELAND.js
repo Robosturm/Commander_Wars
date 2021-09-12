@@ -39,6 +39,14 @@ var Constructor = function()
                 "wasteland+2",
                 "wasteland+3"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_wasteland";
+    }
 };
 Constructor.prototype = TERRAIN;
 var WASTELAND = new Constructor();

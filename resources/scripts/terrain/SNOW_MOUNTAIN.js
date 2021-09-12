@@ -67,11 +67,12 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_snowmountain";
+        return "";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_snowmountain";
+        var rand = globals.randInt(0, 1);
+        return "back_snowmountain+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

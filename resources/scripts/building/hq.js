@@ -68,7 +68,7 @@ var Constructor = function()
     {
         var player = terrain.getBuilding().getOwner();
         // get army name
-        var armyName = "os";
+        var armyName = "";
         if (player !== null)
         {
             armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
