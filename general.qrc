@@ -658,14 +658,6 @@
         <file>resources/images/terrain/desert_wasteland.png</file>
         <file>resources/images/terrain/desert_weld+E+W.png</file>
         <file>resources/images/terrain/desert_weld+N+S.png</file>
-        <file>resources/images/terrain/desert+0.png</file>
-        <file>resources/images/terrain/desert+1.png</file>
-        <file>resources/images/terrain/desert+2.png</file>
-        <file>resources/images/terrain/desert+3.png</file>
-        <file>resources/images/terrain/desert+4.png</file>
-        <file>resources/images/terrain/desert+5.png</file>
-        <file>resources/images/terrain/desert+6.png</file>
-        <file>resources/images/terrain/desert+7.png</file>
         <file>resources/images/terrain/desert+E.png</file>
         <file>resources/images/terrain/desert+N.png</file>
         <file>resources/images/terrain/desert+S.png</file>
@@ -3234,138 +3226,6 @@
         <file>mods/awdc_unit/scripts/weapons/weapon_vulcan_cannon.js</file>
         <file>mods/awdc_unit/scripts/weapons/weapon_waterplane_missile.js</file>
         <file>mods/awdc_unit/mod.txt</file>
-        <file>mods/awdc_unit_image/images/units/aircraftcarrier+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/aircraftcarrier+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/aircraftcarrier+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/aircraftcarrier.png</file>
-        <file>mods/awdc_unit_image/images/units/antitankcannon+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/antitankcannon+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/antitankcannon+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/antitankcannon.png</file>
-        <file>mods/awdc_unit_image/images/units/apc+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/apc+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/apc+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/apc.png</file>
-        <file>mods/awdc_unit_image/images/units/artillery+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/artillery+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/artillery+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/artillery.png</file>
-        <file>mods/awdc_unit_image/images/units/battleship+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/battleship+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/battleship+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/battleship.png</file>
-        <file>mods/awdc_unit_image/images/units/bomber+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/bomber+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/bomber+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/bomber.png</file>
-        <file>mods/awdc_unit_image/images/units/cannonboat+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/cannonboat+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/cannonboat+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/cannonboat.png</file>
-        <file>mods/awdc_unit_image/images/units/cruiser+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/cruiser+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/cruiser+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/cruiser.png</file>
-        <file>mods/awdc_unit_image/images/units/duster+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/duster+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/duster+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/duster.png</file>
-        <file>mods/awdc_unit_image/images/units/fighter+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/fighter+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/fighter+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/fighter.png</file>
-        <file>mods/awdc_unit_image/images/units/flak+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/flak+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/flak+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/flak.png</file>
-        <file>mods/awdc_unit_image/images/units/flare+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/flare+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/flare+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/flare.png</file>
-        <file>mods/awdc_unit_image/images/units/heavy_tank+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/heavy_tank+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/heavy_tank+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/heavy_tank.png</file>
-        <file>mods/awdc_unit_image/images/units/infantry+os+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/infantry+os+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/infantry+os+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/infantry+os.png</file>
-        <file>mods/awdc_unit_image/images/units/k_heli+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/k_heli+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/k_heli+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/k_heli.png</file>
-        <file>mods/awdc_unit_image/images/units/lander+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/lander+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/lander+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/lander.png</file>
-        <file>mods/awdc_unit_image/images/units/light_tank+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/light_tank+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/light_tank+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/light_tank.png</file>
-        <file>mods/awdc_unit_image/images/units/mech+os+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/mech+os+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/mech+os+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/mech+os.png</file>
-        <file>mods/awdc_unit_image/images/units/megatank+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/megatank+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/megatank+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/megatank.png</file>
-        <file>mods/awdc_unit_image/images/units/missile+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/missile+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/missile+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/missile.png</file>
-        <file>mods/awdc_unit_image/images/units/motorbike+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/motorbike+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/motorbike+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/motorbike.png</file>
-        <file>mods/awdc_unit_image/images/units/recon+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/recon+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/recon+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/recon.png</file>
-        <file>mods/awdc_unit_image/images/units/res.xml</file>
-        <file>mods/awdc_unit_image/images/units/rocketthrower+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/rocketthrower+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/rocketthrower+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/rocketthrower.png</file>
-        <file>mods/awdc_unit_image/images/units/submarine+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/submarine+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/submarine+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/submarine.png</file>
-        <file>mods/awdc_unit_image/images/units/t_heli+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/t_heli+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/t_heli+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/t_heli.png</file>
-        <file>mods/awdc_unit_image/images/units/waterplane+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/waterplane+walk+mask.png</file>
-        <file>mods/awdc_unit_image/images/units/waterplane+walk.png</file>
-        <file>mods/awdc_unit_image/images/units/waterplane.png</file>
-        <file>mods/awdc_unit_image/scripts/units/aircraftcarrier.js</file>
-        <file>mods/awdc_unit_image/scripts/units/antitankcannon.js</file>
-        <file>mods/awdc_unit_image/scripts/units/apc.js</file>
-        <file>mods/awdc_unit_image/scripts/units/artillery.js</file>
-        <file>mods/awdc_unit_image/scripts/units/battleship.js</file>
-        <file>mods/awdc_unit_image/scripts/units/bomber.js</file>
-        <file>mods/awdc_unit_image/scripts/units/cannonboat.js</file>
-        <file>mods/awdc_unit_image/scripts/units/cruiser.js</file>
-        <file>mods/awdc_unit_image/scripts/units/duster.js</file>
-        <file>mods/awdc_unit_image/scripts/units/fighter.js</file>
-        <file>mods/awdc_unit_image/scripts/units/flak.js</file>
-        <file>mods/awdc_unit_image/scripts/units/flare.js</file>
-        <file>mods/awdc_unit_image/scripts/units/heavy_tank.js</file>
-        <file>mods/awdc_unit_image/scripts/units/infantry.js</file>
-        <file>mods/awdc_unit_image/scripts/units/k_heli.js</file>
-        <file>mods/awdc_unit_image/scripts/units/lander.js</file>
-        <file>mods/awdc_unit_image/scripts/units/light_tank.js</file>
-        <file>mods/awdc_unit_image/scripts/units/mech.js</file>
-        <file>mods/awdc_unit_image/scripts/units/megatank.js</file>
-        <file>mods/awdc_unit_image/scripts/units/missile.js</file>
-        <file>mods/awdc_unit_image/scripts/units/motorbike.js</file>
-        <file>mods/awdc_unit_image/scripts/units/recon.js</file>
-        <file>mods/awdc_unit_image/scripts/units/rocketthrower.js</file>
-        <file>mods/awdc_unit_image/scripts/units/submarine.js</file>
-        <file>mods/awdc_unit_image/scripts/units/t_heli.js</file>
-        <file>mods/awdc_unit_image/scripts/units/waterplane.js</file>
-        <file>mods/awdc_unit_image/mod.txt</file>
         <file>mods/awdc_weather/scripts/building/radar.js</file>
         <file>mods/awdc_weather/scripts/gamerules/weather/weather_rain.js</file>
         <file>mods/awdc_weather/scripts/gamerules/weather/weather_sandstorm.js</file>
@@ -5047,7 +4907,6 @@
         <file>resources/images/game/battlesprites/background/back_street+sea.png</file>
         <file>resources/images/game/battlesprites/background/back_street+town.png</file>
         <file>resources/images/game/battlesprites/background/back_town+bm+0.png</file>
-        <file>resources/images/game/battlesprites/background/back_town+bm.png</file>
         <file>resources/images/game/battlesprites/background/back_town+ge+0.png</file>
         <file>resources/images/game/battlesprites/background/back_town+ge+1.png</file>
         <file>resources/images/game/battlesprites/background/back_town+os+0.png</file>
@@ -5068,5 +4927,16 @@
         <file>resources/images/game/battlesprites/foreground/fore_street+1.png</file>
         <file>resources/images/game/battlesprites/base_snowair.png</file>
         <file>resources/images/game/battlesprites/background/back_hq+.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_factory+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_town+bm+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowplanes+forest.png</file>
+        <file>resources/images/terrain/desert+0.png</file>
+        <file>resources/images/terrain/desert+1.png</file>
+        <file>resources/images/terrain/desert+2.png</file>
+        <file>resources/images/terrain/desert+3.png</file>
+        <file>resources/images/terrain/desert+4.png</file>
+        <file>resources/images/terrain/desert+5.png</file>
+        <file>resources/images/terrain/desert+6.png</file>
+        <file>resources/images/terrain/desert+7.png</file>
     </qresource>
 </RCC>

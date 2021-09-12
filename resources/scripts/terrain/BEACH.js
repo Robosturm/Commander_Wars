@@ -131,7 +131,7 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender)
     {
-        if (defender !== null &&
+        if (typeof defender !== 'undefined' &&
             defender.getUnitType() === GameEnums.UnitType_Naval)
         {
             return "back_beach+sea";

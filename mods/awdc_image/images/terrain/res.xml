@@ -50,17 +50,26 @@
         <image file="sea+S+W.png" />
         <image file="sea+W.png" />
                 
-                <image file="rough_sea+N+E+S+W.png" cols = "5" />
+        <image file="rough_sea+N+E+S+W.png" cols = "5" />
 
-                <image file="reaf+N+E+S+W.png" />
-                <image file="reaf+1+N+E+S+W.png" />
-                <image file="reaf+2+N+E+S+W.png" />
-                <image file="reaf+3+N+E+S+W.png" />
+        <image file="reaf+N+E+S+W.png" />
+        <image file="reaf+1+N+E+S+W.png" />
+        <image file="reaf+2+N+E+S+W.png" />
+        <image file="reaf+3+N+E+S+W.png" />
         
         <image file="mountain.png" />
         <image file="mountain+E.png" />
         <image file="mountain+E+W.png" />
         <image file="mountain+W.png" />
+        
+        <image file="desert+0.png" />
+        <image file="desert+1.png" />
+        <image file="desert+2.png" />
+        <image file="desert+3.png" />
+        <image file="desert+4.png" />        
+        <image file="desert+5.png" />
+        <image file="desert+6.png" />
+        <image file="desert+7.png" />
         
         <image file="desert_rock.png" />
         <image file="desert_rock+E.png" />

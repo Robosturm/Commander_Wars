@@ -9,8 +9,8 @@
         <image file="battlesprites/base_desertforest.png" />
         <image file="battlesprites/base_snowforest.png" />
         <!-- battle sprite fore -->
-        <image file="battlesprites/foreground/fore_factory.png" />
         <image file="battlesprites/foreground/fore_factory+0.png" />
+        <image file="battlesprites/foreground/fore_factory+1.png" />
         <image file="battlesprites/foreground/fore_pipeline.png" />
         <image file="battlesprites/foreground/fore_plains+0.png" />
         <image file="battlesprites/foreground/fore_plains+1.png" />
@@ -77,6 +77,7 @@
         <image file="battlesprites/background/back_snowplanes+pipe.png" />
         <image file="battlesprites/background/back_snowplanes+sea.png" />
         <image file="battlesprites/background/back_snowplanes+street.png" />
+        <image file="battlesprites/background/back_snowplanes+forest.png" />
         <image file="battlesprites/background/back_snowplanes+town.png" />
         <image file="battlesprites/background/back_snowriver.png" />
         <image file="battlesprites/background/back_snowstreet.png" />

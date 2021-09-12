@@ -153,19 +153,19 @@ var UNIT =
         unit.getOwner().addFunds(-healingDone / 10 * costs);
     },
 
-    getTerrainAnimationBase : function(unit, terrain)
+    getTerrainAnimationBase : function(unit, terrain, defender)
     {
-        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain);
+        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender);
     },
 
-    getTerrainAnimationForeground : function(unit, terrain)
+    getTerrainAnimationForeground : function(unit, terrain, defender)
     {
-        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain);
+        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender);
     },
 
-    getTerrainAnimationBackground : function(unit, terrain)
+    getTerrainAnimationBackground : function(unit, terrain, defender)
     {
-        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain);
+        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender);
     },
 
     getTerrainAnimationMoveSpeed : function(unit)

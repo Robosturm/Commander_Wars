@@ -168,10 +168,10 @@ var TERRAIN =
         {
             weatherModifier = "snow";
         }
-        return TERRAIN.getTerrainAnimationBackground(id, weatherModifier);
+        return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
-    getTerrainAnimationBackground : function(id, weatherModifier)
+    getTerrainBackgroundId : function(id, weatherModifier)
     {
         switch (id)
         {
@@ -192,7 +192,7 @@ var TERRAIN =
         case "BUILDING":
             return "back_" + weatherModifier + "planes+town";
         case "STREET":
-            return "back_planes" + weatherModifier + "street";
+            return "back_" + weatherModifier + "planes+street";
         case "DESERT_WELD":
         case "SNOW_WELD":
         case "WELD":

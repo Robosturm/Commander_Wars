@@ -77,6 +77,7 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
+        var id = TERRAIN.getTerrainAnimationId(terrain);
         var weatherModifier = "";
         var baseId = terrain.getBaseTerrainID();
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||

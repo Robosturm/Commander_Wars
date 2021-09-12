@@ -66,21 +66,14 @@ var Constructor = function()
 
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        var player = terrain.getBuilding().getOwner();
-        // get army name
-        var armyName = "";
-        if (player !== null)
-        {
-            armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
-        }
-        return "fore_hq+" + armyName;
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var player = terrain.getBuilding().getOwner();
         // get army name
-        var armyName = "os";
+        var armyName = "";
         if (player !== null)
         {
             armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
