@@ -377,7 +377,7 @@ var Constructor = function()
                     armyName === "ti")
             {
                 rotation = -90;
-                movement = Qt.point(-70, 25);
+                movement = Qt.point(-50, 20);
             }
             sprite.loadDyingMovingSprite("mech+" + armyName + "+mask",
                                          "mech+" + armyName + "+dying+mask",

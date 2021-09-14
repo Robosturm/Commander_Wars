@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <set path = "mods/aw2_image/images/building/" />
+    <set path = "mods/awdc_image/images/building/" />
     <atlas linearFilter = "false">
         <!-- factory -->
         <image file="factory.png" cols = "4" />
@@ -26,29 +26,14 @@
         <image file="airport.png" cols = "2" />
         <image file="airport+mask.png" cols = "2" />
         <image file="airport+neutral.png" />
-        
-        <!-- labor -->
-        <image file="labor.png" cols = "2" />
-        <image file="labor+mask.png" cols = "2" />
-        <image file="labor+neutral.png" />
-        
+
         <!-- mine -->
         <image file="mine.png" cols = "2" />
         <image file="mine+mask.png" cols = "2" />
         <image file="mine+neutral.png" />
         
-        <!-- labor -->
+        <!-- silo -->
         <image file="silo.png" />
         <image file="silo+rocket.png" />
-        
-        <!-- temporary airport -->
-        <image file="temporary_airport.png" cols = "2" />
-        <image file="temporary_airport+mask.png" cols = "2" />
-        <image file="temporary_airport+neutral.png" cols = "2" />
-        
-        <!-- temporary harbour -->
-        <image file="temporary_harbour.png" cols = "2" />
-        <image file="temporary_harbour+mask.png" cols = "2" />
-        <image file="temporary_harbour+neutral.png" cols = "2" />
     </atlas>
 </resources>

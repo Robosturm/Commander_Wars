@@ -141,6 +141,15 @@ public slots:
      */
     void loadColorOverlayForLastLoadedFrame(QColor color, qint32 time, qint32 loops, qint32 showDelayMs);
     /**
+     * @brief addUnitshakeToLastLoadedSprites
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param delayMs
+     * @param shakePauseMs
+     */
+    void addUnitshakeToLastLoadedSprites(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    /**
      * @brief getInvertStartPosition
      * @return is true during impact animations and results in an inverted positioning of the impacts.
      * So the impacts are drawm at the position of the dying units

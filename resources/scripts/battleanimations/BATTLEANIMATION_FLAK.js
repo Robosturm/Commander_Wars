@@ -11,7 +11,8 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],
-                     ["ac", "ac"],];
+                     ["ac", "ac"],
+                     ["ti", "ti"],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -89,6 +90,11 @@ var Constructor = function()
                 }
                 else if (armyName === "ac")
                 {
+                    offset = Qt.point(38, 31);
+                }
+                else if (armyName === "ti")
+                {
+                    // -10, 5
                     offset = Qt.point(38, 31);
                 }
                 for (var i2 = 0; i2 < mgCount; ++i2)

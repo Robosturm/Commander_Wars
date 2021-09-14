@@ -254,7 +254,7 @@
         <image file="flak/flak+ge+stop+mask.png" cols = "2" />
         <image file="flak/flak+yc+stop+mask.png" cols = "2" />
         <image file="flak/flak+ma+stop+mask.png" />
-        <image file="flak/flak+zi+stop+mask.png" />
+        <image file="flak/flak+ti+stop+mask.png" />
         <!-- flare -->
         <image file="flare/flare+mask.png" />
         <image file="flare/flare+bh+mask.png" />        

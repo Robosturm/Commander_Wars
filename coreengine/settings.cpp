@@ -611,7 +611,8 @@ void Settings::setActiveMods(const QStringList &activeMods)
     while (i < m_activeMods.size())
     {
         QDir dir(m_activeMods[i]);
-        if (!dir.exists())
+        QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
+        if (!dir.exists() && !dir2.exists())
         {
             Console::print("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", Console::eWARNING);
             m_activeMods.removeAt(i);

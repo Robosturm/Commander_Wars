@@ -638,6 +638,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
                 {
                     rotation = -rotation;
                 }
+                pSprite->setAnchorInPixels(pAnim->getWidth() / 2, pAnim->getHeight() / 2);
                 oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
                 pSprite->addTween(rotationTween);
             }
@@ -728,6 +729,32 @@ void BattleAnimationSprite::loadColorOverlayForLastLoadedFrame(QColor color, qin
     }
 }
 
+void BattleAnimationSprite::addUnitshakeToLastLoadedSprites(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    QVector<QVector<oxygine::spSprite>>* frame;
+    if (m_nextFrames.length() > 0 && m_nextFrames[m_nextFrames.length() - 1].length() > 0)
+    {
+        frame = &m_nextFrames[m_nextFrames.length() - 1];
+    }
+    else
+    {
+        frame = &m_currentFrame;
+    }
+    qint32 value = getUnitCount(m_maxUnitCount);
+    for (qint32 i = m_maxUnitCount; i >= m_maxUnitCount - value + 1; i--)
+    {
+        if (i - 1 < frame->length() && i > 0)
+        {
+            for (auto & sprite : (*frame)[i - 1])
+            {
+                // add impact image
+                oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                                               oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+                sprite->addTween(tween);
+            }
+        }
+    }
+}
 void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 {
     

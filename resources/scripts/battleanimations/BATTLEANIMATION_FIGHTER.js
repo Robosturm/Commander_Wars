@@ -10,7 +10,8 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ti", "ti"],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
@@ -43,27 +44,31 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
-        var offset = Qt.point(-100, 15);
+        var offset = Qt.point(-50, 30);
         var count = sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
         if (armyName === "yc")
         {
-            offset = Qt.point(-95, 15);
+            offset = Qt.point(-50, 30);
         }
         else if (armyName === "ge")
         {
-            offset = Qt.point(-95, 15);
+            offset = Qt.point(-50, 30);
         }
         else if (armyName === "bm")
         {
-            offset = Qt.point(-102, 15);
+            offset = Qt.point(-50, 30);
         }
         else if (armyName === "bh")
         {
-            offset = Qt.point(-95, 15);
+            offset = Qt.point(-50, 30);
         }
         else if (armyName === "ma")
         {
-            offset = Qt.point(-80, 15);
+            offset = Qt.point(-50, 30);
+        }
+        else if (armyName === "ti")
+        {
+            offset = Qt.point(-50, 30);
         }
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(227, 0), 800, false,

@@ -4951,5 +4951,13 @@
         <file>resources/images/battleanimations/flak/flak+ti+fire+air+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+ti+move+air+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+ti+stop+air+mask.png</file>
+        <file>mods/awdc_image/images/terrain/desert+0.png</file>
+        <file>mods/awdc_image/images/terrain/desert+1.png</file>
+        <file>mods/awdc_image/images/terrain/desert+2.png</file>
+        <file>mods/awdc_image/images/terrain/desert+3.png</file>
+        <file>mods/awdc_image/images/terrain/desert+4.png</file>
+        <file>mods/awdc_image/images/terrain/desert+5.png</file>
+        <file>mods/awdc_image/images/terrain/desert+6.png</file>
+        <file>mods/awdc_image/images/terrain/desert+7.png</file>
     </qresource>
 </RCC>
