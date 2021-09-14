@@ -8,7 +8,7 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSpriteV2("crystal_tank+mask", GameEnums.Recoloring_Matrix,
-                          BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(5, 10));
+                          BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(-5, 10));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -17,17 +17,27 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
-            offset = Qt.point(85, 55);
-            sprite.loadSingleMovingSprite("medium_shot", false,
+            offset = Qt.point(78, 50);
+            sprite.loadSingleMovingSprite("crystalcannon", false,
                                           Qt.point(offset.x, offset.y),
                                           Qt.point(0, 0), 0, true,
-                                          1, 1.0, 5, 200, false);
-            sprite.loadSound("tank_shot.wav", 1, 200);
+                                          1, 1.0, 1, 0, false);
+            var enemySprite = sprite.getEnemySprite();
+            enemySprite.setInvertStartPosition(true);
+            enemySprite.loadSingleMovingSprite("crystalcannon_trail", false,
+                                               Qt.point(0, offset.y),
+                                               Qt.point(0, 0), 0, true,
+                                               1, 1.0, 5, 0, false);
+            enemySprite.loadSingleMovingSprite("crystalcannon_trail", false,
+                                               Qt.point(64, offset.y),
+                                               Qt.point(0, 0), 0, true,
+                                               1, 1.0, 5, 0, false);
+            enemySprite.setInvertStartPosition(false);
         }
         else
         {
             // mg
-            offset = Qt.point(93, 73);
+            offset = Qt.point(83, 73);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
             sprite.loadSound("mg_weapon_fire.wav", 1);

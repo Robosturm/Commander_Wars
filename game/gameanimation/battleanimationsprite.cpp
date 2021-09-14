@@ -14,6 +14,8 @@
 #include "game/gameanimation/battleanimationsprite.h"
 #include "game/gameanimation/battleanimation.h"
 
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
+
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 const QString BattleAnimationSprite::impactUnitOverlayAnimation = "loadImpactUnitOverlayAnimation";
 const QString BattleAnimationSprite::impactAnimation = "loadImpactAnimation";
@@ -482,6 +484,36 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
     }
 }
 
+void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
+                           QPoint movement, float rotation, qint32 moveTime, short priority, qint32 maxUnitCount, qint32 showDelay)
+{
+    qint32 startUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
+    qint32 endUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
+    while (m_nextFrames[m_nextFrames.length() - 1].length() < startUnits)
+    {
+        m_nextFrames[m_nextFrames.length() - 1].append(QVector<oxygine::spSprite>());
+    }
+    for (qint32 i = maxUnitCount; i >= maxUnitCount - startUnits + 1; i--)
+    {
+        if (i < (maxUnitCount - endUnits + 1))
+        {
+            loadSingleMovingSpriteV2(dyingSpriteId, mode, offset + getUnitBasePosition(i, maxUnitCount, startUnits), movement, moveTime, true,
+                                     1, 1.0f, i + priority, showDelay, false, GameMap::frameTime, -1, 0, rotation);
+        }
+        else
+        {
+            loadSingleMovingSpriteV2(livingSpriteId, mode, offset + getUnitBasePosition(i, maxUnitCount, startUnits), QPoint(0, 0), 0, false,
+                                     1, 1.0f, i + priority, 0, false, GameMap::frameTime, -1, 0, 0);
+        }
+
+        if (m_lastLoadedSprite.get() != nullptr)
+        {
+            m_nextFrames[m_nextFrames.length() - 1][maxUnitCount - i].append(m_lastLoadedSprite);
+            m_lastLoadedSprite->detach();
+        }
+    }
+}
+
 QPoint BattleAnimationSprite::getUnitBasePosition(qint32 unit, qint32 maxUnitCount, qint32 unitsAlive)
 {
     QPoint position(0, 0);
@@ -501,10 +533,12 @@ QPoint BattleAnimationSprite::getUnitBasePosition(qint32 unit, qint32 maxUnitCou
     QPoint posOffset = getUnitPositionOffset(unit);
     return position + posOffset;
 }
+
 void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
                                                      QPoint movement, qint32 moveTime, bool deleteAfter,
                                                      qint32 loops, float scale, short priority, qint32 showDelay,
-                                                     bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame)
+                                                     bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
+                                                     float rotation)
 {    
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -598,6 +632,15 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
                 });
             }
             pSprite->addTween(moveTween);
+            if (rotation != 0)
+            {
+                if (isFlippedX())
+                {
+                    rotation = -rotation;
+                }
+                oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+                pSprite->addTween(rotationTween);
+            }
         }
         if (showDelay > 0)
         {
@@ -810,6 +853,43 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+}
+
+void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundSprite)
+{
+    m_pBackgroundSprite = newBackgroundSprite;
+}
+
+float BattleAnimationSprite::getBackgroundSpeed()
+{
+    return oxygine::safeSpCast<oxygine::SlidingSprite>(m_pBackgroundSprite->getFirstChild())->getSpeed();
+}
+
+void BattleAnimationSprite::setBackgroundSpeed(float speed)
+{
+    m_backgroundSpeed = getBackgroundSpeed();
+    auto & childs = m_pBackgroundSprite->getChildren();
+    for (auto & child : childs)
+    {
+        oxygine::safeSpCast<oxygine::SlidingSprite>(child)->setSpeed(speed);
+    }
+}
+
+void BattleAnimationSprite::restoreBackgroundSpeed()
+{
+    float backup = m_backgroundSpeed;
+    setBackgroundSpeed(m_backgroundSpeed);
+    m_backgroundSpeed = backup;
+}
+
+BattleAnimationSprite *BattleAnimationSprite::getEnemySprite() const
+{
+    return m_EnemySprite;
+}
+
+void BattleAnimationSprite::setEnemySprite(BattleAnimationSprite *newEnemySprite)
+{
+    m_EnemySprite = newEnemySprite;
 }
 
 bool BattleAnimationSprite::getInvertStartPosition() const

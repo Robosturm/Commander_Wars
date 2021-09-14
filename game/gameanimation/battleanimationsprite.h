@@ -84,14 +84,42 @@ public:
         m_fireHp = fireHp;
     }
     /**
+     * @brief setEnemySprite
+     * @param newEnemySprite
+     */
+    void setEnemySprite(BattleAnimationSprite *newEnemySprite);
+    /**
+     * @brief setBackgroundSprite
+     * @param newPBackgroundSprite
+     */
+    void setBackgroundSprite(oxygine::spSprite newBackgroundSprite);
+signals:
+    void sigDetachChild(oxygine::spActor pActor);
+public slots:
+    /**
+     * @brief getBackgroundSpeed
+     * @return
+     */
+    float getBackgroundSpeed();
+    /**
+     * @brief setBackgroundSpeed
+     * @param speed
+     */
+    void setBackgroundSpeed(float speed);
+    /**
+     * @brief restoreBackgroundSpeed
+     */
+    void restoreBackgroundSpeed();
+    /**
      * @brief setInvertStartPosition
      * @param invertStartPosition
      */
     void setInvertStartPosition(bool invertStartPosition);
-
-signals:
-    void sigDetachChild(oxygine::spActor pActor);
-public slots:
+    /**
+     * @brief getEnemySprite
+     * @return
+     */
+    BattleAnimationSprite *getEnemySprite() const;
     /**
      * @brief loadDyingFadeOutAnimation
      */
@@ -265,6 +293,21 @@ public slots:
                             QPoint movement, qint32 moveTime, bool deleteAfter = false,
                             qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
                             bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0);
+
+    /**
+     * @brief loadDyingMovingSprite
+     * @param livingSpriteId
+     * @param dyingSpriteId
+     * @param mode
+     * @param offset
+     * @param movement
+     * @param rotation
+     * @param moveTime
+     * @param priority
+     * @param showDelay
+     */
+    void loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
+                               QPoint movement = QPoint(0, 0), float rotation = 0, qint32 moveTime = 0, short priority = 0, qint32 maxUnitCount = 5, qint32 showDelay = 0);
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -284,6 +327,7 @@ public slots:
                                 QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                 qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
                                 bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0);
+
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -302,7 +346,8 @@ public slots:
     void loadSingleMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
                                   QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                   qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                                  bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0);
+                                  bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0,
+                                  float rotation = 0);
     /**
      * @brief getImpactDurationMS
      * @return
@@ -418,11 +463,16 @@ private:
     QTimer m_nextFrameTimer;
     bool m_startWithFraming{false};
 
+    BattleAnimationSprite* m_EnemySprite{nullptr};
+
     float m_dyingStartHp{10.0f};
     float m_dyingEndHp{10.0f};
     float m_fireHp{10.0f};
     bool m_invertStartPosition{false};
     bool m_playSound{true};
+
+    oxygine::spSprite m_pBackgroundSprite;
+    float m_backgroundSpeed{0};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

@@ -12,7 +12,13 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         BATTLEANIMATION_AIRCRAFTCARRIER.loadSprite(sprite, unit, defender, weapon, Qt.point(20, 20), Qt.point(-150, 0), 1500);
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 1;
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, startPos, movement, moveTime)
@@ -25,6 +31,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         BATTLEANIMATION_AIRCRAFTCARRIER.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)

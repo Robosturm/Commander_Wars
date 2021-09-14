@@ -183,8 +183,6 @@ var Constructor = function()
             offset.x = (offset.x - 30);
             offset.y = (offset.y + 3);
             sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-
-            // -25 - 21
             offset.x = -30;
             offset.y = (offset.y - 5);
             sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
@@ -275,11 +273,9 @@ var Constructor = function()
             {
                 weaponRes = "bazooka_yc"
             }
-
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
-
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("rocket_flying.wav", 1, 0);
@@ -296,7 +292,6 @@ var Constructor = function()
             }
         }
     };
-
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
     {
@@ -354,7 +349,46 @@ var Constructor = function()
         {
             return 1000;
         }
-    }
+    };
+
+    this.getDyingDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 1)
+        {
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
+            var offset = Qt.point(-10, 5);
+            var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
+            var rotation = 0;
+            var movement = Qt.point(-30, 15);
+            if (armyName === "ac" ||
+                    armyName === "dm" ||
+                    armyName === "ma" ||
+                    armyName === "pf" ||
+                    armyName === "ti")
+            {
+                rotation = -90;
+                movement = Qt.point(-70, 25);
+            }
+            sprite.loadDyingMovingSprite("mech+" + armyName + "+mask",
+                                         "mech+" + armyName + "+dying+mask",
+                                         GameEnums.Recoloring_Matrix,
+                                         offset, movement, rotation, 300);
+        }
+        else
+        {
+            BATTLEANIMATION_INFANTRY.loadDyingAnimation(sprite, unit, defender, weapon);
+        }
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

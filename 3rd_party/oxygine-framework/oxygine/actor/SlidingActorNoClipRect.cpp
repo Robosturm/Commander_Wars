@@ -4,6 +4,8 @@
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
 #include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
+#include "coreengine/settings.h"
+
 namespace oxygine
 {
     float SlidingActorNoClipRect::m_defaultTouchThreshold = 15.0f;
@@ -196,147 +198,152 @@ namespace oxygine
             return;
         }
         TouchEvent* te = safeCast<TouchEvent*>(event);
-        timeMS tm = Clock::getTimeMS();
-        switch (te->type)
+
+        if (te->mouseButton == MouseButton_Middle ||
+            Settings::getSmallScreenDevice())
         {
-            case TouchEvent::TOUCH_DOWN:
+            timeMS tm = Clock::getTimeMS();
+            switch (te->type)
             {
-                m_finger = te->index;
-                m_current = 0;
-                m_lastIterTime = tm;
-
-                m_prev[0].pos = m_content->getPosition();
-                m_prev[0].tm = tm;
-
-                for (qint32 i = 1; i < NUM; ++i)
+                case TouchEvent::TOUCH_DOWN:
                 {
-                    m_prev[i].tm = timeMS(0);
-                }
+                    m_finger = te->index;
+                    m_current = 0;
+                    m_lastIterTime = tm;
 
-                m_holded = event->target;
-                m_downPos = te->localPosition;
-                break;
-            }
-            case TouchEvent::TOUCH_UP:
-            {
-                if (m_ignoreTouchUp)
-                {
-                    te->stopImmediatePropagation();
-                }
-
-                if (m_drag.getDragEnabled() && te->index == m_finger && m_ignoreTouchUp == false)
-                {
-                    m_finger = 0;
-                    Vector2 pos = m_content->getPosition();
-
-                    m_holded = nullptr;
-
-                    const iter* old = 0;
-                    const iter* mid = 0;
-                    const iter* last = m_prev + m_current;
+                    m_prev[0].pos = m_content->getPosition();
+                    m_prev[0].tm = tm;
 
                     for (qint32 i = 1; i < NUM; ++i)
                     {
-                        qint32 n = (m_current + NUM - i) % NUM;
-                        if (m_prev[n].tm > timeMS(0))
+                        m_prev[i].tm = timeMS(0);
+                    }
+
+                    m_holded = event->target;
+                    m_downPos = te->localPosition;
+                    break;
+                }
+                case TouchEvent::TOUCH_UP:
+                {
+                    if (m_ignoreTouchUp)
+                    {
+                        te->stopImmediatePropagation();
+                    }
+
+                    if (m_drag.getDragEnabled() && te->index == m_finger && m_ignoreTouchUp == false)
+                    {
+                        m_finger = 0;
+                        Vector2 pos = m_content->getPosition();
+
+                        m_holded = nullptr;
+
+                        const iter* old = 0;
+                        const iter* mid = 0;
+                        const iter* last = m_prev + m_current;
+
+                        for (qint32 i = 1; i < NUM; ++i)
                         {
-                            last = m_prev + n;
+                            qint32 n = (m_current + NUM - i) % NUM;
+                            if (m_prev[n].tm > timeMS(0))
+                            {
+                                last = m_prev + n;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            if (!mid && (last->tm + timeMS(50) <= tm))
+                            {
+                                mid = last;
+                            }
+                            if (last->tm + timeMS(150) <= tm)
+                            {
+                                old = last;
+                                break;
+                            }
                         }
-                        else
+                        if (!old)
                         {
-                            break;
+                            old = last;
                         }
-                        if (!mid && (last->tm + timeMS(50) <= tm))
+                        if (!mid)
                         {
                             mid = last;
                         }
-                        if (last->tm + timeMS(150) <= tm)
+                        Vector2 midpos = mid->pos;
+                        Vector2 dir = pos - midpos;
+                        if (dir.sqlength() < 10 * 10)
                         {
-                            old = last;
-                            break;
-                        }
-                    }
-                    if (!old)
-                    {
-                        old = last;
-                    }
-                    if (!mid)
-                    {
-                        mid = last;
-                    }
-                    Vector2 midpos = mid->pos;
-                    Vector2 dir = pos - midpos;
-                    if (dir.sqlength() < 10 * 10)
-                    {
-                        m_speed = Vector2(0, 0);
-                    }
-                    else
-                    {
-                        timeMS v = tm - old->tm;
-                        if (v == timeMS(0))
-                        {
-                            return;
-                        }
-
-                        Vector2 dr = pos - old->pos;
-
-                        Vector2 ns = (dr * 1000.0f) / v.count();
-
-                        if (m_speed.dot(ns) < 0)
-                        {
-                            m_speed = ns;
+                            m_speed = Vector2(0, 0);
                         }
                         else
                         {
-                            m_speed += ns;
-                        }
-                    }
-
-
-                    if (!m_sliding)
-                    {
-                        m_sliding = true;
-                    }
-
-                    SlidingEvent sd(SlidingEvent::BEGIN);
-                    sd.speed = m_speed;
-                    dispatchEvent(&sd);
-                    m_speed = sd.speed;
-
-                    m_lastIterTime = tm;
-                }
-                break;
-            }
-            case TouchEvent::MOVE:
-            {
-                if (te->index == m_finger)
-                {
-                    Vector2 offset = m_downPos - te->localPosition;
-                    float d = offset.dot(offset);
-                    if (m_holded && (d >= m_rad * m_rad))
-                    {
-                        spActor act = safeSpCast<Actor>(m_holded);
-
-                        while (act && act.get() != m_content.get())
-                        {
-                            for (qint32 i = 0; i < MouseButton_Num; ++i)
+                            timeMS v = tm - old->tm;
+                            if (v == timeMS(0))
                             {
-                                act->setNotPressed((MouseButton)i);
-
-                                TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
-                                ev.mouseButton = (MouseButton)i;
-                                ev.index = te->index;
-                                ev.bubbles = false;
-                                act->dispatchEvent(&ev);
-
+                                return;
                             }
-                            act = act->getParent();
+
+                            Vector2 dr = pos - old->pos;
+
+                            Vector2 ns = (dr * 1000.0f) / v.count();
+
+                            if (m_speed.dot(ns) < 0)
+                            {
+                                m_speed = ns;
+                            }
+                            else
+                            {
+                                m_speed += ns;
+                            }
                         }
 
-                        m_holded = nullptr;
+
+                        if (!m_sliding)
+                        {
+                            m_sliding = true;
+                        }
+
+                        SlidingEvent sd(SlidingEvent::BEGIN);
+                        sd.speed = m_speed;
+                        dispatchEvent(&sd);
+                        m_speed = sd.speed;
+
+                        m_lastIterTime = tm;
                     }
+                    break;
                 }
-                break;
+                case TouchEvent::MOVE:
+                {
+                    if (te->index == m_finger)
+                    {
+                        Vector2 offset = m_downPos - te->localPosition;
+                        float d = offset.dot(offset);
+                        if (m_holded && (d >= m_rad * m_rad))
+                        {
+                            spActor act = safeSpCast<Actor>(m_holded);
+
+                            while (act && act.get() != m_content.get())
+                            {
+                                for (qint32 i = 0; i < MouseButton_Num; ++i)
+                                {
+                                    act->setNotPressed((MouseButton)i);
+
+                                    TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+                                    ev.mouseButton = (MouseButton)i;
+                                    ev.index = te->index;
+                                    ev.bubbles = false;
+                                    act->dispatchEvent(&ev);
+
+                                }
+                                act = act->getParent();
+                            }
+
+                            m_holded = nullptr;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }

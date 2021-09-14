@@ -312,19 +312,32 @@ var Constructor = function()
         return 600;
     };
 
-    // this.hasDyingAnimation = function()
-    // {
-    //     return true;
-    // };
-    //
-    // this.loadDyingAnimation = function(sprite, unit, defender, weapon)
-    // {
-    //     var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
-    //     var offset = Qt.point(-10, 5);
-    //
-    //     sprite.loadMovingSpriteV2("infantry+" + armyName + "+dying",  GameEnums.Recoloring_Matrix,
-    //                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, Qt.point(-50, 0), 300, true);
-    // };
+    this.hasDyingAnimation = function()
+    {
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
+        var offset = Qt.point(-10, 5);
+        var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
+        var rotation = 0;
+        var movement = Qt.point(-30, 15);
+        if (armyName === "ac" ||
+            armyName === "dm" ||
+            armyName === "ma" ||
+            armyName === "pf" ||
+            armyName === "ti")
+        {
+            rotation = -90;
+            movement = Qt.point(-80, 20);
+        }
+        sprite.loadDyingMovingSprite("infantry+" + armyName + riverName + "+mask",
+                                     "infantry+" + armyName + "+dying+mask",
+                                     GameEnums.Recoloring_Matrix,
+                                     offset, movement, rotation, 300);
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

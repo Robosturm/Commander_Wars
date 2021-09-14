@@ -37,35 +37,49 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     createCoInfoFrontImages(pAtkUnit, pDefUnit);
     createHealthbar(pAtkUnit, atkStartHp, pDefUnit, defStartHp);
 
-    // dummy impl for standing units
+    // load attacker sprite
     m_pAttackerAnimation = spBattleAnimationSprite::create(spUnit(pAtkUnit), pAtkTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
-    setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
-    m_pAttackerAnimation->clear();
-    m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
-    setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
-
-    m_pAttackerSprite->addChild(m_pAttackerAnimation);
+    // load deender sprite
     m_pDefenderAnimation = spBattleAnimationSprite::create(spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);
     m_pDefenderAnimation->setFireHp(defEndHp);
+    // set enemy sprites
+    m_pDefenderAnimation->setEnemySprite(m_pAttackerAnimation.get());
+    m_pAttackerAnimation->setEnemySprite(m_pDefenderAnimation.get());
+    // load terrains
+    oxygine::spSprite pAtkTerrainSprite = loadTerrainSprite(pAtkUnit, pDefUnit);
+    setSpriteFlipped(pAtkTerrainSprite, pAtkUnit, pDefUnit);
+    m_pAttackerSprite->addChild(pAtkTerrainSprite);
+    m_pAttackerAnimation->setBackgroundSprite(pAtkTerrainSprite);
+    oxygine::spSprite pDefTerrainSprite = loadTerrainSprite(pDefUnit, pAtkUnit);
+    setSpriteFlipped(pDefTerrainSprite, pDefUnit, pAtkUnit);
+    m_pDefenderSprite->addChild(pDefTerrainSprite);
+    m_pDefenderAnimation->setBackgroundSprite(pDefTerrainSprite);
+    // load initial attacker state
+    m_pAttackerSprite->addChild(m_pAttackerAnimation);
+    setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
+    m_pAttackerAnimation->clear();
+    m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
+    setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
     if (!m_pAttackerAnimation->hasMoveInAnimation(pAtkUnit, pDefUnit, atkWeapon))
     {
         // skip move in
         m_currentState = AnimationProgress::WaitAfterIn;
     }
+    // load initial defender state
     setSpriteFlipped(m_pDefenderAnimation, pDefUnit, pAtkUnit);
     m_pDefenderAnimation->clear();
     m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pDefUnit, pAtkUnit, m_DefWeapon);
     setSpriteFlipped(m_pDefenderAnimation, pDefUnit, pAtkUnit);
     m_pDefenderSprite->addChild(m_pDefenderAnimation);
 
-    //    // battleTimer
+    // battleTimer
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
@@ -73,10 +87,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
 {
-
     GameManager* pGameManager = GameManager::getInstance();
-
-
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back+mask", oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
@@ -106,13 +117,6 @@ void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
     m_pDefenderSprite = oxygine::spActor::create();
     pDefenderClipRect->addChild(m_pDefenderSprite);
     addChild(pDefenderClipRect);
-
-    oxygine::spSprite pAtkTerrainSprite = loadTerrainSprite(pAtkUnit, pDefUnit);
-    setSpriteFlipped(pAtkTerrainSprite, pAtkUnit, pDefUnit);
-    m_pAttackerSprite->addChild(pAtkTerrainSprite);
-    oxygine::spSprite pDefTerrainSprite = loadTerrainSprite(pDefUnit, pAtkUnit);
-    setSpriteFlipped(pDefTerrainSprite, pDefUnit, pAtkUnit);
-    m_pDefenderSprite->addChild(pDefTerrainSprite);
 
     pAnim = pGameManager->getResAnim("battle_front");
     pSprite = oxygine::spSprite::create();
@@ -787,7 +791,7 @@ void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAni
 
 void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 {
-    constexpr qint32 fadeoutTime = 1200;
+    constexpr qint32 fadeoutTime = 1000;
     qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 100);
     m_battleTimer.start((fadeoutTime + sleep) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }

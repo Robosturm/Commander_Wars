@@ -4938,5 +4938,18 @@
         <file>resources/images/terrain/desert+5.png</file>
         <file>resources/images/terrain/desert+6.png</file>
         <file>resources/images/terrain/desert+7.png</file>
+        <file>resources/images/battleanimations/apc/apc+ti+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+ti+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ti+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+stop+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+ti+stop+air+mask.png</file>
     </qresource>
 </RCC>
