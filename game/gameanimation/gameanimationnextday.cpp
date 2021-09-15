@@ -200,10 +200,10 @@ bool GameAnimationNextDay::onFinished(bool skipping)
     if (pMap.get() != nullptr)
     {
         pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
-    }
-    if (!m_permanent)
-    {
-        ret = GameAnimation::onFinished(skipping);        
+        if (!m_permanent)
+        {
+            ret = GameAnimation::onFinished(skipping);
+        }
     }
     return ret;
 }

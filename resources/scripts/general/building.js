@@ -253,7 +253,7 @@ var BUILDING =
         var baseId = terrain.getBaseTerrainID();
         var building = terrain.getBuilding();
         var player = building.getOwner();        
-        var army = armyData[globals.randInt(0, armyData.length)];
+        var army = BUILDING.armyData[globals.randInt(0, BUILDING.armyData.length - 1)][1];
         if (player !== null)
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);

@@ -178,9 +178,14 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
 
 bool GameMap::anyPlayerAlive()
 {
+    qint32 count = 0;
     for (const auto & player : qAsConst(m_players))
     {
         if (!player->getIsDefeated())
+        {
+            ++count;
+        }
+        if (count >= 2)
         {
             return true;
         }
@@ -1968,82 +1973,85 @@ void GameMap::nextTurnPlayerTimeout()
 
 void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
-    Console::print("GameMap::nextTurn", Console::eDEBUG);
-    m_Rules->checkVictory();
-    enableUnits(m_CurrentPlayer.get());
-    bool nextDay = nextPlayer();
-    playMusic();
-    bool permanent = false;
-    bool found = false;
-    auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
-    if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
-         m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
-         baseGameInput != nullptr)
+    if (anyPlayerAlive())
     {
-        if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
+        Console::print("GameMap::nextTurn", Console::eDEBUG);
+        m_Rules->checkVictory();
+        enableUnits(m_CurrentPlayer.get());
+        bool nextDay = nextPlayer();
+        playMusic();
+        bool permanent = false;
+        bool found = false;
+        auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
+        if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
+             m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
+            baseGameInput != nullptr)
         {
-            // search for previous player
-            qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
-            for (qint32 i = currentPlayerID - 1; i >= 0; i--)
+            if (baseGameInput->getAiType() == GameEnums::AiTypes_Human)
             {
-                if (m_players[i]->getBaseGameInput() != nullptr &&
-                    m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
-                    !m_players[i]->getIsDefeated())
-                {
-                    if (m_players[i]->getTeam() != m_CurrentPlayer->getTeam())
-                    {
-                        permanent = true;
-                    }
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                for (qint32 i = m_players.size() - 1; i > currentPlayerID; i--)
+                // search for previous player
+                qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
+                for (qint32 i = currentPlayerID - 1; i >= 0; i--)
                 {
                     if (m_players[i]->getBaseGameInput() != nullptr &&
-                        m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                        m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                        !m_players[i]->getIsDefeated())
                     {
                         if (m_players[i]->getTeam() != m_CurrentPlayer->getTeam())
                         {
                             permanent = true;
                         }
+                        found = true;
                         break;
+                    }
+                }
+                if (!found)
+                {
+                    for (qint32 i = m_players.size() - 1; i > currentPlayerID; i--)
+                    {
+                        if (m_players[i]->getBaseGameInput() != nullptr &&
+                            m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                        {
+                            if (m_players[i]->getTeam() != m_CurrentPlayer->getTeam())
+                            {
+                                permanent = true;
+                            }
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
-    if (permanent)
-    {
+        if (permanent)
+        {
+            spGameMenue pMenu = GameMenue::getInstance();
+            if (pMenu.get() != nullptr)
+            {
+                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(m_CurrentPlayer.get(), GameMap::frameTime, true);
+                pMenu->addChild(pAnim);
+            }
+        }
+        else
+        {
+            GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
+        }
+        if (nextDay)
+        {
+            startOfTurn(nullptr);
+            m_Recorder->newDay();
+        }
+        m_Rules->startOfTurn(nextDay);
+        m_CurrentPlayer->earnMoney();
+        startOfTurn(m_CurrentPlayer.get());
+        checkFuel(m_CurrentPlayer.get());
+        m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
+        m_Rules->initRoundTime();
         spGameMenue pMenu = GameMenue::getInstance();
         if (pMenu.get() != nullptr)
         {
-            spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(m_CurrentPlayer.get(), GameMap::frameTime, true);
-            pMenu->addChild(pAnim);
+            pMenu->updatePlayerinfo();
+            pMenu->updateMinimap();
         }
-    }
-    else
-    {
-        GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
-    }
-    if (nextDay)
-    {
-        startOfTurn(nullptr);
-        m_Recorder->newDay();
-    }
-    m_Rules->startOfTurn(nextDay);
-    m_CurrentPlayer->earnMoney();
-    startOfTurn(m_CurrentPlayer.get());
-    checkFuel(m_CurrentPlayer.get());
-    m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
-    m_Rules->initRoundTime();
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
-    {
-        pMenu->updatePlayerinfo();
-        pMenu->updateMinimap();
     }
 }
 

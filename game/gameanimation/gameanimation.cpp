@@ -30,14 +30,18 @@ GameAnimation::GameAnimation(quint32 frameTime)
 
 void GameAnimation::restart()
 {
-    m_stopped = false;
-    m_previousAnimation = nullptr;
-    for (auto & tween : m_stageTweens)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
-        oxygine::Stage::getStage()->addTween(tween);
+        m_stopped = false;
+        m_previousAnimation = nullptr;
+        for (auto & tween : m_stageTweens)
+        {
+            oxygine::Stage::getStage()->addTween(tween);
+        }
+        pMap->addChild(spGameAnimation(this));
+        start();
     }
-    GameMap::getInstance()->addChild(spGameAnimation(this));
-    start();
 }
 
 void GameAnimation::start()

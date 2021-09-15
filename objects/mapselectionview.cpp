@@ -250,7 +250,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             (info.fileName().endsWith(".map") ||
              info.fileName().endsWith(".msav")))
         {
-            m_CurrentCampaign = nullptr;
+            m_CurrentLoadedCampaign = nullptr;
             if (m_pCurrentMap.get() != nullptr)
             {
                 m_pCurrentMap->deleteMap();
@@ -309,12 +309,12 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
                 m_pCurrentMap = nullptr;
             }
             m_pMinimap->updateMinimap(spGameMap());
-            m_CurrentCampaign = nullptr;
-            m_CurrentCampaign = spCampaign::create(info.absoluteFilePath());
-            m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
-            m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
+            m_CurrentLoadedCampaign = nullptr;
+            m_CurrentLoadedCampaign = spCampaign::create(info.absoluteFilePath());
+            m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
+            m_MapAuthor->setHtmlText(m_CurrentLoadedCampaign->getAuthor());
             m_MapPlayerCount->setVisible(false);
-            m_MapName->setHtmlText(m_CurrentCampaign->getName());
+            m_MapName->setHtmlText(m_CurrentLoadedCampaign->getName());
             m_pVictoryInfo->setVisible(false);
         }
     }

@@ -108,7 +108,7 @@
     <sound file="selectunit.wav"                cachesize = "2"/>
     <sound file="ship_dying_move.wav"            cachesize = "5"/>
     <sound file="snow.wav"                      cachesize = "2"/>
-    <sound file="speaking.wav"                  cachesize = "10"/>
+    <sound file="speaking.wav"                  cachesize = "30"/>
     <sound file="stealth.wav"                   cachesize = "10"/>
     <sound file="stealthfighter_fire.wav"       cachesize = "5"/>
     <sound file="sun.wav"                       cachesize = "2"/>

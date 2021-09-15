@@ -1719,9 +1719,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="458"/>
-        <location filename="../game/gamemap.cpp" line="512"/>
-        <location filename="../game/gamemap.cpp" line="1239"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
+        <location filename="../game/gamemap.cpp" line="517"/>
+        <location filename="../game/gamemap.cpp" line="1244"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1736,43 +1736,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="458"/>
-        <location filename="../game/gamemap.cpp" line="1239"/>
+        <location filename="../game/gamemap.cpp" line="463"/>
+        <location filename="../game/gamemap.cpp" line="1244"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="512"/>
+        <location filename="../game/gamemap.cpp" line="517"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="522"/>
+        <location filename="../game/gamemap.cpp" line="527"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1216"/>
+        <location filename="../game/gamemap.cpp" line="1221"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1266"/>
+        <location filename="../game/gamemap.cpp" line="1271"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1276"/>
+        <location filename="../game/gamemap.cpp" line="1281"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1284"/>
+        <location filename="../game/gamemap.cpp" line="1289"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1296"/>
+        <location filename="../game/gamemap.cpp" line="1301"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1810,67 +1810,67 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1457"/>
+        <location filename="../menue/gamemenue.cpp" line="1460"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1458"/>
+        <location filename="../menue/gamemenue.cpp" line="1461"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1459"/>
+        <location filename="../menue/gamemenue.cpp" line="1462"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1460"/>
+        <location filename="../menue/gamemenue.cpp" line="1463"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1461"/>
+        <location filename="../menue/gamemenue.cpp" line="1464"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1462"/>
+        <location filename="../menue/gamemenue.cpp" line="1465"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1463"/>
+        <location filename="../menue/gamemenue.cpp" line="1466"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1464"/>
+        <location filename="../menue/gamemenue.cpp" line="1467"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1487"/>
+        <location filename="../menue/gamemenue.cpp" line="1490"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1497"/>
+        <location filename="../menue/gamemenue.cpp" line="1500"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1887"/>
+        <location filename="../menue/gamemenue.cpp" line="1891"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1918"/>
+        <location filename="../menue/gamemenue.cpp" line="1922"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1944"/>
+        <location filename="../menue/gamemenue.cpp" line="1948"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>

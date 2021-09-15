@@ -146,7 +146,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pRuleSelection = spPanel::create(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
-    if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
+    if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
     {
         hidePlayerSelection();
         hideRuleSelection();
@@ -155,7 +155,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
-        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
+        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentSetCampaign());
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
@@ -189,7 +189,7 @@ void MapSelectionMapsMenue::slotButtonBack()
         }
         case MapSelectionStep::selectPlayer:
         {
-            if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
+            if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
             {
                 showRuleSelection();
                 hidePlayerSelection();
@@ -200,11 +200,11 @@ void MapSelectionMapsMenue::slotButtonBack()
                 Console::print("Leaving Map Selection Menue", Console::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), true));
                 }
                 else
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), false));
                 }
                 oxygine::Actor::detach();
             }
@@ -229,7 +229,7 @@ void MapSelectionMapsMenue::slotButtonNext()
                 (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER) ||
                 (mapFile == NetworkCommands::SERVERMAPIDENTIFIER))
             {
-                m_pMapSelectionView->setCurrentCampaign(spCampaign());
+                m_pMapSelectionView->getCurrentMap()->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
                 if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
                 {
                     startGame();
@@ -248,11 +248,11 @@ void MapSelectionMapsMenue::slotButtonNext()
                     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
                     if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                     {
-                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
+                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), true));
                     }
                     else
                     {
-                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
+                        oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentLoadedCampaign(), false));
                     }
                     oxygine::Actor::detach();
                 }
@@ -358,7 +358,7 @@ void MapSelectionMapsMenue::startGame()
     spGameMap pMap = GameMap::getInstance();
     pMap->setVisible(false);
     pMap->initPlayersAndSelectCOs();
-    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+    pMap->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites(-1, -1, false, true);
     // start game

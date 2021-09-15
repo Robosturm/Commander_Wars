@@ -76,7 +76,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     connect(this, &CampaignMenu::sigShowSaveCampaign, this, &CampaignMenu::showSaveCampaign, Qt::QueuedConnection);
 
     m_pMapSelectionView = spMapSelectionView::create();
-    m_pMapSelectionView->setCurrentCampaign(campaign);
+    m_pMapSelectionView->setCurrentSetCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked, Qt::QueuedConnection);
@@ -156,7 +156,7 @@ void CampaignMenu::slotButtonNext()
     {
         spGameMap pMap = GameMap::getInstance();
         pMap->initPlayersAndSelectCOs();
-        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+        pMap->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
         pMap->getGameScript()->gameStart();
         pMap->updateSprites();
         // start game
@@ -195,7 +195,7 @@ void CampaignMenu::saveCampaign(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
+        m_pMapSelectionView->getCurrentSetCampaign()->serializeObject(stream);
         file.close();
     }   
 }
@@ -205,7 +205,7 @@ void CampaignMenu::autosave()
     if (Settings::getAutoSavingCycle() > 0)
     {
         Console::print("CampaignMenu::autosave()", Console::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentSetCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
         saveCampaign(path);
     }
 }

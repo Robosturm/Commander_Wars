@@ -48,13 +48,17 @@ public:
     {
         m_currentMapFile = QFileInfo(info);
     }
-    inline spCampaign getCurrentCampaign()
+    inline spCampaign getCurrentSetCampaign()
     {
-        return m_CurrentCampaign;
+        return m_CurrentSetCampaign;
     }
-    inline void setCurrentCampaign(spCampaign pCampaign)
+    inline spCampaign getCurrentLoadedCampaign()
     {
-        m_CurrentCampaign = pCampaign;
+        return m_CurrentLoadedCampaign;
+    }
+    inline void setCurrentSetCampaign(spCampaign pCampaign)
+    {
+        m_CurrentSetCampaign = pCampaign;
     }
     spMapSelection getMapSelection() const;
 
@@ -71,7 +75,8 @@ private:
     void loadMapVictoryInfo();
 
 private:
-    spCampaign m_CurrentCampaign;
+    spCampaign m_CurrentSetCampaign;
+    spCampaign m_CurrentLoadedCampaign;
     /**
       * @brief m_currentMapFile stores the current map info
       */

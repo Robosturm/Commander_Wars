@@ -638,7 +638,7 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                           m_gameStarted;
+                                                        m_gameStarted;
         spPlayer pCurrentPlayer = spPlayer(pMap->getCurrentPlayer());
         auto* baseGameInput = pCurrentPlayer->getBaseGameInput();
         if (multiplayer &&
@@ -1105,43 +1105,46 @@ void GameMenue::actionPerformed()
 {
     if (getParent() != nullptr)
     {
-        Console::print("Action performed", Console::eDEBUG);
-        finishActionPerformed();
-        if (Settings::getSyncAnimations())
-        {
-            GameMap::getInstance()->syncUnitsAndBuildingAnimations();
-        }
-        m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
-        m_IngameInfoBar->updateMinimap();
-        m_IngameInfoBar->updatePlayerInfo();
         spGameMap pMap = GameMap::getInstance();
-        if (GameAnimationFactory::getAnimationCount() == 0 &&
-            !pMap->getGameRules()->getVictory())
+        if (pMap.get() != nullptr)
         {
-            if (!pMap->anyPlayerAlive())
+            Console::print("Action performed", Console::eDEBUG);
+            finishActionPerformed();
+            if (Settings::getSyncAnimations())
             {
-                Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
-                emit sigExitGame();
+                pMap->syncUnitsAndBuildingAnimations();
             }
-            else if (pMap->getCurrentPlayer()->getIsDefeated())
+            m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
+            m_IngameInfoBar->updateMinimap();
+            m_IngameInfoBar->updatePlayerInfo();
+            if (GameAnimationFactory::getAnimationCount() == 0 &&
+                !pMap->getGameRules()->getVictory())
             {
-                Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
-                performAction(pAction);
-            }
-            else if (m_pStoredAction.get() != nullptr)
-            {
-                performAction(m_pStoredAction);
-            }
-            else
-            {
-                GlobalUtils::setUseSeed(false);
-                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                if (!pMap->anyPlayerAlive())
                 {
-                    pMap->getGameRules()->resumeRoundTime();
+                    Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                    emit sigExitGame();
                 }
-                Console::print("emitting sigActionPerformed()", Console::eDEBUG);
-                emit sigActionPerformed();
+                else if (pMap->getCurrentPlayer()->getIsDefeated())
+                {
+                    Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
+                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+                    performAction(pAction);
+                }
+                else if (m_pStoredAction.get() != nullptr)
+                {
+                    performAction(m_pStoredAction);
+                }
+                else
+                {
+                    GlobalUtils::setUseSeed(false);
+                    if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                    {
+                        pMap->getGameRules()->resumeRoundTime();
+                    }
+                    Console::print("emitting sigActionPerformed()", Console::eDEBUG);
+                    emit sigActionPerformed();
+                }
             }
         }
     }
@@ -1658,10 +1661,10 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename, bool skipAnimations)
 {
-    Console::print("GameMenue::saveMap()", Console::eDEBUG);
+    Console::print("GameMenue::saveMap() " + filename, Console::eDEBUG);
+    m_saveFile = filename;
     if (!m_saveFile.isEmpty())
     {
-        m_saveFile = filename;
         m_saveMap = true;
         if (m_saveAllowed)
         {
@@ -1701,6 +1704,7 @@ void GameMenue::doSaveMap()
             Settings::setLastSaveGame(m_saveFile);
         }
         m_saveMap = false;
+        m_saveFile = "";
         if (m_exitAfterSave)
         {
             exitGame();

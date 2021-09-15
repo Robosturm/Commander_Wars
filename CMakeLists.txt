@@ -36,6 +36,14 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
 
+# Retrieve the absolute path to qmake and then use that path to find
+# the binaries
+get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
+get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+endif()
+# find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 ###################################################################################
 # Set build dependend defines
 ###################################################################################
@@ -736,4 +744,14 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${CMAKE_BUILD_TYPE}/platforms" OPTIONAL)
+endif()
+
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    set(InstallExePath "${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}.exe")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND "${CMAKE_COMMAND}" -E
+        env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+            "${InstallExePath}"
+    COMMENT "Running windeployqt with path ${InstallExePath}"
+)
 endif()
