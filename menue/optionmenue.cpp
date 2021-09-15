@@ -22,7 +22,6 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/base/slider.h"
-#include "objects/base/dropdownmenu.h"
 #include "objects/base/selectkey.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/textbox.h"
@@ -30,6 +29,51 @@
 #include "objects/base/timespinbox.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
+
+QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
+{
+    OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
+                                              "mods/aw2_damage_formula",
+                                              "mods/awds_unit",
+                                              "mods/awds_co",
+                                              "mods/awds_weather",
+                                              "mods/awdc_co",
+                                              "mods/awdc_unit",
+                                              "mods/awdc_powergain",
+                                              "mods/awdc_weather",
+                                              "mods/awdc_terrain",
+                                              "mods/awdc_flare",
+                                              "map_creator",
+                                              "coop_mod"}),
+    OptionMenue::GamemodeMods(
+    {"mods/aw_unloading",
+     "mods/aw2_damage_formula",
+     "mods/awds_unit",
+     "mods/awds_co",
+     "mods/awds_weather"},
+                                            {"mods/awdc_co",
+                                            "mods/awdc_unit",
+                                            "mods/awdc_powergain",
+                                            "mods/awdc_weather",
+                                            "mods/awdc_terrain",
+                                            "mods/awdc_flare",
+                                            "map_creator",
+                                            "coop_mod"}),
+    OptionMenue::GamemodeMods(
+    {"mods/aw_unloading",
+     "mods/awdc_co",
+     "mods/awdc_unit",
+     "mods/awdc_powergain",
+     "mods/awdc_weather",
+     "mods/awdc_terrain",
+     "mods/awdc_flare"},
+                                            {"mods/aw2_damage_formula",
+                                             "mods/awds_unit",
+                                             "mods/awds_co",
+                                             "mods/awds_weather",
+                                             "map_creator",
+                                             "coop_mod"})
+};
 
 OptionMenue::OptionMenue()
 {
@@ -810,11 +854,12 @@ void OptionMenue::showMods()
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
                                  tr("Advance Wars DC")};
-    spDropDownmenu pModSelection = spDropDownmenu::create(300, versions);
-    pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
-    pModSelection->setX(260);
-    connect(pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
-    m_ModSelector->addChild(pModSelection);
+    m_pModSelection = spDropDownmenu::create(300, versions);
+    m_pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
+    m_pModSelection->setX(260);
+    connect(m_pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
+    m_ModSelector->addChild(m_pModSelection);
+    updateModSelection();
     y += 50;
     pLabel = spLabel::create(250);
     style.multiline = false;
@@ -823,10 +868,9 @@ void OptionMenue::showMods()
     pLabel->setY(y);
     m_ModSelector->addChild(pLabel);
     QVector<QString> tags;
-
+    QStringList currentMods = Settings::getMods();
     qint32 width = 0;
     qint32 mods = 0;
-    QStringList currentMods = Settings::getMods();
     style.multiline = false;
     QStringList availableMods = Settings::getAvailableMods();
     for (const auto & mod : qAsConst(availableMods))
@@ -921,6 +965,35 @@ void OptionMenue::showMods()
     pApp->continueRendering();
 }
 
+void OptionMenue::updateModSelection()
+{
+    QStringList currentMods = Settings::getMods();
+    qint32 index = 0;
+    bool set = false;
+    for (const auto & gameMode : m_gamemodeMods)
+    {
+        bool valid = (currentMods.size() == gameMode.m_enableMods.size());
+        for (const auto & activeMod : gameMode.m_enableMods)
+        {
+            if (!currentMods.contains(activeMod))
+            {
+                valid = false;
+            }
+        }
+        if (valid)
+        {
+            set = true;
+            m_pModSelection->setCurrentItem(index + 1);
+            break;
+        }
+        ++index;
+    }
+    if (!set)
+    {
+        m_pModSelection->setCurrentItem(0);
+    }
+}
+
 void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
                               QString name, QString description, QString version,
                               QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
@@ -994,73 +1067,24 @@ void OptionMenue::loadModInfo(oxygine::Box9Sprite* pPtrBox,
 
 void OptionMenue::selectMods(qint32 item)
 {    
-    QStringList removeList;
-    QStringList addList;
-    switch (item)
+    if (item > 0)
     {
-        case 1:
+        QStringList removeList;
+        QStringList addList;
+        removeList = m_gamemodeMods[item - 1].m_disableMods;
+        addList = m_gamemodeMods[item - 1].m_enableMods;
+        for (auto & removeMod : removeList)
         {
-            removeList.append("mods/aw_unloading");
-            removeList.append("mods/aw2_damage_formula");
-            removeList.append("mods/awds_unit");
-            removeList.append("mods/awds_co");
-            removeList.append("mods/awds_weather");
-            removeList.append("mods/awdc_co");
-            removeList.append("mods/awdc_unit");
-            removeList.append("mods/awdc_powergain");
-            removeList.append("mods/awdc_weather");
-            removeList.append("mods/awdc_terrain");
-            removeList.append("mods/awdc_flare");
-            removeList.append("map_creator");
-            removeList.append("coop_mod");
-            break;
+            Settings::removeMod(removeMod);
         }
-        case 2:
+        for (auto & addMod : addList)
         {
-            addList.append("mods/aw_unloading");
-            addList.append("mods/aw2_damage_formula");
-            addList.append("mods/awds_unit");
-            addList.append("mods/awds_co");
-            addList.append("mods/awds_weather");
-            removeList.append("mods/awdc_co");
-            removeList.append("mods/awdc_unit");
-            removeList.append("mods/awdc_powergain");
-            removeList.append("mods/awdc_weather");
-            removeList.append("mods/awdc_terrain");
-            removeList.append("mods/awdc_flare");
-            removeList.append("map_creator");
-            removeList.append("coop_mod");
-            break;
+            Settings::addMod(addMod);
         }
-        case 3:
-        {
-            addList.append("mods/aw_unloading");
-            removeList.append("mods/aw2_damage_formula");
-            removeList.append("mods/awds_unit");
-            removeList.append("mods/awds_co");
-            removeList.append("mods/awds_weather");
-            removeList.append("map_creator");
-            removeList.append("coop_mod");
-            addList.append("mods/awdc_co");
-            addList.append("mods/awdc_unit");
-            addList.append("mods/awdc_powergain");
-            addList.append("mods/awdc_weather");
-            addList.append("mods/awdc_terrain");
-            addList.append("mods/awdc_flare");
-            break;
-        }
+        Console::print("Marking restart cause mods changed.", Console::eDEBUG);
+        restartNeeded = true;
+        showMods();
     }
-    for (auto & removeMod : removeList)
-    {
-        Settings::removeMod(removeMod);
-    }
-    for (auto & addMod : addList)
-    {
-        Settings::addMod(addMod);
-    }
-    Console::print("Marking restart cause mods changed.", Console::eDEBUG);
-    restartNeeded = true;
-    showMods();
 }
 
 void OptionMenue::restart()
@@ -1140,6 +1164,7 @@ void OptionMenue::updateModCheckboxes()
         }
         ++i;
     }
+    updateModSelection();
 }
 
 void OptionMenue::updateModFilter(QString tag)

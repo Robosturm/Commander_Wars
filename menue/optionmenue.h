@@ -8,6 +8,7 @@
 #include "objects/base/panel.h"
 #include "objects/gameplayandkeys.h"
 #include "objects/base/checkbox.h"
+#include "objects/base/dropdownmenu.h"
 #include "menue/basemenu.h"
 
 class OptionMenue;
@@ -52,11 +53,26 @@ private slots:
                      QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                      bool isComsetic, QStringList modTags, QString thumbnail);
 private:
+    void updateModSelection();
+private:
+    struct GamemodeMods
+    {
+        GamemodeMods(QStringList enableMods, QStringList disableMods)
+            : m_enableMods(enableMods),
+              m_disableMods(disableMods)
+        {
+        }
+        QStringList m_enableMods;
+        QStringList m_disableMods;
+    };
+    static QVector<GamemodeMods> m_gamemodeMods;
+
     spGameplayAndKeys m_pGameplayAndKeys;
 
     spPanel m_pOptions;
     spPanel m_pMods;
     spPanel m_pModDescription;
+    spDropDownmenu m_pModSelection;
     oxygine::spActor m_ModSelector;
     oxygine::spTextField m_ModDescriptionText;
     QVector<oxygine::spActor> m_ModBoxes;
