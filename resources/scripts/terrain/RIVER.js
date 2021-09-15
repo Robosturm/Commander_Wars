@@ -101,7 +101,9 @@ var Constructor = function()
     {
         var rand = globals.randInt(0, 1);
         var weatherModifier = "";
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        var baseId = terrain.getBaseTerrainID();
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
+            baseId === "SNOW")
         {
             weatherModifier = "snow";
         }

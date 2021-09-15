@@ -243,77 +243,80 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_BuildingCountTexts[i]->setVisible(false);
         m_BuildingCountSprites[i]->setVisible(false);
     }
-    if (info.isFile() &&
-        (info != m_currentMapFile || !fast) &&
-        (info.fileName().endsWith(".map") ||
-         info.fileName().endsWith(".msav")))
+    if (info.exists())
     {
-        m_CurrentCampaign = nullptr;
-        if (m_pCurrentMap.get() != nullptr)
+        if (info.isFile() &&
+            (info != m_currentMapFile || !fast) &&
+            (info.fileName().endsWith(".map") ||
+             info.fileName().endsWith(".msav")))
         {
-            m_pCurrentMap->deleteMap();
-            m_pCurrentMap = nullptr;
-        }
-        bool savegame = info.fileName().endsWith(".msav");
-        QString file = info.absoluteFilePath();
-        m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
-        m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
-        m_pCurrentMap->getGameScript()->init();
-        m_pMinimap->clear();
-        m_pMinimap->updateMinimap(m_pCurrentMap);
-        m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);
-        m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
-        if (m_pCurrentMap.get() != nullptr)
-        {
-            m_MapName->setHtmlText(m_pCurrentMap->getMapName());
-            m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
-            m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
-            m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
-        }
-        m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
-        m_pVictoryInfo->setVisible(true);
-        m_MapPlayerCount->setVisible(true);
-        m_currentMapFile = info;
-        loadMapVictoryInfo();
-        qint32 pos = 0;
-        if (m_pCurrentMap.get() != nullptr)
-        {
-            for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
+            m_CurrentCampaign = nullptr;
+            if (m_pCurrentMap.get() != nullptr)
             {
-                qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getID(i));
-                if (count > 0)
+                m_pCurrentMap->deleteMap();
+                m_pCurrentMap = nullptr;
+            }
+            bool savegame = info.fileName().endsWith(".msav");
+            QString file = info.absoluteFilePath();
+            m_pCurrentMap = spGameMap::create(file, true, fast, savegame);
+            m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
+            m_pCurrentMap->getGameScript()->init();
+            m_pMinimap->clear();
+            m_pMinimap->updateMinimap(m_pCurrentMap);
+            m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);
+            m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
+            if (m_pCurrentMap.get() != nullptr)
+            {
+                m_MapName->setHtmlText(m_pCurrentMap->getMapName());
+                m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
+                m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
+                m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
+            }
+            m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
+            m_pVictoryInfo->setVisible(true);
+            m_MapPlayerCount->setVisible(true);
+            m_currentMapFile = info;
+            loadMapVictoryInfo();
+            qint32 pos = 0;
+            if (m_pCurrentMap.get() != nullptr)
+            {
+                for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
                 {
-                    m_BuildingCountTexts[i]->setHtmlText(QString::number(count));
-                    m_BuildingCountTexts[i]->setVisible(true);
-                    m_BuildingCountTexts[i]->setPosition(2 + pos * (GameMap::getImageSize() + 12), 12 + GameMap::getImageSize() * 1.2f);
-                    spBuilding building = m_BuildingCountSprites[i];
-                    building->scaleAndShowOnSingleTile();
-                    building->setX(building->oxygine::Actor::getX() + pos * (GameMap::getImageSize() + 12));
-                    building->setY(building->oxygine::Actor::getY() + 5 + GameMap::getImageSize() / 2);
-                    building->setVisible(true);
-                    pos++;
+                    qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getID(i));
+                    if (count > 0)
+                    {
+                        m_BuildingCountTexts[i]->setHtmlText(QString::number(count));
+                        m_BuildingCountTexts[i]->setVisible(true);
+                        m_BuildingCountTexts[i]->setPosition(2 + pos * (GameMap::getImageSize() + 12), 12 + GameMap::getImageSize() * 1.2f);
+                        spBuilding building = m_BuildingCountSprites[i];
+                        building->scaleAndShowOnSingleTile();
+                        building->setX(building->oxygine::Actor::getX() + pos * (GameMap::getImageSize() + 12));
+                        building->setY(building->oxygine::Actor::getY() + 5 + GameMap::getImageSize() / 2);
+                        building->setVisible(true);
+                        pos++;
+                    }
                 }
             }
+            m_content->setSize(pos * (GameMap::getImageSize() + 12), 100);
+            m_contentSlider->snap();
         }
-        m_content->setSize(pos * (GameMap::getImageSize() + 12), 100);
-        m_contentSlider->snap();
-    }
-    else if (info.isFile() && info.fileName().endsWith(".jsm"))
-    {
-        if (m_pCurrentMap.get() != nullptr)
+        else if (info.isFile() && info.fileName().endsWith(".jsm"))
         {
-            m_pCurrentMap->deleteMap();
-            m_currentMapFile = QFileInfo();
-            m_pCurrentMap = nullptr;
+            if (m_pCurrentMap.get() != nullptr)
+            {
+                m_pCurrentMap->deleteMap();
+                m_currentMapFile = QFileInfo();
+                m_pCurrentMap = nullptr;
+            }
+            m_pMinimap->updateMinimap(spGameMap());
+            m_CurrentCampaign = nullptr;
+            m_CurrentCampaign = spCampaign::create(info.absoluteFilePath());
+            m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
+            m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
+            m_MapPlayerCount->setVisible(false);
+            m_MapName->setHtmlText(m_CurrentCampaign->getName());
+            m_pVictoryInfo->setVisible(false);
         }
-        m_pMinimap->updateMinimap(spGameMap());
-        m_CurrentCampaign = nullptr;
-        m_CurrentCampaign = spCampaign::create(info.absoluteFilePath());
-        m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
-        m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
-        m_MapPlayerCount->setVisible(false);
-        m_MapName->setHtmlText(m_CurrentCampaign->getName());
-        m_pVictoryInfo->setVisible(false);
     }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
     if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())

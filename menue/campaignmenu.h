@@ -23,7 +23,7 @@ public:
     virtual ~CampaignMenu() = default;
 signals:
     void sigExitMenue();
-    void buttonNext();
+    void sigButtonNext();
     void sigShowSaveCampaign();
 public slots:
     // slots for changing the map

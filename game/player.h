@@ -330,6 +330,13 @@ public slots:
      */
     qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getWeatherMovementCostModifier
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getWeatherMovementCostModifier(Unit* pUnit, QPoint position);
+    /**
      * @brief getBonusMovementpoints
      * @param pUnit
      * @param position

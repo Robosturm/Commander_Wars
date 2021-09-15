@@ -1788,13 +1788,19 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
             }
         }
     }
+    qint32 weatherCosts = m_pOwner->getWeatherMovementCostModifier(this, QPoint(x, y));
+
     if ((costs <= 0) && (baseCosts > 0))
     {
         return 1;
     }
+    else if (weatherCosts + costs >= 0 && costs + baseCosts < 0)
+    {
+        return -1;
+    }
     else
     {
-        return costs;
+        return costs + weatherCosts;
     }
 }
 

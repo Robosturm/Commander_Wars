@@ -2,8 +2,6 @@ var Constructor = function()
 {
     this.immediateStart = function()
     {
-        // called to check if the game should start immediatly without changing rules or modifying co's
-        // return true for an immediate start
         return true;
     };
 
@@ -63,7 +61,6 @@ var Constructor = function()
             if (mapTownDialog.readDataBool() === false)
             {
                 gameScript.mapTownDialog();
-                // enable os map lab
                 var campaignVariables = map.getCampaign().getVariables();
                 var bmLabFound = campaignVariables.createVariable("bmLabFound");
                 bmLabFound.writeDataBool(true);

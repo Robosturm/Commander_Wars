@@ -69,7 +69,7 @@ public:
      * @param folder
      * @param files
      */
-    void addDeveloperMaps(QString & folder, QStringList & files);
+    void addDeveloperMaps(QString prefix, QString folder, QStringList & files);
 signals:
 
 public slots:

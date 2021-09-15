@@ -79,7 +79,8 @@
         <image file="battlesprites/background/back_snowplanes+street.png" />
         <image file="battlesprites/background/back_snowplanes+forest.png" />
         <image file="battlesprites/background/back_snowplanes+town.png" />
-        <image file="battlesprites/background/back_snowriver.png" />
+        <image file="battlesprites/background/back_snowriver+0.png" />
+        <image file="battlesprites/background/back_snowriver+1.png" />
         <image file="battlesprites/background/back_snowstreet.png" />
         <image file="battlesprites/background/back_snowstreet+mountain.png" />
         <image file="battlesprites/background/back_snowstreet+pipe.png" />

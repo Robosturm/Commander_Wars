@@ -83,31 +83,35 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
             if (QFile::exists(Settings::getUserPath() + folder + files[i]))
             {
                 files[i] = Settings::getUserPath() + folder + files[i];
+                Console::print("adding campaign map: " + Settings::getUserPath() + folder + files[i], Console::eDEBUG);
             }
             else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
             {
+                Console::print("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], Console::eDEBUG);
                 files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
             }
         }
-        addDeveloperMaps(folder, files);
+        addDeveloperMaps(Settings::getUserPath(), folder, files);
+        addDeveloperMaps(oxygine::Resource::RCC_PREFIX_PATH, folder, files);
     }
     return CampaignMapInfo(folder, files);
 }
 
-void Campaign::addDeveloperMaps(QString & folder, QStringList & files)
+void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & files)
 {
     if (Console::getDeveloperMode())
     {
         QStringList filter;
         filter << "*.map";
-        QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
+        QDirIterator dirIter(prefix + folder, filter, QDir::Files, QDirIterator::Subdirectories);
         while (dirIter.hasNext())
         {
             dirIter.next();
-            QString file = GlobalUtils::makePathRelative(dirIter.fileInfo().absoluteFilePath());
+            QString file = dirIter.fileName();
             if (!files.contains(file))
             {
-                files.append(file);
+                Console::print("adding campaign folder map: " + prefix + folder + file, Console::eDEBUG);
+                files.append(prefix + folder + file);
             }
         }
     }

@@ -62,9 +62,9 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit buttonNext();
+        emit sigButtonNext();
     });
-    connect(this, &CampaignMenu::buttonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
+    connect(this, &CampaignMenu::sigButtonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonSave = ObjectManager::createButton(tr("Save"));
     m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
@@ -74,7 +74,6 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
         emit sigShowSaveCampaign();
     });
     connect(this, &CampaignMenu::sigShowSaveCampaign, this, &CampaignMenu::showSaveCampaign, Qt::QueuedConnection);
-
 
     m_pMapSelectionView = spMapSelectionView::create();
     m_pMapSelectionView->setCurrentCampaign(campaign);
@@ -131,7 +130,7 @@ void CampaignMenu::mapSelectionItemClicked(QString item)
     }
     if (info.isFile())
     {
-        emit buttonNext();
+        emit sigButtonNext();
     }    
 }
 

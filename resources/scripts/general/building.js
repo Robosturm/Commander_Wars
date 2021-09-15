@@ -252,8 +252,12 @@ var BUILDING =
         var rand = globals.randInt(0, 1);
         var baseId = terrain.getBaseTerrainID();
         var building = terrain.getBuilding();
-        var player = building.getOwner();
-        var army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
+        var player = building.getOwner();        
+        var army = armyData[globals.randInt(0, armyData.length)];
+        if (player !== null)
+        {
+            army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
+        }
         if (baseId === "DESERT")
         {
             return "back_deserttown";

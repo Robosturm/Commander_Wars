@@ -4894,7 +4894,6 @@
         <file>resources/images/game/battlesprites/background/back_snowplanes+street.png</file>
         <file>resources/images/game/battlesprites/background/back_snowplanes+town.png</file>
         <file>resources/images/game/battlesprites/background/back_snowplanes.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowriver.png</file>
         <file>resources/images/game/battlesprites/background/back_snowstreet+mountain.png</file>
         <file>resources/images/game/battlesprites/background/back_snowstreet+pipe.png</file>
         <file>resources/images/game/battlesprites/background/back_snowstreet+sea.png</file>
@@ -4959,5 +4958,7 @@
         <file>mods/awdc_image/images/terrain/desert+5.png</file>
         <file>mods/awdc_image/images/terrain/desert+6.png</file>
         <file>mods/awdc_image/images/terrain/desert+7.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowriver+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowriver+1.png</file>
     </qresource>
 </RCC>

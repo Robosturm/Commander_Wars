@@ -1317,13 +1317,16 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     {
         modifier += m_playerCOs[1]->getMovementcostModifier(pUnit, position);
     }
-    if (pUnit->getOwner() == this)
+    return modifier;
+}
+
+qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr && !getWeatherImmune())
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr && !getWeatherImmune())
-        {
-            modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
-        }
+        modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
     }
     return modifier;
 }
