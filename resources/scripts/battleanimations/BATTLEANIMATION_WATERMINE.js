@@ -10,7 +10,7 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("watermine+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_WATERMINE.getMaxUnitCount(), Qt.point(5, 10),
                                   Qt.point(0, 0), 0, false, -1);
-        sprite.loadMovingSpriteV2("watermine", GameEnums.Recoloring_Matrix,
+        sprite.loadMovingSpriteV2("watermine", GameEnums.Recoloring_None,
                                   BATTLEANIMATION_WATERMINE.getMaxUnitCount(), Qt.point(5, 10),
                                   Qt.point(0, 0), 0, false, -1);
     };

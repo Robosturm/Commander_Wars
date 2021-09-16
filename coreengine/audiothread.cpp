@@ -310,12 +310,13 @@ void AudioThread::loadFolder(QString folder)
 void AudioThread::SlotClearPlayList()
 {    
     Console::print("AudioThread::SlotClearPlayList()", Console::eDEBUG);
-    m_player[0]->m_player.stop();
-    m_player[0]->m_playListPostiton = -1;
-    m_player[1]->m_player.stop();
-    m_player[1]->m_playListPostiton = -1;
-    m_PlayListdata.clear();    
+    m_PlayListdata.clear();
     m_currentPlayer = -1;
+    m_player[0]->m_playListPostiton = -1;
+    m_player[1]->m_playListPostiton = -1;
+    m_player[0]->m_player.stop();
+    m_player[1]->m_player.stop();
+
     // wasting some time
     for (qint32 i = 0; i < 30; ++i)
     {
@@ -430,7 +431,9 @@ void AudioThread::SlotSetVolume(qint32 value)
     qreal sound = (static_cast<qreal>(value) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
     qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-    m_audioOutput.setVolume(qRound(volume * 100));
+    qreal resultingVolume = qRound(volume * 100);
+    Console::print("Setting volume to : " + QString::number(resultingVolume), Console::eDEBUG);
+    m_audioOutput.setVolume(resultingVolume);
 }
 
 void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
@@ -462,6 +465,7 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
     {
         case QMediaPlayer::NoMedia:
         {
+            emit sigLoadNextAudioFile(playerIndex);
             break;
         }
         case QMediaPlayer::LoadedMedia:
