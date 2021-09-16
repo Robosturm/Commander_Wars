@@ -400,6 +400,7 @@ void CoreAI::getBestTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSys
             }
         }
     }
+    pAction->setMovepath(QVector<QPoint>(), 0);
 }
 
 void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
@@ -490,6 +491,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFinding
             }
         }
     }
+    pAction->setMovepath(QVector<QPoint>(), 0);
 }
 
 void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
@@ -1396,6 +1398,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
     {
         Console::print("Found flare target with score: " + QString::number(score), Console::eDEBUG);
     }
+    pAction->setMovepath(QVector<QPoint>(), 0);
 }
 
 qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle)
