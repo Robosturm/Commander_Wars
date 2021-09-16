@@ -315,7 +315,9 @@ void AudioThread::SlotClearPlayList()
     m_player[0]->m_playListPostiton = -1;
     m_player[1]->m_playListPostiton = -1;
     m_player[0]->m_player.stop();
+    m_player[0]->m_player.setSource(QUrl());
     m_player[1]->m_player.stop();
+    m_player[1]->m_player.setSource(QUrl());
 
     // wasting some time
     for (qint32 i = 0; i < 30; ++i)
@@ -389,6 +391,10 @@ void AudioThread::initialAudioBuffering()
             Console::print("Buffering music for player 0: " + m_PlayListdata[m_player[0]->m_playListPostiton].m_file + " at position " + QString::number(m_player[0]->m_playerStartPosition), Console::eDEBUG);
             QApplication::processEvents();
         }
+        else
+        {
+            Console::print("Playlist is empty", Console::eDEBUG);
+        }
     }
 }
 
@@ -423,6 +429,10 @@ void AudioThread::bufferOtherPlayer()
         m_player[bufferPlayer]->m_player.setPosition(0);
         Console::print("Buffering music for player: " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
         QApplication::processEvents();
+    }
+    else
+    {
+        Console::print("Playlist is empty or player is invalid", Console::eDEBUG);
     }
 }
 
@@ -513,7 +523,7 @@ void AudioThread::loadNextAudioFile(qint32 playerIndex)
     {
         m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
         m_player[playerIndex]->m_player.setPosition(0);
-        Console::print("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playerIndex].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
+        Console::print("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playListEntry].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
         m_player[playerIndex]->m_player.play();
     }
 }

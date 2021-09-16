@@ -261,17 +261,17 @@
 <context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="43"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="42"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="53"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="62"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="61"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3707,7 +3707,7 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="798"/>
+        <location filename="../objects/playerselection.cpp" line="799"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>

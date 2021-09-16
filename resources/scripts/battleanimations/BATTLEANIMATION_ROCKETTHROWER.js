@@ -13,7 +13,8 @@ var Constructor = function()
                      ["ma", "ma"],
                      ["ac", "ac"],
                      ["dm", "dm"],
-                     ["ti", "ti"],];
+                     ["ti", "ti"],
+                     ["pf", "pf"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
@@ -74,6 +75,10 @@ var Constructor = function()
         else if (armyName === "ti")
         {
             offset = Qt.point(-5, 31);
+        }
+        else if (armyName === "pf")
+        {
+            offset = Qt.point(7, 45);
         }
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,

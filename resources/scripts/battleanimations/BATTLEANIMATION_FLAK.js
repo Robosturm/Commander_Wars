@@ -94,8 +94,8 @@ var Constructor = function()
                 }
                 else if (armyName === "ti")
                 {
-                    // -10, 5
-                    offset = Qt.point(38, 31);
+                    offset = Qt.point(30, 35);
+                    mgCount = 1;
                 }
                 for (var i2 = 0; i2 < mgCount; ++i2)
                 {
@@ -134,6 +134,11 @@ var Constructor = function()
                 else if (armyName === "ac")
                 {
                     offset = Qt.point(38, 20);
+                }
+                else if (armyName === "ti")
+                {
+                    offset = Qt.point(33, 32);
+                    mgCount = 1;
                 }
                 for (var i2 = 0; i2 < mgCount; ++i2)
                 {

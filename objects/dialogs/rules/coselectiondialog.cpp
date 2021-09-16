@@ -32,9 +32,8 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_COSelection = spCOSelection::create(QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
+    m_COSelection = spCOSelection::create(QPoint(30, 30), QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
     m_COSelection->colorChanged(color);
-    m_COSelection->setPosition(30, 30);
     pSpriteBox->addChild(m_COSelection);
     selectedCOIDChanged(coid);
 

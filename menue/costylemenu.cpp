@@ -67,7 +67,7 @@ COStyleMenu::COStyleMenu()
     {
         bannList.removeAll(item);
     }
-    spCOSelection pCOSelection = spCOSelection::create(QSize(Settings::getWidth(), Settings::getHeight() - 50), bannList);
+    spCOSelection pCOSelection = spCOSelection::create(QPoint(0, 0), QSize(Settings::getWidth(), Settings::getHeight() - 50), bannList);
     pCOSelection->colorChanged(QColor(248, 88, 0));
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
