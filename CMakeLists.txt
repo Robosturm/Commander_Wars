@@ -6,7 +6,7 @@ project (Commander_Wars LANGUAGES CXX)
 # 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
 
 # Special Information for Android
-# ANDROID_NATIVE_API_LEVEL needs to be 26
+# ANDROID_NATIVE_API_LEVEL needs to be 27
 # NDK Version needs to be: 21.3.6528147 -> This needs to be matched exactly
 
 # Find includes in corresponding build directories

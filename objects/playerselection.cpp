@@ -764,18 +764,19 @@ void PlayerSelection::showPlayerSelection()
             m_pReadyBoxes.append(pCheckbox);
             m_pPlayerSelection->addItem(pCheckbox);
         }
-
-        if (m_pNetworkInterface.get() == nullptr ||
+        if (isCampaign && ai > 0)
+        {
+            createAi(i, static_cast<GameEnums::AiTypes>(ai));
+        }
+        else if ((m_pNetworkInterface.get() == nullptr ||
             m_pNetworkInterface->getIsServer() ||
-            m_isServerGame)
+            m_isServerGame))
         {
             selectPlayerAi(i, static_cast<GameEnums::AiTypes>(ai));
         }
         else
         {
-            // cli
             createAi(i, static_cast<GameEnums::AiTypes>(ai));
-
         }
         y += 15 + playerIncomeSpinBox->getHeight();
     }

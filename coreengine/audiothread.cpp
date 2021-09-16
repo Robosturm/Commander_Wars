@@ -465,7 +465,10 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
     {
         case QMediaPlayer::NoMedia:
         {
-            emit sigLoadNextAudioFile(playerIndex);
+            if (m_PlayListdata.size() > 0)
+            {
+                emit sigLoadNextAudioFile(playerIndex);
+            }
             break;
         }
         case QMediaPlayer::LoadedMedia:
