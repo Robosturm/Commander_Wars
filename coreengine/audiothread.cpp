@@ -431,9 +431,9 @@ void AudioThread::SlotSetVolume(qint32 value)
     qreal sound = (static_cast<qreal>(value) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
     qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-    qreal resultingVolume = qRound(volume * 100);
-    Console::print("Setting volume to : " + QString::number(resultingVolume), Console::eDEBUG);
-    m_audioOutput.setVolume(resultingVolume);
+    // qreal resultingVolume = qRound(volume * 100);
+    Console::print("Setting volume to : " + QString::number(volume), Console::eDEBUG);
+    m_audioOutput.setVolume(volume);
 }
 
 void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPointMs)
@@ -592,9 +592,7 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
 {
     qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0) * volume;
-    sound = QAudio::convertVolume(sound,
-                                        QAudio::LogarithmicVolumeScale,
-                                        QAudio::LinearVolumeScale);
+    sound = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
     if (sound > 0)
     {
         if (m_soundCaches.contains(file))
