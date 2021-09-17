@@ -48,6 +48,7 @@
         <image file="battlesprites/background/back_forest+2.png" />
         <image file="battlesprites/background/back_harbour.png" />
         <image file="battlesprites/background/back_hq+.png" />
+        <image file="battlesprites/background/back_hq+ac.png" />
         <image file="battlesprites/background/back_hq+bh.png" />
         <image file="battlesprites/background/back_hq+bm.png" />
         <image file="battlesprites/background/back_hq+ge.png" />

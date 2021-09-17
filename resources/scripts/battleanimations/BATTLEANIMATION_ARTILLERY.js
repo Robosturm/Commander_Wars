@@ -4,15 +4,16 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ac", "ac"],
-                     ["ti", "ti"],];
+                     ["ti", "ti"],
+                     ["os", "os"],
+                     ["yc", "yc"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);
@@ -75,6 +76,10 @@ var Constructor = function()
         else if (armyName === "ti")
         {
             offset = Qt.point(44, 25);
+        }
+        else if (armyName === "bd")
+        {
+            offset = Qt.point(41, 36);
         }
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);

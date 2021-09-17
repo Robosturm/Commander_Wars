@@ -10,7 +10,9 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ti", "ti"],
+                     ["bd", "bd"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon, 0, 0);
@@ -69,6 +71,14 @@ var Constructor = function()
             {
                 offset = Qt.point(-25, 45);
             }
+            else if (armyName === "ti")
+            {
+                offset = Qt.point(-45, 37);
+            }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(-39, 38);
+            }
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(130, -80), 600, false,
                                     -1, 1, -1);
@@ -100,6 +110,14 @@ var Constructor = function()
             else if (armyName === "ma")
             {
                 offset = Qt.point(41, 49);
+            }
+            else if (armyName === "ti")
+            {
+                offset = Qt.point(32, 34);
+            }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(30, 35);
             }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);

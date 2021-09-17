@@ -4,15 +4,16 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ac", "ac"],
-                     ["ti", "ti"],];
+                     ["os", "os"],
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
 
     this.getArmyName = function(unit)
     {
@@ -67,7 +68,7 @@ var Constructor = function()
         var offset = Qt.point(35, 44);
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
-            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire_air", 2);
+            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire+air", 2);
             offset = Qt.point(35, 50);
             if (armyName === "yc")
             {
@@ -96,6 +97,10 @@ var Constructor = function()
             else if (armyName === "ti")
             {
                 offset = Qt.point(36, 37);
+            }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(35, 39);
             }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
@@ -130,6 +135,10 @@ var Constructor = function()
             else if (armyName === "ti")
             {
                 offset = Qt.point(36, 30);
+            }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(35, 34);
             }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);

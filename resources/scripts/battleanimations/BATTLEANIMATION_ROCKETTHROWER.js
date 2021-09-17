@@ -4,17 +4,19 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],
+                     ["bm", "bm"],
                      ["dm", "dm"],
+                     ["ge", "ge"],
+                     ["ma", "ma"],
+                     ["os", "os"],
                      ["ti", "ti"],
-                     ["pf", "pf"],];
+                     ["pf", "pf"],
+                     ["yc", "yc"],
+];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
@@ -79,6 +81,10 @@ var Constructor = function()
         else if (armyName === "pf")
         {
             offset = Qt.point(7, 45);
+        }
+        else if (armyName === "bd")
+        {
+            offset = Qt.point(-2, 30);
         }
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,

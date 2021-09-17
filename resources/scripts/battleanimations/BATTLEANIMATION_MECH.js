@@ -4,17 +4,18 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],
+                     ["bm", "bm"],
                      ["dm", "dm"],
+                     ["ge", "ge"],
+                     ["ma", "ma"],
+                     ["os", "os"],
                      ["pf", "pf"],
-                     ["ti", "ti"],];
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
 
     this.getRiverString = function(unit)
     {
@@ -176,6 +177,11 @@ var Constructor = function()
             {
                 weaponRes = "bazooka_yc"
                 offset = Qt.point(19, 17);
+            }
+            else if (armyName === "bd")
+            {
+                weaponRes = "bazooka_bm"
+                offset = Qt.point(17, 16);
             }
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, 0), 400, false,

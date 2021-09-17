@@ -4,14 +4,15 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
+    this.armyData = [["bd", "bd"],
                      ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ti", "ti"],];
+                     ["os", "os"],
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "");
@@ -63,6 +64,10 @@ var Constructor = function()
         else if (armyName === "ti")
         {
             offset = Qt.point(-4, 38);
+        }
+        else if (armyName === "bd")
+        {
+            offset = Qt.point(-1, 26);
         }
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,

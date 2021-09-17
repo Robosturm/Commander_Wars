@@ -4,15 +4,16 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ac", "ac"],
-                     ["ti", "ti"],];
+                     ["os", "os"],
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var startX = -90;
@@ -97,6 +98,10 @@ var Constructor = function()
             {
                 offset = Qt.point(21, 27);
             }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(23, 18);
+            }
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1.0, 0, 120);
             for (var i = 0; i < count; i++)
@@ -138,6 +143,10 @@ var Constructor = function()
                 {
                     offset = Qt.point(23, 54);
                 }
+                else if (armyName === "bd")
+                {
+                    offset = Qt.point(19, 46);
+                }
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
@@ -172,6 +181,10 @@ var Constructor = function()
                 else if (armyName === "ti")
                 {
                     offset = Qt.point(23, 49);
+                }
+                else if (armyName === "bd")
+                {
+                    offset = Qt.point(19, 41);
                 }
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);

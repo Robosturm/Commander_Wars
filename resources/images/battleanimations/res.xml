@@ -68,7 +68,6 @@
         <image file="apc/apc+ac+mask.png" />
         <image file="apc/apc+bh+mask.png" />
         <image file="apc/apc+bm+mask.png" />
-        <image file="apc/apc+dm.png" />
         <image file="apc/apc+dm+mask.png" />
         <image file="apc/apc+ge+mask.png" />
         <image file="apc/apc+os+mask.png" />
@@ -816,14 +815,14 @@
         <image file="recon/recon+yc+move+mask.png" cols = "4" />
         <image file="recon/recon+ma+move+mask.png" />
         <image file="recon/recon+ti+move+mask.png" />
-        <image file="recon/recon+ac+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+bh+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+bm+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+ge+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+os+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+yc+fire_air+mask.png" cols = "2" />
-        <image file="recon/recon+ma+fire_air+mask.png" />
-        <image file="recon/recon+ti+fire_air+mask.png" />
+        <image file="recon/recon+ac+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+bh+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+bm+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+ge+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+os+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+yc+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+ma+fire+air+mask.png" />
+        <image file="recon/recon+ti+fire+air+mask.png" />
         <image file="recon/recon+ac+fire+mask.png" cols = "2" />
         <image file="recon/recon+bh+fire+mask.png" cols = "2" />
         <image file="recon/recon+bm+fire+mask.png" cols = "2" />
