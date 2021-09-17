@@ -106,13 +106,21 @@ var BATTLEANIMATION =
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
-        return 1000;
+        var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
+        return 600 + BATTLEANIMATION.defaultFrameDelay * count;
     },
 
     getFireDurationMS : function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
+    },
+
+    getFiredDurationMS : function(sprite, unit, defender, weapon)
+    {
+        // must be smaller or equal to the fire duration
+        // the time will be scaled with animation speed inside the engine
+        return -1;
     },
 
     getMoveInDurationMS : function(sprite, unit, defender, weapon)

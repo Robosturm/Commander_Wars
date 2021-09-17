@@ -349,6 +349,29 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
     }
 }
 
+qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getFiredDurationMS";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
+    args1 << attackerWeapon;
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 500;
+    }
+}
+
 qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

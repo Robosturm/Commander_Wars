@@ -379,6 +379,14 @@ public slots:
      */
     qint32 getFireDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
+     * @brief getFiredDurationMS
+     * @param pUnit
+     * @param pDefender
+     * @param attackerWeapon
+     * @return
+     */
+    qint32 getFiredDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
+    /**
      * @brief getMoveInDurationMS
      * @return
      */

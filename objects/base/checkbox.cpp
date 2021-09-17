@@ -55,7 +55,6 @@ Checkbox::Checkbox()
         emit checkChanged(m_Checked);
     });
     setSize(pAnim->getWidth(), pAnim->getHeight());
-    setDisableColor(QColor(50, 50, 50, 0));
 }
 
 bool Checkbox::getChecked() const

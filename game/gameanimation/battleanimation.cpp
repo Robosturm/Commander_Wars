@@ -603,9 +603,22 @@ void BattleAnimation::nextAnimatinStep()
             loadFireAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             break;
         }
+        case AnimationProgress::AttackerFired:
+        {
+            qint32 remainingDuration = loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            if (remainingDuration > 0)
+            {
+
+                m_battleTimer.start(remainingDuration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+                break;
+            }
+            else
+            {
+                m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+            }
+        }
         case AnimationProgress::AttackerImpact:
         {
-            loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             // load impact
             loadImpactAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_pAttackerAnimation,
                                 m_HealthBar1, m_defEndHp, m_AtkWeapon, m_atkStartHp);
@@ -649,10 +662,24 @@ void BattleAnimation::nextAnimatinStep()
             }
             break;
         }
+        case AnimationProgress::DefenderFired:
+        {
+            // remove firing frames
+            qint32 remainingDuration = loadFiredAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
+            if (remainingDuration > 0)
+            {
+
+                m_battleTimer.start(remainingDuration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+                break;
+            }
+            else
+            {
+                m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+            }
+        }
         case AnimationProgress::DefenderImpact:
         {
             // remove firing frames
-            loadFiredAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
                                 m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
             break;
@@ -729,7 +756,13 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
 {    
     pSprite->loadAnimation(BattleAnimationSprite::fireAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
-    m_battleTimer.start(pSprite->getFireDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    qint32 firedDuration = pSprite->getFiredDurationMS(pUnit1, pUnit2, weapon);
+    qint32 fireDuration = pSprite->getFireDurationMS(pUnit1, pUnit2, weapon);
+    if (firedDuration > fireDuration || firedDuration <= 0)
+    {
+        firedDuration = fireDuration;
+    }
+    m_battleTimer.start(firedDuration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
@@ -776,11 +809,22 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     m_battleTimer.start(pSprite->getImpactDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
-void BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
+qint32 BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
     pSprite->setHasFired(true);
     pSprite->loadAnimation(BattleAnimationSprite::standingFiredAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
+
+    qint32 firedDuration = pSprite->getFiredDurationMS(pUnit1, pUnit2, weapon);
+    qint32 fireDuration = pSprite->getFireDurationMS(pUnit1, pUnit2, weapon);
+    if (firedDuration < 0 || firedDuration <= fireDuration)
+    {
+        return 0;
+    }
+    else
+    {
+        return fireDuration - firedDuration;
+    }
 }
 
 void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)

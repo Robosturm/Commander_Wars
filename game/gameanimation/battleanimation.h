@@ -32,9 +32,11 @@ public:
         MoveStop,
         WaitAfterIn,
         AttackerFire,
+        AttackerFired,
         AttackerImpact,
         AttackerDying,
         DefenderFire,
+        DefenderFired,
         DefenderImpact,
         DefenderDying,
         WaitAfterBattle,
@@ -139,7 +141,7 @@ private:
      * @param pUnit2
      * @param weapon
      */
-    void loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
+    qint32 loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
      * @brief loadImpactAnimation
      * @param pUnit1

@@ -44,7 +44,7 @@ var Constructor = function()
         BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(0, 0), 0);
     };
 
-    this.baseStandingAnimation = function(sprite, unit, defender, weapon, fireFrames, movement, moveTime)
+    this.baseStandingAnimation = function(sprite, unit, defender, weapon, fireFrames, movement, moveTime, startFrame = 0)
     {
         var player = unit.getOwner();
         // get army name
@@ -63,14 +63,14 @@ var Constructor = function()
             var frameTime = 200;
             sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Matrix,
                                       BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
-                                      movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames);
+                                      movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames, startFrame);
         }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count, Qt.point(0, 0), 0);
+        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count, Qt.point(0, 0), 0, 1);
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
@@ -85,16 +85,21 @@ var Constructor = function()
             var offset2 = Qt.point(0, 0);
             switch (i)
             {
-            case 1:
-                offset2 = Qt.point(-8, -7);
-                break;
-            case 2:
-                offset2 = Qt.point(20, -18);
-                break;
+            // upper row
             case 3:
-                offset2 = Qt.point(18, -23);
+                offset2 = Qt.point(0, 0);
                 break;
             case 4:
+                offset2 = Qt.point(-8, -7);
+                break;
+            // lower row
+            case 0:
+                offset2 = Qt.point(20, -18);
+                break;
+            case 1:
+                offset2 = Qt.point(18, -23);
+                break;
+            case 2:
                 offset2 = Qt.point(13, -27);
                 break;
             }
@@ -105,6 +110,19 @@ var Constructor = function()
                                           Qt.point(0, 0), 0, true,
                                           1, 1.0, 5, 200 * i);
             sprite.loadSound("cannon_weapon_fire.wav", 1, i * 200);
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 200 * count;
+        }
+        else
+        {
+            return -1;
         }
     };
 

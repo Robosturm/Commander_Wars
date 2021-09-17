@@ -39,7 +39,7 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
-            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, count);
+            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 1, count);
             offset = Qt.point(108, 85);
             for (var i = 0; i < count; i++)
             {
@@ -125,11 +125,25 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1500;
+            var count = sprite.getUnitCount(5);
+            return 700 + 200 * count;
         }
         else
         {
             return 1000;
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 200 * count;
+        }
+        else
+        {
+            return -1;
         }
     };
 };
