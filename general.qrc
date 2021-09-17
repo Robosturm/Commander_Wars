@@ -4973,10 +4973,7 @@
         <file>resources/images/battleanimations/artillery/artillery+bd+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+bg+fire+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+bg+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bd+air+fire+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bd+air+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bd+air+move+mask.png</file>
-        <file>resources/images/battleanimations/flak/flak+bd+air+stop+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bd+fire+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bd+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bd+move+mask.png</file>
@@ -4995,7 +4992,6 @@
         <file>resources/images/battleanimations/infantry/infantry+bd+fire+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+fire+up+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+mask.png</file>
-        <file>resources/images/battleanimations/infantry/infantry+bd+river .png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+river+fire+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+river+fire+up+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+river+fire+up.png</file>
@@ -5056,5 +5052,9 @@
         <file>resources/images/battleanimations/recon/recon+ma+fire+air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+os+fire+air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+yc+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bd+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bd+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+bd+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/infantry/infantry+bd+walk+mask.png</file>
     </qresource>
 </RCC>
