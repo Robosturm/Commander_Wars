@@ -485,7 +485,7 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
 }
 
 void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
-                           QPoint movement, float rotation, qint32 moveTime, short priority, qint32 maxUnitCount, qint32 showDelay)
+                           QPoint movement, float rotation, qint32 moveTime, short priority, qint32 firedFrame, qint32 maxUnitCount, qint32 showDelay)
 {
     qint32 startUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
@@ -503,7 +503,7 @@ void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QStrin
         else
         {
             loadSingleMovingSpriteV2(livingSpriteId, mode, offset + getUnitBasePosition(i, maxUnitCount, startUnits), QPoint(0, 0), 0, false,
-                                     1, 1.0f, i + priority, 0, false, GameMap::frameTime, -1, 0, 0);
+                                     1, 1.0f, i + priority, 0, false, GameMap::frameTime, firedFrame, firedFrame, 0);
         }
 
         if (m_lastLoadedSprite.get() != nullptr)
@@ -880,6 +880,16 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+}
+
+bool BattleAnimationSprite::getHasFired() const
+{
+    return m_hasFired;
+}
+
+void BattleAnimationSprite::setHasFired(bool newHasFired)
+{
+    m_hasFired = newHasFired;
 }
 
 void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundSprite)

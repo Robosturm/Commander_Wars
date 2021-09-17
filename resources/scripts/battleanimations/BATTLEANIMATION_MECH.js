@@ -385,10 +385,15 @@ var Constructor = function()
                 rotation = -90;
                 movement = Qt.point(-50, 20);
             }
-            sprite.loadDyingMovingSprite("mech+" + armyName + "+mask",
+            var ending = "";
+            if (sprite.getHasFired())
+            {
+                ending = "+fire";
+            }
+            sprite.loadDyingMovingSprite("mech+" + armyName + riverName + ending + "+mask",
                                          "mech+" + armyName + "+dying+mask",
                                          GameEnums.Recoloring_Matrix,
-                                         offset, movement, rotation, 300);
+                                         offset, movement, rotation, 300, 0, 2);
         }
         else
         {

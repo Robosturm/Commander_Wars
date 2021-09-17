@@ -93,9 +93,20 @@ public:
      * @param newPBackgroundSprite
      */
     void setBackgroundSprite(oxygine::spSprite newBackgroundSprite);
+    /**
+     * @brief setHasFired
+     * @param newHasFired
+     */
+    void setHasFired(bool newHasFired);
+
 signals:
     void sigDetachChild(oxygine::spActor pActor);
 public slots:
+    /**
+     * @brief getHasFired
+     * @return
+     */
+    bool getHasFired() const;
     /**
      * @brief getBackgroundSpeed
      * @return
@@ -316,7 +327,7 @@ public slots:
      * @param showDelay
      */
     void loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
-                               QPoint movement = QPoint(0, 0), float rotation = 0, qint32 moveTime = 0, short priority = 0, qint32 maxUnitCount = 5, qint32 showDelay = 0);
+                               QPoint movement = QPoint(0, 0), float rotation = 0, qint32 moveTime = 0, short priority = 0, qint32 firedFrame = 0, qint32 maxUnitCount = 5, qint32 showDelay = 0);
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -479,6 +490,7 @@ private:
     float m_fireHp{10.0f};
     bool m_invertStartPosition{false};
     bool m_playSound{true};
+    bool m_hasFired{false};
 
     oxygine::spSprite m_pBackgroundSprite;
     float m_backgroundSpeed{0};
