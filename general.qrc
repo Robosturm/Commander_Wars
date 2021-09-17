@@ -3878,32 +3878,26 @@
         <file>resources/images/battleanimations/partisan/partisan+mask.png</file>
         <file>resources/images/battleanimations/piperunner/piperunner+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+bh+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bh+stop+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bm+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+bm+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bm+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bm+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+bm+stop+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ge+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+ge+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ge+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ge+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ge+stop+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ma+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+ma+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ma+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ma+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ma+stop+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+os+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+os+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+os+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+os+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+os+stop+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+yc+fire+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+yc+fire_air+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+yc+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+yc+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+yc+stop+mask.png</file>
@@ -4712,7 +4706,6 @@
         <file>resources/images/battleanimations/recon/recon+ac+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ac+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+ac+stop+mask.png</file>
-        <file>resources/images/battleanimations/recon/recon+ac+fire_air+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ac+fire+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ac+mask.png</file>
         <file>resources/images/battleanimations/light_tank/light_tank+ac+mg+fire+mask.png</file>
@@ -5056,5 +5049,12 @@
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+bd+fire+mask.png</file>
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+bd+mask.png</file>
         <file>resources/images/game/battlesprites/background/back_hq+ac.png</file>
+        <file>resources/images/battleanimations/recon/recon+ac+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+bh+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+bm+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ge+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ma+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+os+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+yc+fire+air+mask.png</file>
     </qresource>
 </RCC>
