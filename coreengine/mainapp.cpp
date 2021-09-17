@@ -525,7 +525,7 @@ bool Mainapp::event(QEvent *ev)
         QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(ev);
         return keyInputMethodEvent(inputEvent);
     }
-    if (ev->type() == QEvent::InputMethodQuery)
+    else if (ev->type() == QEvent::InputMethodQuery)
     {
         QInputMethodQueryEvent * inputEvent = static_cast<QInputMethodQueryEvent *>(ev);
         return keyInputMethodQueryEvent(inputEvent);

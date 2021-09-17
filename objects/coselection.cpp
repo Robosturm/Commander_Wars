@@ -9,13 +9,14 @@
 
 #include "objects/base/moveinbutton.h"
 
-COSelection::COSelection(QSize maxSize, QStringList coids)
+COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     : QObject(),
       m_Coids(coids)
 {
     setObjectName("COSelection");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    setPosition(position.x(), position.y());
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -74,7 +75,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     if (Settings::getSmallScreenDevice())
     {
         auto moveInButton = spMoveInButton::create(m_ArmyBannerPanel.get(), m_ArmyBannerPanel->getScaledHeight(), 1, -1, 2.0f, true);
-        m_ArmyBannerPanel->setY(-m_ArmyBannerPanel->getScaledHeight() + 1);
+        m_ArmyBannerPanel->setY(-m_ArmyBannerPanel->getScaledHeight() - getY() + 1);
         startY = 0;
     }
     else

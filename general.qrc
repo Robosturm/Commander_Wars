@@ -4960,5 +4960,24 @@
         <file>mods/awdc_image/images/terrain/desert+7.png</file>
         <file>resources/images/game/battlesprites/background/back_snowriver+0.png</file>
         <file>resources/images/game/battlesprites/background/back_snowriver+1.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+ti+stop+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ti+fire_air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ti+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ti+move+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+ti+stop+mask.png</file>
+        <file>resources/images/battleanimations/rocketthrower/rocketthrower+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/rocketthrower/rocketthrower+pf+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ti+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ti+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+yc+fire+air+mask.png</file>
     </qresource>
 </RCC>
