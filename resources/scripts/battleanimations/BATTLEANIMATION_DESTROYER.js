@@ -92,6 +92,19 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 600 + 200 * count;
+        }
+        else
+        {
+            return 1100;
+        }
+    };
+
     this.getFiredDurationMS = function(sprite, unit, defender, weapon)
     {
         if (weapon === 0)
@@ -137,12 +150,6 @@ var Constructor = function()
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
         return 1210;
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
