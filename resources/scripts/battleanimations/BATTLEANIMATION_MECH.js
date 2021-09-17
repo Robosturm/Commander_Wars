@@ -377,10 +377,10 @@ var Constructor = function()
             var rotation = 0;
             var movement = Qt.point(-30, 15);
             if (armyName === "ac" ||
-                    armyName === "dm" ||
-                    armyName === "ma" ||
-                    armyName === "pf" ||
-                    armyName === "ti")
+                armyName === "dm" ||
+                armyName === "ma" ||
+                armyName === "pf" ||
+                armyName === "ti")
             {
                 rotation = -90;
                 movement = Qt.point(-50, 20);
