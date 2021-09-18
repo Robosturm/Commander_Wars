@@ -337,7 +337,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
 
 void GameAnimationFactory::clearAllAnimations()
 {
-
+    CONSOLE_PRINT("GameAnimationFactory -> clearAllAnimations()", Console::eDEBUG);
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         m_Animations[i]->detach();

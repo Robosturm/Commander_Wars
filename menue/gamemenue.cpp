@@ -892,7 +892,7 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
 void GameMenue::skipAnimations(bool postAnimation)
 {
     AnimationSkipMode skipAnimations = getSkipMode();
-    CONSOLE_PRINT("skipping Animations", Console::eDEBUG);
+    CONSOLE_PRINT("skipping Animations " + QString::number(static_cast<qint32>(skipAnimations)), Console::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
@@ -938,6 +938,7 @@ void GameMenue::skipAllAnimations()
 
 void GameMenue::skipExceptBattle()
 {
+    CONSOLE_PRINT("GameMenue::skipExceptBattle", Console::eDEBUG);
     GameEnums::AnimationMode animMode = Settings::getShowAnimations();
     spGameMap pMap = GameMap::getInstance();
     qint32 i = 0;
@@ -1010,6 +1011,10 @@ void GameMenue::skipExceptBattle()
                 {
                     while (!pAnimation->onFinished(true));
                 }
+            }
+            else
+            {
+                i++;
             }
         }
         else

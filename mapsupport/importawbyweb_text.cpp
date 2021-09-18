@@ -725,7 +725,6 @@ void GameMap::importAWByWebMap(QString file)
                         getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }
-
                     case 149:
                     {
                         spBuilding pBuilding = spBuilding::create("AIRPORT");
