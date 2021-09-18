@@ -686,6 +686,7 @@ void Mainapp::createBaseDirs()
     QStringList dirs =
     {
         "temp",
+        "temp/music",
         "savegames",
         "mods",
         "data/gamerules",

@@ -43,7 +43,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
-    // load deender sprite
+    // load defender sprite
     m_pDefenderAnimation = spBattleAnimationSprite::create(spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
@@ -433,6 +433,8 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     addChild(m_HealthBar1);
 }
 
+
+
 bool BattleAnimation::getIsLeft(Unit* pUnit1, Unit* pUnit2)
 {
     if (pUnit1->Unit::getX() < pUnit2->Unit::getX())
@@ -502,7 +504,39 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
     pSprite->setSpeed(speed);
-    
+    qint32 terrainDefense = pUnit->getTerrainDefense();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
+    float defenseY = 5;
+    float startDefenseX = 5;
+    float defenseX = startDefenseX;
+    for (qint32 i = 1; i <= terrainDefense; i++)
+    {
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        if (getIsLeft(pUnit, pDefender))
+        {
+            pSprite->setPosition(defenseX, defenseY);
+        }
+        else
+        {
+            pSprite->setPosition(127 - defenseX - pAnim->getWidth(), defenseY);
+        }
+        pSprite->setResAnim(pAnim);
+        pSprite->setPriority(10);
+        ret->addChild(pSprite);
+        if (pAnim != nullptr)
+        {
+            if (i % 4 == 0)
+            {
+                defenseY += pAnim->getHeight() + 2;
+                defenseX = startDefenseX;
+            }
+            else
+            {
+                defenseX += pAnim->getWidth();
+            }
+        }
+    }
+
     return ret;
 }
 

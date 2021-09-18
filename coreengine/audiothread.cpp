@@ -318,13 +318,20 @@ void AudioThread::SlotClearPlayList()
     m_player[0]->m_player.setSource(QUrl());
     m_player[1]->m_player.stop();
     m_player[1]->m_player.setSource(QUrl());
-
+    clearTempFolder();
     // wasting some time
     for (qint32 i = 0; i < 30; ++i)
     {
         QApplication::processEvents();
         QThread::msleep(1);
     }
+}
+
+void AudioThread::clearTempFolder()
+{
+    QDir dir("temp/music");
+    dir.removeRecursively();
+    dir.mkpath(".");
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)
@@ -455,12 +462,12 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
     }
     if (QFile::exists(currentPath))
     {
-        Console::print("Adding " + currentPath + " to play list", Console::eDEBUG);
         for (auto & player : m_player)
         {
             player->m_player.stop();
         }
-        m_PlayListdata.append(PlaylistData(currentPath, startPointMs, endPointMs));
+        Console::print("Adding " + currentPath + " to play list", Console::eDEBUG);
+        addMusicToTempFolder(currentPath, startPointMs, endPointMs);
     }
     else
     {
@@ -564,7 +571,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
             if (!loadedSounds.contains(file) && QFile::exists(folder + '/' + file))
             {
                 Console::print("Adding " + folder + '/' + file + " to play list", Console::eDEBUG);
-                m_PlayListdata.append(PlaylistData(folder + '/' + file));
+                addMusicToTempFolder(folder + '/' + file);
                 loadedSounds.append(file);
             }
         }
@@ -573,6 +580,25 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
     {
         Console::print("Unable to locate music folder: " + folder, Console::eDEBUG);
     }
+}
+
+void AudioThread::addMusicToTempFolder(QString file, qint64 startPointMs, qint64 endPointMs)
+{
+//#ifdef Q_OS_ANDROID
+    // work around for temp file creation in qt
+    if (file.startsWith(oxygine::Resources::RCC_PREFIX_PATH))
+    {
+        QFile musicFile(file);
+        QFileInfo fileInfo(file);
+        QString filename = fileInfo.baseName() + ".mp3";
+        file = "temp/music/" + filename;
+        if (!musicFile.copy(file))
+        {
+            Console::print("Unable to copy music to temp folder: " + file + " Reason: " + musicFile.errorString(), Console::eERROR);
+        }
+    }
+//#endif
+    m_PlayListdata.append(PlaylistData(file, startPointMs, endPointMs));
 }
 
 bool AudioThread::getLoadBaseGameFolders() const

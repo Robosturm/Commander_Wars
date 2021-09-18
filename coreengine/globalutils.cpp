@@ -463,7 +463,7 @@ QUrl GlobalUtils::getUrlForFile(QString file)
     }
     else
     {
-        url = QUrl::fromLocalFile(file);
+        url = QUrl::fromLocalFile(Settings::getUserPath() + file);
     }
     return url;
 }

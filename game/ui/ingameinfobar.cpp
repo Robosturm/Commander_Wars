@@ -468,20 +468,20 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         pBattleAnimationSprite->setPriority(3);
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }
-    qint32 TerrainDefense = 0;
+    qint32 terrainDefense = 0;
     if (pUnit.get() != nullptr)
     {
-        TerrainDefense = pUnit->getTerrainDefense();
+        terrainDefense = pUnit->getTerrainDefense();
     }
     else
     {
-        TerrainDefense = pTerrain->getBaseDefense();
+        terrainDefense = pTerrain->getBaseDefense();
     }
     float defenseY = pTerrainSprite->getY() + 5;
     float startDefenseX = pTerrainSprite->getX() + 5;
     float defenseX = startDefenseX;
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
-    for (qint32 i = 1; i <= TerrainDefense; i++)
+    for (qint32 i = 1; i <= terrainDefense; i++)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(defenseX, defenseY);

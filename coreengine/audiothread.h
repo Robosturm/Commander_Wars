@@ -135,6 +135,11 @@ protected slots:
      */
     void loadNextAudioFile(qint32 playerIndex);
 protected:
+    void addMusicToTempFolder(QString file, qint64 startPointMs = -1, qint64 endPointMs = -1);
+    /**
+     * @brief clearTempFolder
+     */
+    void clearTempFolder();
     /**
      * @brief loadMusicFolder
      * @param folder
