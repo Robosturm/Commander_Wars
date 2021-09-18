@@ -67,40 +67,10 @@ void AudioThread::initAudio()
     CONSOLE_PRINT("AudioThread::initAudio", Console::eDEBUG);
     m_audioDevice = Settings::getAudioOutput().value<QAudioDevice>();
     m_audioOutput.setDevice(m_audioDevice);
-    m_player[0].reset(new Player(this));
-    m_player[1].reset(new Player(this));
-    m_player[0]->m_player.setAudioOutput(&m_audioOutput);
-    m_player[1]->m_player.setAudioOutput(&m_audioOutput);
+    createPlayer(0);
+    createPlayer(1);
     // everything needs to be created in the context of this thread
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
-    // connect media state handling
-    connect(&m_player[0]->m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
-    {
-        mediaStatusChanged(m_player[0]->m_player, 0, newState);
-    });
-    connect(&m_player[1]->m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
-    {
-        mediaStatusChanged(m_player[1]->m_player, 1, newState);
-    });
-    // connect playback state handling
-    connect(&m_player[0]->m_player, &QMediaPlayer::playbackStateChanged, this, [=](QMediaPlayer::PlaybackState newState)
-    {
-        mediaPlaybackStateChanged(0, newState);
-    });
-    connect(&m_player[1]->m_player, &QMediaPlayer::playbackStateChanged, this, [=](QMediaPlayer::PlaybackState newState)
-    {
-        mediaPlaybackStateChanged(1, newState);
-    });
-    // connect error handling
-    connect(&m_player[0]->m_player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, const QString &errorString)
-    {
-        reportReplayError(0, error, errorString);
-    }, Qt::QueuedConnection);
-    connect(&m_player[1]->m_player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, const QString &errorString)
-    {
-        reportReplayError(1, error, errorString);
-    }, Qt::QueuedConnection);
-
     m_positionUpdateTimer.setInterval(5);
     m_positionUpdateTimer.setSingleShot(false);
     connect(&m_positionUpdateTimer, &QTimer::timeout, this, [=]()
@@ -111,6 +81,28 @@ void AudioThread::initAudio()
         }
     });
     m_positionUpdateTimer.start();
+}
+
+void AudioThread::createPlayer(qint32 player)
+{
+    CONSOLE_PRINT("AudioThread::createPlayer() " + QString::number(player), Console::eDEBUG);
+    m_player[player].reset(new Player(this, m_player[player].get()));
+    m_player[player]->m_player.setAudioOutput(&m_audioOutput);
+    // connect media state handling
+    connect(&m_player[player]->m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
+    {
+        mediaStatusChanged(m_player[player]->m_player, player, newState);
+    });
+    // connect playback state handling
+    connect(&m_player[player]->m_player, &QMediaPlayer::playbackStateChanged, this, [=](QMediaPlayer::PlaybackState newState)
+    {
+        mediaPlaybackStateChanged(player, newState);
+    });
+    // connect error handling
+    connect(&m_player[player]->m_player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, const QString &errorString)
+    {
+        reportReplayError(player, error, errorString);
+    }, Qt::QueuedConnection);
 }
 
 void AudioThread::createSoundCache()
@@ -208,6 +200,11 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         while (!cache->sound[i]->isLoaded())
         {
             QApplication::processEvents();
+        }
+        for (qint32 i = 0; i < 5; ++i)
+        {
+            QApplication::processEvents();
+            QThread::msleep(1);
         }
     }
     m_soundCaches.insert(file, cache);
@@ -379,8 +376,8 @@ void AudioThread::initialAudioBuffering()
         qint32 size = m_PlayListdata.size();
         if (size > 0)
         {
-            m_player[0]->m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
             m_player[0]->m_player.stop();
+            m_player[0]->m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
             // m_player[0]->m_playerFile.close();
             // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
@@ -403,14 +400,13 @@ void AudioThread::bufferOtherPlayer()
     qint32 size = m_PlayListdata.size();
     if (size > 0 && m_currentPlayer >= 0)
     {
-        qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
-
         qint32 bufferPlayer = 0;
         if (m_currentPlayer == 0)
         {
             bufferPlayer = 1;
         }
         m_player[bufferPlayer]->m_player.stop();
+        qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
         m_player[bufferPlayer]->m_playListPostiton = newMedia;
         // m_player[bufferPlayer]->m_playerFile.close();
         // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
@@ -458,7 +454,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
         {
             player->m_player.stop();
         }
-        addMusicToTempFolder(currentPath, startPointMs, endPointMs);
+        addMusicToPlaylist(currentPath, startPointMs, endPointMs);
     }
     else
     {
@@ -499,7 +495,7 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
                 playerIndex == m_currentPlayer)
             {
                 // shuffle through loaded media
-                SlotPlayRandom();
+                emit sigPlayRandom();
             }
             else
             {
@@ -561,7 +557,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
         {
             if (!loadedSounds.contains(file) && QFile::exists(folder + '/' + file))
             {
-                addMusicToTempFolder(folder + '/' + file);
+                addMusicToPlaylist(folder + '/' + file);
                 loadedSounds.append(file);
             }
         }
@@ -572,7 +568,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
     }
 }
 
-void AudioThread::addMusicToTempFolder(QString file, qint64 startPointMs, qint64 endPointMs)
+void AudioThread::addMusicToPlaylist(QString file, qint64 startPointMs, qint64 endPointMs)
 {
     CONSOLE_PRINT("Adding " + file + " to play list", Console::eDEBUG);
     m_PlayListdata.append(PlaylistData(file, startPointMs, endPointMs));
