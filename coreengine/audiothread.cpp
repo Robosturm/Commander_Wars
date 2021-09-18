@@ -92,12 +92,12 @@ void AudioThread::createPlayer(qint32 player)
     connect(&m_player[player]->m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
     {
         mediaStatusChanged(m_player[player]->m_player, player, newState);
-    });
+    }, Qt::QueuedConnection);
     // connect playback state handling
     connect(&m_player[player]->m_player, &QMediaPlayer::playbackStateChanged, this, [=](QMediaPlayer::PlaybackState newState)
     {
         mediaPlaybackStateChanged(player, newState);
-    });
+    }, Qt::QueuedConnection);
     // connect error handling
     connect(&m_player[player]->m_player, &QMediaPlayer::errorOccurred, this, [=](QMediaPlayer::Error error, const QString &errorString)
     {
@@ -378,6 +378,7 @@ void AudioThread::initialAudioBuffering()
         {
             m_player[0]->m_player.stop();
             m_player[0]->m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
+            createPlayer(0);
             // m_player[0]->m_playerFile.close();
             // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
@@ -408,6 +409,7 @@ void AudioThread::bufferOtherPlayer()
         m_player[bufferPlayer]->m_player.stop();
         qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
         m_player[bufferPlayer]->m_playListPostiton = newMedia;
+        createPlayer(bufferPlayer);
         // m_player[bufferPlayer]->m_playerFile.close();
         // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
         // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
@@ -515,6 +517,7 @@ void AudioThread::loadNextAudioFile(qint32 playerIndex)
     qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
     if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
     {
+        createPlayer(playerIndex);
         m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
         m_player[playerIndex]->m_player.setPosition(0);
         CONSOLE_PRINT("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playListEntry].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
