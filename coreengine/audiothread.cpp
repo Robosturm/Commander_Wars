@@ -378,7 +378,6 @@ void AudioThread::initialAudioBuffering()
         {
             m_player[0]->m_player.stop();
             m_player[0]->m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
-            createPlayer(0);
             // m_player[0]->m_playerFile.close();
             // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
@@ -409,7 +408,6 @@ void AudioThread::bufferOtherPlayer()
         m_player[bufferPlayer]->m_player.stop();
         qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
         m_player[bufferPlayer]->m_playListPostiton = newMedia;
-        createPlayer(bufferPlayer);
         // m_player[bufferPlayer]->m_playerFile.close();
         // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
         // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
@@ -497,7 +495,7 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
                 playerIndex == m_currentPlayer)
             {
                 // shuffle through loaded media
-                emit sigPlayRandom();
+                SlotPlayRandom();
             }
             else
             {
@@ -517,7 +515,6 @@ void AudioThread::loadNextAudioFile(qint32 playerIndex)
     qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
     if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
     {
-        createPlayer(playerIndex);
         m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
         m_player[playerIndex]->m_player.setPosition(0);
         CONSOLE_PRINT("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playListEntry].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
