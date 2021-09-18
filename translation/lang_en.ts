@@ -1731,7 +1731,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1037"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1039"/>
         <source>Loading Sprites</source>
         <translation type="unfinished"></translation>
     </message>
