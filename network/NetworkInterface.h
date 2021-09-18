@@ -155,20 +155,20 @@ public slots:
     virtual void changeThread(quint64 socketID, QThread* pThread) = 0;
     void displayTCPError(QAbstractSocket::SocketError socketError)
     {
-        Console::print("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
+        CONSOLE_PRINT("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
         switch (socketError)
         {
             case QAbstractSocket::RemoteHostClosedError:
-                Console::print("The connection was closed by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was closed by the peer.", Console::eDEBUG);
                 break;
             case QAbstractSocket::HostNotFoundError:
-                Console::print("The host was not found. Please check the host name and port settings.", Console::eERROR);
+                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
                 break;
             case QAbstractSocket::ConnectionRefusedError:
-                Console::print("The connection was refused by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
                 break;
             default:
-                Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
+                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
     void displayLocalError(QLocalSocket::LocalSocketError socketError)
@@ -176,43 +176,43 @@ public slots:
         switch (socketError)
         {
             case QLocalSocket::ConnectionError:
-                Console::print("The server was closed by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The server was closed by the peer.", Console::eDEBUG);
                 break;
             case QLocalSocket::ServerNotFoundError:
-                Console::print("The host was not found. Please check the host name and port settings.", Console::eERROR);
+                CONSOLE_PRINT("The host was not found. Please check the host name and port settings.", Console::eERROR);
                 break;
             case QLocalSocket::ConnectionRefusedError:
-                Console::print("The connection was refused by the peer.", Console::eDEBUG);
+                CONSOLE_PRINT("The connection was refused by the peer.", Console::eDEBUG);
                 break;
             default:
-                Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
+                CONSOLE_PRINT("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
     void displayStateChange(QAbstractSocket::SocketState socketState)
     {
-        Console::print("State changed for " + QString::number(m_socketID), Console::eDEBUG);
+        CONSOLE_PRINT("State changed for " + QString::number(m_socketID), Console::eDEBUG);
         switch (socketState)
         {
             case QAbstractSocket::UnconnectedState:
-                Console::print("State is now Unconnected.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Unconnected.", Console::eDEBUG);
                 break;
             case QAbstractSocket::HostLookupState:
-                Console::print("State is now Lookup.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Lookup.", Console::eDEBUG);
                 break;
             case QAbstractSocket::ConnectingState:
-                Console::print("State is now Connecting.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Connecting.", Console::eDEBUG);
                 break;
             case QAbstractSocket::ConnectedState:
-                Console::print("State is now Connected.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Connected.", Console::eDEBUG);
                 break;
             case QAbstractSocket::BoundState:
-                Console::print("State is now Bound.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Bound.", Console::eDEBUG);
                 break;
             case QAbstractSocket::ListeningState:
-                Console::print("State is now Listening.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Listening.", Console::eDEBUG);
                 break;
             case QAbstractSocket::ClosingState:
-                Console::print("State is now Closing.", Console::eDEBUG);
+                CONSOLE_PRINT("State is now Closing.", Console::eDEBUG);
                 break;
         }
     }

@@ -7,8 +7,14 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(-116, 0), 1200, 0, 0, 0, 0,
                                              "+cannon", "+flak", Qt.point(20, 20));
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -38,6 +44,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
@@ -143,6 +150,19 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        var count = sprite.getUnitCount(5);
+        if (weapon === 0)
+        {
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
+        else
+        {
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         return true;
@@ -159,7 +179,6 @@ var Constructor = function()
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 

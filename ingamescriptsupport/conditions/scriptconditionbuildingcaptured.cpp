@@ -49,7 +49,7 @@ void ScriptConditionBuildingCaptured::setPlayer(const qint32 &player)
 
 void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionBuildingCaptured", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionBuildingCaptured", Console::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
@@ -94,7 +94,7 @@ void ScriptConditionBuildingCaptured::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingCaptured::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionBuildingCaptured", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionBuildingCaptured", Console::eDEBUG);
     rStream << "        if (map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner() !== null && map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner().getPlayerID() === "
             << QString::number(m_player) << " && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " "  << ConditionBuildingCaptured << "\n";

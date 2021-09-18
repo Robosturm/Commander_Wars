@@ -43,7 +43,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
     QStringList items = line.replace("if (turn === ", "")
                             .replace(" && player === ", ",")
                             .replace(") { // ", ",").split(",");
-    Console::print("Reading ConditionStartOfTurn " + line, Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionStartOfTurn " + line, Console::eDEBUG);
     if (items.size() >= 2)
     {
         day = items[0].toInt();
@@ -52,7 +52,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
         {
             if (readSubCondition(rStream, ConditionStartOfTurn, line))
             {
-                Console::print("Read ConditionStartOfTurn", Console::eDEBUG);
+                CONSOLE_PRINT("Read ConditionStartOfTurn", Console::eDEBUG);
                 break;
             }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
@@ -62,7 +62,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
             }
             else
             {
-                Console::print("unable to determine event", Console::eWARNING);
+                CONSOLE_PRINT("unable to determine event", Console::eWARNING);
             }
         }
     }
@@ -70,7 +70,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
 
 void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionStartOfTurn", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionStartOfTurn", Console::eDEBUG);
     rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // "
             << QString::number(getVersion()) << " " << ConditionStartOfTurn + "\n";
     for (qint32 i = 0; i < events.size(); i++)

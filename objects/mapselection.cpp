@@ -240,7 +240,7 @@ void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)
 
 void MapSelection::setSelection(QString folder, QStringList files)
 {    
-    Console::print("MapSelection::setSelection", Console::eDEBUG);
+    CONSOLE_PRINT("MapSelection::setSelection", Console::eDEBUG);
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
@@ -259,7 +259,7 @@ void MapSelection::setCurrentItem(QString item)
 
 void MapSelection::changeFolder(QString folder)
 {    
-    Console::print("MapSelection::changeFolder " + folder, Console::eDEBUG);
+    CONSOLE_PRINT("MapSelection::changeFolder " + folder, Console::eDEBUG);
     m_itemClicked = false;
     QString newFolder = folder;
     if (folder == "")
@@ -276,7 +276,7 @@ void MapSelection::changeFolder(QString folder)
     {
         QFileInfo newFolderInfo(newFolder);
         newFolder = GlobalUtils::makePathRelative(newFolderInfo.absoluteFilePath());
-        Console::print("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
+        CONSOLE_PRINT("MapSelection::changeFolder. Relative Path: " + newFolder, Console::eDEBUG);
         m_Files.clear();
         if (newFolder != "maps")
         {
@@ -380,7 +380,7 @@ void MapSelection::updateSelection(qint32 startIndex)
             {
                 // it's a map
                 QString fullFilename = m_Files[m_currentStartIndex + i];
-                Console::print("MapSelection::updateSelection Loading: " + fullFilename, Console::eDEBUG);
+                CONSOLE_PRINT("MapSelection::updateSelection Loading: " + fullFilename, Console::eDEBUG);
                 QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);

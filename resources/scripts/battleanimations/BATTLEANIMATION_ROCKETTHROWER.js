@@ -15,8 +15,8 @@ var Constructor = function()
                      ["os", "os"],
                      ["ti", "ti"],
                      ["pf", "pf"],
-                     ["yc", "yc"],
-];
+                     ["yc", "yc"],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
@@ -99,6 +99,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
@@ -125,17 +130,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount();
-    };
-
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount();
+        return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
     };
 };
 

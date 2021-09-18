@@ -96,24 +96,24 @@ void GameAction::perform()
 
 void GameAction::printAction()
 {
-    Console::print("Performing Action " + m_actionID, Console::eINFO);
-    Console::print("Target X " + QString::number(m_target.x()) +
+    CONSOLE_PRINT("Performing Action " + m_actionID, Console::eINFO);
+    CONSOLE_PRINT("Target X " + QString::number(m_target.x()) +
                    " Target Y " + QString::number(m_target.y()), Console::eINFO);
-    Console::print("Costs " + QString::number(m_costs), Console::eINFO);
-    Console::print("Seed " + QString::number(m_seed), Console::eINFO);
+    CONSOLE_PRINT("Costs " + QString::number(m_costs), Console::eINFO);
+    CONSOLE_PRINT("Seed " + QString::number(m_seed), Console::eINFO);
     Unit* pUnit = getTargetUnit();
     Building* pBuilding = getTargetBuilding();
     if (pUnit != nullptr)
     {
-        Console::print("Unit " + pUnit->getUnitID(), Console::eINFO);
+        CONSOLE_PRINT("Unit " + pUnit->getUnitID(), Console::eINFO);
     }
     else if (pBuilding != nullptr)
     {
-        Console::print("Building " + pBuilding->getBuildingID(), Console::eINFO);
+        CONSOLE_PRINT("Building " + pBuilding->getBuildingID(), Console::eINFO);
     }
     if (m_Movepath.size() > 0)
     {
-        Console::print("Moving to X " + QString::number(m_Movepath[0].x()) +
+        CONSOLE_PRINT("Moving to X " + QString::number(m_Movepath[0].x()) +
                 " Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
     QString data;
@@ -122,7 +122,7 @@ void GameAction::printAction()
     {
         data += "0x" + QString::number(bytes[i])+ " ";
     }
-    Console::print("Data " + data, Console::eINFO);
+    CONSOLE_PRINT("Data " + data, Console::eINFO);
 }
 
 qint32 GameAction::getPlayer() const
@@ -455,7 +455,7 @@ void GameAction::setInputStep(const qint32 &value)
 
 void GameAction::serializeObject(QDataStream& stream) const
 {
-    Console::print("storing game action", Console::eDEBUG);
+    CONSOLE_PRINT("storing game action", Console::eDEBUG);
     stream << getVersion();
     stream << m_actionID;
     stream << m_target;
@@ -485,7 +485,7 @@ void GameAction::serializeObject(QDataStream& stream) const
 
 void GameAction::deserializeObject(QDataStream& stream)
 {
-    Console::print("reading game action", Console::eDEBUG);
+    CONSOLE_PRINT("reading game action", Console::eDEBUG);
     qint32 version;
     stream >> version;
     stream >> m_actionID;

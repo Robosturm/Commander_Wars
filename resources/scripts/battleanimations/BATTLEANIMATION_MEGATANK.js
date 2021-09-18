@@ -91,6 +91,32 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 700 + 200 * count;
+        }
+        else
+        {
+            return 800;
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 200 * count;
+        }
+        else
+        {
+            return -1;
+        }
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 6, 6);
@@ -121,29 +147,16 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
         if (weapon === 0)
         {
-            var count = sprite.getUnitCount(5);
-            return 700 + 200 * count;
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {
-            return 1000;
-        }
-    };
-
-    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
-    {
-        if (weapon === 0)
-        {
-            var count = sprite.getUnitCount(5);
-            return 200 * count;
-        }
-        else
-        {
-            return -1;
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
     };
 };

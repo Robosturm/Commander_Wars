@@ -29,6 +29,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_PIPERUNNER.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
@@ -63,12 +68,14 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 550 + 300 * sprite.getUnitCount(5);
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
+        else
+        {
+            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
     };
 };
 

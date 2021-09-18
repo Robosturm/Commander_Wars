@@ -64,7 +64,7 @@ void Userdata::storeUser()
     {
         if (!Settings::getUsername().isEmpty())
         {
-            Console::print("Userdata::storeUser", Console::eDEBUG);
+            CONSOLE_PRINT("Userdata::storeUser", Console::eDEBUG);
             QFile user(Settings::getUserPath() + Settings::getUsername() + ".dat");
             user.open(QIODevice::WriteOnly | QIODevice::Truncate);
             QDataStream pStream(&user);
@@ -80,7 +80,7 @@ void Userdata::changeUser()
     QFile user(Settings::getUserPath() + Settings::getUsername() + ".dat");
     if (user.exists())
     {
-        Console::print("Userdata::changeUser", Console::eDEBUG);
+        CONSOLE_PRINT("Userdata::changeUser", Console::eDEBUG);
         user.open(QIODevice::ReadOnly);
         QDataStream pStream(&user);
         Userdata::deserializeObject(pStream);
@@ -88,7 +88,7 @@ void Userdata::changeUser()
     }
     else
     {
-        Console::print("no userdata found creating new one", Console::eDEBUG);
+        CONSOLE_PRINT("no userdata found creating new one", Console::eDEBUG);
         storeUser();
     }
 }
@@ -173,7 +173,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
 
 void Userdata::deleteAchievement(QString id)
 {
-    Console::print("Userdata::deleteAchievement " + id, Console::eDEBUG);
+    CONSOLE_PRINT("Userdata::deleteAchievement " + id, Console::eDEBUG);
     for (qint32 i = 0; i < m_achievements.size(); i++)
     {
         if (m_achievements[i].id == id)
@@ -246,7 +246,7 @@ const QVector<Userdata::Achievement>* Userdata::getAchievements()
 
 void Userdata::addVictoryForMap(QString mapPath, QString co1, QString co2, qint32 score)
 {
-    Console::print("Userdata::addVictoryForMap", Console::eDEBUG);
+    CONSOLE_PRINT("Userdata::addVictoryForMap", Console::eDEBUG);
     if (m_mapVictoryInfo.contains(mapPath))
     {
         auto item = m_mapVictoryInfo.find(mapPath);
@@ -495,7 +495,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
 
 void Userdata::deserializeObject(QDataStream& pStream)
 {
-    Console::print("Userdata::deserializeObject", Console::eDEBUG);
+    CONSOLE_PRINT("Userdata::deserializeObject", Console::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     qint32 version = 0;
     pStream >> version;

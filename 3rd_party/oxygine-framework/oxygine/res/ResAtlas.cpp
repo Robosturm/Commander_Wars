@@ -37,12 +37,12 @@ namespace oxygine
         ImageData im;
         spImage mt = spImage::create();
 
-        Console::print("loading atlas: " + file, Console::eDEBUG);
+        CONSOLE_PRINT("loading atlas: " + file, Console::eDEBUG);
         QImage img (file);
-        Console::print("atlas file loaded: " + file, Console::eDEBUG);
+        CONSOLE_PRINT("atlas file loaded: " + file, Console::eDEBUG);
         mt->init(img, true);
         im = mt->lock();
-        Console::print("atlas size: " + QString::number(im.m_w) + " " + QString::number(im.m_h), Console::eDEBUG);
+        CONSOLE_PRINT("atlas size: " + QString::number(im.m_w) + " " + QString::number(im.m_h), Console::eDEBUG);
 
         nt->init(mt->lock());
         nt->setLinearFilter(linearFilter);

@@ -276,6 +276,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 3, 0);
@@ -290,6 +295,11 @@ var Constructor = function()
         {
             sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+    };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
@@ -313,11 +323,6 @@ var Constructor = function()
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_INFANTRY.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 610 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_INFANTRY.getMaxUnitCount();
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

@@ -42,6 +42,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
@@ -75,9 +80,20 @@ var Constructor = function()
 		}
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
+        else
+        {
+            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
+    };
+
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
@@ -87,22 +103,8 @@ var Constructor = function()
         sprite.loadSound("airunit_dying.wav", 1);
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2000;
     };
 };

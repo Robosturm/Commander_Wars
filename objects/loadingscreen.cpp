@@ -89,7 +89,7 @@ void LoadingScreen::setWorktext(QString workText)
 
 void LoadingScreen::hide()
 {
-    Console::print("LoadingScreen::hide", Console::eDEBUG);
+    CONSOLE_PRINT("LoadingScreen::hide", Console::eDEBUG);
     m_pLoadingScreen->detach();
     m_pLoadingScreen = nullptr;
 }

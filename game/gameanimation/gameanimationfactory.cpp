@@ -330,7 +330,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
     }
     if (m_Animations.size() == 0 && !skipping)
     {
-        Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
+        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }
@@ -348,7 +348,7 @@ void GameAnimationFactory::clearAllAnimations()
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    Console::print("GameAnimationFactory::finishAllAnimations()", Console::eDEBUG);
+    CONSOLE_PRINT("GameAnimationFactory::finishAllAnimations()", Console::eDEBUG);
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -364,7 +364,7 @@ void GameAnimationFactory::finishAllAnimationsWithEmitFinished()
     GameAnimationFactory::finishAllAnimations();
     if (m_Animations.size() == 0)
     {
-        Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
+        CONSOLE_PRINT("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }

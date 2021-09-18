@@ -65,7 +65,7 @@ InGameMenue::~InGameMenue()
 
 void InGameMenue::loadBackground()
 {
-    Console::print("Entering In Game Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering In Game Menue", Console::eDEBUG);
     // load background
     m_backgroundSprite = oxygine::spSprite::create();
     oxygine::Actor::addChild(m_backgroundSprite);
@@ -381,7 +381,7 @@ void InGameMenue::centerMapOnCursor()
 
 void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 height)
 {
-    Console::print("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), Console::eDEBUG);
+    CONSOLE_PRINT("InGameMenue::initSlidingActor() x " + QString::number(x) + " y " + QString::number(y) + " width " + QString::number(width) + " height "  + QString::number(height), Console::eDEBUG);
     if (m_mapSliding.get() == nullptr)
     {
         m_mapSliding = oxygine::spSlidingActorNoClipRect::create();
@@ -412,7 +412,7 @@ void InGameMenue::updateSlidingActorSize()
         spGameMap pMap = GameMap::getInstance();
         qint32 mapWidth = pMap->getScaledWidth();
         qint32 mapHeight = pMap->getScaledHeight();
-        Console::print("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
+        CONSOLE_PRINT("InGameMenue::updateSlidingActorSize() width " + QString::number(mapWidth) + " height "  + QString::number(mapHeight), Console::eDEBUG);
         if (mapWidth < m_mapSliding->getWidth())
         {
             m_mapSlidingActor->setWidth(m_mapSliding->getWidth());

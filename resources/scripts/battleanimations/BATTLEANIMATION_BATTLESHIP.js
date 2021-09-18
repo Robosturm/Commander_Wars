@@ -14,6 +14,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();
         var movement = Qt.point(-120, 0);
         var moveTime = 1200;
@@ -37,6 +38,11 @@ var Constructor = function()
                                       BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
                                       movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, 0);
         }
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -69,6 +75,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         var count = sprite.getUnitCount(5);
         BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count, Qt.point(0, 0), 0, 1);
         var player = unit.getOwner();
@@ -137,6 +144,12 @@ var Constructor = function()
             sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+    };
+
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {

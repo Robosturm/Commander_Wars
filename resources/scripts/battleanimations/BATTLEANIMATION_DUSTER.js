@@ -30,6 +30,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 3, 0);
@@ -46,10 +51,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 410 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_DUSTER.getMaxUnitCount();
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
     };
 };
 

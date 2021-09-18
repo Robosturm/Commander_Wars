@@ -124,7 +124,7 @@ void WorkerThread::start()
 
     if (QFile::exists("init.js"))
     {
-        Console::print("Init script is present and will be loaded", Console::eDEBUG);
+        CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
         pInterpreter->openScript("init.js", true);
     }
 
@@ -135,7 +135,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     pLoadingScreen->hide();
     m_started = true;
-    Console::print("WorkerThread::start Finalizing", Console::eDEBUG);
+    CONSOLE_PRINT("WorkerThread::start Finalizing", Console::eDEBUG);
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }
 
@@ -183,7 +183,7 @@ bool WorkerThread::getStarted() const
 
 void WorkerThread::onQuit()
 {
-    Console::print("Shutting down workerthread", Console::eDEBUG);
+    CONSOLE_PRINT("Shutting down workerthread", Console::eDEBUG);
     if (oxygine::Stage::instance)
     {
         oxygine::Stage::instance->cleanup();

@@ -199,28 +199,23 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
+    };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount();
+        return 300 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
     };
 };
 

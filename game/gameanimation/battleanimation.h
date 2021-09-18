@@ -201,6 +201,11 @@ private:
      * @param defStartHp
      */
     void createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp);
+    /**
+     * @brief startBattleTimer
+     * @param duration
+     */
+    void startBattleTimer(qint32 duration);
 private:
     QTimer m_battleTimer;
 

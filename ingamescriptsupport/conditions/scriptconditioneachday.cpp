@@ -49,7 +49,7 @@ void ScriptConditionEachDay::setPlayer(const qint32 &value)
 
 void ScriptConditionEachDay::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionEachDay", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionEachDay", Console::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if ((turn - ", "")
                             .replace(") % ", ",")
@@ -77,7 +77,7 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream, QString line)
 
 void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionEachDay", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionEachDay", Console::eDEBUG);
     rStream << "        if ((turn - " + QString::number(day)  +  ") % " + QString::number(intervall) +  " === 0 && player === " + QString::number(player) + ") { // "
             << QString::number(getVersion()) << " " << ConditionEachDay +"\n";
     for (qint32 i = 0; i < events.size(); i++)

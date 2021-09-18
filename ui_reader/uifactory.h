@@ -147,7 +147,7 @@ private:
         QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
         if (erg.isError())
         {
-            Console::print("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
         }
     }
     template<typename TType>
@@ -166,11 +166,11 @@ private:
         }
         else
         {
-            Console::print("Unable to determine a return value while interpreting. Line: " + line, Console::eERROR);
+            CONSOLE_PRINT("Unable to determine a return value while interpreting. Line: " + line, Console::eERROR);
         }
         if (erg.isError())
         {
-            Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
         }
         return ret;
     }

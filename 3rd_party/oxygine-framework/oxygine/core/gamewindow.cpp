@@ -124,7 +124,7 @@ namespace oxygine
         }
         else
         {
-            Console::print("!ready", Console::eDEBUG);
+            CONSOLE_PRINT("!ready", Console::eDEBUG);
         }
 
         return ready;
@@ -176,14 +176,14 @@ namespace oxygine
         initializeOpenGLFunctions();
         if (!hasOpenGLFeature(QOpenGLFunctions::Shaders))
         {
-            Console::print("Shaders are not supported by open gl. This may result in a black screen.", Console::eWARNING);
+            CONSOLE_PRINT("Shaders are not supported by open gl. This may result in a black screen.", Console::eWARNING);
         }
         if (!hasOpenGLFeature(QOpenGLFunctions::Multitexture))
         {
-            Console::print("Multitextures are not supported by open gl. This may result in a black screen.", Console::eWARNING);
+            CONSOLE_PRINT("Multitextures are not supported by open gl. This may result in a black screen.", Console::eWARNING);
         }
         // init oxygine engine
-        Console::print("initialize oxygine", Console::eDEBUG);
+        CONSOLE_PRINT("initialize oxygine", Console::eDEBUG);
         VideoDriver::instance = spVideoDriver::create();
         VideoDriver::instance->setDefaultSettings();
         rsCache().setDriver(VideoDriver::instance.get());
@@ -206,11 +206,11 @@ namespace oxygine
 
     void GameWindow::resizeGL(qint32 w, qint32 h)
     {
-        Console::print("core::restore()", Console::eDEBUG);
+        CONSOLE_PRINT("core::restore()", Console::eDEBUG);
         VideoDriver::instance->restore();
         STDRenderer::restore();
         oxygine::Stage::instance->setSize(w, h);
-        Console::print("core::restore() done", Console::eDEBUG);
+        CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
     }
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)

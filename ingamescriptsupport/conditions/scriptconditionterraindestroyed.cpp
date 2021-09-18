@@ -20,7 +20,7 @@ ScriptConditionTerrainDestroyed::ScriptConditionTerrainDestroyed()
 
 void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionTerrainDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionTerrainDestroyed", Console::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
@@ -57,7 +57,7 @@ void ScriptConditionTerrainDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionTerrainDestroyed::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionTerrainDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionTerrainDestroyed", Console::eDEBUG);
     rStream << "        if (" << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getHp() <= 0 && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionTerrainDestroyed << "\n";
     if (subCondition.get() != nullptr)

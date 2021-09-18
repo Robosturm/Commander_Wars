@@ -215,19 +215,19 @@ void VictoryRule::checkDefeat()
                     }
                     case GameEnums::DefeatType_Defeated:
                     {
-                        Console::print("Defeating player caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player caused by rule " + m_RuleID, Console::eDEBUG);
                         pPlayer->defeatPlayer(nullptr);
                         break;
                     }
                     case GameEnums::DefeatType_ByCurrentPlayer:
                     {
-                        Console::print("Defeating player and moving ownership of buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player and moving ownership of buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
                         pPlayer->defeatPlayer(pMap->getCurrentPlayer());
                         break;
                     }
                     case GameEnums::DefeatType_Domination:
                     {
-                        Console::print("Defeating player and moving ownership of units and buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Defeating player and moving ownership of units and buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
                         pPlayer->defeatPlayer(pMap->getCurrentPlayer(), true);
                         break;
                     }

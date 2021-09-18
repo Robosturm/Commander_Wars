@@ -29,7 +29,7 @@ MainServer::MainServer()
     : QObject(),
       m_updateTimer(this)
 {
-    Console::print("Game server launched", Console::eDEBUG);
+    CONSOLE_PRINT("Game server launched", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_updateTimer.setSingleShot(true);
     m_updateTimer.start(5000);
@@ -62,7 +62,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        Console::print("Network Server Command received: " + messageType, Console::eDEBUG);
+        CONSOLE_PRINT("Network Server Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
@@ -79,7 +79,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     bool found = false;
     QString slave;
     stream >> slave;
-    Console::print("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
+    CONSOLE_PRINT("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
     for (const auto & game : qAsConst(m_games))
     {
         if (game->game.getServerName() == slave)
@@ -96,7 +96,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     }
     if (!found)
     {
-        Console::print("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", Console::eDEBUG);
+        CONSOLE_PRINT("Failed to find game " + slave + " for socket " + QString::number(socketID) + " to join game. Forcing a disconnection.", Console::eDEBUG);
         m_pGameServer->disconnectClient(socketID);
     }
 }
@@ -139,7 +139,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     }
     else
     {
-        Console::print("Requested invalid mod configuration.", Console::eDEBUG);
+        CONSOLE_PRINT("Requested invalid mod configuration.", Console::eDEBUG);
         // todo send request denial
     }
 }
@@ -180,7 +180,7 @@ void MainServer::playerJoined(qint64 socketId)
 void MainServer::sendGameDataToClient(qint64 socketId)
 {
     QString command = QString(NetworkCommands::SERVERGAMEDATA);
-    Console::print("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QByteArray block;
     QBuffer buffer(&block);
     buffer.open(QIODevice::WriteOnly);
@@ -206,7 +206,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
 
 void MainServer::closeGame(NetworkGame* pGame)
 {
-    Console::print("Despawning game: " + pGame->getServerName(), Console::eDEBUG);
+    CONSOLE_PRINT("Despawning game: " + pGame->getServerName(), Console::eDEBUG);
     for (qint32 i = 0; i < m_games.size(); i++)
     {
         if (&m_games[i]->game == pGame)
@@ -236,7 +236,7 @@ void MainServer::removeGame(NetworkGame* pGame)
             {
                 QThread::msleep(1);
             }
-            Console::print("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
+            CONSOLE_PRINT("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
             m_games.removeAt(i2);
             break;
         }

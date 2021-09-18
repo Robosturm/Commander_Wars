@@ -22,11 +22,11 @@ namespace oxygine
         QString log = m_program.log();
         if (success)
         {
-            Console::print("compiled shader program", Console::eDEBUG);
+            CONSOLE_PRINT("compiled shader program", Console::eDEBUG);
         }
         else
         {
-            Console::print("can't compile program: " + log, Console::eFATAL);
+            CONSOLE_PRINT("can't compile program: " + log, Console::eFATAL);
         }
     }
 

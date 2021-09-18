@@ -118,7 +118,7 @@ void Tooltip::showTooltip()
         {
             if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
             {
-                Console::print("Showing tooltip", Console::eDEBUG);
+                CONSOLE_PRINT("Showing tooltip", Console::eDEBUG);
                 QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
                 if (m_Tooltip.get() != nullptr)
                 {

@@ -92,8 +92,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1000 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ARTILLERY.getMaxUnitCount();
+        return 1000 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
@@ -107,7 +106,12 @@ var Constructor = function()
         {
             sprite.loadSound("artillery_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
-    }
+    };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

@@ -82,6 +82,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 1);
@@ -108,17 +113,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MISSILE.getMaxUnitCount();
-    };
-
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MISSILE.getMaxUnitCount();
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
     };
 };
 

@@ -62,6 +62,18 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+        }
+        else
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+        }
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ZCOUNIT_PARTISAN.loadStandingAnimation(sprite, unit, defender, weapon);
@@ -107,6 +119,17 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            return 900 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+        }
+        else
+        {
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+        }
+    };
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
     {
@@ -129,33 +152,13 @@ var Constructor = function()
     };
     this.getMoveInDurationMS = function()
     {
-        // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount();
     };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        if (weapon === 0)
-        {
-            // the time will be scaled with animation speed inside the engine
-            return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount();
-        }
-        else
-        {
-            return 700 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount();
-        }
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount();
-    }
 };
 
 Constructor.prototype = BATTLEANIMATION;

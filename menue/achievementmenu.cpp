@@ -24,7 +24,7 @@ Achievementmenu::Achievementmenu()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Achievement Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Achievement Menue", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -126,7 +126,7 @@ void Achievementmenu::onEnter()
 
 void Achievementmenu::exitMenue()
 {    
-    Console::print("Leaving Achievement Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Achievement Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
@@ -141,7 +141,7 @@ void Achievementmenu::searchChanged(QString text)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    Console::print("Achievementmenu::searchChanged " + text, Console::eDEBUG);
+    CONSOLE_PRINT("Achievementmenu::searchChanged " + text, Console::eDEBUG);
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;

@@ -14,6 +14,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
         if (armyName === "ma")
@@ -24,6 +25,11 @@ var Constructor = function()
         {
             BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-85, 0), 850, 0, 0, 0, 0, Qt.point(20, 20));            
         }
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -60,6 +66,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         var count = sprite.getUnitCount(5);
         var player = unit.getOwner();
         var rocketSprite = "+missile";
@@ -131,6 +138,18 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            return sprite.getUnitCount(5) * 100 + 400;
+        }
+        else
+        {
+            return 700;
+        }
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         var rocketEndFrame = 0;
@@ -150,18 +169,6 @@ var Constructor = function()
         }
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, rocketEndFrame, rocketEndFrame, Qt.point(-65, 20));
         sprite.loadSound("ship_dying_move.wav", -2);
-    };
-    
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        if (weapon === 0)
-        {
-            return sprite.getUnitCount(5) * 100 + 10;
-        }
-        else
-        {
-            return 500;
-        }
     };
 
 
@@ -203,11 +210,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1000;
+            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
         else
         {
-            return 1000;
+            return 600 + BATTLEANIMATION.defaultFrameDelay * count;
         }
     };
 

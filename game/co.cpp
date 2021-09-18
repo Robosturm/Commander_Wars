@@ -135,7 +135,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        Console::print("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
@@ -1675,7 +1675,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
 
 void CO::serializeObject(QDataStream& pStream) const
 {
-    Console::print("storing co", Console::eDEBUG);
+    CONSOLE_PRINT("storing co", Console::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
     pStream << m_powerStars;
@@ -1700,7 +1700,7 @@ void CO::deserializeObject(QDataStream& pStream)
 
 void CO::deserializer(QDataStream& pStream, bool fast)
 {
-    Console::print("reading game co", Console::eDEBUG);
+    CONSOLE_PRINT("reading game co", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_coID;
@@ -1786,7 +1786,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 {
     qint32 size = 0;
     pStream >> size;
-    Console::print("reading co styles " + QString::number(size), Console::eDEBUG);
+    CONSOLE_PRINT("reading co styles " + QString::number(size), Console::eDEBUG);
     m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {
@@ -1872,7 +1872,7 @@ QString CO::getActiveCoStyle()
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
-    Console::print("Loading sprites for CO " + coid, Console::eDEBUG);
+    CONSOLE_PRINT("Loading sprites for CO " + coid, Console::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);

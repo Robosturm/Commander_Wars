@@ -131,6 +131,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 0)
@@ -176,18 +181,12 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_K_HELI.getMaxUnitCount();
+            return 1100 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
         }
         else
         {
-            return 1000;
+            return 800 - BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
         }
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_K_HELI.getMaxUnitCount();
     };
 };
 

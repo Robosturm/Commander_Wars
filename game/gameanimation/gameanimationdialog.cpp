@@ -322,7 +322,7 @@ void GameAnimationDialog::loadBackground(QString file)
     }
     else
     {
-        Console::print("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
+        CONSOLE_PRINT("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
     }
 }
 

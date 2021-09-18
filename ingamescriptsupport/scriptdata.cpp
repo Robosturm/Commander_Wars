@@ -41,7 +41,7 @@ QString ScriptData::getVariableName()
 
 void ScriptData::readScript(QTextStream& rStream)
 {
-    Console::print("ScriptData::readScript", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptData::readScript", Console::eDEBUG);
     clearData();
     bool started = false;
     while (!rStream.atEnd())
@@ -55,7 +55,7 @@ void ScriptData::readScript(QTextStream& rStream)
         {
             if (line.endsWith(victoryInfo))
             {
-                Console::print("Reading victory info", Console::eDEBUG);
+                CONSOLE_PRINT("Reading victory info", Console::eDEBUG);
                 while (!rStream.atEnd())
                 {
                     line = rStream.readLine();
@@ -65,11 +65,11 @@ void ScriptData::readScript(QTextStream& rStream)
                         break;
                     }
                 }
-                Console::print("Read victory info", Console::eDEBUG);
+                CONSOLE_PRINT("Read victory info", Console::eDEBUG);
             }
             else if (line.endsWith(immediateStart))
             {
-                Console::print("Reading immediate start", Console::eDEBUG);
+                CONSOLE_PRINT("Reading immediate start", Console::eDEBUG);
                 while (!rStream.atEnd())
                 {
                     line = rStream.readLine();
@@ -87,41 +87,41 @@ void ScriptData::readScript(QTextStream& rStream)
                         break;
                     }
                 }
-                Console::print("Read immediate start", Console::eDEBUG);
+                CONSOLE_PRINT("Read immediate start", Console::eDEBUG);
             }
             else if (line.endsWith(victory))
             {
-                Console::print("Reading victory code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading victory code", Console::eDEBUG);
                 readData(victory, rStream, customVictoryCode, &m_Victory);
-                Console::print("Read victory code", Console::eDEBUG);
+                CONSOLE_PRINT("Read victory code", Console::eDEBUG);
             }
             else if (line.endsWith(turnStart))
             {
-                Console::print("Reading turn start code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading turn start code", Console::eDEBUG);
                 readData(turnStart, rStream, customStartOfTurnCode, &m_DayConditions);
-                Console::print("Read turn start code", Console::eDEBUG);
+                CONSOLE_PRINT("Read turn start code", Console::eDEBUG);
             }
             else if (line.endsWith(actionConditions))
             {
-                Console::print("Reading action code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading action code", Console::eDEBUG);
                 readData(actionConditions, rStream, customActionConditions, &m_ActionConditions);
-                Console::print("Read action code", Console::eDEBUG);
+                CONSOLE_PRINT("Read action code", Console::eDEBUG);
             }
             else if (line.endsWith(scriptEnd))
             {
-                Console::print("Reading script end", Console::eDEBUG);
+                CONSOLE_PRINT("Reading script end", Console::eDEBUG);
                 break;
             }
             else
             {
-                Console::print("Reading custom code", Console::eDEBUG);
+                CONSOLE_PRINT("Reading custom code", Console::eDEBUG);
                 customCode += line;
             }
         }
     }
     if (rStream.status() != QTextStream::Ok)
     {
-        Console::print("Error occured while reading ScriptData", Console::eERROR);
+        CONSOLE_PRINT("Error occured while reading ScriptData", Console::eERROR);
     }
 }
 
@@ -133,19 +133,19 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
         QString trimmedLine = line.simplified();
         if (trimmedLine.endsWith(id))
         {
-            Console::print("Read end for " + id, Console::eDEBUG);
+            CONSOLE_PRINT("Read end for " + id, Console::eDEBUG);
             break;
         }
         if (line.endsWith("precondition"))
         {
-            Console::print("Reading precondition", Console::eDEBUG);
+            CONSOLE_PRINT("Reading precondition", Console::eDEBUG);
             while (!rStream.atEnd())
             {
                 QString line = rStream.readLine();
                 line = line.simplified();
                 if (line.endsWith("preconditionend"))
                 {
-                    Console::print("Read precondition", Console::eDEBUG);
+                    CONSOLE_PRINT("Read precondition", Console::eDEBUG);
                     break;
                 }
             }
@@ -165,7 +165,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
 
 void ScriptData::writeScript(QTextStream& rStream)
 {
-    Console::print("ScriptData::writeScript", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptData::writeScript", Console::eDEBUG);
     m_variableCounter = 0;
     rStream << "var Constructor = function() { // " + scriptStart + "\n";
     rStream << "    this.immediateStart = function() { // " + immediateStart + "\n";

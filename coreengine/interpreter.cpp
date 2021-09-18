@@ -92,16 +92,16 @@ void Interpreter::openScript(QString script, bool setup)
     if (!scriptFile.open(QIODevice::ReadOnly))
     {
         QString error = "Error: attemp to read file " + script + " which could not be opened.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else if (!scriptFile.exists())
     {
         QString error = "Error: unable to open non existing file " + script + ".";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else
     {
-        Console::print("Loading script " + script, Console::eDEBUG);
+        CONSOLE_PRINT("Loading script " + script, Console::eDEBUG);
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         if (setup)
@@ -120,21 +120,21 @@ void Interpreter::openScript(QString script, bool setup)
             QString error = value.toString() + " in File:" + script + " in File: " +
                             value.property("fileName").toString() + " at Line: " +
                             value.property("lineNumber").toString();
-            Console::print(error, Console::eERROR);
+            CONSOLE_PRINT(error, Console::eERROR);
         }
     }
 }
 
 void Interpreter::loadScript(QString content, QString script)
 {
-    Console::print("Interpreter::loadScript: " + script, Console::eDEBUG);
+    CONSOLE_PRINT("Interpreter::loadScript: " + script, Console::eDEBUG);
     QJSValue value = evaluate(content, script);
     if (value.isError())
     {
         QString error = value.toString() + " in script " + script + " in File: " +
                         value.property("fileName").toString() + " at Line: " +
                         value.property("lineNumber").toString();
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
 }
 
@@ -153,14 +153,14 @@ QJSValue Interpreter::doFunction(QString func, const QJSValueList& args)
             QString error = ret.toString() + " in File: " +
                             ret.property("fileName").toString() + " at Line: " +
                             ret.property("lineNumber").toString();
-            Console::print(error, Console::eERROR);
+            CONSOLE_PRINT(error, Console::eERROR);
         }
 #ifdef GAMEDEBUG
     }
     else
     {
         QString error = "Error: attemp to call a non function value. Call:" + func;
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
 #endif
     return ret;
@@ -185,20 +185,20 @@ QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& 
                 QString error = ret.toString() + " in File: " +
                                 ret.property("fileName").toString() + " at Line: " +
                                 ret.property("lineNumber").toString();
-                Console::print(error, Console::eERROR);
+                CONSOLE_PRINT(error, Console::eERROR);
             }
 #ifdef GAMEDEBUG
         }
         else
         {
             QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
-            Console::print(error, Console::eERROR);
+            CONSOLE_PRINT(error, Console::eERROR);
         }
     }
     else
     {
         QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
 
 #endif
@@ -210,7 +210,7 @@ QJSValue Interpreter::doString(QString task)
     QJSValue value = evaluate(task, "GameCode");
     if (value.isError())
     {
-        Console::print(value.toString(), Console::eERROR);
+        CONSOLE_PRINT(value.toString(), Console::eERROR);
     }
     return value;
 }
@@ -261,7 +261,7 @@ qint32 Interpreter::getGlobalInt(QString var)
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else
     {
@@ -277,7 +277,7 @@ bool Interpreter::getGlobalBool(QString var)
     if (!value.isBool())
     {
         QString error = "Error: attemp to read " + var + "which is not from type bool.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else
     {
@@ -293,7 +293,7 @@ double Interpreter::getGlobalDouble(QString var)
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else
     {
@@ -309,7 +309,7 @@ QString Interpreter::getGlobalString(QString var)
     if (!value.isString())
     {
         QString error = "Error: attemp to read " + var + "which is not from type QString.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
     }
     else
     {

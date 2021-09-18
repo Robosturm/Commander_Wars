@@ -22,7 +22,7 @@ Shopmenu::Shopmenu()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Shop Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Shop Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -136,7 +136,7 @@ void Shopmenu::onEnter()
 
 void Shopmenu::exitMenue()
 {
-    Console::print("Leaving Shop Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Shop Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();

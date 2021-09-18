@@ -14,6 +14,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
@@ -28,6 +29,11 @@ var Constructor = function()
         }
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon, alive = true)
@@ -55,6 +61,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
@@ -76,8 +83,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function()
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -102,31 +108,25 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 860;
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2000;
     };
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 

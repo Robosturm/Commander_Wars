@@ -81,8 +81,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 900;
+        return 800 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -108,9 +107,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_FIGHTER.getMaxUnitCount();
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
     };
 };
 

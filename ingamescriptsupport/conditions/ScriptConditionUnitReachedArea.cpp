@@ -78,7 +78,7 @@ void ScriptConditionUnitReachedArea::setHeigth(const qint32 &heigth)
 
 void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionUnitReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitReachedArea", Console::eDEBUG);
     line = line.simplified();
     QStringList list = line.split("//");
     if (list.size() >= 2)
@@ -130,7 +130,7 @@ void ScriptConditionUnitReachedArea::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitReachedArea::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionUnitReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitReachedArea", Console::eDEBUG);
     rStream << "        if (map.isUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
             << QString::number(m_width) << ", " << QString::number(m_heigth) << "), "
             << m_unitID << "Value) && " << m_executed << ".readDataBool() === false) {"

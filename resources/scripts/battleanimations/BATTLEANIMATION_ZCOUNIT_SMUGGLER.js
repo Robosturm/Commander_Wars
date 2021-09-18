@@ -44,9 +44,6 @@ var Constructor = function()
         BATTLEANIMATION_ZCOUNIT_SMUGGLER.loadSprite(sprite, unit, defender, 1);
 
         var offset = Qt.point(22, 37);
-        // -15 5
-        //  0 -5
-        //  37 37
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
         for (var i = 0; i < count; i++)
@@ -57,9 +54,13 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount());
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
 
@@ -78,22 +79,20 @@ var Constructor = function()
             sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount());
+    };
+
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount();
     };
 };
 

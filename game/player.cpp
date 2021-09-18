@@ -73,7 +73,7 @@ float Player::getUnitBuildValue(QString unitID)
 
 void Player::loadVisionFields()
 {
-    Console::print("Player::loadVisionFields()", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadVisionFields()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -152,7 +152,7 @@ void Player::swapCOs()
 
 void Player::setColor(QColor color, qint32 table)
 {
-    Console::print("Setting player color", Console::eDEBUG);
+    CONSOLE_PRINT("Setting player color", Console::eDEBUG);
     m_Color = color;
     bool loaded = false;
     if (table >= 0)
@@ -173,7 +173,7 @@ void Player::setColor(QColor color, qint32 table)
 
 bool Player::loadTable(qint32 table)
 {
-    Console::print("Player::loadTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTable", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     args << table;
@@ -190,7 +190,7 @@ bool Player::loadTable(qint32 table)
 
 bool Player::loadTableFromFile(QString tablename)
 {
-    Console::print("Player::loadTableFromFile " + tablename, Console::eDEBUG);
+    CONSOLE_PRINT("Player::loadTableFromFile " + tablename, Console::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -217,7 +217,7 @@ bool Player::loadTableFromFile(QString tablename)
 
 bool Player::colorToTable(QColor baseColor)
 {
-    Console::print("Player::colorToTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTable", Console::eDEBUG);
     bool found = colorToTableInTable(baseColor);
     if (!found)
     {
@@ -338,7 +338,7 @@ bool Player::colorToTable(QColor baseColor)
 
 bool Player::colorToTableInTable(QColor baseColor)
 {
-    Console::print("Player::colorToTableInTable", Console::eDEBUG);
+    CONSOLE_PRINT("Player::colorToTableInTable", Console::eDEBUG);
     bool found = false;
     QStringList searchPaths;
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
@@ -361,7 +361,7 @@ bool Player::colorToTableInTable(QColor baseColor)
             QImage img(path);
             if (QColor(img.pixel(8, 0)) == baseColor)
             {
-                Console::print("load table " + path, Console::eDEBUG);
+                CONSOLE_PRINT("load table " + path, Console::eDEBUG);
                 m_colorTable.load(path);
                 if (m_colorTable.height() > 0)
                 {
@@ -383,7 +383,7 @@ bool Player::colorToTableInTable(QColor baseColor)
 
 void Player::createTable(QColor baseColor)
 {
-    Console::print("Player::createTable " + baseColor.name(), Console::eDEBUG);
+    CONSOLE_PRINT("Player::createTable " + baseColor.name(), Console::eDEBUG);
     constexpr qint32 imageSize = 256;
     m_colorTable = QImage(imageSize, imageSize, QImage::Format_RGBA8888);
     m_colorTable.fill(QColor(0, 0, 0, 0));
@@ -1771,7 +1771,7 @@ qint32 Player::calculatePlayerStrength()
 
 void Player::serializeObject(QDataStream& pStream) const
 {
-    Console::print("storing player", Console::eDEBUG);
+    CONSOLE_PRINT("storing player", Console::eDEBUG);
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
@@ -1830,7 +1830,7 @@ void Player::deserializeObject(QDataStream& pStream)
 
 void Player::deserializer(QDataStream& pStream, bool fast)
 {
-    Console::print("reading player", Console::eDEBUG);
+    CONSOLE_PRINT("reading player", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     quint32 color;
@@ -1893,7 +1893,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             qint32 heigth = 0;
             pStream >> width;
             pStream >> heigth;
-            Console::print("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
+            CONSOLE_PRINT("Loading player vision width " + QString::number(width) + " height " + QString::number(heigth), Console::eDEBUG);
             for (qint32 x = 0; x < width; x++)
             {
                 m_FogVisionFields.append(QVector<VisionFieldInfo>());
@@ -1998,7 +1998,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
-            Console::print("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
         }
@@ -2012,7 +2012,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         m_Color = m_colorTable.pixel(8, 0);
         if (!fast)
         {
-            Console::print("Loading colortable", Console::eDEBUG);
+            CONSOLE_PRINT("Loading colortable", Console::eDEBUG);
             m_ColorTableAnim = oxygine::spSingleResAnim::create();
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable, 1, 1, 1, false);
         }

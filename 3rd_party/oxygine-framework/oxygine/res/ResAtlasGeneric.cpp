@@ -138,7 +138,7 @@ namespace oxygine
             }
             if (found)
             {
-                Console::print("Duplicate entry found. " + walker.getPath("file"), Console::eFATAL);
+                CONSOLE_PRINT("Duplicate entry found. " + walker.getPath("file"), Console::eFATAL);
                 continue;
             }
 
@@ -176,12 +176,12 @@ namespace oxygine
             }
             else
             {
-                Console::print("Invalid item found. " + walker.getPath("file"), Console::eFATAL);
+                CONSOLE_PRINT("Invalid item found. " + walker.getPath("file"), Console::eFATAL);
                 continue;
             }
             if (img.width() == 0 || img.height() == 0)
             {
-                Console::print("Image is not valid " + walker.getPath("file"), Console::eWARNING);
+                CONSOLE_PRINT("Image is not valid " + walker.getPath("file"), Console::eWARNING);
                 continue;
             }
             rows = child_node.attribute("rows").toInt();
@@ -228,7 +228,7 @@ namespace oxygine
                 }
                 if (QFile::exists(overlayPath))
                 {
-                    Console::print("SpriteCreator::preProcessMask for file " + path, Console::eDEBUG);
+                    CONSOLE_PRINT("SpriteCreator::preProcessMask for file " + path, Console::eDEBUG);
                     QImage overlay(overlayPath);
                     SpriteCreator::preProcessMask(img, overlay, columns, rows);
                 }

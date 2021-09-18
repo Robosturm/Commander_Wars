@@ -22,7 +22,7 @@ ReplayRecorder::ReplayRecorder()
 
 ReplayRecorder::~ReplayRecorder()
 {
-    Console::print("Saving record", Console::eDEBUG);
+    CONSOLE_PRINT("Saving record", Console::eDEBUG);
     if (m_recording)
     {
         m_dailyMapPos = m_recordFile.pos();
@@ -37,7 +37,7 @@ ReplayRecorder::~ReplayRecorder()
     m_recordFile.close();
     if (m_playing)
     {
-        Console::print("Restoring interpreter after record replay", Console::eDEBUG);
+        CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
         Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     }
 }
@@ -47,7 +47,7 @@ void ReplayRecorder::startRecording()
     spGameMap pMap = GameMap::getInstance();
     if (Settings::getRecord() && pMap.get() != nullptr)
     {
-        Console::print("Starting recording", Console::eDEBUG);
+        CONSOLE_PRINT("Starting recording", Console::eDEBUG);
         // compress script enviroment
         QByteArray data = Interpreter::getRuntimeData().toUtf8();
         data = qCompress(data);

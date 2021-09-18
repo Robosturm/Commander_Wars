@@ -29,6 +29,11 @@ var Constructor = function()
         }
     };
 
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 610;
+    };
+
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+stop", Qt.point(-10, 5), Qt.point(0, 0), 0, 1);
@@ -190,14 +195,29 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
+        if (armyName === "ma")
+        {
+            return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        }
+        else if (armyName === "yc" ||
+                 armyName === "ti")
+        {
+            return 1200 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        }
+        else
+        {
+            return 1300 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        }
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         return true;
-    };
-    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 610;
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -216,10 +236,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 850 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_FLAK.getMaxUnitCount();
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
     };
 };
 

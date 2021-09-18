@@ -18,7 +18,7 @@ Wikimenu::Wikimenu()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Wiki Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Wiki Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -66,7 +66,7 @@ void Wikimenu::onEnter()
 void Wikimenu::exitMenue()
 {    
     // save changed settings :)
-    Console::print("Leaving Wiki Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Wiki Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

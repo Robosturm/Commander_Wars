@@ -17,7 +17,7 @@ TCPServer::~TCPServer()
 {
     disconnect();
     TCPServer::disconnectTCP();
-    Console::print("Server is closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Server is closed", Console::eLogLevels::eDEBUG);
 }
 
 void TCPServer::connectTCP(QString, quint16 port)
@@ -31,7 +31,7 @@ void TCPServer::connectTCP(QString, quint16 port)
     connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
     connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
 
-    Console::print("TCP Server is running", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("TCP Server is running", Console::eLogLevels::eDEBUG);
 }
 
 void TCPServer::disconnectTCP()
@@ -58,7 +58,7 @@ void TCPServer::disconnectClient(quint64 socketID)
     {
         if (m_pClients[i]->getSocketID() == socketID)
         {
-            Console::print("Client " + QString::number(socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Client " + QString::number(socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
             emit m_pClients[i]->sigDisconnected(m_pClients[i]->getSocketID());
             m_pClients[i]->disconnectTCP();
             m_pClients.removeAt(i);            
@@ -103,7 +103,7 @@ void TCPServer::onConnect()
         pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
         pClient->setIsServer(true);
         m_pClients.append(pClient);
-        Console::print("New Client connection. Socket: " + QString::number(m_idCounter), Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("New Client connection. Socket: " + QString::number(m_idCounter), Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }

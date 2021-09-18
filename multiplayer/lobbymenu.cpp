@@ -25,7 +25,7 @@ LobbyMenu::LobbyMenu()
 {
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Lobby Menue", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     if (!Settings::getServer())
@@ -133,7 +133,7 @@ LobbyMenu::LobbyMenu()
 
 void LobbyMenu::exitMenue()
 {    
-    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
@@ -141,7 +141,7 @@ void LobbyMenu::exitMenue()
 
 void LobbyMenu::hostLocal()
 {    
-    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create("", "", true));
     oxygine::Actor::detach();    
 }
@@ -152,7 +152,7 @@ void LobbyMenu::hostServer()
         m_pTCPClient->getIsConnected())
     {
         m_usedForHosting = true;
-        Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "", true));
         oxygine::Actor::detach();        
     }
@@ -192,9 +192,9 @@ void LobbyMenu::joinGamePassword(QString password)
     }
     if (exists)
     {
-        Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
         QString command = QString(NetworkCommands::SERVERJOINGAME);
-        Console::print("Sending command " + command, Console::eDEBUG);
+        CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
         m_usedForHosting = true;
         oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, false));
         QByteArray data;
@@ -215,7 +215,7 @@ void LobbyMenu::joinAdress()
 
 void LobbyMenu::join(QString adress, QString password)
 {    
-    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::Stage::getStage()->addChild(spMultiplayermenu::create(adress.trimmed(), password, false));
     oxygine::Actor::detach();    
 }

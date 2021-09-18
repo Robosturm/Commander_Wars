@@ -121,13 +121,13 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
                 }
                 else
                 {
-                    Console::print("Unable to load: " + uiFile, Console::eERROR);
+                    CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
                 }
             }
             else
             {
-                Console::print("Unable to load: " + uiFile, Console::eERROR);
-                Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+                CONSOLE_PRINT("Unable to load: " + uiFile, Console::eERROR);
+                CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             }
         }
     }
@@ -147,7 +147,7 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
     }
     if (!success)
     {
-        Console::print("Unable to create item: " + name + ".", Console::eERROR);
+        CONSOLE_PRINT("Unable to create item: " + name + ".", Console::eERROR);
     }
     return success;
 }
@@ -571,7 +571,7 @@ bool UiFactory::checkElements(QDomNodeList childs, QVector<QString> attributes)
             }
             else if (i == childCount)
             {
-                Console::print("Missing attribute: " + attr, Console::eERROR);
+                CONSOLE_PRINT("Missing attribute: " + attr, Console::eERROR);
                 ret = false;
             }
         }
@@ -593,11 +593,11 @@ qint32 UiFactory::getIntValue(QString line)
     }
     else if (erg.isError())
     {
-        Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
     }
     else
     {
-        Console::print("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+        CONSOLE_PRINT("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
     }
     return value;
 }
@@ -612,11 +612,11 @@ bool UiFactory::getBoolValue(QString line)
     }
     else if (erg.isError())
     {
-        Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
     }
     else
     {
-        Console::print("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
+        CONSOLE_PRINT("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
     }
     return value;
 }
@@ -627,7 +627,7 @@ QString UiFactory::getStringValue(QString line)
     QString value;
     if (erg.isError())
     {
-        Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        CONSOLE_PRINT("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
     }
     else
     {
@@ -660,6 +660,6 @@ void UiFactory::doEvent(QString command)
     QJSValue erg = Interpreter::getInstance()->evaluate(command);
     if (erg.isError())
     {
-        Console::print("Error while parsing " + command + " Error: " + erg.toString() + ".", Console::eERROR);
+        CONSOLE_PRINT("Error while parsing " + command + " Error: " + erg.toString() + ".", Console::eERROR);
     }
 }

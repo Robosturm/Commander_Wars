@@ -203,6 +203,18 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        }
+        else
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        }
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 1)
@@ -299,6 +311,18 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        }
+        else
+        {
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        }
+    };
+
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
     {
         if (terrain !== null)
@@ -329,32 +353,12 @@ var Constructor = function()
     };
     this.getMoveInDurationMS = function()
     {
-        // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        if (weapon === 0)
-        {
-            return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
-        }
-        else
-        {
-            return 1000;
-        }
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

@@ -26,7 +26,7 @@ void GlobalUtils::seed(quint32 seed)
 {
     m_seed = seed;
     m_randGenerator.seed(seed);
-    Console::print("Seeding with " + QString::number(m_seed), Console::eDEBUG);
+    CONSOLE_PRINT("Seeding with " + QString::number(m_seed), Console::eDEBUG);
 }
 
 quint32 GlobalUtils::getSeed()
@@ -296,7 +296,7 @@ QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
 
 void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders)
 {
-    Console::print("GlobalUtils::importFilesFromDirectory", Console::eDEBUG);
+    CONSOLE_PRINT("GlobalUtils::importFilesFromDirectory", Console::eDEBUG);
     QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
     while (dirIter.hasNext())
     {
@@ -368,14 +368,14 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
     }
     else
     {
-        Console::print("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
+        CONSOLE_PRINT("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
     }
     return ret;
 }
 
 QString GlobalUtils::getNextAutosavePath(const QString & path, const QString & ending, qint32 max)
 {
-    Console::print("GlobalUtils::getNextAutosavePath", Console::eDEBUG);
+    CONSOLE_PRINT("GlobalUtils::getNextAutosavePath", Console::eDEBUG);
     QString finalPath = path + QString::number(1) + ending;
     QDateTime oldestDate = QFileInfo(finalPath).lastModified();
     for (qint32 i = 2; i <= max; ++i)

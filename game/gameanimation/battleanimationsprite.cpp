@@ -676,7 +676,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     }
     else
     {
-        Console::print("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -840,7 +840,7 @@ void BattleAnimationSprite::startNextFrame()
 
 void BattleAnimationSprite::startNextUnitFrames()
 {
-    Console::print("Progressing next battle frame", Console::eDEBUG);
+    CONSOLE_PRINT("Progressing next battle frame", Console::eDEBUG);
     if (m_currentFrame.size() == 0 && !m_startWithFraming)
     {
         for (auto & unitFrame : m_nextFrames[0])
@@ -887,7 +887,7 @@ void BattleAnimationSprite::startNextUnitFrames()
         ++m_frameIterator;
         if (m_frameIterator >= m_nextFrames[0].size())
         {
-            Console::print("Progressing next battle animation", Console::eDEBUG);
+            CONSOLE_PRINT("Progressing next battle animation", Console::eDEBUG);
             m_frameIterator = 0;
             m_nextFrames.removeFirst();
         }

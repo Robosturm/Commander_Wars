@@ -26,7 +26,7 @@ COStyleMenu::COStyleMenu()
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
-    Console::print("Entering Co Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Co Style Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -90,7 +90,7 @@ void COStyleMenu::onEnter()
 
 void COStyleMenu::exitMenue()
 {    
-    Console::print("Leaving CO Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
@@ -98,7 +98,7 @@ void COStyleMenu::exitMenue()
 
 void COStyleMenu::reloadMenue()
 {
-    Console::print("Leaving CO Style Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving CO Style Menue", Console::eDEBUG);
     auto window = spCOStyleMenu::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

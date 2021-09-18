@@ -283,7 +283,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
     }
     else
     {
-        Console::print("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -1070,7 +1070,7 @@ void Unit::loadUnit(Unit* pUnit)
 
 void Unit::loadSpawnedUnit(QString unitId)
 {
-    Console::print("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
     if (canTransportUnit(pUnit.get()))
     {
@@ -1080,7 +1080,7 @@ void Unit::loadSpawnedUnit(QString unitId)
 
 Unit* Unit::spawnUnit(QString unitID)
 {
-    Console::print("Unit::spawnUnit " + unitID, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::spawnUnit " + unitID, Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
@@ -1590,7 +1590,7 @@ void Unit::setUnitVisible(bool value)
 
 void Unit::makeCOUnit(quint8 co, bool force)
 {
-    Console::print("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
+    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
         (pCO->getCOUnit() == nullptr || force))

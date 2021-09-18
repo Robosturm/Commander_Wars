@@ -242,7 +242,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
     }
     else
     {
-        Console::print("Unable to load unit walk sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load unit walk sprite: " + spriteID, Console::eERROR);
         emitFinished();
     }
 }

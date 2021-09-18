@@ -54,9 +54,6 @@ var Constructor = function()
             // gun
             BATTLEANIMATION_ZCOUNIT_AUTO_TANK.loadSprite(sprite, unit);
             offset = Qt.point(33, 21);
-            // 41 24
-            // -5  5
-            // -3 -7
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 0.5, 0, 0);
             for (var i = 0; i < count; i++)
@@ -81,8 +78,6 @@ var Constructor = function()
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
-            // 32 29
-            // -5  5
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -92,27 +87,23 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount());
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount();
     };
 };
 
