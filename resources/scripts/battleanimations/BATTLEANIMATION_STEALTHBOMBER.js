@@ -44,7 +44,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        return 600 + 150 * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)

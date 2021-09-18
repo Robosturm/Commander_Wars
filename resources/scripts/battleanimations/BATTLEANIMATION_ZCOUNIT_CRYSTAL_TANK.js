@@ -86,7 +86,7 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1600;
+            return 1100;
         }
         else
         {

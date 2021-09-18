@@ -42,7 +42,7 @@ var Constructor = function()
             {
                 offset2 = Qt.point(10, 10);
             }
-            sprite.loadSingleMovingSprite("rocket_hit", false,
+            sprite.loadSingleMovingSprite("rocket_up", false,
                                           Qt.point(offset.x + offset2.x,
                                                    offset.y + offset2.y),
                                           Qt.point(80, 40), 400, false,
