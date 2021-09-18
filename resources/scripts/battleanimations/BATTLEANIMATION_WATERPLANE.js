@@ -51,8 +51,9 @@ var Constructor = function()
 
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            sprite.loadSprite("rocket_hit_air",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300);
+            sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                                    Qt.point(-50, 0), 300, false,
+                                    1, 1.0, 0, 300);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);

@@ -57,8 +57,9 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
-                          1, 1.0, 0, 300);
+        sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                                Qt.point(-30, 15), 300, false,
+                                1, 1.0, 0, 300);
         sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
                                 -1, 1, 0, 0, true);
