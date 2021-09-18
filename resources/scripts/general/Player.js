@@ -230,6 +230,7 @@ var PLAYER =
                    [Qt.point(130,  4),  "#de8452"],
                    [Qt.point(133,  4),  "#ffde84"],
                    [Qt.point(139,  4),  "#addee7"],
+                   [Qt.point(145,  4),  "#addee7"],
                    // face 2
                    [Qt.point(130,  7),  "#905038"],
                    [Qt.point(133,  7),  "#f89860"],
