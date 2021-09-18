@@ -87,10 +87,10 @@ var Constructor = function()
         cursorData.setYOffset(- map.getImageSize() / 3);
         cursorData.setScale(2);
     };
-    this.calcEnviromentDamage = function(action, attacker, attackerWeapon, attackerPosition, targetField, enviroment)
+    this.calcEnviromentDamage = function(action, attacker, attackerWeapon, attackerPosition, targetField, enviroment, luckMode)
     {
         var baseDamage = Global[attackerWeapon].getEnviromentDamage(enviroment);
-        var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, null, targetField, false);
+        var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, null, targetField, false, luckMode);
         var attackerHp = attacker.getHpRounded() + attacker.getAttackHpBonus(attackerPosition);
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0);
         return damage;
@@ -325,12 +325,12 @@ var Constructor = function()
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
                             unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
                     {
-                        dmg1 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                        dmg1 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }
                     if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
                             unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
                     {
-                        dmg2 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                        dmg2 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }
                     if ((dmg1 > 0.0) || (dmg2 > 0.0))
                     {
