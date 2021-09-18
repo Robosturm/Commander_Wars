@@ -50,8 +50,13 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 2);
-        return "back_mountain+" + rand.toString();
+        var rand = globals.randInt(0, 1);
+        var weatherModifier = "";
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            weatherModifier = "snow";
+        }
+        return "back_" + weatherModifier + "mountain+" + rand.toString();
     };
     this.getDescription = function()
     {
