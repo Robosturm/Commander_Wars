@@ -127,7 +127,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread();
-            m_AudioWorker.start(QThread::Priority::NormalPriority);
+            m_AudioWorker.start(QThread::Priority::LowPriority);
+            m_Audiothread->moveToThread(&m_AudioWorker);
             emit m_Audiothread->sigInitAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");
