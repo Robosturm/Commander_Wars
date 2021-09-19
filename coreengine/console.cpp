@@ -22,11 +22,7 @@
 #include "spritingsupport/spritecreator.h"
 
 // values which differ from release to debug build
-#ifdef GAMEDEBUG
-Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
-#else
-Console::eLogLevels Console::m_LogLevel = Console::eINFO;
-#endif
+Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG_LEVEL);
 
 bool Console::m_show = false;
 bool Console::m_toggled = false;

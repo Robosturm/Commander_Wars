@@ -32,6 +32,7 @@
 
 QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 {
+    // enabled                                // disabled
     OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
                                               "mods/aw2_damage_formula",
                                               "mods/awds_unit",
@@ -823,13 +824,13 @@ void OptionMenue::showMods()
     m_pModDescription->clearContent();
     m_ModBoxes.clear();
     m_ModCheckboxes.clear();
+    m_ModSelector->removeChildren();
 
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
     m_ModSelector->setVisible(true);
     m_pModDescription->setVisible(true);
     m_pGameplayAndKeys->setVisible(false);
-    m_ModSelector->removeChildren();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -970,7 +971,7 @@ void OptionMenue::updateModSelection()
     QStringList currentMods = Settings::getMods();
     qint32 index = 0;
     bool set = false;
-    for (const auto & gameMode : m_gamemodeMods)
+    for (const auto & gameMode : qAsConst(m_gamemodeMods))
     {
         bool valid = (currentMods.size() == gameMode.m_enableMods.size());
         for (const auto & activeMod : gameMode.m_enableMods)

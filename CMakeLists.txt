@@ -53,6 +53,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
+        -DDEBUG_LEVEL=0
         -DHEAVY_AI
         -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
@@ -67,6 +68,7 @@ else("Release")
     message("Compiling as Release")
     add_definitions(
         -DGAMERELEASE
+        -DDEBUG_LEVEL=1
         )
     set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()
