@@ -586,6 +586,7 @@
         <image file="k_heli/k_heli+ge+mask.png" cols = "2" />
         <image file="k_heli/k_heli+os+mask.png" cols = "2" />
         <image file="k_heli/k_heli+yc+mask.png" cols = "2" />
+        <image file="k_heli/k_heli+ti+mask.png" cols = "2" />
         <image file="k_heli/k_heli+ma+mask.png" />
         <image file="k_heli/k_heli+bd+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+bh+mg+fire+mask.png" cols = "2" />
@@ -593,6 +594,7 @@
         <image file="k_heli/k_heli+ge+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+os+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+yc+mg+fire+mask.png" cols = "2" />
+        <image file="k_heli/k_heli+ti+mg+fire+mask.png" cols = "2" />
         <!-- lander -->
         <image file="lander/lander+bh.png" cols = "4" />
         <image file="lander/lander+bh+mask.png" cols = "4" />
