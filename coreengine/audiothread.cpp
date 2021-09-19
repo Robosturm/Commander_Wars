@@ -113,7 +113,7 @@ void AudioThread::createSoundCache()
     QStringList mods = Settings::getMods();
     for (const auto & mod : qAsConst(mods))
     {
-        searchFolders.append(mod + "sounds/");
+        searchFolders.append(mod + "/sounds/");
     }
     for (qint32 i = searchFolders.size() - 1; i >= 0; --i)
     {

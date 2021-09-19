@@ -1979,7 +1979,6 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         m_Rules->checkVictory();
         enableUnits(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
-        playMusic();
         bool permanent = false;
         bool found = false;
         auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
@@ -2052,6 +2051,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             pMenu->updatePlayerinfo();
             pMenu->updateMinimap();
         }
+        playMusic();
     }
 }
 
