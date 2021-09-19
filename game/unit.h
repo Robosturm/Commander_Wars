@@ -582,6 +582,12 @@ public slots:
      */
     void showRanges();
     /**
+     * @brief getVisionFields
+     * @param position
+     * @return x = x, y = y z = direct vision
+     */
+    QVector<QVector3D> getVisionFields(QPoint position);
+    /**
      * @brief removeUnit removes this from game
      */
     void removeUnit(bool killed = true);

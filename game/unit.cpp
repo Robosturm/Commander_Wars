@@ -2431,8 +2431,6 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         movePath.append(QPoint(Unit::getX(), Unit::getY()));
     }
     // update vision based on the movepath of the unit
-    spGameMap pMap = GameMap::getInstance();
-    bool visionBlock = pMap->getGameRules()->getVisionBlock();
     for (qint32 i = 0; i < movePath.size(); i++)
     {
         qint32 moveCost = 1;
@@ -2443,40 +2441,10 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         }
         if (moveCost > 0)
         {
-            spQmlVectorPoint pCircle;
-            qint32 visionRange = getVision(movePath[i]);
-            Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
-            if (visionBlock)
+            auto fields = getVisionFields(movePath[i]);
+            for (auto & field : qAsConst(fields))
             {
-                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
-            }
-            else
-            {
-                pCircle = GlobalUtils::getCircle(0, visionRange);
-            }
-            for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
-            {
-                QPoint circleField = pCircle->at(i2);
-                QPoint field = circleField + QPoint(movePath[i].x(), movePath[i].y());
-                if (pMap->onMap(field.x(), field.y()))
-                {
-                    if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
-                    {
-                        m_pOwner->addVisionField(field.x(), field.y(), 1, true);
-                    }
-                    else
-                    {
-                        Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
-                        Unit* pUnit = pTerrain->getUnit();
-                        bool visionHide = pTerrain->getVisionHide(m_pOwner);
-                        if ((!visionHide) ||
-                            ((pUnit != nullptr) && visionHide &&
-                             !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
-                        {
-                            m_pOwner->addVisionField(field.x(), field.y(), 1, false);
-                        }
-                    }
-                }
+                m_pOwner->addVisionField(field.x(), field.y(), 1, field.z());
             }
         }
     }
@@ -2484,7 +2452,49 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
     }
-    
+}
+
+QVector<QVector3D> Unit::getVisionFields(QPoint position)
+{
+    QVector<QVector3D> visionFields;
+    spGameMap pMap = GameMap::getInstance();
+    bool visionBlock = pMap->getGameRules()->getVisionBlock();
+    spQmlVectorPoint pCircle;
+    qint32 visionRange = getVision(position);
+    Terrain* pTerrain = pMap->getTerrain(position.x(), position.y());
+    if (visionBlock)
+    {
+        pCircle = pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
+    }
+    else
+    {
+        pCircle = GlobalUtils::getCircle(0, visionRange);
+    }
+    for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
+    {
+        QPoint circleField = pCircle->at(i2);
+        QPoint field = circleField + QPoint(position.x(), position.y());
+        if (pMap->onMap(field.x(), field.y()))
+        {
+            if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
+            {
+                visionFields.append(QVector3D(field.x(), field.y(), true));
+            }
+            else
+            {
+                Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
+                Unit* pUnit = pTerrain->getUnit();
+                bool visionHide = pTerrain->getVisionHide(m_pOwner);
+                if ((!visionHide) ||
+                    ((pUnit != nullptr) && visionHide &&
+                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                {
+                    visionFields.append(QVector3D(field.x(), field.y(), false));
+                }
+            }
+        }
+    }
+    return visionFields;
 }
 
 void Unit::moveUnitToField(qint32 x, qint32 y)

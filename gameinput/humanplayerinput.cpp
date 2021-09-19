@@ -57,15 +57,15 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
 {
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
-        m_pPlayer == nullptr)
-    {
-        if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
-        {
-            cleanUpInput();
-        }
-        
-    }
+    // if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+    //     m_pPlayer == nullptr)
+    // {
+    //     if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
+    //     {
+    //         cleanUpInput();
+    //     }
+    //
+    // }
 }
 
 void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
@@ -112,6 +112,14 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 showAttackableFields(x, y);
             }
+            else if (m_FieldPoints.size() > 0 && !m_showVisionFields)
+            {
+                showVisionFields(x, y);
+            }
+            else
+            {
+                cleanUpInput();
+            }
         }
     }
     else if (isViewPlayer)
@@ -133,6 +141,35 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         // do nothing
     }
+}
+
+void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
+{
+    Mainapp::getInstance()->pauseRendering();
+    clearMarkedFields();
+    // try to show fire ranges :)
+    spGameMap pMap = GameMap::getInstance();
+    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+    if ((pUnit != nullptr) &&
+        (!pUnit->isStealthed(m_pPlayer)))
+    {
+        m_showVisionFields = true;
+        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+        auto points = pUnit->getVisionFields(pUnit->Unit::getPosition());
+        for (auto & point : qAsConst(points))
+        {
+            if (!m_FieldPoints.contains(QVector3D(point.x(), point.y(), 1)))
+            {
+                createMarkedField(point.toPoint(), QColor(255, 127, 39), Terrain::DrawPriority::MarkedFieldMap);
+            }
+        }
+    }
+    else
+    {
+        cleanUpInput();
+    }
+    syncMarkedFields();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void HumanPlayerInput::cancelSelection(qint32 x, qint32 y)
@@ -266,6 +303,7 @@ void HumanPlayerInput::cleanUpInput()
     clearMenu();
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
+    m_showVisionFields = false;
     clearMarkedFields();
     deleteArrow();
     spGameMenue pMenue = GameMenue::getInstance();

@@ -108,6 +108,12 @@ public:
      */
     void showAttackableFields(qint32 x, qint32 y);
     /**
+     * @brief showVisionFields
+     * @param x
+     * @param y
+     */
+    void showVisionFields(qint32 x, qint32 y);
+    /**
      * @brief clearMarkedFields
      */
     void clearMarkedFields();
@@ -211,6 +217,8 @@ private:
 
     QPoint m_lastClickPoint;
     QPoint m_lastCursorPosition;
+
+    bool m_showVisionFields;
 };
 
 #endif // HUMANPLAYERINPUT_H
