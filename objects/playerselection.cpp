@@ -98,6 +98,11 @@ bool PlayerSelection::isClosedPlayer(qint32 player)
             ret = (aiName == tr("Closed"));
         }
     }
+    else if (m_pNetworkInterface.get() == nullptr &&
+             m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1)
+    {
+        ret = true;
+    }
     return ret;
 }
 

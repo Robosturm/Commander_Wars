@@ -54,8 +54,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_QML_DEBUG
         -DGAMEDEBUG
         -DDEBUG_LEVEL=0
-        -DHEAVY_AI
-        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        #-DHEAVY_AI
+        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 
@@ -755,5 +755,5 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
             "${InstallExePath}"
     COMMENT "Running windeployqt with path ${InstallExePath}"
-)
+    )
 endif()
