@@ -149,6 +149,10 @@ void Building::setOwner(Player* pOwner)
     }
     else
     {
+        if (m_BuildingID == "HQ")
+        {
+            updateBuildingSprites(false);
+        }
         updatePlayerColor(visible);
     }
 }
