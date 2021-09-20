@@ -1063,7 +1063,7 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
     }
     spGameMap pMap = GameMap::getInstance();
     const auto & data = pMap->getGameRecorder()->getPlayerDataRecords();
-    if (player >= 0 && data.size() < player)
+    if (player >= 0 && player < data.size())
     {
         const auto & playerdata = data[player];
         if (Settings::getSmallScreenDevice())
