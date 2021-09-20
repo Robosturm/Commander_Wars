@@ -13,6 +13,7 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["ma", "ma"],
                      ["os", "os"],
+                     ["ti", "ti"],
                      ["yc", "yc"],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
