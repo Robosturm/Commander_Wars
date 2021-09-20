@@ -167,7 +167,7 @@ var Constructor = function()
         {
             rocketEndFrame = sprite.getFireUnitCount(5);
         }
-        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, rocketEndFrame, rocketEndFrame, Qt.point(-65, 20));
+        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, 0, 0, rocketEndFrame, rocketEndFrame, Qt.point(-65, 20));
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 

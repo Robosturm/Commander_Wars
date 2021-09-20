@@ -78,7 +78,6 @@ CO_CAULDER.startOfTurn = function(co)
                 if (animations.length < 5)
                 {
                     animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
-                    powerNameAnimation.queueAnimation(animation);
                     animations.push(animation);
                 }
                 else
