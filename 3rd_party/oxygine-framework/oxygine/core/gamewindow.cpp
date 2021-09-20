@@ -19,6 +19,7 @@
 #include <QTimerEvent>
 #include <QMutexLocker>
 #include <qapplication.h>
+#include <limits>
 
 #include "coreengine/console.h"
 
@@ -312,7 +313,7 @@ namespace oxygine
         {
             case QEvent::TouchBegin:
             {
-                if (touchPoints.count() == 1 )
+                if (touchPoints.count() == 1)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMousePressEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
@@ -323,10 +324,10 @@ namespace oxygine
             case QEvent::TouchUpdate:
             {
                 handleZoomGesture(touchPoints);
-                if (touchPoints.count() == 1 )
+                if (touchPoints.count() == 1 && !m_longPressSent)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (touchPoint0.pressPosition() == touchPoint0.position() &&
+                    if (sameTouchpoint(touchPoint0.pressPosition(), touchPoint0.position()) &&
                         touchPoint0.timeHeld() >= 0.5)
                     {
                         emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
@@ -342,20 +343,20 @@ namespace oxygine
             }
             case QEvent::TouchEnd:
             {
-                if (touchPoints.count() == 1)
+                if (touchPoints.count() == 1 && !m_longPressSent)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
-                    if (touchPoint0.pressPosition() == touchPoint0.position() &&
-                        !m_longPressSent)
+                    if (sameTouchpoint(touchPoint0.pressPosition(), touchPoint0.position()))
                     {
                         if (touchPoint0.timeHeld() >= 0.5)
                         {
                             emit sigMousePressEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
                             emit sigMouseReleaseEvent(MouseButton_Right, touchPoint0.position().x(), touchPoint0.position().y());
+                            m_longPressSent = true;
                         }
                     }
                 }
-                if (m_touchMousePressSent)
+                if (m_touchMousePressSent && !m_longPressSent)
                 {
                     const QTouchEvent::TouchPoint &touchPoint0 = touchPoints.first();
                     emit sigMouseReleaseEvent(MouseButton_Left, touchPoint0.position().x(), touchPoint0.position().y());
@@ -367,6 +368,11 @@ namespace oxygine
             default:
                 break;
         }
+    }
+
+    bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
+    {
+        return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) < 15;
     }
 
     void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)
