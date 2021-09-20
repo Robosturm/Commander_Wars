@@ -132,7 +132,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
             {

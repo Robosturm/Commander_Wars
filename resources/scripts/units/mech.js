@@ -56,7 +56,8 @@ var Constructor = function()
                      ["yc", "yc"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],];
+                     ["ma", "ma"],
+                     ["ac", "ac"],];
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();

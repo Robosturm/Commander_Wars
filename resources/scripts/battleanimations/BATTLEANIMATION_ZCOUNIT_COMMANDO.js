@@ -122,22 +122,12 @@ var Constructor = function()
         var i = 0;
         if (weapon === 1)
         {
-            sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300);
-            sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-            sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
-                                    Qt.point(-127, 0), 400, true,
-                                    1, 1, 0, 0, true);
-            for (i = 0; i < count; i++)
-            {
-                sprite.loadSound("rocket_flying.wav", 1, 0);
-                sprite.loadSound("impact_explosion.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            }
+            BATTLEANIMATION_MECH.loadImpactAnimation(sprite, unit, defender, weapon);
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

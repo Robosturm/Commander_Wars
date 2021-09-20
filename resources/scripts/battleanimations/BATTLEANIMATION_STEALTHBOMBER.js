@@ -64,7 +64,7 @@ var Constructor = function()
                                     1, 1, 0, 0, true);
             sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                                     Qt.point(-50, 0), 300, false,
-                                    1, 1.0, 0, 300);
+                                    1, 1.0, 0, 300, true);
         }
         else
         {
@@ -72,7 +72,7 @@ var Constructor = function()
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
-                              1, 1.0, 0, 300);
+                              1, 1.0, 0, 300, true);
         }
         for (var i = 0; i < count; i++)
         {

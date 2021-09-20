@@ -102,6 +102,7 @@
         <image file="infantry+os+mask.png" cols = "4"  />
         <image file="infantry+os+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+ac+mask.png" cols = "4"  />
+        <image file="infantry+ac+walk+mask.png" cols = "4"  rows = "4"  />
         <image file="infantry+bd+mask.png" cols = "4"  />
         <image file="infantry+bh+mask.png" cols = "4"  />
         <image file="infantry+bh+walk+mask.png" cols = "4"  rows = "4"  />
@@ -129,6 +130,7 @@
         <image file="light_tank+walk+mask.png" cols = "3" rows = "4"  />
         <!-- mech -->
         <image file="mech+ac+mask.png" cols = "4"  />
+        <image file="mech+ac+walk+mask.png" cols = "4" rows = "4"  />
         <image file="mech+bd+mask.png" cols = "4"  />
         <image file="mech+bh+mask.png" cols = "4"  />
         <image file="mech+bh+walk+mask.png" cols = "4" rows = "4"  />

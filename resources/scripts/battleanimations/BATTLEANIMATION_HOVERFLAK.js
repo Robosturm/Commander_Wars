@@ -165,7 +165,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                          1, 1.0, 0, 0);
+                          1, 1.0, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

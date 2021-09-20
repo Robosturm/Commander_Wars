@@ -129,7 +129,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 200);
             for (i = 0; i < count; i++)
             {
@@ -139,7 +139,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

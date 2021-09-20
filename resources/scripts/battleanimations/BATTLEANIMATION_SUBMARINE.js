@@ -99,7 +99,7 @@ var Constructor = function()
 
                 sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 30),
                                               Qt.point(0, 0), 0, false,
-                                              1, 1.0, 2, 300 + i * 150);
+                                              1, 1.0, 2, 300 + i * 150, true);
             }
             else
             {

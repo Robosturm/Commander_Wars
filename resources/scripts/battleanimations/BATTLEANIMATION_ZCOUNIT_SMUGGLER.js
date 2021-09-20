@@ -45,7 +45,7 @@ var Constructor = function()
 
         var offset = Qt.point(22, 37);
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                          1, 1, 0, 0);
+                          1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

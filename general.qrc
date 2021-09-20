@@ -5055,5 +5055,7 @@
         <file>resources/images/battleanimations/flak/flak+bd+move+air+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+bd+stop+air+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bd+walk+mask.png</file>
+        <file>resources/images/units/infantry+ac+walk+mask.png</file>
+        <file>resources/images/units/mech+ac+walk+mask.png</file>
     </qresource>
 </RCC>

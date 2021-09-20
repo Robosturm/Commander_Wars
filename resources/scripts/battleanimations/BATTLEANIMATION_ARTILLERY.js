@@ -81,7 +81,7 @@ var Constructor = function()
         {
             offset = Qt.point(41, 36);
         }
-        sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
+        sprite.loadSprite("artillery_shot", false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);
         for (var i = 0; i < count; i++)
         {
@@ -99,8 +99,8 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
         var i = 0;
-        sprite.loadSprite("artillery_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 0);
+        sprite.loadSprite("artillery_hit", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                          1, 1.0, 0, 0, true);
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)
         {
