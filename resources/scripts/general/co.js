@@ -74,6 +74,12 @@ var CO =
         return 0;
     },
 
+    canCounterAttack : function(co, attacker, atkPosX, atkPosY,
+                                defender, defPosX, defPosY, luckMode)
+    {
+        return GameEnums.CounterAttackMode_Impossible;
+    },
+
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                              defender, defPosX, defPosY, isDefender, action, luckMode)
     {

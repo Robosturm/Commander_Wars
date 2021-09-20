@@ -1391,7 +1391,65 @@ float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qi
 bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
 {
     bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1;
-    return directCombat;
+    CO* pCO = m_pOwner->getCO(0);
+    auto mode = GameEnums::CounterAttackMode_Undefined;
+    if (pCO != nullptr)
+    {
+        mode = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+    }
+    if (mode != GameEnums::CounterAttackMode_Impossible)
+    {
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+            if (mode2 != GameEnums::CounterAttackMode_Undefined)
+            {
+                mode = mode2;
+            }
+        }
+    }
+    if (mode != GameEnums::CounterAttackMode_Impossible)
+    {
+        spGameMap pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer != nullptr &&
+                m_pOwner->isEnemy(pPlayer) &&
+                !pPlayer->getIsDefeated())
+            {
+                pCO = pPlayer->getCO(0);
+                if (pCO != nullptr)
+                {
+                    auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+                    if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                    {
+                        mode = mode2;
+                    }
+                }
+                if (mode == GameEnums::CounterAttackMode_Impossible)
+                {
+                    break;
+                }
+                pCO = pPlayer->getCO(1);
+                if (pCO != nullptr)
+                {
+                    auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+                    if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                    {
+                        mode = mode2;
+                    }
+                }
+                if (mode == GameEnums::CounterAttackMode_Impossible)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return (directCombat || mode == GameEnums::CounterAttackMode_Possible) &&
+            mode != GameEnums::CounterAttackMode_Impossible;
 }
 
 qint32 Unit::getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)

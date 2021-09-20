@@ -1100,6 +1100,47 @@ float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoi
     return ergValue;
 }
 
+GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "canCounterAttack";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
+    args1 << luckMode;
+    auto ergValue = GameEnums::CounterAttackMode_Impossible;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                auto mode2 = static_cast<GameEnums::CounterAttackMode>(erg.toNumber());
+                if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                {
+                    ergValue = mode2;
+                    if (ergValue == GameEnums::CounterAttackMode_Impossible)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return ergValue;
+}
+
 GameEnums::PowerMode CO::getPowerMode() const
 {
     return m_PowerMode;
