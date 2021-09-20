@@ -69,34 +69,48 @@ var Constructor = function()
         var unitDefendedVariable = variables.createVariable("UNITDEFENDED");
         unitDefendedVariable.writeDataInt32(1);
     };
-    this.doSupportDamageReduction = function(unit, attacker, attackerPosition, defender, defenderPosition)
+    this.doSupportDamageReduction = function(unit, damage, attacker, attackerPosition, defender, defenderPosition)
     {
         // gets called after the damage reduction has been applied
-        var ret = false;
-        var variables = unit.getVariables();
-        var unitDefendedVariable = variables.getVariable("UNITDEFENDED");
-        var canDefend = 1;
-        if (unitDefendedVariable !== null)
+        var ret = [false, 0];
+        var apply = ZCOUNIT_CHAPERON.getApplyReduction(unit, attackerPosition, defenderPosition);
+        if (apply)
         {
-            canDefend = unitDefendedVariable.readDataInt32();
-        }
-        var ammo1 = unit.getAmmo1()
-        var pos = unit.getPosition();
-        if (canDefend > 0 &&
-            globals.getDistance(defenderPosition, pos) < unit.getMaxRange(pos) &&
-            globals.getDistance(defenderPosition, attackerPosition) > 1 &&
-            ammo1 > 1)
-        {
-            unitDefendedVariable = variables.createVariable("UNITDEFENDED");
+            ret[0] = true;
+            var variables = unit.getVariables();
+            var unitDefendedVariable = variables.createVariable("UNITDEFENDED");
             unitDefendedVariable.writeDataInt32(0);
             unit.setAmmo1(unit.getAmmo1() - 1);
-            ret = true;
+            if (unit.isStealthed(attacker.getOwner()))
+            {
+                ret[1] = ZCOUNIT_CHAPERON.getReductionDamage(damage, unit);
+            }
         }
         return ret;
     };
     this.predictSupportDamageReduction = function(unit, damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, defender, luckMode)
     {
+        var ret = [false, 0];
+        var apply = ZCOUNIT_CHAPERON.getApplyReduction(unit, attackerPosition, defenderPosition);
+        if (apply)
+        {
+            ret[0] = true;
+            if (!unit.isStealthed(attacker.getOwner()))
+            {
+                ret[1] = ZCOUNIT_CHAPERON.getReductionDamage(damage, unit);
+            }
+        }
+        return ret;
+    };
+
+    this.getReductionDamage = function(damage, unit)
+    {
+        return damage * unit.getHpRounded() / 10;
+    };
+
+    this.getApplyReduction = function(unit, attackerPosition, defenderPosition)
+    {
         var variables = unit.getVariables();
         var unitDefendedVariable = variables.getVariable("UNITDEFENDED");
         var canDefend = 1;
@@ -104,23 +118,25 @@ var Constructor = function()
         {
             canDefend = unitDefendedVariable.readDataInt32();
         }
-        var ret = 0;
+        var ret = false;
         var ammo1 = unit.getAmmo1();
         var pos = unit.getPosition();
+        var unitDistance = globals.getDistance(defenderPosition, pos);
         if (canDefend > 0 &&
-            globals.getDistance(defenderPosition, pos) <= unit.getMaxRange(pos) &&
+            unitDistance <= unit.getMaxRange(pos) &&
             globals.getDistance(defenderPosition, attackerPosition) > 1 &&
             ammo1 > 0)
         {
-            ret = damage * unit.getHpRounded() / 10;
+            ret = true;
         }
         return ret;
     };
+
     this.getCOSpecificUnit = function(building)
     {
         return true;
     };
-}
+};
 
 Constructor.prototype = UNIT;
 var ZCOUNIT_CHAPERON = new Constructor();

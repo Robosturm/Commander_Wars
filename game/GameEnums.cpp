@@ -141,6 +141,10 @@ void GameEnums::registerEnums()
     value.setProperty("PowerGainMode_Hp", PowerGainMode_Hp);
     value.setProperty("PowerGainMode_Hp_OnlyAttacker", PowerGainMode_Hp_OnlyAttacker);
 
+    value.setProperty("CounterAttackMode_Undefined", CounterAttackMode_Undefined);
+    value.setProperty("CounterAttackMode_Impossible", CounterAttackMode_Impossible);
+    value.setProperty("CounterAttackMode_Possible", CounterAttackMode_Possible);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

@@ -105,7 +105,7 @@ var Constructor = function()
     {
         var damage = -1;
         // only direct units can deal counter damage
-        if (Math.abs(attackerPosition.x - defender.getX()) + Math.abs(attackerPosition.y - defender.getY()) === 1)
+        if (defender.canCounterAttack(action, defender.getPosition(), attacker, attackerPosition, luckMode))
         {
             if (defender.getMinRange(Qt.point(defender.getX(), defender.getY())) === 1 && defenderWeapon !== "")
             {
@@ -196,16 +196,21 @@ var Constructor = function()
             var unitId = unit.getUnitID();
             if (typeof Global[unitId].predictSupportDamageReduction !== 'undefined')
             {
-                ret = Global[unitId].predictSupportDamageReduction(unit, damage, attacker, attackerPosition, attackerBaseHp,
-                                                                   defenderPosition, defender, luckMode);
-                break;
+                var retInfo = Global[unitId].predictSupportDamageReduction(unit, damage, attacker, attackerPosition, attackerBaseHp,
+                                                                           defenderPosition, defender, luckMode);
+                if (retInfo[0] === true)
+                {
+                    ret = retInfo[1];
+                    break;
+                }
             }
         }
         units.remove();
         return ret;
     };
-    this.doSupportDamageReduction = function(attacker, attackerPosition, defender, defenderPosition)
+    this.doSupportDamageReduction = function(damage, attacker, attackerPosition, defender, defenderPosition)
     {
+        var reduction = 0;
         var owner = defender.getOwner();
         var units = owner.getUnits();
         for (var i = 0; i < units.size(); ++i)
@@ -214,13 +219,16 @@ var Constructor = function()
             var unitId = unit.getUnitID();
             if (typeof Global[unitId].doSupportDamageReduction !== 'undefined')
             {
-                if (Global[unitId].doSupportDamageReduction(unit, attacker, attackerPosition, defender, defenderPosition))
+                var ret = Global[unitId].doSupportDamageReduction(unit, damage, attacker, attackerPosition, defender, defenderPosition);
+                if (ret[0] === true)
                 {
+                    reduction = ret[1];
                     break;
                 }
             }
         }
         units.remove();
+        return reduction;
     };
 
     this.calcBattleDamage = function(action, x, y, luckMode)
@@ -285,8 +293,8 @@ var Constructor = function()
                             result.y = 1;
                         }
                     }
-                    if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1 &&
-                            defUnit.isAttackable(unit, true, actionTargetField, true))
+                    if (defUnit.isAttackable(unit, true, actionTargetField, true) &&
+                        defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode))
                     {
                         baseDamage1 = -1;
                         baseDamage2 = -1;
@@ -455,11 +463,11 @@ var Constructor = function()
         ACTION_FIRE.postAnimationAttackerDamage = action.readDataInt32();
         ACTION_FIRE.postAnimationAttackerWeapon = action.readDataInt32();
         ACTION_FIRE.postAnimationDefenderDamage = action.readDataInt32();
-        ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();
+        ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();        
         // we need to move the unit to the target position
         ACTION_FIRE.postAnimationUnit = action.getTargetUnit();
+        ACTION_FIRE.applPostDamageReduction();
         var animation = Global[ACTION_FIRE.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
-
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
@@ -480,6 +488,23 @@ var Constructor = function()
         // disable unit commandments for this turn
         ACTION_FIRE.postAnimationUnit.setHasMoved(true);
 
+    };
+
+    this.applPostDamageReduction = function()
+    {
+        var defTerrain = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY);
+        var defBuilding = defTerrain.getBuilding();
+        var defUnit = defTerrain.getUnit();
+        if (defUnit !== null)
+        {
+            var damageReduction = ACTION_FIRE.doSupportDamageReduction(ACTION_FIRE.postAnimationAttackerDamage, ACTION_FIRE.postAnimationUnit, ACTION_FIRE.postAnimationUnit.getPosition(),
+                                                                       defUnit, Qt.point(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY));
+            ACTION_FIRE.postAnimationAttackerDamage  -= damageReduction;
+            if (ACTION_FIRE.postAnimationAttackerDamage < 0)
+            {
+                ACTION_FIRE.postAnimationAttackerDamage = 0;
+            }
+        }
     };
 
     this.performPostAnimation = function(postAnimation)
@@ -510,8 +535,7 @@ var Constructor = function()
             var defUnitX = defUnit.getX();
             var defUnitY = defUnit.getY();
             var defStartHp = defUnit.getHp();
-            var atkStartHp = attacker.getHp();
-            ACTION_FIRE.doSupportDamageReduction(attacker, attacker.getPosition(), defUnit, Qt.point(defUnitX, defUnitY));
+            var atkStartHp = attacker.getHp();            
             var costs = defUnit.getCosts();
             var damage = attackerDamage / 10.0;
             if (damage < 0.0)

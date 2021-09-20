@@ -263,6 +263,14 @@ public:
     };
     Q_ENUM(PowerGainMode)
 
+    enum CounterAttackMode
+    {
+        CounterAttackMode_Undefined,
+        CounterAttackMode_Impossible,
+        CounterAttackMode_Possible,
+    };
+    Q_ENUM(CounterAttackMode)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;
