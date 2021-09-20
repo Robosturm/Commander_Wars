@@ -380,6 +380,8 @@ void Console::extractResources()
         QDir newDir(targetDir + dir);
         newDir.mkpath(".");
         file.copy(targetDir + relativePath);
+        QFile permission(targetDir + relativePath);
+        permission.setPermissions(QFileDevice::ReadOther | QFileDevice::WriteOther);
         if (count % 40 == 0)
         {
             CONSOLE_PRINT("Extracted files " + QString::number(count) + "...", Console::eINFO);
