@@ -326,6 +326,8 @@ var Constructor = function()
             }
             else
             {
+                var dmg1 = -1;
+                var dmg2 = -1;
                 if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
                      (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                         (defTerrain.getHp() > 0))
@@ -336,7 +338,7 @@ var Constructor = function()
                         dmg1 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }
                     if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
-                            unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
+                        unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
                     {
                         dmg2 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }
