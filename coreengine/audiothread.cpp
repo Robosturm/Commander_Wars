@@ -201,6 +201,12 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         {
             QApplication::processEvents();
         }
+        // waste some time
+        for (qint32 i = 0; i < 2; ++i)
+        {
+            QApplication::processEvents();
+            QThread::msleep(1);
+        }
     }
     m_soundCaches.insert(file, cache);
 }
