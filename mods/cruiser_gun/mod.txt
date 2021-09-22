@@ -1,8 +1,0 @@
-name=Cruiser AA Ground Attack
-description=This mod enables the Cruiser's AA gun to attack ground and sea targets. 
-version=1.0.0
-compatible_mods=
-incompatible_mods=
-required_mods=
-cosmetic=false
-tags=Gameplay
