@@ -3289,230 +3289,240 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="500"/>
-        <source>Sprite Aliasing: </source>
+        <source>Touch Sensitivity: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="504"/>
+        <source>Selects how long a touch is treated as the same point. Used for detecting long press events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="513"/>
+        <source>Sprite Aliasing: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="517"/>
         <source>If checked ingame sprites will be aliased smoother.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="527"/>
+        <location filename="../menue/optionmenue.cpp" line="540"/>
         <source>Language: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="558"/>
+        <location filename="../menue/optionmenue.cpp" line="571"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="574"/>
+        <location filename="../menue/optionmenue.cpp" line="587"/>
         <source>Auto Saving Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="578"/>
+        <location filename="../menue/optionmenue.cpp" line="591"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="590"/>
+        <location filename="../menue/optionmenue.cpp" line="603"/>
         <source>Auto Saving Cycle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="594"/>
+        <location filename="../menue/optionmenue.cpp" line="607"/>
         <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="604"/>
+        <location filename="../menue/optionmenue.cpp" line="617"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="608"/>
+        <location filename="../menue/optionmenue.cpp" line="621"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="617"/>
+        <location filename="../menue/optionmenue.cpp" line="630"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="624"/>
+        <location filename="../menue/optionmenue.cpp" line="637"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="628"/>
+        <location filename="../menue/optionmenue.cpp" line="641"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="653"/>
+        <location filename="../menue/optionmenue.cpp" line="666"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="657"/>
+        <location filename="../menue/optionmenue.cpp" line="670"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="669"/>
+        <location filename="../menue/optionmenue.cpp" line="682"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="673"/>
+        <location filename="../menue/optionmenue.cpp" line="686"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="685"/>
+        <location filename="../menue/optionmenue.cpp" line="698"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="689"/>
+        <location filename="../menue/optionmenue.cpp" line="702"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="703"/>
+        <location filename="../menue/optionmenue.cpp" line="716"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="707"/>
+        <location filename="../menue/optionmenue.cpp" line="720"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="731"/>
+        <location filename="../menue/optionmenue.cpp" line="744"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="738"/>
+        <location filename="../menue/optionmenue.cpp" line="751"/>
         <source>Audio Device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="755"/>
+        <location filename="../menue/optionmenue.cpp" line="768"/>
         <source>Selects the primary audio output device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="770"/>
+        <location filename="../menue/optionmenue.cpp" line="783"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="774"/>
+        <location filename="../menue/optionmenue.cpp" line="787"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="787"/>
+        <location filename="../menue/optionmenue.cpp" line="800"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="791"/>
+        <location filename="../menue/optionmenue.cpp" line="804"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="804"/>
+        <location filename="../menue/optionmenue.cpp" line="817"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="808"/>
+        <location filename="../menue/optionmenue.cpp" line="821"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="851"/>
+        <location filename="../menue/optionmenue.cpp" line="864"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="854"/>
+        <location filename="../menue/optionmenue.cpp" line="867"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="855"/>
+        <location filename="../menue/optionmenue.cpp" line="868"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="856"/>
+        <location filename="../menue/optionmenue.cpp" line="869"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="857"/>
+        <location filename="../menue/optionmenue.cpp" line="870"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="859"/>
+        <location filename="../menue/optionmenue.cpp" line="872"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="868"/>
+        <location filename="../menue/optionmenue.cpp" line="881"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="950"/>
+        <location filename="../menue/optionmenue.cpp" line="963"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="952"/>
+        <location filename="../menue/optionmenue.cpp" line="965"/>
         <source>Filters the mods by the given tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1041"/>
+        <location filename="../menue/optionmenue.cpp" line="1054"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1043"/>
+        <location filename="../menue/optionmenue.cpp" line="1056"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1048"/>
+        <location filename="../menue/optionmenue.cpp" line="1061"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1053"/>
+        <location filename="../menue/optionmenue.cpp" line="1066"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1058"/>
+        <location filename="../menue/optionmenue.cpp" line="1071"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1063"/>
+        <location filename="../menue/optionmenue.cpp" line="1076"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>

@@ -11,22 +11,22 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
+    this.animationData = [["os",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
+                          ["bm",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
+                          ["ge",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
+                          ["yc",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
+                          ["bh",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
+                          ["ma",[Qt.point(0, 0),    0,    0,  Qt.point(54, 71)]],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
-        var player = unit.getOwner();
-        var movement = Qt.point(-120, 0);
-        var moveTime = 1200;
-        // get army name
+        var player = unit.getOwner();        
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var offset = Qt.point(20, 20);
-        if (armyName === "ma")
-        {
-            offset.x = 0;
-            movement = Qt.point(0, 0);
-            moveTime = 0;
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        var movement = data[0];
+        var moveTime = data[1];
+        var offset = Qt.point(data[2], 20);
         sprite.loadMovingSprite("battleship+" + armyName,  false,
                                 BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
@@ -55,11 +55,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var offset = Qt.point(-100, 20);
-        if (armyName === "ma")
-        {
-            offset.x = 0;
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        var offset = Qt.point(data[2] - data[0].x, 20);
         sprite.loadMovingSprite("battleship+" + armyName,  false,
                                 BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
@@ -81,12 +78,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var offset = Qt.point(88, 115);
-        // gun
-        if (armyName === "ma")
-        {
-            offset = Qt.point(54, 71);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData)
+        var offset = data[3];
         for (var i = 0; i < count; i++)
         {
             var offset2 = Qt.point(0, 0);

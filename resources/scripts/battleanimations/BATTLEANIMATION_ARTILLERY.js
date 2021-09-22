@@ -11,9 +11,20 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ti", "ti"],
                      ["os", "os"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
                      ["yc", "yc"],];
+    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(44, 35)]],
+                          ["bd", [Qt.point(-5, 5),  Qt.point(41, 36)]],
+                          ["bh", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["bm", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["ge", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["ma", [Qt.point(-35, 5), Qt.point(30, 57)]],
+                          ["os", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["pf", [Qt.point(-5, 5),  Qt.point(41, 35)]],
+                          ["ti", [Qt.point(-5, 5),  Qt.point(44, 25)]],
+                          ["yc", [Qt.point(-5, 5),  Qt.point(30, 37)]],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);
@@ -29,11 +40,9 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
-        var offset = Qt.point(-5, 5);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(-35, 5);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
+        var offset = data[0];
+
         sprite.loadSpriteV2("artillery+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, endFrame, startFrame);
         BATTLEANIMATION.loadSpotter(sprite, unit);
@@ -47,40 +56,8 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "+fire");
-        var offset = Qt.point(30, 37);
-        // gun
-        if (armyName === "yc")
-        {
-            offset = Qt.point(30, 37);
-        }
-        else if (armyName === "ma")
-        {
-            offset = Qt.point(30, 57);
-        }
-        else if (armyName === "ge")
-        {
-            offset = Qt.point(30, 37);
-        }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(30, 37);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(30, 37);
-        }
-        else if (armyName === "ac")
-        {
-            offset = Qt.point(44, 35);
-        }
-        else if (armyName === "ti")
-        {
-            offset = Qt.point(44, 25);
-        }
-        else if (armyName === "bd")
-        {
-            offset = Qt.point(41, 36);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
+        var offset = data[1];
         sprite.loadSprite("artillery_shot", false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);
         for (var i = 0; i < count; i++)

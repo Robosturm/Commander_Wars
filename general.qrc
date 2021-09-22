@@ -5059,5 +5059,44 @@
         <file>resources/images/units/mech+ac+walk+mask.png</file>
         <file>resources/images/battleanimations/GeneralSprites/rocket_launch+1.png</file>
         <file>resources/images/battleanimations/GeneralSprites/rocket_launch+2.png</file>
+        <file>resources/images/battleanimations/apc/apc+pf+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+pf+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+pf+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+pf+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+pf+stop+mask.png</file>
+        <file>resources/images/battleanimations/k_heli/k_heli+pf+mask.png</file>
+        <file>resources/images/battleanimations/k_heli/k_heli+pf+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+pf+stop+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+pf+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+pf+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+pf+fire+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+pf+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+pf+move+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+pf+stop+mask.png</file>
     </qresource>
 </RCC>

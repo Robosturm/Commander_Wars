@@ -31,6 +31,7 @@ float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
 bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
+qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
@@ -157,6 +158,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getTouchPointSensitivity()
+{
+    return m_touchPointSensitivity;
+}
+
+void Settings::setTouchPointSensitivity(qint32 newTouchPointSensitivity)
+{
+    m_touchPointSensitivity = newTouchPointSensitivity;
 }
 
 const QVariant &Settings::getAudioOutput()
@@ -893,6 +904,12 @@ void Settings::loadSettings()
         }
     }
     m_touchScreen = settings.value("TouchScreen", hasTouch).toBool();
+    m_touchPointSensitivity = settings.value("TouchPointSensitivity", 15).toInt(&ok);
+    if (!ok || m_touchPointSensitivity < 0)
+    {
+        m_touchPointSensitivity = 15;
+    }
+
     settings.endGroup();
     CONSOLE_PRINT("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
 
@@ -1480,6 +1497,7 @@ void Settings::saveSettings()
         settings.setValue("MouseSensitivity",           m_mouseSensitivity);
         settings.setValue("UserPath",                   m_userPath);
         settings.setValue("TouchScreen",                m_touchScreen);
+        settings.setValue("TouchPointSensitivity",      m_touchPointSensitivity);
         settings.endGroup();
 
         settings.beginGroup("Resolution");

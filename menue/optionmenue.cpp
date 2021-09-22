@@ -497,6 +497,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Touch Sensitivity: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
+    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long press events."));
+    touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
+    touchPointSensitivity->setPosition(sliderOffset - 130, y);
+    connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
+    m_pOptions->addItem(touchPointSensitivity);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sprite Aliasing: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

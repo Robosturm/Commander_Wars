@@ -39,6 +39,9 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static qint32 getTouchPointSensitivity();
+    static void setTouchPointSensitivity(qint32 newTouchPointSensitivity);
+
     static const QVariant &getAudioOutput();
     static void setAudioOutput(const QVariant &newAudioOutput);
 
@@ -441,6 +444,7 @@ private:
     static float m_gamma;
     static bool m_smallScreenDevice;
     static bool m_touchScreen;
+    static qint32 m_touchPointSensitivity;
 
     static bool m_borderless;
     static bool m_fullscreen;

@@ -10,6 +10,11 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["ac", "ac"],];
+    this.fireData = [["os", [Qt.point(30, 28), "artillery_shot"]],
+                     ["bm", [Qt.point(30, 28), "artillery_shot"]],
+                     ["ge", [Qt.point(30, 28), "artillery_shot"]],
+                     ["yc", [Qt.point(30, 28), "artillery_shot"]],
+                     ["ac", [Qt.point(34, 24), "light_shot"]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
@@ -25,28 +30,9 @@ var Constructor = function()
         // gun
         BATTLEANIMATION_ANTITANKCANNON.loadStandingAnimation(sprite, unit, defender, weapon);
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
-        var offset = Qt.point(31, 30);
-        var anim = "light_shot";
-        if (armyName === "ac")
-        {
-            //  49  27
-            // -15  5
-            //  0   8
-            offset = Qt.point(34, 24);
-            anim = "light_shot";
-        }
-        else if (armyName === "os" ||
-                 armyName === "bm" ||
-                 armyName === "ge" ||
-                 armyName === "yc")
-        {
-            //  52  32
-            // -15  5
-            // -7   9
-            offset = Qt.point(30, 28);
-            anim = "artillery_shot";
-        }
-
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.fireData);
+        var offset = data[0];
+        var anim = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount());
         sprite.loadSprite(anim,  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);

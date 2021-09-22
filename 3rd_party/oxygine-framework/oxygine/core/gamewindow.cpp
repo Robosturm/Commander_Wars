@@ -22,6 +22,7 @@
 #include <limits>
 
 #include "coreengine/console.h"
+#include "coreengine/settings.h"
 
 namespace oxygine
 {
@@ -372,7 +373,7 @@ namespace oxygine
 
     bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
     {
-        return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) < 15;
+        return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
     }
 
     void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)
