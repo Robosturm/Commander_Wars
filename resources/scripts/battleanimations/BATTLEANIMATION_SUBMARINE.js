@@ -32,15 +32,14 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, startPos, movement, moveTime)
     {
         var player = unit.getOwner();
-        // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
         if(unit.getHidden() === true &&
            armyName !== "ma")
         {
             sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
             sprite.loadMovingSprite("submarine+hidden+" + armyName,  false,
-                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
         }
         else
         {
@@ -122,6 +121,12 @@ var Constructor = function()
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        if(unit.getHidden() === true)
+        {
+            return false;
+        }
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
