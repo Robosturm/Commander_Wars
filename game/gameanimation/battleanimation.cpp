@@ -166,25 +166,25 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
 
-    m_AtkCO0 = oxygine::spSprite::create();
+    m_AtkCO0.coSprite = oxygine::spSprite::create();
     float coScale = 22.0f / 24.0f;
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_AtkCO0->setResAnim(pAnimCO);
+        m_AtkCO0.anim = pCO->getResAnim(resAnim);
+        m_AtkCO0.coSprite->setResAnim(m_AtkCO0.anim);
         setCOMood(m_AtkCO0, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
         {
-            m_AtkCO0->setPosition(-18, -13);
+            m_AtkCO0.coSprite->setPosition(-18, -13);
         }
         else
         {
-            m_AtkCO0->setPosition(getWidth() - 28, -13);
+            m_AtkCO0.coSprite->setPosition(getWidth() - 28, -13);
         }
-        m_AtkCO0->setPriority(priorityCO);
-        m_AtkCO0->setScale(coScale);
-        addChild(m_AtkCO0);
+        m_AtkCO0.coSprite->setPriority(priorityCO);
+        m_AtkCO0.coSprite->setScale(coScale);
+        addChild(m_AtkCO0.coSprite);
     }
     /*********************************************************************************************/
     // co on the left lower corner
@@ -208,25 +208,25 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
 
-    m_AtkCO1 = oxygine::spSprite::create();
+    m_AtkCO1.coSprite = oxygine::spSprite::create();
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_AtkCO1->setResAnim(pAnimCO);
+        m_AtkCO1.anim = pCO->getResAnim(resAnim);
+        m_AtkCO1.coSprite->setResAnim(m_AtkCO1.anim);
         setCOMood(m_AtkCO1, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
         {
-            m_AtkCO1->setPosition(-18, getHeight() - 28);
+            m_AtkCO1.coSprite->setPosition(-18, getHeight() - 28);
         }
         else
         {
-            m_AtkCO1->setPosition(getWidth() - 28, getHeight() - 28);
+            m_AtkCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
         }
-        m_AtkCO1->setPriority(priorityCO);
-        m_AtkCO1->setScale(coScale);
-        addChild(m_AtkCO1);
+        m_AtkCO1.coSprite->setPriority(priorityCO);
+        m_AtkCO1.coSprite->setScale(coScale);
+        addChild(m_AtkCO1.coSprite);
     }
     /*********************************************************************************************/
     // co on the right upper corner
@@ -252,24 +252,24 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     addChild(pSprite);
 
     pCO = pPlayer->getCO(0);
-    m_DefCO0 = oxygine::spSprite::create();
+    m_DefCO0.coSprite = oxygine::spSprite::create();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_DefCO0->setResAnim(pAnimCO);
+        m_DefCO0.anim = pCO->getResAnim(resAnim);
+        m_DefCO0.coSprite->setResAnim(m_DefCO0.anim);
         setCOMood(m_DefCO0, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
         {
-            m_DefCO0->setPosition(-18, -13);
+            m_DefCO0.coSprite->setPosition(-18, -13);
         }
         else
         {
-            m_DefCO0->setPosition(getWidth() - 28, -13);
+            m_DefCO0.coSprite->setPosition(getWidth() - 28, -13);
         }
-        m_DefCO0->setPriority(priorityCO);
-        m_DefCO0->setScale(coScale);
-        addChild(m_DefCO0);
+        m_DefCO0.coSprite->setPriority(priorityCO);
+        m_DefCO0.coSprite->setScale(coScale);
+        addChild(m_DefCO0.coSprite);
     }
     /*********************************************************************************************/
     // co on the right lower corner
@@ -294,24 +294,24 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     addChild(pSprite);
 
     pCO = pPlayer->getCO(1);
-    m_DefCO1 = oxygine::spSprite::create();
+    m_DefCO1.coSprite = oxygine::spSprite::create();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_DefCO1->setResAnim(pAnimCO);
+        m_DefCO1.anim = pCO->getResAnim(resAnim);
+        m_DefCO1.coSprite->setResAnim(m_DefCO1.anim);
         setCOMood(m_DefCO1, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
         {
-            m_DefCO1->setPosition(-18, getHeight() - 28);
+            m_DefCO1.coSprite->setPosition(-18, getHeight() - 28);
         }
         else
         {
-            m_DefCO1->setPosition(getWidth() - 28, getHeight() - 28);
+            m_DefCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
         }
-        m_DefCO1->setPriority(priorityCO);
-        m_DefCO1->setScale(coScale);
-        addChild(m_DefCO1);
+        m_DefCO1.coSprite->setPriority(priorityCO);
+        m_DefCO1.coSprite->setScale(coScale);
+        addChild(m_DefCO1.coSprite);
     }
 }
 
@@ -433,8 +433,6 @@ void BattleAnimation::createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pD
     addChild(m_HealthBar1);
 }
 
-
-
 bool BattleAnimation::getIsLeft(Unit* pUnit1, Unit* pUnit2)
 {
     if (pUnit1->Unit::getX() < pUnit2->Unit::getX())
@@ -540,7 +538,7 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     return ret;
 }
 
-void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
+void BattleAnimation::setCOMood(CoFace & coFace, float hp1, float hp2)
 {
     GameEnums::COMood mood = GameEnums::COMood_Normal;
     if (hp1 - hp2 > 3.0f)
@@ -555,7 +553,19 @@ void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
     {
         mood = GameEnums::COMood_Normal;
     }
-    pSprite->setColumn(static_cast<qint32>(mood));
+    const oxygine::ResAnim* pAnim = coFace.anim;
+    if (pAnim != nullptr)
+    {
+        if (pAnim->getColumns() > 0)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnimColumn(pAnim, static_cast<qint32>(mood)), oxygine::timeMS(static_cast<qint64>(pAnim->getColumns() * GameMap::frameTime)), -1);
+            coFace.coSprite->addTween(tween);
+        }
+        else
+        {
+            coFace.coSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+        }
+    }
 }
 
 QColor BattleAnimation::getHealthBarColor(float hp)

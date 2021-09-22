@@ -170,6 +170,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     # tween
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp

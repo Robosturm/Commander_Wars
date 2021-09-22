@@ -5057,5 +5057,7 @@
         <file>resources/images/battleanimations/infantry/infantry+bd+walk+mask.png</file>
         <file>resources/images/units/infantry+ac+walk+mask.png</file>
         <file>resources/images/units/mech+ac+walk+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/rocket_launch+1.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/rocket_launch+2.png</file>
     </qresource>
 </RCC>

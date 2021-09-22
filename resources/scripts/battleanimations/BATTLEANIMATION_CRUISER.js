@@ -70,7 +70,9 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         var player = unit.getOwner();
         var rocketSprite = "+missile";
+        var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         var mgSprite = "+cannon+fire+air";
+        var mgStartFrame = 0;
         var mgEndFrame = 0;
         var rocketEndFrame = 0;
         if (weapon === 0)
@@ -80,7 +82,16 @@ var Constructor = function()
         }
         else
         {
-            mgEndFrame = 1;
+            if (position <= 0)
+            {
+                mgSprite = "+cannon+fire+ground";
+                mgStartFrame = 1;
+                mgEndFrame = 2;
+            }
+            else
+            {
+                mgEndFrame = 1;
+            }
         }
         
         // get army name
@@ -88,7 +99,7 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
 
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 
-                                           0, mgEndFrame, 0, rocketEndFrame, Qt.point(-65, 20),
+                                           mgStartFrame, mgEndFrame, 0, rocketEndFrame, Qt.point(-65, 20),
                                            rocketSprite, mgSprite);
         if (weapon === 0)
         {
@@ -124,14 +135,28 @@ var Constructor = function()
             }
         }
         else
-        {            
-            offset = Qt.point(96, 76);
-            if (armyName === "ma")
+        {
+            if (position > 0)
             {
-                offset = Qt.point(62, 57);
+                offset = Qt.point(96, 76);
+                if (armyName === "ma")
+                {
+                    offset = Qt.point(62, 57);
+                }
+                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0, false, true);
             }
-            sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
-                              1, 1, 0, 0, false, true);
+            else
+            {
+                offset = Qt.point(100, 63);
+                if (armyName === "ma")
+                {
+                    offset = Qt.point(62, 52);
+                }
+                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0, false, true);
+            }
+
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
             sprite.loadSound("anti_air_gun_fire.wav", 1, 200);
             sprite.loadSound("anti_air_gun_fire.wav", 1, 400);
