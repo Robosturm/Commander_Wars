@@ -758,10 +758,28 @@
         <image file="mech/mech+yc+walk+mask.png" cols = "6" />
         <image file="mech/mech+ma+walk+mask.png" />
         <!-- megatank -->
-        <image file="megatank/megatank+cannon+mask.png" cols = "7" />
-        <image file="megatank/megatank+mask.png" />
+        <image file="megatank/megatank+os+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+os+mask.png" />
+        <image file="megatank/megatank+bm+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+bm+mask.png" />
+        <image file="megatank/megatank+ge+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+ge+mask.png" />
+        <image file="megatank/megatank+yc+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+yc+mask.png" />
         <image file="megatank/megatank+bh+cannon+mask.png" cols = "7" />
         <image file="megatank/megatank+bh+mask.png" />
+        <image file="megatank/megatank+ac+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+ac+mask.png" />
+        <image file="megatank/megatank+bd+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+bd+mask.png" />
+        <image file="megatank/megatank+gs+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+gs+mask.png" />
+        <image file="megatank/megatank+pf+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+pf+mask.png" />
+        <image file="megatank/megatank+ti+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+ti+mask.png" />
+        <image file="megatank/megatank+dm+cannon+mask.png" cols = "7" />
+        <image file="megatank/megatank+dm+mask.png" />
         <!-- missile -->
         <image file="missile/missile+bh+mask.png" />
         <image file="missile/missile+bm+mask.png" />
