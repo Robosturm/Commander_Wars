@@ -11,8 +11,20 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["ma", "ma"],
                      ["os", "os"],
+                     ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
+
+    this.animationData = [["bd", [Qt.point(-10, 5), Qt.point(-1, 26), "rocket_launch+2", Qt.point(20, 10)]],
+                          ["bm", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["bh", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["ge", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["ma", [Qt.point(-35, 5), Qt.point(5, 40),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["os", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["pf", [Qt.point(-10, 5), Qt.point(-1, 35), "rocket_launch+1", Qt.point(20, 10)]],
+                          ["ti", [Qt.point(-10, 5), Qt.point(-4, 38), "rocket_launch+1", Qt.point(20, 10)]],
+                          ["yc", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "");
@@ -23,11 +35,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
-        var offset = Qt.point(-10, 5);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(-35, 5);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
+        var offset = data[0];
         sprite.loadSpriteV2("missile+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset,
                             1, 1, 0, 0, false, false, 200, endFrame, startFrame);
@@ -40,41 +49,14 @@ var Constructor = function()
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
-        var offset = Qt.point(11, 35);
-        if (armyName === "yc")
-        {
-            offset = Qt.point(11, 35);
-        }
-        else if (armyName === "ge")
-        {
-            offset = Qt.point(11, 35);
-        }
-        else if (armyName === "ma")
-        {
-            offset = Qt.point(5, 40);
-        }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(11, 35);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(11, 35);
-        }
-        else if (armyName === "ti")
-        {
-            offset = Qt.point(-4, 38);
-        }
-        else if (armyName === "bd")
-        {
-            offset = Qt.point(-1, 26);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
+        var offset = data[1];
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,
                                 -1, 1, -1);
-        offset.x -= 35;
-        offset.y -= 22;
-        sprite.loadMovingSprite("rocket_launch", false, sprite.getMaxUnitCount(), offset,
+        offset.x -= data[3].x;
+        offset.y -= data[3].y;
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
         {

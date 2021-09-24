@@ -78,7 +78,7 @@
         <image file="apc/apc+ma+mask.png" />
         <image file="apc/apc+ti+mask.png" />
         <!-- artillerycraft -->
-        <image file="artillerycraft/artillerycraft+mask.png" />
+        <image file="artillerycraft/artillerycraft+ma+mask.png" />
         <image file="artillerycraft/artillerycraft+bm+mask.png" />
         <image file="artillerycraft/artillerycraft+ge+mask.png" />
         <image file="artillerycraft/artillerycraft+os+mask.png" />
@@ -280,15 +280,16 @@
         <image file="flak/flak+ti+stop+mask.png" />
         <image file="flak/flak+pf+stop+mask.png" />
         <!-- flare -->
-        <image file="flare/flare+mask.png" />
+        <image file="flare/flare+os+mask.png" />
         <image file="flare/flare+bh+mask.png" />        
         <!-- heavy_hovercraft -->
-        <image file="heavy_hovercraft/heavy_hovercraft+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+ma+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+bm+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+ge+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+os+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+yc+prop+mask.png" cols = "2" />
         <image file="heavy_hovercraft/heavy_hovercraft+yc+mask.png" />
+        <image file="heavy_hovercraft/heavy_hovercraft+ma+mg+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+bm+mg+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+ge+mg+mask.png" />
         <image file="heavy_hovercraft/heavy_hovercraft+os+mg+mask.png" />
@@ -868,6 +869,7 @@
         <image file="missile/missile+yc+mask.png" />
         <image file="missile/missile+ma+mask.png" />
         <image file="missile/missile+ti+mask.png" />
+        <image file="missile/missile+pf+mask.png" />
         <image file="missile/missile+bd+fire+mask.png" />
         <image file="missile/missile+bh+fire+mask.png" cols = "2"/>
         <image file="missile/missile+bm+fire+mask.png" cols = "2"/>
@@ -876,6 +878,7 @@
         <image file="missile/missile+yc+fire+mask.png" cols = "2"/>
         <image file="missile/missile+ma+fire+mask.png" />
         <image file="missile/missile+ti+fire+mask.png" />
+        <image file="missile/missile+pf+fire+mask.png" />
         <!-- motorbike -->
         <image file="motorbike/motorbike+mask.png" />
         <image file="motorbike/motorbike+os+mask.png" />
@@ -900,6 +903,7 @@
         <image file="recon/recon+yc+mask.png" />
         <image file="recon/recon+ma+mask.png" />
         <image file="recon/recon+ti+mask.png" />
+        <image file="recon/recon+pf+mask.png" />
         <image file="recon/recon+ac+stop+mask.png" cols = "4" />
         <image file="recon/recon+bh+stop+mask.png" cols = "4" />
         <image file="recon/recon+bm+stop+mask.png" cols = "4" />
@@ -909,6 +913,7 @@
         <image file="recon/recon+bd+stop+mask.png" />
         <image file="recon/recon+ma+stop+mask.png" />
         <image file="recon/recon+ti+stop+mask.png" />
+        <image file="recon/recon+pf+stop+mask.png" />
         <image file="recon/recon+ac+move+mask.png" cols = "4" />
         <image file="recon/recon+bd+move+mask.png" />
         <image file="recon/recon+bh+move+mask.png" cols = "4" />
@@ -918,6 +923,7 @@
         <image file="recon/recon+yc+move+mask.png" cols = "4" />
         <image file="recon/recon+ma+move+mask.png" />
         <image file="recon/recon+ti+move+mask.png" />
+        <image file="recon/recon+pf+move+mask.png" />
         <image file="recon/recon+ac+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+bd+fire+air+mask.png" />
         <image file="recon/recon+bh+fire+air+mask.png" cols = "2" />
@@ -927,6 +933,7 @@
         <image file="recon/recon+yc+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+ma+fire+air+mask.png" />
         <image file="recon/recon+ti+fire+air+mask.png" />
+        <image file="recon/recon+pf+fire+air+mask.png" />
         <image file="recon/recon+ac+fire+mask.png" cols = "2" />
         <image file="recon/recon+bd+fire+mask.png" />
         <image file="recon/recon+bh+fire+mask.png" cols = "2" />
@@ -936,6 +943,7 @@
         <image file="recon/recon+yc+fire+mask.png" cols = "2" />
         <image file="recon/recon+ma+fire+mask.png" />
         <image file="recon/recon+ti+fire+mask.png" />
+        <image file="recon/recon+pf+fire+mask.png" />
         <!-- rocketthrower -->
         <image file="rocketthrower/rocketthrower+ac+mask.png" />
         <image file="rocketthrower/rocketthrower+bd+mask.png" />

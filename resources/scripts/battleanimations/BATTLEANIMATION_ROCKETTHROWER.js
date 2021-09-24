@@ -17,6 +17,18 @@ var Constructor = function()
                      ["pf", "pf"],
                      ["yc", "yc"],];
 
+    this.animationData = [["ac", [Qt.point(-10, 5), Qt.point(5, 38),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["bd", [Qt.point(-10, 5), Qt.point(-2, 30), "rocket_launch+2", Qt.point(20, 10)]],
+                          ["bh", [Qt.point(-10, 5), Qt.point(0, 33),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["bm", [Qt.point(-10, 5), Qt.point(0, 32),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["dm", [Qt.point(-10, 5), Qt.point(5, 37),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["ge", [Qt.point(-10, 5), Qt.point(0, 24),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["ma", [Qt.point(-25, 5), Qt.point(0, 42),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["os", [Qt.point(-10, 5), Qt.point(0, 31),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["ti", [Qt.point(-10, 5), Qt.point(-5, 31), "rocket_launch+1", Qt.point(20, 10)]],
+                          ["pf", [Qt.point(-10, 5), Qt.point(7, 45),  "rocket_launch+1", Qt.point(20, 10)]],
+                          ["yc", [Qt.point(-10, 5), Qt.point(0, 32),  "rocket_launch",   Qt.point(35, 22)]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
@@ -27,11 +39,8 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
-        var offset = Qt.point(-10, 5);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(-25, 5);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
+        var offset = data[0];
         sprite.loadSpriteV2("rocketthrower+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, -1, startFrame);
         BATTLEANIMATION.loadSpotter(sprite, unit);
@@ -43,55 +52,16 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fire");
-        var offset = Qt.point(0, 31);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
+        var offset = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
-        // rocket
-        if (armyName === "yc")
-        {
-            offset = Qt.point(0, 32);
-        }
-        else if (armyName === "ma")
-        {
-            offset = Qt.point(0, 42);
-        }
-        else if (armyName === "ge")
-        {
-            offset = Qt.point(0, 24);
-        }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(0, 32);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(0, 33);
-        }
-        else if (armyName === "ac")
-        {
-            offset = Qt.point(5, 38);
-        }
-        else if (armyName === "dm")
-        {
-            offset = Qt.point(5, 37);
-        }
-        else if (armyName === "ti")
-        {
-            offset = Qt.point(-5, 31);
-        }
-        else if (armyName === "pf")
-        {
-            offset = Qt.point(7, 45);
-        }
-        else if (armyName === "bd")
-        {
-            offset = Qt.point(-2, 30);
-        }
+        // rocket        
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
-        offset.x -= 35;
-        offset.y -= 22;
-        sprite.loadMovingSprite("rocket_launch", false, sprite.getMaxUnitCount(), offset,
+        offset.x -= data[3].x;
+        offset.y -= data[4].y;
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
         {

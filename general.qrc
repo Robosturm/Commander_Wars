@@ -3515,7 +3515,6 @@
         <file>resources/images/battleanimations/apc/apc+ma+mask.png</file>
         <file>resources/images/battleanimations/apc/apc+os+mask.png</file>
         <file>resources/images/battleanimations/apc/apc+yc+mask.png</file>
-        <file>resources/images/battleanimations/artillerycraft/artillerycraft+mask.png</file>
         <file>resources/images/battleanimations/at_cycle/at_cycle+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank.png</file>
@@ -3583,7 +3582,6 @@
         <file>resources/images/battleanimations/flak/flak+yc+fire+air+mask.png</file>
         <file>resources/images/battleanimations/flak/flak+yc+mask.png</file>
         <file>resources/images/battleanimations/flare/flare+bh+mask.png</file>
-        <file>resources/images/battleanimations/flare/flare+mask.png</file>
         <file>resources/images/battleanimations/GeneralSprites/artillery_shot.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bazooka_bh.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bazooka_ge.png</file>
@@ -3605,7 +3603,6 @@
         <file>resources/images/battleanimations/GeneralSprites/unit_explosion.png</file>
         <file>resources/images/battleanimations/GeneralSprites/vehicle_dust.png</file>
         <file>resources/images/battleanimations/GeneralSprites/vehicle_dust_stop.png</file>
-        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+fire+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+mask.png</file>
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+bh+move+mask.png</file>
@@ -5118,5 +5115,9 @@
         <file>resources/images/battleanimations/megatank/megatank+ti+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+yc+cannon+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+yc+mask.png</file>
+        <file>resources/images/battleanimations/artillerycraft/artillerycraft+ma+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ma+mask.png</file>
+        <file>resources/images/battleanimations/flare/flare+os+mask.png</file>
+        <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ma+mg+mask.png</file>
     </qresource>
 </RCC>

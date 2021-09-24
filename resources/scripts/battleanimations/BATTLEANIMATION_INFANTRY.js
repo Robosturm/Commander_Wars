@@ -26,7 +26,7 @@ var Constructor = function()
                           ["ma", [65, Qt.point(-75, 5), Qt.point(16, 19), Qt.point(16, 14), Qt.point(16, 14), Qt.point(-50, 20), 90]],
                           ["os", [65, Qt.point(-75, 5), Qt.point(14, 21), Qt.point(14, 11), Qt.point(14, 13), Qt.point(-30, 15), 0]],
                           ["pf", [65, Qt.point(-75, 5), Qt.point(13, 19), Qt.point(13, 14), Qt.point(13, 14), Qt.point(-50, 20), 90]],
-                          ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), 0]],
+                          ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), 90]],
                           ["yc", [65, Qt.point(-75, 5), Qt.point(21, 25), Qt.point(21, 16), Qt.point(21, 18), Qt.point(-30, 15), 0]],];
 
     this.getArmyName = function(unit)
