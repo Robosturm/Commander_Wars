@@ -379,7 +379,7 @@
         <!-- hoellium -->
         <image file="hoellium/hoellium+mask.png" cols = "4" />        
         <!-- hovercraft -->
-        <image file="hovercraft/hovercraft+mask.png" />
+        <image file="hovercraft/hovercraft+ma+mask.png" />
         <image file="hovercraft/hovercraft+bm+mask.png" />
         <image file="hovercraft/hovercraft+ge+mask.png" />
         <image file="hovercraft/hovercraft+os+mask.png" />
@@ -389,16 +389,19 @@
         <image file="hovercraft/hovercraft+ge+fire+mask.png" cols = "4" />
         <image file="hovercraft/hovercraft+os+fire+mask.png" cols = "4" />
         <image file="hovercraft/hovercraft+yc+fire+mask.png" cols = "4" />
+        <image file="hovercraft/hovercraft+ma+fire+mask.png" />
         <image file="hovercraft/hovercraft+bm+mg+fire+mask.png" cols = "2" />
         <image file="hovercraft/hovercraft+ge+mg+fire+mask.png" cols = "2" />
         <image file="hovercraft/hovercraft+os+mg+fire+mask.png" cols = "2" />
         <image file="hovercraft/hovercraft+yc+mg+fire+mask.png" cols = "2" />
+        <image file="hovercraft/hovercraft+ma+mg+fire+mask.png" />
         <image file="hovercraft/hovercraft+bm+mg+mask.png" />
         <image file="hovercraft/hovercraft+ge+mg+mask.png" />
         <image file="hovercraft/hovercraft+os+mg+mask.png" />
         <image file="hovercraft/hovercraft+yc+mg+mask.png" />
+        <image file="hovercraft/hovercraft+ma+mg+mask.png" />        
         <!-- hoverflak -->
-        <image file="hoverflak/hoverflak+mask.png" />
+        <image file="hoverflak/hoverflak+ma+mask.png" />
         <image file="hoverflak/hoverflak+bm+mask.png" />
         <image file="hoverflak/hoverflak+ge+mask.png" />
         <image file="hoverflak/hoverflak+os+mask.png" />
@@ -408,14 +411,17 @@
         <image file="hoverflak/hoverflak+ge+air+mask.png" />
         <image file="hoverflak/hoverflak+os+air+mask.png" />
         <image file="hoverflak/hoverflak+yc+air+mask.png" />
+        <image file="hoverflak/hoverflak+ma+air+mask.png" />
         <image file="hoverflak/hoverflak+bm+fire+air+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+ge+fire+air+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+os+fire+air+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+yc+fire+air+mask.png" cols = "2" />
+        <image file="hoverflak/hoverflak+ma+fire+air+mask.png" />
         <image file="hoverflak/hoverflak+bm+fire+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+ge+fire+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+os+fire+mask.png" cols = "4" />
         <image file="hoverflak/hoverflak+yc+fire+mask.png" cols = "2" />
+        <image file="hoverflak/hoverflak+ma+fire+mask.png" />
         <!-- infantry -->
         <image file="infantry/infantry+ac+dying+mask.png" />
         <image file="infantry/infantry+bd+dying+mask.png" cols = "3" />
@@ -880,7 +886,7 @@
         <image file="missile/missile+ti+fire+mask.png" />
         <image file="missile/missile+pf+fire+mask.png" />
         <!-- motorbike -->
-        <image file="motorbike/motorbike+mask.png" />
+        <image file="motorbike/motorbike++mask.png" />
         <image file="motorbike/motorbike+os+mask.png" />
         <image file="motorbike/motorbike+bm+mask.png" />        
         <!-- neotank -->

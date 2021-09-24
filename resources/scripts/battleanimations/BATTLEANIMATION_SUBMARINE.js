@@ -12,6 +12,13 @@ var Constructor = function()
                      ["bg", "bh"],
                      ["ma", "ma"],];
 
+    this.animationData = [["os", [true]],
+                          ["bm", [true]],
+                          ["ge", [true]],
+                          ["yc", [true]],
+                          ["bh", [true]],
+                          ["ma", [false]],];
+
     // todo load ship move sound
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
@@ -33,8 +40,8 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        if(unit.getHidden() === true &&
-           armyName !== "ma")
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        if(unit.getHidden() === true && data[0])
         {
             sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                       BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);

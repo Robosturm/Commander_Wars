@@ -5,24 +5,18 @@ var Constructor = function()
         return 5;
     };
 
+    this.armyData = [["ma", "ma"],
+                     ["os", "os"],];
+
+    this.animationData = [["ma", [Qt.point(-5, 5),  Qt.point(31, 12)]],
+                          ["os", [Qt.point(-35, 5), Qt.point(31, 31)]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
-        // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "ma"))
-        {
-            armyName = "os";
-        }
-        var offset = Qt.point(-35, 5);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(-5, 5);
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SNIPER.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
+        var offset = data[0];
         sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
     };
@@ -46,19 +40,10 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_SNIPER.getMaxUnitCount());
         BATTLEANIMATION_SNIPER.loadStandingAnimation(sprite, unit, defender, weapon);
-        // mg
         var player = unit.getOwner();
-        // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        var offset = Qt.point(31, 31);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(31, 12);
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SNIPER.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
+        var offset = data[1];
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                         1, 1, 0, 0);
         for (var i = 0; i < count; i++)

@@ -3629,8 +3629,6 @@
         <file>resources/images/battleanimations/heavy_tank/heavy_tank+yc+stop+mask.png</file>
         <file>resources/images/battleanimations/hoellium/hoellium+mask.png</file>
         <file>resources/images/battleanimations/hot_tank/hot_tank+mask.png</file>
-        <file>resources/images/battleanimations/hovercraft/hovercraft+mask.png</file>
-        <file>resources/images/battleanimations/hoverflak/hoverflak+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+dying+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+fire+down+mask.png</file>
         <file>resources/images/battleanimations/infantry/infantry+bh+fire+mask.png</file>
@@ -3863,7 +3861,6 @@
         <file>resources/images/battleanimations/missile_sub/missile_sub+mask.png</file>
         <file>resources/images/battleanimations/missile_sub/missile_sub.png</file>
         <file>resources/images/battleanimations/motorbike/motorbike+bm+mask.png</file>
-        <file>resources/images/battleanimations/motorbike/motorbike+mask.png</file>
         <file>resources/images/battleanimations/motorbike/motorbike+os+mask.png</file>
         <file>resources/images/battleanimations/neospider_tank/neospider_tank+mask.png</file>
         <file>resources/images/battleanimations/neotank/neotank+cannon_fire+mask.png</file>
@@ -5119,5 +5116,14 @@
         <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ma+mask.png</file>
         <file>resources/images/battleanimations/flare/flare+os+mask.png</file>
         <file>resources/images/battleanimations/heavy_hovercraft/heavy_hovercraft+ma+mg+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ma+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ma+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/hovercraft/hovercraft+ma+mg+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ma+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ma+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ma+fire+mask.png</file>
+        <file>resources/images/battleanimations/hoverflak/hoverflak+ma+mask.png</file>
+        <file>resources/images/battleanimations/motorbike/motorbike++mask.png</file>
     </qresource>
 </RCC>
