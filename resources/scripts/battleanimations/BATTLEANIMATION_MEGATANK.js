@@ -4,6 +4,18 @@ var Constructor = function()
     {
         return 1;
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "bh"],
+                     ["ac", "ac"],
+                     ["gs", "gs"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
+                     ["dm", "dm"],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
     {
@@ -12,19 +24,6 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
     {
-        var player = unit.getOwner();
-        // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg" ||
-            armyName === "bh" ||
-            armyName === "ma")
-        {
-            armyName = "+bh";
-        }
-        else
-        {
-            armyName = "";
-        }
         sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(0, 10));
         sprite.loadSpriteV2("megatank" + armyName + "+cannon+mask", GameEnums.Recoloring_Matrix,
