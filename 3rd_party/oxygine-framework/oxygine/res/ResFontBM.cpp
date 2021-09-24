@@ -197,7 +197,7 @@ namespace oxygine
             file.setFileName(QString(RCC_PREFIX_PATH) + path);
             if (!file.exists())
             {
-                Console::print("Unable to load font " + m_file, Console::eFATAL);
+                CONSOLE_PRINT("Unable to load font " + m_file, Console::eFATAL);
                 return;
             }
         }
@@ -211,7 +211,7 @@ namespace oxygine
 
         if (!isXml)
         {
-            Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+            CONSOLE_PRINT("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             return;
         }
         /////////////////////////////////////////////////

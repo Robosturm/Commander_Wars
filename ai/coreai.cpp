@@ -109,7 +109,7 @@ void CoreAI::init()
 
 void CoreAI::loadIni(QString file)
 {
-    Console::print("CoreAI::loadIni " + file, Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
     m_iniFiles.append(file);
     QStringList searchFiles;
     if (!file.isEmpty())
@@ -134,7 +134,7 @@ void CoreAI::loadIni(QString file)
 
 void CoreAI::nextAction()
 {
-    Console::print("CoreAI::nextAction", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     spGameMenue pMenue = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
@@ -146,7 +146,7 @@ void CoreAI::nextAction()
 
         if (!processPredefinedAi())
         {
-            Console::print("Processing ai specific behaviour", Console::eDEBUG);
+            CONSOLE_PRINT("Processing ai specific behaviour", Console::eDEBUG);
             // if so execute next action
             process();
         }
@@ -181,7 +181,7 @@ qint32 CoreAI::index(QVector<QVector3D>& points, QPoint point)
 
 bool CoreAI::useCOPower(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
 {
-    Console::print("CoreAI::useCOPower()", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::useCOPower()", Console::eDEBUG);
     QVector<float> data;
     data.append(-1);
     data.append(0);
@@ -317,7 +317,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
 
 void CoreAI::createMovementMap(spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
-    Console::print("CoreAI::createMovementMap", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::createMovementMap", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
@@ -612,7 +612,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
 
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit pUnits)
 {
-    Console::print("CoreAI::moveAwayFromProduction", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
     m_aiStep = AISteps::moveAway;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -847,7 +847,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
 
 void CoreAI::addMenuItemData(spGameAction pGameAction, QString itemID, qint32 cost)
 {
-    Console::print("CoreAI::addMenuItemData()", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
     pGameAction->writeDataString(itemID);
     // increase costs and input step
     pGameAction->setCosts(pGameAction->getCosts() + cost);
@@ -856,7 +856,7 @@ void CoreAI::addMenuItemData(spGameAction pGameAction, QString itemID, qint32 co
 
 void CoreAI::addSelectedFieldData(spGameAction pGameAction, QPoint point)
 {
-    Console::print("CoreAI::addSelectedFieldData()", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
@@ -1396,7 +1396,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
     }
     if (score > 0)
     {
-        Console::print("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+        CONSOLE_PRINT("Found flare target with score: " + QString::number(score), Console::eDEBUG);
     }
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
@@ -1642,7 +1642,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
 
 void CoreAI::rebuildIsland(spQmlVectorUnit pUnits)
 {
-    Console::print("CoreAI::rebuildIsland", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::rebuildIsland", Console::eDEBUG);
     // and create one
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1784,7 +1784,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
 
 void CoreAI::finishTurn()
 {
-    Console::print("CoreAI::finishTurn(()", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
     m_usedTransportSystem = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER);
     CO* pCO0 = m_pPlayer->getCO(0);
@@ -1822,7 +1822,7 @@ void CoreAI::finishTurn()
 
 bool CoreAI::useBuilding(spQmlVectorBuilding pBuildings)
 {
-    Console::print("CoreAI::useBuilding", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::useBuilding", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
@@ -1975,7 +1975,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnit
 
 bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
 {
-    Console::print("CoreAI::buildCOUnit", Console::eDEBUG);
+    CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
     spGameAction pAction = spGameAction::create();
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
@@ -2102,7 +2102,7 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
 
 void CoreAI::serializeObject(QDataStream& stream) const
 {    
-    Console::print("storing core ai", Console::eDEBUG);
+    CONSOLE_PRINT("storing core ai", Console::eDEBUG);
     stream << getVersion();
     stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
@@ -2131,7 +2131,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
 
 void CoreAI::deserializeObject(QDataStream& stream)
 {
-    Console::print("reading core ai", Console::eDEBUG);
+    CONSOLE_PRINT("reading core ai", Console::eDEBUG);
     qint32 version;
     stream >> version;
     if (version > 1)

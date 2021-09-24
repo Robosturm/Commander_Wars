@@ -314,7 +314,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
 
 void ScriptCondition::writePreCondition(QTextStream& rStream)
 {
-    Console::print("ScriptCondition::writePreCondition", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptCondition::writePreCondition", Console::eDEBUG);
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);
@@ -323,7 +323,7 @@ void ScriptCondition::writePreCondition(QTextStream& rStream)
 
 void ScriptCondition::writePostCondition(QTextStream& rStream)
 {
-    Console::print("ScriptCondition::writePostCondition", Console::eDEBUG);
+    CONSOLE_PRINT("ScriptCondition::writePostCondition", Console::eDEBUG);
     if (pParent != nullptr)
     {
         pParent->writePostCondition(rStream);

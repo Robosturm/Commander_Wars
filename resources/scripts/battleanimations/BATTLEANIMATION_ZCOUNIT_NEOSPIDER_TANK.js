@@ -41,6 +41,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount());
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount());
@@ -48,7 +53,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 200);
             for (i = 0; i < count; i++)
             {
@@ -58,18 +63,12 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount();
     };
 };
 

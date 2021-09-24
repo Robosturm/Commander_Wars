@@ -12,7 +12,7 @@ QString HeavyAi::getNeuralNetworkName(qint32 network)
     }
     else
     {
-        Console::print("HeavyAi::getNeuralNetworkName invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::getNeuralNetworkName invalid index " + QString::number(network), Console::eDEBUG);
     }
     return "";
 }
@@ -25,13 +25,13 @@ void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance)
     }
     else
     {
-        Console::print("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::mutateNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
     }
 }
 
 void HeavyAi::combineAi(QStringList aisToUse)
 {
-    Console::print("HeavyAi::combineAi", Console::eDEBUG);
+    CONSOLE_PRINT("HeavyAi::combineAi", Console::eDEBUG);
     for (qint32 i = 0; i < NeuralNetworksMax; ++i)
     {
         qint32 item = GlobalUtils::randInt(0, aisToUse.length() - 1);
@@ -53,7 +53,7 @@ void HeavyAi::saveNeuralNetwork(qint32 network)
     }
     else
     {
-        Console::print("HeavyAi::saveNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
+        CONSOLE_PRINT("HeavyAi::saveNeuralNetwork invalid index " + QString::number(network), Console::eDEBUG);
     }
 }
 

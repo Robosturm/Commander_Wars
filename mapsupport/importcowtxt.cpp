@@ -171,7 +171,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == terrainCount - 1)
                         {
-                            Console::print("Error unable to import terrain: " + terraindID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import terrain: " + terraindID, Console::eLogLevels::eERROR);
                         }
                     }
                 }
@@ -218,7 +218,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == buildingCount - 1)
                         {
-                            Console::print("Error unable to import building: " + buildingID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import building: " + buildingID, Console::eLogLevels::eERROR);
                         }
                     }
                 }
@@ -243,7 +243,7 @@ void GameMap::importTxtMap(QString file)
                         }
                         else if (i == unitCount - 1)
                         {
-                            Console::print("Error unable to import unit: " + unitID, Console::eLogLevels::eERROR);
+                            CONSOLE_PRINT("Error unable to import unit: " + unitID, Console::eLogLevels::eERROR);
                         }
                     }
                 }

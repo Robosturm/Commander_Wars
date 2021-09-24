@@ -11,23 +11,30 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
+    this.animationData = [["os", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["bm", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["ge", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["yc", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["bh", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["ma", [0,  Qt.point(0,   -1), 0,   Qt.point(60, 50)]],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
-        var offset = Qt.point(20, 40);
-        var movement = Qt.point(-85, -1);
-        var moveTime = 850;
-        if (armyName === "ma")
-        {
-            offset = Qt.point(0, 40);
-            movement = Qt.point(0, 0);
-            moveTime = 0;
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
+        var offset = Qt.point(data[0], 40);
+        var movement = data[1];
+        var moveTime = data[2];
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon, alive = true)
@@ -44,27 +51,22 @@ var Constructor = function()
         // get army name
         var player = unit.getOwner();        
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
-        var offset = Qt.point(-65, 40);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(0, 40);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
+        var offset = Qt.point(data[0] - data[1].x, 40);
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
         BATTLEANIMATION_BOMBER.loadStandingAnimation(sprite, unit, defender, weapon);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
         var count = sprite.getUnitCount(5);
-        var startPoint = Qt.point(70, 60);
-        if (armyName === "ma")
-        {
-            startPoint = Qt.point(60, 50);
-        }
+        var startPoint = data[3];
         for (var i = 0; i < count; i++)
         {
             sprite.loadSingleMovingSprite("bombs_projectile", false, startPoint,
@@ -74,10 +76,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
+        return 600 + 150 * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -89,7 +90,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 300);
+                          1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("bomb_falling", false, 5, Qt.point(0, 150),
                                 Qt.point(0, -130), 400, true,
@@ -102,31 +103,25 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 860;
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2000;
     };
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 

@@ -136,6 +136,22 @@ protected slots:
     void loadNextAudioFile(qint32 playerIndex);
 protected:
     /**
+     * @brief createPlayer
+     * @param player
+     */
+    void createPlayer(qint32 player);
+    /**
+     * @brief addMusicToTempFolder
+     * @param file
+     * @param startPointMs
+     * @param endPointMs
+     */
+    void addMusicToPlaylist(QString file, qint64 startPointMs = -1, qint64 endPointMs = -1);
+    /**
+     * @brief clearTempFolder
+     */
+    void clearTempFolder();
+    /**
      * @brief loadMusicFolder
      * @param folder
      * @param loadedSounds
@@ -210,10 +226,15 @@ private:
     };
     struct Player
     {
-        Player(QObject* parent)
+        Player(QObject* parent, Player* player)
             : m_player(parent),
               m_playerFile(parent)
         {
+            if (player != nullptr)
+            {
+                m_playerStartPosition = player->m_playerStartPosition;
+                m_playListPostiton = player->m_playListPostiton;
+            }
         }
         QFile m_playerFile;
         QMediaPlayer m_player;

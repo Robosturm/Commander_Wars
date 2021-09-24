@@ -38,7 +38,7 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
-            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, count);
+            BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 1, count);
             offset = Qt.point(108, 85);
             for (var i = 0; i < count; i++)
             {
@@ -90,6 +90,32 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 700 + 200 * count;
+        }
+        else
+        {
+            return 800;
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 200 * count;
+        }
+        else
+        {
+            return -1;
+        }
+    };
+
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 6, 6);
@@ -102,7 +128,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 200);
             for (i = 0; i < count; i++)
             {
@@ -112,7 +138,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -120,15 +146,16 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
         if (weapon === 0)
         {
-            return 1500;
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {
-            return 1000;
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
     };
 };

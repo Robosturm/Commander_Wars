@@ -19,9 +19,6 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         BATTLEANIMATION_ZCOUNIT_SIEGE_CANNON.loadStandingAnimation(sprite, unit, defender, weapon);
         var offset = Qt.point(114, 135);
-        // 148 137
-        // -30   5
-        // - 4  -7
         for (var i = 0; i < count; i++)
         {
             sprite.loadSingleMovingSprite("artillery_shot", false,
@@ -34,8 +31,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1000 + 500 * sprite.getUnitCount(5);
+        return 500 + 500 * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_SIEGE_CANNON.getMaxUnitCount());
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
@@ -43,13 +39,18 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         var i = 0;
         sprite.loadSprite("artillery_heavy_hit",  false, sprite.getMaxUnitCount(), Qt.point(-16, 20),
-                          1, 1.0, 0, 0);
+                          1, 1.0, 0, 0, true);
         sprite.addSpriteScreenshake(8, 0.98, 800, 200);
         for (i = 0; i < count; i++)
         {
             sprite.loadSound("artillery_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
-    }
+    };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

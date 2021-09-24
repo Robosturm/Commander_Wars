@@ -25,6 +25,7 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/TweenQueue.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenwait.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"

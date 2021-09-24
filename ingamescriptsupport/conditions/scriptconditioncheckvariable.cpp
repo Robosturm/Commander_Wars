@@ -21,7 +21,7 @@ ScriptConditionCheckVariable::ScriptConditionCheckVariable()
 
 void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionCheckVariable", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionCheckVariable", Console::eDEBUG);
     line = line.simplified();
     line = line.replace("if (", "");
     if (line.startsWith(ScriptData::variables))
@@ -59,7 +59,7 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString l
 
 void ScriptConditionCheckVariable::writePreCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionCheckVariable", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionCheckVariable", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)

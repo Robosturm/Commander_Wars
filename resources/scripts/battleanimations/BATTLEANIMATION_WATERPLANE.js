@@ -35,6 +35,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
@@ -46,8 +51,9 @@ var Constructor = function()
 
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            sprite.loadSprite("rocket_hit_air",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300);
+            sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                                    Qt.point(-50, 0), 300, false,
+                                    1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
@@ -55,7 +61,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("rocket_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300);
+                              1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
@@ -68,17 +74,16 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_WATERPLANE.getMaxUnitCount();
-    };
-
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_WATERPLANE.getMaxUnitCount();
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
+        }
+        else
+        {
+            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
+        }
     };
 };
 

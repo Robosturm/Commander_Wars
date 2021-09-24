@@ -21,7 +21,7 @@ CreditsMenue::CreditsMenue()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Credits Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Credits Menue", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -158,7 +158,7 @@ void CreditsMenue::onEnter()
 
 void CreditsMenue::exitMenue()
 {    
-    Console::print("Leaving Credits Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Credits Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    

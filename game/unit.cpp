@@ -283,7 +283,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
     }
     else
     {
-        Console::print("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load unit sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -1070,7 +1070,7 @@ void Unit::loadUnit(Unit* pUnit)
 
 void Unit::loadSpawnedUnit(QString unitId)
 {
-    Console::print("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
     if (canTransportUnit(pUnit.get()))
     {
@@ -1080,7 +1080,7 @@ void Unit::loadSpawnedUnit(QString unitId)
 
 Unit* Unit::spawnUnit(QString unitID)
 {
-    Console::print("Unit::spawnUnit " + unitID, Console::eDEBUG);
+    CONSOLE_PRINT("Unit::spawnUnit " + unitID, Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
@@ -1388,6 +1388,70 @@ float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qi
     return bonus;
 }
 
+bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
+{
+    bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1;
+    CO* pCO = m_pOwner->getCO(0);
+    auto mode = GameEnums::CounterAttackMode_Undefined;
+    if (pCO != nullptr)
+    {
+        mode = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+    }
+    if (mode != GameEnums::CounterAttackMode_Impossible)
+    {
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+            if (mode2 != GameEnums::CounterAttackMode_Undefined)
+            {
+                mode = mode2;
+            }
+        }
+    }
+    if (mode != GameEnums::CounterAttackMode_Impossible)
+    {
+        spGameMap pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer != nullptr &&
+                m_pOwner->isEnemy(pPlayer) &&
+                !pPlayer->getIsDefeated())
+            {
+                pCO = pPlayer->getCO(0);
+                if (pCO != nullptr)
+                {
+                    auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+                    if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                    {
+                        mode = mode2;
+                    }
+                }
+                if (mode == GameEnums::CounterAttackMode_Impossible)
+                {
+                    break;
+                }
+                pCO = pPlayer->getCO(1);
+                if (pCO != nullptr)
+                {
+                    auto mode2 = pCO->canCounterAttack(pAction, this, position, pDefender, defPosition, luckMode);
+                    if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                    {
+                        mode = mode2;
+                    }
+                }
+                if (mode == GameEnums::CounterAttackMode_Impossible)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return (directCombat || mode == GameEnums::CounterAttackMode_Possible) &&
+            mode != GameEnums::CounterAttackMode_Impossible;
+}
+
 qint32 Unit::getUnitBonusDefensive(GameAction* pAction, QPoint position, Unit* pAttacker, QPoint atkPosition, bool isAttacker, GameEnums::LuckDamageMode luckMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1590,7 +1654,7 @@ void Unit::setUnitVisible(bool value)
 
 void Unit::makeCOUnit(quint8 co, bool force)
 {
-    Console::print("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
+    CONSOLE_PRINT("Unit::makeCOUnit for " + QString::number(co) + " force=" + QString::number(force), Console::eDEBUG);
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
         (pCO->getCOUnit() == nullptr || force))
@@ -2431,8 +2495,6 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         movePath.append(QPoint(Unit::getX(), Unit::getY()));
     }
     // update vision based on the movepath of the unit
-    spGameMap pMap = GameMap::getInstance();
-    bool visionBlock = pMap->getGameRules()->getVisionBlock();
     for (qint32 i = 0; i < movePath.size(); i++)
     {
         qint32 moveCost = 1;
@@ -2443,40 +2505,10 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         }
         if (moveCost > 0)
         {
-            spQmlVectorPoint pCircle;
-            qint32 visionRange = getVision(movePath[i]);
-            Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
-            if (visionBlock)
+            auto fields = getVisionFields(movePath[i]);
+            for (auto & field : qAsConst(fields))
             {
-                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
-            }
-            else
-            {
-                pCircle = GlobalUtils::getCircle(0, visionRange);
-            }
-            for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
-            {
-                QPoint circleField = pCircle->at(i2);
-                QPoint field = circleField + QPoint(movePath[i].x(), movePath[i].y());
-                if (pMap->onMap(field.x(), field.y()))
-                {
-                    if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
-                    {
-                        m_pOwner->addVisionField(field.x(), field.y(), 1, true);
-                    }
-                    else
-                    {
-                        Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
-                        Unit* pUnit = pTerrain->getUnit();
-                        bool visionHide = pTerrain->getVisionHide(m_pOwner);
-                        if ((!visionHide) ||
-                            ((pUnit != nullptr) && visionHide &&
-                             !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
-                        {
-                            m_pOwner->addVisionField(field.x(), field.y(), 1, false);
-                        }
-                    }
-                }
+                m_pOwner->addVisionField(field.x(), field.y(), 1, field.z());
             }
         }
     }
@@ -2484,7 +2516,49 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
     }
-    
+}
+
+QVector<QVector3D> Unit::getVisionFields(QPoint position)
+{
+    QVector<QVector3D> visionFields;
+    spGameMap pMap = GameMap::getInstance();
+    bool visionBlock = pMap->getGameRules()->getVisionBlock();
+    spQmlVectorPoint pCircle;
+    qint32 visionRange = getVision(position);
+    Terrain* pTerrain = pMap->getTerrain(position.x(), position.y());
+    if (visionBlock)
+    {
+        pCircle = pMap->getVisionCircle(position.x(), position.y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
+    }
+    else
+    {
+        pCircle = GlobalUtils::getCircle(0, visionRange);
+    }
+    for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
+    {
+        QPoint circleField = pCircle->at(i2);
+        QPoint field = circleField + QPoint(position.x(), position.y());
+        if (pMap->onMap(field.x(), field.y()))
+        {
+            if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
+            {
+                visionFields.append(QVector3D(field.x(), field.y(), true));
+            }
+            else
+            {
+                Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
+                Unit* pUnit = pTerrain->getUnit();
+                bool visionHide = pTerrain->getVisionHide(m_pOwner);
+                if ((!visionHide) ||
+                    ((pUnit != nullptr) && visionHide &&
+                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                {
+                    visionFields.append(QVector3D(field.x(), field.y(), false));
+                }
+            }
+        }
+    }
+    return visionFields;
 }
 
 void Unit::moveUnitToField(qint32 x, qint32 y)

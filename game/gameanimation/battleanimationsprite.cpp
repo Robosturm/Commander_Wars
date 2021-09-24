@@ -349,6 +349,29 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
     }
 }
 
+qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getFiredDurationMS";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
+    args1 << attackerWeapon;
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 500;
+    }
+}
+
 qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -485,7 +508,7 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
 }
 
 void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
-                           QPoint movement, float rotation, qint32 moveTime, short priority, qint32 maxUnitCount, qint32 showDelay)
+                           QPoint movement, float rotation, qint32 moveTime, short priority, qint32 firedFrame, qint32 maxUnitCount, qint32 showDelay)
 {
     qint32 startUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endUnits = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
@@ -503,7 +526,7 @@ void BattleAnimationSprite::loadDyingMovingSprite(QString livingSpriteId, QStrin
         else
         {
             loadSingleMovingSpriteV2(livingSpriteId, mode, offset + getUnitBasePosition(i, maxUnitCount, startUnits), QPoint(0, 0), 0, false,
-                                     1, 1.0f, i + priority, 0, false, GameMap::frameTime, -1, 0, 0);
+                                     1, 1.0f, i + priority, 0, false, GameMap::frameTime, firedFrame, firedFrame, 0);
         }
 
         if (m_lastLoadedSprite.get() != nullptr)
@@ -653,7 +676,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     }
     else
     {
-        Console::print("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
+        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -817,7 +840,7 @@ void BattleAnimationSprite::startNextFrame()
 
 void BattleAnimationSprite::startNextUnitFrames()
 {
-    Console::print("Progressing next battle frame", Console::eDEBUG);
+    CONSOLE_PRINT("Progressing next battle frame", Console::eDEBUG);
     if (m_currentFrame.size() == 0 && !m_startWithFraming)
     {
         for (auto & unitFrame : m_nextFrames[0])
@@ -864,7 +887,7 @@ void BattleAnimationSprite::startNextUnitFrames()
         ++m_frameIterator;
         if (m_frameIterator >= m_nextFrames[0].size())
         {
-            Console::print("Progressing next battle animation", Console::eDEBUG);
+            CONSOLE_PRINT("Progressing next battle animation", Console::eDEBUG);
             m_frameIterator = 0;
             m_nextFrames.removeFirst();
         }
@@ -880,6 +903,16 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+}
+
+bool BattleAnimationSprite::getHasFired() const
+{
+    return m_hasFired;
+}
+
+void BattleAnimationSprite::setHasFired(bool newHasFired)
+{
+    m_hasFired = newHasFired;
 }
 
 void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundSprite)

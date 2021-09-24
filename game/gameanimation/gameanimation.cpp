@@ -64,7 +64,7 @@ void GameAnimation::doPreAnimationCall()
 {
     if ((!m_jsPreActionObject.isEmpty()) && (!m_jsPreActionObject.isEmpty()))
     {
-        Console::print("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
+        CONSOLE_PRINT("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
@@ -179,7 +179,7 @@ void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float of
     }
     else
     {
-        Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eERROR);
     }
 }
 
@@ -204,7 +204,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         else
         {
-            Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
+            CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eERROR);
             return;
         }
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
@@ -371,7 +371,7 @@ bool GameAnimation::onFinished(bool skipping)
         m_QueuedAnimations.clear();
         if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
         {
-            Console::print("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
+            CONSOLE_PRINT("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args1;
             QJSValue obj1 = pInterpreter->newQObject(this);

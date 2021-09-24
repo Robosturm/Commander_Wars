@@ -18,14 +18,11 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
         BATTLEANIMATION_ZCOUNIT_AT_CYCLE.loadStandingAnimation(sprite, unit, defender, weapon);
         var offset = Qt.point(28, 20);
-        sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(127, 0), 400, false,
                                 1, 1, -1);
         offset.x = (offset.x - 20);
         sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-
-        // 9   21
-        // -30 15
         offset = Qt.point(-36, 11);
         sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
         for (var i = 0; i < count; i++)
@@ -34,13 +31,18 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
         sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 300);
+                          1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
-        sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
+        sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                 Qt.point(-127, 0), 400, true,
                                 1, 1, 0, 0, true);
         for (i = 0; i < count; i++)
@@ -50,16 +52,10 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount();
-    };
-
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount();
-    }
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

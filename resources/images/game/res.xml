@@ -48,6 +48,7 @@
         <image file="battlesprites/background/back_forest+2.png" />
         <image file="battlesprites/background/back_harbour.png" />
         <image file="battlesprites/background/back_hq+.png" />
+        <image file="battlesprites/background/back_hq+ac.png" />
         <image file="battlesprites/background/back_hq+bh.png" />
         <image file="battlesprites/background/back_hq+bm.png" />
         <image file="battlesprites/background/back_hq+ge.png" />
@@ -55,7 +56,6 @@
         <image file="battlesprites/background/back_hq+yc.png" />
         <image file="battlesprites/background/back_mountain+0.png" />
         <image file="battlesprites/background/back_mountain+1.png" />
-        <image file="battlesprites/background/back_mountain+2.png" />
         <image file="battlesprites/background/back_planes.png" />
         <image file="battlesprites/background/back_planes+forest.png" />
         <image file="battlesprites/background/back_planes+mountain.png" />
@@ -109,7 +109,7 @@
         <image file="battlesprites/battle_front.png" />
         <image file="battlesprites/co_back.png" />
         <image file="battlesprites/co_front.png" />
-        <image file="battlesprites/battle_back+mask.png" />
+        <!-- <image file="battlesprites/battle_back+mask.png" /> -->
         <image file="battlesprites/battle_front+mask.png" />
         <!-- <image file="battlesprites/co_back+mask.png" /> -->
         <image file="battlesprites/co_front+mask.png" />

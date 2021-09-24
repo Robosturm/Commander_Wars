@@ -22,11 +22,7 @@
 #include "spritingsupport/spritecreator.h"
 
 // values which differ from release to debug build
-#ifdef GAMEDEBUG
-Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
-#else
-Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
-#endif
+Console::eLogLevels Console::m_LogLevel = static_cast<Console::eLogLevels>(DEBUG_LEVEL);
 
 bool Console::m_show = false;
 bool Console::m_toggled = false;
@@ -111,13 +107,13 @@ void Console::init()
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole.get(), &Console::KeyInput, Qt::QueuedConnection);
     // Print some Info
 
-    Console::print("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
-    Console::print("Starting Game...", Console::eLogLevels::eINFO);
-    Console::print("Prepare to Fight...", Console::eLogLevels::eINFO);
-    Console::print("Read this message while waiting...", Console::eLogLevels::eINFO);
-    Console::print("", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("Starting Game...", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("Prepare to Fight...", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("Read this message while waiting...", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("", Console::eLogLevels::eINFO);
     Console::createfunnymessage();
-    Console::print("", Console::eLogLevels::eINFO);
+    CONSOLE_PRINT("", Console::eLogLevels::eINFO);
 }
 
 void Console::release()
@@ -327,11 +323,6 @@ void Console::setDeveloperMode(bool developerMode)
     }
 }
 
-Console::eLogLevels Console::getLogLevel()
-{
-    return m_LogLevel;
-}
-
 void Console::setVolume(qint32 volume)
 {
     Mainapp::getInstance()->getAudioThread()->setVolume(volume);
@@ -350,7 +341,7 @@ void Console::help(qint32 start, qint32 end)
     {
         if (index >= start && (index <= end || end < 0))
         {
-            Console::print(functions[index], Console::eINFO);
+            CONSOLE_PRINT(functions[index], Console::eINFO);
         }
         index++;
     }
@@ -372,7 +363,7 @@ void Console::extractResources()
     QDir target(targetDir);
     if (target.exists())
     {
-        Console::print("Deleting old extracted files.", Console::eINFO);
+        CONSOLE_PRINT("Deleting old extracted files.", Console::eINFO);
         target.removeRecursively();
     }
     QStringList filter;
@@ -389,22 +380,24 @@ void Console::extractResources()
         QDir newDir(targetDir + dir);
         newDir.mkpath(".");
         file.copy(targetDir + relativePath);
+        QFile permission(targetDir + relativePath);
+        permission.setPermissions(QFileDevice::ReadOther | QFileDevice::WriteOther);
         if (count % 40 == 0)
         {
-            Console::print("Extracted files " + QString::number(count) + "...", Console::eINFO);
+            CONSOLE_PRINT("Extracted files " + QString::number(count) + "...", Console::eINFO);
         }
     }
-    Console::print("Extracting files done. Extracted: " + QString::number(count) + " files", Console::eINFO);
+    CONSOLE_PRINT("Extracting files done. Extracted: " + QString::number(count) + " files", Console::eINFO);
 }
 
 void Console::memoryUsage()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    Console::print("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()), Console::eINFO);
-    Console::print("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
-    Console::print("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
-    Console::print("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
-    Console::print("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), Console::eINFO);
+    CONSOLE_PRINT("Js-Objects=" + QString::number(oxygine::ref_counter::getAlloctedJsObjectCount()), Console::eINFO);
+    CONSOLE_PRINT("C++-Objects=" + QString::number(oxygine::ref_counter::getAlloctedObjectCount()), Console::eINFO);
+    CONSOLE_PRINT("Textures=" + QString::number(oxygine::Texture::getHighestTextureCount()), Console::eINFO);
+    CONSOLE_PRINT("Materials cached=" + QString::number(oxygine::MaterialCache::mc().getSize()), Console::eINFO);
+    CONSOLE_PRINT("Sounds buffered=" + QString::number(pApp->getAudioThread()->getSoundsBuffered()), Console::eINFO);
 
 }
 

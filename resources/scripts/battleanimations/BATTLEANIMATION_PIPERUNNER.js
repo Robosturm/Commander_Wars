@@ -29,6 +29,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_PIPERUNNER.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
@@ -39,8 +44,9 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
-                              1, 1.0, 0, 300);
+            sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                                    Qt.point(-30, 15), 300, false,
+                                    1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("pipe_rocket_up", false, 5, Qt.point(127, 0),
                                     Qt.point(-128, 64), 400, true,
                                     -1, 1, 0, 0, true);
@@ -48,7 +54,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 300);
+                              1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("pipe_rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     -1, 1, 0, 0, true);
@@ -63,12 +69,14 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 550 + 300 * sprite.getUnitCount(5);
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
+        else
+        {
+            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
     };
 };
 

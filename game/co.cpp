@@ -135,7 +135,7 @@ void CO::setPowerFilled(const double &value)
         {
             limitPowerbar(currentValue);
         }
-        Console::print("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
+        CONSOLE_PRINT("Powerbar changed by: " + QString::number(value - currentValue), Console::eDEBUG);
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
@@ -1100,6 +1100,47 @@ float CO::getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoi
     return ergValue;
 }
 
+GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "canCounterAttack";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
+    args1 << luckMode;
+    auto ergValue = GameEnums::CounterAttackMode_Impossible;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                auto mode2 = static_cast<GameEnums::CounterAttackMode>(erg.toNumber());
+                if (mode2 != GameEnums::CounterAttackMode_Undefined)
+                {
+                    ergValue = mode2;
+                    if (ergValue == GameEnums::CounterAttackMode_Impossible)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return ergValue;
+}
+
 GameEnums::PowerMode CO::getPowerMode() const
 {
     return m_PowerMode;
@@ -1675,7 +1716,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
 
 void CO::serializeObject(QDataStream& pStream) const
 {
-    Console::print("storing co", Console::eDEBUG);
+    CONSOLE_PRINT("storing co", Console::eDEBUG);
     pStream << getVersion();
     pStream << m_coID;
     pStream << m_powerStars;
@@ -1700,7 +1741,7 @@ void CO::deserializeObject(QDataStream& pStream)
 
 void CO::deserializer(QDataStream& pStream, bool fast)
 {
-    Console::print("reading game co", Console::eDEBUG);
+    CONSOLE_PRINT("reading game co", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_coID;
@@ -1786,7 +1827,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 {
     qint32 size = 0;
     pStream >> size;
-    Console::print("reading co styles " + QString::number(size), Console::eDEBUG);
+    CONSOLE_PRINT("reading co styles " + QString::number(size), Console::eDEBUG);
     m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {
@@ -1872,7 +1913,7 @@ QString CO::getActiveCoStyle()
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
-    Console::print("Loading sprites for CO " + coid, Console::eDEBUG);
+    CONSOLE_PRINT("Loading sprites for CO " + coid, Console::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);

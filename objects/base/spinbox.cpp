@@ -275,7 +275,7 @@ qreal SpinBox::getCurrentValue()
 
 qreal SpinBox::checkInput()
 {
-    Console::print("SpinBox::checkInput", Console::eDEBUG);
+    CONSOLE_PRINT("SpinBox::checkInput", Console::eDEBUG);
     bool ok = false;
     qreal value = m_Text.toDouble(&ok);
     if (m_Text == "∞")
@@ -350,7 +350,7 @@ void SpinBox::setSpinSpeed(qreal SpinSpeed)
 bool SpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
     bool bRet = false;
-    Console::print("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
+    CONSOLE_PRINT("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
     if (event->queries() == Qt::ImTextBeforeCursor)
     {
         QString textBefore = m_Text.mid(0, m_curmsgpos + 1);

@@ -40,7 +40,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
      // load minimap
     if (pMap.get() != nullptr)
     {
-        Console::print("Minimap::updateMinimap", Console::eDEBUG);
+        CONSOLE_PRINT("Minimap::updateMinimap", Console::eDEBUG);
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
         qint32 size = width * heigth;

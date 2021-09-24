@@ -165,7 +165,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                          1, 1.0, 0, 0);
+                          1, 1.0, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -174,8 +174,23 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_HOVERFLAK.getMaxUnitCount();
+        var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
+        if (armyName === "yc")
+        {
+            return 1200 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
+        }
+        else if (armyName === "os" ||
+                 armyName === "ge" ||
+                 armyName === "bm")
+        {
+            return 1300 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
+        }
+        else
+        {
+            return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
+        }
     };
 };
 

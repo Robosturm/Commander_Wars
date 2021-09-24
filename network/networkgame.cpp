@@ -32,7 +32,7 @@ void NetworkGame::addClient(spTCPClient pClient)
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    Console::print("Forwarding message from socket " + QString::number(socketID), Console::eDEBUG);
+    CONSOLE_PRINT("Forwarding message from socket " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         if (m_Clients[i]->getSocketID() != socketID)
@@ -51,7 +51,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
     {
         stream >> messageType;
     }
-    Console::print("Recieve Route message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
+    CONSOLE_PRINT("Recieve Route message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
     if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
     {
         slaveRunning(stream);
@@ -78,13 +78,13 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
         else if (messageType == NetworkCommands::PLAYERCHANGED)
         {
             QString command = QString(NetworkCommands::SERVERREQUESTOPENPLAYERCOUNT);
-            Console::print("Sending command " + command, Console::eDEBUG);
+            CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << command;
             emit m_gameConnection.sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
         }
-        Console::print("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
+        CONSOLE_PRINT("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
         // forward data to other clients
         for (qint32 i = 0; i < m_Clients.size(); i++)
         {
@@ -118,7 +118,7 @@ void NetworkGame::slaveRunning(QDataStream &stream)
 void NetworkGame::sendPlayerJoined(qint32 player)
 {
     QString command = QString(NetworkCommands::PLAYERJOINEDGAMEONSERVER);
-    Console::print("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     quint64 socket = m_Clients[player]->getSocketID();;
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -145,7 +145,7 @@ const NetworkGameData & NetworkGame::getData() const
 void NetworkGame::recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     // forward data to hosted game
-    Console::print("Recieved Client data sending data to slave for socket " + QString::number(socket), Console::eDEBUG);
+    CONSOLE_PRINT("Recieved Client data sending data to slave for socket " + QString::number(socket), Console::eDEBUG);
     emit m_gameConnection.sig_sendData(socket, data, service, false);
 }
 
@@ -216,7 +216,7 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::clientDisconnect(quint64 socketId)
 {
-    Console::print("Networkgame Client " + QString::number(socketId) + " disconnected.", Console::eDEBUG);
+    CONSOLE_PRINT("Networkgame Client " + QString::number(socketId) + " disconnected.", Console::eDEBUG);
     bool isHost = false;
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
@@ -228,7 +228,7 @@ void NetworkGame::clientDisconnect(quint64 socketId)
         }
     }
     QString command = QString(NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER);
-    Console::print("Sending command " + command, Console::eDEBUG);
+    CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << command;
@@ -244,14 +244,14 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     emit sigDisconnectSocket(socketId);
     if (isHost || m_Clients.size() == 0)
     {
-        Console::print("Networkgame Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);
+        CONSOLE_PRINT("Networkgame Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);
         emit sigClose(this);
     }
 }
 
 void NetworkGame::processFinished(int, QProcess::ExitStatus)
 {
-    Console::print("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
+    CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         emit sigDisconnectSocket(m_Clients[i]->getSocketID());

@@ -4,17 +4,19 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],
+                     ["bm", "bm"],
                      ["dm", "dm"],
+                     ["ge", "ge"],
+                     ["ma", "ma"],
+                     ["os", "os"],
                      ["ti", "ti"],
-                     ["pf", "pf"],];
+                     ["pf", "pf"],
+                     ["yc", "yc"],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
@@ -80,6 +82,10 @@ var Constructor = function()
         {
             offset = Qt.point(7, 45);
         }
+        else if (armyName === "bd")
+        {
+            offset = Qt.point(-2, 30);
+        }
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
@@ -91,6 +97,11 @@ var Constructor = function()
         {
             sprite.loadSound("rocket_launch.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+    };
+
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
     };
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
@@ -107,7 +118,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
         sprite.loadSprite("rocket_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 300);
+                          1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                 Qt.point(-128, -64), 400, true,
@@ -119,17 +130,9 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount();
-    };
-
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount();
+        return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
     };
 };
 

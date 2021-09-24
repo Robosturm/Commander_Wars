@@ -52,7 +52,7 @@ spDialogEntry ScriptEventDialog::getDialog(qint32 index)
 
 void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
 {
-    Console::print("Reading EventDialog", Console::eDEBUG);
+    CONSOLE_PRINT("Reading EventDialog", Console::eDEBUG);
     line = line.simplified();
     while (!rStream.atEnd())
     {
@@ -60,7 +60,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream, QString line)
         line = line.simplified();
         if (line.endsWith(EventDialog))
         {
-            Console::print("Read EventDialog", Console::eDEBUG);
+            CONSOLE_PRINT("Read EventDialog", Console::eDEBUG);
             break;
         }
         else if (line.endsWith(ScriptEventDialogItem))

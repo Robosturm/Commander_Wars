@@ -149,6 +149,10 @@ void Building::setOwner(Player* pOwner)
     }
     else
     {
+        if (m_BuildingID == "HQ")
+        {
+            updateBuildingSprites(false);
+        }
         updatePlayerColor(visible);
     }
 }
@@ -236,7 +240,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
     }
     else
     {
-        Console::print("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
 }
 

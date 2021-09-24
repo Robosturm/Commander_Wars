@@ -127,7 +127,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread();
-            m_AudioWorker.start(QThread::Priority::NormalPriority);
+            m_AudioWorker.start(QThread::Priority::LowPriority);
+            m_Audiothread->moveToThread(&m_AudioWorker);
             emit m_Audiothread->sigInitAudio();
             m_Audiothread->clearPlayList();
             m_Audiothread->loadFolder("resources/music/hauptmenue");
@@ -373,7 +374,7 @@ void Mainapp::doScreenshot()
 
 void Mainapp::changeScreenMode(qint32 mode)
 {
-    Console::print("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
     hide();
     switch (mode)
     {
@@ -439,7 +440,7 @@ void Mainapp::changeScreenMode(qint32 mode)
 
 void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 {    
-    Console::print("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
+    CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
     setMaximumSize(QSize(width, heigth));
@@ -675,7 +676,7 @@ QString Mainapp::qsTr(const char* const text)
 void Mainapp::createBaseDirs()
 {
     QString userPath = Settings::getUserPath();
-    Console::print("Creating base dirs in " + userPath, Console::eDEBUG);
+    CONSOLE_PRINT("Creating base dirs in " + userPath, Console::eDEBUG);
     if (!userPath.isEmpty())
     {
         QDir newDir(userPath);

@@ -7,8 +7,14 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         BATTLEANIMATION_DESTROYER.loadSprite(sprite, unit, defender, weapon, Qt.point(-116, 0), 1200, 0, 0, 0, 0,
                                              "+cannon", "+flak", Qt.point(20, 20));
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -38,6 +44,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
@@ -91,6 +98,33 @@ var Constructor = function()
             sprite.loadSound("anti_air_gun_fire.wav", 1, 500);
         }
     };
+
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 600 + 200 * count;
+        }
+        else
+        {
+            return 1100;
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 200 * count;
+        }
+        else
+        {
+            return -1;
+        }
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
@@ -98,7 +132,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
             {
@@ -116,6 +150,19 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        var count = sprite.getUnitCount(5);
+        if (weapon === 0)
+        {
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
+        else
+        {
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         return true;
@@ -125,12 +172,6 @@ var Constructor = function()
         return 1210;
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
-    };
-
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         return 2200;
@@ -138,7 +179,6 @@ var Constructor = function()
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 

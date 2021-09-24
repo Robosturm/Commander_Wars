@@ -16,7 +16,7 @@ LocalServer::~LocalServer()
 {
     disconnect();
     LocalServer::disconnectTCP();
-    Console::print("Server is closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Server is closed", Console::eLogLevels::eDEBUG);
 }
 
 void LocalServer::connectTCP(QString adress, quint16)
@@ -30,7 +30,7 @@ void LocalServer::connectTCP(QString adress, quint16)
     connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
     connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
 
-    Console::print("Local Server is running. " + adress, Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server is running. " + adress, Console::eLogLevels::eDEBUG);
     // create marker file
     QString markername = "temp/" + adress + ".marker";
     QFile file(markername);
@@ -47,7 +47,7 @@ void LocalServer::disconnectTCP()
             // realize correct deletion
             m_pTCPSockets[0]->disconnect();
             m_pTCPSockets[0]->close();
-            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Client disconnected.", Console::eLogLevels::eDEBUG);
         }
         m_pRXTasks.removeAt(0);
         m_pTXTasks.removeAt(0);
@@ -66,7 +66,7 @@ void LocalServer::disconnectClient(quint64 socketID)
     {
         if (m_SocketIDs[i] == socketID)
         {
-            Console::print("Local Server Client disconnected.", Console::eLogLevels::eDEBUG);
+            CONSOLE_PRINT("Local Server Client disconnected.", Console::eLogLevels::eDEBUG);
             if (m_pTCPSockets[i]->isOpen())
             {
                 // realize correct deletion
@@ -108,14 +108,14 @@ void LocalServer::onConnect()
         {
             emit sigDisconnectClient(socket);
         });
-        Console::print("New Client connection.", Console::eLogLevels::eDEBUG);
+        CONSOLE_PRINT("New Client connection.", Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }
 
 void LocalServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    Console::print("Forwarding data from local server to all clients except " + QString::number(socketID), Console::eDEBUG);
+    CONSOLE_PRINT("Forwarding data from local server to all clients except " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_SocketIDs.size(); i++)
     {
         if (m_SocketIDs[i] != socketID)
@@ -143,17 +143,17 @@ QVector<quint64> LocalServer::getConnectedSockets()
 
 void LocalServer::changeThread(quint64 socketID, QThread*)
 {
-    Console::print("Unsupported call to change thread on local server for socekt " + QString::number(socketID), Console::eFATAL);
+    CONSOLE_PRINT("Unsupported call to change thread on local server for socekt " + QString::number(socketID), Console::eFATAL);
 }
 
 void LocalServer::addSocket(quint64 socket)
 {
-    Console::print("Local Server added socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server added socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
     m_SocketIDs.append(socket);
 }
 
 void LocalServer::removeSocket(quint64 socket)
 {
-    Console::print("Local Server removed socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Local Server removed socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
     m_SocketIDs.removeAll(socket);
 }

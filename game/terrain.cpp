@@ -38,7 +38,7 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
         }
         else
         {
-            Console::print("Unable to load Terrain " + terrainID, Console::eFATAL);
+            CONSOLE_PRINT("Unable to load Terrain " + terrainID, Console::eFATAL);
         }
     }
     return pTerrain;
@@ -371,7 +371,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     }
     else
     {
-        Console::print("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
     if (m_pTerrainSprite.get() && m_x >= 0 && m_y >= 0)
     {

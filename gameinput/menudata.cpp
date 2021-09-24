@@ -64,6 +64,6 @@ bool MenuData::validData()
     {
         return true;
     }
-    Console::print("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
+    CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
     return false;
 }

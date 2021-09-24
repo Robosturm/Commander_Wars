@@ -53,8 +53,9 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        -DHEAVY_AI
-        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        -DDEBUG_LEVEL=0
+        #-DHEAVY_AI
+        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
         -DOXYGINE_DEBUG_SAFECAST
         )
 
@@ -67,6 +68,7 @@ else("Release")
     message("Compiling as Release")
     add_definitions(
         -DGAMERELEASE
+        -DDEBUG_LEVEL=1
         )
     set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()
@@ -168,6 +170,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     # tween
     3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenAnimColumn.cpp
     3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp
@@ -753,5 +756,5 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
             "${InstallExePath}"
     COMMENT "Running windeployqt with path ${InstallExePath}"
-)
+    )
 endif()

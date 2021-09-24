@@ -39,8 +39,9 @@ namespace oxygine
         }
 
         if (me->mouseButton != MouseButton_Left)
+        {
             return;
-
+        }
         switch (event->type)
         {
             case TouchEvent::OVER:
@@ -53,8 +54,8 @@ namespace oxygine
                         setState(stateOvered);
                     }
                 }
+                break;
             }
-            break;
             case TouchEvent::OUTX:
             {
                 if (m_btnOvered == me->index)
@@ -65,8 +66,8 @@ namespace oxygine
                     }
                     m_btnOvered = 0;
                 }
+                break;
             }
-            break;
             case TouchEvent::TOUCH_DOWN:
             {
                 if (!m_btnPressed)
@@ -85,8 +86,8 @@ namespace oxygine
                     removeEventListener(m_touchUpCbId);
                     m_btnPressed = 0;
                 }
+                break;
             }
-            break;
         }
     }
 

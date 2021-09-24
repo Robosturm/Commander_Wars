@@ -79,7 +79,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
       m_savegame(savegame)
 {
     setObjectName("GameMap");
-    Console::print("Loading map: " + map, Console::eDEBUG);
+    CONSOLE_PRINT("Loading map: " + map, Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadMapData();
@@ -327,7 +327,7 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
 
 void GameMap::deleteMap()
 {
-    Console::print("deleteMap()", Console::eDEBUG);
+    CONSOLE_PRINT("deleteMap()", Console::eDEBUG);
     if (m_pInstance.get() != nullptr)
     {
         m_pInstance->detach();
@@ -337,7 +337,7 @@ void GameMap::deleteMap()
 
 GameMap::~GameMap()
 {
-    Console::print("desctructing map.", Console::eDEBUG);
+    CONSOLE_PRINT("desctructing map.", Console::eDEBUG);
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
@@ -354,7 +354,7 @@ GameMap::~GameMap()
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->deleteObject(m_JavascriptName);
     }
-    Console::print("map was deleted", Console::eDEBUG);
+    CONSOLE_PRINT("map was deleted", Console::eDEBUG);
 }
 
 QStringList GameMap::getAllUnitIDs()
@@ -440,7 +440,7 @@ void GameMap::setCurrentPlayer(qint32 player)
 
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
-    Console::print("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
+    CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
 
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
@@ -508,7 +508,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
         }
     }
 
-    Console::print("synchronizing animations", Console::eDEBUG);
+    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
     auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -543,7 +543,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
 
 void GameMap::syncUnitsAndBuildingAnimations()
 {
-    Console::print("Synchronizing units and building animations", Console::eDEBUG);
+    CONSOLE_PRINT("Synchronizing units and building animations", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
@@ -635,7 +635,7 @@ void GameMap::removePlayer(qint32 index)
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
 {
-    Console::print("spawning Unit", Console::eDEBUG);
+    CONSOLE_PRINT("spawning Unit", Console::eDEBUG);
     if (owner != nullptr)
     {
         qint32 heigth = getMapHeight();
@@ -655,7 +655,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             else if (i == m_players.size() - 1)
             {
                 // cancel since we have no owner for the unit
-                Console::print("Invalid player selected. Didn't spawn unit " + unitID, Console::eERROR);
+                CONSOLE_PRINT("Invalid player selected. Didn't spawn unit " + unitID, Console::eERROR);
                 return nullptr;
             }
         }
@@ -664,7 +664,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
-            Console::print("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
+            CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
             return nullptr;
         }
         spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true);
@@ -761,7 +761,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             }
         }
     }
-    Console::print("Didn't spawn unit " + unitID + " didn't find an empty field", Console::eDEBUG);
+    CONSOLE_PRINT("Didn't spawn unit " + unitID + " didn't find an empty field", Console::eDEBUG);
     return nullptr;
 }
 
@@ -1117,7 +1117,7 @@ bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
 
 void GameMap::serializeObject(QDataStream& pStream) const
 {
-    Console::print("storing map", Console::eDEBUG);
+    CONSOLE_PRINT("storing map", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
@@ -1208,7 +1208,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     qint32 playerCount = 0;
     readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
                   width, heigth, playerCount, m_UniqueIdCounter);
-    Console::print("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
+    CONSOLE_PRINT("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
     qint32 mapSize = width * heigth;
     setSize(width * GameMap::getImageSize(), heigth * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
@@ -1220,7 +1220,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
-    Console::print("Loading players count: " + QString::number(playerCount), Console::eDEBUG);
+    CONSOLE_PRINT("Loading players count: " + QString::number(playerCount), Console::eDEBUG);
     for (qint32 i = 0; i < playerCount; i++)
     {
         // create player
@@ -1702,7 +1702,7 @@ void GameMap::startOfTurn(Player* pPlayer)
 
 void GameMap::startOfTurnNeutral()
 {
-    Console::print("Doing start of turn for neutrals", Console::eDEBUG);
+    CONSOLE_PRINT("Doing start of turn for neutrals", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
@@ -1727,7 +1727,7 @@ void GameMap::startOfTurnNeutral()
 
 void GameMap::startOfTurnPlayer(Player* pPlayer)
 {
-    Console::print("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
+    CONSOLE_PRINT("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     qint32 playerId = pPlayer->getPlayerID();
@@ -1975,11 +1975,10 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     if (anyPlayerAlive())
     {
-        Console::print("GameMap::nextTurn", Console::eDEBUG);
+        CONSOLE_PRINT("GameMap::nextTurn", Console::eDEBUG);
         m_Rules->checkVictory();
         enableUnits(m_CurrentPlayer.get());
         bool nextDay = nextPlayer();
-        playMusic();
         bool permanent = false;
         bool found = false;
         auto* baseGameInput = m_CurrentPlayer->getBaseGameInput();
@@ -2052,6 +2051,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             pMenu->updatePlayerinfo();
             pMenu->updateMinimap();
         }
+        playMusic();
     }
 }
 
@@ -2102,7 +2102,7 @@ void GameMap::initPlayersAndSelectCOs()
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
         if (pPlayer->getBaseGameInput() == nullptr)
         {
-            Console::print("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
+            CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
             pPlayer->setBaseGameInput(spHumanPlayerInput::create());
         }
         // resolve CO 1 beeing set and CO 0 not
@@ -2124,7 +2124,7 @@ void GameMap::initPlayersAndSelectCOs()
                 count++;
                 if (count > 2000 * bannList.size())
                 {
-                    Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
+                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
                     pPlayer->setCO("", 0);
                     break;
                 }
@@ -2150,7 +2150,7 @@ void GameMap::initPlayersAndSelectCOs()
                 pPlayer->getCO(1)->setCoStyleFromUserdata();
                 if (count > 2000 * bannList.size())
                 {
-                    Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
+                    CONSOLE_PRINT("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
                     pPlayer->setCO("", 1);
                     break;
                 }

@@ -44,7 +44,7 @@ Mainwindow::Mainwindow()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Main Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
@@ -509,7 +509,7 @@ void Mainwindow::replayGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            Console::print("Leaving Main Menue", Console::eDEBUG);
+            CONSOLE_PRINT("Leaving Main Menue", Console::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             spReplayMenu pMenu = spReplayMenu::create(filename);
@@ -534,7 +534,7 @@ void Mainwindow::replayGame(QString filename)
 
 void Mainwindow::leaveMenue()
 {    
-    Console::print("Leaving Main Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Main Menue", Console::eDEBUG);
     oxygine::Actor::detach();
 }
 
@@ -574,7 +574,7 @@ void Mainwindow::cheatTimeout()
 
 void Mainwindow::versionClicked()
 {
-    Console::print("Mainwindow::versionClicked", Console::eDEBUG);
+    CONSOLE_PRINT("Mainwindow::versionClicked", Console::eDEBUG);
     ++m_cheatCounter;
     m_cheatTimeout.stop();
     if (m_cheatCounter >= 10)

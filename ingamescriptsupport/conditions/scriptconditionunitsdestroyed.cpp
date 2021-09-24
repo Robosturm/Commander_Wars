@@ -40,7 +40,7 @@ void ScriptConditionUnitsDestroyed::setCount(const qint32 &count)
 
 void ScriptConditionUnitsDestroyed::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionUnitsDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitsDestroyed", Console::eDEBUG);
     line = line.simplified();
     QStringList items = line.replace("if (map.getGameRecorder().getDestroyedUnits(", "")
                             .replace(") >= ", ",")
@@ -76,7 +76,7 @@ void ScriptConditionUnitsDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitsDestroyed::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionUnitsDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitsDestroyed", Console::eDEBUG);
     rStream << "        if (map.getGameRecorder().getDestroyedUnits(" << QString::number(m_player) << ") >= " << QString::number(m_count)
             << " && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionUnitsDestroyed << "\n";

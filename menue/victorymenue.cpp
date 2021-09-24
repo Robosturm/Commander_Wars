@@ -34,7 +34,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    Console::print("Entering Victory Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Victory Menue", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -492,7 +492,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     if (Mainapp::getSlave())
     {
         // despawn slave process on finish
-        Console::print("Closing slave cause the game is finished.", Console::eDEBUG);
+        CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
         QCoreApplication::exit(0);
     }
     else
@@ -558,7 +558,7 @@ void VictoryMenue::addShopMoney()
     }
     if (highestScore > 0)
     {
-        Console::print("Adding points to userdata.", Console::eDEBUG);
+        CONSOLE_PRINT("Adding points to userdata.", Console::eDEBUG);
         Userdata* pUserdata = Userdata::getInstance();
         spDialogValueCounter pDialogValueCounter = spDialogValueCounter::create(pUserdata->getCredtis(), highestScore);
         connect(pDialogValueCounter.get(), &DialogValueCounter::sigFinished, this, &VictoryMenue::onProgressTimerStart, Qt::QueuedConnection);
@@ -579,7 +579,7 @@ void VictoryMenue::onProgressTimerStart()
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 {
-    Console::print("VictoryMenue::showGraph " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::showGraph " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {
@@ -703,7 +703,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
 void VictoryMenue::exitMenue()
 {
-    Console::print("Leaving Victory Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Victory Menue", Console::eDEBUG);
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_pNetworkInterface = nullptr;
@@ -997,7 +997,7 @@ qint32 VictoryMenue::getStepTime()
 
 void VictoryMenue::AddScoreToUserdata()
 {
-    Console::print("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::AddScoreToUserdata", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QString path = pMap->getMapPath();
     if (!path.isEmpty() && pMap->getWinnerTeam() >= 0)
@@ -1041,7 +1041,7 @@ void VictoryMenue::AddScoreToUserdata()
 
 void VictoryMenue::onEnter()
 {
-    Console::print("VictoryMenue::onEnter", Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::onEnter", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "onVictory";
@@ -1056,14 +1056,14 @@ void VictoryMenue::onEnter()
 
 void VictoryMenue::showPlayerStatistic(qint32 player)
 {
-    Console::print("VictoryMenue::showPlayerStatistic for " + QString::number(player), Console::eDEBUG);
+    CONSOLE_PRINT("VictoryMenue::showPlayerStatistic for " + QString::number(player), Console::eDEBUG);
     if (m_statisticsView.get() != nullptr)
     {
         m_statisticsView->detach();
     }
     spGameMap pMap = GameMap::getInstance();
     const auto & data = pMap->getGameRecorder()->getPlayerDataRecords();
-    if (player >= 0 && data.size() < player)
+    if (player >= 0 && player < data.size())
     {
         const auto & playerdata = data[player];
         if (Settings::getSmallScreenDevice())

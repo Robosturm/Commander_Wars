@@ -84,7 +84,7 @@ var BATTLEANIMATION =
         if (weapon === 0)
         {
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             sprite.addSpriteScreenshake(8, 0.98, 800, 200);
             for (i = 0; i < count; i++)
             {
@@ -94,7 +94,7 @@ var BATTLEANIMATION =
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                              1, 1.0, 0, 0);
+                              1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -105,14 +105,29 @@ var BATTLEANIMATION =
     getImpactDurationMS : function(sprite, unit, defender, weapon)
     {
         // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
+        // the time will be scaled with animation speed inside the engine        
+        var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
+        if (weapon === 0)
+        {
+            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
+        else
+        {
+            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+        }
     },
 
     getFireDurationMS : function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
+    },
+
+    getFiredDurationMS : function(sprite, unit, defender, weapon)
+    {
+        // must be smaller or equal to the fire duration
+        // the time will be scaled with animation speed inside the engine
+        return -1;
     },
 
     getMoveInDurationMS : function(sprite, unit, defender, weapon)

@@ -29,7 +29,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Campaign Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Campaign Menue", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -97,7 +97,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
 void CampaignMenu::exitMenue()
 {    
-    Console::print("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
     auto window = spMapSelectionMapsMenue::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();    
@@ -160,7 +160,7 @@ void CampaignMenu::slotButtonNext()
         pMap->getGameScript()->gameStart();
         pMap->updateSprites();
         // start game
-        Console::print("Leaving Campaign Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spGameMenue::create(false, spNetworkInterface());
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -171,7 +171,7 @@ void CampaignMenu::slotButtonNext()
     }
     else
     {
-        Console::print("Leaving Campaign Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
         auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -204,7 +204,7 @@ void CampaignMenu::autosave()
 {
     if (Settings::getAutoSavingCycle() > 0)
     {
-        Console::print("CampaignMenu::autosave()", Console::eDEBUG);
+        CONSOLE_PRINT("CampaignMenu::autosave()", Console::eDEBUG);
         QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentSetCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
         saveCampaign(path);
     }

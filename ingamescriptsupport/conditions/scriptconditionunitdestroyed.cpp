@@ -43,7 +43,7 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream, QString l
 
 void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 {
-    Console::print("Reading ConditionUnitDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionUnitDestroyed", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     m_unitID = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
@@ -59,7 +59,7 @@ void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionUnitDestroyed", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionUnitDestroyed", Console::eDEBUG);
     rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
             << "// " << m_x << " " << m_y << " " << QString::number(getVersion()) << " " << ConditionUnitDestroyed << "\n";
     if (subCondition.get() != nullptr)

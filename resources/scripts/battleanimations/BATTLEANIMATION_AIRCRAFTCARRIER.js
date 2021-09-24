@@ -18,7 +18,7 @@ var Constructor = function()
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 1;
+        return 0;
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, startPos, movement, moveTime)
@@ -43,10 +43,10 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 1350;
+        var count = sprite.getUnitCount(5);
+        return 500 + 150 * count;
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -56,9 +56,10 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount());
-        sprite.loadSprite("rocket_hit_air",  false, 5, Qt.point(0, 60),
-                          1, 1.0, 0, 300);
+        var count = sprite.getUnitCount(5);
+        sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                                Qt.point(-30, 15), 300, false,
+                                1, 1.0, 0, 300, true);
         sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
                                 -1, 1, 0, 0, true);
@@ -70,6 +71,11 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         return true;
@@ -77,11 +83,6 @@ var Constructor = function()
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
         return 1510;
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 1500;
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

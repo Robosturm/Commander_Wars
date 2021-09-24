@@ -31,6 +31,7 @@ float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
 bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
+qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
@@ -157,6 +158,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getTouchPointSensitivity()
+{
+    return m_touchPointSensitivity;
+}
+
+void Settings::setTouchPointSensitivity(qint32 newTouchPointSensitivity)
+{
+    m_touchPointSensitivity = newTouchPointSensitivity;
 }
 
 const QVariant &Settings::getAudioOutput()
@@ -614,7 +625,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
         QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
         if (!dir.exists() && !dir2.exists())
         {
-            Console::print("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", Console::eWARNING);
+            CONSOLE_PRINT("Removing mod from active list: " + m_activeMods[i] + " cause it wasn't found.", Console::eWARNING);
             m_activeMods.removeAt(i);
         }
         else
@@ -625,7 +636,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
     m_activeMods.sort();
     for (const auto & mod : qAsConst(m_activeMods))
     {
-        Console::print("Loaded mod: " + mod, Console::eDEBUG);
+        CONSOLE_PRINT("Loaded mod: " + mod, Console::eDEBUG);
         bool found = false;
         QFile file(mod + "/mod.txt");
         if (file.exists())
@@ -767,16 +778,16 @@ void Settings::setLanguage(const QString &language)
     // load language file and install it
     if (m_Translator.load(QLocale(m_language), languageFile))
     {
-         Console::print("Loaded language " + language, Console::eDEBUG);
+         CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
     }
     else if (m_language != "en")
     {
         QString error = "Error: Unknown Language " + m_language + " selected.";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_language = "en";
         if (m_Translator.load(QLocale(m_language), QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/lang_" + m_language))
         {
-            Console::print("Loaded language " + language, Console::eDEBUG);
+            CONSOLE_PRINT("Loaded language " + language, Console::eDEBUG);
         }
     }
     QGuiApplication::installTranslator(&m_Translator);
@@ -812,27 +823,27 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Resolution] Setting: x";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_x = 0;
     }
     m_y  = settings.value("y", 0).toInt(&ok);
     if(!ok)
     {
         QString error = "Error in the Ini File: [Resolution] Setting: y";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_y = 0;
     }
     QSize size = QGuiApplication::primaryScreen()->availableSize();
     m_width       = settings.value("width", size.width()).toInt(&ok);
     if(!ok){
         QString error = "Error in the Ini File: [Resolution] Setting: width";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_width = size.width();
     }
     m_height      = settings.value("height", size.height()).toInt(&ok);
     if(!ok){
         QString error = "Error in the Ini File: [Resolution] Setting: heigth";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_height = size.height();
     }
 
@@ -840,14 +851,14 @@ void Settings::loadSettings()
     if(!ok || m_brightness > 50.0f || m_brightness < -50.0f)
     {
         QString error = "Error in the Ini File: [Resolution] Setting: brightness";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_brightness = 0.0f;
     }
     m_gamma      = settings.value("gamma", 1.0f).toFloat(&ok);
     if(!ok || m_gamma <= 0.0f || m_gamma > 50.0f)
     {
         QString error = "Error in the Ini File: [Resolution] Setting: gamma";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_gamma = 1.0f;
     }
     m_borderless = settings.value("borderless", true).toBool();
@@ -870,7 +881,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_mouseSensitivity = -0.75f;
     }
     if (Settings::getSmallScreenDevice())
@@ -893,160 +904,166 @@ void Settings::loadSettings()
         }
     }
     m_touchScreen = settings.value("TouchScreen", hasTouch).toBool();
+    m_touchPointSensitivity = settings.value("TouchPointSensitivity", 15).toInt(&ok);
+    if (!ok || m_touchPointSensitivity < 0)
+    {
+        m_touchPointSensitivity = 15;
+    }
+
     settings.endGroup();
-    Console::print("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
+    CONSOLE_PRINT("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
 
     // Keys
     settings.beginGroup("Keys");
     m_key_escape      = static_cast<Qt::Key>(settings.value("key_escape", Qt::Key_Escape).toInt(&ok));
     if(!ok){
         QString error = "Error in the Ini File: [Key] Setting: key_escape";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_escape = Qt::Key_Escape;
     }
     m_key_console      = static_cast<Qt::Key>(settings.value("key_console", Qt::Key_F1).toInt(&ok));
     if(!ok){
         QString error = "Error in the Ini File: [Key] Setting: key_console";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_console = Qt::Key_F1;
     }    
     m_key_screenshot      = static_cast<Qt::Key>(settings.value("key_screenshot", Qt::Key_F5).toInt(&ok));
     if(!ok){
         QString error = "Error in the Ini File: [Key] Setting: key_screenshot";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_screenshot = Qt::Key_F5;
     }
     m_key_up = static_cast<Qt::Key>(settings.value("key_up", Qt::Key_W).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_up";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_up = Qt::Key_W;
     }
     m_key_down = static_cast<Qt::Key>(settings.value("key_down", Qt::Key_S).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_down";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_down = Qt::Key_S;
     }
     m_key_right = static_cast<Qt::Key>(settings.value("key_right", Qt::Key_D).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_right";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_right = Qt::Key_D;
     }
     m_key_left = static_cast<Qt::Key>(settings.value("key_left", Qt::Key_A).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_left";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_left = Qt::Key_A;
     }
     m_key_confirm = static_cast<Qt::Key>(settings.value("key_confirm", Qt::Key_Space).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_confirm";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_confirm = Qt::Key_Space;
     }
     m_key_cancel = static_cast<Qt::Key>(settings.value("key_cancel", Qt::Key_B).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_cancel";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_cancel = Qt::Key_B;
     }
     m_key_next = static_cast<Qt::Key>(settings.value("key_next", Qt::Key_E).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_next";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_next = Qt::Key_E;
     }
     m_key_previous = static_cast<Qt::Key>(settings.value("key_previous", Qt::Key_Q).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_previous";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_previous = Qt::Key_Q;
     }
     m_key_quicksave1 = static_cast<Qt::Key>(settings.value("key_quicksave1", Qt::Key_F9).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_quicksave1";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_quicksave1 = Qt::Key_F9;
     }
     m_key_quicksave2 = static_cast<Qt::Key>(settings.value("key_quicksave2", Qt::Key_F11).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_quicksave2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_quicksave2 = Qt::Key_F11;
     }
     m_key_quickload1 = static_cast<Qt::Key>(settings.value("key_quickload1", Qt::Key_F10).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_quickload1";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_quickload1 = Qt::Key_F10;
     }
     m_key_quickload2 = static_cast<Qt::Key>(settings.value("key_quickload2", Qt::Key_F12).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_quickload2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_quickload2 = Qt::Key_F12;
     }
     m_key_information = static_cast<Qt::Key>(settings.value("key_information", Qt::Key_I).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_information";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_information = Qt::Key_I;
     }
     m_key_moveMapUp = static_cast<Qt::Key>(settings.value("key_moveMapUp", Qt::Key_Up).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapUp";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapUp = Qt::Key_Up;
     }
     m_key_moveMapDown = static_cast<Qt::Key>(settings.value("key_moveMapDown", Qt::Key_Down).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapDown";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapDown = Qt::Key_Down;
     }
     m_key_moveMapRight = static_cast<Qt::Key>(settings.value("key_moveMapRight", Qt::Key_Right).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapRight";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapRight = Qt::Key_Right;
     }
     m_key_moveMapLeft = static_cast<Qt::Key>(settings.value("key_moveMapLeft", Qt::Key_Left).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapLeft";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapLeft = Qt::Key_Left;
     }
     m_key_MapZoomOut = static_cast<Qt::Key>(settings.value("key_MapZoomOut", Qt::Key_Minus).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_MapZoomOut";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_MapZoomOut = Qt::Key_Minus;
     }
     m_key_MapZoomIn = static_cast<Qt::Key>(settings.value("key_MapZoomIn", Qt::Key_Plus).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_MapZoomIn";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_MapZoomIn = Qt::Key_Plus;
     }
 
@@ -1054,7 +1071,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_ShowAttackFields";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_ShowAttackFields = Qt::Key_2;
     }
 
@@ -1062,126 +1079,126 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_ShowIndirectAttackFields";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_MapZoomIn = Qt::Key_1;
     }
     m_key_up2 = static_cast<Qt::Key>(settings.value("key_up2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_up2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_up2 = Qt::Key(0);
     }
     m_key_down2 = static_cast<Qt::Key>(settings.value("key_down2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_down2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_down2 = Qt::Key(0);
     }
     m_key_right2 = static_cast<Qt::Key>(settings.value("key_right2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_right2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_right2 = Qt::Key(0);
     }
     m_key_left2 = static_cast<Qt::Key>(settings.value("key_left2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_left2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_left2 = Qt::Key(0);
     }
     m_key_confirm2 = static_cast<Qt::Key>(settings.value("key_confirm2", Qt::Key_Return).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_confirm2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_confirm2 = Qt::Key_Return;
     }
     m_key_cancel2 = static_cast<Qt::Key>(settings.value("key_cancel2", Qt::Key_Backspace).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_cancel2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_cancel2 = Qt::Key_Backspace;
     }
     m_key_next2 = static_cast<Qt::Key>(settings.value("key_next2", Qt::Key_Tab).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_next2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_next2 = Qt::Key_Tab;
     }
     m_key_previous2 = static_cast<Qt::Key>(settings.value("key_previous2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_previous2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_previous2 = Qt::Key(0);
     }
     m_key_information2 = static_cast<Qt::Key>(settings.value("key_information2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_information2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_information2 = Qt::Key(0);
     }
     m_key_moveMapUp2 = static_cast<Qt::Key>(settings.value("key_moveMapUp2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapUp2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapUp2 = Qt::Key(0);
     }
     m_key_moveMapDown2 = static_cast<Qt::Key>(settings.value("key_moveMapDown2", Qt::Key_Down).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapDown2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapDown2 = Qt::Key_Down;
     }
     m_key_moveMapRight2 = static_cast<Qt::Key>(settings.value("key_moveMapRight2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapRight2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapRight2 = Qt::Key(0);
     }
     m_key_moveMapLeft2 = static_cast<Qt::Key>(settings.value("key_moveMapLeft2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_moveMapLeft2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_moveMapLeft2 = Qt::Key(0);
     }
     m_key_MapZoomOut2 = static_cast<Qt::Key>(settings.value("key_MapZoomOut2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_MapZoomOut2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_MapZoomOut2 = Qt::Key(0);
     }
     m_key_MapZoomIn2 = static_cast<Qt::Key>(settings.value("key_MapZoomIn2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_MapZoomIn2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_MapZoomIn2 = Qt::Key(0);
     }
     m_key_ShowAttackFields2 = static_cast<Qt::Key>(settings.value("key_ShowAttackFields2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_ShowAttackFields2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_ShowAttackFields2 = Qt::Key(0);
     }
     m_key_ShowIndirectAttackFields2 = static_cast<Qt::Key>(settings.value("key_ShowIndirectAttackFields2", Qt::Key(0)).toInt(&ok));
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_ShowIndirectAttackFields2";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_ShowIndirectAttackFields2 = Qt::Key(0);
     }
 
@@ -1190,7 +1207,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorPlaceTerrain";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorPlaceTerrain = Qt::Key_1;
     }
 
@@ -1198,7 +1215,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorPlaceBuilding";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorPlaceBuilding = Qt::Key_2;
     }
 
@@ -1206,7 +1223,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorPlaceUnit";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorPlaceUnit = Qt::Key_3;
     }
 
@@ -1214,7 +1231,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorNextTeam";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorNextTeam = Qt::Key_Tab;
     }
 
@@ -1222,7 +1239,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorPreviousTeam";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorPreviousTeam = Qt::Key_Asterisk;
     }
 
@@ -1230,7 +1247,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorSelectionRight";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorSelectionRight = Qt::Key_R;
     }
 
@@ -1238,7 +1255,7 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Key] Setting: key_EditorSelectionLeft";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_key_EditorSelectionLeft = Qt::Key_T;
     }
     settings.endGroup();
@@ -1249,21 +1266,21 @@ void Settings::loadSettings()
     if(!ok)
     {
         QString error = "Error in the Ini File: [Sound] Setting: TotalVolume";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_TotalVolume = 100;
     }
     m_MusicVolume      = settings.value("MusicVolume", 80).toInt(&ok);
     if(!ok)
     {
         QString error = "Error in the Ini File: [Sound] Setting: MusicVolume";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_MusicVolume = 80;
     }
     m_SoundVolume      = settings.value("SoundVolume", 100).toInt(&ok);
     if(!ok)
     {
         QString error = "Error in the Ini File: [Sound] Setting: SoundVolume";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_SoundVolume = 100;
     }
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
@@ -1289,49 +1306,49 @@ void Settings::loadSettings()
     if (!ok || m_showAnimations < GameEnums::AnimationMode_None || m_showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
     {
         QString error = "Error in the Ini File: [Game] Setting: ShowAnimations";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_animationSpeed = GameEnums::AnimationMode_All;
     }
     m_battleAnimations  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimations", 0).toInt(&ok));
     if (!ok || m_battleAnimations < GameEnums::BattleAnimationMode_Detail || m_battleAnimations > GameEnums::BattleAnimationMode_Overworld)
     {
         QString error = "Error in the Ini File: [Game] Setting: BattleAnimations";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_battleAnimations = GameEnums::BattleAnimationMode_Detail;
     }
     m_animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
     if(!ok || m_animationSpeed <= 0 ||  m_animationSpeed > 100u)
     {
         QString error = "Error in the Ini File: [Game] Setting: AnimationSpeed";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_animationSpeed = 1u;
     }
     battleAnimationSpeed = settings.value("BattleAnimationSpeed", 1u).toUInt(&ok);
     if(!ok || battleAnimationSpeed <= 0 ||  battleAnimationSpeed > 100u)
     {
         QString error = "Error in the Ini File: [Game] Setting: BattleAnimationSpeed";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
     m_walkAnimationSpeed = settings.value("WalkAnimationSpeed", 20u).toUInt(&ok);
     if(!ok || m_walkAnimationSpeed <= 0 ||  m_walkAnimationSpeed > 100u)
     {
         QString error = "Error in the Ini File: [Game] Setting: WalkAnimationSpeed";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_walkAnimationSpeed = 20u;
     }
     m_dialogAnimationSpeed = settings.value("DialogAnimationSpeed", 1u).toUInt(&ok);
     if(!ok || m_dialogAnimationSpeed <= 0 ||  m_dialogAnimationSpeed > 100u)
     {
         QString error = "Error in the Ini File: [Game] Setting: DialogAnimationSpeed";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_dialogAnimationSpeed = 20u;
     }
     m_captureAnimationSpeed = settings.value("CaptureAnimationSpeed", 1u).toUInt(&ok);
     if(!ok || m_captureAnimationSpeed <= 0 ||  m_captureAnimationSpeed > 100u)
     {
         QString error = "Error in the Ini File: [Game] Setting: CaptureAnimationSpeed";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_captureAnimationSpeed = 1u;
     }
 
@@ -1339,21 +1356,21 @@ void Settings::loadSettings()
     if(!ok || multiTurnCounter <= 0 || multiTurnCounter > 10u)
     {
         QString error = "Error in the Ini File: [Game] Setting: MultiTurnCounter";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         multiTurnCounter = 4u;
     }
     m_MenuItemCount = settings.value("MenuItemCount", 13).toInt(&ok);
     if(!ok || m_MenuItemCount < 5)
     {
         QString error = "Error in the Ini File: [Game] Setting: MenuItemCount";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_MenuItemCount = 5;
     }
     m_MenuItemRowCount = settings.value("MenuItemRowCount", 2).toInt(&ok);
     if(!ok || m_MenuItemRowCount < 1)
     {
         QString error = "Error in the Ini File: [Game] Setting: MenuItemRowCount";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_MenuItemRowCount = 1;
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
@@ -1361,7 +1378,7 @@ void Settings::loadSettings()
     if(!ok || m_spriteFilter < GL_NEAREST)
     {
         QString error = "Error in the Ini File: [Game] Setting: SpriteFilter";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_showCoCount = 0;
     }
     if (Settings::getSmallScreenDevice())
@@ -1375,7 +1392,7 @@ void Settings::loadSettings()
     if(!ok || m_showCoCount < 0)
     {
         QString error = "Error in the Ini File: [Game] Setting: ShowCoCount";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_showCoCount = 0;
     }
     m_dialogAnimation = settings.value("DialogAnimation", true).toBool();
@@ -1405,14 +1422,14 @@ void Settings::loadSettings()
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
     {
         QString error = "Error in the Ini File: [Game] Setting: COInfoPosition";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         coInfoPosition = GameEnums::COInfoPosition_Flipping;
     }
     m_autoFocusing  = static_cast<GameEnums::AutoFocusing>(settings.value("AutoFocusing", 0).toInt(&ok));
     if (!ok || m_autoFocusing < GameEnums::AutoFocusing_LastPos || m_autoFocusing > GameEnums::AutoFocusing_Owned)
     {
         QString error = "Error in the Ini File: [Game] Setting: AutoFocusing";
-        Console::print(error, Console::eERROR);
+        CONSOLE_PRINT(error, Console::eERROR);
         m_autoFocusing = GameEnums::AutoFocusing_LastPos;
     }
     settings.endGroup();
@@ -1469,7 +1486,7 @@ void Settings::loadSettings()
 
 void Settings::saveSettings()
 {
-    Console::print("Settings::saveSettings()", Console::eDEBUG);
+    CONSOLE_PRINT("Settings::saveSettings()", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     if (!pApp->getSlave())
     {
@@ -1480,6 +1497,7 @@ void Settings::saveSettings()
         settings.setValue("MouseSensitivity",           m_mouseSensitivity);
         settings.setValue("UserPath",                   m_userPath);
         settings.setValue("TouchScreen",                m_touchScreen);
+        settings.setValue("TouchPointSensitivity",      m_touchPointSensitivity);
         settings.endGroup();
 
         settings.beginGroup("Resolution");

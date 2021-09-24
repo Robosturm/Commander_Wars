@@ -30,7 +30,7 @@ TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, qu
 
 TCPClient::~TCPClient()
 {
-    Console::print("Client gets closed", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client gets closed", Console::eLogLevels::eDEBUG);
     disconnect();
     if (!m_onServer)
     {
@@ -60,12 +60,12 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    Console::print("Client is running", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is running", Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
 {
-    Console::print("TCP Client " + QString::number(m_socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("TCP Client " + QString::number(m_socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
     if (m_pSocket != nullptr)
     {
         m_pRXTask = nullptr;
@@ -100,7 +100,7 @@ void TCPClient::changeThread(quint64, QThread* pThread)
 
 void TCPClient::connected()
 {
-    Console::print("Client is connected", Console::eLogLevels::eDEBUG);
+    CONSOLE_PRINT("Client is connected", Console::eLogLevels::eDEBUG);
     isConnected = true;
     emit sigConnected(0);
 }

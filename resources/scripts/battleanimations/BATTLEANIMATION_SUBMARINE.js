@@ -20,21 +20,26 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 20), Qt.point(-60, 0), 1200);
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, startPos, movement, moveTime)
     {
         var player = unit.getOwner();
-        // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
         if(unit.getHidden() === true &&
            armyName !== "ma")
         {
             sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+                                      BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
             sprite.loadMovingSprite("submarine+hidden+" + armyName,  false,
-                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+                                    BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
         }
         else
         {
@@ -47,6 +52,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         BATTLEANIMATION_SUBMARINE.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
@@ -65,6 +71,11 @@ var Constructor = function()
             }
             sprite.loadSound("torpedo_fire.wav", 1, i * 150);
         }
+    };
+
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 400 + 150 * sprite.getUnitCount(BATTLEANIMATION_SNIPER.getMaxUnitCount());
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -87,7 +98,7 @@ var Constructor = function()
 
                 sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 30),
                                               Qt.point(0, 0), 0, false,
-                                              1, 1.0, 2, 300 + i * 150);
+                                              1, 1.0, 2, 300 + i * 150, true);
             }
             else
             {
@@ -103,20 +114,28 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 700 - 150 + 150 * sprite.getUnitCount(BATTLEANIMATION_SUBMARINE.getMaxUnitCount());
+    };
+
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        if(unit.getHidden() === true)
+        {
+            return false;
+        }
         return true;
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 1210;
     };
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
@@ -126,22 +145,8 @@ var Constructor = function()
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2200;
     };
 };

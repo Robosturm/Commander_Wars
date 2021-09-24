@@ -287,6 +287,17 @@ public slots:
     float getTrueDamage(GameAction* pAction, float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
+     * @brief canCounterAttack
+     * @param pAction
+     * @param pAttacker
+     * @param atkPosition
+     * @param pDefender
+     * @param defPosition
+     * @param luckMode
+     * @return
+     */
+    GameEnums::CounterAttackMode canCounterAttack(GameAction* pAction, Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode);
+    /**
      * @brief getMovementFuelCostModifier
      * @param pUnit
      * @param fuelCost
@@ -532,7 +543,6 @@ public slots:
     GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
                                        qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
                                        GameEnums::AiTurnMode turnMode);
-
     /**
      * @brief getCoUnitBonus
      * @param pUnit

@@ -252,7 +252,15 @@ void GameAnimationDialog::setCO(QString coid, GameEnums::COMood mood)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString resAnim = coid.toLower() + "+face";
     oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
-    m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+    if (pAnim->getColumns() > 0)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnimColumn(pAnim, static_cast<qint32>(mood)), oxygine::timeMS(static_cast<qint64>(pAnim->getColumns() * GameMap::frameTime)), -1);
+        m_COSprite->addTween(tween);
+    }
+    else
+    {
+        m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+    }
 }
 
 void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood)
@@ -322,7 +330,7 @@ void GameAnimationDialog::loadBackground(QString file)
     }
     else
     {
-        Console::print("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
+        CONSOLE_PRINT("Ignoring loading of empty image. GameAnimationDialog::loadBackground", Console::eDEBUG);
     }
 }
 

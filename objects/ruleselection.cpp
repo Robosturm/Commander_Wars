@@ -38,7 +38,7 @@ void RuleSelection::confirmRuleSelectionSetup()
 {
     if (m_ruleChangeEabled)
     {
-        Console::print("Confirming rule selection and enabling/disabling rules for the map.", Console::eDEBUG);
+        CONSOLE_PRINT("Confirming rule selection and enabling/disabling rules for the map.", Console::eDEBUG);
         GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
@@ -53,12 +53,12 @@ void RuleSelection::confirmRuleSelectionSetup()
                     qint32 ruleValue = pRule->getRuleValue(0);
                     if (ruleValue == 0)
                     {
-                        Console::print("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
                         pMap->getGameRules()->removeVictoryRule(ruleID);
                     }
                     else
                     {
-                        Console::print("Rule is enabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Rule is enabled: " + ruleID, Console::eDEBUG);
                     }
                 }
                 else if (inputTypes[0] == VictoryRule::spinbox)
@@ -67,17 +67,17 @@ void RuleSelection::confirmRuleSelectionSetup()
                     qint32 infiniteValue = pRule->getInfiniteValue(0);
                     if (ruleValue <= infiniteValue)
                     {
-                        Console::print("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
                         pMap->getGameRules()->removeVictoryRule(ruleID);
                     }
                     else
                     {
-                        Console::print("Rule is enabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Rule is enabled: " + ruleID, Console::eDEBUG);
                     }
                 }
                 else
                 {
-                    Console::print("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
+                    CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
                     pMap->getGameRules()->removeVictoryRule(ruleID);
                 }
             }
@@ -95,12 +95,12 @@ void RuleSelection::confirmRuleSelectionSetup()
                     qint32 ruleValue = pRule->getRuleValue(0);
                     if (ruleValue == 0)
                     {
-                        Console::print("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
                         pMap->getGameRules()->removeGameRule(ruleID);
                     }
                     else
                     {
-                        Console::print("Rule is enabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Rule is enabled: " + ruleID, Console::eDEBUG);
                     }
                 }
                 else if (inputTypes[0] == VictoryRule::spinbox)
@@ -109,17 +109,17 @@ void RuleSelection::confirmRuleSelectionSetup()
                     qint32 infiniteValue = pRule->getInfiniteValue(0);
                     if (ruleValue <= infiniteValue)
                     {
-                        Console::print("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Removing rule cause it's disabled: " + ruleID, Console::eDEBUG);
                         pMap->getGameRules()->removeGameRule(ruleID);
                     }
                     else
                     {
-                        Console::print("Rule is enabled: " + ruleID, Console::eDEBUG);
+                        CONSOLE_PRINT("Rule is enabled: " + ruleID, Console::eDEBUG);
                     }
                 }
                 else
                 {
-                    Console::print("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
+                    CONSOLE_PRINT("Removing rule cause it's in unsupported format: " + ruleID, Console::eERROR);
                     pMap->getGameRules()->removeGameRule(ruleID);
                 }
             }
@@ -801,7 +801,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     y += 60;
 
     qint32 initCount = pMap->getGameRules()->getVictoryRuleSize();
-    Console::print("Creating ruleset number of initial rules " + QString::number(initCount), Console::eDEBUG);
+    CONSOLE_PRINT("Creating ruleset number of initial rules " + QString::number(initCount), Console::eDEBUG);
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         qint32 xPos = 0;
@@ -809,7 +809,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         spVictoryRule pRule = spVictoryRule(pMap->getGameRules()->getVictoryRule(ruleID));
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
-            Console::print("Creating default ruleset for " + ruleID, Console::eDEBUG);
+            CONSOLE_PRINT("Creating default ruleset for " + ruleID, Console::eDEBUG);
             pRule = spVictoryRule::create(ruleID);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)

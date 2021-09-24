@@ -522,10 +522,10 @@
         <image file="bh/co_sturm+face.png" cols = "3" />        
         <image file="bh/co_sturm+alt+nrm.png" />
         <image file="bh/co_sturm+alt+info.png" />
-        <image file="bh/co_sturm+alt+face.png" cols = "3" />        
+        <image file="bh/co_sturm+alt+face.png" cols = "3" rows = "2" />
         <image file="bh/co_flak+nrm.png" />
         <image file="bh/co_flak+info.png" />
-        <image file="bh/co_flak+face.png" cols = "3" />        
+        <image file="bh/co_flak+face.png" cols = "3" />
         <image file="bh/co_flak+alt+nrm.png" />
         <image file="bh/co_flak+alt+info.png" />
         <image file="bh/co_flak+alt+face.png" cols = "3" />        

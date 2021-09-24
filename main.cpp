@@ -210,20 +210,20 @@ int main(qint32 argc, char* argv[])
     Userdata::getInstance()->release();
     Console::getInstance()->release();
     Settings::shutdown();
-    Console::print("Shutting down main window", Console::eDEBUG);
+    CONSOLE_PRINT("Shutting down main window", Console::eDEBUG);
     window.shutdown();
-    Console::print("Saving settings", Console::eDEBUG);
+    CONSOLE_PRINT("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
     // give os time to save the settings
     QThread::currentThread()->msleep(250);
     if (MainServer::exists())
     {
-        Console::print("Shutting dwon game server", Console::eDEBUG);
+        CONSOLE_PRINT("Shutting dwon game server", Console::eDEBUG);
         MainServer::getInstance()->deleteLater();
         window.getGameServerThread()->quit();
         window.getGameServerThread()->wait();
     }
-    Console::print("Checking for memory leak during runtime", Console::eDEBUG);
+    CONSOLE_PRINT("Checking for memory leak during runtime", Console::eDEBUG);
     static constexpr qint32 finalObjects = 0;
     if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
     {
@@ -237,9 +237,9 @@ int main(qint32 argc, char* argv[])
     if (returncode == 1)
     {
 #ifdef Q_OS_ANDROID
-        Console::print("No automatic restart on android", Console::eDEBUG);
+        CONSOLE_PRINT("No automatic restart on android", Console::eDEBUG);
 #else
-        Console::print("Restarting application", Console::eDEBUG);
+        CONSOLE_PRINT("Restarting application", Console::eDEBUG);
         QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
 #endif
     }

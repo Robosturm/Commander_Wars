@@ -32,6 +32,7 @@
 
 QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 {
+    // enabled                                // disabled
     OptionMenue::GamemodeMods(QStringList(), {"mods/aw_unloading",
                                               "mods/aw2_damage_formula",
                                               "mods/awds_unit",
@@ -82,7 +83,7 @@ OptionMenue::OptionMenue()
     pApp->pauseRendering();
     Interpreter::setCppOwnerShip(this);
     moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Entering Option Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -203,7 +204,7 @@ void OptionMenue::exitMenue()
     }
     else
     {
-        Console::print("Leaving Option Menue", Console::eDEBUG);
+        CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
         auto window = spMainwindow::create();
         oxygine::Stage::getStage()->addChild(window);
         oxygine::Actor::detach();
@@ -221,7 +222,7 @@ void OptionMenue::showGameplayAndKeys()
 
 void OptionMenue::reloadSettings()
 {    
-    Console::print("Leaving Option Menue", Console::eDEBUG);
+    CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
     spOptionMenue newMenu = spOptionMenue::create();
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
@@ -496,6 +497,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Touch Sensitivity: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
+    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long press events."));
+    touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
+    touchPointSensitivity->setPosition(sliderOffset - 130, y);
+    connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
+    m_pOptions->addItem(touchPointSensitivity);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sprite Aliasing: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -561,7 +575,7 @@ void OptionMenue::showSettings()
     connect(pLanguageMenu.get(), &DropDownmenu::sigItemChanged, pApp,
             [=](qint32 item)
     {
-        Console::print("Marking restart cause language changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Marking restart cause language changed.", Console::eDEBUG);
         Settings::setLanguage(languages[item]);
         restartNeeded = true;
         emit sigReloadSettings();
@@ -637,7 +651,7 @@ void OptionMenue::showSettings()
         {
             if (value != Settings::getUsername())
             {
-                Console::print("Marking restart cause user changed.", Console::eDEBUG);
+                CONSOLE_PRINT("Marking restart cause user changed.", Console::eDEBUG);
                 restartNeeded = true;
             }
             Settings::setUsername(value);
@@ -689,7 +703,7 @@ void OptionMenue::showSettings()
     pCheckbox->setChecked(Settings::getServer());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
-        Console::print("Marking restart cause server settings changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
         restartNeeded = true;
     });
@@ -823,13 +837,13 @@ void OptionMenue::showMods()
     m_pModDescription->clearContent();
     m_ModBoxes.clear();
     m_ModCheckboxes.clear();
+    m_ModSelector->removeChildren();
 
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
     m_ModSelector->setVisible(true);
     m_pModDescription->setVisible(true);
     m_pGameplayAndKeys->setVisible(false);
-    m_ModSelector->removeChildren();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -970,7 +984,7 @@ void OptionMenue::updateModSelection()
     QStringList currentMods = Settings::getMods();
     qint32 index = 0;
     bool set = false;
-    for (const auto & gameMode : m_gamemodeMods)
+    for (const auto & gameMode : qAsConst(m_gamemodeMods))
     {
         bool valid = (currentMods.size() == gameMode.m_enableMods.size());
         for (const auto & activeMod : gameMode.m_enableMods)
@@ -1081,7 +1095,7 @@ void OptionMenue::selectMods(qint32 item)
         {
             Settings::addMod(addMod);
         }
-        Console::print("Marking restart cause mods changed.", Console::eDEBUG);
+        CONSOLE_PRINT("Marking restart cause mods changed.", Console::eDEBUG);
         restartNeeded = true;
         showMods();
     }
@@ -1089,7 +1103,7 @@ void OptionMenue::selectMods(qint32 item)
 
 void OptionMenue::restart()
 {
-    Console::print("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
+    CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
     QCoreApplication::exit(1);
 }
 

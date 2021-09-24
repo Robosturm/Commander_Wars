@@ -65,7 +65,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
         QVector<QVector<spDecisionQuestion>> questions;
         CoreAI::getTrainingData(trainingDataFile, trainingData, questions);
         m_pRootNode = train(trainingData, questions);
-        Console::print("Storing tree: " + treeFile, Console::eDEBUG);
+        CONSOLE_PRINT("Storing tree: " + treeFile, Console::eDEBUG);
         // store trained tree for next use.
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
@@ -79,15 +79,15 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
 
 float DecisionTree::getDecision(QVector<float>& input)
 {
-    Console::print("getDecision() for decision tree()", Console::eDEBUG);
+    CONSOLE_PRINT("getDecision() for decision tree()", Console::eDEBUG);
     float output = m_pRootNode->getDecision(input);
-    Console::print("Result = " + QString::number(output), Console::eDEBUG);
+    CONSOLE_PRINT("Result = " + QString::number(output), Console::eDEBUG);
     return output;
 }
 
 spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
-    Console::print("training decision tree()", Console::eDEBUG);
+    CONSOLE_PRINT("training decision tree()", Console::eDEBUG);
 	float gain = 0;
     spDecisionQuestion pQuestion = findBestSplit(trainingData, gain, questions);
 	if (gain <= 0.0f)
@@ -239,7 +239,7 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
     Leaf* pLeaf = dynamic_cast<Leaf*>(pNode);
     if (pLeaf != nullptr)
     {
-        Console::print(spacing + "Predict " + pLeaf->print(), Console::eDEBUG);
+        CONSOLE_PRINT(spacing + "Predict " + pLeaf->print(), Console::eDEBUG);
         return;
     }
     if (pNode != nullptr)
@@ -247,11 +247,11 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
         auto * pQuestion = pNode->getQuestion();
         if (pQuestion != nullptr)
         {
-            Console::print(spacing + pQuestion->print(), Console::eDEBUG);
+            CONSOLE_PRINT(spacing + pQuestion->print(), Console::eDEBUG);
         }
         for (qint32 i = 0; i < pNode->getNodeSize(); i++)
         {
-            Console::print(spacing + "--> " + QString::number(i) + ":", Console::eDEBUG);
+            CONSOLE_PRINT(spacing + "--> " + QString::number(i) + ":", Console::eDEBUG);
             printTree(pNode->getNode(i) , spacing + "    ");
         }
     }

@@ -121,9 +121,9 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
-        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount();
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount());
     };
+
 };
 
 Constructor.prototype = BATTLEANIMATION;

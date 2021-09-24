@@ -158,7 +158,7 @@ void Textbox::update(const oxygine::UpdateState& us)
 bool Textbox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
 {
     bool bRet = false;
-    Console::print("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
+    CONSOLE_PRINT("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
     if (event->queries() == Qt::ImTextBeforeCursor)
     {
         QString textBefore = m_Text.mid(0, m_curmsgpos + 1);

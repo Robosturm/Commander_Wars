@@ -75,7 +75,7 @@ void WikiView::search(bool onlyTag)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
-    Console::print("WikiView::searchChanged ", Console::eDEBUG);
+    CONSOLE_PRINT("WikiView::searchChanged ", Console::eDEBUG);
     m_MainPanel->clearContent();
     QVector<WikiDatabase::PageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;

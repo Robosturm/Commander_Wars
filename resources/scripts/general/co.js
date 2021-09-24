@@ -10,7 +10,7 @@ var CO =
     {
         // called when a co unit got destroyed
         var gamerules = map.getGameRules();
-        co.setPowerFilled(co.getPowerFilled() * gamerules.getPowerLoose());
+        co.setPowerFilled(co.getPowerFilled() * (1 - gamerules.getPowerLoose()));
     },
 
     loadCOMusic : function(co)
@@ -72,6 +72,12 @@ var CO =
                                   defender, defPosX, defPosY, isDefender, luckMode)
     {
         return 0;
+    },
+
+    canCounterAttack : function(co, attacker, atkPosX, atkPosY,
+                                defender, defPosX, defPosY, luckMode)
+    {
+        return GameEnums.CounterAttackMode_Impossible;
     },
 
     getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,

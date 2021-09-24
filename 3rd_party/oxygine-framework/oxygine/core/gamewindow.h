@@ -157,6 +157,7 @@ namespace oxygine
         void swapDisplayBuffers();
 
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
+        bool sameTouchpoint(QPointF pos1, QPointF pos2) const;
     protected:
         bool m_renderEnabled = true;
 

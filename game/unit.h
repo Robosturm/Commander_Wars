@@ -582,6 +582,12 @@ public slots:
      */
     void showRanges();
     /**
+     * @brief getVisionFields
+     * @param position
+     * @return x = x, y = y z = direct vision
+     */
+    QVector<QVector3D> getVisionFields(QPoint position);
+    /**
      * @brief removeUnit removes this from game
      */
     void removeUnit(bool killed = true);
@@ -725,6 +731,16 @@ public slots:
      */
     float getTrueDamage(GameAction* pAction, float damage, QPoint position, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
+    /**
+     * @brief canCounterAttack
+     * @param pAction
+     * @param position
+     * @param pDefender
+     * @param defPosition
+     * @param luckMode
+     * @return
+     */
+    bool canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTerrainDefense
      * @return

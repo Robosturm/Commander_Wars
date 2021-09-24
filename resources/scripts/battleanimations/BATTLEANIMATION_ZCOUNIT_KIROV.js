@@ -20,7 +20,6 @@ var Constructor = function()
     {
         BATTLEANIMATION_ZCOUNIT_KIROV.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
-        // 21 4
         for (var i = 0; i < count; i++)
         {
             sprite.loadSingleMovingSprite("bombs_projectile", false, Qt.point(13, 84),
@@ -28,6 +27,11 @@ var Constructor = function()
                                           1, 1, -1, i * 150);
             sprite.loadSound("falling_bomb.wav", 1, i * 150);
         }
+    };
+
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + 150 * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -39,7 +43,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         sprite.loadSprite("cannon_heavy_hit",  false, 5, Qt.point(0, 60),
-                          1, 1.0, 0, 300);
+                          1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("bomb_falling", false, 5, Qt.point(0, 150),
                                 Qt.point(0, -130), 400, true,
@@ -50,9 +54,13 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+    };
+
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
@@ -62,22 +70,8 @@ var Constructor = function()
         sprite.loadSound("airunit_dying.wav", 1);
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500 + BATTLEANIMATION.defaultFrameDelay * 5;
-    };
-
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2000;
     };
 };

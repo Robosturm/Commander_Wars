@@ -31,6 +31,11 @@ var Constructor = function()
         }
     };
 
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 + 150 * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount());
+    };
+
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
@@ -40,7 +45,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(5);
         sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 300);
+                          1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),
                                 Qt.point(-128, -64), 400, true,
@@ -52,9 +57,13 @@ var Constructor = function()
         }
     };
 
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount());
+    };
+
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 
@@ -64,22 +73,8 @@ var Constructor = function()
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
-    };
-
-    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2200;
     };
 };

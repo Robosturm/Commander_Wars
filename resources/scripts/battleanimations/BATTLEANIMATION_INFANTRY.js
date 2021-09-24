@@ -4,17 +4,18 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["dm", "dm"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
-                     ["ac", "ac"],
+                     ["os", "os"],
                      ["pf", "pf"],
                      ["ti", "ti"],
-                     ["dm", "dm"],];
+                     ["yc", "yc"],];
 
     this.getArmyName = function(unit)
     {
@@ -162,6 +163,10 @@ var Constructor = function()
             {
                 offset = Qt.point(21, 25);
             }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(19, 27);
+            }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset);
         }
         else if (position < 0)
@@ -205,6 +210,10 @@ var Constructor = function()
                 offset = Qt.point(15, 19);
             }
             else if (armyName === "yc")
+            {
+                offset = Qt.point(21, 16);
+            }
+            else if (armyName === "bd")
             {
                 offset = Qt.point(21, 16);
             }
@@ -253,6 +262,10 @@ var Constructor = function()
             {
                 offset = Qt.point(21, 18);
             }
+            else if (armyName === "bd")
+            {
+                offset = Qt.point(20, 19);
+            }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset);
         }
         for (var i = 0; i < count; i++)
@@ -261,6 +274,11 @@ var Constructor = function()
             sprite.loadSound("mg_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
             sprite.loadSound("mg_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
         }
+    };
+
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -272,11 +290,16 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                          1, 1.0, 0, 0);
+                          1, 1.0, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_impact.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+    };
+
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
@@ -300,11 +323,6 @@ var Constructor = function()
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_INFANTRY.getMaxUnitCount();
-    };
-
-    this.getFireDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 610 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_INFANTRY.getMaxUnitCount();
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

@@ -17,6 +17,11 @@ class BattleAnimation : public GameAnimation
 {
     Q_OBJECT
 public:
+    struct CoFace
+    {
+        oxygine::ResAnim* anim{nullptr};
+        oxygine::spSprite coSprite;
+    };
     static constexpr qint32 spriteWidth = 127;
     static constexpr qint32 spriteHeigth = 192;
 
@@ -32,9 +37,11 @@ public:
         MoveStop,
         WaitAfterIn,
         AttackerFire,
+        AttackerFired,
         AttackerImpact,
         AttackerDying,
         DefenderFire,
+        DefenderFired,
         DefenderImpact,
         DefenderDying,
         WaitAfterBattle,
@@ -101,7 +108,7 @@ private:
      * @param hp1
      * @param hp2
      */
-    void setCOMood(oxygine::spSprite pSprite, float hp1, float hp2);
+    void setCOMood(CoFace & CoFace, float hp1, float hp2);
     /**
      * @brief loadTerrainSprite
      * @param pUnit
@@ -139,7 +146,7 @@ private:
      * @param pUnit2
      * @param weapon
      */
-    void loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
+    qint32 loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
      * @brief loadImpactAnimation
      * @param pUnit1
@@ -199,13 +206,18 @@ private:
      * @param defStartHp
      */
     void createHealthbar(Unit* pAtkUnit, float atkStartHp, Unit* pDefUnit, float defStartHp);
+    /**
+     * @brief startBattleTimer
+     * @param duration
+     */
+    void startBattleTimer(qint32 duration);
 private:
     QTimer m_battleTimer;
 
-    oxygine::spSprite m_AtkCO0;
-    oxygine::spSprite m_AtkCO1;
-    oxygine::spSprite m_DefCO0;
-    oxygine::spSprite m_DefCO1;
+    CoFace m_AtkCO0;
+    CoFace m_AtkCO1;
+    CoFace m_DefCO0;
+    CoFace m_DefCO1;
 
     oxygine::spBox9Sprite m_HealthBar0;
     oxygine::spBox9Sprite m_HealthBar1;

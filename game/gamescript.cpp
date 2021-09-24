@@ -22,7 +22,7 @@ GameScript::~GameScript()
 {
     if (!m_script.isEmpty())
     {
-        Console::print("Deleting gameScript", Console::eDEBUG);
+        CONSOLE_PRINT("Deleting gameScript", Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->deleteObject(m_scriptName);
     }
@@ -67,7 +67,7 @@ void GameScript::init()
         }
         if (file.exists())
         {
-            Console::print("Loading map script " + file.fileName(), Console::eDEBUG);
+            CONSOLE_PRINT("Loading map script " + file.fileName(), Console::eDEBUG);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             m_script = stream.readAll();

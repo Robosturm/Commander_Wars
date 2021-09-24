@@ -19,6 +19,8 @@ class Interpreter;
 class Console;
 using spConsole = oxygine::intrusive_ptr<Console>;
 
+#define CONSOLE_PRINT(text, logLevel) if (logLevel >= Console::getLogLevel() ) {Console::print(text, logLevel);}
+
 class Console : public QObject, public oxygine::Actor
 {
     Q_OBJECT
@@ -94,7 +96,10 @@ public slots:
      * @brief getLogLevel
      * @return
      */
-    static Console::eLogLevels getLogLevel();
+    static Console::eLogLevels getLogLevel()
+    {
+        return m_LogLevel;
+    }
     /**
      * @brief createSprites
      * @param input

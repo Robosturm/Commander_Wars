@@ -23,10 +23,10 @@ namespace oxygine
     {
         void reset()
         {
-            Console::print("core::reset()", Console::eDEBUG);
+            CONSOLE_PRINT("core::reset()", Console::eDEBUG);
             STDRenderer::reset();
             VideoDriver::instance->reset();
-            Console::print("core::reset() done", Console::eDEBUG);
+            CONSOLE_PRINT("core::reset() done", Console::eDEBUG);
         }
     }
     void handleErrorPolicy(error_policy ep, QString message)
@@ -34,13 +34,13 @@ namespace oxygine
         switch (ep)
         {
             case ep_show_error:
-                Console::print(message, Console::eERROR);
+                CONSOLE_PRINT(message, Console::eERROR);
 #ifdef GAMEDEBUG
                 Q_ASSERT(false);
 #endif
                 break;
             case ep_show_warning:
-                Console::print(message, Console::eWARNING);
+                CONSOLE_PRINT(message, Console::eWARNING);
                 break;
             case ep_ignore_error:
                 break;

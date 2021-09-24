@@ -83,11 +83,11 @@ Campaign::CampaignMapInfo Campaign::getCampaignMaps()
             if (QFile::exists(Settings::getUserPath() + folder + files[i]))
             {
                 files[i] = Settings::getUserPath() + folder + files[i];
-                Console::print("adding campaign map: " + Settings::getUserPath() + folder + files[i], Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign map: " + Settings::getUserPath() + folder + files[i], Console::eDEBUG);
             }
             else if (QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + folder + files[i]))
             {
-                Console::print("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign map: " + QString(oxygine::Resource::RCC_PREFIX_PATH) + folder + files[i], Console::eDEBUG);
                 files[i] = oxygine::Resource::RCC_PREFIX_PATH + folder + files[i];
             }
         }
@@ -110,7 +110,7 @@ void Campaign::addDeveloperMaps(QString prefix, QString folder, QStringList & fi
             QString file = dirIter.fileName();
             if (!files.contains(file))
             {
-                Console::print("adding campaign folder map: " + prefix + folder + file, Console::eDEBUG);
+                CONSOLE_PRINT("adding campaign folder map: " + prefix + folder + file, Console::eDEBUG);
                 files.append(prefix + folder + file);
             }
         }
@@ -213,7 +213,7 @@ QString Campaign::getDescription()
 }
 void Campaign::serializeObject(QDataStream& pStream) const
 {
-    Console::print("storing campaign", Console::eDEBUG);
+    CONSOLE_PRINT("storing campaign", Console::eDEBUG);
     pStream << getVersion();
     pStream << m_script;
     pStream << m_scriptFile;
@@ -222,7 +222,7 @@ void Campaign::serializeObject(QDataStream& pStream) const
 
 void Campaign::deserializeObject(QDataStream& pStream)
 {
-    Console::print("reading campaign", Console::eDEBUG);
+    CONSOLE_PRINT("reading campaign", Console::eDEBUG);
     qint32 version = 0;
     pStream >> version;
     pStream >> m_script;

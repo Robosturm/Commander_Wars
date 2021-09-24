@@ -77,6 +77,12 @@ var CO_PERK =
         return 0;
     },
 
+    canCounterAttack : function(co, attacker, atkPosX, atkPosY,
+                                defender, defPosX, defPosY, luckMode)
+    {
+        return GameEnums.CounterAttackMode_Impossible;
+    },
+
     getPerfectVision : function(co)
     {
         // return true if forest and reafs etc are disabled in fog of war see sonja

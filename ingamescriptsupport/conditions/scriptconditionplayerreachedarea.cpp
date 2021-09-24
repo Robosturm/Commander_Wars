@@ -60,7 +60,7 @@ void ScriptConditionPlayerReachedArea::setHeigth(const qint32 &heigth)
 
 void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QString line)
 {
-    Console::print("Reading ConditionPlayerReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Reading ConditionPlayerReachedArea", Console::eDEBUG);
     line = line.simplified();
     QStringList list = line.split("//");
     if (list.size() >= 2)
@@ -112,7 +112,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QStri
 
 void ScriptConditionPlayerReachedArea::writePreCondition(QTextStream& rStream)
 {
-    Console::print("Writing ConditionPlayerReachedArea", Console::eDEBUG);
+    CONSOLE_PRINT("Writing ConditionPlayerReachedArea", Console::eDEBUG);
     m_executed = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)

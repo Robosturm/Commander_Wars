@@ -45,6 +45,19 @@ getArmyNameFromTable = function(army, table)
     }
     return "os";
 }
+
+getArmyDataFromTable = function(army, table)
+{
+    var armyName = army.toLowerCase();
+    for (var i = 0; i < table.length; i++)
+    {
+        if (table[i][0] === armyName)
+        {
+           return table[i][1];
+        }
+    }
+    return table[0][0];
+}
 replaceTextArgs = function(text, args)
 {
     for (var i = 0; i < args.length; i++)

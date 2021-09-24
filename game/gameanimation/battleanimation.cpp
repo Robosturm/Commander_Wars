@@ -43,7 +43,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
-    // load deender sprite
+    // load defender sprite
     m_pDefenderAnimation = spBattleAnimationSprite::create(spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
@@ -166,25 +166,25 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
 
-    m_AtkCO0 = oxygine::spSprite::create();
+    m_AtkCO0.coSprite = oxygine::spSprite::create();
     float coScale = 22.0f / 24.0f;
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_AtkCO0->setResAnim(pAnimCO);
+        m_AtkCO0.anim = pCO->getResAnim(resAnim);
+        m_AtkCO0.coSprite->setResAnim(m_AtkCO0.anim);
         setCOMood(m_AtkCO0, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
         {
-            m_AtkCO0->setPosition(-18, -13);
+            m_AtkCO0.coSprite->setPosition(-18, -13);
         }
         else
         {
-            m_AtkCO0->setPosition(getWidth() - 28, -13);
+            m_AtkCO0.coSprite->setPosition(getWidth() - 28, -13);
         }
-        m_AtkCO0->setPriority(priorityCO);
-        m_AtkCO0->setScale(coScale);
-        addChild(m_AtkCO0);
+        m_AtkCO0.coSprite->setPriority(priorityCO);
+        m_AtkCO0.coSprite->setScale(coScale);
+        addChild(m_AtkCO0.coSprite);
     }
     /*********************************************************************************************/
     // co on the left lower corner
@@ -208,25 +208,25 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
 
-    m_AtkCO1 = oxygine::spSprite::create();
+    m_AtkCO1.coSprite = oxygine::spSprite::create();
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_AtkCO1->setResAnim(pAnimCO);
+        m_AtkCO1.anim = pCO->getResAnim(resAnim);
+        m_AtkCO1.coSprite->setResAnim(m_AtkCO1.anim);
         setCOMood(m_AtkCO1, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
         {
-            m_AtkCO1->setPosition(-18, getHeight() - 28);
+            m_AtkCO1.coSprite->setPosition(-18, getHeight() - 28);
         }
         else
         {
-            m_AtkCO1->setPosition(getWidth() - 28, getHeight() - 28);
+            m_AtkCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
         }
-        m_AtkCO1->setPriority(priorityCO);
-        m_AtkCO1->setScale(coScale);
-        addChild(m_AtkCO1);
+        m_AtkCO1.coSprite->setPriority(priorityCO);
+        m_AtkCO1.coSprite->setScale(coScale);
+        addChild(m_AtkCO1.coSprite);
     }
     /*********************************************************************************************/
     // co on the right upper corner
@@ -252,24 +252,24 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     addChild(pSprite);
 
     pCO = pPlayer->getCO(0);
-    m_DefCO0 = oxygine::spSprite::create();
+    m_DefCO0.coSprite = oxygine::spSprite::create();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_DefCO0->setResAnim(pAnimCO);
+        m_DefCO0.anim = pCO->getResAnim(resAnim);
+        m_DefCO0.coSprite->setResAnim(m_DefCO0.anim);
         setCOMood(m_DefCO0, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
         {
-            m_DefCO0->setPosition(-18, -13);
+            m_DefCO0.coSprite->setPosition(-18, -13);
         }
         else
         {
-            m_DefCO0->setPosition(getWidth() - 28, -13);
+            m_DefCO0.coSprite->setPosition(getWidth() - 28, -13);
         }
-        m_DefCO0->setPriority(priorityCO);
-        m_DefCO0->setScale(coScale);
-        addChild(m_DefCO0);
+        m_DefCO0.coSprite->setPriority(priorityCO);
+        m_DefCO0.coSprite->setScale(coScale);
+        addChild(m_DefCO0.coSprite);
     }
     /*********************************************************************************************/
     // co on the right lower corner
@@ -294,24 +294,24 @@ void BattleAnimation::createCoInfoBackImages(Unit* pAtkUnit, float atkStartHp, U
     addChild(pSprite);
 
     pCO = pPlayer->getCO(1);
-    m_DefCO1 = oxygine::spSprite::create();
+    m_DefCO1.coSprite = oxygine::spSprite::create();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCO->getResAnim(resAnim);
-        m_DefCO1->setResAnim(pAnimCO);
+        m_DefCO1.anim = pCO->getResAnim(resAnim);
+        m_DefCO1.coSprite->setResAnim(m_DefCO1.anim);
         setCOMood(m_DefCO1, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
         {
-            m_DefCO1->setPosition(-18, getHeight() - 28);
+            m_DefCO1.coSprite->setPosition(-18, getHeight() - 28);
         }
         else
         {
-            m_DefCO1->setPosition(getWidth() - 28, getHeight() - 28);
+            m_DefCO1.coSprite->setPosition(getWidth() - 28, getHeight() - 28);
         }
-        m_DefCO1->setPriority(priorityCO);
-        m_DefCO1->setScale(coScale);
-        addChild(m_DefCO1);
+        m_DefCO1.coSprite->setPriority(priorityCO);
+        m_DefCO1.coSprite->setScale(coScale);
+        addChild(m_DefCO1.coSprite);
     }
 }
 
@@ -502,11 +502,43 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
     pSprite->setSpeed(speed);
-    
+    qint32 terrainDefense = pUnit->getTerrainDefense();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
+    float defenseY = 5;
+    float startDefenseX = 5;
+    float defenseX = startDefenseX;
+    for (qint32 i = 1; i <= terrainDefense; i++)
+    {
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        if (getIsLeft(pUnit, pDefender))
+        {
+            pSprite->setPosition(defenseX, defenseY);
+        }
+        else
+        {
+            pSprite->setPosition(127 - defenseX - pAnim->getWidth(), defenseY);
+        }
+        pSprite->setResAnim(pAnim);
+        pSprite->setPriority(10);
+        ret->addChild(pSprite);
+        if (pAnim != nullptr)
+        {
+            if (i % 4 == 0)
+            {
+                defenseY += pAnim->getHeight() + 2;
+                defenseX = startDefenseX;
+            }
+            else
+            {
+                defenseX += pAnim->getWidth();
+            }
+        }
+    }
+
     return ret;
 }
 
-void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
+void BattleAnimation::setCOMood(CoFace & coFace, float hp1, float hp2)
 {
     GameEnums::COMood mood = GameEnums::COMood_Normal;
     if (hp1 - hp2 > 3.0f)
@@ -521,7 +553,19 @@ void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
     {
         mood = GameEnums::COMood_Normal;
     }
-    pSprite->setColumn(static_cast<qint32>(mood));
+    const oxygine::ResAnim* pAnim = coFace.anim;
+    if (pAnim != nullptr)
+    {
+        if (pAnim->getColumns() > 0)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnimColumn(pAnim, static_cast<qint32>(mood)), oxygine::timeMS(static_cast<qint64>(pAnim->getColumns() * GameMap::frameTime)), -1);
+            coFace.coSprite->addTween(tween);
+        }
+        else
+        {
+            coFace.coSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+        }
+    }
 }
 
 QColor BattleAnimation::getHealthBarColor(float hp)
@@ -576,6 +620,8 @@ void BattleAnimation::stopSound(bool forceStop)
 
 void BattleAnimation::nextAnimatinStep()
 {
+    Mainapp::getInstance()->pauseRendering();
+    CONSOLE_PRINT("BattleAnimation::nextAnimatinStep " + QString::number(static_cast<qint32>(m_currentState)), Console::eDEBUG);
     switch (m_currentState)
     {
         case AnimationProgress::MoveIn:
@@ -588,13 +634,21 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::MoveStop:
         {
             m_pAttackerAnimation->startNextFrame();
-            m_battleTimer.start(m_pAttackerAnimation->getStopDurationMS(m_pAtkUnit, m_pDefUnit, m_AtkWeapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-            break;
+            qint32 stopDuration = m_pAttackerAnimation->getStopDurationMS(m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            if (stopDuration > 0)
+            {
+                startBattleTimer(stopDuration);
+                break;
+            }
+            else
+            {
+                m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+            }
         }
         case AnimationProgress::WaitAfterIn:
         {
             stopSound(true);
-            m_battleTimer.start(500 / Settings::getBattleAnimationSpeed());
+            startBattleTimer(500);
             break;
         }
         case AnimationProgress::AttackerFire:
@@ -603,9 +657,22 @@ void BattleAnimation::nextAnimatinStep()
             loadFireAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             break;
         }
+        case AnimationProgress::AttackerFired:
+        {
+            qint32 remainingDuration = loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            if (remainingDuration > 0)
+            {
+
+                startBattleTimer(remainingDuration);
+                break;
+            }
+            else
+            {
+                m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+            }
+        }
         case AnimationProgress::AttackerImpact:
         {
-            loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             // load impact
             loadImpactAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_pAttackerAnimation,
                                 m_HealthBar1, m_defEndHp, m_AtkWeapon, m_atkStartHp);
@@ -645,14 +712,28 @@ void BattleAnimation::nextAnimatinStep()
                 m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
                 setSpriteFlipped(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit);
                 m_currentState = AnimationProgress::WaitAfterBattle;
-                m_battleTimer.start(500 / Settings::getBattleAnimationSpeed());
+                startBattleTimer(500);
             }
             break;
+        }
+        case AnimationProgress::DefenderFired:
+        {
+            // remove firing frames
+            qint32 remainingDuration = loadFiredAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
+            if (remainingDuration > 0)
+            {
+
+                m_battleTimer.start(remainingDuration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+                break;
+            }
+            else
+            {
+                m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
+            }
         }
         case AnimationProgress::DefenderImpact:
         {
             // remove firing frames
-            loadFiredAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
                                 m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
             break;
@@ -683,7 +764,7 @@ void BattleAnimation::nextAnimatinStep()
             m_pAttackerAnimation->setHpRounded(GlobalUtils::roundUp(m_atkEndHp));
             m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             setSpriteFlipped(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
-            m_battleTimer.start(500 / Settings::getBattleAnimationSpeed());
+            startBattleTimer(500);
             break;
         }
         case AnimationProgress::Finished:
@@ -697,6 +778,7 @@ void BattleAnimation::nextAnimatinStep()
     {
         BattleAnimation::onFinished(false);
     }
+    Mainapp::getInstance()->continueRendering();
 }
 
 Unit *BattleAnimation::getDefUnit() const
@@ -715,7 +797,7 @@ void BattleAnimation::loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit*
     pSprite->setStartWithFraming(true);
     pSprite->loadAnimation(BattleAnimationSprite::moveInAnimation, pUnit1, pUnit2, weapon, true, false);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
-    m_battleTimer.start(pSprite->getMoveInDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    startBattleTimer(pSprite->getMoveInDurationMS(pUnit1, pUnit2, weapon));
     
 }
 
@@ -729,7 +811,13 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
 {    
     pSprite->loadAnimation(BattleAnimationSprite::fireAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
-    m_battleTimer.start(pSprite->getFireDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    qint32 firedDuration = pSprite->getFiredDurationMS(pUnit1, pUnit2, weapon);
+    qint32 fireDuration = pSprite->getFireDurationMS(pUnit1, pUnit2, weapon);
+    if (firedDuration > fireDuration || firedDuration <= 0)
+    {
+        firedDuration = fireDuration;
+    }
+    startBattleTimer(firedDuration);
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
@@ -773,27 +861,45 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
     pSprite->setInvertStartPosition(false);
-    m_battleTimer.start(pSprite->getImpactDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    startBattleTimer(pSprite->getImpactDurationMS(pUnit2, pUnit1, weapon));
 }
 
-void BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
+qint32 BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
+    pSprite->setHasFired(true);
     pSprite->loadAnimation(BattleAnimationSprite::standingFiredAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
+
+    qint32 firedDuration = pSprite->getFiredDurationMS(pUnit1, pUnit2, weapon);
+    qint32 fireDuration = pSprite->getFireDurationMS(pUnit1, pUnit2, weapon);
+    if (firedDuration < 0 || firedDuration <= fireDuration)
+    {
+        return 0;
+    }
+    else
+    {
+        return fireDuration - firedDuration;
+    }
 }
 
 void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)
 {
     pSprite->loadAnimation(BattleAnimationSprite::dyingAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
-    m_battleTimer.start(pSprite->getDyingDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    startBattleTimer(pSprite->getDyingDurationMS(pUnit1, pUnit2, weapon));
 }
 
 void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 {
     constexpr qint32 fadeoutTime = 1000;
     qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 100);
-    m_battleTimer.start((fadeoutTime + sleep) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    startBattleTimer(fadeoutTime + sleep);
+}
+
+void BattleAnimation::startBattleTimer(qint32 duration)
+{
+    CONSOLE_PRINT("Starting battle timer with base duration: " + QString::number(duration), Console::eDEBUG);
+    m_battleTimer.start(duration / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 void BattleAnimation::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)

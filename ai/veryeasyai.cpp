@@ -221,7 +221,7 @@ void VeryEasyAI::finishTurn()
 
 bool VeryEasyAI::captureBuildings(spQmlVectorUnit pUnits)
 {
-    Console::print("VeryEasyAI::captureBuildings()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::captureBuildings()", Console::eDEBUG);
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = (cost >= m_minSiloDamage);
@@ -301,7 +301,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit pUnits)
 
 bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit pUnits)
 {
-    Console::print("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -320,7 +320,7 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit pUnits)
 
 bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit pUnits)
 {
-    Console::print("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -339,7 +339,7 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit pUnits)
 
 bool VeryEasyAI::attack(Unit* pUnit)
 {
-    Console::print("VeryEasyAI::attack", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::attack", Console::eDEBUG);
     if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack
@@ -392,7 +392,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
                            spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                            bool supportUnits )
 {
-    Console::print("VeryEasyAI::moveUnits()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::moveUnits()", Console::eDEBUG);
     if (m_aiStep < AISteps::moveToTargets)
     {
         createMovementMap(pBuildings, pEnemyBuildings);
@@ -452,7 +452,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
 
 bool VeryEasyAI::moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
-    Console::print("VeryEasyAI::moveTransporters()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::moveTransporters()", Console::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -515,7 +515,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemy
 
 bool VeryEasyAI::loadUnits(spQmlVectorUnit pUnits)
 {
-    Console::print("VeryEasyAI::loadUnits()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::loadUnits()", Console::eDEBUG);
     m_aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -549,7 +549,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit pUnits)
 bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& actions,
                           QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
 {
-    Console::print("VeryEasyAI::moveUnit()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::moveUnit()", Console::eDEBUG);
     TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -673,7 +673,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
 
 bool VeryEasyAI::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits)
 {
-    Console::print("VeryEasyAI::buildUnits()", Console::eDEBUG);
+    CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
