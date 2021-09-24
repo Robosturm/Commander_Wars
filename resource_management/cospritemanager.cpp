@@ -166,3 +166,46 @@ void COSpriteManager::removeRessource(QString id)
         }
     }
 }
+
+QStringList COSpriteManager::getArmyList(const QStringList & coids) const
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getArmies";
+    QJSValueList args1;
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
+    QStringList armies = ret.toVariant().toStringList();
+    QStringList allowedArmies;
+    // remove unused armies
+    // first search avaible armies if the selection is set like that
+    for (qint32 i = 0; i < coids.size(); i++)
+    {
+        QString function1 = "getCOArmy";
+        QJSValue ret = pInterpreter->doFunction(coids[i], function1);
+        if (ret.isString())
+        {
+            QString army = ret.toString();
+            if (!allowedArmies.contains(army))
+            {
+                allowedArmies.append(army);
+            }
+        }
+    }
+    // we have allowed armies? Else allow everything
+    if (allowedArmies.size() > 0)
+    {
+        // remove all other armies
+        qint32 iter = 0;
+        while (iter < armies.size())
+        {
+            if (allowedArmies.contains(armies[iter]))
+            {
+                iter++;
+            }
+            else
+            {
+                armies.removeAt(iter);
+            }
+        }
+    }
+    return armies;
+}
