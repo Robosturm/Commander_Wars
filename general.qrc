@@ -3857,7 +3857,6 @@
         <file>resources/images/battleanimations/mech/mech+yc+river.png</file>
         <file>resources/images/battleanimations/mech/mech+yc+stop+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+yc+walk+mask.png</file>
-        <file>resources/images/battleanimations/megatank/megatank+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+bh+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+bm+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+ge+mask.png</file>
@@ -4608,7 +4607,6 @@
         <file>resources/images/battleanimations/light_tank/light_tank+yc+mg+stop+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+bh+cannon+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+bh+mask.png</file>
-        <file>resources/images/battleanimations/megatank/megatank+cannon+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+bh+fire+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+bm+fire+mask.png</file>
         <file>resources/images/battleanimations/missile/missile+ge+fire+mask.png</file>
@@ -5098,5 +5096,27 @@
         <file>resources/images/battleanimations/recon/recon+pf+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+pf+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+pf+stop+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+bd+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+bd+mask .png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ac+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ac+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bd+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bd+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bm+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+bm+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+dm+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+dm+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ge+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ge+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+gs+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+gs+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+os+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+os+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+pf+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+pf+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ti+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+ti+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+yc+cannon+mask.png</file>
+        <file>resources/images/battleanimations/megatank/megatank+yc+mask.png</file>
     </qresource>
 </RCC>

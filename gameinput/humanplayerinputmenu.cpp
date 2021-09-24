@@ -487,9 +487,13 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 {
                     m_currentAction -= m_rowCount;
                 }
-                else
+                else if (endItemCount > 0)
                 {
                     m_currentAction = endItemCount - 1;
+                }
+                else
+                {
+                    m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
             else if (cur == Settings::getKey_right() ||

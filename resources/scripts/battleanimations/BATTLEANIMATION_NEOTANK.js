@@ -96,7 +96,7 @@ var Constructor = function()
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_NEOTANK.getMaxUnitCount();
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_NEOTANK.getMaxUnitCount());
     };
 };
 

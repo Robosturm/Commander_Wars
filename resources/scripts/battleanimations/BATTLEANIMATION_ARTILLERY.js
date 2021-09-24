@@ -15,16 +15,17 @@ var Constructor = function()
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
-    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(44, 35)]],
+
+    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(42, 34)]],
                           ["bd", [Qt.point(-5, 5),  Qt.point(41, 36)]],
-                          ["bh", [Qt.point(-5, 5),  Qt.point(30, 37)]],
-                          ["bm", [Qt.point(-5, 5),  Qt.point(30, 37)]],
-                          ["ge", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["bh", [Qt.point(-5, 5),  Qt.point(39, 38)]],
+                          ["bm", [Qt.point(-5, 5),  Qt.point(39, 36)]],
+                          ["ge", [Qt.point(-5, 5),  Qt.point(40, 37)]],
                           ["ma", [Qt.point(-35, 5), Qt.point(30, 57)]],
-                          ["os", [Qt.point(-5, 5),  Qt.point(30, 37)]],
+                          ["os", [Qt.point(-5, 5),  Qt.point(40, 38)]],
                           ["pf", [Qt.point(-5, 5),  Qt.point(41, 35)]],
                           ["ti", [Qt.point(-5, 5),  Qt.point(44, 25)]],
-                          ["yc", [Qt.point(-5, 5),  Qt.point(30, 37)]],];
+                          ["yc", [Qt.point(-5, 5),  Qt.point(40, 38)]],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "", 0, 0);

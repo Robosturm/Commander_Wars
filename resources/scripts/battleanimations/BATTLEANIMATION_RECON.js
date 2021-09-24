@@ -189,7 +189,7 @@ var Constructor = function()
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
     };
 };
 

@@ -4,15 +4,28 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
                      ["ma", "ma"],
+                     ["os", "os"],
+                     ["pf", "pf"],
                      ["ti", "ti"],
-                     ["bd", "bd"],];
+                     ["yc", "yc"],];
+
+
+    this.animationData = [["bd", [Qt.point(-39, 38), Qt.point(30, 35)]],
+                          ["bh", [Qt.point(-45, 45), Qt.point(33, 34)]],
+                          ["bm", [Qt.point(-39, 38), Qt.point(30, 35)]],
+                          ["ge", [Qt.point(-43, 45), Qt.point(33, 33)]],
+                          ["ma", [Qt.point(-25, 45), Qt.point(41, 49)]],
+                          ["os", [Qt.point(-43, 38), Qt.point(29, 34)]],
+                          ["pf", [Qt.point(-36, 28), Qt.point(37, 38)]],
+                          ["ti", [Qt.point(-45, 37), Qt.point(32, 34)]],
+                          ["yc", [Qt.point(-40, 40), Qt.point(26, 38)]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon, 0, 0);
@@ -45,40 +58,11 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_K_HELI.armyData);
         var offset = Qt.point(0, 0);
         var count = sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_K_HELI.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon);
-            // 30
-
-            offset = Qt.point(-43, 38);
-            if (armyName === "yc")
-            {
-                offset = Qt.point(-40, 40);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(-43, 45);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(-39, 38);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(-45, 45);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(-25, 45);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(-45, 37);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(-39, 38);
-            }
+            offset = data[0];
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(130, -80), 600, false,
                                     -1, 1, -1);
@@ -90,35 +74,7 @@ var Constructor = function()
         else
         {
             BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon, 0, 1, 3);
-            offset = Qt.point(29, 34);
-            if (armyName === "yc")
-            {
-                offset = Qt.point(26, 38);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(33, 33);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(30, 35);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(33, 34);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(41, 49);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(32, 34);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(30, 35);
-            }
+            offset = data[1];
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
             sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);

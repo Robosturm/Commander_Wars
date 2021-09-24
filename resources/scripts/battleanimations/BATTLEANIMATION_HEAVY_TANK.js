@@ -12,8 +12,20 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["ma", "ma"],
                      ["os", "os"],
+                     ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
+    this.animationData = [["ac", [Qt.point(21, 28), Qt.point(21, 52), Qt.point(21, 47)]],
+                          ["bd", [Qt.point(23, 18), Qt.point(19, 46), Qt.point(19, 41)]],
+                          ["bh", [Qt.point(15, 26), Qt.point(17, 52), Qt.point(17, 46)]],
+                          ["bm", [Qt.point(16, 21), Qt.point(16, 52), Qt.point(16, 45)]],
+                          ["ge", [Qt.point(15, 27), Qt.point(17, 52), Qt.point(17, 46)]],
+                          ["ma", [Qt.point(28, 40), Qt.point(35, 25), Qt.point(35, 21)]],
+                          ["os", [Qt.point(15, 22), Qt.point(9, 52),  Qt.point(8, 46)]],
+                          ["pf", [Qt.point(16, 25), Qt.point(21, 52), Qt.point(21, 47)]],
+                          ["ti", [Qt.point(21, 27), Qt.point(23, 54), Qt.point(23, 49)]],
+                          ["yc", [Qt.point(15, 26), Qt.point(17, 52), Qt.point(17, 46)]],];
+
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
@@ -67,42 +79,11 @@ var Constructor = function()
         var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var count = sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_HEAVY_TANK.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
-            offset = Qt.point(15, 22);
-            if (armyName === "yc")
-            {
-                offset = Qt.point(15, 26);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(15, 27);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(16, 21);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(15, 26);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(28, 40);
-            }
-            else if (armyName === "ac")
-            {
-                offset = Qt.point(21, 28);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(21, 27);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(23, 18);
-            }
+            offset = data[0];
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1.0, 0, 120);
             for (var i = 0; i < count; i++)
@@ -115,78 +96,14 @@ var Constructor = function()
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire+air", 3);
-                offset = Qt.point(9, 52);
-                if (armyName === "yc")
-                {
-                    offset = Qt.point(17, 52);
-                }
-                else if (armyName === "ge")
-                {
-                    offset = Qt.point(17, 52);
-                }
-                else if (armyName === "bm")
-                {
-                    offset = Qt.point(16, 52);
-                }
-                else if (armyName === "bh")
-                {
-                    offset = Qt.point(17, 52);
-                }
-                else if (armyName === "ma")
-                {
-                    offset = Qt.point(35, 25);
-                }
-                else if (armyName === "ac")
-                {
-                    offset = Qt.point(21, 52);
-                }
-                else if (armyName === "ti")
-                {
-                    offset = Qt.point(23, 54);
-                }
-                else if (armyName === "bd")
-                {
-                    offset = Qt.point(19, 46);
-                }
+                offset = data[1];
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
             else
             {
                 BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
-                offset = Qt.point(8, 46);
-                if (armyName === "yc")
-                {
-                    offset = Qt.point(17, 46);
-                }
-                else if (armyName === "ge")
-                {
-                    offset = Qt.point(17, 46);
-                }
-                else if (armyName === "bm")
-                {
-                    offset = Qt.point(16, 45);
-                }
-                else if (armyName === "bh")
-                {
-                    offset = Qt.point(17, 46);
-                }
-                else if (armyName === "ma")
-                {
-                    offset = Qt.point(35, 21);
-                }
-                else if (armyName === "ac")
-                {
-                    offset = Qt.point(21, 47);
-                }
-                else if (armyName === "ti")
-                {
-                    offset = Qt.point(23, 49);
-                }
-                else if (armyName === "bd")
-                {
-                    offset = Qt.point(19, 41);
-                }
+                offset = data[2];
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
             }
@@ -215,7 +132,7 @@ var Constructor = function()
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 300 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
     };
 };
 

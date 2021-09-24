@@ -28,7 +28,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount());
+        var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var startX = -75;
         BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+move", Qt.point(startX, 5), Qt.point(65, 0), 600, -1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
@@ -43,6 +43,11 @@ var Constructor = function()
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
         return 610;
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -77,7 +82,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FIGHTER.animationData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
         var offset = Qt.point(-10, 5);
         BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+fire", Qt.point(-10, 5), Qt.point(0, 0), 0, 3);
         var mgCount = data[0];

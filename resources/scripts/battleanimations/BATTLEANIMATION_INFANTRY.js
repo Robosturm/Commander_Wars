@@ -17,6 +17,18 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
+    this.animationData = [["ac", [65, Qt.point(-75, 5), Qt.point(15, 19), Qt.point(15, 14), Qt.point(15, 14), Qt.point(-50, 20), 90]],
+                          ["bd", [65, Qt.point(-75, 5), Qt.point(19, 27), Qt.point(21, 16), Qt.point(20, 19), Qt.point(-30, 15), 0]],
+                          ["bh", [65, Qt.point(-75, 5), Qt.point(18, 23), Qt.point(18, 13), Qt.point(18, 16), Qt.point(-30, 15), 0]],
+                          ["bm", [65, Qt.point(-75, 5), Qt.point(14, 26), Qt.point(15, 16), Qt.point(15, 19), Qt.point(-30, 15), 0]],
+                          ["dm", [65, Qt.point(-75, 5), Qt.point(8, 20),  Qt.point(8, 12),  Qt.point(8, 13),  Qt.point(-50, 20), 90]],
+                          ["ge", [65, Qt.point(-75, 5), Qt.point(14, 23), Qt.point(14, 14), Qt.point(14, 15), Qt.point(-30, 15), 0]],
+                          ["ma", [65, Qt.point(-75, 5), Qt.point(16, 19), Qt.point(16, 14), Qt.point(16, 14), Qt.point(-50, 20), 90]],
+                          ["os", [65, Qt.point(-75, 5), Qt.point(14, 21), Qt.point(14, 11), Qt.point(14, 13), Qt.point(-30, 15), 0]],
+                          ["pf", [65, Qt.point(-75, 5), Qt.point(13, 19), Qt.point(13, 14), Qt.point(13, 14), Qt.point(-50, 20), 90]],
+                          ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), 0]],
+                          ["yc", [65, Qt.point(-75, 5), Qt.point(21, 25), Qt.point(21, 16), Qt.point(21, 18), Qt.point(-30, 15), 0]],];
+
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
@@ -70,8 +82,9 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
-        sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                  Qt.point(65, 0), 600, false,
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), data[1],
+                                  Qt.point(data[0], 0), 600, false,
                                   1, 1);
         if (riverName !== "")
         {
@@ -89,7 +102,8 @@ var Constructor = function()
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
-        var offset = Qt.point(-10, 5);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        var offset = Qt.point(data[0] + data[1].x, data[1].y);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
         if (riverName !== "")
@@ -120,152 +134,23 @@ var Constructor = function()
         var armyName = BATTLEANIMATION_INFANTRY.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var position = BATTLEANIMATION.getRelativePosition(unit, defender);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         if (position > 0)
         {
-            BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+up", 3);
-            if (armyName === "ac")
-            {
-                offset = Qt.point(15, 19);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(18, 23);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(14, 26);
-            }
-            else if (armyName === "dm")
-            {
-                offset = Qt.point(8, 20);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(14, 23);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(16, 19);
-            }
-            else if (armyName === "os")
-            {
-                offset = Qt.point(14, 21);
-            }
-            else if (armyName === "pf")
-            {
-                offset = Qt.point(13, 19);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(15, 24);
-            }
-            else if (armyName === "yc")
-            {
-                offset = Qt.point(21, 25);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(19, 27);
-            }
+            BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+up", 3);            
+            offset = data[2];
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset);
         }
         else if (position < 0)
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+down", 3);
-                        // -10
-            if (armyName === "ac")
-            {
-                offset = Qt.point(15, 14);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(18, 13);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(15, 16);
-            }
-            else if (armyName === "dm")
-            {
-                offset = Qt.point(8, 12);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(14, 14);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(16, 14);
-            }
-            else if (armyName === "os")
-            {
-                offset = Qt.point(14, 11);
-            }
-            else if (armyName === "pf")
-            {
-                offset = Qt.point(13, 14);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(15, 19);
-            }
-            else if (armyName === "yc")
-            {
-                offset = Qt.point(21, 16);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(21, 16);
-            }
+            offset = data[3];
             sprite.loadSprite("mg_shot_down",  false, sprite.getMaxUnitCount(), offset);
         }
         else
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
-            if (armyName === "ac")
-            {
-                offset = Qt.point(15, 14);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(18, 16);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(15, 19);
-            }
-            else if (armyName === "dm")
-            {
-                offset = Qt.point(8, 13);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(14, 15);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(16, 14);
-            }
-            else if (armyName === "os")
-            {
-                offset = Qt.point(14, 13);
-            }
-            else if (armyName === "pf")
-            {
-                offset = Qt.point(13, 14);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(15, 19);
-            }
-            else if (armyName === "yc")
-            {
-                offset = Qt.point(21, 18);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(20, 19);
-            }
+            offset = data[4];
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset);
         }
         for (var i = 0; i < count; i++)
@@ -338,19 +223,11 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         var offset = Qt.point(-10, 5);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
-        var rotation = 0;
-        var movement = Qt.point(-30, 15);
-        if (armyName === "ac" ||
-            armyName === "dm" ||
-            armyName === "ma" ||
-            armyName === "pf" ||
-            armyName === "ti")
-        {
-            rotation = -90;
-            movement = Qt.point(-50, 20);
-        }
+        var rotation = data[6];
+        var movement = data[5];
         sprite.loadDyingMovingSprite("infantry+" + armyName + riverName + "+mask",
                                      "infantry+" + armyName + "+dying+mask",
                                      GameEnums.Recoloring_Matrix,

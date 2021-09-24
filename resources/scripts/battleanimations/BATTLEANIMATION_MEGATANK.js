@@ -24,9 +24,11 @@ var Constructor = function()
 
     this.loadSprite = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
     {
-        sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MEGATANK.armyData);
+        sprite.loadSpriteV2("megatank+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(0, 10));
-        sprite.loadSpriteV2("megatank" + armyName + "+cannon+mask", GameEnums.Recoloring_Matrix,
+        sprite.loadSpriteV2("megatank+" + armyName + "+cannon+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(64, 10 + 32),
                             1, 1, 0, 0,
                             false, false, 200, endFrame, startFrame);
