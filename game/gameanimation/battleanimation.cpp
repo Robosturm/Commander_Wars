@@ -774,7 +774,7 @@ void BattleAnimation::nextAnimatinStep()
     }
     m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
     
-    if (m_currentState >= AnimationProgress::Finished)
+    if (m_currentState > AnimationProgress::Finished)
     {
         BattleAnimation::onFinished(false);
     }

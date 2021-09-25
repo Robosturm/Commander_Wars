@@ -60,7 +60,7 @@ var Constructor = function()
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
         offset.x -= data[3].x;
-        offset.y -= data[4].y;
+        offset.y -= data[3].y;
         sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
