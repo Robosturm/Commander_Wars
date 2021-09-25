@@ -129,18 +129,39 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadSprite("artillery_heavy_hit",  false, 5, Qt.point(-16, 20),
-                          1, 1.0, 0, 0, true);
-        sprite.addSpriteScreenshake(8, 0.95, 800, 200);
+        if (defender.getUnitType()  === GameEnums.UnitType_Naval)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(68 - i * 25, 20),
+                                              Qt.point(0, 0), 0, false,
+                                              1, 1.0, 2, i * BATTLEANIMATION.defaultFrameDelay * 2, true,
+                                              100, -1, 0, 0, 180);
+            }
+        }
+        else
+        {
+            sprite.loadSprite("artillery_heavy_hit",  false, 5, Qt.point(-16, 20),
+                              1, 1.0, 0, 0, true);
+        }
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("impact_explosion.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        sprite.addSpriteScreenshake(8, 0.95, 800, 200);
+
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        if (defender.getUnitType()  === GameEnums.UnitType_Naval)
+        {
+            return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * 2 * sprite.getUnitCount(5);
+        }
+        else
+        {
+            return 500 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        }
     };
 
 

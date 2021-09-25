@@ -99,11 +99,11 @@ var Constructor = function()
         {
             if (globals.isEven(i))
             {
-                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 30),
+                sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 20),
                                               Qt.point(-70, 0), 400, true,
                                               1, 1, 2, i * 150, true);
 
-                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 30),
+                sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 20),
                                               Qt.point(0, 0), 0, false,
                                               1, 1.0, 2, 300 + i * 150, true,
                                               100, -1, 0, 0, 180);
