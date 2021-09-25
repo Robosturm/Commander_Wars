@@ -1118,7 +1118,7 @@ GameEnums::CounterAttackMode CO::canCounterAttack(GameAction* pAction, Unit* pAt
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
-    auto ergValue = GameEnums::CounterAttackMode_Impossible;
+    auto ergValue = GameEnums::CounterAttackMode_Undefined;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))

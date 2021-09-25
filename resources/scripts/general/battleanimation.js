@@ -20,7 +20,7 @@ var BATTLEANIMATION =
     hasDyingAnimation : function()
     {
         // return true if the unit has an implementation for loadDyingAnimation
-        return false;
+        return true;
     },
 
     loadMoveInAnimation : function(sprite, unit, defender, weapon)
@@ -35,7 +35,31 @@ var BATTLEANIMATION =
 
     loadDyingAnimation : function(sprite, unit, defender, weapon)
     {
-        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+        var spriteId = "unit_explosion";
+        var fadeoutTime = 900;
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
+        {
+            fadeoutTime = 400
+            spriteId = "unit_explosion_air";
+        }
+        sprite.loadAnimation("loadStandingFiredAnimation", unit, defender, weapon);
+        sprite.loadDyingFadeOutAnimation(fadeoutTime);
+
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, Qt.point(0, 20))
+        sprite.setAlphaForLastLoadedSprites(127);
+    },
+
+    getDyingDurationMS : function(sprite, unit, defender, weapon)
+    {
+        // the time will be scaled with animation speed inside the engine
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
+        {
+            return 700;
+        }
+        else
+        {
+            return 1300;
+        }
     },
 
     loadDyingAnimationSound : function(sprite, unit, defender, weapon)
@@ -140,12 +164,6 @@ var BATTLEANIMATION =
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
-    },
-
-    getDyingDurationMS : function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 0;
     },
 
     spotterArmyData = [["os", "os"],

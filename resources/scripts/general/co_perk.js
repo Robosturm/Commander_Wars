@@ -80,7 +80,7 @@ var CO_PERK =
     canCounterAttack : function(co, attacker, atkPosX, atkPosY,
                                 defender, defPosX, defPosY, luckMode)
     {
-        return GameEnums.CounterAttackMode_Impossible;
+        return GameEnums.CounterAttackMode_Undefined;
     },
 
     getPerfectVision : function(co)
