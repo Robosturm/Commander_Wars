@@ -4,18 +4,19 @@ var Constructor = function()
     {
         return 1;
     };
-    this.armyData = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bh"],
-                     ["ma", "bh"],
-                     ["ac", "ac"],
+                     ["bm", "bm"],
+                     ["dm", "dm"],
+                     ["ge", "ge"],
                      ["gs", "gs"],
+                     ["os", "os"],
+                     ["ma", "bh"],
                      ["pf", "pf"],
                      ["ti", "ti"],
-                     ["dm", "dm"],];
+                     ["yc", "yc"],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon, startFrame = 0, endFrame = -1)
     {

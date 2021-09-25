@@ -56,7 +56,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
-        var offset = Qt.point(data[2] - data[0].x, 20);
+        var offset = Qt.point(data[2] + data[0].x, 20);
         sprite.loadMovingSprite("battleship+" + armyName,  false,
                                 BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
