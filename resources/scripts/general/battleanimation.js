@@ -37,15 +37,16 @@ var BATTLEANIMATION =
     {
         var spriteId = "unit_explosion";
         var fadeoutTime = 900;
+        var offset = Qt.point(0, 20);
         if (unit.getUnitType()  === GameEnums.UnitType_Air)
         {
             fadeoutTime = 400
             spriteId = "unit_explosion_air";
+            offset = Qt.point(-20, 20);
         }
         sprite.loadAnimation("loadStandingFiredAnimation", unit, defender, weapon);
         sprite.loadDyingFadeOutAnimation(fadeoutTime);
-
-        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, Qt.point(0, 20))
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset)
         sprite.setAlphaForLastLoadedSprites(127);
     },
 

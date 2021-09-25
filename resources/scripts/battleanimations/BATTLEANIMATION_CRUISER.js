@@ -166,6 +166,9 @@ var Constructor = function()
         {
             rocketEndFrame = sprite.getUnitCount(5);
         }
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0, rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20));
     };
 

@@ -19,7 +19,7 @@ var Constructor = function()
         BATTLEANIMATION_ZCOUNIT_AT_CYCLE.loadStandingAnimation(sprite, unit, defender, weapon);
         var offset = Qt.point(28, 20);
         sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), offset,
-                                Qt.point(127, 0), 400, false,
+                                Qt.point(160, 0), 500, false,
                                 1, 1, -1);
         offset.x = (offset.x - 20);
         sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
@@ -33,7 +33,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
+            return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)

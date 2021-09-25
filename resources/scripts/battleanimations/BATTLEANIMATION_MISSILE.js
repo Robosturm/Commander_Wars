@@ -83,7 +83,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
         sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                                Qt.point(-30, 15), 300, false,
+                                Qt.point(-30, 15), 400, false,
                                 1, 1.0, 0, 300, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), Qt.point(127, 0),

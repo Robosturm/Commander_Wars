@@ -11,7 +11,7 @@ var Constructor = function()
                      ["ma", "bh"],];
 
     this.animationData = [["os", [Qt.point(31, 29)]],
-                          ["bh", [Qt.point(17, 27)]],];
+                          ["bh", [Qt.point(4, 19)]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {

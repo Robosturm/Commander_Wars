@@ -17,16 +17,16 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["ac", [65, Qt.point(-75, 5), Qt.point(15, 19), Qt.point(15, 14), Qt.point(15, 14), Qt.point(-50, 20), 90]],
+    this.animationData = [["ac", [65, Qt.point(-75, 5), Qt.point(15, 19), Qt.point(15, 14), Qt.point(15, 14), Qt.point(-50, 20), -90]],
                           ["bd", [65, Qt.point(-75, 5), Qt.point(19, 27), Qt.point(21, 16), Qt.point(20, 19), Qt.point(-30, 15), 0]],
                           ["bh", [65, Qt.point(-75, 5), Qt.point(18, 23), Qt.point(18, 13), Qt.point(18, 16), Qt.point(-30, 15), 0]],
                           ["bm", [65, Qt.point(-75, 5), Qt.point(14, 26), Qt.point(15, 16), Qt.point(15, 19), Qt.point(-30, 15), 0]],
-                          ["dm", [65, Qt.point(-75, 5), Qt.point(8, 20),  Qt.point(8, 12),  Qt.point(8, 13),  Qt.point(-50, 20), 90]],
+                          ["dm", [65, Qt.point(-75, 5), Qt.point(8, 20),  Qt.point(8, 12),  Qt.point(8, 13),  Qt.point(-50, 20), -90]],
                           ["ge", [65, Qt.point(-75, 5), Qt.point(14, 23), Qt.point(14, 14), Qt.point(14, 15), Qt.point(-30, 15), 0]],
-                          ["ma", [65, Qt.point(-75, 5), Qt.point(16, 19), Qt.point(16, 14), Qt.point(16, 14), Qt.point(-50, 20), 90]],
+                          ["ma", [65, Qt.point(-75, 5), Qt.point(16, 19), Qt.point(16, 14), Qt.point(16, 14), Qt.point(-50, 20), -90]],
                           ["os", [65, Qt.point(-75, 5), Qt.point(14, 21), Qt.point(14, 11), Qt.point(14, 13), Qt.point(-30, 15), 0]],
-                          ["pf", [65, Qt.point(-75, 5), Qt.point(13, 19), Qt.point(13, 14), Qt.point(13, 14), Qt.point(-50, 20), 90]],
-                          ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), 90]],
+                          ["pf", [65, Qt.point(-75, 5), Qt.point(13, 19), Qt.point(13, 14), Qt.point(13, 14), Qt.point(-50, 20), -90]],
+                          ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), -90]],
                           ["yc", [65, Qt.point(-75, 5), Qt.point(21, 25), Qt.point(21, 16), Qt.point(21, 18), Qt.point(-30, 15), 0]],];
 
     this.getArmyName = function(unit)
