@@ -50,7 +50,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
         BATTLEANIMATION_HOVERFLAK.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
         var player = unit.getOwner();
-        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERFLAK.armyData);
+        var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERFLAK.armyData);
         var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERFLAK.animationData);
         var offset = data[2];
         var mgCount = data[1];
@@ -119,7 +119,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var player = unit.getOwner();
-        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERFLAK.armyData);
+        var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERFLAK.armyData);
         var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERFLAK.animationData);
         return data[4] + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
     };

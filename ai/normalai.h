@@ -463,8 +463,8 @@ private:
     float m_movementpointBonus{0.33f};
     float m_damageToUnitCostRatioBonus{20};
     float m_superiorityRatio{2.5f};
-    float m_cheapUnitRatio{0.9f};
-    float m_cheapUnitBonusMultiplier{40};
+    float m_cheapUnitRatio{1.0f};
+    float m_cheapUnitBonusMultiplier{45};
     float m_normalUnitBonusMultiplier{10};
     float m_expensiveUnitBonusMultiplier{5};
 

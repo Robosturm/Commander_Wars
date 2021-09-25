@@ -423,15 +423,15 @@ void NormalAi::readIni(QString name)
         {
             m_superiorityRatio = 2.5f;
         }
-        m_cheapUnitRatio = settings.value("CheapUnitRatio", 0.9f).toFloat(&ok);
+        m_cheapUnitRatio = settings.value("CheapUnitRatio", 1.0f).toFloat(&ok);
         if(!ok)
         {
-            m_cheapUnitRatio = 0.9f;
+            m_cheapUnitRatio = 1.0f;
         }
-        m_cheapUnitBonusMultiplier = settings.value("CheapUnitBonusMultiplier", 40).toFloat(&ok);
+        m_cheapUnitBonusMultiplier = settings.value("CheapUnitBonusMultiplier", 45).toFloat(&ok);
         if(!ok)
         {
-            m_cheapUnitBonusMultiplier = 40;
+            m_cheapUnitBonusMultiplier = 45;
         }
         m_normalUnitBonusMultiplier = settings.value("NormalUnitBonusMultiplier", 10).toFloat(&ok);
         if(!ok)
@@ -480,10 +480,10 @@ void NormalAi::readIni(QString name)
         {
             m_ProducingTransportLoadingBonus = 15.0f;
         }
-        m_ProducingTransportMinLoadingTransportRatio = settings.value("ProducingTransportMinLoadingTransportRatio", 3.0f).toFloat(&ok);
+        m_ProducingTransportMinLoadingTransportRatio = settings.value("ProducingTransportMinLoadingTransportRatio", 7.0f).toFloat(&ok);
         if(!ok)
         {
-            m_ProducingTransportMinLoadingTransportRatio = 3.0f;
+            m_ProducingTransportMinLoadingTransportRatio = 7.0f;
         }
         m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
         if(!ok)
@@ -2812,7 +2812,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVector
     {
         score += unitBuildData.loadingCount * m_ProducingTransportLoadingBonus;
     }
-    if (unitBuildData.loadingCount > 0 || unitBuildData.loadingCount == 1)
+    if (unitBuildData.loadingCount > 0)
     {
         if (unitBuildData.transportCount <= 0 ||
             static_cast<float>(pUnits->size()) / static_cast<float>(unitBuildData.transportCount) > m_ProducingTransportMinLoadingTransportRatio ||
@@ -2923,7 +2923,7 @@ float NormalAi::calcCostScore(QVector<float>& data)
     }
     else if (data[FundsFactoryRatio] < m_cheapUnitRatio)
     {
-        score += (m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
+        score += (1.4f - (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
     }
     else
     {
