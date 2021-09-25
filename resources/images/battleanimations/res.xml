@@ -222,25 +222,25 @@
         <image file="flak/flak+ti+air+mask.png" />
         <image file="flak/flak+pf+air+mask.png" />
         <image file="flak/flak+ac+fire+air+mask.png" cols = "4" />
-        <image file="flak/flak+bd+fire+air+mask.png" />
+        <image file="flak/flak+bd+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+bh+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+os+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ge+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+air+mask.png" />
-        <image file="flak/flak+ti+fire+air+mask.png" />
-        <image file="flak/flak+pf+fire+air+mask.png" />
+        <image file="flak/flak+ti+fire+air+mask.png" cols = "2" />
+        <image file="flak/flak+pf+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ac+fire+mask.png" cols = "4" />
-        <image file="flak/flak+bd+fire+mask.png" />
+        <image file="flak/flak+bd+fire+mask.png" cols = "4" />
         <image file="flak/flak+bh+fire+mask.png" cols = "4" />
         <image file="flak/flak+bm+fire+mask.png" cols = "4" />
         <image file="flak/flak+os+fire+mask.png" cols = "4" />
         <image file="flak/flak+ge+fire+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+mask.png" />
-        <image file="flak/flak+ti+fire+mask.png" />
-        <image file="flak/flak+pf+fire+mask.png" />
+        <image file="flak/flak+ti+fire+mask.png" cols = "2" />
+        <image file="flak/flak+pf+fire+mask.png" cols = "4" />
         <image file="flak/flak+ac+move+mask.png" cols = "4" />
         <image file="flak/flak+bd+move+mask.png" />
         <image file="flak/flak+bh+move+mask.png" cols = "4" />
