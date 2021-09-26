@@ -141,9 +141,9 @@
         <image file="arrow+unit.png" cols = "10" />
         <!-- Human Player menu -->
         <image file="cursor+menu.png" cols = "4" />
-        <image file="menu+top.png" guideX1="3" guideX2="57" guideY1="2" guideY2="4"/>
-        <image file="menu+middle.png" guideX1="3" guideX2="57" guideY1="2" guideY2="14"/>
-        <image file="menu+bottom.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
+        <image file="menu+top+mask.png" guideX1="3" guideX2="57" guideY1="2" guideY2="4"/>
+        <image file="menu+middle+mask.png" guideX1="3" guideX2="57" guideY1="2" guideY2="14"/>
+        <image file="menu+bottom+mask.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
         <!-- Human Player menu icons -->
         <image file="wait.png" />
         <image file="fire.png" />

@@ -445,9 +445,6 @@
         <file>resources/images/game/lz.png</file>
         <file>resources/images/game/ma.png</file>
         <file>resources/images/game/marked+field.png</file>
-        <file>resources/images/game/menu+bottom.png</file>
-        <file>resources/images/game/menu+middle.png</file>
-        <file>resources/images/game/menu+top.png</file>
         <file>resources/images/game/missile_icon.png</file>
         <file>resources/images/game/music.png</file>
         <file>resources/images/game/next_player.png</file>
@@ -5132,5 +5129,10 @@
         <file>resources/images/battleanimations/neotank/neotank+os+move+mask.png</file>
         <file>resources/images/battleanimations/neotank/neotank+os+stop+mask.png</file>
         <file>resources/images/battleanimations/neotank/neotank+os+cannon+fire+mask.png</file>
+        <file>resources/images/battleanimations/submarine/submarine+hidden+ma+mask.png</file>
+        <file>resources/images/battleanimations/submarine/submarine+hidden+ma.png</file>
+        <file>resources/images/game/menu+bottom+mask.png</file>
+        <file>resources/images/game/menu+middle+mask.png</file>
+        <file>resources/images/game/menu+top+mask.png</file>
     </qresource>
 </RCC>
