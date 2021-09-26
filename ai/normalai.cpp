@@ -28,6 +28,9 @@ NormalAi::NormalAi(QString configurationFile)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadIni( "normal/" + configurationFile);
+    setUnitBuildValue("RECON",         0.6f);
+    setUnitBuildValue("FLARE",         0.6f);
+    setUnitBuildValue("MOTORBIKE",     0.6f);
 }
 
 
@@ -2066,21 +2069,14 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     float funds = m_pPlayer->getFunds();
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
-    if (productionBuildings > 2)
+    if (productionBuildings > GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
+        productionBuildings > m_fundsPerBuildingFactorA)
     {
         // if we have a bigger number of buildings we wanna spam out units but not at an average costs overall buildings
         // but more a small amount of strong ones and a large amount of cheap ones
         // so we use a small (x - a) / (x - b) function here
-        float test = funds * ((productionBuildings - m_fundsPerBuildingFactorA) / (static_cast<float>(productionBuildings) - m_fundsPerBuildingFactorB));
-        if (test > m_spamingFunds)
-        {
-            test = m_spamingFunds;
-        }
-        if (test > fundsPerFactory)
-        {
-            fundsPerFactory = test;
-        }
-        if (fundsPerFactory >= m_spamingFunds)
+        fundsPerFactory = funds * (1 - ((productionBuildings - m_fundsPerBuildingFactorA) / (static_cast<float>(productionBuildings) - m_fundsPerBuildingFactorB)));
+        if (fundsPerFactory >= m_spamingFunds * 1.5f)
         {
             data[UseHighTechUnits] = 1.0f;
         }
