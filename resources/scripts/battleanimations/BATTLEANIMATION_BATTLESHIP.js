@@ -11,12 +11,20 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.animationData = [["os",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
-                          ["bm",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
-                          ["ge",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
-                          ["yc",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
-                          ["bh",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
-                          ["ma",[Qt.point(-57, 0),    570, 0, Qt.point(0,  71),  Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],];
+    this.animationData = [["os",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0),   Qt.point(-8, -7)]],
+                          ["bm",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0),   Qt.point(-8, -7)]],
+                          ["ge",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0),   Qt.point(-8, -7)]],
+                          ["yc",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0),   Qt.point(-8, -7)]],
+                          ["bh",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0),   Qt.point(-8, -7)]],
+                          ["ma",[Qt.point(-57, 0),    570, 0, Qt.point(55,  62),  Qt.point(0, 0),   Qt.point(-7, -3),  Qt.point(-12, -6), Qt.point(22, -8), Qt.point(16, -12)]],];
+
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        return data[1];
+    };
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -61,13 +69,10 @@ var Constructor = function()
                                 BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
-        if (armyName !== "ma")
-        {
-            var frameTime = 200;
-            sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Matrix,
-                                      BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
-                                      movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames, startFrame);
-        }
+        var frameTime = 200;
+        sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(offset.x + 160, offset.y + 64),
+                                  movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames, startFrame);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -147,10 +152,6 @@ var Constructor = function()
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         return true;
-    };
-    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
-    {
-        return 1210;
     };
 
     this.hasDyingAnimation = function()

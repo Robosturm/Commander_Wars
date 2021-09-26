@@ -625,6 +625,7 @@
         <image file="k_heli/k_heli+yc+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+ti+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+pf+mg+fire+mask.png" cols = "2" />
+        <image file="k_heli/k_heli+ma+mg+fire+mask.png" cols = "2" />
         <!-- lander -->
         <image file="lander/lander+bh.png" cols = "4" />
         <image file="lander/lander+bh+mask.png" cols = "4" />
@@ -910,12 +911,18 @@
         <image file="motorbike/motorbike+os+mask.png" />
         <image file="motorbike/motorbike+bm+mask.png" />        
         <!-- neotank -->
-        <image file="neotank/neotank+mask.png" />
-        <image file="neotank/neotank+stop+mask.png" cols = "4" />
-        <image file="neotank/neotank+cannon_fire+mask.png" cols = "4" />
-        <image file="neotank/neotank+move+mask.png" cols = "4" />
-        <image file="neotank/neotank+mg_fire+mask.png" cols = "2" />
-        <image file="neotank/neotank+mg_fire_air+mask.png" cols = "2" />
+        <image file="neotank/neotank+os+mask.png" />
+        <image file="neotank/neotank+os+stop+mask.png" cols = "4" />
+        <image file="neotank/neotank+os+cannon+fire+mask.png" cols = "4" />
+        <image file="neotank/neotank+os+move+mask.png" cols = "4" />
+        <image file="neotank/neotank+os+mg+fire+mask.png" cols = "2" />
+        <image file="neotank/neotank+os+mg+fire+air+mask.png" cols = "2" />
+        <image file="neotank/neotank+ma+mask.png" />
+        <image file="neotank/neotank+ma+stop+mask.png" />
+        <image file="neotank/neotank+ma+cannon+fire+mask.png" />
+        <image file="neotank/neotank+ma+move+mask.png" />
+        <image file="neotank/neotank+ma+mg+fire+mask.png" />
+        <image file="neotank/neotank+ma+mg+fire+air+mask.png" />
         <!-- piperunner -->
         <image file="piperunner/piperunner+mask.png" />
         <image file="piperunner/piperunner+fire+mask.png" cols = "3" />

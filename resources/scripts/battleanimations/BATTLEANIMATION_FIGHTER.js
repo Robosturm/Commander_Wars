@@ -13,15 +13,15 @@ var Constructor = function()
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
-    this.animationData = [["bm", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["bh", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["bg", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["ge", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["ma", [Qt.point(-50, 20), Qt.point(-50, 30)]],
-                          ["os", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["pf", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["ti", [Qt.point(-40, 20), Qt.point(-50, 30)]],
-                          ["yc", [Qt.point(-40, 20), Qt.point(-50, 30)]],];
+    this.animationData = [["bm", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["bh", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["bg", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["ge", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["ma", [Qt.point(-50, 20), Qt.point(-70, 30)]],
+                          ["os", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["pf", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["ti", [Qt.point(-40, 20), Qt.point(-70, 30)]],
+                          ["yc", [Qt.point(-40, 20), Qt.point(-70, 30)]],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_FIGHTER.loadSprite(sprite, unit, defender, weapon, "");
@@ -91,7 +91,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
     };
 };
 

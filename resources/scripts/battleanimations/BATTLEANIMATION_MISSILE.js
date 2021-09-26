@@ -19,7 +19,7 @@ var Constructor = function()
                           ["bm", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["bh", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["ge", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
-                          ["ma", [Qt.point(-35, 5), Qt.point(5, 40),  "rocket_launch",   Qt.point(35, 22)]],
+                          ["ma", [Qt.point(-35, 5), Qt.point(9, 36),  "rocket_launch",   Qt.point(35, 22)]],
                           ["os", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["pf", [Qt.point(-10, 5), Qt.point(-1, 35), "rocket_launch+1", Qt.point(20, 10)]],
                           ["ti", [Qt.point(-10, 5), Qt.point(-4, 38), "rocket_launch+1", Qt.point(20, 10)]],

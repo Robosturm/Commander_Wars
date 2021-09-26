@@ -12,23 +12,29 @@ var Constructor = function()
                      ["bg", "bh"],
                      ["ma", "ma"],];
 
-    this.animationData = [["os", [true]],
-                          ["bm", [true]],
-                          ["ge", [true]],
-                          ["yc", [true]],
-                          ["bh", [true]],
-                          ["ma", [false]],];
+    this.animationData = [["os", [-60, 20]],
+                          ["bm", [-60, 20]],
+                          ["ge", [-60, 20]],
+                          ["yc", [-60, 20]],
+                          ["bh", [-60, 20]],
+                          ["ma", [0,   30]],];
 
     // todo load ship move sound
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-60, 20), Qt.point(0, 0), 0);
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(data[0], data[1]), Qt.point(0, 0), 0);
     };
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
-        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 20), Qt.point(-60, 0), 1200);
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, data[1]), Qt.point(data[0], 0), 600);
     };
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
@@ -40,8 +46,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
-        if(unit.getHidden() === true && data[0])
+        if(unit.getHidden() === true)
         {
             sprite.loadMovingSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                       BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 30), movement, moveTime, false, -1);
@@ -140,7 +145,7 @@ var Constructor = function()
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 1210;
+        return 600;
     };
 
     this.hasDyingAnimation = function()
@@ -150,7 +155,10 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-60, 20), Qt.point(-140, 0), 2000);
+        var player = unit.getOwner();
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(data[0], data[1]), Qt.point(-140, 0), 2000);
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 

@@ -16,7 +16,7 @@ var Constructor = function()
                           ["ge", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["yc", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["bh", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
-                          ["ma", [0,  Qt.point(0,   -1), 0,   Qt.point(60, 50)]],];
+                          ["ma", [3,  Qt.point(-85, -1), 850, Qt.point(75, 115)]],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -70,7 +70,7 @@ var Constructor = function()
         for (var i = 0; i < count; i++)
         {
             sprite.loadSingleMovingSprite("bombs_projectile", false, startPoint,
-                                          Qt.point(0, -80), 400, false,
+                                          Qt.point(0, -160), 800, false,
                                           1, 1, -1, i * 150);
             sprite.loadSound("falling_bomb.wav", 1, i * 150);
         }
@@ -78,7 +78,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 + 150 * sprite.getUnitCount(5);
+        return 800 + 150 * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)

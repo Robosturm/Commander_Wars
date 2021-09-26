@@ -21,7 +21,7 @@ var Constructor = function()
                           ["bh", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
                           ["bm", [Qt.point(-5, 5),  Qt.point(37, 47), Qt.point(37, 40)]],
                           ["ge", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
-                          ["ma", [Qt.point(-15, 5), Qt.point(38, 25), Qt.point(38, 20)]],
+                          ["ma", [Qt.point(-15, 5), Qt.point(39, 25), Qt.point(39, 20)]],
                           ["os", [Qt.point(-5, 5),  Qt.point(35, 50), Qt.point(35, 44)]],
                           ["pf", [Qt.point(-5, 5),  Qt.point(32, 45), Qt.point(32, 40)]],
                           ["ti", [Qt.point(-5, 5),  Qt.point(36, 37), Qt.point(36, 30)]],
@@ -30,7 +30,6 @@ var Constructor = function()
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
-        // get army name
         return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_RECON.armyData);
     };
 
@@ -38,10 +37,12 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                  Qt.point(65, 0), 600, false, 1, 1);
-        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
-                                Qt.point(65, 0), 600, false, 1, 1);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var movement = 65;
+        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement, 5),
+                                  Qt.point(movement, 0), 600, false, 1, 1);
+        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement - 25, 7),
+                                Qt.point(movement, 0), 600, false, 1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -51,8 +52,10 @@ var Constructor = function()
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+        var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         sprite.loadSprite("vehicle_dust_stop",  false,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(-40, 7), 1);
+                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(data[0].x - 25, 7), 1);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)

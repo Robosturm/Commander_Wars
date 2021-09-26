@@ -20,7 +20,7 @@ var Constructor = function()
                           ["bh", [Qt.point(-45, 45), Qt.point(33, 34)]],
                           ["bm", [Qt.point(-39, 38), Qt.point(30, 35)]],
                           ["ge", [Qt.point(-43, 45), Qt.point(33, 33)]],
-                          ["ma", [Qt.point(-25, 45), Qt.point(41, 49)]],
+                          ["ma", [Qt.point(-35, 40), Qt.point(41, 49)]],
                           ["os", [Qt.point(-43, 38), Qt.point(29, 34)]],
                           ["pf", [Qt.point(-36, 28), Qt.point(37, 38)]],
                           ["ti", [Qt.point(-45, 37), Qt.point(32, 34)]],
@@ -41,14 +41,11 @@ var Constructor = function()
                             BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1, 0, 0, false,
                             false, 50);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        if (armyName !== "ma")
-        {
-            sprite.loadSpriteV2("k_heli+" + armyName + "+mg+fire+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_K_HELI.getMaxUnitCount(), Qt.point(offset.x + 40, offset.y),
-                                loops, 1, 0, 0, false,
-                                false, 100, endFrame, startFrame);
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
-        }
+        sprite.loadSpriteV2("k_heli+" + armyName + "+mg+fire+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_K_HELI.getMaxUnitCount(), Qt.point(offset.x + 40, offset.y),
+                            loops, 1, 0, 0, false,
+                            false, 100, endFrame, startFrame);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     }
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
