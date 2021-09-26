@@ -236,7 +236,7 @@ var Constructor = function()
     {
         if (unit.getBaseMaxRange() > 1)
         {
-            return 2;
+            return 6;
         }
         else if (unit.getUnitType() === GameEnums.UnitType_Ground)
         {

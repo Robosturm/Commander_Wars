@@ -36,11 +36,11 @@ var BATTLEANIMATION =
     loadDyingAnimation : function(sprite, unit, defender, weapon)
     {
         var spriteId = "unit_explosion";
-        var fadeoutTime = 900;
-        var offset = Qt.point(0, 20);
+        var fadeoutTime = 600;
+        var offset = Qt.point(-20, 20);
         if (unit.getUnitType()  === GameEnums.UnitType_Air)
         {
-            fadeoutTime = 400
+            fadeoutTime = 300
             spriteId = "unit_explosion_air";
             offset = Qt.point(-20, 20);
         }
@@ -59,17 +59,6 @@ var BATTLEANIMATION =
         else
         {
             return 1300;
-        }
-    },
-
-    loadDyingAnimationSound : function(sprite, unit, defender, weapon)
-    {
-        var maxUnitCount = sprite.getMaxUnitCount()
-        var startCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingStartHp()));
-        var endCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingEndHp()));
-        for (var i = 0; i < startCount - endCount; i++)
-        {
-            //sprite.loadSound("tank_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
     },
 

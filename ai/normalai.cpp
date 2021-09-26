@@ -17,6 +17,7 @@
 #include "ai/targetedunitpathfindingsystem.h"
 
 #include "resource_management/weaponmanager.h"
+#include "resource_management/movementtablemanager.h"
 
 
 NormalAi::NormalAi(QString configurationFile)
@@ -35,7 +36,8 @@ void NormalAi::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        settings.beginGroup("general");
+        CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
+        settings.beginGroup("General");
         bool ok = false;
         m_minMovementDamage = settings.value("MinMovementDamage", 0.3f).toFloat(&ok);
         if(!ok)
@@ -92,6 +94,12 @@ void NormalAi::readIni(QString name)
         {
             m_minSiloDamage = 7000;
         }
+        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_minSameIslandDistance = 3.0f;
+        }
+        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
         settings.endGroup();
         settings.beginGroup("CoUnit");
         m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
@@ -223,15 +231,15 @@ void NormalAi::readIni(QString name)
         {
             m_ownUnitEnemyUnitRatioAverager = 10;
         }
-        m_maxDayScoreVariancer = settings.value("MaxTransporterDayScoreVariancer", 10).toFloat(&ok);
+        m_maxDayScoreVariancer = settings.value("MaxDayScoreVariancer", 10).toFloat(&ok);
         if(!ok)
         {
             m_maxDayScoreVariancer = 10;
         }
-        m_directIndirectUnitBonusFactor = settings.value("DirectIndirectUnitBonusFactor", 1.2f).toFloat(&ok);
+        m_directIndirectUnitBonusFactor = settings.value("DirectIndirectUnitBonusFactor", 1.75f).toFloat(&ok);
         if(!ok)
         {
-            m_directIndirectUnitBonusFactor = 1.2f;
+            m_directIndirectUnitBonusFactor = 1.75f;
         }
         m_maxBuildingTargetFindLoops = settings.value("MaxBuildingTargetFindLoops", 5).toFloat(&ok);
         if(!ok)
@@ -362,15 +370,15 @@ void NormalAi::readIni(QString name)
         {
             m_lowIndirectUnitBonus = 0.3f;
         }
-        m_lowIndirectMalus = settings.value("LowIndirectMalus", 0.5f).toFloat(&ok);
+        m_lowIndirectMalus = settings.value("LowIndirectMalus", 30.0f).toFloat(&ok);
         if(!ok)
         {
-            m_lowIndirectMalus = 0.5f;
+            m_lowIndirectMalus = 30.0f;
         }
-        m_highIndirectMalus = settings.value("HighIndirectMalus", 0.6f).toFloat(&ok);
+        m_highIndirectMalus = settings.value("HighIndirectMalus", 40.0f).toFloat(&ok);
         if(!ok)
         {
-            m_highIndirectMalus = 0.6f;
+            m_highIndirectMalus = 40.0f;
         }
         m_lowDirectUnitBonus = settings.value("LowDirectUnitBonus", 0.35f).toFloat(&ok);
         if(!ok)
@@ -408,10 +416,10 @@ void NormalAi::readIni(QString name)
         {
             m_nearEnemyBonus = 10;
         }
-        m_movementpointBonus = settings.value("MovementpointBonus", 0.33f).toFloat(&ok);
+        m_movementpointBonus = settings.value("MovementpointBonus", 3.0f).toFloat(&ok);
         if(!ok)
         {
-            m_movementpointBonus = 0.33f;
+            m_movementpointBonus = 3.0f;
         }
         m_damageToUnitCostRatioBonus = settings.value("DamageToUnitCostRatioBonus", 20).toFloat(&ok);
         if(!ok)
@@ -485,12 +493,16 @@ void NormalAi::readIni(QString name)
         {
             m_ProducingTransportMinLoadingTransportRatio = 7.0f;
         }
-        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
+        m_buildingBonusMultiplier = settings.value("BuildingBonusMultiplier", 4.0f).toFloat(&ok);
         if(!ok)
         {
-            m_minSameIslandDistance = 3.0f;
+            m_buildingBonusMultiplier = 4.0f;
         }
-        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
+        m_expensiveUnitBonusMultiplier = settings.value("ExpensiveUnitBonusMultiplier", 4.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_expensiveUnitBonusMultiplier = 4.0f;
+        }
         if(!ok)
         {
             m_slowUnitSpeed = 3;
@@ -2068,6 +2080,10 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
         {
             fundsPerFactory = test;
         }
+        if (fundsPerFactory >= m_spamingFunds)
+        {
+            data[UseHighTechUnits] = 1.0f;
+        }
     }
     // position 0 direct to indirect ratio
     if (indirectUnits > 0)
@@ -2096,7 +2112,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     data[UnitCount] = pUnits->size();
 
     spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
-    float bestScore = std::numeric_limits<float>::lowest();
+    float bestScore = -400000.0f;;
     QVector<qint32> buildingIdx;
     QVector<qint32> unitIDx;
     QVector<float> scores;
@@ -2175,7 +2191,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                                     if (!unitData.isTransporter)
                                     {
 
-                                        score = calcBuildScore(data);
+                                        score = calcBuildScore(data, unitData);
                                     }
                                     else
                                     {
@@ -2227,6 +2243,9 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
         qint32 item = GlobalUtils::randIntBase(0, buildingIdx.size() - 1);
         Building* pBuilding = pBuildings->at(buildingIdx[item]);
         pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
+        spMenuData pData = pAction->getMenuStepData();
+        QString unitId = pData->getActionIDs()[unitIDx[item]];
+        CONSOLE_PRINT("NormalAi::buildUnits() producing " + unitId + " with score " + QString::number(scores[item]), Console::eDEBUG);
         if (transporters[item])
         {
             for (auto & building : m_productionData)
@@ -2241,10 +2260,9 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                 }
             }
         }
-        spMenuData pData = pAction->getMenuStepData();
         if (pData->validData())
         {
-            CoreAI::addMenuItemData(pAction, pData->getActionIDs()[unitIDx[item]], pData->getCostList()[unitIDx[item]]);
+            CoreAI::addMenuItemData(pAction, unitId, pData->getCostList()[unitIDx[item]]);
         }
         // produce the unit
         if (pAction->isFinalStep())
@@ -2334,13 +2352,20 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                    QVector<QVector4D> & attackCount, QVector<float> & buildData)
 {
     CONSOLE_PRINT("NormalAi::createUnitBuildData()", Console::eDEBUG);
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     Unit dummy(unitBuildData.unitId, m_pPlayer, false);
     dummy.setVirtuellX(x);
     dummy.setVirtuellY(y);
+    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
+    qint32 baseMovementCost = pMovementTableManager->getBaseMovementPoints(dummy.getMovementType(), pDummyTerrain.get(), pDummyTerrain.get(), &dummy);
+    if (baseMovementCost < 0)
+    {
+        baseMovementCost = 1;
+    }
     createIslandMap(dummy.getMovementType(), dummy.getUnitID());
     UnitPathFindingSystem pfs(&dummy, m_pPlayer);
     pfs.explore();
-    unitBuildData.movePoints = dummy.getMovementpoints(QPoint(x, y));
+    unitBuildData.movePoints = dummy.getMovementpoints(QPoint(x, y)) / baseMovementCost;
     auto points = pfs.getAllNodePoints();
     if (points.length() >= unitBuildData.movePoints * 1.5f)
     {
@@ -2462,7 +2487,6 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
 
 std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor)
 {
-    CONSOLE_PRINT("NormalAi::calcExpectedFundsDamage() find enemies", Console::eDEBUG);
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 notAttackableCount = 0;
     float damageCount = 0;
@@ -2539,11 +2563,6 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                         if (mult > m_maxDistanceMultiplier)
                         {
                             mult = m_maxDistanceMultiplier;
-                        }
-                        if (myFirerange > 1)
-                        {
-                            // increased bonus for indirects since they should be attacked less often and attack more often
-                            mult += 1.0f;
                         }
                         resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
                                     counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue();
@@ -2653,6 +2672,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                             factor += m_transportBonus;
                         }
                     }
+                    if (dummy.getBaseMaxRange() > 1)
+                    {
+                        factor *= 0.60f;
+                    }
                     if (factor < 0)
                     {
                         factor = 0;
@@ -2664,7 +2687,6 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
         }
         counter++;
     }
-    CONSOLE_PRINT("NormalAi::calcExpectedFundsDamage() calc damage", Console::eDEBUG);
     if (attacksCount <= 0)
     {
         attacksCount = 1;
@@ -2703,7 +2725,6 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
                                   spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                   QVector<std::tuple<Unit*, Unit*>>& transportTargets)
 {
-    CONSOLE_PRINT("NormalAi::getTransporterData()", Console::eDEBUG);
     QVector<QVector3D> targets;
     spQmlVectorUnit relevantUnits = spQmlVectorUnit::create();
     QPoint position = dummy.getPosition();
@@ -2715,6 +2736,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     spGameMap pMap = GameMap::getInstance();
     qint32 loadingPlace = dummy.getLoadingPlace();
     qint32 smallTransporterCount = 0;
+    qint32 transporterCount = 0;
     qint32 maxCounter = m_ProducingTransportSearchrange;
     qint32 counter = 1;
     while (relevantUnits->size()  < loadingPlace * m_transporterToRequiredPlaceFactor &&
@@ -2736,6 +2758,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
                     smallTransporterCount++;
                 }
             }
+            ++transporterCount;
         }
         counter++;
     }
@@ -2778,12 +2801,13 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     unitBuildData.loadingPlace = dummy.getLoadingPlace();
     unitBuildData.transportCount = transporterUnits.size();
     unitBuildData.loadingCount = loadingUnits.size();
+    unitBuildData.transporterCount = transporterCount;
     auto actions = dummy.getActionList();
     unitBuildData.utilityTransporter = !dummy.useTerrainDefense() ||
                                        actions.contains(CoreAI::ACTION_SUPPORTALL_RATION);
 }
 
-float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit pUnits, QVector<float>& data)
+float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorUnit pUnits, QVector<float>& data)
 {
     float score = 0.0f;
     if (score == 0.0f && pUnits->size() / (unitBuildData.smallTransporterCount + 1) > m_unitToSmallTransporterRatio && unitBuildData.loadingPlace == 1)
@@ -2814,56 +2838,63 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVector
     }
     if (unitBuildData.loadingCount > 0)
     {
-        if (unitBuildData.transportCount <= 0 ||
-            static_cast<float>(pUnits->size()) / static_cast<float>(unitBuildData.transportCount) > m_ProducingTransportMinLoadingTransportRatio ||
-            unitBuildData.loadingCount == 1)
+        if (unitBuildData.transporterCount <= 0 ||
+            static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transporterCount) > m_ProducingTransportMinLoadingTransportRatio)
         {
-            score += calcCostScore(data);
+            score += calcCostScore(data, unitBuildData);
             score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
             score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
+            score -= unitBuildData.transportCount;
+            CONSOLE_PRINT("NormalAi::calcTransporterScore for " + unitBuildData.unitId +
+                          " score=" + QString::number(score) +
+                          " loadingCount=" + QString::number(unitBuildData.loadingCount) +
+                          " transportCount=" + QString::number(unitBuildData.transporterCount), Console::eDEBUG);
         }
     }
     else
     {
-        score = std::numeric_limits<float>::lowest();
+        score = -500000.0f;
     }
     return score;
 }
 
-float NormalAi::calcBuildScore(QVector<float>& data)
+float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildData)
 {
     float score = 0;
     // used index 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11
-    if (data[IndirectUnit] == 1.0f)
+    if (data[InfantryUnit] == 0.0f)
     {
-        // indirect unit
-        if (data[DirectUnitRatio] > m_directIndirectRatio)
+        if (data[IndirectUnit] == 1.0f)
         {
-            score += m_lowIndirectUnitBonus * (data[DirectUnitRatio] - m_directIndirectRatio);
+            // indirect unit
+            if (data[DirectUnitRatio] > m_directIndirectRatio)
+            {
+                score += m_lowIndirectUnitBonus * (data[DirectUnitRatio] - m_directIndirectRatio);
+            }
+            else if (data[DirectUnitRatio] < m_directIndirectRatio / 2)
+            {
+                score -= m_highIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
+            }
+            else if (data[DirectUnitRatio] < m_directIndirectRatio)
+            {
+                score -= m_lowIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
+            }
         }
-        else if (data[DirectUnitRatio] < m_directIndirectRatio / 2)
+        else if (data[DirectUnit] == 1.0f)
         {
-            score -= m_highIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
-        }
-        else if (data[DirectUnitRatio] < m_directIndirectRatio)
-        {
-            score -= m_lowIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
-        }
-    }
-    else if (data[DirectUnit] == 1.0f)
-    {
-        // direct unit
-        if (data[DirectUnitRatio] < m_directIndirectRatio)
-        {
-            score += m_lowDirectUnitBonus * (m_directIndirectRatio - data[DirectUnitRatio]);
-        }
-        else if (data[DirectUnitRatio] > m_directIndirectRatio * 2)
-        {
-            score -= m_highDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
-        }
-        else if (data[DirectUnitRatio] > m_directIndirectRatio)
-        {
-            score -= m_lowDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
+            // direct unit
+            if (data[DirectUnitRatio] < m_directIndirectRatio)
+            {
+                score += m_lowDirectUnitBonus * (m_directIndirectRatio - data[DirectUnitRatio]);
+            }
+            else if (data[DirectUnitRatio] > m_directIndirectRatio * 2)
+            {
+                score -= m_highDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
+            }
+            else if (data[DirectUnitRatio] > m_directIndirectRatio)
+            {
+                score -= m_lowDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
+            }
         }
     }
     if (data[UnitCount] > m_minUnitCountForDamageBonus)
@@ -2886,12 +2917,8 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         {
             score += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
         }
-        if (data[InfantryCount] >= m_minInfantryCount)
-        {
-            score -= data[InfantryCount];
-        }
     }
-    score += calcCostScore(data);
+    score += calcCostScore(data, unitBuildData);
     // apply movement bonus
     score += data[Movementpoints] * m_movementpointBonus;
     if (data[UnitCount] > m_minUnitCountForDamageBonus)
@@ -2910,24 +2937,36 @@ float NormalAi::calcBuildScore(QVector<float>& data)
     {
         score += m_nearEnemyBonus * data[Movementpoints] / GlobalUtils::roundUp(data[ReachDistance]);
     }
+    CONSOLE_PRINT("NormalAi::calcBuildScore final score=" + QString::number(score) + " for " + unitBuildData.unitId, Console::eDEBUG);
     return score;
 }
 
-float NormalAi::calcCostScore(QVector<float>& data)
+float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildData)
 {
     float score = 0;
-    // funds bonus;
-    if (data[FundsFactoryRatio] > m_superiorityRatio + data[UnitEnemyRatio])
+    // funds bonus
+    if ( data[UseHighTechUnits] > 0.0f)
     {
-        score -= (data[FundsFactoryRatio] - m_superiorityRatio + data[UnitEnemyRatio]) * m_expensiveUnitBonusMultiplier;
+        score -= data[FundsFactoryRatio] * m_expensiveUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] < m_cheapUnitRatio)
+    else if (data[FundsFactoryRatio] > m_superiorityRatio)
     {
-        score += (1.4f - (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
+        score -= (data[FundsFactoryRatio] - (1.0f - data[UnitEnemyRatio])) * m_expensiveUnitBonusMultiplier;
+    }
+    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio * 0.35f &&
+             data[UseHighTechUnits] < 1.0f)
+    {
+        score += (1.4f + (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
+    }
+    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio)
+    {
+        score += (1.0f - (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
     }
     else
     {
-        score += (m_superiorityRatio + data[UnitEnemyRatio] - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+        score += (m_superiorityRatio - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
     }
+    CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +
+                  " funds ratio=" + QString::number(data[FundsFactoryRatio]), Console::eDEBUG);
     return score;
 }

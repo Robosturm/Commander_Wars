@@ -40,6 +40,7 @@ class NormalAi : public CoreAI
         qint32 noTransporterBonus{0};
         qint32 transportCount{0};
         qint32 loadingCount{0};
+        qint32 transporterCount{0};
         bool utilityTransporter{false};
         bool isSmallTransporter{false};
     };
@@ -68,6 +69,7 @@ public:
         UnitCount = 13,
         ReachDistance = 14,
         UnitCost = 15,
+        UseHighTechUnits = 16,
         Max,
     };
 
@@ -308,7 +310,7 @@ protected:
      * @param data
      * @return
      */
-    float calcBuildScore(QVector<float>& data);
+    float calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildData);
     /**
      * @brief createUnitBuildData
      * @param x
@@ -328,7 +330,7 @@ protected:
      * @param data
      * @return
      */
-    float calcCostScore(QVector<float>& data);
+    float calcCostScore(QVector<float>& data, UnitBuildData & unitBuildData);
     /**
      * @brief getTransporterData
      * @param unitBuildData
@@ -446,7 +448,7 @@ private:
     qint32 m_indirectUnitAttackCountMalus{4};
     float m_minAttackCountBonus{5};
     float m_lowIndirectUnitBonus{0.3f};
-    float m_lowIndirectMalus{0.5f};
+    float m_lowIndirectMalus{30.0f};
     float m_highIndirectMalus{0.6f};
     float m_lowDirectUnitBonus{0.35f};
     float m_lowDirectMalus{0.3f};
@@ -458,15 +460,15 @@ private:
     float m_nearEnemyBonus{10};
     float m_lowOwnBuildingEnemyBuildingRatio{1.25f};
     float m_lowInfantryRatio{0.4f};
-    float m_buildingBonusMultiplier{0.75f};
+    float m_buildingBonusMultiplier{4.0f};
     float m_lowIncomeInfantryBonusMultiplier{50};
-    float m_movementpointBonus{0.33f};
+    float m_movementpointBonus{3.0f};
     float m_damageToUnitCostRatioBonus{20};
     float m_superiorityRatio{2.5f};
     float m_cheapUnitRatio{1.0f};
     float m_cheapUnitBonusMultiplier{45};
     float m_normalUnitBonusMultiplier{10};
-    float m_expensiveUnitBonusMultiplier{5};
+    float m_expensiveUnitBonusMultiplier{15};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

@@ -20,6 +20,8 @@ BaseGameInputIF::BaseGameInputIF(GameEnums::AiTypes aiType)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    setUnitBuildValue("RECON", 0.6f);
+    setUnitBuildValue("FLARE", 0.6f);
 }
 
 void BaseGameInputIF::setPlayer(Player* pPlayer)
