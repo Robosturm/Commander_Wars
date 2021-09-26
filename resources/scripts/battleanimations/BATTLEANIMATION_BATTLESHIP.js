@@ -11,12 +11,12 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.animationData = [["os",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
-                          ["bm",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
-                          ["ge",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
-                          ["yc",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
-                          ["bh",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115)]],
-                          ["ma",[Qt.point(0, 0),    0,    0,  Qt.point(54, 71)]],];
+    this.animationData = [["os",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
+                          ["bm",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
+                          ["ge",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
+                          ["yc",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
+                          ["bh",[Qt.point(-120, 0), 1200, 20, Qt.point(88, 115), Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],
+                          ["ma",[Qt.point(-57, 0),    570, 0, Qt.point(0,  71),  Qt.point(20, -18), Qt.point(18, -23), Qt.point(13, -27), Qt.point(0, 0), Qt.point(-8, -7)]],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -82,28 +82,7 @@ var Constructor = function()
         var offset = data[3];
         for (var i = 0; i < count; i++)
         {
-            var offset2 = Qt.point(0, 0);
-            switch (i)
-            {
-            // upper row
-            case 3:
-                offset2 = Qt.point(0, 0);
-                break;
-            case 4:
-                offset2 = Qt.point(-8, -7);
-                break;
-            // lower row
-            case 0:
-                offset2 = Qt.point(20, -18);
-                break;
-            case 1:
-                offset2 = Qt.point(18, -23);
-                break;
-            case 2:
-                offset2 = Qt.point(13, -27);
-                break;
-            }
-
+            var offset2 = data[4 + i];
             sprite.loadSingleMovingSprite("battleship_shot", false,
                                           Qt.point(offset.x + offset2.x,
                                                    offset.y + offset2.y),

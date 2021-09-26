@@ -30,7 +30,7 @@ NormalAi::NormalAi(QString configurationFile)
     loadIni( "normal/" + configurationFile);
     setUnitBuildValue("RECON",         0.6f);
     setUnitBuildValue("FLARE",         0.6f);
-    setUnitBuildValue("MOTORBIKE",     0.6f);
+    setUnitBuildValue("MOTORBIKE",     0.8f);
 }
 
 

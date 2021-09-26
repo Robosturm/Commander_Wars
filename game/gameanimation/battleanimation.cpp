@@ -322,7 +322,7 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("co_front");
     oxygine::ResAnim* pAnimMask = pGameManager->getResAnim("co_front+mask", oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnim);
+    pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, -30);
     if (getIsLeft(pAtkUnit, pDefUnit))
@@ -335,13 +335,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     }
     addChild(pSprite);
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnimMask);
+    pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, -30);
     addChild(pSprite);
 
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnim);
+    pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, getHeight() - 45);
     if (getIsLeft(pAtkUnit, pDefUnit))
@@ -355,13 +355,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     addChild(pSprite);
 
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnimMask);
+    pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(-35, getHeight() - 45);
     addChild(pSprite);
 
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnim);
+    pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, - 30);
     if (getIsLeft(pAtkUnit, pDefUnit))
@@ -374,13 +374,13 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     }
     addChild(pSprite);
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnimMask);
+    pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, - 30);
     addChild(pSprite);
 
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnim);
+    pSprite->setResAnim(pAnimMask);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
     if (getIsLeft(pAtkUnit, pDefUnit))
@@ -393,7 +393,7 @@ void BattleAnimation::createCoInfoFrontImages(Unit* pAtkUnit, Unit* pDefUnit)
     }
     addChild(pSprite);
     pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnimMask);
+    pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityCOFront);
     pSprite->setPosition(getWidth() - 45, getHeight() - 45);
     addChild(pSprite);
