@@ -172,7 +172,7 @@
         <image file="cruiser/cruiser+os+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+yc+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+ge+missile+mask.png" cols = "6" />
-        <image file="cruiser/cruiser+bm+missile+mask.png" cols = "6" />        
+        <image file="cruiser/cruiser+bm+missile+mask.png" cols = "6" />
         <!-- destroyer -->
         <image file="destroyer/destroyer.png" cols = "4" />
         <image file="destroyer/destroyer+mask.png" cols = "4" />
@@ -695,7 +695,7 @@
         <image file="light_tank/light_tank+ac+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bd+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bh+mg+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "2" />
+        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+stop+mask.png" cols = "4" />
@@ -715,7 +715,7 @@
         <image file="light_tank/light_tank+ac+stop+mask.png" />
         <image file="light_tank/light_tank+bd+stop+mask.png" />
         <image file="light_tank/light_tank+bh+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "2" />
+        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+ge+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+stop+mask.png" cols = "4" />
@@ -940,7 +940,7 @@
         <image file="recon/recon+ti+mask.png" />
         <image file="recon/recon+pf+mask.png" />
         <image file="recon/recon+ac+stop+mask.png" cols = "4" />
-        <image file="recon/recon+bh+stop+mask.png" cols = "2" />
+        <image file="recon/recon+bh+stop+mask.png" cols = "4" />
         <image file="recon/recon+bm+stop+mask.png" cols = "4" />
         <image file="recon/recon+ge+stop+mask.png" cols = "4" />
         <image file="recon/recon+os+stop+mask.png" cols = "4" />

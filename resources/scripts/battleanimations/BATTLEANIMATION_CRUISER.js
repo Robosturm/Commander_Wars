@@ -43,7 +43,7 @@ var Constructor = function()
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, mgStartFrame, mgEndFrame, rocketStartFrame, rocketEndFrame, startPos,
-                               rocketSprite = "+missile", mgSprite = "+cannon+fire+air")
+                               rocketSprite = "+missile", mgSprite = "+cannon+fire+air", mgLoops = 1)
     {
         var player = unit.getOwner();
         // get army name
@@ -58,7 +58,7 @@ var Constructor = function()
                                   false, 100, rocketEndFrame, rocketStartFrame);
         sprite.loadMovingSpriteV2("cruiser+" + armyName + mgSprite + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(startPos.x + 80 + 64, startPos.y + 32),
-                                  movement, moveTime, false, 3, 1, 0, 0,
+                                  movement, moveTime, false, mgLoops, 1, 0, 0,
                                   false, 100, mgEndFrame, mgStartFrame);
     };
 
@@ -72,7 +72,8 @@ var Constructor = function()
         var mgSprite = "+cannon+fire+air";
         var mgStartFrame = 0;
         var mgEndFrame = 0;
-        var rocketEndFrame = 0;
+        var rocketEndFrame = 0;        
+        var mgLoops = 1;
         if (weapon === 0)
         {
             rocketSprite = "+missile+fire";
@@ -83,19 +84,20 @@ var Constructor = function()
             if (position <= 0)
             {
                 mgSprite = "+cannon+fire+ground";
-                mgStartFrame = 1;
-                mgEndFrame = 2;
+                mgStartFrame = 0;
+                mgEndFrame = -1;
             }
             else
             {
                 mgEndFrame = 1;
+                mgLoops = 3;
             }
         }
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 
                                            mgStartFrame, mgEndFrame, 0, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
-                                           rocketSprite, mgSprite);
+                                           rocketSprite, mgSprite, mgLoops);
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
@@ -123,7 +125,7 @@ var Constructor = function()
             {
                 offset = data[5];
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                                  1, 1, 0, 0, false, true);
+                                  1, 1, 0, 100, false, true);
             }
 
             sprite.loadSound("anti_air_gun_fire.wav", 1, 0);
