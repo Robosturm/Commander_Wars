@@ -12,13 +12,24 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["ma", "ma"],
                      ["os", "os"],
+                     ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
+
+    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(41, 41), Qt.point(41, 33)]],
+                          ["bd", [Qt.point(-5, 5),  Qt.point(35, 39), Qt.point(35, 34)]],
+                          ["bh", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
+                          ["bm", [Qt.point(-5, 5),  Qt.point(37, 47), Qt.point(37, 40)]],
+                          ["ge", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
+                          ["ma", [Qt.point(-15, 5), Qt.point(39, 25), Qt.point(39, 20)]],
+                          ["os", [Qt.point(-5, 5),  Qt.point(35, 50), Qt.point(35, 44)]],
+                          ["pf", [Qt.point(-5, 5),  Qt.point(32, 45), Qt.point(32, 40)]],
+                          ["ti", [Qt.point(-5, 5),  Qt.point(36, 37), Qt.point(36, 30)]],
+                          ["yc", [Qt.point(-5, 5),  Qt.point(29, 47), Qt.point(30, 40)]],];
 
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
-        // get army name
         return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_RECON.armyData);
     };
 
@@ -26,10 +37,12 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                  Qt.point(65, 0), 600, false, 1, 1);
-        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
-                                Qt.point(65, 0), 600, false, 1, 1);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var movement = 65;
+        sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement, 5),
+                                  Qt.point(movement, 0), 600, false, 1, 1);
+        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement - 25, 7),
+                                Qt.point(movement, 0), 600, false, 1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -39,8 +52,10 @@ var Constructor = function()
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+        var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         sprite.loadSprite("vehicle_dust_stop",  false,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(-40, 7), 1);
+                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(data[0].x - 25, 7), 1);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -51,11 +66,8 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
     {
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        var offset = Qt.point(-5, 5);
-        if (armyName === "ma")
-        {
-            offset = Qt.point(-15, 5);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var offset = data[0];
         sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
     };
@@ -66,80 +78,18 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
         var offset = Qt.point(35, 44);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
             BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire+air", 2);
-            offset = Qt.point(35, 50);
-            if (armyName === "yc")
-            {
-                offset = Qt.point(29, 47);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(39, 37);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(37, 47);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(39, 37);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(38, 25);
-            }
-            else if (armyName === "ac")
-            {
-                offset = Qt.point(41, 41);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(36, 37);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(35, 39);
-            }
+            offset = data[1];
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
         }
         else
         {
             BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire", 2);
-            if (armyName === "yc")
-            {
-                offset = Qt.point(30, 40);
-            }
-            else if (armyName === "ge")
-            {
-                offset = Qt.point(39, 30);
-            }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(37, 40);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(39, 30);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(38, 20);
-            }
-            else if (armyName === "ac")
-            {
-                offset = Qt.point(41, 33);
-            }
-            else if (armyName === "ti")
-            {
-                offset = Qt.point(36, 30);
-            }
-            else if (armyName === "bd")
-            {
-                offset = Qt.point(35, 34);
-            }
+            offset = data[2];
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
         }
@@ -169,7 +119,12 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
-        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+        var yOffset = 22;
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
+        {
+            yOffset = 40
+        }
+        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                           1, 1.0, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
@@ -179,7 +134,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
     };
 
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
@@ -189,7 +144,7 @@ var Constructor = function()
 
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();
+        return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
     };
 };
 

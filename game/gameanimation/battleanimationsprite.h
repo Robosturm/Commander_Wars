@@ -98,6 +98,16 @@ public:
      * @param newHasFired
      */
     void setHasFired(bool newHasFired);
+    /**
+     * @brief getPlayNextFrame
+     * @return
+     */
+    bool getPlayNextFrame() const;
+    /**
+     * @brief setPlayNextFrame
+     * @param newPlayNextFrame
+     */
+    void setPlayNextFrame(bool newPlayNextFrame);
 
 signals:
     void sigDetachChild(oxygine::spActor pActor);
@@ -152,14 +162,14 @@ public slots:
      */
     void loadColorOverlayForLastLoadedFrame(QColor color, qint32 time, qint32 loops, qint32 showDelayMs);
     /**
-     * @brief addUnitshakeToLastLoadedSprites
+     * @brief addUnitshakeToLastLoadedFrame
      * @param startIntensity
      * @param decay
      * @param durationMs
      * @param delayMs
      * @param shakePauseMs
      */
-    void addUnitshakeToLastLoadedSprites(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    void addUnitshakeToLastLoadedFrame(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
     /**
      * @brief getInvertStartPosition
      * @return is true during impact animations and results in an inverted positioning of the impacts.
@@ -329,6 +339,22 @@ public slots:
     void loadDyingMovingSprite(QString livingSpriteId, QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
                                QPoint movement = QPoint(0, 0), float rotation = 0, qint32 moveTime = 0, short priority = 0, qint32 firedFrame = 0, qint32 maxUnitCount = 5, qint32 showDelay = 0);
     /**
+     * @brief loadOnlyDyingMovingSprite
+     * @param dyingSpriteId
+     * @param mode
+     * @param offset
+     * @param movement
+     * @param rotation
+     * @param moveTime
+     * @param priority
+     * @param firedFrame
+     * @param maxUnitCount
+     * @param showDelay
+     */
+    void loadOnlyDyingMovingSprite(QString dyingSpriteId, GameEnums::Recoloring mode, QPoint offset,
+                                   quint8 alpha = 180, QPoint movement = QPoint(0, 0), float rotation = 0, qint32 moveTime = 0,
+                                   short priority = 0, qint32 firedFrame = 0, qint32 maxUnitCount = 5, qint32 showDelay = 0);
+    /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
      * @param addPlayerColor apply the player color to this sprite or not
@@ -346,7 +372,8 @@ public slots:
     void loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
                                 QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                 qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                                bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0);
+                                bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1,
+                                qint32 startFrame = 0, float rotation = 0, quint8 alpha = 255);
 
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
@@ -367,7 +394,7 @@ public slots:
                                   QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                   qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
                                   bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0,
-                                  float rotation = 0);
+                                  float rotation = 0, quint8 alpha = 255);
     /**
      * @brief getImpactDurationMS
      * @return
@@ -499,9 +526,10 @@ private:
     bool m_invertStartPosition{false};
     bool m_playSound{true};
     bool m_hasFired{false};
+    bool m_playNextFrame{false};
 
     oxygine::spSprite m_pBackgroundSprite;
-    float m_backgroundSpeed{0};
+    float m_backgroundSpeed{0.0f};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

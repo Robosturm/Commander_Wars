@@ -17,6 +17,18 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
+    this.animationData = [["ac", ["bazooka_bm", Qt.point(20, 16), Qt.point(-50, 20), -90]],
+                          ["bd", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
+                          ["bh", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
+                          ["bm", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
+                          ["dm", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-50, 20), -90]],
+                          ["ge", ["bazooka_ge", Qt.point(15, 14), Qt.point(-30, 15), 0]],
+                          ["ma", ["bazooka_os", Qt.point(20, 10), Qt.point(-50, 20), -90]],
+                          ["os", ["bazooka_os", Qt.point(18, 17), Qt.point(-30, 15), 0]],
+                          ["pf", ["bazooka_os", Qt.point(17, 16), Qt.point(-50, 20), -90]],
+                          ["ti", ["bazooka_yc", Qt.point(18, 17), Qt.point(-50, 20), -90]],
+                          ["yc", ["bazooka_yc", Qt.point(19, 17), Qt.point(-30, 15), 0]],];
+
     this.getRiverString = function(unit)
     {
         var terrainId = "PLAINS";
@@ -124,67 +136,13 @@ var Constructor = function()
         if (weapon === 1)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 0, 2);
-            var weaponRes = "bazooka_os";
-            var offset = Qt.point(11, 19);
             var player = unit.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
-            if (armyName === "ac")
-            {
-                weaponRes = "bazooka_bm"
-                offset = Qt.point(20, 16);
-            }
-            else if (armyName === "bh")
-            {
-                weaponRes = "bazooka_bh"
-                offset = Qt.point(15, 12);
-            }
-            else if (armyName === "bm")
-            {
-                weaponRes = "bazooka_bm"
-                offset = Qt.point(17, 16);
-            }
-            else if (armyName === "dm")
-            {
-                weaponRes = "bazooka_ge";
-                offset = Qt.point(14, 9);
-            }
-            else if (armyName === "ge")
-            {
-                weaponRes = "bazooka_ge";
-                offset = Qt.point(15, 14);
-            }
-            else if (armyName === "ma")
-            {
-                weaponRes = "bazooka_os";
-                offset = Qt.point(20, 10);
-            }
-            else if (armyName === "os")
-            {
-                weaponRes = "bazooka_os";
-                offset = Qt.point(18, 17);
-            }
-            else if (armyName === "pf")
-            {
-                weaponRes = "bazooka_pf";
-                offset = Qt.point(17, 16);
-            }
-            else if (armyName === "ti")
-            {
-                weaponRes = "bazooka_yc"
-                offset = Qt.point(18, 17);
-            }
-            else if (armyName === "yc")
-            {
-                weaponRes = "bazooka_yc"
-                offset = Qt.point(19, 17);
-            }
-            else if (armyName === "bd")
-            {
-                weaponRes = "bazooka_bm"
-                offset = Qt.point(17, 16);
-            }
+            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var weaponRes = data[0];
+            var offset = data[1];
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
-                                    Qt.point(127, 0), 400, false,
+                                    Qt.point(160, 0), 500, false,
                                     1, 1, -1);
             offset.x = (offset.x - 30);
             offset.y = (offset.y + 3);
@@ -205,9 +163,9 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 0)
+        if (weapon === 1)
         {
-            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
         else
         {
@@ -246,51 +204,12 @@ var Constructor = function()
         if (weapon === 1)
         {
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             var player = unit.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
-            var weaponRes = "bazooka_os";
-            if (armyName === "ac")
-            {
-                weaponRes = "bazooka_bm"
-            }
-            else if (armyName === "bh")
-            {
-                weaponRes = "bazooka_bh"
-            }
-            else if (armyName === "bm")
-            {
-                weaponRes = "bazooka_bm"
-            }
-            else if (armyName === "dm")
-            {
-                weaponRes = "bazooka_ge";
-            }
-            else if (armyName === "ge")
-            {
-                weaponRes = "bazooka_ge";
-            }
-            else if (armyName === "ma")
-            {
-                weaponRes = "bazooka_os";
-            }
-            else if (armyName === "os")
-            {
-                weaponRes = "bazooka_os";
-            }
-            else if (armyName === "pf")
-            {
-                weaponRes = "bazooka_pf";
-            }
-            else if (armyName === "ti")
-            {
-                weaponRes = "bazooka_yc"
-            }
-            else if (armyName === "yc")
-            {
-                weaponRes = "bazooka_yc"
-            }
+            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var weaponRes = data[0];
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
@@ -302,7 +221,12 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+            var yOffset = 22;
+            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            {
+                yOffset = 40
+            }
+            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
@@ -315,11 +239,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
     };
 
@@ -376,19 +300,11 @@ var Constructor = function()
         if (weapon === 1)
         {
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
-            var offset = Qt.point(-10, 5);
             var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
-            var rotation = 0;
-            var movement = Qt.point(-30, 15);
-            if (armyName === "ac" ||
-                armyName === "dm" ||
-                armyName === "ma" ||
-                armyName === "pf" ||
-                armyName === "ti")
-            {
-                rotation = -90;
-                movement = Qt.point(-50, 20);
-            }
+            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var offset = Qt.point(-10, 5);
+            var rotation = data[3];
+            var movement = data[2];
             var ending = "";
             if (sprite.getHasFired())
             {

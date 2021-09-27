@@ -231,16 +231,13 @@ var Constructor = function()
     this.getAiUsePower = function(co, powerSurplus, turnMode)
     {
         // cop spam
-        if (turnMode === GameEnums.AiTurnMode_StartOfDay)
+        if (co.canUseSuperpower())
         {
-            if (co.canUseSuperpower())
-            {
-                return GameEnums.PowerMode_Superpower;
-            }
-            else if (co.canUsePower())
-            {
-                return GameEnums.PowerMode_Power;
-            }
+            return GameEnums.PowerMode_Superpower;
+        }
+        else if (co.canUsePower())
+        {
+            return GameEnums.PowerMode_Power;
         }
         return GameEnums.PowerMode_Off;
     };

@@ -70,7 +70,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         var i = 0;
         sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                          1, 1.0, 0, 300, true);
+                          1, 1.0, 0, 400, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
                                 Qt.point(-127, -60), 400, true,
@@ -84,7 +84,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

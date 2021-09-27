@@ -468,4 +468,10 @@ var TAGPOWER =
     {
         // called after the action was performed
     },
+
+    canCounterAttack : function(co, attacker, atkPosX, atkPosY,
+                                defender, defPosX, defPosY, luckMode)
+    {
+        return GameEnums.CounterAttackMode_Undefined;
+    },
 };

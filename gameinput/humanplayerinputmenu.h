@@ -13,6 +13,7 @@
 
 class HumanPlayerInputMenu;
 typedef oxygine::intrusive_ptr<HumanPlayerInputMenu> spHumanPlayerInputMenu;
+class Player;
 
 class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
@@ -34,10 +35,11 @@ public slots:
     void keyInput(oxygine::KeyEvent event);
     void moveMouseToItem(qint32 x, qint32 y);
 private:
-    qint32 createTopSprite(qint32 x, qint32 width);
-    qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
+    qint32 createTopSprite(qint32 x, qint32 width, Player* pPlayer);
+    qint32 createBottomSprite(qint32 x, qint32 y, qint32 width, Player* pPlayer);
     oxygine::spBox9Sprite createMenuItem(bool enabled, qint32& x, qint32& y, qint32 width, oxygine::TextStyle style,
-                                         QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item);
+                                         QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item,
+                                         Player* pPlayer);
     void updateItemPositionAndVisibility();
     void scroll(qint32 count);
     void addTouchMoveEvents();

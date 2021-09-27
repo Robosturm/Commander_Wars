@@ -662,7 +662,6 @@ void BattleAnimation::nextAnimatinStep()
             qint32 remainingDuration = loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             if (remainingDuration > 0)
             {
-
                 startBattleTimer(remainingDuration);
                 break;
             }
@@ -687,10 +686,15 @@ void BattleAnimation::nextAnimatinStep()
                 if (m_pDefenderAnimation->hasDyingAnimation())
                 {
                     loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
+                    m_pDefenderAnimation->setPlayNextFrame(true);
                 }
                 else
                 {
                     loadDyingFadeoutAnimation(m_pDefenderAnimation);
+                }
+                if (m_DefenderDamage < 0)
+                {
+                    m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(AnimationProgress::WaitAfterBattle) - 1);
                 }
                 break;
             }
@@ -702,6 +706,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::DefenderFire:
         {
             stopSound();
+            m_pDefenderAnimation->setPlayNextFrame(false);
             m_pDefenderAnimation->setHpRounded(GlobalUtils::roundUp(m_defEndHp));
             if (m_DefenderDamage >= 0)
             {
@@ -747,6 +752,7 @@ void BattleAnimation::nextAnimatinStep()
                 if (m_pAttackerAnimation->hasDyingAnimation())
                 {
                     loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_AtkWeapon);
+                    m_pAttackerAnimation->setPlayNextFrame(true);
                 }
                 else
                 {
@@ -761,9 +767,6 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterBattle:
         {
-            m_pAttackerAnimation->setHpRounded(GlobalUtils::roundUp(m_atkEndHp));
-            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
-            setSpriteFlipped(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
             startBattleTimer(500);
             break;
         }
@@ -774,7 +777,7 @@ void BattleAnimation::nextAnimatinStep()
     }
     m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(m_currentState) + 1);
     
-    if (m_currentState >= AnimationProgress::Finished)
+    if (m_currentState > AnimationProgress::Finished)
     {
         BattleAnimation::onFinished(false);
     }

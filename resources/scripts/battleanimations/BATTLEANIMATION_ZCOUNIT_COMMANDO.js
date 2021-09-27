@@ -70,9 +70,9 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        if (weapon === 0)
+        if (weapon === 1)
         {
-            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
+            return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         }
         else
         {
@@ -108,11 +108,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount());
         }
     };
 
@@ -126,7 +126,12 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+            var yOffset = 22;
+            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            {
+                yOffset = 40
+            }
+            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {

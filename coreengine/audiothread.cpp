@@ -131,7 +131,7 @@ void AudioThread::createSoundCache()
             QString file = dirIter.fileName();
             if (!m_soundCaches.contains(file))
             {
-                fillSoundCache(SoundData::MAX_SAME_SOUNDS / 2, folder, file);
+                fillSoundCache(SoundData::DEFAULT_CACHE_SIZE, folder, file);
             }
         }
     }

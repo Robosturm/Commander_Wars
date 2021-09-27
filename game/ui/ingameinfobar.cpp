@@ -90,7 +90,7 @@ IngameInfoBar::IngameInfoBar()
     {
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
-    m_pDetailedViewBox->setSize(136, 200);
+    m_pDetailedViewBox->setSize(131, 200);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());
@@ -126,7 +126,7 @@ void IngameInfoBar::updatePlayerInfo()
                 }
                 pSprite->setScale(1.8f);
                 pSprite->setResAnim(pAnim);
-                pSprite->setPosition(12, 10);
+                pSprite->setPosition(9, 12);
                 m_pGameInfoBox->addChild(pSprite);
                 pSprite = oxygine::spSprite::create();
                 pCO = pPlayer->getCO(1);
@@ -139,7 +139,7 @@ void IngameInfoBar::updatePlayerInfo()
                     pAnim = pCOSpriteManager->getResAnim("no_co+face");
                 }
                 pSprite->setResAnim(pAnim);
-                pSprite->setPosition(109, 10);
+                pSprite->setPosition(106, 12);
                 pSprite->setScale(1.8f);
                 m_pGameInfoBox->addChild(pSprite);
 
@@ -394,6 +394,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
 {
+    static constexpr qint32 xOffset = 2;
+    static constexpr qint32 yOffset = 4;
     bool HpHidden = false;
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
@@ -439,19 +441,19 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         speed = pTerrain->getTerrainAnimationMoveSpeed();
     }
     oxygine::spSlidingSprite pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(5, 3);
+    pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBase);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(5, 3);
+    pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBack);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
-    pTerrainSprite->setPosition(5, 3);
+    pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimFore);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
     pTerrainSprite->setSpeed(speed);
@@ -464,7 +466,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
             hp = Unit::MAX_UNIT_HP;
         }
         spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, hp, false);
-        pBattleAnimationSprite->setPosition(5, 3);
+        pBattleAnimationSprite->setPosition(xOffset, yOffset);
         pBattleAnimationSprite->setPriority(3);
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
     }

@@ -88,7 +88,6 @@ void GameEnums::registerEnums()
     value.setProperty("AnimationMode_OnlyBattleAlly", AnimationMode_OnlyBattleAlly);
     value.setProperty("AnimationMode_OnlyBattleEnemy", AnimationMode_OnlyBattleEnemy);
 
-
     value.setProperty("BuildingTarget_All", BuildingTarget_All);
     value.setProperty("BuildingTarget_Own", BuildingTarget_Own);
     value.setProperty("BuildingTarget_Enemy", BuildingTarget_Enemy);

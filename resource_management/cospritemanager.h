@@ -51,6 +51,12 @@ public slots:
      * @param id
      */
     void removeRessource(QString id);
+    /**
+     * @brief getArmyList
+     * @param coids
+     * @return
+     */
+    QStringList getArmyList(const QStringList & coids) const;
 protected:
     friend RessourceManagement<COSpriteManager>;
     COSpriteManager();

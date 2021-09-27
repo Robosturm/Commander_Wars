@@ -11,6 +11,15 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
+
+    this.animationData = [["os", [Qt.point(-33, 20)]],
+                          ["bm", [Qt.point(-33, 20)]],
+                          ["ge", [Qt.point(-33, 20)]],
+                          ["yc", [Qt.point(-33, 20)]],
+                          ["bh", [Qt.point(-33, 20)]],
+                          ["bg", [Qt.point(-33, 20)]],
+                          ["ma", [Qt.point(-13, 20)]],];
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_LANDER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
@@ -21,21 +30,11 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_LANDER.armyData);
-
-        if (armyName === "ma")
-        {
-            sprite.loadMovingSprite("lander+" + armyName,  false,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-            sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-        }
-        else
-        {
-            sprite.loadMovingSprite("lander+" + armyName,  false,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(-33, 20), movement, moveTime, false, -1);
-            sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(-33, 20), movement, moveTime, false, -1);
-        }
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LANDER.animationData);
+        sprite.loadMovingSprite("lander+" + armyName,  false,
+                                BATTLEANIMATION_LANDER.getMaxUnitCount(), data[0], movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_LANDER.getMaxUnitCount(), data[0], movement, moveTime, false, -1);
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

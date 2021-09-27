@@ -37,11 +37,14 @@ public slots:
 private slots:
     void remove();
 private:
+    void filterAndSortCoIds(const QStringList & coids);
+private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ShowCOInfoButton;
     oxygine::spButton m_ExitButton;
     spCOSelection m_COSelection;
     QString m_currentCOID;
+    QStringList m_coids;
     qint32 m_player;
 };
 

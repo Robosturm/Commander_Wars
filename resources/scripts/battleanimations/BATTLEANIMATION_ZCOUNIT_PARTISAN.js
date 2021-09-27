@@ -110,7 +110,12 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+            var yOffset = 22;
+            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            {
+                yOffset = 40
+            }
+            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
@@ -123,11 +128,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 900 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount());
         }
     };
 

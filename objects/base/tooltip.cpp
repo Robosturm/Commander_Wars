@@ -45,6 +45,13 @@ Tooltip::Tooltip()
         emit sigStartHoveredTimer();
         emit sigHideTooltip();
     });
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
+    {
+        m_mouseHovered = false;
+        emit sigStartHoveredTimer();
+        emit sigHideTooltip();
+    });
+
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigStopTooltip();
