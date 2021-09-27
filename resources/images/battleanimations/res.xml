@@ -157,11 +157,11 @@
         <image file="cruiser/cruiser+yc+cannon+fire+air+mask.png" cols = "2" />
         <image file="cruiser/cruiser+ge+cannon+fire+air+mask.png" cols = "2" />
         <image file="cruiser/cruiser+bm+cannon+fire+air+mask.png" cols = "2" />
-        <image file="cruiser/cruiser+bh+cannon+fire+ground+mask.png" cols = "3" />
-        <image file="cruiser/cruiser+os+cannon+fire+ground+mask.png" cols = "3" />
-        <image file="cruiser/cruiser+yc+cannon+fire+ground+mask.png" cols = "3" />
-        <image file="cruiser/cruiser+ge+cannon+fire+ground+mask.png" cols = "3" />
-        <image file="cruiser/cruiser+bm+cannon+fire+ground+mask.png" cols = "3" />
+        <image file="cruiser/cruiser+bh+cannon+fire+ground+mask.png" cols = "7" />
+        <image file="cruiser/cruiser+os+cannon+fire+ground+mask.png" cols = "7" />
+        <image file="cruiser/cruiser+yc+cannon+fire+ground+mask.png" cols = "7" />
+        <image file="cruiser/cruiser+ge+cannon+fire+ground+mask.png" cols = "7" />
+        <image file="cruiser/cruiser+bm+cannon+fire+ground+mask.png" cols = "7" />
         <image file="cruiser/cruiser+bh+missile+fire+mask.png" cols = "6" />
         <image file="cruiser/cruiser+os+missile+fire+mask.png" cols = "6" />
         <image file="cruiser/cruiser+yc+missile+fire+mask.png" cols = "6" />
