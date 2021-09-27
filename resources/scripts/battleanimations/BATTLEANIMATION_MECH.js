@@ -204,7 +204,7 @@ var Constructor = function()
         if (weapon === 1)
         {
             sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             var player = unit.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
@@ -234,11 +234,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         }
     };
 

@@ -98,6 +98,16 @@ public:
      * @param newHasFired
      */
     void setHasFired(bool newHasFired);
+    /**
+     * @brief getPlayNextFrame
+     * @return
+     */
+    bool getPlayNextFrame() const;
+    /**
+     * @brief setPlayNextFrame
+     * @param newPlayNextFrame
+     */
+    void setPlayNextFrame(bool newPlayNextFrame);
 
 signals:
     void sigDetachChild(oxygine::spActor pActor);
@@ -516,6 +526,7 @@ private:
     bool m_invertStartPosition{false};
     bool m_playSound{true};
     bool m_hasFired{false};
+    bool m_playNextFrame{false};
 
     oxygine::spSprite m_pBackgroundSprite;
     float m_backgroundSpeed{0.0f};

@@ -42,7 +42,7 @@ var BATTLEANIMATION =
         {
             fadeoutTime = 300
             spriteId = "unit_explosion_air";
-            offset = Qt.point(-20, 20);
+            offset = Qt.point(-30, 20);
         }
         if (sprite.getHasFired())
         {
@@ -129,11 +129,11 @@ var BATTLEANIMATION =
         var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
         if (weapon === 0)
         {
-            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 50 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
     },
 

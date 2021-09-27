@@ -19,6 +19,8 @@ var Constructor = function()
         var offset = data[0];
         sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
+        BATTLEANIMATION.loadSpotter(sprite, unit);
+
     };
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
@@ -77,7 +79,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_SNIPER.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_SNIPER.getMaxUnitCount());
     };
 };
 

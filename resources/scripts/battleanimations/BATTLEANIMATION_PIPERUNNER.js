@@ -45,7 +45,7 @@ var Constructor = function()
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
             sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                                    Qt.point(-30, 15), 300, false,
+                                    Qt.point(-30, 15), 400, false,
                                     1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("pipe_rocket_up", false, 5, Qt.point(127, 0),
                                     Qt.point(-128, 64), 400, true,
@@ -54,7 +54,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
             sprite.loadMovingSprite("pipe_rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     -1, 1, 0, 0, true);
@@ -71,11 +71,11 @@ var Constructor = function()
     {
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
         else
         {
-            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
     };
 };

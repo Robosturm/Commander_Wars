@@ -57,8 +57,8 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                                Qt.point(-30, 15), 300, false,
+        sprite.loadMovingSprite("rocket_hit_air", false, 5, Qt.point(0, 20),
+                                Qt.point(-30, 15), 400, false,
                                 1, 1.0, 0, 300, true);
         sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
@@ -73,7 +73,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+        return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)

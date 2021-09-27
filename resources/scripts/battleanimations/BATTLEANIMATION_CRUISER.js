@@ -184,7 +184,7 @@ var Constructor = function()
         if (weapon === 0)
         {
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
                                     Qt.point(-127, -60), 400, true,
@@ -210,11 +210,11 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
         else
         {
-            return 600 + BATTLEANIMATION.defaultFrameDelay * count;
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
     };
 

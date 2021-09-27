@@ -885,9 +885,13 @@ void BattleAnimationSprite::startNextFrame()
 
 void BattleAnimationSprite::startNextUnitFrames()
 {
-    CONSOLE_PRINT("Progressing next battle frame", Console::eDEBUG);
+    CONSOLE_PRINT("Progressing next battle frame current=" + QString::number(m_currentFrame.size()) +
+                  " next frames=" + QString::number(m_nextFrames.length()) +
+                  " frame iterator=" + QString::number(m_frameIterator) +
+                  " owner=" + QString::number(m_pUnit->getOwner()->getPlayerID()), Console::eDEBUG);
     if (m_currentFrame.size() == 0 && !m_startWithFraming)
     {
+        // add initial frames
         for (auto & unitFrame : m_nextFrames[0])
         {
             m_currentFrame.append(QVector<oxygine::spSprite>());
@@ -913,6 +917,7 @@ void BattleAnimationSprite::startNextUnitFrames()
         {
             m_currentFrame.append(QVector<oxygine::spSprite>());
         }
+
         if (m_nextFrames.length() > 0)
         {
             if (m_frameIterator < m_nextFrames[0].length())
@@ -935,6 +940,13 @@ void BattleAnimationSprite::startNextUnitFrames()
             CONSOLE_PRINT("Progressing next battle animation", Console::eDEBUG);
             m_frameIterator = 0;
             m_nextFrames.removeFirst();
+            if (m_nextFrames.size() > 0 && m_playNextFrame)
+            {
+                if (m_frameIterator < m_nextFrames[0].size())
+                {
+                    m_nextFrameTimer.start();
+                }
+            }
         }
         else if (m_nextFrames.size() > 0)
         {
@@ -948,6 +960,16 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+}
+
+bool BattleAnimationSprite::getPlayNextFrame() const
+{
+    return m_playNextFrame;
+}
+
+void BattleAnimationSprite::setPlayNextFrame(bool newPlayNextFrame)
+{
+    m_playNextFrame = newPlayNextFrame;
 }
 
 bool BattleAnimationSprite::getHasFired() const

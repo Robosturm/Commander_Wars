@@ -110,7 +110,7 @@ var Constructor = function()
 
                 sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(45, 20),
                                               Qt.point(0, 0), 0, false,
-                                              1, 1.0, 2, 300 + i * 150, true,
+                                              1, 1.0, 2, 400 + i * 150, true,
                                               100, -1, 0, 0, 180);
             }
             else
@@ -120,7 +120,7 @@ var Constructor = function()
                                               1, 0.5, -1, i * 150);
                 sprite.loadSingleMovingSprite("water_hit",  false, Qt.point(57, 50),
                                               Qt.point(0, 0), 0, false,
-                                              1, 0.5, -1, 300 + i * 150, true,
+                                              1, 0.5, -1, 400 + i * 150, true,
                                               100, -1, 0, 0, 180);
             }
             sprite.loadSound("torpedo_move.wav", 1);
@@ -130,7 +130,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 700 - 150 + 150 * sprite.getUnitCount(BATTLEANIMATION_SUBMARINE.getMaxUnitCount());
+        return 400 - 150 + 150 * sprite.getUnitCount(BATTLEANIMATION_SUBMARINE.getMaxUnitCount());
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)

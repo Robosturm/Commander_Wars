@@ -686,10 +686,18 @@ void BattleAnimation::nextAnimatinStep()
                 if (m_pDefenderAnimation->hasDyingAnimation())
                 {
                     loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
+                    if (m_DefenderDamage < 0)
+                    {
+                        m_pDefenderAnimation->setPlayNextFrame(true);
+                    }
                 }
                 else
                 {
                     loadDyingFadeoutAnimation(m_pDefenderAnimation);
+                }
+                if (m_DefenderDamage < 0)
+                {
+                    m_currentState = static_cast<AnimationProgress>(static_cast<qint32>(AnimationProgress::WaitAfterBattle) - 1);
                 }
                 break;
             }
@@ -746,6 +754,7 @@ void BattleAnimation::nextAnimatinStep()
                 if (m_pAttackerAnimation->hasDyingAnimation())
                 {
                     loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_AtkWeapon);
+                    m_pAttackerAnimation->setPlayNextFrame(true);
                 }
                 else
                 {

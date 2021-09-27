@@ -52,7 +52,7 @@ var Constructor = function()
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
             sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                                    Qt.point(-50, 0), 300, false,
+                                    Qt.point(-50, 0), 400, false,
                                     1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                     Qt.point(-127, 0), 400, true,
@@ -61,7 +61,7 @@ var Constructor = function()
         else
         {
             sprite.loadSprite("rocket_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
@@ -78,11 +78,11 @@ var Constructor = function()
     {
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
         }
         else
         {
-            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_WATERPLANE.getMaxUnitCount());
         }
     };
 };
