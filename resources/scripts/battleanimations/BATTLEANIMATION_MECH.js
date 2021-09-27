@@ -21,7 +21,7 @@ var Constructor = function()
                           ["bd", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
                           ["bh", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
                           ["bm", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
-                          ["dm", ["bazooka_ge", Qt.point(14, 9)], Qt.point(-50, 20), -90],
+                          ["dm", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-50, 20), -90]],
                           ["ge", ["bazooka_ge", Qt.point(15, 14), Qt.point(-30, 15), 0]],
                           ["ma", ["bazooka_os", Qt.point(20, 10), Qt.point(-50, 20), -90]],
                           ["os", ["bazooka_os", Qt.point(18, 17), Qt.point(-30, 15), 0]],
@@ -295,9 +295,9 @@ var Constructor = function()
         if (weapon === 1)
         {
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
-            var offset = Qt.point(-10, 5);
             var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
             var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var offset = Qt.point(-10, 5);
             var rotation = data[3];
             var movement = data[2];
             var ending = "";
