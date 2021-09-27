@@ -49,19 +49,14 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
-        // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fire");
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
-        var offset = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
-        // rocket        
-        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
                                 Qt.point(128, 64), 400, true,
                                 -1, 1, 0);
-        offset.x -= data[3].x;
-        offset.y -= data[3].y;
-        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), Qt.point(data[1].x - data[3].x, data[1].y - data[3].y),
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
         {

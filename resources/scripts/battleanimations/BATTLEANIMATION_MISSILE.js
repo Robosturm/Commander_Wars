@@ -50,13 +50,10 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
-        var offset = data[1];
-        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
                                 Qt.point(128, 64), 400, false,
                                 -1, 1, 0);
-        offset.x -= data[3].x;
-        offset.y -= data[3].y;
-        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), Qt.point(data[1].x - data[3].x, data[1].y - data[3].y),
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
         {

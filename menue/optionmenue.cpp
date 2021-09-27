@@ -1106,7 +1106,9 @@ void OptionMenue::selectMods(qint32 item)
 void OptionMenue::restart()
 {
     CONSOLE_PRINT("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
-    QCoreApplication::exit(1);
+    removeChildren();
+    detach();
+    emit Mainapp::getInstance()->sigQuit(1);
 }
 
 void OptionMenue::updateModCheckboxes()

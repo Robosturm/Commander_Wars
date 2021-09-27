@@ -215,7 +215,7 @@ int main(qint32 argc, char* argv[])
     CONSOLE_PRINT("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
     // give os time to save the settings
-    QThread::currentThread()->msleep(250);
+    QThread::currentThread()->msleep(350);
     if (MainServer::exists())
     {
         CONSOLE_PRINT("Shutting dwon game server", Console::eDEBUG);
