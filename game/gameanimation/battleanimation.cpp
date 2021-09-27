@@ -686,10 +686,7 @@ void BattleAnimation::nextAnimatinStep()
                 if (m_pDefenderAnimation->hasDyingAnimation())
                 {
                     loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
-                    if (m_DefenderDamage < 0)
-                    {
-                        m_pDefenderAnimation->setPlayNextFrame(true);
-                    }
+                    m_pDefenderAnimation->setPlayNextFrame(true);
                 }
                 else
                 {
@@ -709,6 +706,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::DefenderFire:
         {
             stopSound();
+            m_pDefenderAnimation->setPlayNextFrame(false);
             m_pDefenderAnimation->setHpRounded(GlobalUtils::roundUp(m_defEndHp));
             if (m_DefenderDamage >= 0)
             {
