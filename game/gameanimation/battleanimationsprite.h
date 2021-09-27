@@ -518,7 +518,7 @@ private:
     bool m_hasFired{false};
 
     oxygine::spSprite m_pBackgroundSprite;
-    float m_backgroundSpeed{0};
+    float m_backgroundSpeed{0.0f};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

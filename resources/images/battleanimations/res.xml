@@ -263,6 +263,7 @@
         <image file="flak/flak+ti+move+air+mask.png" />
         <image file="flak/flak+pf+move+air+mask.png" />
         <image file="flak/flak+ac+stop+air+mask.png" cols = "4" />
+        <image file="flak/flak+bd+stop+air+mask.png" />
         <image file="flak/flak+bh+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+os+stop+air+mask.png" cols = "4" />
@@ -272,6 +273,7 @@
         <image file="flak/flak+ti+stop+air+mask.png" />
         <image file="flak/flak+pf+stop+air+mask.png" />
         <image file="flak/flak+ac+stop+mask.png" cols = "4" />
+        <image file="flak/flak+bd+stop+mask.png" />
         <image file="flak/flak+bh+stop+mask.png" cols = "4" />
         <image file="flak/flak+bm+stop+mask.png" cols = "4" />
         <image file="flak/flak+os+stop+mask.png" cols = "4" />
@@ -693,7 +695,7 @@
         <image file="light_tank/light_tank+ac+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bd+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bh+mg+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ge+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+stop+mask.png" cols = "4" />
@@ -713,7 +715,7 @@
         <image file="light_tank/light_tank+ac+stop+mask.png" />
         <image file="light_tank/light_tank+bd+stop+mask.png" />
         <image file="light_tank/light_tank+bh+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ge+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+stop+mask.png" cols = "4" />
@@ -938,7 +940,7 @@
         <image file="recon/recon+ti+mask.png" />
         <image file="recon/recon+pf+mask.png" />
         <image file="recon/recon+ac+stop+mask.png" cols = "4" />
-        <image file="recon/recon+bh+stop+mask.png" cols = "4" />
+        <image file="recon/recon+bh+stop+mask.png" cols = "2" />
         <image file="recon/recon+bm+stop+mask.png" cols = "4" />
         <image file="recon/recon+ge+stop+mask.png" cols = "4" />
         <image file="recon/recon+os+stop+mask.png" cols = "4" />

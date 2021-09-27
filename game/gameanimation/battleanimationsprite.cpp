@@ -982,9 +982,12 @@ void BattleAnimationSprite::setBackgroundSpeed(float speed)
 
 void BattleAnimationSprite::restoreBackgroundSpeed()
 {
-    float backup = m_backgroundSpeed;
-    setBackgroundSpeed(m_backgroundSpeed);
-    m_backgroundSpeed = backup;
+    if (m_backgroundSpeed != 0.0f)
+    {
+        float backup = m_backgroundSpeed;
+        setBackgroundSpeed(m_backgroundSpeed);
+        m_backgroundSpeed = backup;
+    }
 }
 
 BattleAnimationSprite *BattleAnimationSprite::getEnemySprite() const
