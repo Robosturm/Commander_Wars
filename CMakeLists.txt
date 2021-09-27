@@ -51,14 +51,12 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     add_definitions(
-        -DQT_DECLARATIVE_DEBUG
-        -DQT_QML_DEBUG
-        -DGAMEDEBUG
-        -DDEBUG_LEVEL=0
-        #-DHEAVY_AI
-        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
-        #-DAUDIOSUPPORT
-        -DOXYGINE_DEBUG_SAFECAST
+        -DGAMEDEBUG                 # adds additional js checks and asserts
+        -DDEBUG_LEVEL=0             # default console log level
+        #-DHEAVY_AI                 # experimental heavy ai unfinished
+        #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+        #-DAUDIOSUPPORT             # currently not supported for mingw --> qt bug
+        -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
         )
 
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
@@ -69,8 +67,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 else("Release")
     message("Compiling as Release")
     add_definitions(
-        -DGAMERELEASE
-        -DDEBUG_LEVEL=1
+        -DDEBUG_LEVEL=1             # default console log level
         -DAUDIOSUPPORT
         )
     set(DEPLOY_RESOURCES_AS_FOLDER 0)

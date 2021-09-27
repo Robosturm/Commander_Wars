@@ -12,6 +12,12 @@
 
 namespace oxygine
 {
+    template<typename ...>
+    bool isType(ref_counter* pObj)
+    {
+
+    }
+
     std::atomic<qint32> ref_counter::m_instanceCounter = 0;
     std::atomic<qint32> ref_counter::m_jsInstanceCounter = 0;
 #ifdef MEMORYTRACING
@@ -34,18 +40,12 @@ namespace oxygine
                 if (GameWindow::getWindow() != nullptr &&
                     !GameWindow::getWindow()->getShuttingDown())
                 {
-                    oxygine::Texture* pObj1 = dynamic_cast<oxygine::Texture*>(this);
-                    MapMover* pObj2 = dynamic_cast<MapMover*>(this);
-                    RxTask* pObj3 = dynamic_cast<RxTask*>(this);
-                    TxTask* pObj4 = dynamic_cast<TxTask*>(this);                    
-                    NetworkInterface* pObj5 = dynamic_cast<NetworkInterface*>(this);
-                    SingleResAnim* pObj6 = dynamic_cast<SingleResAnim*>(this);
-                    if (pObj1 == nullptr &&
-                        pObj2 == nullptr &&
-                        pObj3 == nullptr &&
-                        pObj4 == nullptr &&
-                        pObj5 == nullptr &&
-                        pObj6 == nullptr)
+                    if (dynamic_cast<oxygine::Texture*>(this) == nullptr &&
+                        dynamic_cast<SingleResAnim*>(this) == nullptr &&
+                        dynamic_cast<MapMover*>(this) == nullptr &&
+                        dynamic_cast<RxTask*>(this) == nullptr &&
+                        dynamic_cast<TxTask*>(this) == nullptr &&
+                        dynamic_cast<NetworkInterface*>(this) == nullptr)
                     {
                         handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
                     }
