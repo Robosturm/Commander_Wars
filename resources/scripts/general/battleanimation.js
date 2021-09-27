@@ -44,7 +44,14 @@ var BATTLEANIMATION =
             spriteId = "unit_explosion_air";
             offset = Qt.point(-20, 20);
         }
-        sprite.loadAnimation("loadStandingFiredAnimation", unit, defender, weapon);
+        if (sprite.getHasFired())
+        {
+            sprite.loadAnimation("loadStandingFiredAnimation", unit, defender, weapon);
+        }
+        else
+        {
+            sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+        }
         sprite.loadDyingFadeOutAnimation(fadeoutTime);
         sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset)
     },

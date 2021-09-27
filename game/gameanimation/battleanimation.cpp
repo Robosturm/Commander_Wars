@@ -662,7 +662,6 @@ void BattleAnimation::nextAnimatinStep()
             qint32 remainingDuration = loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             if (remainingDuration > 0)
             {
-
                 startBattleTimer(remainingDuration);
                 break;
             }
@@ -761,9 +760,6 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterBattle:
         {
-            m_pAttackerAnimation->setHpRounded(GlobalUtils::roundUp(m_atkEndHp));
-            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
-            setSpriteFlipped(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
             startBattleTimer(500);
             break;
         }
