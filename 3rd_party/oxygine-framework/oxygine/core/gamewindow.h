@@ -99,7 +99,6 @@ namespace oxygine
         void sigMouseMoveEvent(qint32 x, qint32 y);
         void sigStopUpdateTimer();
         void sigStartUpdateTimer();
-        void sigWaitOnRelease();
     public slots:
         /**
          * @brief getBrightness
@@ -137,7 +136,6 @@ namespace oxygine
             }
         }
         void quitApp();
-        void waitOnRelease();
         virtual void onQuit() = 0;
     protected:
         virtual void registerResourceTypes();

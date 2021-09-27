@@ -52,14 +52,14 @@ QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
      "mods/awds_unit",
      "mods/awds_co",
      "mods/awds_weather"},
-                                            {"mods/awdc_co",
-                                            "mods/awdc_unit",
-                                            "mods/awdc_powergain",
-                                            "mods/awdc_weather",
-                                            "mods/awdc_terrain",
-                                            "mods/awdc_flare",
-                                            "map_creator",
-                                            "coop_mod"}),
+    {"mods/awdc_co",
+     "mods/awdc_unit",
+     "mods/awdc_powergain",
+     "mods/awdc_weather",
+     "mods/awdc_terrain",
+     "mods/awdc_flare",
+     "map_creator",
+     "coop_mod"}),
     OptionMenue::GamemodeMods(
     {"mods/aw_unloading",
      "mods/awdc_co",
@@ -68,12 +68,12 @@ QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
      "mods/awdc_weather",
      "mods/awdc_terrain",
      "mods/awdc_flare"},
-                                            {"mods/aw2_damage_formula",
-                                             "mods/awds_unit",
-                                             "mods/awds_co",
-                                             "mods/awds_weather",
-                                             "map_creator",
-                                             "coop_mod"})
+    {"mods/aw2_damage_formula",
+     "mods/awds_unit",
+     "mods/awds_co",
+     "mods/awds_weather",
+     "map_creator",
+     "coop_mod"})
 };
 
 OptionMenue::OptionMenue()
@@ -731,7 +731,8 @@ void OptionMenue::showSettings()
 }
 
 void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y, QObject* pSignalOwner)
-{
+{    
+#ifdef AUDIOSUPPORT
     AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -827,6 +828,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     });
     pOwner->addItem(pSlider);
     y += 40;
+#endif
 }
 
 void OptionMenue::showMods()

@@ -56,7 +56,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DGAMEDEBUG
         -DDEBUG_LEVEL=0
         #-DHEAVY_AI
-        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        -DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
+        #-DAUDIOSUPPORT
         -DOXYGINE_DEBUG_SAFECAST
         )
 
@@ -70,6 +71,7 @@ else("Release")
     add_definitions(
         -DGAMERELEASE
         -DDEBUG_LEVEL=1
+        -DAUDIOSUPPORT
         )
     set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()

@@ -38,7 +38,6 @@ namespace oxygine
         m_window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
-        connect(this, &GameWindow::sigWaitOnRelease, this, &GameWindow::waitOnRelease, Qt::BlockingQueuedConnection);
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
 
@@ -236,10 +235,6 @@ namespace oxygine
         {
             pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
         }
-    }
-
-    void GameWindow::waitOnRelease()
-    {
     }
 
     void GameWindow::mousePressEvent(QMouseEvent *event)

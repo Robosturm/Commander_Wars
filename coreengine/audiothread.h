@@ -250,8 +250,10 @@ private:
     // sound playback data
     QMap<QString, std::shared_ptr<SoundData>> m_soundCaches;
     // general audio info
+#ifdef AUDIOSUPPORT
     QAudioDevice m_audioDevice;
     QAudioOutput m_audioOutput;
+#endif
     bool m_loadBaseGameFolders{true};
 };
 

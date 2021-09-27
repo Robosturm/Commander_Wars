@@ -53,7 +53,7 @@ var Constructor = function()
         var offset = data[1];
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,
-                                -1, 1, -1);
+                                -1, 1, 0);
         offset.x -= data[3].x;
         offset.y -= data[3].y;
         sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,

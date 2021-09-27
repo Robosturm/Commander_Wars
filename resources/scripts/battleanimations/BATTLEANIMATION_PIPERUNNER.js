@@ -21,7 +21,7 @@ var Constructor = function()
         {
             sprite.loadSingleMovingSprite("pipe_rocket_up", false, Qt.point(60, 82),
                                           Qt.point(128, 64), 400, false,
-                                          1, 1, -1, i * 300);
+                                          -1, 1, -1, i * 300);
             sprite.loadSingleMovingSprite("pipe_shot", false, Qt.point(79, 78),
                                           Qt.point(0, 0), 0, false,
                                           1, 1, 5, i * 300);

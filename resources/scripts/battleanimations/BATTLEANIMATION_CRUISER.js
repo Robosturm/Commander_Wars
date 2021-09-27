@@ -148,28 +148,47 @@ var Constructor = function()
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
     {
+        var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         var rocketEndFrame = 0;
+        var mgSprite = "+cannon+fire+air";
+        var mgEndFrame = 0;
         if (weapon === 0)
         {
             rocketEndFrame = sprite.getUnitCount(5);
         }
+        else if (position <= 0)
+        {
+            mgSprite = "+cannon+fire+ground";
+            mgEndFrame = 1;
+        }
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
-        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0, rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20));
+        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, mgEndFrame, mgEndFrame,
+                                           rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
+                                           "+missile", mgSprite);
     };
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
+        var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         var rocketEndFrame = 0;
+        var mgSprite = "+cannon+fire+air";
+        var mgEndFrame = 0;
         if (weapon === 0)
         {
             rocketEndFrame = sprite.getFireUnitCount(5);
         }
-        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, 0, 0, rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20));
+        else if (position <= 0)
+        {
+            mgSprite = "+cannon+fire+ground";
+            mgEndFrame = 1;
+        }
+        BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000, mgEndFrame, mgEndFrame, rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
+                                           "+missile", mgSprite);
         sprite.loadSound("ship_dying_move.wav", -2);
     };
 
@@ -239,13 +258,11 @@ var Constructor = function()
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
-        // the time will be scaled with animation speed inside the engine
         return 2200;
     };
 
     this.hasDyingAnimation = function()
     {
-        // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
 };

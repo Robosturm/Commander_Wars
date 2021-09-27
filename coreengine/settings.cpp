@@ -1283,6 +1283,7 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_SoundVolume = 100;
     }
+#ifdef AUDIOSUPPORT
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
     QString description = settings.value("AudioDevice", "").toString();
     const auto audioDevices = QMediaDevices::audioOutputs();
@@ -1298,6 +1299,7 @@ void Settings::loadSettings()
     {
         m_audioOutput = QVariant::fromValue(defaultDeviceInfo);
     }
+#endif
     settings.endGroup();
 
     // game

@@ -37,13 +37,15 @@ namespace oxygine
                     oxygine::Texture* pObj1 = dynamic_cast<oxygine::Texture*>(this);
                     MapMover* pObj2 = dynamic_cast<MapMover*>(this);
                     RxTask* pObj3 = dynamic_cast<RxTask*>(this);
-                    TxTask* pObj4 = dynamic_cast<TxTask*>(this);
+                    TxTask* pObj4 = dynamic_cast<TxTask*>(this);                    
                     NetworkInterface* pObj5 = dynamic_cast<NetworkInterface*>(this);
+                    SingleResAnim* pObj6 = dynamic_cast<SingleResAnim*>(this);
                     if (pObj1 == nullptr &&
                         pObj2 == nullptr &&
                         pObj3 == nullptr &&
                         pObj4 == nullptr &&
-                        pObj5 == nullptr)
+                        pObj5 == nullptr &&
+                        pObj6 == nullptr)
                     {
                         handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
                     }
