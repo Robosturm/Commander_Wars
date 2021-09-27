@@ -519,7 +519,7 @@
         <!-- BH -->
         <image file="bh/co_sturm+nrm.png" />
         <image file="bh/co_sturm+info.png" />
-        <image file="bh/co_sturm+face.png" cols = "3" />        
+        <image file="bh/co_sturm+face.png" cols = "3" rows = "2" />        
         <image file="bh/co_sturm+alt+nrm.png" />
         <image file="bh/co_sturm+alt+info.png" />
         <image file="bh/co_sturm+alt+face.png" cols = "3" rows = "2" />
