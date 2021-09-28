@@ -106,7 +106,7 @@
     <sound file="rockets_explode.wav"           cachesize = "5"/>
     <sound file="sandstorm.wav"                 cachesize = "2"/>
     <sound file="selectunit.wav"                cachesize = "2"/>
-    <sound file="ship_dying_move.wav"            cachesize = "5"/>
+    <sound file="ship_dying_move.wav"           cachesize = "5"/>
     <sound file="snow.wav"                      cachesize = "2"/>
     <sound file="speaking.wav"                  cachesize = "30"/>
     <sound file="stealth.wav"                   cachesize = "10"/>
@@ -134,6 +134,6 @@
     <sound file="victory.wav"                   cachesize = "5"/>    
     <sound file="volcan_eruption.wav"           cachesize = "5"/>
     <sound file="volcan_hit.wav"                cachesize = "10"/>
-    <sound file="vulcan_weapon_fire.wav"        cachesize = "30"/>
+    <sound file="vulcan_weapon_fire.wav"        cachesize = "60"/>
 </sounds>
 

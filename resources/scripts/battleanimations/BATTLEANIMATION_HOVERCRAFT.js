@@ -9,13 +9,19 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["ge", "ge"],
                      ["yc", "yc"],
-                     ["bh", ""],
-                     ["bg", ""],
-                     ["ma", ""],
-                     ["ac", ""],
-                     ["pf", ""],
-                     ["ti", ""],
-                     ["dm", ""],];
+                     ["bh", "ma"],
+                     ["bg", "ma"],
+                     ["ma", "ma"],
+                     ["ac", "ma"],
+                     ["pf", "ma"],
+                     ["ti", "ma"],
+                     ["dm", "ma"],];
+
+    this.animationData = [["os", [Qt.point(-35, 5), Qt.point(2, 24),  Qt.point(4, 39)]],
+                          ["bm", [Qt.point(-35, 5), Qt.point(10, 20), Qt.point(13, 36)]],
+                          ["ge", [Qt.point(-35, 5), Qt.point(10, 19), Qt.point(14, 33)]],
+                          ["yc", [Qt.point(-35, 5), Qt.point(8, 19),  Qt.point(14, 37)]],
+                          ["ma", [Qt.point(-45, 5), Qt.point(0, 28),  Qt.point(13, 33)]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
@@ -26,24 +32,17 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERCRAFT.armyData);
-        if (army !== "")
+        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
+        var weaponId = "";
+        if (weapon === 1)
         {
-            var weaponId = "";
-            if (weapon === 1)
-            {
-                weaponId = "+mg";
-            }
-            sprite.loadSpriteV2("hovercraft+" + army + weaponId + ending + "+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-35, 5), loops);
-            sprite.loadSpriteV2("hovercraft+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-35, 5),
-                                -1, 1, 0, 0, false, false, 100);
+            weaponId = "+mg";
         }
-        else
-        {
-            sprite.loadSpriteV2("hovercraft+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
-        }
+        sprite.loadSpriteV2("hovercraft+" + army + weaponId + ending + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), data[0], loops);
+        sprite.loadSpriteV2("hovercraft+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), data[0],
+                            -1, 1, 0, 0, false, false, 100);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -52,26 +51,11 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount());
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERCRAFT.armyData);
+        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_HOVERCRAFT.loadSprite(sprite, unit, defender, weapon, "+fire");
-            offset = Qt.point(0, 28);
-            if (army === "os")
-            {
-                offset = Qt.point(2, 24);
-            }
-            else if (army === "ge")
-            {
-                offset = Qt.point(10, 19);
-            }
-            else if (army === "bm")
-            {
-                offset = Qt.point(10, 20);
-            }
-            else if (army === "yc")
-            {
-                offset = Qt.point(8, 19);
-            }
+            offset = data[1];
             sprite.loadSprite("light_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
             for (var i = 0; i < count; i++)
@@ -82,23 +66,7 @@ var Constructor = function()
         else
         {
             BATTLEANIMATION_HOVERCRAFT.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
-            offset = Qt.point(13, 33);
-            if (army === "os")
-            {
-                offset = Qt.point(4, 39);
-            }
-            else if (army === "ge")
-            {
-                offset = Qt.point(14, 33);
-            }
-            else if (army === "bm")
-            {
-                offset = Qt.point(13, 36);
-            }
-            else if (army === "yc")
-            {
-                offset = Qt.point(14, 37);
-            }
+            offset = data[2];
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 offset.y += 5;

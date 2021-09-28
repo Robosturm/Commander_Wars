@@ -43,7 +43,12 @@ var Constructor = function()
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
-        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+        var yOffset = 22;
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
+        {
+            yOffset = 40
+        }
+        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                           1, 1.0, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
@@ -53,7 +58,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
     };
 };
 

@@ -10,6 +10,7 @@
 
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/weaponmanager.h"
+#include "resource_management/movementtablemanager.h"
 
 // code for building units is here
 
@@ -134,6 +135,8 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
                                   const QVector<std::tuple<Unit*, Unit*>> & transportTargets, const spQmlVectorBuilding & pEnemyBuildings)
 {
     // create new
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
     spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
     qint32 x = building.m_pBuilding->Building::getX();
     qint32 y = building.m_pBuilding->Building::getY();
@@ -157,7 +160,13 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
                     Unit dummy(unitData.unitId, m_pPlayer, false);
                     dummy.setVirtuellX(x);
                     dummy.setVirtuellY(y);
-                    qint32 movementPoints = dummy.getMovementpoints(QPoint(x, y));
+                    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
+                    qint32 baseMovementCost = pMovementTableManager->getBaseMovementPoints(dummy.getMovementType(), pDummyTerrain.get(), pDummyTerrain.get(), &dummy);
+                    if (baseMovementCost < 0)
+                    {
+                        baseMovementCost = 1;
+                    }
+                    qint32 movementPoints = dummy.getMovementpoints(QPoint(x, y)) / baseMovementCost;
                     getProductionInputVector(building.m_pBuilding, &dummy, unitData, immuneUnits, movementPoints);
                     getTransportInputVector(building.m_pBuilding, &dummy, transportTargets, pEnemyBuildings, movementPoints, unitData);
                     updateUnitBuildData(unitData, data, funds);

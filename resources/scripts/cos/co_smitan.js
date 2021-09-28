@@ -294,7 +294,7 @@ var Constructor = function()
     {
         if (unit.getBaseMaxRange() > 1)
         {
-            return 2;
+            return 4;
         }
         return 0;
     };

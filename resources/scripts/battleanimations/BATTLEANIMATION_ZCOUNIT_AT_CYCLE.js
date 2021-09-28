@@ -19,7 +19,7 @@ var Constructor = function()
         BATTLEANIMATION_ZCOUNIT_AT_CYCLE.loadStandingAnimation(sprite, unit, defender, weapon);
         var offset = Qt.point(28, 20);
         sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), offset,
-                                Qt.point(127, 0), 400, false,
+                                Qt.point(160, 0), 500, false,
                                 1, 1, -1);
         offset.x = (offset.x - 20);
         sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
@@ -33,14 +33,14 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-            return 500 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
+            return 700 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
         sprite.loadSprite("cannon_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 300, true);
+                          1, 1.0, 0, 400, true);
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                 Qt.point(-127, 0), 400, true,
@@ -54,7 +54,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
     };
 };
 

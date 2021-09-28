@@ -48,9 +48,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     width += GameMap::getImageSize() + GameMap::getImageSize() * 3 / 4 ;
     m_itemWidth = width;
     m_itemHeigth = GameMap::getImageSize();
+    spGameMap pMap = GameMap::getInstance();
+    Player* pPlayer = pMap->getCurrentViewPlayer();
 
     GameManager* pGameManager = GameManager::getInstance();
-    qint32 heigth = createTopSprite(0, width);
+    qint32 heigth = createTopSprite(0, width, pPlayer);
     qint32 y = heigth;
     m_startY = y;
     m_Cursor = oxygine::spSprite::create();
@@ -84,11 +86,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         if (i > 0 && i % m_rowCount == 0 && xCount < m_maxXCount)
         {
             xCount++;
-            createBottomSprite(x, y, width);
+            createBottomSprite(x, y, width, pPlayer);
             if (xCount < m_maxXCount)
             {
                 x += width;
-                createTopSprite(x, width);
+                createTopSprite(x, width, pPlayer);
             }
             maxY = y;
             y = m_startY;
@@ -104,7 +106,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             costs = costList[i];
         }
         QString action = actionIDs[i];
-        oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i);
+        oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i, pPlayer);
         if (xCount < m_maxXCount)
         {
             y += static_cast<qint32>(pItemBox->getHeight());
@@ -123,11 +125,12 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             for (qint32 i = 0; i < emptyItems; i++)
             {
                 oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
-                pAnim = pGameManager->getResAnim("menu+middle");
+                pAnim = pGameManager->getResAnim("menu+middle+mask");
                 pItemBox->setResAnim(pAnim);
                 pItemBox->setSize(pAnim->getSize());
                 pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+                pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
                 pItemBox->setHeight(GameMap::getImageSize());
                 pItemBox->setY(y);
                 pItemBox->setX(x);
@@ -151,7 +154,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             }
         }
     }
-    qint32 bottomHeigth = createBottomSprite(x, maxY, width);
+    qint32 bottomHeigth = createBottomSprite(x, maxY, width, pPlayer);
     addChild(m_Cursor);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
 
@@ -279,13 +282,15 @@ void HumanPlayerInputMenu::updateItemPositionAndVisibility()
 }
 
 oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32& x, qint32& y, qint32 width, oxygine::TextStyle style,
-                                                           QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item)
+                                                           QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item,
+                                                           Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+middle");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+middle+mask");
     pItemBox->setResAnim(pAnim);
     pItemBox->setSize(pAnim->getSize());
+    pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
     pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pItemBox->addChild(icon);
@@ -361,13 +366,14 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     return pItemBox;
 }
 
-qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)
+qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width, Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pBottomBox = oxygine::spBox9Sprite::create();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+bottom");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+bottom+mask");
     pBottomBox->setResAnim(pAnim);
     pBottomBox->setSize(pAnim->getSize());
+    pBottomBox->setColorTable(pPlayer->getColorTableAnim(), true);
     pBottomBox->setWidth(width);
     pBottomBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
@@ -377,13 +383,14 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
     return static_cast<qint32>(pBottomBox->getHeight());
 }
 
-qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width)
+qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pTopBox = oxygine::spBox9Sprite::create();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top+mask");
     pTopBox->setResAnim(pAnim);
     pTopBox->setSize(pAnim->getSize());
+    pTopBox->setColorTable(pPlayer->getColorTableAnim(), true);
     pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setWidth(width);
@@ -487,9 +494,13 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 {
                     m_currentAction -= m_rowCount;
                 }
-                else
+                else if (endItemCount > 0)
                 {
                     m_currentAction = endItemCount - 1;
+                }
+                else
+                {
+                    m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
             else if (cur == Settings::getKey_right() ||

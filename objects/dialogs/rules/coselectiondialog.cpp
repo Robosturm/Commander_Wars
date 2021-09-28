@@ -68,6 +68,57 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     connect(this, &COSelectionDialog::sigShowCOInfo, this, &COSelectionDialog::showCOInfo, Qt::QueuedConnection);
     connect(this, &COSelectionDialog::canceled, this, &COSelectionDialog::remove, Qt::QueuedConnection);
     connect(this, &COSelectionDialog::sigFinished, this, &COSelectionDialog::remove, Qt::QueuedConnection);
+    filterAndSortCoIds(coids);
+}
+
+void COSelectionDialog::filterAndSortCoIds(const QStringList & coids)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    QStringList armies = pCOSpriteManager->getArmyList(coids);
+    for (const auto & army : armies)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + army);
+        QStringList preSetCOOrder = ret.toVariant().toStringList();
+        qint32 index = 0;
+        if (coids.size() > 0)
+        {
+            // remove all unallowed co's
+            while (index < preSetCOOrder.size())
+            {
+                if (coids.contains(preSetCOOrder[index]))
+                {
+                    index++;
+                }
+                else
+                {
+                    preSetCOOrder.removeAt(index);
+                }
+            }
+        }
+        for (qint32 i = 0; i < pCOSpriteManager->getCount(); ++i)
+        {
+            QString coid = pCOSpriteManager->getID(i);
+            if ((coids.isEmpty() || coids.contains(coid)) &&
+                !m_coids.contains(coid) && !preSetCOOrder.contains(coid))
+            {
+                QString function1 = "getCOArmy";
+                QJSValue ret = pInterpreter->doFunction(coid, function1);
+                if (ret.isString())
+                {
+                    QString COArmy = ret.toString();
+                    if (COArmy == army && !preSetCOOrder.contains(coid))
+                    {
+                        preSetCOOrder.append(coid);
+                        break;
+                    }
+                }
+            }
+        }
+        m_coids.append(preSetCOOrder);
+    }
+    m_coids.removeAll(CO::CO_RANDOM);
+    m_coids.removeDuplicates();
 }
 
 void COSelectionDialog::remove()
@@ -80,27 +131,26 @@ void COSelectionDialog::showCOInfo()
     QString coid = m_currentCOID;
     if (coid.isEmpty())
     {
-        coid = COSpriteManager::getInstance()->getID(0);
+        coid = m_coids[0];
     }
     Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
     spCO co = spCO::create(coid, pPlayer);
     addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
-    {
-        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        qint32 index = pCOSpriteManager->getIndex(pCurrentCO->getCoID());
+    {        
+        qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
         index += direction;
         QString coid;
         if (index < 0)
         {
-            coid = pCOSpriteManager->getID(pCOSpriteManager->getCount() - 1);
+            coid = m_coids[m_coids.size() - 1];
         }
-        else if (index >= pCOSpriteManager->getCount())
+        else if (index >= m_coids.size())
         {
-            coid = pCOSpriteManager->getID(0);
+            coid = m_coids[index];
         }
         else
         {
-            coid = pCOSpriteManager->getID(index);
+            coid = m_coids[index];
         }
         pCurrentCO = spCO::create(coid, pPlayer);
     }, false));

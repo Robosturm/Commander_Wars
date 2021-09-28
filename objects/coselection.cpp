@@ -26,43 +26,8 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
     qint32 y = 0;
     oxygine::ResAnim* pAnim = nullptr;
     oxygine::spSprite pSprite;
-    QString function1 = "getArmies";
-    QJSValueList args1;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
-    m_Armies = ret.toVariant().toStringList();
-    QStringList allowedArmies;
-    // remove unused armies
-    // first search avaible armies if the selection is set like that
-    for (qint32 i = 0; i < m_Coids.size(); i++)
-    {
-        QString function1 = "getCOArmy";
-        QJSValue ret = pInterpreter->doFunction(m_Coids[i], function1);
-        if (ret.isString())
-        {
-            QString army = ret.toString();
-            if (!allowedArmies.contains(army))
-            {
-                allowedArmies.append(army);
-            }
-        }
-    }
-    // we have allowed armies? Else allow everything
-    if (allowedArmies.size() > 0)
-    {
-        // remove all other armies
-        qint32 iter = 0;
-        while (iter < m_Armies.size())
-        {
-            if (allowedArmies.contains(m_Armies[iter]))
-            {
-                iter++;
-            }
-            else
-            {
-                m_Armies.removeAt(iter);
-            }
-        }
-    }
+    m_Armies = pCOSpriteManager->getArmyList(m_Coids);
+
     m_ArmyBannerPanel = spPanel::create(true, QSize(maxSize.width(),  75 * scale + 22), QSize(m_Armies.size() * 20 * scale + 40, 53 * scale + 22));
     m_ArmyBannerPanel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects) + 1);
     addChild(m_ArmyBannerPanel);

@@ -35,11 +35,12 @@ find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
-
 # Retrieve the absolute path to qmake and then use that path to find
 # the binaries
 get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
+get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
+get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 endif()
@@ -112,8 +113,10 @@ message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
 message("Qt-Dir: ${Qt6_DIR}")
 message("Addr2Line Path: ${ADDR_2_LINE}")
-message("C-Compiler Path: ${CMAKE_C_COMPILER}")
-message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
+message("C-Compiler Path: ${C_COMPILER_PATH}")
+message("C-Compiler: ${CMAKE_C_COMPILER}")
+message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
+message("C++-Compiler: ${CMAKE_CXX_COMPILER}")
 message("C-Compiler ${CMAKEXX_COMPILER_ID}")
 message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
 message("OS: ${CMAKE_SYSTEM_NAME}")
@@ -750,11 +753,13 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 endif()
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(InstallExePath "${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/${PROJECT_NAME}.exe")
+    set(InstallPath "${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/")
+    message("Running windeployqt with path ${InstallPath}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND "${CMAKE_COMMAND}" -E
+        COMMAND "${CMAKE_COMMAND}" -E
         env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-            "${InstallExePath}"
-    COMMENT "Running windeployqt with path ${InstallExePath}"
+                "$<TARGET_FILE:${PROJECT_NAME}>"
+                --libdir \"${InstallPath}\"
+                --plugindir \"${InstallPath}\"
     )
 endif()

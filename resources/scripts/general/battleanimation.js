@@ -20,7 +20,7 @@ var BATTLEANIMATION =
     hasDyingAnimation : function()
     {
         // return true if the unit has an implementation for loadDyingAnimation
-        return false;
+        return true;
     },
 
     loadMoveInAnimation : function(sprite, unit, defender, weapon)
@@ -35,17 +35,37 @@ var BATTLEANIMATION =
 
     loadDyingAnimation : function(sprite, unit, defender, weapon)
     {
-        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+        var spriteId = "unit_explosion";
+        var fadeoutTime = 600;
+        var offset = Qt.point(-20, 20);
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
+        {
+            fadeoutTime = 300
+            spriteId = "unit_explosion_air";
+            offset = Qt.point(-30, 20);
+        }
+        if (sprite.getHasFired())
+        {
+            sprite.loadAnimation("loadStandingFiredAnimation", unit, defender, weapon);
+        }
+        else
+        {
+            sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+        }
+        sprite.loadDyingFadeOutAnimation(fadeoutTime);
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset)
     },
 
-    loadDyingAnimationSound : function(sprite, unit, defender, weapon)
+    getDyingDurationMS : function(sprite, unit, defender, weapon)
     {
-        var maxUnitCount = sprite.getMaxUnitCount()
-        var startCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingStartHp()));
-        var endCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingEndHp()));
-        for (var i = 0; i < startCount - endCount; i++)
+        // the time will be scaled with animation speed inside the engine
+        if (unit.getUnitType()  === GameEnums.UnitType_Air)
         {
-            //sprite.loadSound("tank_explode.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
+            return 700;
+        }
+        else
+        {
+            return 1300;
         }
     },
 
@@ -93,7 +113,12 @@ var BATTLEANIMATION =
         }
         else
         {
-            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+            var yOffset = 22;
+            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            {
+                yOffset = 40
+            }
+            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
@@ -109,11 +134,11 @@ var BATTLEANIMATION =
         var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
         if (weapon === 0)
         {
-            return 300 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 50 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
         else
         {
-            return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * count;
         }
     },
 
@@ -140,12 +165,6 @@ var BATTLEANIMATION =
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
-    },
-
-    getDyingDurationMS : function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 0;
     },
 
     spotterArmyData = [["os", "os"],

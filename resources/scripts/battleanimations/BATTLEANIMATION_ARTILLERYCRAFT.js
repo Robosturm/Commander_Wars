@@ -9,38 +9,30 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["ge", "ge"],
                      ["yc", "yc"],
-                     ["bh", ""],
-                     ["bg", ""],
-                     ["ma", ""],
-                     ["ac", ""],
-                     ["pf", ""],
-                     ["ti", ""],
-                     ["dm", ""],];
+                     ["bh", "ma"],
+                     ["bg", "ma"],
+                     ["ma", "ma"],
+                     ["ac", "ma"],
+                     ["pf", "ma"],
+                     ["ti", "ma"],
+                     ["dm", "ma"],];
 
     this.animationData = [["os", [Qt.point(-45, 5), Qt.point(28, 45)]],
                           ["bm", [Qt.point(-45, 5), Qt.point(9, 38)]],
                           ["ge", [Qt.point(-45, 5), Qt.point(14, 36)]],
                           ["yc", [Qt.point(-45, 5), Qt.point(24, 40)]],
-                          ["",   [Qt.point(-55, 5), Qt.point(-12, 42)]],];
+                          ["ma", [Qt.point(-55, 5), Qt.point(-12, 42)]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERYCRAFT.armyData);
         var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
-        if (army !== "")
-        {
-            sprite.loadSpriteV2("artillerycraft+" + army + "+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0]);
-            sprite.loadSpriteV2("artillerycraft+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0],
-                                -1, 1, 0, 0, false, false, 100);
-        }
-        else
-        {
-            sprite.loadSpriteV2("artillerycraft+mask", GameEnums.Recoloring_Matrix,
-                                BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0]);
-        }
+        sprite.loadSpriteV2("artillerycraft+" + army + "+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0]);
+        sprite.loadSpriteV2("artillerycraft+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
+                            BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0],
+                            -1, 1, 0, 0, false, false, 100);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -80,7 +72,7 @@ var Constructor = function()
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 800 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount());
+        return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount());
     };
 };
 

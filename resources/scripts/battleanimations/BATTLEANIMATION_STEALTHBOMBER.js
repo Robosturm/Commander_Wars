@@ -59,12 +59,12 @@ var Constructor = function()
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            sprite.loadMovingSprite("rocket", false, 5, Qt.point(127, 60),
+            sprite.loadMovingSprite("rocket", false, 5, Qt.point(127, 30),
                                     Qt.point(-128, 0), 400, true,
                                     1, 1, 0, 0, true);
-            sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                                    Qt.point(-50, 0), 300, false,
-                                    1, 1.0, 0, 300, true);
+            sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 30),
+                                    Qt.point(-50, 0), 400, false,
+                                    1, 1.0, 0, 400, true);
         }
         else
         {
@@ -72,7 +72,7 @@ var Constructor = function()
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
-                              1, 1.0, 0, 300, true);
+                              1, 1.0, 0, 400, true);
         }
         for (var i = 0; i < count; i++)
         {
@@ -85,11 +85,11 @@ var Constructor = function()
     {
         if (defender.getUnitType() === GameEnums.UnitType_Air)
         {
-            return 600 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
         else
         {
-            return 1100 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
+            return 400 - BATTLEANIMATION.defaultFrameDelay + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(5);
         }
     };
 
