@@ -78,6 +78,7 @@ var Constructor = function()
                                               1, 1.0, 5, 200 * i, false);
                 sprite.loadSound("megacannon_weapon_fire.wav", 1, 200 * i);
             }
+            sprite.addSpriteShakeY(4, 0.7, 0.4, 200, 0, count);
         }
         else
         {

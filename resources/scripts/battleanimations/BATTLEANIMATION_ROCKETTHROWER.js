@@ -58,6 +58,7 @@ var Constructor = function()
                                 -1, 1, 0);
         sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), Qt.point(data[1].x - data[3].x, data[1].y - data[3].y),
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
+        sprite.addSpriteShakeY(4, 0.5, 0.0, 75, 0, count);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_launch.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

@@ -31,7 +31,7 @@ var Constructor = function()
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
-        return 600 + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_PIPERUNNER.getMaxUnitCount());
+        return 500 + 300 * sprite.getUnitCount(5);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)

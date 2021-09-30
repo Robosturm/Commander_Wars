@@ -2,14 +2,14 @@
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 TweenToggleVisibility::TweenToggleVisibility(float start, float end)
-    : startFraction(start),
-      endFracrtion(end)
+    : m_startFraction(start),
+      m_endFracrtion(end)
 {
 }
 
 void TweenToggleVisibility::update(oxygine::Actor& actor, float p, const oxygine::UpdateState&)
 {
-    if ((p >= startFraction) && (p <= endFracrtion))
+    if ((p >= m_startFraction) && (p <= m_endFracrtion))
     {
         actor.setVisible(true);
     }

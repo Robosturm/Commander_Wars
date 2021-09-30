@@ -112,6 +112,7 @@ var Constructor = function()
                                               -1, 1.0, 5, 100 * i, false);
                 sprite.loadSound("rocket_launch.wav", 1, 100 * i);
             }
+            sprite.addSpriteShakeY(4, 0.7, 0.4, 100, 0, count);
         }
         else
         {
@@ -138,11 +139,24 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return sprite.getUnitCount(5) * 100 + 400;
+            return sprite.getUnitCount(5) * 100 + 700;
         }
         else
         {
             return 700;
+        }
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            var count = sprite.getUnitCount(5);
+            return 100 * count;
+        }
+        else
+        {
+            return -1;
         }
     };
 

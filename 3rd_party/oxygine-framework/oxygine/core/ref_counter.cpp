@@ -12,12 +12,6 @@
 
 namespace oxygine
 {
-    template<typename ...>
-    bool isType(ref_counter* pObj)
-    {
-
-    }
-
     std::atomic<qint32> ref_counter::m_instanceCounter = 0;
     std::atomic<qint32> ref_counter::m_jsInstanceCounter = 0;
 #ifdef MEMORYTRACING

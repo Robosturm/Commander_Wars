@@ -19,8 +19,8 @@ public:
     void init(oxygine::Actor&){}
     void done(oxygine::Actor&){}
 protected:
-    float startFraction{0};
-    float endFracrtion{0};
+    float m_startFraction{0};
+    float m_endFracrtion{0};
 };
 
 #endif // TWEENTOGGLEVISIBILITY_H

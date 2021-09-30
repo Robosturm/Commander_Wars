@@ -55,7 +55,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DDEBUG_LEVEL=0             # default console log level
         #-DHEAVY_AI                 # experimental heavy ai unfinished
         #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-        #-DAUDIOSUPPORT             # currently not supported for mingw --> qt bug
+        -DAUDIOSUPPORT             # currently not supported for mingw --> qt bug
         -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
         )
 
@@ -177,6 +177,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp
+    3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp

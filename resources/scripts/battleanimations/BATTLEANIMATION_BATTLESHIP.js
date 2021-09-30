@@ -95,6 +95,7 @@ var Constructor = function()
                                           1, 1.0, 5, 200 * i);
             sprite.loadSound("cannon_weapon_fire.wav", 1, i * 200);
         }
+        sprite.addSpriteShakeY(4, 0.7, 0.4, 200, 0, count);
     };
 
     this.getFiredDurationMS = function(sprite, unit, defender, weapon)

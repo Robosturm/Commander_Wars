@@ -77,7 +77,7 @@ void AudioThread::initAudio()
     createPlayer(1);
     // everything needs to be created in the context of this thread
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
-    m_positionUpdateTimer.setInterval(5);
+    m_positionUpdateTimer.setInterval(1);
     m_positionUpdateTimer.setSingleShot(false);
     connect(&m_positionUpdateTimer, &QTimer::timeout, this, [=]()
     {

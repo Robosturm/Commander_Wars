@@ -7,10 +7,11 @@ var Constructor = function()
     this.armyData = [["ac", "ac"],
                      ["bd", "bd"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
@@ -20,9 +21,11 @@ var Constructor = function()
     this.animationData = [["ac", ["bazooka_bm", Qt.point(20, 16), Qt.point(-50, 20), -90]],
                           ["bd", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
                           ["bh", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
+                          ["bg", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
                           ["bm", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
                           ["dm", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-50, 20), -90]],
                           ["ge", ["bazooka_ge", Qt.point(15, 14), Qt.point(-30, 15), 0]],
+                          ["gs", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-30, 15), 0]],
                           ["ma", ["bazooka_os", Qt.point(20, 10), Qt.point(-50, 20), -90]],
                           ["os", ["bazooka_os", Qt.point(18, 17), Qt.point(-30, 15), 0]],
                           ["pf", ["bazooka_os", Qt.point(17, 16), Qt.point(-50, 20), -90]],
@@ -66,12 +69,9 @@ var Constructor = function()
             sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                       Qt.point(65, 0), 600, false,
                                       1, 1);
-            if (riverName !== "")
-            {
-                sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                        Qt.point(65, 0), 600, false,
-                                        1, 1);
-            }
+            sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                    Qt.point(65, 0), 600, false,
+                                    1, 1);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -111,11 +111,9 @@ var Constructor = function()
         sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
                             false, false, 100, endFrame, startFrame);
-        if (riverName !== "")
-        {
-            sprite.loadSprite("mech+" + armyName + riverName + ending,  false,
-                              BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
-        }
+        sprite.loadSpriteV2("mech+" + armyName + riverName + ending, GameEnums.Recoloring_None,
+                            BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
+                            false, false, 100, endFrame, startFrame);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -313,7 +311,11 @@ var Constructor = function()
             sprite.loadDyingMovingSprite("mech+" + armyName + riverName + ending + "+mask",
                                          "mech+" + armyName + "+dying+mask",
                                          GameEnums.Recoloring_Matrix,
-                                         offset, movement, rotation, 300, 0, 2);
+                                         offset, movement, rotation, 400, 0, 2);
+            sprite.loadDyingMovingSprite("mech+" + armyName + riverName + ending ,
+                                         "mech+" + armyName + "+dying",
+                                         GameEnums.Recoloring_None,
+                                         offset, movement, rotation, 400, 0, 2);
         }
         else
         {
