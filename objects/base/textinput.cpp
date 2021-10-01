@@ -57,26 +57,6 @@ void TextInput::doHandleEvent(QEvent *event)
         switch (event->type())
         {
             case QEvent::KeyPress:
-            {
-                QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event);
-                Qt::Key cur = static_cast<Qt::Key>(inputEvent->key());
-                if ((inputEvent->modifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-                {
-                    switch(cur)
-                    {
-                        case Qt::Key_C:
-                        case Qt::Key_X:
-                        {
-                            QGuiApplication::clipboard()->setText(m_lineEdit->selectedText());
-                            break;
-                        }
-                        default:
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
             case QEvent::InputMethodQuery:
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
