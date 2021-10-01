@@ -72,6 +72,7 @@
         <image file="apc/apc+bm+mask.png" />
         <image file="apc/apc+dm+mask.png" />
         <image file="apc/apc+ge+mask.png" />
+        <image file="apc/apc+gs+mask.png" />
         <image file="apc/apc+os+mask.png" />
         <image file="apc/apc+yc+mask.png" />
         <image file="apc/apc+ma+mask.png" />
@@ -182,19 +183,27 @@
         <!-- duster -->
         <image file="duster/duster+mask.png" cols = "2" />        
         <!-- fighter -->
+        <image file="fighter/fighter+ac+mask.png" />
+        <image file="fighter/fighter+bd+mask.png" />
         <image file="fighter/fighter+bg+mask.png" />
         <image file="fighter/fighter+bh+mask.png" />
         <image file="fighter/fighter+bm+mask.png" />
+        <image file="fighter/fighter+dm+mask.png" />
         <image file="fighter/fighter+ge+mask.png" />
+        <image file="fighter/fighter+gs+mask.png" />
         <image file="fighter/fighter+os+mask.png" />
         <image file="fighter/fighter+yc+mask.png" cols = "2" />
         <image file="fighter/fighter+pf+mask.png" cols = "2" />
         <image file="fighter/fighter+ma+mask.png" />
         <image file="fighter/fighter+ti+mask.png" />
+        <image file="fighter/fighter+ac+fire+mask.png" />
+        <image file="fighter/fighter+bd+fire+mask.png" />
         <image file="fighter/fighter+bg+fire+mask.png" />
         <image file="fighter/fighter+bh+fire+mask.png" />
         <image file="fighter/fighter+bm+fire+mask.png" />
+        <image file="fighter/fighter+dm+fire+mask.png" />
         <image file="fighter/fighter+ge+fire+mask.png" />
+        <image file="fighter/fighter+gs+fire+mask.png" />
         <image file="fighter/fighter+os+fire+mask.png" />
         <image file="fighter/fighter+yc+fire+mask.png" cols = "2" />
         <image file="fighter/fighter+pf+fire+mask.png" cols = "2" />
@@ -974,6 +983,7 @@
         <image file="missile/missile+bd+mask.png" />
         <image file="missile/missile+bh+mask.png" />
         <image file="missile/missile+bm+mask.png" />
+        <image file="missile/missile+dm+mask.png" />
         <image file="missile/missile+ge+mask.png" />
         <image file="missile/missile+os+mask.png" />
         <image file="missile/missile+yc+mask.png" />
@@ -983,6 +993,7 @@
         <image file="missile/missile+bd+fire+mask.png" />
         <image file="missile/missile+bh+fire+mask.png" cols = "2"/>
         <image file="missile/missile+bm+fire+mask.png" cols = "2"/>
+        <image file="missile/missile+dm+fire+mask.png" />
         <image file="missile/missile+ge+fire+mask.png" cols = "2"/>
         <image file="missile/missile+os+fire+mask.png" cols = "2"/>
         <image file="missile/missile+yc+fire+mask.png" cols = "2"/>

@@ -5,9 +5,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "qguiapplication.h"
-#include "qclipboard.h"
-
 #include <QTime>
 
 TimeSpinBox::TimeSpinBox(qint32 width)
@@ -73,7 +70,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
             qint32 value = getCurrentValue();
             value += m_spinDirection;
             setCurrentValue(value);
-            m_toggle.start();
+            m_spinTimer.start();
             emit sigValueChanged(getCurrentValue());
         }
     });
@@ -106,7 +103,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
             qint32 value = getCurrentValue();
             value += m_spinDirection;
             setCurrentValue(value);
-            m_toggle.start();
+            m_spinTimer.start();
             emit sigValueChanged(getCurrentValue());
         }
     });
@@ -124,21 +121,8 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     {
         emit sigFocused();
     });
-    m_toggle.start();
-
-    connect(pApp, &Mainapp::sigKeyDown, this, &TimeSpinBox::KeyInput, Qt::QueuedConnection);
+    m_spinTimer.start();
     setCurrentValue(0);
-}
-
-void TimeSpinBox::focused()
-{
-    m_curmsgpos = m_Text.size();
-    m_preeditSize = 0;
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->show();
-    }
 }
 
 void TimeSpinBox::focusedLost()
@@ -146,21 +130,7 @@ void TimeSpinBox::focusedLost()
     qint32 value = checkInput();
     m_Textfield->setX(0);
     emit sigValueChanged(value);
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
-}
-
-void TimeSpinBox::looseFocusInternal()
-{
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
-    Tooltip::looseFocusInternal();
+    TextInput::focusedLost();
 }
 
 void TimeSpinBox::setEnabled(bool value)
@@ -182,36 +152,25 @@ void TimeSpinBox::setCurrentValue(qint32 value)
 void TimeSpinBox::update(const oxygine::UpdateState& us)
 {
     // no need to calculate more than we need if we're invisible
+    QString drawText = getDrawText(getCurrentText());
     if(m_focused)
     {
         // create output text
-        QString drawText = m_Text;
-        if (m_toggle.elapsed() < BLINKFREQG)
-        {
-            drawText.insert(m_curmsgpos,"|");
-        }
-        else
-        {
-            drawText.insert(m_curmsgpos," ");
-        }
-        if (m_toggle.elapsed() > BLINKFREQG * 2)
-        {
-            m_toggle.start();
-        }
+        qint32 curmsgpos = getCursorPosition();
         m_Textfield->setHtmlText(drawText);
 
-        if (m_Text.size() > 0)
+        if (drawText.size() > 0)
         {
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / m_Text.size();
+            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
             qint32 boxSize = (m_Textbox->getWidth() - 5 - fontWidth);
-            xPos = -fontWidth * m_curmsgpos + boxSize / 2;
+            xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
             {
                 xPos = 0;
             }
-            else if ((m_Text.size() - m_curmsgpos + 1) * fontWidth < boxSize)
+            else if ((drawText.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
                 xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
                 if (xPos > 0)
@@ -230,16 +189,15 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
     {
         if (m_spinDirection != 0.0)
         {
-            if (m_toggle.elapsed() > BLINKFREQG)
+            if (m_spinTimer.elapsed() > BLINKFREQG)
             {
                 qint32 value = getCurrentValue();
                 value += m_spinDirection;
                 setValue(value);
-                m_toggle.start();
+                m_spinTimer.start();
             }
             checkInput();
         }
-        QString drawText = m_Text;
         m_Textfield->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
@@ -248,23 +206,22 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
 qint32 TimeSpinBox::getCurrentValue()
 {
     qint32 value = 0;
-    value = QTime::fromString(m_Text, "hh:mm:ss").msecsSinceStartOfDay();
+    value = QTime::fromString(getCurrentText(), "hh:mm:ss").msecsSinceStartOfDay();
     return value;
 }
 
 qint32 TimeSpinBox::checkInput()
 {
-    qint32 value = QTime::fromString(m_Text, "hh:mm:ss").msecsSinceStartOfDay();
+    qint32 value = QTime::fromString(getCurrentText(), "hh:mm:ss").msecsSinceStartOfDay();
     setValue(value);
     return value;
 }
 
 void TimeSpinBox::setValue(qint32 value)
-{
-    
-    m_Text = QTime::fromMSecsSinceStartOfDay(value).toString("hh:mm:ss");
-    m_Textfield->setHtmlText(m_Text);
-    
+{    
+    QString text = QTime::fromMSecsSinceStartOfDay(value).toString("hh:mm:ss");
+    setCurrentText(text);
+    m_Textfield->setHtmlText(text);
 }
 
 qint32 TimeSpinBox::getSpinSpeed() const
@@ -277,171 +234,9 @@ void TimeSpinBox::setSpinSpeed(qint32 SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-bool TimeSpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+bool TimeSpinBox::onEditFinished()
 {
-    bool bRet = false;
-    CONSOLE_PRINT("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
-    if (event->queries() == Qt::ImTextBeforeCursor)
-    {
-        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
-        m_editPos = m_curmsgpos;
-        event->setValue(Qt::ImTextBeforeCursor, textBefore);
-        bRet = true;
-    }
-    else if (event->queries() == Qt::ImTextAfterCursor)
-    {
-        event->setValue(Qt::ImTextAfterCursor, "");
-        bRet = true;
-    }
-    else if (event->queries() == Qt::ImSurroundingText)
-    {
-        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
-        event->setValue(Qt::ImSurroundingText, textBefore);
-        event->setValue(Qt::ImCursorPosition, m_curmsgpos);
-        bRet = true;
-    }
-    return bRet;
-}
-
-void TimeSpinBox::handleTouchInput(oxygine::KeyEvent event)
-{
-    for (const auto & action : qAsConst(event.getAttributeList()))
-    {
-        if (action.type == QInputMethodEvent::AttributeType::TextFormat)
-        {
-            QString msg = event.getText();
-            if (m_preeditSize > 0)
-            {
-                m_Text.remove(m_editPos + event.getStart(), m_preeditSize);
-            }
-            m_preeditSize = msg.size();
-            m_Text.insert(m_editPos + action.start, msg);
-        }
-        else if (action.type == QInputMethodEvent::AttributeType::Cursor)
-        {
-            m_curmsgpos = m_editPos + action.start;
-        }
-        else if (action.type == QInputMethodEvent::AttributeType::Selection)
-        {
-            if (!event.getText().isEmpty())
-            {
-                m_preeditSize = 0;
-                m_curmsgpos = m_editPos + action.start;
-                m_editPos = m_curmsgpos;
-            }
-        }
-    }
-}
-
-void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
-{
-    // for debugging
-    Qt::Key cur = event.getKey();
-    if (m_focused)
-    {
-        restartTooltiptimer();
-        if (event.getInputEvent())
-        {
-            handleTouchInput(event);
-        }
-        else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-        {
-            switch(cur)
-            {
-                case Qt::Key_V:
-                {
-                    QString text = QGuiApplication::clipboard()->text();
-                    m_Text = m_Text.insert(m_curmsgpos, text);
-                    m_curmsgpos = text.size();
-                    break;
-                }
-                case Qt::Key_C:
-                {
-                    QGuiApplication::clipboard()->setText(m_Text);
-                    break;
-                }
-                case Qt::Key_X:
-                {
-                    QGuiApplication::clipboard()->setText(m_Text);
-                    m_Text = "";
-                    m_curmsgpos = 0;
-                    break;
-                }
-                default:
-                {
-                    // nothing
-                    break;
-                }
-            }
-        }
-        else
-        {
-            //Handle Key Input for the console
-            switch(cur)
-            {
-                case Qt::Key_Home:
-                {
-                    m_curmsgpos = 0;
-                    break;
-                }
-                case Qt::Key_Left:
-                {
-                    m_curmsgpos--;
-                    if(m_curmsgpos < 0)
-                    {
-                        m_curmsgpos = 0;
-                    }
-                    break;
-                }
-                case Qt::Key_Right:
-                {
-                    m_curmsgpos++;
-                    if(m_curmsgpos > m_Text.size())
-                    {
-                        m_curmsgpos = m_Text.size();
-                    }
-                    break;
-                }
-                case Qt::Key_Enter:
-                case Qt::Key_Return:
-                {
-                    looseFocusInternal();
-                    qint32 value = checkInput();
-                    emit sigValueChanged(value);
-                    break;
-                }
-                case Qt::Key_Backspace:
-                {
-                    if(m_curmsgpos > 0){
-                        m_Text.remove(m_curmsgpos - 1,1);
-                        m_curmsgpos--;
-                        m_editPos--;
-                    }
-                    break;
-                }
-                case Qt::Key_Delete:
-                {
-                    if (m_curmsgpos < m_Text.size())
-                    {
-                        m_Text.remove(m_curmsgpos, 1);
-                    }
-                    break;
-                }
-                case Qt::Key_End:
-                {
-                    m_curmsgpos = m_Text.size();
-                    break;
-                }
-                default:
-                {
-                    // for the start we don't check for upper or lower key input
-                    QString msg = event.getText();
-                    m_Text.insert(m_curmsgpos, msg);
-                    checkInput();
-                    m_curmsgpos = m_Text.size();
-                }
-            }
-        }
-        
-    }
+    qint32 value = checkInput();
+    emit sigValueChanged(value);
+    return true;
 }

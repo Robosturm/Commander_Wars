@@ -2,8 +2,6 @@
 #include <QMutexLocker>
 #include <QString>
 #include <QDir>
-#include <QClipboard>
-#include <QGuiApplication>
 #include <qlogging.h>
 #include <QLoggingCategory>
 #include <qdatetime.h>
@@ -29,9 +27,6 @@ bool Console::m_toggled = false;
 bool Console::m_developerMode = false;
 QList<QString> Console::m_output;
 spConsole Console::m_pConsole;
-QString Console::m_curmsg = nullptr;
-qint32 Console::m_curmsgpos = 0;
-QElapsedTimer Console::m_toggle;
 qint32 Console::m_curlastmsgpos = 0;
 QList<QString> Console::m_lastmsgs;
 qint32 Console::m_outputSize = 100;
@@ -88,6 +83,12 @@ Console::Console()
 
     // we're hidden to begin with
     oxygine::Actor::setVisible(false);
+    connect(this, &Console::sigToggleView, this, &Console::toggleView, Qt::QueuedConnection);
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
+    {
+        event->stopPropagation();
+        emit sigFocused();
+    });
 }
 
 spConsole Console::getInstance()
@@ -101,12 +102,7 @@ spConsole Console::getInstance()
 
 void Console::init()
 {
-    m_toggle.start();
-
-    Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole.get(), &Console::KeyInput, Qt::QueuedConnection);
     // Print some Info
-
     CONSOLE_PRINT("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
     CONSOLE_PRINT("Starting Game...", Console::eLogLevels::eINFO);
     CONSOLE_PRINT("Prepare to Fight...", Console::eLogLevels::eINFO);
@@ -245,7 +241,6 @@ void Console::update(const oxygine::UpdateState& us)
     // no need to calculate more than we need if we're invisible
     if(m_show)
     {
-
         QMutexLocker locker(&m_datalocker);
         qint32 screenheight = Settings::getHeight();
         qint32 h = FontManager::getMainFont16()->getSize();
@@ -267,27 +262,23 @@ void Console::update(const oxygine::UpdateState& us)
                 drawText += "> " + m_output[i] + "\n";
             }
         }
-        // create blinking cursor position
-        QString curprintmsg = m_curmsg;
-        if (m_toggle.elapsed() < BLINKFREQG)
+        if (m_focused)
         {
-            curprintmsg.insert(m_curmsgpos,"|");
+            // create blinking cursor position
+            QString curprintmsg = getDrawText(getCurrentText());
+            drawText += "> </r>" +  curprintmsg;
+            m_text->setHtmlText("<r>" + drawText);
+            qint32 height = m_text->getTextRect().size.y;
+            m_text->setHeight(height);
+            if (height > Settings::getHeight() - 50)
+            {
+                m_text->setY(Settings::getHeight() - 50 - height);
+            }
         }
         else
         {
-            curprintmsg.insert(m_curmsgpos," ");
-        }
-        if (m_toggle.elapsed() > BLINKFREQG * 2)
-        {
-            m_toggle.start();
-        }
-        drawText += "> " + curprintmsg;
-        m_text->setHtmlText(drawText);
-        qint32 height = m_text->getTextRect().size.y;
-        m_text->setHeight(height);
-        if (height > Settings::getHeight() - 50)
-        {
-            m_text->setY(Settings::getHeight() - 50 - height);
+            drawText += "> Click the console to regain focus";
+            m_text->setHtmlText(drawText);
         }
     }
     oxygine::Actor::update(us);
@@ -300,6 +291,11 @@ void Console::toggleView()
     if (m_show)
     {
         m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
+        emit sigFocused();
+    }
+    else
+    {
+       looseFocusInternal();
     }
     m_toggled = true;
 }
@@ -1423,57 +1419,23 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::KeyInput(oxygine::KeyEvent event)
+void Console::doHandleEvent(QEvent *event)
 {
     // for debugging
-    Qt::Key cur = event.getKey();
-    if (cur == Settings::getKeyConsole())
+    if (event->type() == QEvent::KeyPress)
     {
-        Console::toggleView();
-    }
-    else if (m_show)
-    {
-        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+        QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event);
+        Qt::Key cur = static_cast<Qt::Key>(inputEvent->key());
+        if (cur == Settings::getKeyConsole())
         {
-            switch(cur)
-            {
-                case Qt::Key_V:
-                {
-                    QString text = QGuiApplication::clipboard()->text();
-                    m_curmsg = m_curmsg.insert(m_curmsgpos, text);
-                    m_curmsgpos += text.size();
-                    break;
-                }
-                case Qt::Key_C:
-                {
-                    QGuiApplication::clipboard()->setText(m_curmsg);
-                    m_curmsgpos += m_curmsg.size();
-                    break;
-                }
-                case Qt::Key_X:
-                {
-                    QGuiApplication::clipboard()->setText(m_curmsg);
-                    m_curmsg = "";
-                    m_curmsgpos = 0;
-                    break;
-                }
-                default:
-                {
-                    // nothing
-                    break;
-                }
-            }
+            toggleView();
+            FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
         }
         else
         {
             //Handle Key Input for the console
             switch(cur)
             {
-                case Qt::Key_Home:
-                {
-                    m_curmsgpos = 0;
-                    break;
-                }
                 case Qt::Key_Up:
                 {
                     m_curlastmsgpos--;
@@ -1483,18 +1445,11 @@ void Console::KeyInput(oxygine::KeyEvent event)
                     }
                     if(m_curlastmsgpos < m_lastmsgs.size() && m_curlastmsgpos >= 0)
                     {
-                        m_curmsg = m_lastmsgs[m_curlastmsgpos];
-                        m_curmsgpos = m_curmsg.size();
+                        QString msg = m_lastmsgs[m_curlastmsgpos];
+                        setCurrentText(msg);
+                        setCursorPosition(msg.size());
                     }
-                    break;
-                }
-                case Qt::Key_Left:
-                {
-                    m_curmsgpos--;
-                    if(m_curmsgpos < 0)
-                    {
-                        m_curmsgpos = 0;
-                    }
+                    FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
                     break;
                 }
                 case Qt::Key_Down:
@@ -1506,67 +1461,40 @@ void Console::KeyInput(oxygine::KeyEvent event)
                     }
                     if(m_curlastmsgpos < m_lastmsgs.size())
                     {
-                        m_curmsg = m_lastmsgs[m_curlastmsgpos];
-                        m_curmsgpos = m_curmsg.size();
+                        QString msg = m_lastmsgs[m_curlastmsgpos];
+                        setCurrentText(msg);
+                        setCursorPosition(msg.size());
                     }
-                    break;
-                }
-                case Qt::Key_Right:
-                {
-                    m_curmsgpos++;
-                    if(m_curmsgpos > m_curmsg.size())
-                    {
-                        m_curmsgpos = m_curmsg.size();
-                    }
-                    break;
-                }
-                case Qt::Key_Enter:
-                case Qt::Key_Return:
-                {
-                    dotask(m_curmsg);
-                    m_lastmsgs.append(m_curmsg);
-                    while (m_lastmsgs.size() > m_lastMsgSize)
-                    {
-                        m_lastmsgs.removeFirst();
-                    }
-                    m_curlastmsgpos = m_lastmsgs.size();
-                    m_curmsg = "";
-                    m_curmsgpos = 0;
-                    break;
-                }
-                case Qt::Key_Backspace:
-                {
-                    if(m_curmsgpos > 0)
-                    {
-                        m_curmsg.remove(m_curmsgpos - 1,1);
-                        m_curmsgpos--;
-                    }
-                    break;
-                }
-                case Qt::Key_Delete:
-                {
-                    if (m_curmsgpos < m_curmsg.size())
-                    {
-                        m_curmsg.remove(m_curmsgpos, 1);
-                    }
-                    break;
-                }
-                case Qt::Key_End:
-                {
-                    m_curmsgpos = m_curmsg.size();
+                    FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
                     break;
                 }
                 default:
                 {
-                    // for the start we don't check for upper or lower key input
-                    QString msg = event.getText();
-                    m_curmsg.insert(m_curmsgpos,msg);
-                    m_curmsgpos += msg.size();
+                    TextInput::doHandleEvent(event);
+                    break;
                 }
             }
         }
     }
+    else
+    {
+        TextInput::doHandleEvent(event);
+    }
+}
 
+bool Console::onEditFinished()
+{
+    QString message = getCurrentText();
+    dotask(message);
+    m_lastmsgs.append(message);
+    while (m_lastmsgs.size() > m_lastMsgSize)
+    {
+        m_lastmsgs.removeFirst();
+    }
+    m_curlastmsgpos = m_lastmsgs.size();
+    setCurrentText("");
+    setCursorPosition(0);
+    return false;
 }
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)

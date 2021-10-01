@@ -252,7 +252,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
     }
 }
 

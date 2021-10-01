@@ -6,6 +6,7 @@
 #include <QTranslator>
 #include <QThread>
 #include <QCoreApplication>
+#include <QLineEdit>
 #include "QMutex"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
@@ -75,7 +76,7 @@ public:
     };
 
     explicit Mainapp();
-    virtual ~Mainapp();
+    virtual ~Mainapp() = default;
     virtual void shutdown() override;
     static inline Mainapp* getInstance()
     {
@@ -135,6 +136,14 @@ public:
     static QString qsTr(QString text);
 
     bool getNoUi() const;
+    /**
+     * @brief getLastCreateLineEdit
+     * @return
+     */
+    QLineEdit* getLastCreateLineEdit() const
+    {
+        return m_pLineEdit;
+    }
 
 public slots:
     void changeScreenMode(qint32 mode);
@@ -172,8 +181,6 @@ public slots:
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
-    void sigConsoleKeyDown(oxygine::KeyEvent event);
-    void sigConsoleKeyUp(oxygine::KeyEvent event);
     /**
      * @brief sigWindowLayoutChanged
      */
@@ -195,15 +202,19 @@ signals:
     void sigApplyFilter(quint32 filter);
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
+    void sigCreateLineEdit();
+    void sigFocusedObjectEvent(QEvent* event);
+private slots:
+    void createLineEdit();
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
     bool keyInputMethodEvent(QInputMethodEvent *event);
-    bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event);
     virtual bool event(QEvent *ev) override;
     void createBaseDirs();
     virtual void onQuit() override;
 private:
+    QLineEdit* m_pLineEdit{nullptr};
     static Mainapp* m_pMainapp;
     static QMutex m_crashMutex;
     static QThread m_Workerthread;

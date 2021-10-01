@@ -5081,7 +5081,6 @@
         <file>resources/images/battleanimations/recon/recon+pf+move+mask.png</file>
         <file>resources/images/battleanimations/recon/recon+pf+stop+mask.png</file>
         <file>resources/images/battleanimations/fighter/fighter+bd+fire+mask.png</file>
-        <file>resources/images/battleanimations/fighter/fighter+bd+mask .png</file>
         <file>resources/images/battleanimations/megatank/megatank+ac+cannon+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+ac+mask.png</file>
         <file>resources/images/battleanimations/megatank/megatank+bd+cannon+mask.png</file>
@@ -5205,5 +5204,24 @@
         <file>resources/images/battleanimations/mech/mech+gs+walk+mask.png</file>
         <file>resources/images/battleanimations/mech/mech+gs+walk.png</file>
         <file>resources/images/battleanimations/mech/mech+gs.png</file>
+        <file>resources/images/battleanimations/apc/apc+gs+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+ac+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+bd+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+dm+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/fighter/fighter+gs+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+dm+mask.png</file>
+        <file>resources/images/animations/soldier+ac+mask.png</file>
+        <file>resources/images/animations/soldier+bd+mask.png</file>
+        <file>resources/images/animations/soldier+bg+mask.png</file>
+        <file>resources/images/animations/soldier+dm+mask.png</file>
+        <file>resources/images/animations/soldier+gs.png</file>
+        <file>resources/images/animations/soldier+gs+mask.png</file>
+        <file>resources/images/animations/soldier+ma+mask.png</file>
+        <file>resources/images/animations/soldier+pf+mask.png</file>
+        <file>resources/images/animations/soldier+ti+mask.png</file>
     </qresource>
 </RCC>

@@ -20,14 +20,7 @@ public:
     {
         return m_focusedObject;
     }
-    /**
-     * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
-     * @param event
-     */
-    virtual bool keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
-    {
-        return false;
-    };
+    static bool handleEvent(QEvent *event);
 protected:
     virtual void focused(){};
     virtual void looseFocusInternal();
@@ -36,7 +29,18 @@ signals:
     void sigFocused();
 public slots:
     virtual void focusedLost(){};
-    // virtual void focusedLost() = 0;
+protected slots:
+    /**
+     * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
+     * @param event
+     */
+    virtual void doHandleEvent(QEvent* event)
+    {
+        if (m_focused)
+        {
+            delete event;
+        }
+    };
 private slots:
     void focusedInternal();
 protected:

@@ -2764,98 +2764,98 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="140"/>
+        <location filename="../coreengine/mainapp.cpp" line="142"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="155"/>
+        <location filename="../coreengine/mainapp.cpp" line="157"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="165"/>
+        <location filename="../coreengine/mainapp.cpp" line="167"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="175"/>
+        <location filename="../coreengine/mainapp.cpp" line="177"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="185"/>
+        <location filename="../coreengine/mainapp.cpp" line="187"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="197"/>
+        <location filename="../coreengine/mainapp.cpp" line="199"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="207"/>
+        <location filename="../coreengine/mainapp.cpp" line="209"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="217"/>
+        <location filename="../coreengine/mainapp.cpp" line="219"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="227"/>
+        <location filename="../coreengine/mainapp.cpp" line="229"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="234"/>
+        <location filename="../coreengine/mainapp.cpp" line="236"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="244"/>
+        <location filename="../coreengine/mainapp.cpp" line="246"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="254"/>
+        <location filename="../coreengine/mainapp.cpp" line="256"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="264"/>
+        <location filename="../coreengine/mainapp.cpp" line="266"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="274"/>
+        <location filename="../coreengine/mainapp.cpp" line="276"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="284"/>
+        <location filename="../coreengine/mainapp.cpp" line="286"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="294"/>
+        <location filename="../coreengine/mainapp.cpp" line="296"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="583"/>
+        <location filename="../coreengine/mainapp.cpp" line="561"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="589"/>
+        <location filename="../coreengine/mainapp.cpp" line="567"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="591"/>
+        <location filename="../coreengine/mainapp.cpp" line="569"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>

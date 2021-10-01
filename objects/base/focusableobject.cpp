@@ -1,5 +1,6 @@
 #include "objects/base/focusableobject.h"
 #include "coreengine/console.h"
+#include "coreengine/mainapp.h"
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
@@ -10,6 +11,7 @@ FocusableObject::FocusableObject()
     setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
+    connect(Mainapp::getInstance(), &Mainapp::sigFocusedObjectEvent, this, &FocusableObject::doHandleEvent, Qt::QueuedConnection);
     if (!m_registeredAtStage)
     {
         m_registeredAtStage = true;
@@ -22,6 +24,31 @@ FocusableObject::FocusableObject()
             }
         });
     }
+}
+
+bool FocusableObject::handleEvent(QEvent *event)
+{
+    bool handled = false;
+    if (FocusableObject::getFocusedObject() != nullptr)
+    {
+        switch (event->type())
+        {
+            case QEvent::InputMethodQuery:
+            case QEvent::InputMethod:
+            case QEvent::KeyPress:
+            case QEvent::KeyRelease:
+            {
+                emit Mainapp::getInstance()->sigFocusedObjectEvent(event->clone());
+                handled = true;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+    return handled;
 }
 
 

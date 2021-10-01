@@ -3,13 +3,12 @@
 
 #include <QVector>
 #include <QObject>
-#include <QElapsedTimer>
 #include <QKeyEvent>
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
-#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+#include "objects/base/textinput.h"
 
 class QString;
 class QMutex;
@@ -21,7 +20,7 @@ using spConsole = oxygine::intrusive_ptr<Console>;
 
 #define CONSOLE_PRINT(text, logLevel) if (logLevel >= Console::getLogLevel() ) {Console::print(text, logLevel);}
 
-class Console : public QObject, public oxygine::Actor
+class Console : public TextInput
 {
     Q_OBJECT
 public:
@@ -53,7 +52,9 @@ public:
     static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     void init();
     void release();
-// use slots here since they're part of QMetaObject thus they get published to JSEngine.
+signals:
+    void sigToggleView();
+    // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
     /**
      * @brief getDeveloperMode
@@ -171,15 +172,6 @@ public slots:
      */
     virtual void update(const oxygine::UpdateState& us) override;
     /**
-     * @brief KeyInput event called when a key is pressed
-     * @param event
-     */
-    void KeyInput(oxygine::KeyEvent event);
-    /**
-     * @brief toggleView
-     */
-    void toggleView();
-    /**
      * @brief getConsoleLog
      * @return
      */
@@ -188,6 +180,18 @@ public slots:
         QMutexLocker locker(&m_datalocker);
         return m_output;
     }
+protected slots:
+    /**
+     * @brief toggleView
+     */
+    void toggleView();
+    /**
+     * @brief doHandleEvent
+     * @param event
+     */
+    virtual void doHandleEvent(QEvent *event) override;
+protected:
+    virtual bool onEditFinished() override;
 private:
     friend class oxygine::intrusive_ptr<Console>;
     explicit Console();
@@ -196,12 +200,9 @@ private:
 
 private:
     static eLogLevels m_LogLevel;
-    static QString m_curmsg;
     static QList<QString> m_lastmsgs;
     static const qint32 m_lastMsgSize{10};
     static qint32 m_curlastmsgpos;
-    static qint32 m_curmsgpos;
-    static QElapsedTimer m_toggle;
     static spConsole m_pConsole;
     static bool m_show;
     static bool m_toggled;

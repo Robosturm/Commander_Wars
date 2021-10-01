@@ -65,10 +65,12 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
+    connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
 }
 
-Mainapp::~Mainapp()
+void Mainapp::createLineEdit()
 {
+    m_pLineEdit = new QLineEdit();
 }
 
 void Mainapp::shutdown()
@@ -127,7 +129,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         case StartupPhase::General:
         {
             m_Audiothread = new AudioThread();
-            m_AudioWorker.start(QThread::Priority::LowPriority);
+            m_AudioWorker.start(QThread::Priority::HighPriority);
             m_Audiothread->moveToThread(&m_AudioWorker);
             emit m_Audiothread->sigInitAudio();
             m_Audiothread->clearPlayList();
@@ -395,7 +397,7 @@ void Mainapp::changeScreenMode(qint32 mode)
             }
             if (screenSize.height() < Settings::getHeight())
             {
-                setWidth(screenSize.height());
+                setHeight(screenSize.height());
                 Settings::setHeight(screenSize.height());
             }
             break;
@@ -428,7 +430,7 @@ void Mainapp::changeScreenMode(qint32 mode)
             }
             if (screenSize.height() < Settings::getHeight())
             {
-                setWidth(screenSize.height());
+                setHeight(screenSize.height());
                 Settings::setHeight(screenSize.height());
             }
             showNormal();
@@ -482,25 +484,18 @@ qint32 Mainapp::getScreenMode()
 
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {
-    if (Console::getInstance()->getVisible())
+    Qt::Key cur = static_cast<Qt::Key>(event->key());
+    if (cur == Settings::getKeyConsole())
     {
-        emit sigConsoleKeyDown(oxygine::KeyEvent(event));
+        emit Console::getInstance()->sigToggleView();
+    }
+    else if (cur == Settings::getKey_screenshot())
+    {
+        doScreenshot();
     }
     else
     {
-        Qt::Key cur = static_cast<Qt::Key>(event->key());
-        if (cur == Settings::getKeyConsole())
-        {
-            Console::getInstance()->toggleView();
-        }
-        else if (cur == Settings::getKey_screenshot())
-        {
-            doScreenshot();
-        }
-        else
-        {
-            emit sigKeyDown(oxygine::KeyEvent(event));
-        }
+        emit sigKeyDown(oxygine::KeyEvent(event));
     }
 }
 
@@ -508,45 +503,28 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
 {
     if (!event->isAutoRepeat())
     {
-        if (Console::getInstance()->getVisible())
+        emit sigKeyUp(oxygine::KeyEvent(event));
+    }
+}
+
+bool Mainapp::event(QEvent *event)
+{
+    bool handled = FocusableObject::handleEvent(event);
+    if (!handled)
+    {
+        if (event->type() == QEvent::InputMethod)
         {
-            emit sigConsoleKeyUp(oxygine::KeyEvent(event));
+            QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(event);
+            handled = keyInputMethodEvent(inputEvent);
         }
         else
         {
-            emit sigKeyUp(oxygine::KeyEvent(event));
+            handled = oxygine::GameWindow::event(event);
         }
     }
+    return handled;
 }
 
-bool Mainapp::event(QEvent *ev)
-{
-    if (ev->type() == QEvent::InputMethod)
-    {
-        QInputMethodEvent* inputEvent = static_cast<QInputMethodEvent*>(ev);
-        return keyInputMethodEvent(inputEvent);
-    }
-    else if (ev->type() == QEvent::InputMethodQuery)
-    {
-        QInputMethodQueryEvent * inputEvent = static_cast<QInputMethodQueryEvent *>(ev);
-        return keyInputMethodQueryEvent(inputEvent);
-    }
-    else
-    {
-        return oxygine::GameWindow::event(ev);
-    }
-}
-
-bool Mainapp::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
-{
-    if (FocusableObject::getFocusedObject() != nullptr)
-    {
-        bool bRet = FocusableObject::getFocusedObject()->keyInputMethodQueryEvent(event);
-        event->accept();
-        return bRet;
-    }
-    return false;
-}
 
 bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
 {
