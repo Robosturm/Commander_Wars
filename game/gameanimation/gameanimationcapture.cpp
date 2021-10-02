@@ -165,7 +165,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
 void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
         float endPoints = m_endPoints;

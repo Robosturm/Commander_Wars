@@ -31,7 +31,7 @@ void TextInput::editFinished()
 
 QString TextInput::getCurrentText() const
 {
-    return m_lineEdit->text();
+    return m_lineEdit->text().trimmed();
 }
 
 void TextInput::setCurrentText(QString text)

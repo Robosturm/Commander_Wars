@@ -61,6 +61,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
+    elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        set(DEPLOY_RESOURCES_AS_FOLDER 1)
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
@@ -510,8 +512,7 @@ set(${PROJECT_NAME}_SRCS
 
 ##############################################################################
 # OS Specific files #
-##############################################################################
-
+######################################
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
@@ -529,17 +530,21 @@ endif()
 ##############################################################################
 # Resources files #
 ##############################################################################
+########################################
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-        "general.qrc"
-    )
-else()
-    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-                         "general.qrc"
-                         "music.qrc"
-                         "sound.qrc"
-    )
+if (NOT DEPLOY_RESOURCES_AS_FOLDER)
+    message("Using compiled resources")
+    if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+        )
+    else()
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+                             "general.qrc"
+                             "music.qrc"
+                             "sound.qrc"
+        )
+    endif()
 endif()
 
 ##############################################################################

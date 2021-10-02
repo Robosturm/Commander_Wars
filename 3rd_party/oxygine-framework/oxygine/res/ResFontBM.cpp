@@ -64,9 +64,9 @@ namespace oxygine
     {
         spImage mt = spImage::create();
         QImage img;
-        if (QFile::exists(Settings::getUserPath() +p.file))
+        if (QFile::exists(Settings::getUserPath() + p.file))
         {
-           img = QImage(Settings::getUserPath() +p.file);
+           img = QImage(Settings::getUserPath() + p.file);
         }
         else if (QFile::exists(RCC_PREFIX_PATH + p.file))
         {

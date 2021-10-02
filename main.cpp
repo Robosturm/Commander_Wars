@@ -208,7 +208,6 @@ int main(qint32 argc, char* argv[])
     CrashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
     Userdata::getInstance()->release();
-    Console::getInstance()->release();
     Settings::shutdown();
     CONSOLE_PRINT("Shutting down main window", Console::eDEBUG);
     window.shutdown();

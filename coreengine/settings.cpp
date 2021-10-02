@@ -621,7 +621,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
     qint32 i = 0;
     while (i < m_activeMods.size())
     {
-        QDir dir(m_activeMods[i]);
+        QDir dir(getUserPath() + m_activeMods[i]);
         QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
         if (!dir.exists() && !dir2.exists())
         {

@@ -23,34 +23,36 @@ class HeavyAi : public CoreAI
      */
     enum BuildingEntry
     {
-        DirectUnitRatio         ,           // 0
-        IndirectUnitRatio       ,           // 1
-        InfantryUnitRatio       ,           // 2
-        TransportUnitRatio      ,           // 3
-        TotalBuildingRatio      ,           // 4
-        EnemyRatio              ,           // 5
-        ProductionUsage         ,           // 6
-        DayProgression          ,           // 7
-        LocalUnitData           ,           //
-        BasicAttackRange = LocalUnitData,   // 8
-        CaptureUnit             ,           // 9
-        CoUnitValue             ,           // 10
-        Movementpoints          ,           // 11
-        MapMovementpoints,                  // 12
-        FondsUsage              ,           // 13
-        FireRange               ,           // 14
-        Flying                  ,           // 15
-        LoadingPotential        ,           // 16
-        OwnInfluence,                       // 17
-        HighestEnemyInfluence,              // 18
-        DealingFundsDamage      ,           // 19
-        DealingHpDamage         ,           // 20
-        ReceivingFundsDamge     ,           // 21
-        ReceivingHpDamage       ,           // 22
-        CapturePotential        ,       	// 23
-        CanAttackImmuneUnitRatio,           // 24
-        UnitsToTransportRatio,              // 25
-        RequiredUnitsToTransportRatio,      // 26
+        DirectUnitRatio         ,
+        IndirectUnitRatio       ,
+        InfantryUnitRatio       ,
+        TransportUnitRatio      ,
+        TotalBuildingRatio      ,
+        SupplyUnitRatio         ,
+        SupplyRequiredRatio     ,
+        EnemyRatio              ,
+        ProductionUsage         ,
+        DayProgression          ,
+        LocalUnitData           ,
+        BasicAttackRange = LocalUnitData,
+        CaptureUnit             ,
+        CoUnitValue             ,
+        Movementpoints          ,
+        MapMovementpoints,
+        FondsUsage              ,
+        FireRange               ,
+        Flying                  ,
+        LoadingPotential        ,
+        OwnInfluence,
+        HighestEnemyInfluence,
+        DealingFundsDamage      ,
+        DealingHpDamage         ,
+        ReceivingFundsDamge     ,
+        ReceivingHpDamage       ,
+        CapturePotential        ,
+        CanAttackImmuneUnitRatio,
+        UnitsToTransportRatio,
+        RequiredUnitsToTransportRatio,
         MovementPotential,
         VisionPotential,
         MaxUnitValue,
