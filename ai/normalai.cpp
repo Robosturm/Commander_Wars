@@ -103,6 +103,10 @@ void NormalAi::readIni(QString name)
             m_minSameIslandDistance = 3.0f;
         }
         m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
+        if(!ok)
+        {
+            m_slowUnitSpeed = 3;
+        }
         settings.endGroup();
         settings.beginGroup("CoUnit");
         m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
@@ -522,10 +526,18 @@ void NormalAi::readIni(QString name)
         {
             m_averageSupplySupport = 8.0f;
         }
+
+        m_cappingFunds = settings.value("CappingFunds", 4700.0f).toFloat(&ok);
         if(!ok)
         {
-            m_slowUnitSpeed = 3;
+            m_cappingFunds = 4700.0f;
         }
+        m_cappedFunds = settings.value("CappedFunds", 1999.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_cappedFunds = 1999.0f;
+        }
+
         settings.endGroup();
     }
 }
@@ -2096,14 +2108,18 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     getEnemyDamageCounts(pUnits, pEnemyUnits, attackCount);
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
-    if (productionBuildings > GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
-        productionBuildings > m_fundsPerBuildingFactorA)
+    if (productionBuildings >= GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
+        productionBuildings >= m_fundsPerBuildingFactorA)
     {
         // if we have a bigger number of buildings we wanna spam out units but not at an average costs overall buildings
         // but more a small amount of strong ones and a large amount of cheap ones
         // so we use a small (x - a) / (x - b) function here
         fundsPerFactory = funds * (1 - ((productionBuildings - m_fundsPerBuildingFactorA) / (static_cast<float>(productionBuildings) - m_fundsPerBuildingFactorB)));
-        if (fundsPerFactory >= m_spamingFunds * 1.5f)
+        if (fundsPerFactory < m_cappingFunds)
+        {
+            fundsPerFactory = m_cappedFunds;
+        }
+        else if (fundsPerFactory >= m_spamingFunds * 1.5f)
         {
             data[UseHighTechUnits] = 1.0f;
         }

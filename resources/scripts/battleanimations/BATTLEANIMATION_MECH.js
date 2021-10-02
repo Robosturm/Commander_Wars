@@ -142,11 +142,8 @@ var Constructor = function()
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(160, 0), 500, false,
                                     1, 1, -1);
-            offset.x = (offset.x - 30);
-            offset.y = (offset.y + 3);
-            sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-            offset.x = -30;
-            offset.y = (offset.y - 5);
+            sprite.loadSprite("rocket_trailing_smoke",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
+            offset = Qt.point(data[1].x - 55, data[1].y - 5);
             sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
             for (var i = 0; i < count; i++)
             {

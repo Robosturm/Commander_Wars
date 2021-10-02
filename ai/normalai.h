@@ -482,6 +482,8 @@ private:
     float m_canSupplyBonus{10};
     float m_maxSupplyUnitRatio{0.05f};
     float m_averageSupplySupport{8};
+    float m_cappingFunds{4700};
+    float m_cappedFunds{1999};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

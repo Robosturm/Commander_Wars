@@ -40,7 +40,7 @@
         <image file="GeneralSprites/vehicle_dust.png" cols = "4" />
         <image file="GeneralSprites/vehicle_dust_stop.png" cols = "5" />
         <image file="GeneralSprites/bazooka_launch.png" cols = "6" />
-        <image file="GeneralSprites/bazooka_launch_start.png" cols = "4" />
+        <image file="GeneralSprites/rocket_trailing_smoke.png" cols = "4" />
         <image file="GeneralSprites/crystalcannon.png" cols = "21" />
         <image file="GeneralSprites/crystalcannon_trail.png" cols = "21" />
         <!-- spotters -->
