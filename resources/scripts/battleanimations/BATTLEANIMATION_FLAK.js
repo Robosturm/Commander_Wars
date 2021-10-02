@@ -15,16 +15,39 @@ var Constructor = function()
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
-    this.animationData = [["ac", [2, Qt.point(38, 31), Qt.point(38, 20), 1300]],
-                          ["bd", [2, Qt.point(17, 43), Qt.point(20, 31), 1300]],
-                          ["bh", [2, Qt.point(31, 41), Qt.point(33, 29), 1300]],
-                          ["bm", [2, Qt.point(30, 38), Qt.point(31, 24), 1300]],
-                          ["ge", [2, Qt.point(31, 43), Qt.point(33, 29), 1300]],
-                          ["ma", [2, Qt.point(25, 50), Qt.point(24, 45), 1300]],
-                          ["os", [2, Qt.point(35, 40), Qt.point(31, 26), 1300]],
-                          ["pf", [1, Qt.point(33, 50), Qt.point(33, 33), 1200]],
-                          ["ti", [1, Qt.point(30, 35), Qt.point(33, 32), 1200]],
-                          ["yc", [1, Qt.point(34, 46), Qt.point(34, 29), 1200]],];
+    this.animationData = [["ac", [2, 900, 1,  ""]],
+                          ["bd", [4, 900, 2, "+single"]],
+                          ["bh", [2, 900, 1,  ""]],
+                          ["bm", [2, 900, 1,  ""]],
+                          ["ge", [2, 900, 1,  ""]],
+                          ["ma", [2, 900, 1,  ""]],
+                          ["os", [2, 900, 1,  ""]],
+                          ["pf", [2, 900, 1,  ""]],
+                          ["ti", [1, 800, 1,  ""]],
+                          ["yc", [1, 800, 1,  ""]],];
+
+    this.animationMgDataAir = [["ac", [0, Qt.point(39, 32), 0, Qt.point(41, 34)]],
+                               ["bd", [0, Qt.point(17, 44), 0, Qt.point(17, 35), 0, Qt.point(22, 47), -1, Qt.point(23, 41)]],
+                               ["bh", [0, Qt.point(31, 43), 0, Qt.point(35, 47)]],
+                               ["bm", [0, Qt.point(30, 38), 0, Qt.point(34, 42)]],
+                               ["ge", [0, Qt.point(32, 43), 0, Qt.point(35, 47)]],
+                               ["ma", [0, Qt.point(25, 50), 0, Qt.point(30, 54)]],
+                               ["os", [0, Qt.point(31, 41), 0, Qt.point(35, 45)]],
+                               ["pf", [0, Qt.point(33, 50), 0, Qt.point(31, 46)]],
+                               ["ti", [0, Qt.point(30, 46)]],
+                               ["yc", [0, Qt.point(34, 46)]]];
+
+    this.animationMgData    = [["ac", [0, Qt.point(39, 20), 0, Qt.point(41, 22)]],
+                               ["bd", [0, Qt.point(19, 32), -1, Qt.point(26, 36), 0, Qt.point(21, 24), -1, Qt.point(26, 28)]],
+                               ["bh", [0, Qt.point(33, 29), 0, Qt.point(36, 32)]],
+                               ["bm", [0, Qt.point(31, 24), 0, Qt.point(34, 27)]],
+                               ["ge", [0, Qt.point(33, 29), 0, Qt.point(36, 32)]],
+                               ["ma", [0, Qt.point(25, 45), 0, Qt.point(30, 49)]],
+                               ["os", [0, Qt.point(31, 26), 0, Qt.point(34, 29)]],
+                               ["pf", [0, Qt.point(29, 31), 0, Qt.point(33, 34)]],
+                               ["ti", [0, Qt.point(33, 33)]],
+                               ["yc", [0, Qt.point(34, 30)]],];
+
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -84,50 +107,41 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
         var offset = Qt.point(-10, 5);
-        BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+fire", Qt.point(-10, 5), Qt.point(0, 0), 0, 3);
+        BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+fire", Qt.point(-10, 5), Qt.point(0, 0), 0, 2);
         var mgCount = data[0];
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
-            offset = data[1];
+            var mgData = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgDataAir);
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
-                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(),
-                                  Qt.point(offset.x + i2 * 5, offset.y + i2 * 5),
-                                  1, 1, 0, 100 * i2);
-                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(),
-                                  Qt.point(offset.x + i2 * 5, offset.y + i2 * 5),
-                                  1, 1, 0, 600 + 100 * i2);
+                sprite.loadSprite("mg_shot_air+flak" + data[3],  false, sprite.getMaxUnitCount(),
+                                        mgData[1 + i2 * 2],
+                                  data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }
         else
         {
-            offset = data[2];
+            var mgData = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgData);
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
-                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(),
-                                  Qt.point(offset.x + i2 * 4, offset.y + i2 * 4),
-                                  1, 1, 0, 100 * i2);
-                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(),
-                                  Qt.point(offset.x + i2 * 4, offset.y + i2 * 4),
-                                  1, 1, 0, 600 + 100 * i2);
+                sprite.loadSprite("mg_shot+flak" + data[3],  false, sprite.getMaxUnitCount(),
+                                        mgData[1 + i2 * 2],
+                                  data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 200 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 400 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 600 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 800 + i * BATTLEANIMATION.defaultFrameDelay);
-            sprite.loadSound("vulcan_weapon_fire.wav", 1, 1000 + i * BATTLEANIMATION.defaultFrameDelay);
-            if (mgCount === 2)
+            var soundCount = 1;
+            if (mgCount > 1)
             {
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 300 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 500 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 700 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 900 + i * BATTLEANIMATION.defaultFrameDelay);
-                sprite.loadSound("vulcan_weapon_fire.wav", 1, 1100 + i * BATTLEANIMATION.defaultFrameDelay);
+                soundCount = 2;
+            }
+            for (var i2 = 0; i2 < soundCount; ++i2)
+            {
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 +       i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 400 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("vulcan_weapon_fire.wav", 1, 100 * i2 + 600 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };
@@ -138,7 +152,12 @@ var Constructor = function()
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
-        return data[3] + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+        return data[1] + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
+    };
+
+    this.getFiredDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 800 - BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
     };
 
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)

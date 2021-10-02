@@ -5223,5 +5223,14 @@
         <file>resources/images/animations/soldier+ma+mask.png</file>
         <file>resources/images/animations/soldier+pf+mask.png</file>
         <file>resources/images/animations/soldier+ti+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/mg_shot+flak.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/mg_shot_air+flak.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/rocket_trailing_smoke.png</file>
+        <file>resources/images/units/infantry+bg+mask.png</file>
+        <file>resources/images/units/infantry+bg+walk+mask.png</file>
+        <file>resources/images/units/mech+bg+mask.png</file>
+        <file>resources/images/units/mech+bg+walk+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/mg_shot_air+flak+single.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/mg_shot+flak+single.png</file>
     </qresource>
 </RCC>

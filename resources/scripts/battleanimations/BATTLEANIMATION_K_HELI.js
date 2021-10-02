@@ -65,7 +65,7 @@ var Constructor = function()
                                     -1, 1, -1);
             offset = Qt.point(data[0].x + 45, data[0].y + 5);
             sprite.loadSprite("rocket_trailing_smoke", false, BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
-            offset = Qt.point(data[0].x + 7, data[0].y - 5);
+            offset = Qt.point(data[0].x + 2, data[0].y);
             sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
             for (var i = 0; i < count; i++)
             {

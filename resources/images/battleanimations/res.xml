@@ -21,6 +21,10 @@
         <image file="GeneralSprites/mg_shot.png" cols = "6" />
         <image file="GeneralSprites/mg_shot_air.png" cols = "6" />
         <image file="GeneralSprites/mg_shot_down.png" cols = "6" />
+        <image file="GeneralSprites/mg_shot+flak.png" cols = "8" />
+        <image file="GeneralSprites/mg_shot_air+flak.png" cols = "8" />
+        <image file="GeneralSprites/mg_shot+flak+single.png" cols = "4" />
+        <image file="GeneralSprites/mg_shot_air+flak+single.png" cols = "4" />
         <image file="GeneralSprites/rocket_launch.png" cols = "6" />
         <image file="GeneralSprites/rocket_launch+1.png" cols = "6" />
         <image file="GeneralSprites/rocket_launch+2.png" cols = "6" />
@@ -238,7 +242,7 @@
         <image file="flak/flak+ge+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+air+mask.png" />
-        <image file="flak/flak+ti+fire+air+mask.png" cols = "2" />
+        <image file="flak/flak+ti+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+pf+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ac+fire+mask.png" cols = "4" />
         <image file="flak/flak+bd+fire+mask.png" cols = "4" />
@@ -248,7 +252,7 @@
         <image file="flak/flak+ge+fire+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+mask.png" />
-        <image file="flak/flak+ti+fire+mask.png" cols = "2" />
+        <image file="flak/flak+ti+fire+mask.png" cols = "4" />
         <image file="flak/flak+pf+fire+mask.png" cols = "4" />
         <image file="flak/flak+ac+move+mask.png" cols = "4" />
         <image file="flak/flak+bd+move+mask.png" />
