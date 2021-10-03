@@ -8,6 +8,7 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["bm", "bm"],
+                     ["dm", "dm"],
                      ["ge", "ge"],
                      ["ma", "ma"],
                      ["os", "os"],

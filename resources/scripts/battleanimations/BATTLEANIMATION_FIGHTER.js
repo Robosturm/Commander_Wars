@@ -4,10 +4,14 @@ var Constructor = function()
     {
         return 5;
     };
-    this.armyData = [["bm", "bm"],
+    this.armyData = [["ac", "ac"],
+                     ["bm", "bm"],
+                     ["bd", "bd"],
                      ["bh", "bh"],
                      ["bg", "bg"],
+                     ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
