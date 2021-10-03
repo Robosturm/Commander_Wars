@@ -5232,5 +5232,48 @@
         <file>resources/images/units/mech+bg+walk+mask.png</file>
         <file>resources/images/battleanimations/GeneralSprites/mg_shot_air+flak+single.png</file>
         <file>resources/images/battleanimations/GeneralSprites/mg_shot+flak+single.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+dm+mask.png</file>
+        <file>resources/images/battleanimations/bomber/bomber+dm+mask.png</file>
+        <file>resources/images/battleanimations/crystal_tank/crystal_tank+fire.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+dm+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+dm+stop+mask.png</file>
+        <file>resources/images/battleanimations/k_heli/k_heli+dm+mask.png</file>
+        <file>resources/images/battleanimations/k_heli/k_heli+dm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+dm+stop+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+dm+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+dm+fire+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+dm+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+dm+move+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+dm+stop+mask.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+0.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+1.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+2.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+3.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+4.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+5.png</file>
+        <file>resources/images/battleanimations/smuggler/smuggler+mask+6.png</file>
     </qresource>
 </RCC>

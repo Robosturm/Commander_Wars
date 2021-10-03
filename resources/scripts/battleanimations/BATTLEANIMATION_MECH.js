@@ -19,18 +19,18 @@ var Constructor = function()
                      ["yc", "yc"],];
 
     this.animationData = [["ac", ["bazooka_bm", Qt.point(20, 16), Qt.point(-50, 20), -90]],
-                          ["bd", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
-                          ["bh", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
-                          ["bg", ["bazooka_bh", Qt.point(15, 12), Qt.point(-30, 15), 0]],
-                          ["bm", ["bazooka_bm", Qt.point(17, 16), Qt.point(-30, 15), 0]],
+                          ["bd", ["bazooka_bm", Qt.point(17, 16), Qt.point(-50, 20), -90]],
+                          ["bh", ["bazooka_bh", Qt.point(15, 12), Qt.point(-50, 20), -90]],
+                          ["bg", ["bazooka_bh", Qt.point(15, 12), Qt.point(-50, 20), -90]],
+                          ["bm", ["bazooka_bm", Qt.point(17, 16), Qt.point(-50, 20), -90]],
                           ["dm", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-50, 20), -90]],
-                          ["ge", ["bazooka_ge", Qt.point(15, 14), Qt.point(-30, 15), 0]],
-                          ["gs", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-30, 15), 0]],
+                          ["ge", ["bazooka_ge", Qt.point(15, 14), Qt.point(-50, 20), -90]],
+                          ["gs", ["bazooka_ge", Qt.point(14, 9),  Qt.point(-50, 20), -90]],
                           ["ma", ["bazooka_os", Qt.point(20, 10), Qt.point(-50, 20), -90]],
-                          ["os", ["bazooka_os", Qt.point(18, 17), Qt.point(-30, 15), 0]],
+                          ["os", ["bazooka_os", Qt.point(18, 17), Qt.point(-50, 20), -90]],
                           ["pf", ["bazooka_os", Qt.point(17, 16), Qt.point(-50, 20), -90]],
                           ["ti", ["bazooka_yc", Qt.point(18, 17), Qt.point(-50, 20), -90]],
-                          ["yc", ["bazooka_yc", Qt.point(19, 17), Qt.point(-30, 15), 0]],];
+                          ["yc", ["bazooka_yc", Qt.point(19, 17), Qt.point(-50, 20), -90]],];
 
     this.getRiverString = function(unit)
     {

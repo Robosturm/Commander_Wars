@@ -203,7 +203,7 @@ signals:
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
-    void sigFocusedObjectEvent(QEvent* event);
+    void sigFocusedObjectEvent(std::shared_ptr<QEvent> event);
 private slots:
     void createLineEdit();
 protected:

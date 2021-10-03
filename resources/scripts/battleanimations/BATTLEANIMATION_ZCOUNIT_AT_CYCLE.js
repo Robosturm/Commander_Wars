@@ -17,13 +17,12 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount());
         BATTLEANIMATION_ZCOUNIT_AT_CYCLE.loadStandingAnimation(sprite, unit, defender, weapon);
-        var offset = Qt.point(28, 20);
+        var offset = Qt.point(32, 14);
         sprite.loadMovingSprite("bazooka_yc", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(160, 0), 500, false,
                                 1, 1, -1);
-        offset.x = (offset.x - 20);
-        sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
-        offset = Qt.point(-36, 11);
+        sprite.loadSprite("rocket_trailing_smoke",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
+        offset = Qt.point(offset.x - 76, offset.y - 5);
         sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
         for (var i = 0; i < count; i++)
         {

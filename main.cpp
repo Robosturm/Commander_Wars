@@ -116,6 +116,7 @@ void registerInterfaceData()
     qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");
     qRegisterMetaType<spTextbox>("spTextbox");
     qRegisterMetaType<spGameAction>("spGameAction");
+    qRegisterMetaType<std::shared_ptr<QEvent>>("std::shared_ptr<QEvent>");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);

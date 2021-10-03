@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QElapsedTimer>
 
+
 class TextInput : public Tooltip
 {
     Q_OBJECT
@@ -27,7 +28,7 @@ public:
 public slots:
     virtual void focusedLost() override;
 protected slots:
-    virtual void doHandleEvent(QEvent *event) override;
+    virtual void doHandleEvent(std::shared_ptr<QEvent> event) override;
 private slots:
     void editFinished();
 protected:

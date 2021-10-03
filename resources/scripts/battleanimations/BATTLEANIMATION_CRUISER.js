@@ -85,7 +85,7 @@ var Constructor = function()
             {
                 mgSprite = "+cannon+fire+ground";
                 mgStartFrame = 0;
-                mgEndFrame = -1;
+                mgEndFrame = 6;
             }
             else
             {

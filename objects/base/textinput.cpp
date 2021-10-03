@@ -49,7 +49,7 @@ void TextInput::setCursorPosition(qint32 position)
     m_lineEdit->setCursorPosition(position);
 }
 
-void TextInput::doHandleEvent(QEvent *event)
+void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
 {
     if (m_focused)
     {
@@ -61,7 +61,7 @@ void TextInput::doHandleEvent(QEvent *event)
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
             {
-                m_lineEdit->event(event);
+                m_lineEdit->event(event.get());
                 break;
             }
             default:
@@ -71,11 +71,11 @@ void TextInput::doHandleEvent(QEvent *event)
             }
         }
     }
-    FocusableObject::doHandleEvent(event);
 }
 
 void TextInput::focused()
 {
+    CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
     Tooltip::disableTooltip();
     m_lineEdit->setCursorPosition(m_lineEdit->text().size());
     auto virtualKeyboard = QGuiApplication::inputMethod();
@@ -87,6 +87,7 @@ void TextInput::focused()
 
 void TextInput::focusedLost()
 {
+    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
     Tooltip::enableTooltip();
     auto virtualKeyboard = QGuiApplication::inputMethod();
     if (virtualKeyboard != nullptr)
@@ -97,6 +98,7 @@ void TextInput::focusedLost()
 
 void TextInput::looseFocusInternal()
 {
+    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
     auto virtualKeyboard = QGuiApplication::inputMethod();
     if (virtualKeyboard != nullptr)
     {

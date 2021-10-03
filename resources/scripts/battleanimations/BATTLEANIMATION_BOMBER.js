@@ -6,6 +6,7 @@ var Constructor = function()
     };
     this.armyData = [["os", "os"],
                      ["bm", "bm"],
+                     ["dm", "dm"],
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
@@ -13,6 +14,7 @@ var Constructor = function()
                      ["ma", "ma"],];
     this.animationData = [["os", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["bm", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
+                          ["dm", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["ge", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["yc", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],
                           ["bh", [20, Qt.point(-85, -1), 850, Qt.point(70, 60)]],

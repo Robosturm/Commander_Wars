@@ -189,7 +189,7 @@ protected slots:
      * @brief doHandleEvent
      * @param event
      */
-    virtual void doHandleEvent(QEvent *event) override;
+    virtual void doHandleEvent(std::shared_ptr<QEvent> event) override;
 protected:
     virtual bool onEditFinished() override;
 private:

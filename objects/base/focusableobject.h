@@ -2,6 +2,7 @@
 #define FOCUSABLEOBJECT_H
 
 #include <QObject>
+#include <memory>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -34,12 +35,8 @@ protected slots:
      * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
      * @param event
      */
-    virtual void doHandleEvent(QEvent* event)
+    virtual void doHandleEvent(std::shared_ptr<QEvent> event)
     {
-        if (m_focused)
-        {
-            delete event;
-        }
     };
 private slots:
     void focusedInternal();

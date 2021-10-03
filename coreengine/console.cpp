@@ -1419,17 +1419,16 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::doHandleEvent(QEvent *event)
+void Console::doHandleEvent(std::shared_ptr<QEvent> event)
 {
     // for debugging
     if (event->type() == QEvent::KeyPress)
     {
-        QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event);
+        QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event.get());
         Qt::Key cur = static_cast<Qt::Key>(inputEvent->key());
         if (cur == Settings::getKeyConsole())
         {
             toggleView();
-            FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
         }
         else
         {
@@ -1449,7 +1448,6 @@ void Console::doHandleEvent(QEvent *event)
                         setCurrentText(msg);
                         setCursorPosition(msg.size());
                     }
-                    FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
                     break;
                 }
                 case Qt::Key_Down:
@@ -1465,7 +1463,6 @@ void Console::doHandleEvent(QEvent *event)
                         setCurrentText(msg);
                         setCursorPosition(msg.size());
                     }
-                    FocusableObject::doHandleEvent(event); // clazy:exclude=skipped-base-method
                     break;
                 }
                 default:

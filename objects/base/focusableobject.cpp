@@ -2,6 +2,9 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
+#include <QClipboard>
+#include <QGuiApplication>
+
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
 
@@ -38,7 +41,8 @@ bool FocusableObject::handleEvent(QEvent *event)
             case QEvent::KeyPress:
             case QEvent::KeyRelease:
             {
-                emit Mainapp::getInstance()->sigFocusedObjectEvent(event->clone());
+                std::shared_ptr<QEvent> ev(event->clone());
+                emit Mainapp::getInstance()->sigFocusedObjectEvent(ev);
                 handled = true;
                 break;
             }
@@ -68,6 +72,11 @@ void FocusableObject::looseFocus()
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            virtualKeyboard->hide();
+        }
     }
 }
 
@@ -78,6 +87,11 @@ void FocusableObject::looseFocusInternal()
         CONSOLE_PRINT("Loosing focus forced by object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            virtualKeyboard->hide();
+        }
     }
 }
 
