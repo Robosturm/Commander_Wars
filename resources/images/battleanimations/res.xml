@@ -1193,7 +1193,6 @@
         <!-- at cycle -->
         <image file="at_cycle/at_cycle+mask.png" />
         <!-- auto tank -->
-        <image file="auto_tank/auto_tank.png" />
         <image file="auto_tank/auto_tank+mask.png" />
         <!-- chaperon -->
         <image file="chaperon/chaperon+mask.png" />        

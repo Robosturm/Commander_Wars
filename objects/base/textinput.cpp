@@ -3,9 +3,6 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
-#include <QGuiApplication>
-#include <QClipboard>
-
 TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -61,6 +58,7 @@ void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
             {
+                CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
                 m_lineEdit->event(event.get());
                 break;
             }
@@ -75,35 +73,20 @@ void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
 
 void TextInput::focused()
 {
-    CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
     Tooltip::disableTooltip();
     m_lineEdit->setCursorPosition(m_lineEdit->text().size());
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->show();
-    }
+    emit Mainapp::getInstance()->sigShowKeyboard(true);
 }
 
 void TextInput::focusedLost()
 {
-    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
     Tooltip::enableTooltip();
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
+    emit Mainapp::getInstance()->sigShowKeyboard(false);
 }
 
 void TextInput::looseFocusInternal()
 {
-    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
+    emit Mainapp::getInstance()->sigShowKeyboard(false);
     Tooltip::looseFocusInternal();
 }
 

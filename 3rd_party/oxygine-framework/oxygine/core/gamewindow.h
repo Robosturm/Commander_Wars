@@ -98,6 +98,7 @@ namespace oxygine
         void sigStopUpdateTimer();
         void sigStartUpdateTimer();
         void sigQuit(qint32 exitCode);
+        void sigShowKeyboard(bool visible);
     public slots:
         /**
          * @brief getBrightness
@@ -137,6 +138,7 @@ namespace oxygine
         void quitApp();
         virtual void onQuit() = 0;
         void quit(qint32 exitCode);
+        void showKeyboard(bool visible);
     protected:
         virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;

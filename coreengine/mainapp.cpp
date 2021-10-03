@@ -5,7 +5,10 @@
 #include "qmessagebox.h"
 #include "qthread.h"
 #include "qresource.h"
+
 #include <QApplication>
+#include <QGuiApplication>
+#include <QClipboard>
 
 #include "coreengine/userdata.h"
 #include "coreengine/mainapp.h"

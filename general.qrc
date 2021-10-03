@@ -3514,7 +3514,6 @@
         <file>resources/images/battleanimations/apc/apc+yc+mask.png</file>
         <file>resources/images/battleanimations/at_cycle/at_cycle+mask.png</file>
         <file>resources/images/battleanimations/auto_tank/auto_tank+mask.png</file>
-        <file>resources/images/battleanimations/auto_tank/auto_tank.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh+fire+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh+mask.png</file>
         <file>resources/images/battleanimations/battleship/battleship+bh.png</file>
@@ -3583,7 +3582,6 @@
         <file>resources/images/battleanimations/GeneralSprites/bazooka_bh.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bazooka_ge.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bazooka_launch.png</file>
-        <file>resources/images/battleanimations/GeneralSprites/bazooka_launch_start.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bazooka_os.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bomb_falling.png</file>
         <file>resources/images/battleanimations/GeneralSprites/bombs_projectile.png</file>
@@ -3898,8 +3896,6 @@
         <file>resources/images/battleanimations/rocketthrower/rocketthrower+yc+mask.png</file>
         <file>resources/images/battleanimations/royal_guard/royal_guard+mask.png</file>
         <file>resources/images/battleanimations/siege_cannon/siege_cannon+mask.png</file>
-        <file>resources/images/battleanimations/smuggler/smuggler+mask.png</file>
-        <file>resources/images/battleanimations/smuggler/smuggler.png</file>
         <file>resources/images/battleanimations/sniper/sniper+ma+mask.png</file>
         <file>resources/images/battleanimations/sniper/sniper+os+mask.png</file>
         <file>resources/images/battleanimations/stealthbomber/stealthbomber+mask.png</file>

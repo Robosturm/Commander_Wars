@@ -44,6 +44,7 @@ namespace oxygine
 
         connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
         connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
+        connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
     void GameWindow::shutdown()
@@ -78,6 +79,10 @@ namespace oxygine
         timeMS duration = VideoDriver::m_stats.duration;
         VideoDriver::m_stats = VideoDriver::Stats();
         VideoDriver::m_stats.duration = duration;
+        if (isActive() && FocusableObject::getFocusedObject() == nullptr)
+        {
+            showKeyboard(false);
+        }
     }
 
     void GameWindow::quitApp()
@@ -448,4 +453,26 @@ namespace oxygine
         }
         return true;
     }
+
+    void GameWindow::showKeyboard(bool visible)
+    {
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            if (visible)
+            {
+                CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
+                virtualKeyboard->show();
+            }
+            else
+            {
+                if (virtualKeyboard->isVisible())
+                {
+                    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
+                    virtualKeyboard->hide();
+                }
+            }
+        }
+    }
+
 }
