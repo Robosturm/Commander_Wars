@@ -53,7 +53,7 @@ var BATTLEANIMATION =
             sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
         }
         sprite.loadDyingFadeOutAnimation(fadeoutTime);
-        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset)
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset,255)
     },
 
     getDyingDurationMS : function(sprite, unit, defender, weapon)
