@@ -588,7 +588,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "2"
+    QT_ANDROID_VERSION_CODE "3"
     )
 
 
