@@ -19,7 +19,7 @@ using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
 class NormalAi : public CoreAI
 {
     Q_OBJECT
-
+    static constexpr float NO_BUILD_SCORE = -500000.0f;
     struct UnitBuildData
     {
         QString unitId;
@@ -27,6 +27,7 @@ class NormalAi : public CoreAI
         bool canMove{false};
         bool indirectUnit{false};
         bool infantryUnit{false};
+        bool isSupplyUnit{false};
         qint32 cost{0};
         qint32 baseRange{0};
         float damage{0.0f};
@@ -70,6 +71,8 @@ public:
         ReachDistance = 14,
         UnitCost = 15,
         UseHighTechUnits = 16,
+        SupplyRatio = 17,
+        RequiredSupplyRatio = 18,
         Max,
     };
 
@@ -134,7 +137,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(QStringList actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendRefillTargets(QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction
@@ -370,6 +373,13 @@ protected:
      * @return
      */
     qint32 getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+    /**
+     * @brief calcSupplyScore
+     * @param data
+     * @param unitBuildData
+     * @return
+     */
+    float calcSupplyScore(QVector<float>& data, UnitBuildData & unitBuildData);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -469,6 +479,11 @@ private:
     float m_cheapUnitBonusMultiplier{45};
     float m_normalUnitBonusMultiplier{10};
     float m_expensiveUnitBonusMultiplier{15};
+    float m_canSupplyBonus{10};
+    float m_maxSupplyUnitRatio{0.05f};
+    float m_averageSupplySupport{8};
+    float m_cappingFunds{4700};
+    float m_cappedFunds{1999};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

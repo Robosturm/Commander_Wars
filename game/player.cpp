@@ -2013,7 +2013,6 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             {
                 createTable(m_Color.darker(160));
             }
-            m_Color = m_colorTable.pixel(8, 0);
         }
         if (!fast)
         {
@@ -2028,7 +2027,6 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             createTable(m_Color.darker(160));
         }
-        m_Color = m_colorTable.pixel(255, 255);
         if (!fast)
         {
             CONSOLE_PRINT("Loading colortable", Console::eDEBUG);

@@ -621,7 +621,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
     qint32 i = 0;
     while (i < m_activeMods.size())
     {
-        QDir dir(m_activeMods[i]);
+        QDir dir(getUserPath() + m_activeMods[i]);
         QDir dir2( oxygine::Resource::RCC_PREFIX_PATH + m_activeMods[i]);
         if (!dir.exists() && !dir2.exists())
         {
@@ -1283,6 +1283,7 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_SoundVolume = 100;
     }
+#ifdef AUDIOSUPPORT
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
     QString description = settings.value("AudioDevice", "").toString();
     const auto audioDevices = QMediaDevices::audioOutputs();
@@ -1298,6 +1299,7 @@ void Settings::loadSettings()
     {
         m_audioOutput = QVariant::fromValue(defaultDeviceInfo);
     }
+#endif
     settings.endGroup();
 
     // game

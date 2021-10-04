@@ -49,20 +49,16 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
-        // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fire");
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
-        var offset = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
-        // rocket        
-        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
-                                Qt.point(128, 64), 400, false,
-                                1, 1, -1);
-        offset.x -= data[3].x;
-        offset.y -= data[3].y;
-        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
+                                Qt.point(128, 64), 400, true,
+                                -1, 1, 0);
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), Qt.point(data[1].x - data[3].x, data[1].y - data[3].y),
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
+        sprite.addSpriteShakeY(4, 0.5, 0.0, 75, 0, count);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_launch.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
@@ -92,7 +88,7 @@ var Constructor = function()
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                 Qt.point(-128, -64), 400, true,
-                                1, 1, 0, 0, true);
+                                -1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, 0);

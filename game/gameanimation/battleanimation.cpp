@@ -717,7 +717,7 @@ void BattleAnimation::nextAnimatinStep()
                 m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
                 setSpriteFlipped(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit);
                 m_currentState = AnimationProgress::WaitAfterBattle;
-                startBattleTimer(500);
+                startBattleTimer(400);
             }
             break;
         }
@@ -767,7 +767,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterBattle:
         {
-            startBattleTimer(500);
+            startBattleTimer(400);
             break;
         }
         case AnimationProgress::Finished:

@@ -5,10 +5,15 @@ var Constructor = function()
         return 5;
     };
 
+    this.getUniqueId = function(unit)
+    {
+        return "+" + (unit.getUniqueID() % 7).toString();
+    };
+
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount());
-        sprite.loadMovingSpriteV2("smuggler+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-80, 5),
+        sprite.loadMovingSpriteV2("smuggler+mask" + BATTLEANIMATION_ZCOUNIT_SMUGGLER.getUniqueId(unit), GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-80, 5),
                                   Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-100, 7),
                                 Qt.point(65, 0), 600, false, 1, 1);
@@ -33,7 +38,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, count)
     {
         var offset = Qt.point(-15, 5);
-        sprite.loadSpriteV2("smuggler+mask", GameEnums.Recoloring_Matrix,
+        sprite.loadSpriteV2("smuggler+mask" + BATTLEANIMATION_ZCOUNIT_SMUGGLER.getUniqueId(unit), GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount(), offset, count);
     };
 

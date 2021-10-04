@@ -38,12 +38,13 @@ namespace oxygine
         m_window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
-        connect(this, &GameWindow::sigWaitOnRelease, this, &GameWindow::waitOnRelease, Qt::BlockingQueuedConnection);
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
+        connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
         connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
 
         connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
         connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
+        connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
     void GameWindow::shutdown()
@@ -78,12 +79,21 @@ namespace oxygine
         timeMS duration = VideoDriver::m_stats.duration;
         VideoDriver::m_stats = VideoDriver::Stats();
         VideoDriver::m_stats.duration = duration;
+        if (isActive() && FocusableObject::getFocusedObject() == nullptr)
+        {
+            showKeyboard(false);
+        }
     }
 
     void GameWindow::quitApp()
     {
         m_shuttingDown = true;
         onQuit();
+    }
+
+    void GameWindow::quit(qint32 exitCode)
+    {
+        QCoreApplication::exit(exitCode);
     }
 
     void GameWindow::paintGL()
@@ -236,10 +246,6 @@ namespace oxygine
         {
             pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
         }
-    }
-
-    void GameWindow::waitOnRelease()
-    {
     }
 
     void GameWindow::mousePressEvent(QMouseEvent *event)
@@ -447,4 +453,26 @@ namespace oxygine
         }
         return true;
     }
+
+    void GameWindow::showKeyboard(bool visible)
+    {
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            if (visible)
+            {
+                CONSOLE_PRINT("Show virtual keyboard", Console::eDEBUG);
+                virtualKeyboard->show();
+            }
+            else
+            {
+                if (virtualKeyboard->isVisible())
+                {
+                    CONSOLE_PRINT("Hide virtual keyboard", Console::eDEBUG);
+                    virtualKeyboard->hide();
+                }
+            }
+        }
+    }
+
 }

@@ -4,9 +4,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "qguiapplication.h"
-#include "qclipboard.h"
-
 SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     : m_MinValue(min),
       m_MaxValue(max),
@@ -73,7 +70,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
             qreal value = getCurrentValue();
             value += m_spinDirection;
             setCurrentValue(value);
-            m_toggle.start();
+            m_spinTimer.start();
             emit sigValueChanged(getCurrentValue());
         }
     });
@@ -106,7 +103,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
             qreal value = getCurrentValue();
             value += m_spinDirection;
             setCurrentValue(value);
-            m_toggle.start();
+            m_spinTimer.start();
             emit sigValueChanged(getCurrentValue());
         }
     });
@@ -124,20 +121,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     {
         emit sigFocused();
     });
-    m_toggle.start();
-
-    connect(pApp, &Mainapp::sigKeyDown, this, &SpinBox::SpinBox::KeyInput, Qt::QueuedConnection);
-}
-
-void SpinBox::focused()
-{
-    m_curmsgpos = m_Text.size();
-    m_preeditSize = 0;
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->show();
-    }
+    m_spinTimer.start();
 }
 
 QString SpinBox::getUnit() const
@@ -155,21 +139,7 @@ void SpinBox::focusedLost()
     qreal value = checkInput();
     m_Textfield->setX(0);
     emit sigValueChanged(value);
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
-}
-
-void SpinBox::looseFocusInternal()
-{
-    auto virtualKeyboard = QGuiApplication::inputMethod();
-    if (virtualKeyboard != nullptr)
-    {
-        virtualKeyboard->hide();
-    }
-    Tooltip::looseFocusInternal();
+    TextInput::focusedLost();
 }
 
 void SpinBox::setEnabled(bool value)
@@ -191,36 +161,24 @@ void SpinBox::setCurrentValue(qreal value)
 void SpinBox::update(const oxygine::UpdateState& us)
 {
     // no need to calculate more than we need if we're invisible
+    QString drawText = getDrawText(getCurrentText());
     if(m_focused)
     {
-        // create output text
-        QString drawText = m_Text;
-        if (m_toggle.elapsed() < BLINKFREQG)
-        {
-            drawText.insert(m_curmsgpos,"|");
-        }
-        else
-        {
-            drawText.insert(m_curmsgpos," ");
-        }
-        if (m_toggle.elapsed() > BLINKFREQG * 2)
-        {
-            m_toggle.start();
-        }
+        qint32 curmsgpos = getCursorPosition();        
         m_Textfield->setHtmlText(drawText + m_unit);
 
-        if (m_Text.size() > 0)
+        if (drawText.size() > 0)
         {
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
-            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / m_Text.size();
+            qint32 fontWidth = m_Textfield->getTextRect().getWidth() / drawText.size();
             qint32 boxSize = (m_Textbox->getWidth() - 5 - fontWidth);
-            xPos = -fontWidth * m_curmsgpos + boxSize / 2;
+            xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
             {
                 xPos = 0;
             }
-            else if ((m_Text.size() - m_curmsgpos + 1) * fontWidth < boxSize)
+            else if ((drawText.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
                 xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
                 if (xPos > 0)
@@ -239,16 +197,15 @@ void SpinBox::update(const oxygine::UpdateState& us)
     {
         if (m_spinDirection != 0.0)
         {
-            if (m_toggle.elapsed() > BLINKFREQG)
+            if (m_spinTimer.elapsed() > BLINKFREQG)
             {
                 qreal value = getCurrentValue();
                 value += m_spinDirection;
                 setValue(value);
-                m_toggle.start();
+                m_spinTimer.start();
             }
             checkInput();
         }
-        QString drawText = m_Text;
         m_Textfield->setHtmlText(drawText + m_unit);
     }
     oxygine::Actor::update(us);
@@ -257,14 +214,15 @@ void SpinBox::update(const oxygine::UpdateState& us)
 qreal SpinBox::getCurrentValue()
 {
     qreal value = 0;
-    if (m_Text == "∞")
+    const QString text = getCurrentText();
+    if (text == "∞")
     {
         value = m_InfinityValue;
     }
     else
     {
         bool ok = false;
-        value = m_Text.toDouble(&ok);
+        value = text.toDouble(&ok);
         if (!ok)
         {
             value = m_InfinityValue;
@@ -277,8 +235,9 @@ qreal SpinBox::checkInput()
 {
     CONSOLE_PRINT("SpinBox::checkInput", Console::eDEBUG);
     bool ok = false;
-    qreal value = m_Text.toDouble(&ok);
-    if (m_Text == "∞")
+    const QString text = getCurrentText();
+    qreal value = text.toDouble(&ok);
+    if (text == "∞")
     {
         value = m_InfinityValue;
         ok = true;
@@ -300,11 +259,11 @@ qreal SpinBox::checkInput()
 }
 
 void SpinBox::setValue(qreal value)
-{
-    
+{    
+    QString text = getCurrentText();
     if (value == m_InfinityValue)
     {
-        m_Text = "∞";
+        text = "∞";
     }
     else
     {
@@ -312,18 +271,19 @@ void SpinBox::setValue(qreal value)
         {
             case Mode::Int:
             {
-                m_Text = QString::number(static_cast<qint32>(value));
+                text = QString::number(static_cast<qint32>(value));
                 break;
             }
             case Mode::Float:
             case Mode::Real:
             {
-                m_Text = QString::number(value, 'f', 2);
+                text = QString::number(value, 'f', 2);
                 break;
             }
         }
     }
-    m_Textfield->setHtmlText(m_Text + m_unit);
+    setCurrentText(text);
+    m_Textfield->setHtmlText(text + m_unit);
     
 }
 
@@ -347,176 +307,9 @@ void SpinBox::setSpinSpeed(qreal SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-bool SpinBox::keyInputMethodQueryEvent(QInputMethodQueryEvent *event)
+bool SpinBox::onEditFinished()
 {
-    bool bRet = false;
-    CONSOLE_PRINT("Textbox::keyInputMethodQueryEvent " + QString::number(event->queries()), Console::eDEBUG);
-    if (event->queries() == Qt::ImTextBeforeCursor)
-    {
-        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
-        m_editPos = m_curmsgpos;
-        event->setValue(Qt::ImTextBeforeCursor, textBefore);
-        bRet = true;
-    }
-    else if (event->queries() == Qt::ImTextAfterCursor)
-    {
-        event->setValue(Qt::ImTextAfterCursor, "");
-        bRet = true;
-    }
-    else if (event->queries() == Qt::ImSurroundingText)
-    {
-        QString textBefore = m_Text.mid(0, m_curmsgpos + 1);
-        event->setValue(Qt::ImSurroundingText, textBefore);
-        event->setValue(Qt::ImCursorPosition, m_curmsgpos);
-        bRet = true;
-    }
-    return bRet;
-}
-
-void SpinBox::handleTouchInput(oxygine::KeyEvent event)
-{
-    for (const auto & action : qAsConst(event.getAttributeList()))
-    {
-        if (action.type == QInputMethodEvent::AttributeType::TextFormat)
-        {
-            QString msg = event.getText();
-            if (m_preeditSize > 0)
-            {
-                m_Text.remove(m_editPos + event.getStart(), m_preeditSize);
-            }
-            m_preeditSize = msg.size();
-            m_Text.insert(m_editPos + action.start, msg);
-        }
-        else if (action.type == QInputMethodEvent::AttributeType::Cursor)
-        {
-            m_curmsgpos = m_editPos + action.start;
-        }
-        else if (action.type == QInputMethodEvent::AttributeType::Selection)
-        {
-            if (!event.getText().isEmpty())
-            {
-                m_preeditSize = 0;
-                m_curmsgpos = m_editPos + action.start;
-                m_editPos = m_curmsgpos;
-            }
-        }
-    }
-}
-
-void SpinBox::KeyInput(oxygine::KeyEvent event)
-{
-    // for debugging
-    Qt::Key cur = event.getKey();
-    if (m_focused)
-    {
-        restartTooltiptimer();
-        if (event.getInputEvent())
-        {
-            handleTouchInput(event);
-        }
-        else if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-        {
-            switch(cur)
-            {
-                case Qt::Key_V:
-                {
-                    QString text = QGuiApplication::clipboard()->text();
-                    m_Text = m_Text.insert(m_curmsgpos, text);
-                    m_curmsgpos = text.size();
-                    break;
-                }
-                case Qt::Key_C:
-                {
-                    QGuiApplication::clipboard()->setText(m_Text);
-                    break;
-                }
-                case Qt::Key_X:
-                {
-                    QGuiApplication::clipboard()->setText(m_Text);
-                    m_Text = "";
-                    m_curmsgpos = 0;
-                    break;
-                }
-                default:
-                {
-                    // nothing
-                    break;
-                }
-            }
-        }
-        else
-        {
-            //Handle Key Input for the console
-            switch(cur)
-            {
-                case Qt::Key_Home:
-                {
-                    m_curmsgpos = 0;
-                    break;
-                }
-                case Qt::Key_Left:
-                {
-                    m_curmsgpos--;
-                    if(m_curmsgpos < 0)
-                    {
-                        m_curmsgpos = 0;
-                    }
-                    break;
-                }
-                case Qt::Key_Right:
-                {
-                    m_curmsgpos++;
-                    if(m_curmsgpos > m_Text.size())
-                    {
-                        m_curmsgpos = m_Text.size();
-                    }
-                    break;
-                }
-                case Qt::Key_Enter:
-                case Qt::Key_Return:
-                {
-                    looseFocusInternal();
-                    qreal value = checkInput();
-                    emit sigValueChanged(value);
-                    break;
-                }
-                case Qt::Key_Backspace:
-                {
-                    if(m_curmsgpos > 0){
-                        m_Text.remove(m_curmsgpos - 1,1);
-                        m_curmsgpos--;
-                        m_editPos--;
-                    }
-                    break;
-                }
-                case Qt::Key_Delete:
-                {
-                    if (m_curmsgpos < m_Text.size())
-                    {
-                        m_Text.remove(m_curmsgpos, 1);
-                    }
-                    break;
-                }
-                case Qt::Key_End:
-                {
-                    m_curmsgpos = m_Text.size();
-                    break;
-                }
-                default:
-                {
-                    // for the start we don't check for upper or lower key input
-                    QString msg = event.getText();
-                    m_Text.insert(m_curmsgpos, msg);
-                    bool ok = false;
-                    msg.toFloat(&ok);
-                    if (!ok)
-                    {
-                        checkInput();
-                    }
-                    m_curmsgpos = m_Text.size();
-                }
-            }
-        }
-        
-    }
+    qreal value = checkInput();
+    emit sigValueChanged(value);
+    return true;
 }

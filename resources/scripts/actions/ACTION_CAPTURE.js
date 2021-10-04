@@ -1,5 +1,19 @@
 var Constructor = function()
 {
+    this.armyData = [["ac", "ac"],
+                     ["bd", "bd"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["bm", "bm"],
+                     ["dm", "dm"],
+                     ["ge", "ge"],
+                     ["gs", "gs"],
+                     ["ma", "ma"],
+                     ["os", "os"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],
+                     ["yc", "yc"],];
+
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
@@ -87,22 +101,10 @@ var Constructor = function()
             var y = targetY * map.getImageSize() - 30;
             var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, ACTION_CAPTURE.postAnimationUnit.getCapturePoints(), maxCapturePoints);
             captureAnimation.addBackgroundSprite("capture_background");
-            var armyName = ACTION_CAPTURE.postAnimationUnit.getOwner().getArmy().toLowerCase();
-            // bh and bg have the same sprites
-            if (armyName === "bg")
-            {
-                armyName = "bh"
-            }
-            if ((armyName !== "os") &&
-                    (armyName !== "yc") &&
-                    (armyName !== "ge") &&
-                    (armyName !== "bm") &&
-                    (armyName !== "bh"))
-            {
-                armyName = "os";
-            }
+            var armyName = Global.getArmyNameFromPlayerTable(ACTION_CAPTURE.postAnimationUnit.getOwner(), ACTION_CAPTURE.armyData);
             Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, building.getOwner(), ACTION_CAPTURE.postAnimationUnit.getOwner());
             captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_Matrix);
+            captureAnimation.addSoldierSprite("soldier+" + armyName, ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_None);
         }
 
         if (captured)

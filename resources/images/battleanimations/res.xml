@@ -21,6 +21,10 @@
         <image file="GeneralSprites/mg_shot.png" cols = "6" />
         <image file="GeneralSprites/mg_shot_air.png" cols = "6" />
         <image file="GeneralSprites/mg_shot_down.png" cols = "6" />
+        <image file="GeneralSprites/mg_shot+flak.png" cols = "8" />
+        <image file="GeneralSprites/mg_shot_air+flak.png" cols = "8" />
+        <image file="GeneralSprites/mg_shot+flak+single.png" cols = "4" />
+        <image file="GeneralSprites/mg_shot_air+flak+single.png" cols = "4" />
         <image file="GeneralSprites/rocket_launch.png" cols = "6" />
         <image file="GeneralSprites/rocket_launch+1.png" cols = "6" />
         <image file="GeneralSprites/rocket_launch+2.png" cols = "6" />
@@ -40,7 +44,7 @@
         <image file="GeneralSprites/vehicle_dust.png" cols = "4" />
         <image file="GeneralSprites/vehicle_dust_stop.png" cols = "5" />
         <image file="GeneralSprites/bazooka_launch.png" cols = "6" />
-        <image file="GeneralSprites/bazooka_launch_start.png" cols = "4" />
+        <image file="GeneralSprites/rocket_trailing_smoke.png" cols = "4" />
         <image file="GeneralSprites/crystalcannon.png" cols = "21" />
         <image file="GeneralSprites/crystalcannon_trail.png" cols = "21" />
         <!-- spotters -->
@@ -64,7 +68,6 @@
         <image file="antitankcannon/antitankcannon+ge+mask.png" />
         <image file="antitankcannon/antitankcannon+yc.png" />
         <image file="antitankcannon/antitankcannon+yc+mask.png" />
-        <image file="antitankcannon/antitankcannon+ac.png" />
         <image file="antitankcannon/antitankcannon+ac+mask.png" />
         <!-- apc -->
         <image file="apc/apc+ac+mask.png" />
@@ -91,6 +94,7 @@
         <image file="artillery/artillery+bd+mask.png" cols = "2" />
         <image file="artillery/artillery+bh+mask.png" cols = "2" />
         <image file="artillery/artillery+bm+mask.png" cols = "2" />
+        <image file="artillery/artillery+dm+mask.png" />
         <image file="artillery/artillery+ge+mask.png" cols = "2" />
         <image file="artillery/artillery+os+mask.png" cols = "2" />
         <image file="artillery/artillery+yc+mask.png" cols = "2" />
@@ -102,6 +106,7 @@
         <image file="artillery/artillery+bd+fire+mask.png" />
         <image file="artillery/artillery+bh+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+bm+fire+mask.png" cols = "8" />
+        <image file="artillery/artillery+dm+fire+mask.png" />
         <image file="artillery/artillery+ge+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+os+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+yc+fire+mask.png" cols = "8" />
@@ -136,6 +141,7 @@
         <!-- bomber -->
         <image file="bomber/bomber+bh+mask.png" />
         <image file="bomber/bomber+bm+mask.png" />
+        <image file="bomber/bomber+dm+mask.png" />
         <image file="bomber/bomber+ge+mask.png" />
         <image file="bomber/bomber+os+mask.png" />
         <image file="bomber/bomber+yc+mask.png" />
@@ -161,11 +167,11 @@
         <image file="cruiser/cruiser+yc+cannon+fire+air+mask.png" cols = "2" />
         <image file="cruiser/cruiser+ge+cannon+fire+air+mask.png" cols = "2" />
         <image file="cruiser/cruiser+bm+cannon+fire+air+mask.png" cols = "2" />
-        <image file="cruiser/cruiser+bh+cannon+fire+ground+mask.png" cols = "7" />
-        <image file="cruiser/cruiser+os+cannon+fire+ground+mask.png" cols = "7" />
-        <image file="cruiser/cruiser+yc+cannon+fire+ground+mask.png" cols = "7" />
-        <image file="cruiser/cruiser+ge+cannon+fire+ground+mask.png" cols = "7" />
-        <image file="cruiser/cruiser+bm+cannon+fire+ground+mask.png" cols = "7" />
+        <image file="cruiser/cruiser+bh+cannon+fire+ground+mask.png" cols = "9" />
+        <image file="cruiser/cruiser+os+cannon+fire+ground+mask.png" cols = "9" />
+        <image file="cruiser/cruiser+yc+cannon+fire+ground+mask.png" cols = "9" />
+        <image file="cruiser/cruiser+ge+cannon+fire+ground+mask.png" cols = "9" />
+        <image file="cruiser/cruiser+bm+cannon+fire+ground+mask.png" cols = "9" />
         <image file="cruiser/cruiser+bh+missile+fire+mask.png" cols = "6" />
         <image file="cruiser/cruiser+os+missile+fire+mask.png" cols = "6" />
         <image file="cruiser/cruiser+yc+missile+fire+mask.png" cols = "6" />
@@ -175,7 +181,7 @@
         <image file="cruiser/cruiser+os+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+yc+missile+mask.png" cols = "6" />
         <image file="cruiser/cruiser+ge+missile+mask.png" cols = "6" />
-        <image file="cruiser/cruiser+bm+missile+mask.png" cols = "6" />        
+        <image file="cruiser/cruiser+bm+missile+mask.png" cols = "6" />
         <!-- destroyer -->
         <image file="destroyer/destroyer.png" cols = "4" />
         <image file="destroyer/destroyer+mask.png" cols = "4" />
@@ -217,6 +223,7 @@
         <image file="flak/flak+bd+mask.png" />
         <image file="flak/flak+bh+mask.png" />
         <image file="flak/flak+bm+mask.png" />
+        <image file="flak/flak+dm+mask.png" />
         <image file="flak/flak+os+mask.png" />
         <image file="flak/flak+ge+mask.png" />
         <image file="flak/flak+yc+mask.png" />
@@ -228,6 +235,7 @@
         <image file="flak/flak+bd+air+mask.png" />
         <image file="flak/flak+bh+air+mask.png" />
         <image file="flak/flak+bm+air+mask.png" />
+        <image file="flak/flak+dm+air+mask.png" />
         <image file="flak/flak+os+air+mask.png" />
         <image file="flak/flak+ge+air+mask.png" />
         <image file="flak/flak+yc+air+mask.png" />
@@ -239,28 +247,30 @@
         <image file="flak/flak+bd+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+bh+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+fire+air+mask.png" cols = "4" />
+        <image file="flak/flak+dm+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+os+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ge+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+pf+fire+air+mask.png" cols = "4" />
-        <image file="flak/flak+ti+fire+air+mask.png" cols = "2" />
         <image file="flak/flak+dm+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ac+fire+mask.png" cols = "4" />
         <image file="flak/flak+bd+fire+mask.png" cols = "4" />
         <image file="flak/flak+bh+fire+mask.png" cols = "4" />
         <image file="flak/flak+bm+fire+mask.png" cols = "4" />
+        <image file="flak/flak+dm+fire+mask.png" cols = "4" />
         <image file="flak/flak+os+fire+mask.png" cols = "4" />
         <image file="flak/flak+ge+fire+mask.png" cols = "4" />
         <image file="flak/flak+yc+fire+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+mask.png" cols = "4" />
+        <image file="flak/flak+ti+fire+mask.png" cols = "4" />
         <image file="flak/flak+pf+fire+mask.png" cols = "4" />
-        <image file="flak/flak+ti+fire+mask.png" cols = "2" />
         <image file="flak/flak+dm+fire+mask.png" cols = "4" />
         <image file="flak/flak+ac+move+mask.png" cols = "4" />
         <image file="flak/flak+bd+move+mask.png" />
         <image file="flak/flak+bh+move+mask.png" cols = "4" />
         <image file="flak/flak+bm+move+mask.png" cols = "4" />
+        <image file="flak/flak+dm+move+mask.png" />
         <image file="flak/flak+os+move+mask.png" cols = "4" />
         <image file="flak/flak+ge+move+mask.png" cols = "4" />
         <image file="flak/flak+yc+move+mask.png" cols = "4" />
@@ -272,6 +282,7 @@
         <image file="flak/flak+bd+move+air+mask.png" />
         <image file="flak/flak+bh+move+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+move+air+mask.png" cols = "4" />
+        <image file="flak/flak+dm+move+air+mask.png" />
         <image file="flak/flak+os+move+air+mask.png" cols = "4" />
         <image file="flak/flak+ge+move+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+move+air+mask.png" cols = "4" />
@@ -283,6 +294,7 @@
         <image file="flak/flak+bd+stop+air+mask.png" />
         <image file="flak/flak+bh+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+bm+stop+air+mask.png" cols = "4" />
+        <image file="flak/flak+dm+stop+air+mask.png" />
         <image file="flak/flak+os+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+ge+stop+air+mask.png" cols = "4" />
         <image file="flak/flak+yc+stop+air+mask.png" cols = "4" />
@@ -294,6 +306,7 @@
         <image file="flak/flak+bd+stop+mask.png" />
         <image file="flak/flak+bh+stop+mask.png" cols = "4" />
         <image file="flak/flak+bm+stop+mask.png" cols = "4" />
+        <image file="flak/flak+dm+stop+mask.png" />
         <image file="flak/flak+os+stop+mask.png" cols = "4" />
         <image file="flak/flak+ge+stop+mask.png" cols = "4" />
         <image file="flak/flak+yc+stop+mask.png" cols = "4" />
@@ -321,6 +334,7 @@
         <image file="heavy_tank/heavy_tank+bd+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+fire+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+bm+fire+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+dm+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+fire+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+os+fire+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+yc+fire+mask.png" cols = "4" />
@@ -332,6 +346,7 @@
         <image file="heavy_tank/heavy_tank+bd+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mask.png" />
         <image file="heavy_tank/heavy_tank+bm+mask.png" />
+        <image file="heavy_tank/heavy_tank+dm+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mask.png" />
         <image file="heavy_tank/heavy_tank+os+mask.png" />
         <image file="heavy_tank/heavy_tank+yc+mask.png" />
@@ -343,6 +358,7 @@
         <image file="heavy_tank/heavy_tank+bd+mg+fire+air+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mg+fire+air+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+bm+mg+fire+air+mask.png" cols = "2" />
+        <image file="heavy_tank/heavy_tank+dm+mg+fire+air+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mg+fire+air+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+os+mg+fire+air+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+yc+mg+fire+air+mask.png" cols = "2" />
@@ -354,6 +370,7 @@
         <image file="heavy_tank/heavy_tank+bd+mg+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mg+fire+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+bm+mg+fire+mask.png" cols = "2" />
+        <image file="heavy_tank/heavy_tank+dm+mg+fire+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mg+fire+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+os+mg+fire+mask.png" cols = "2" />
         <image file="heavy_tank/heavy_tank+yc+mg+fire+mask.png" cols = "2" />
@@ -365,6 +382,7 @@
         <image file="heavy_tank/heavy_tank+bd+mg+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mg+mask.png" />
         <image file="heavy_tank/heavy_tank+bm+mg+mask.png" />
+        <image file="heavy_tank/heavy_tank+dm+mg+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mg+mask.png" />
         <image file="heavy_tank/heavy_tank+os+mg+mask.png" />
         <image file="heavy_tank/heavy_tank+yc+mg+mask.png" />
@@ -376,6 +394,7 @@
         <image file="heavy_tank/heavy_tank+bd+mg+move+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mg+move+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+bm+mg+move+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+dm+mg+move+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mg+move+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+os+mg+move+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+yc+mg+move+mask.png" cols = "4" />
@@ -386,6 +405,7 @@
         <image file="heavy_tank/heavy_tank+ac+mg+stop+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+mg+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+bm+mg+stop+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+dm+mg+stop+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+mg+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+os+mg+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+yc+mg+stop+mask.png" cols = "4" />
@@ -397,6 +417,7 @@
         <image file="heavy_tank/heavy_tank+ac+stop+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+bm+stop+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+dm+stop+mask.png" />
         <image file="heavy_tank/heavy_tank+ge+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+os+stop+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+yc+stop+mask.png" cols = "4" />
@@ -411,6 +432,7 @@
         <image file="heavy_tank/heavy_tank+ti+move+mask.png" />
         <image file="heavy_tank/heavy_tank+pf+move+mask.png" />
         <image file="heavy_tank/heavy_tank+bm+move+mask.png" cols = "4" />
+        <image file="heavy_tank/heavy_tank+dm+move+mask.png" />
         <image file="heavy_tank/heavy_tank+bh+move+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+ge+move+mask.png" cols = "4" />
         <image file="heavy_tank/heavy_tank+os+move+mask.png" cols = "4" />
@@ -463,23 +485,30 @@
         <image file="hoverflak/hoverflak+yc+fire+mask.png" cols = "2" />
         <image file="hoverflak/hoverflak+ma+fire+mask.png" />
         <!-- infantry -->
+        <image file="infantry/infantry+gs+dying.png" />
         <image file="infantry/infantry+ac+dying+mask.png" />
         <image file="infantry/infantry+bd+dying+mask.png" />
         <image file="infantry/infantry+bh+dying+mask.png" />
+        <image file="infantry/infantry+bg+dying+mask.png" />
         <image file="infantry/infantry+bm+dying+mask.png" />
         <image file="infantry/infantry+dm+dying+mask.png" />
         <image file="infantry/infantry+ge+dying+mask.png" />
+        <image file="infantry/infantry+gs+dying+mask.png" />
         <image file="infantry/infantry+ma+dying+mask.png" />
         <image file="infantry/infantry+os+dying+mask.png" />
         <image file="infantry/infantry+pf+dying+mask.png" />
         <image file="infantry/infantry+ti+dying+mask.png" />
         <image file="infantry/infantry+yc+dying+mask.png" />
+        <image file="infantry/infantry+gs+fire.png" cols = "2" />
+        <image file="infantry/infantry+gs+fire+down.png" cols = "2" />
         <image file="infantry/infantry+ac+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+fire+down+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+fire+down+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+fire+down+mask.png" />
         <image file="infantry/infantry+os+fire+down+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+fire+down+mask.png" />
@@ -488,42 +517,65 @@
         <image file="infantry/infantry+ac+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+fire+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+fire+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+fire+mask.png" />
         <image file="infantry/infantry+os+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+fire+mask.png" />
         <image file="infantry/infantry+ti+fire+mask.png" />
         <image file="infantry/infantry+yc+fire+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+fire+up.png" cols = "2" />
         <image file="infantry/infantry+ac+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+fire+up+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+fire+up+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+fire+up+mask.png" />
         <image file="infantry/infantry+os+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+fire+up+mask.png" />
         <image file="infantry/infantry+ti+fire+up+mask.png" />
         <image file="infantry/infantry+yc+fire+up+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs.png" />
         <image file="infantry/infantry+ac+mask.png" />
         <image file="infantry/infantry+bd+mask.png" />
         <image file="infantry/infantry+bh+mask.png" />
+        <image file="infantry/infantry+bg+mask.png" />
         <image file="infantry/infantry+bm+mask.png" />
         <image file="infantry/infantry+dm+mask.png" />
+        <image file="infantry/infantry+gs+mask.png" />
         <image file="infantry/infantry+ge+mask.png" />
         <image file="infantry/infantry+ma+mask.png" />
         <image file="infantry/infantry+os+mask.png" />
         <image file="infantry/infantry+pf+mask.png" />
         <image file="infantry/infantry+ti+mask.png" />
         <image file="infantry/infantry+yc+mask.png" />
+        <image file="infantry/infantry+ac+river.png" />
+        <image file="infantry/infantry+bd+river.png" />
+        <image file="infantry/infantry+bh+river.png" />
+        <image file="infantry/infantry+bg+river.png" />
+        <image file="infantry/infantry+bm+river.png" />
+        <image file="infantry/infantry+dm+river.png" />
+        <image file="infantry/infantry+ge+river.png" />
+        <image file="infantry/infantry+gs+river.png" />
+        <image file="infantry/infantry+ma+river.png" />
+        <image file="infantry/infantry+os+river.png" />
+        <image file="infantry/infantry+pf+river.png" />
+        <image file="infantry/infantry+ti+river.png" />
+        <image file="infantry/infantry+yc+river.png" />
         <image file="infantry/infantry+ac+river+mask.png" />
         <image file="infantry/infantry+bd+river+mask.png" />
         <image file="infantry/infantry+bh+river+mask.png" />
+        <image file="infantry/infantry+bg+river+mask.png" />
         <image file="infantry/infantry+bm+river+mask.png" />
         <image file="infantry/infantry+dm+river+mask.png" />
         <image file="infantry/infantry+ge+river+mask.png" />
+        <image file="infantry/infantry+gs+river+mask.png" />
         <image file="infantry/infantry+ma+river+mask.png" />
         <image file="infantry/infantry+os+river+mask.png" />
         <image file="infantry/infantry+pf+river+mask.png" />
@@ -532,9 +584,11 @@
         <image file="infantry/infantry+ac+river+fire.png" cols = "2" />
         <image file="infantry/infantry+bd+river+fire.png" cols = "2" />
         <image file="infantry/infantry+bh+river+fire.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+fire.png" cols = "2" />
         <image file="infantry/infantry+bm+river+fire.png" cols = "2" />
         <image file="infantry/infantry+dm+river+fire.png" cols = "2" />
         <image file="infantry/infantry+ge+river+fire.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+fire.png" cols = "2" />
         <image file="infantry/infantry+ma+river+fire.png" />
         <image file="infantry/infantry+os+river+fire.png" cols = "2" />
         <image file="infantry/infantry+pf+river+fire.png" />
@@ -543,9 +597,11 @@
         <image file="infantry/infantry+ac+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+river+fire+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+river+fire+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+river+fire+mask.png" />
         <image file="infantry/infantry+os+river+fire+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+river+fire+mask.png" />
@@ -554,9 +610,11 @@
         <image file="infantry/infantry+ac+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+bd+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+bh+river+fire+up.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+bm+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+dm+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+ge+river+fire+up.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+ma+river+fire+up.png" />
         <image file="infantry/infantry+os+river+fire+up.png" cols = "2" />
         <image file="infantry/infantry+pf+river+fire+up.png" />
@@ -565,9 +623,11 @@
         <image file="infantry/infantry+ac+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+river+fire+up+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+river+fire+up+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+river+fire+up+mask.png" />
         <image file="infantry/infantry+os+river+fire+up+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+river+fire+up+mask.png" />
@@ -575,9 +635,11 @@
         <image file="infantry/infantry+ac+river+stop.png" cols = "2" />
         <image file="infantry/infantry+bd+river+stop.png" cols = "2" />
         <image file="infantry/infantry+bh+river+stop.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+stop.png" cols = "2" />
         <image file="infantry/infantry+bm+river+stop.png" cols = "2" />
         <image file="infantry/infantry+dm+river+stop.png" cols = "2" />
         <image file="infantry/infantry+ge+river+stop.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+stop.png" cols = "2" />
         <image file="infantry/infantry+ma+river+stop.png" />
         <image file="infantry/infantry+os+river+stop.png" cols = "2" />
         <image file="infantry/infantry+pf+river+stop.png" />
@@ -586,9 +648,11 @@
         <image file="infantry/infantry+ac+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+river+stop+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+river+stop+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+river+stop+mask.png" />
         <image file="infantry/infantry+os+river+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+river+stop+mask.png" />
@@ -597,9 +661,11 @@
         <image file="infantry/infantry+ac+river+walk.png" cols = "6" />
         <image file="infantry/infantry+bd+river+walk.png" cols = "6" />
         <image file="infantry/infantry+bh+river+walk.png" cols = "6" />
+        <image file="infantry/infantry+bg+river+walk.png" cols = "6" />
         <image file="infantry/infantry+bm+river+walk.png" cols = "6" />
         <image file="infantry/infantry+dm+river+walk.png" cols = "6" />
         <image file="infantry/infantry+ge+river+walk.png" cols = "6" />
+        <image file="infantry/infantry+gs+river+walk.png" cols = "6" />
         <image file="infantry/infantry+ma+river+walk.png" />
         <image file="infantry/infantry+os+river+walk.png" cols = "6" />
         <image file="infantry/infantry+pf+river+walk.png" cols = "6"/>
@@ -608,31 +674,39 @@
         <image file="infantry/infantry+ac+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bd+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bh+river+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+bg+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bm+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+dm+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+ge+river+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+gs+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+ma+river+walk+mask.png" />
         <image file="infantry/infantry+os+river+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+pf+river+walk+mask.png" cols = "6"/>
         <image file="infantry/infantry+ti+river+walk+mask.png" cols = "6"/>
         <image file="infantry/infantry+yc+river+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+gs+walk.png" cols = "6" />
         <image file="infantry/infantry+ac+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bd+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bh+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+bg+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+bm+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+dm+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+ge+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+gs+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+ma+walk+mask.png" />
         <image file="infantry/infantry+os+walk+mask.png" cols = "6" />
         <image file="infantry/infantry+pf+walk+mask.png" cols = "6"/>
         <image file="infantry/infantry+ti+walk+mask.png" cols = "6"/>
         <image file="infantry/infantry+yc+walk+mask.png" cols = "6" />
+        <image file="infantry/infantry+gs+stop.png" cols = "2" />
         <image file="infantry/infantry+ac+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bd+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bh+stop+mask.png" cols = "2" />
+        <image file="infantry/infantry+bg+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+bm+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+dm+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+ge+stop+mask.png" cols = "2" />
+        <image file="infantry/infantry+gs+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+ma+stop+mask.png" />
         <image file="infantry/infantry+os+stop+mask.png" cols = "2" />
         <image file="infantry/infantry+pf+stop+mask.png" />
@@ -642,6 +716,7 @@
         <image file="k_heli/k_heli+bd+mask.png" cols = "2" />
         <image file="k_heli/k_heli+bh+mask.png" cols = "2" />
         <image file="k_heli/k_heli+bm+mask.png" cols = "2" />
+        <image file="k_heli/k_heli+dm+mask.png" cols = "2" />
         <image file="k_heli/k_heli+ge+mask.png" cols = "2" />
         <image file="k_heli/k_heli+os+mask.png" cols = "2" />
         <image file="k_heli/k_heli+yc+mask.png" cols = "2" />
@@ -652,6 +727,7 @@
         <image file="k_heli/k_heli+bd+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+bh+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+bm+mg+fire+mask.png" cols = "2" />
+        <image file="k_heli/k_heli+dm+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+ge+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+os+mg+fire+mask.png" cols = "2" />
         <image file="k_heli/k_heli+yc+mg+fire+mask.png" cols = "2" />
@@ -677,6 +753,7 @@
         <image file="light_tank/light_tank+bd+fire+mask.png" />
         <image file="light_tank/light_tank+bh+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+fire+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+dm+fire+mask.png" />
         <image file="light_tank/light_tank+ge+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+fire+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+fire+mask.png" cols = "4" />
@@ -688,6 +765,7 @@
         <image file="light_tank/light_tank+bd+mask.png" />
         <image file="light_tank/light_tank+bh+mask.png" />
         <image file="light_tank/light_tank+bm+mask.png" />
+        <image file="light_tank/light_tank+dm+mask.png" />
         <image file="light_tank/light_tank+ge+mask.png" />
         <image file="light_tank/light_tank+os+mask.png" />
         <image file="light_tank/light_tank+yc+mask.png" />
@@ -699,6 +777,7 @@
         <image file="light_tank/light_tank+bd+mg+mask.png" />
         <image file="light_tank/light_tank+bh+mg+mask.png" />
         <image file="light_tank/light_tank+bm+mg+mask.png" />
+        <image file="light_tank/light_tank+dm+mg+mask.png" />
         <image file="light_tank/light_tank+ge+mg+mask.png" />
         <image file="light_tank/light_tank+os+mg+mask.png" />
         <image file="light_tank/light_tank+yc+mg+mask.png" />
@@ -710,6 +789,7 @@
         <image file="light_tank/light_tank+bd+mg+fire+mask.png" />
         <image file="light_tank/light_tank+bh+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+bm+mg+fire+mask.png" cols = "2" />
+        <image file="light_tank/light_tank+dm+mg+fire+mask.png" />
         <image file="light_tank/light_tank+ge+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+os+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+yc+mg+fire+mask.png" cols = "2" />
@@ -721,6 +801,7 @@
         <image file="light_tank/light_tank+bd+mg+move+mask.png" />
         <image file="light_tank/light_tank+bh+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+mg+move+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+dm+mg+move+mask.png" />
         <image file="light_tank/light_tank+ge+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+mg+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+move+mask.png" cols = "4" />
@@ -731,7 +812,8 @@
         <image file="light_tank/light_tank+ac+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bd+mg+stop+mask.png" />
         <image file="light_tank/light_tank+bh+mg+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "2" />
+        <image file="light_tank/light_tank+bm+mg+stop+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+dm+mg+stop+mask.png" />
         <image file="light_tank/light_tank+ge+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+mg+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+mg+stop+mask.png" cols = "4" />
@@ -743,6 +825,7 @@
         <image file="light_tank/light_tank+bd+move+mask.png" />
         <image file="light_tank/light_tank+bh+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+bm+move+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+dm+move+mask.png" />
         <image file="light_tank/light_tank+ge+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+move+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+move+mask.png" cols = "4" />
@@ -753,7 +836,8 @@
         <image file="light_tank/light_tank+ac+stop+mask.png" />
         <image file="light_tank/light_tank+bd+stop+mask.png" />
         <image file="light_tank/light_tank+bh+stop+mask.png" cols = "4" />
-        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "2" />
+        <image file="light_tank/light_tank+bm+stop+mask.png" cols = "4" />
+        <image file="light_tank/light_tank+dm+stop+mask.png" />
         <image file="light_tank/light_tank+ge+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+os+stop+mask.png" cols = "4" />
         <image file="light_tank/light_tank+yc+stop+mask.png" cols = "4" />
@@ -762,23 +846,30 @@
         <image file="light_tank/light_tank+ti+stop+mask.png" />
         <image file="light_tank/light_tank+dm+stop+mask.png" />
         <!-- mech -->
+        <image file="mech/mech+gs.png" />
+        <image file="mech/mech+gs+dying.png" />
         <image file="mech/mech+ac+dying+mask.png" />
         <image file="mech/mech+bd+dying+mask.png" />
         <image file="mech/mech+bh+dying+mask.png" />
+        <image file="mech/mech+bg+dying+mask.png" />
         <image file="mech/mech+bm+dying+mask.png" />
         <image file="mech/mech+dm+dying+mask.png" />
         <image file="mech/mech+ge+dying+mask.png" />
+        <image file="mech/mech+gs+dying+mask.png" />
         <image file="mech/mech+os+dying+mask.png" />
         <image file="mech/mech+pf+dying+mask.png" />
         <image file="mech/mech+ti+dying+mask.png" />
         <image file="mech/mech+yc+dying+mask.png" />
         <image file="mech/mech+ma+dying+mask.png" />
+        <image file="mech/mech+gs+fire.png" cols = "3" />
         <image file="mech/mech+ac+fire+mask.png" cols = "3" />
         <image file="mech/mech+bd+fire+mask.png" cols = "3" />
         <image file="mech/mech+bh+fire+mask.png" cols = "3" />
+        <image file="mech/mech+bg+fire+mask.png" cols = "3" />
         <image file="mech/mech+bm+fire+mask.png" cols = "3" />
         <image file="mech/mech+dm+fire+mask.png" cols = "2"/>
         <image file="mech/mech+ge+fire+mask.png" cols = "3" />
+        <image file="mech/mech+gs+fire+mask.png" cols = "3" />
         <image file="mech/mech+os+fire+mask.png" cols = "3" />
         <image file="mech/mech+pf+fire+mask.png" />
         <image file="mech/mech+ti+fire+mask.png" />
@@ -787,9 +878,11 @@
         <image file="mech/mech+ac+mask.png" />
         <image file="mech/mech+bd+mask.png" />
         <image file="mech/mech+bh+mask.png" />
+        <image file="mech/mech+bg+mask.png" />
         <image file="mech/mech+bm+mask.png" />
         <image file="mech/mech+dm+mask.png" />
         <image file="mech/mech+ge+mask.png" />
+        <image file="mech/mech+gs+mask.png" />
         <image file="mech/mech+os+mask.png" />
         <image file="mech/mech+pf+mask.png" />
         <image file="mech/mech+ti+mask.png" />
@@ -798,9 +891,11 @@
         <image file="mech/mech+ac+river.png" />
         <image file="mech/mech+bd+river.png" />
         <image file="mech/mech+bh+river.png" />
+        <image file="mech/mech+bg+river.png" />
         <image file="mech/mech+bm+river.png" />
         <image file="mech/mech+dm+river.png" />
         <image file="mech/mech+ge+river.png" />
+        <image file="mech/mech+gs+river.png" />
         <image file="mech/mech+os+river.png" />
         <image file="mech/mech+pf+river.png" />
         <image file="mech/mech+ti+river.png" />
@@ -809,9 +904,11 @@
         <image file="mech/mech+ac+river+fire.png" cols = "3" />
         <image file="mech/mech+bd+river+fire.png" cols = "3" />
         <image file="mech/mech+bh+river+fire.png" cols = "3" />
+        <image file="mech/mech+bg+river+fire.png" cols = "3" />
         <image file="mech/mech+bm+river+fire.png" cols = "3" />
         <image file="mech/mech+dm+river+fire.png" cols = "2" />
         <image file="mech/mech+ge+river+fire.png" cols = "3" />
+        <image file="mech/mech+gs+river+fire.png" cols = "3" />
         <image file="mech/mech+os+river+fire.png" cols = "3" />
         <image file="mech/mech+pf+river+fire.png" />
         <image file="mech/mech+ti+river+fire.png" />
@@ -820,9 +917,11 @@
         <image file="mech/mech+ac+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+bd+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+bh+river+fire+mask.png" cols = "3" />
+        <image file="mech/mech+bg+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+bm+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+dm+river+fire+mask.png" cols = "2" />
         <image file="mech/mech+ge+river+fire+mask.png" cols = "3" />
+        <image file="mech/mech+gs+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+os+river+fire+mask.png" cols = "3" />
         <image file="mech/mech+pf+river+fire+mask.png" />
         <image file="mech/mech+ti+river+fire+mask.png" />
@@ -831,9 +930,11 @@
         <image file="mech/mech+ac+river+mask.png" />
         <image file="mech/mech+bd+river+mask.png" />
         <image file="mech/mech+bh+river+mask.png" />
+        <image file="mech/mech+bg+river+mask.png" />
         <image file="mech/mech+bm+river+mask.png" />
         <image file="mech/mech+dm+river+mask.png" />
         <image file="mech/mech+ge+river+mask.png" />
+        <image file="mech/mech+gs+river+mask.png" />
         <image file="mech/mech+os+river+mask.png" />
         <image file="mech/mech+pf+river+mask.png" />
         <image file="mech/mech+ti+river+mask.png" />
@@ -842,9 +943,11 @@
         <image file="mech/mech+ac+river+stop.png" />
         <image file="mech/mech+bd+river+stop.png" cols = "2" />
         <image file="mech/mech+bh+river+stop.png" cols = "2" />
+        <image file="mech/mech+bg+river+stop.png" cols = "2" />
         <image file="mech/mech+bm+river+stop.png" cols = "2" />
         <image file="mech/mech+dm+river+stop.png" />
         <image file="mech/mech+ge+river+stop.png" cols = "2" />
+        <image file="mech/mech+gs+river+stop.png" cols = "2" />
         <image file="mech/mech+os+river+stop.png" cols = "2" />
         <image file="mech/mech+pf+river+stop.png" />
         <image file="mech/mech+ti+river+stop.png" />
@@ -853,9 +956,11 @@
         <image file="mech/mech+ac+river+stop+mask.png" />
         <image file="mech/mech+bd+river+stop+mask.png" cols = "2" />
         <image file="mech/mech+bh+river+stop+mask.png" cols = "2" />
+        <image file="mech/mech+bg+river+stop+mask.png" cols = "2" />
         <image file="mech/mech+bm+river+stop+mask.png" cols = "2" />
         <image file="mech/mech+dm+river+stop+mask.png" />
         <image file="mech/mech+ge+river+stop+mask.png" cols = "2" />
+        <image file="mech/mech+gs+river+stop+mask.png" cols = "2" />
         <image file="mech/mech+os+river+stop+mask.png" cols = "2" />
         <image file="mech/mech+pf+river+stop+mask.png" />
         <image file="mech/mech+ti+river+stop+mask.png" />
@@ -864,9 +969,11 @@
         <image file="mech/mech+ac+river+walk.png" cols = "6" />
         <image file="mech/mech+bd+river+walk.png" cols = "6" />
         <image file="mech/mech+bh+river+walk.png" cols = "6" />
+        <image file="mech/mech+bg+river+walk.png" cols = "6" />
         <image file="mech/mech+bm+river+walk.png" cols = "6" />
         <image file="mech/mech+dm+river+walk.png" cols = "6" />
         <image file="mech/mech+ge+river+walk.png" cols = "6" />
+        <image file="mech/mech+gs+river+walk.png" cols = "6" />
         <image file="mech/mech+os+river+walk.png" cols = "6" />
         <image file="mech/mech+pf+river+walk.png" cols = "6" />
         <image file="mech/mech+ti+river+walk.png" cols = "6" />
@@ -875,31 +982,38 @@
         <image file="mech/mech+ac+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+bd+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+bh+river+walk+mask.png" cols = "6" />
+        <image file="mech/mech+bg+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+bm+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+dm+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+ge+river+walk+mask.png" cols = "6" />
+        <image file="mech/mech+gs+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+os+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+pf+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+ti+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+yc+river+walk+mask.png" cols = "6" />
         <image file="mech/mech+ma+river+walk+mask.png" />
+        <image file="mech/mech+gs+stop.png" cols = "2" />
         <image file="mech/mech+ac+stop+mask.png" />
         <image file="mech/mech+bd+stop+mask.png" cols = "2" />
         <image file="mech/mech+bh+stop+mask.png" cols = "2" />
-        <image file="mech/mech+bm+stop+mask.png" cols = "2" />
+        <image file="mech/mech+bg+stop+mask.png" cols = "2" />
         <image file="mech/mech+dm+stop+mask.png" />
         <image file="mech/mech+ge+stop+mask.png" cols = "2" />
+        <image file="mech/mech+gs+stop+mask.png" cols = "2" />
         <image file="mech/mech+os+stop+mask.png" cols = "2" />
         <image file="mech/mech+pf+stop+mask.png" />
         <image file="mech/mech+ti+stop+mask.png" />
         <image file="mech/mech+yc+stop+mask.png" cols = "2" />
         <image file="mech/mech+ma+stop+mask.png" />
+        <image file="mech/mech+gs+walk.png" cols = "6" />
         <image file="mech/mech+ac+walk+mask.png" cols = "6" />
         <image file="mech/mech+bd+walk+mask.png" cols = "6" />
         <image file="mech/mech+bh+walk+mask.png" cols = "6" />
+        <image file="mech/mech+bg+walk+mask.png" cols = "6" />
         <image file="mech/mech+bm+walk+mask.png" cols = "6" />
         <image file="mech/mech+dm+walk+mask.png" cols = "6" />
         <image file="mech/mech+ge+walk+mask.png" cols = "6" />
+        <image file="mech/mech+gs+walk+mask.png" cols = "6" />
         <image file="mech/mech+os+walk+mask.png" cols = "6" />
         <image file="mech/mech+pf+walk+mask.png" cols = "6" />
         <image file="mech/mech+ti+walk+mask.png" cols = "6" />
@@ -932,6 +1046,7 @@
         <image file="missile/missile+bd+mask.png" />
         <image file="missile/missile+bh+mask.png" />
         <image file="missile/missile+bm+mask.png" />
+        <image file="missile/missile+dm+mask.png" />
         <image file="missile/missile+ge+mask.png" />
         <image file="missile/missile+os+mask.png" />
         <image file="missile/missile+yc+mask.png" />
@@ -942,6 +1057,7 @@
         <image file="missile/missile+bd+fire+mask.png" />
         <image file="missile/missile+bh+fire+mask.png" cols = "2"/>
         <image file="missile/missile+bm+fire+mask.png" cols = "2"/>
+        <image file="missile/missile+dm+fire+mask.png" />
         <image file="missile/missile+ge+fire+mask.png" cols = "2"/>
         <image file="missile/missile+os+fire+mask.png" cols = "2"/>
         <image file="missile/missile+yc+fire+mask.png" cols = "2"/>
@@ -974,6 +1090,7 @@
         <image file="recon/recon+bd+mask.png" />
         <image file="recon/recon+bh+mask.png" />
         <image file="recon/recon+bm+mask.png" />
+        <image file="recon/recon+dm+mask.png" />
         <image file="recon/recon+ge+mask.png" />
         <image file="recon/recon+os+mask.png" />
         <image file="recon/recon+yc+mask.png" />
@@ -982,8 +1099,9 @@
         <image file="recon/recon+pf+mask.png" />
         <image file="recon/recon+dm+mask.png" />
         <image file="recon/recon+ac+stop+mask.png" cols = "4" />
-        <image file="recon/recon+bh+stop+mask.png" cols = "2" />
+        <image file="recon/recon+bh+stop+mask.png" cols = "4" />
         <image file="recon/recon+bm+stop+mask.png" cols = "4" />
+        <image file="recon/recon+dm+stop+mask.png" />
         <image file="recon/recon+ge+stop+mask.png" cols = "4" />
         <image file="recon/recon+os+stop+mask.png" cols = "4" />
         <image file="recon/recon+yc+stop+mask.png" cols = "4" />
@@ -996,6 +1114,7 @@
         <image file="recon/recon+bd+move+mask.png" />
         <image file="recon/recon+bh+move+mask.png" cols = "4" />
         <image file="recon/recon+bm+move+mask.png" cols = "4" />
+        <image file="recon/recon+dm+move+mask.png" />
         <image file="recon/recon+ge+move+mask.png" cols = "4" />
         <image file="recon/recon+os+move+mask.png" cols = "4" />
         <image file="recon/recon+yc+move+mask.png" cols = "4" />
@@ -1007,24 +1126,24 @@
         <image file="recon/recon+bd+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+bh+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+bm+fire+air+mask.png" cols = "2" />
+        <image file="recon/recon+dm+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+ge+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+os+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+yc+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+ma+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+ti+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+pf+fire+air+mask.png" cols = "2" />
-        <image file="recon/recon+dm+fire+air+mask.png" cols = "2" />
         <image file="recon/recon+ac+fire+mask.png" cols = "2" />
         <image file="recon/recon+bd+fire+mask.png" cols = "2" />
         <image file="recon/recon+bh+fire+mask.png" cols = "2" />
         <image file="recon/recon+bm+fire+mask.png" cols = "2" />
+        <image file="recon/recon+dm+fire+mask.png" cols = "2" />
         <image file="recon/recon+ge+fire+mask.png" cols = "2" />
         <image file="recon/recon+os+fire+mask.png" cols = "2" />
         <image file="recon/recon+yc+fire+mask.png" cols = "2" />
         <image file="recon/recon+ma+fire+mask.png" cols = "2" />
         <image file="recon/recon+ti+fire+mask.png" cols = "2" />
         <image file="recon/recon+pf+fire+mask.png" cols = "2" />
-        <image file="recon/recon+dm+fire+mask.png" cols = "2" />
         <!-- rocketthrower -->
         <image file="rocketthrower/rocketthrower+ac+mask.png" />
         <image file="rocketthrower/rocketthrower+bd+mask.png" />
@@ -1098,6 +1217,8 @@
         <image file="iron_shield_generator/iron_shield_generator+mask.png" />    
         <!-- iron_shield_generator -->
         <image file="crystal_tank/crystal_tank+mask.png" />
+        <image file="crystal_tank/crystal_tank+fire.png" cols = "21" />
+
         <!-- missile_sub -->
         <image file="missile_sub/missile_sub.png" />
         <image file="missile_sub/missile_sub+mask.png" />
@@ -1106,7 +1227,6 @@
         <!-- at cycle -->
         <image file="at_cycle/at_cycle+mask.png" />
         <!-- auto tank -->
-        <image file="auto_tank/auto_tank.png" />
         <image file="auto_tank/auto_tank+mask.png" />
         <!-- chaperon -->
         <image file="chaperon/chaperon+mask.png" />        
@@ -1120,8 +1240,13 @@
         <image file="partisan/partisan+mask.png" />
         <image file="partisan/partisan+alt+mask.png" />
         <!-- smuggler -->
-        <image file="smuggler/smuggler.png" />
-        <image file="smuggler/smuggler+mask.png" />        
+        <image file="smuggler/smuggler+mask+0.png" />
+        <image file="smuggler/smuggler+mask+1.png" />
+        <image file="smuggler/smuggler+mask+2.png" />
+        <image file="smuggler/smuggler+mask+3.png" />
+        <image file="smuggler/smuggler+mask+4.png" />
+        <image file="smuggler/smuggler+mask+5.png" />
+        <image file="smuggler/smuggler+mask+6.png" />
         <!-- tank hunter -->
         <image file="tank_hunter/tank_hunter+mask.png" />        
         <!-- siege cannon -->

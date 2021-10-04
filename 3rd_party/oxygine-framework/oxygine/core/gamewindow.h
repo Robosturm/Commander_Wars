@@ -85,9 +85,7 @@ namespace oxygine
         bool hasCursor();
         virtual void shutdown();
         qint32 getTimerCycle() const;
-
         bool getShuttingDown() const;
-
         void setShuttingDown(bool newShuttingDown);
 
     signals:
@@ -99,7 +97,8 @@ namespace oxygine
         void sigMouseMoveEvent(qint32 x, qint32 y);
         void sigStopUpdateTimer();
         void sigStartUpdateTimer();
-        void sigWaitOnRelease();
+        void sigQuit(qint32 exitCode);
+        void sigShowKeyboard(bool visible);
     public slots:
         /**
          * @brief getBrightness
@@ -137,8 +136,9 @@ namespace oxygine
             }
         }
         void quitApp();
-        void waitOnRelease();
         virtual void onQuit() = 0;
+        void quit(qint32 exitCode);
+        void showKeyboard(bool visible);
     protected:
         virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;

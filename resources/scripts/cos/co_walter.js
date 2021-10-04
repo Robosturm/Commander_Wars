@@ -88,13 +88,13 @@ var Constructor = function()
             }
             if (animations.length < 7)
             {
-                animation.addSprite("power12", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, globals.randInt(0, 400));
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power12", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 2, delay);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;

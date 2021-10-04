@@ -103,6 +103,10 @@ void NormalAi::readIni(QString name)
             m_minSameIslandDistance = 3.0f;
         }
         m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
+        if(!ok)
+        {
+            m_slowUnitSpeed = 3;
+        }
         settings.endGroup();
         settings.beginGroup("CoUnit");
         m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
@@ -506,10 +510,34 @@ void NormalAi::readIni(QString name)
         {
             m_expensiveUnitBonusMultiplier = 4.0f;
         }
+
+        m_canSupplyBonus = settings.value("CanSupplyBonus", 10.0f).toFloat(&ok);
         if(!ok)
         {
-            m_slowUnitSpeed = 3;
+            m_canSupplyBonus = 10.0f;
         }
+        m_maxSupplyUnitRatio = settings.value("MaxSupplyUnitRatio", 0.05f).toFloat(&ok);
+        if(!ok)
+        {
+            m_maxSupplyUnitRatio = 0.05f;
+        }
+        m_averageSupplySupport = settings.value("AverageSupplySupport", 8.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_averageSupplySupport = 8.0f;
+        }
+
+        m_cappingFunds = settings.value("CappingFunds", 4700.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_cappingFunds = 4700.0f;
+        }
+        m_cappedFunds = settings.value("CappedFunds", 1999.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_cappedFunds = 1999.0f;
+        }
+
         settings.endGroup();
     }
 }
@@ -889,9 +917,7 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
             pUnit->getLoadedUnitCount() == 0)
         {
             QStringList actions = pUnit->getActionList();
-            if (actions.contains(ACTION_SUPPORTALL_RATION) ||
-                actions.contains(ACTION_SUPPORTSINGLE_REPAIR) ||
-                actions.contains(ACTION_SUPPORTSINGLE_FREEREPAIR))
+            if (isRefuelUnit(actions))
             {
                 spGameAction pAction = spGameAction::create(ACTION_WAIT);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
@@ -905,6 +931,12 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
                     QPoint refillTarget;
                     found = getBestRefillTarget(pfs, 4, moveTarget, refillTarget);
                 }
+                else if (actions.contains(ACTION_SUPPORTALL_RATION))
+                {
+                    pAction->setActionID(ACTION_SUPPORTALL_RATION_MONEY);
+                    QPoint refillTarget;
+                    found = getBestRefillTarget(pfs, 4, moveTarget, refillTarget);
+                }
                 else if (actions.contains(ACTION_SUPPORTSINGLE_REPAIR))
                 {
                     pAction->setActionID(ACTION_SUPPORTSINGLE_REPAIR);
@@ -915,6 +947,13 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
                 else if (actions.contains(ACTION_SUPPORTSINGLE_FREEREPAIR))
                 {
                     pAction->setActionID(ACTION_SUPPORTSINGLE_FREEREPAIR);
+                    QPoint refillTarget;
+                    found = getBestRefillTarget(pfs, 1, moveTarget, refillTarget);
+                    CoreAI::addSelectedFieldData(pAction, refillTarget);
+                }
+                else if (actions.contains(ACTION_SUPPORTSINGLE_SUPPLY))
+                {
+                    pAction->setActionID(ACTION_SUPPORTSINGLE_SUPPLY);
                     QPoint refillTarget;
                     found = getBestRefillTarget(pfs, 1, moveTarget, refillTarget);
                     CoreAI::addSelectedFieldData(pAction, refillTarget);
@@ -998,11 +1037,9 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     return ret;
 }
 
-void NormalAi::appendRefillTargets(QStringList actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
+void NormalAi::appendRefillTargets(QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
 {
-    if (actions.contains(ACTION_SUPPORTALL_RATION) ||
-        actions.contains(ACTION_SUPPORTSINGLE_REPAIR) ||
-        actions.contains(ACTION_SUPPORTSINGLE_FREEREPAIR))
+    if (isRefuelUnit(actions))
     {
         spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
         spGameMap pMap = GameMap::getInstance();
@@ -1440,7 +1477,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
                         m_updatePoints.append(pUnit->getPosition());
                         m_updatePoints.append(pAction->getActionTarget());
                         m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
-                                                   static_cast<qint32>(target.y())));
+                                                     static_cast<qint32>(target.y())));
                         emit performAction(pAction);
                         return true;
                     }
@@ -1519,7 +1556,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
                             m_updatePoints.append(pUnit->getPosition());
                             m_updatePoints.append(pAction->getActionTarget());
                             m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
-                                                       static_cast<qint32>(target.y())));
+                                                         static_cast<qint32>(target.y())));
                             emit performAction(pAction);
                             return true;
                         }
@@ -1563,7 +1600,7 @@ bool NormalAi::suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem&
             m_updatePoints.append(pUnit->getPosition());
             m_updatePoints.append(pAction->getActionTarget());
             m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
-                                       static_cast<qint32>(target.y())));
+                                         static_cast<qint32>(target.y())));
             emit performAction(pAction);
             return true;
         }
@@ -2044,71 +2081,93 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
             enemeyCount++;
         }
     }
-
+    float funds = m_pPlayer->getFunds();
     QVector<float> data(BuildItems::Max, 0);
     qint32 productionBuildings = 0;
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);
         if (pBuilding->isProductionBuilding() &&
-            pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
+            pBuilding->getTerrain()->getUnit() == nullptr)
         {
-            productionBuildings++;
+            auto buildList = pBuilding->getConstructionList();
+            for (auto & unitId : buildList)
+            {
+                Unit dummy(unitId, m_pPlayer, false);
+                if (m_pPlayer->getCosts(unitId) < funds && dummy.hasWeapons())
+                {
+                    productionBuildings++;
+                    break;
+                }
+            }
         }
     }
-    qint32 infantryUnits = 0;
-    qint32 indirectUnits = 0;
-    qint32 directUnits = 0;
-    qint32 transporterUnits = 0;
-    QVector<std::tuple<Unit*, Unit*>> transportTargets;
-    GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
-                     infantryUnits, indirectUnits, directUnits,
-                     transporterUnits, transportTargets);
+    UnitCountData countData;
+    GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
     QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
     getEnemyDamageCounts(pUnits, pEnemyUnits, attackCount);
-    float funds = m_pPlayer->getFunds();
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
-    if (productionBuildings > GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
-        productionBuildings > m_fundsPerBuildingFactorA)
+    if (productionBuildings >= GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
+        productionBuildings >= m_fundsPerBuildingFactorA)
     {
         // if we have a bigger number of buildings we wanna spam out units but not at an average costs overall buildings
         // but more a small amount of strong ones and a large amount of cheap ones
         // so we use a small (x - a) / (x - b) function here
         fundsPerFactory = funds * (1 - ((productionBuildings - m_fundsPerBuildingFactorA) / (static_cast<float>(productionBuildings) - m_fundsPerBuildingFactorB)));
-        if (fundsPerFactory >= m_spamingFunds * 1.5f)
+        if (fundsPerFactory < m_cappingFunds)
+        {
+            fundsPerFactory = m_cappedFunds;
+        }
+        else if (fundsPerFactory >= m_spamingFunds * 1.5f)
         {
             data[UseHighTechUnits] = 1.0f;
         }
     }
     // position 0 direct to indirect ratio
-    if (indirectUnits > 0)
+    if (countData.indirectUnits > 0)
     {
-        data[DirectUnitRatio] = static_cast<float>(directUnits) / static_cast<float>(indirectUnits);
+        data[DirectUnitRatio] = static_cast<float>(countData.directUnits) / static_cast<float>(countData.indirectUnits);
     }
     else
     {
-        data[DirectUnitRatio] = static_cast<float>(directUnits);
+        data[DirectUnitRatio] = static_cast<float>(countData.directUnits);
     }
     // position 1 infatry to unit count ratio
     if (pUnits->size() > 0)
     {
-        data[InfantryUnitRatio] = infantryUnits / static_cast<float>(pUnits->size());
+        data[InfantryUnitRatio] = static_cast<float>(countData.infantryUnits) / static_cast<float>(pUnits->size());
     }
     else
     {
         data[InfantryUnitRatio] = 0.0;
     }
-    data[InfantryCount] = infantryUnits;
-    data[UnitEnemyRatio] = (pUnits->size() + m_ownUnitEnemyUnitRatioAverager) / (pEnemyUnits->size() + m_ownUnitEnemyUnitRatioAverager);
+    if (pUnits->size() > 0)
+    {
+        data[SupplyRatio] = static_cast<float>(countData.supplyUnits) / static_cast<float>(pUnits->size());
+    }
+    else
+    {
+        data[SupplyRatio] = 0.0;
+    }
+    if (pUnits->size() > 0)
+    {
+        data[RequiredSupplyRatio] = static_cast<float>(countData.supplyNeededUnits) / static_cast<float>(pUnits->size());
+    }
+    else
+    {
+        data[RequiredSupplyRatio] = 0.0;
+    }
+    data[InfantryCount] = countData.infantryUnits;
+    data[UnitEnemyRatio] = (static_cast<float>(pUnits->size()) + m_ownUnitEnemyUnitRatioAverager) / (static_cast<float>(pEnemyUnits->size()) + m_ownUnitEnemyUnitRatioAverager);
     if (enemeyCount > 1)
     {
-        data[UnitEnemyRatio] *= (enemeyCount - 1);
+        data[UnitEnemyRatio] *= static_cast<float>(enemeyCount - 1);
     }
     data[UnitCount] = pUnits->size();
 
     spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
-    float bestScore = -400000.0f;;
+    float bestScore = NO_BUILD_SCORE + 1;
     QVector<qint32> buildingIdx;
     QVector<qint32> unitIDx;
     QVector<float> scores;
@@ -2138,14 +2197,15 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                     auto & buildingData = m_productionData[index];
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
+                        bool onlyTransporter = true;
                         if (enableList[i2])
                         {
                             float score = 0.0f;
                             qint32 unitIdx = getUnitProductionIdx(index, actionIds[i2],
-                                                                  pUnits, transportTargets,
+                                                                  pUnits, countData.transportTargets,
                                                                   pEnemyUnits, pEnemyBuildings,
                                                                   attackCount, data);
-                            bool isTransporter = false;
+                            bool isTransporter = pBuilding->getBuildingID() == "HARBOUR";
                             if (unitIdx >= 0)
                             {
                                 auto & unitData = buildingData.m_buildData[unitIdx];
@@ -2186,7 +2246,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                                     }
                                     if (!unitData.isTransporter)
                                     {
-
+                                        onlyTransporter = false;
                                         score = calcBuildScore(data, unitData);
                                     }
                                     else
@@ -2194,38 +2254,45 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                                         score = calcTransporterScore(unitData, pUnits, data);
                                         isTransporter = true;
                                     }
+                                    score *= BaseGameInputIF::getUnitBuildValue(actionIds[i2]);
                                 }
-                            }
-                            score *= BaseGameInputIF::getUnitBuildValue(actionIds[i2]);
-                            if (score > bestScore)
-                            {
-                                bestScore = score;
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
-                                transporters.append(isTransporter);
-                                qint32 index = 0;
-                                while (index < scores.size())
+                                else
                                 {
-                                    if (scores[index] < bestScore - variance)
-                                    {
-                                        buildingIdx.removeAt(index);
-                                        unitIDx.removeAt(index);
-                                        scores.removeAt(index);
-                                        transporters.removeAt(index);
-                                    }
-                                    else
-                                    {
-                                        index++;
-                                    }
+                                    score = NO_BUILD_SCORE;
                                 }
                             }
-                            else if (score >= bestScore - variance)
+                            if (!onlyTransporter)
                             {
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
-                                transporters.append(isTransporter);
+                                if (score > bestScore)
+                                {
+                                    bestScore = score;
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                    transporters.append(isTransporter);
+                                    qint32 index = 0;
+                                    while (index < scores.size())
+                                    {
+                                        if (scores[index] < bestScore - variance)
+                                        {
+                                            buildingIdx.removeAt(index);
+                                            unitIDx.removeAt(index);
+                                            scores.removeAt(index);
+                                            transporters.removeAt(index);
+                                        }
+                                        else
+                                        {
+                                            index++;
+                                        }
+                                    }
+                                }
+                                else if (score >= bestScore - variance)
+                                {
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                    transporters.append(isTransporter);
+                                }
                             }
                         }
                     }
@@ -2365,9 +2432,11 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
     auto points = pfs.getAllNodePoints();
     if (points.length() >= unitBuildData.movePoints * 1.5f)
     {
+        QStringList actionList = dummy.getActionList();
         unitBuildData.canMove = true;
         unitBuildData.isTransporter = (dummy.getWeapon1ID().isEmpty() &&
                                        dummy.getWeapon2ID().isEmpty());
+        unitBuildData.isSupplyUnit = isRefuelUnit(actionList);
         if (unitBuildData.isTransporter)
         {
             getTransporterData(unitBuildData, dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets);
@@ -2388,7 +2457,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
             unitBuildData.notAttackableCount = std::get<1>(damageData);
             unitBuildData.damage =  std::get<0>(damageData);
             unitBuildData.cost = dummy.getUnitCosts();
-            unitBuildData.infantryUnit = (dummy.getActionList().contains(ACTION_CAPTURE) &&
+            unitBuildData.infantryUnit = (actionList.contains(ACTION_CAPTURE) &&
                                           dummy.getLoadingPlace() == 0);
             unitBuildData.indirectUnit = dummy.getBaseMaxRange() > 1;
         }
@@ -2832,6 +2901,8 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
     {
         score += unitBuildData.loadingCount * m_ProducingTransportLoadingBonus;
     }
+    float supplyScore = calcSupplyScore(data, unitBuildData);
+    score += supplyScore;
     if (unitBuildData.loadingCount > 0)
     {
         if (unitBuildData.transporterCount <= 0 ||
@@ -2846,10 +2917,14 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
                           " loadingCount=" + QString::number(unitBuildData.loadingCount) +
                           " transportCount=" + QString::number(unitBuildData.transporterCount), Console::eDEBUG);
         }
+        else if (supplyScore <= 0.0f)
+        {
+            score = NO_BUILD_SCORE;
+        }
     }
-    else
+    else if (supplyScore <= 0.0f)
     {
-        score = -500000.0f;
+        score = NO_BUILD_SCORE;
     }
     return score;
 }
@@ -2928,12 +3003,24 @@ float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildDa
     }
     // apply co buff bonus
     score += data[COBonus] * m_coUnitBuffBonus;
-
+    score += calcSupplyScore(data, unitBuildData);
     if (data[ReachDistance] > 0 && data[Movementpoints] > 0)
     {
         score += m_nearEnemyBonus * data[Movementpoints] / GlobalUtils::roundUp(data[ReachDistance]);
     }
     CONSOLE_PRINT("NormalAi::calcBuildScore final score=" + QString::number(score) + " for " + unitBuildData.unitId, Console::eDEBUG);
+    return score;
+}
+
+float NormalAi::calcSupplyScore(QVector<float>& data, UnitBuildData & unitBuildData)
+{
+    float score = 0.0f;
+    if (unitBuildData.isSupplyUnit && data[SupplyRatio] <= m_maxSupplyUnitRatio)
+    {
+        qint32 supplyUnits = data[SupplyRatio] * data[UnitCount];
+        qint32 supplyNeeds = data[RequiredSupplyRatio] * data[UnitCount] - supplyUnits * m_averageSupplySupport;
+        score += m_canSupplyBonus * supplyNeeds;
+    }
     return score;
 }
 

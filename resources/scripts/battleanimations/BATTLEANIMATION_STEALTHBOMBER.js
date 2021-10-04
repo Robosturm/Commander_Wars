@@ -30,13 +30,13 @@ var Constructor = function()
             {
                 sprite.loadSingleMovingSprite("rocket", false, Qt.point(45, 62),
                                               Qt.point(128, 0), 400, false,
-                                              1, 1, -1, i * 150);
+                                              -1, 1, -1, i * 150);
             }
             else
             {
                 sprite.loadSingleMovingSprite("rocket_down", false, Qt.point(45, 82),
                                               Qt.point(128, -64), 400, false,
-                                              1, 1, -1, i * 150);
+                                              -1, 1, -1, i * 150);
             }
             sprite.loadSound("stealthfighter_fire.wav", 1, i * 150);
         }
@@ -61,7 +61,7 @@ var Constructor = function()
         {
             sprite.loadMovingSprite("rocket", false, 5, Qt.point(127, 30),
                                     Qt.point(-128, 0), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
             sprite.loadMovingSprite("rocket_hit_air", false, sprite.getMaxUnitCount(), Qt.point(0, 30),
                                     Qt.point(-50, 0), 400, false,
                                     1, 1.0, 0, 400, true);
@@ -70,7 +70,7 @@ var Constructor = function()
         {
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
             sprite.loadSprite("rocket_hit",  false, 5, Qt.point(0, 60),
                               1, 1.0, 0, 400, true);
         }

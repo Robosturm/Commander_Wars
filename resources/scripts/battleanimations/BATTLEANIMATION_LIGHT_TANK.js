@@ -21,6 +21,7 @@ var Constructor = function()
                           ["bd", [Qt.point(21, 22), Qt.point(23, 42), Qt.point(23, 37), -80]],
                           ["bh", [Qt.point(27, 24), Qt.point(28, 41), Qt.point(28, 36), -80]],
                           ["bm", [Qt.point(27, 20), Qt.point(30, 41), Qt.point(30, 36), -80]],
+                          ["dm", [Qt.point(27, 21), Qt.point(28, 41), Qt.point(28, 36), -80]],
                           ["ge", [Qt.point(26, 23), Qt.point(30, 42), Qt.point(30, 37), -80]],
                           ["ma", [Qt.point(18, 34), Qt.point(37, 27), Qt.point(37, 22), -90]],
                           ["os", [Qt.point(21, 24), Qt.point(23, 44), Qt.point(23, 39), -80]],

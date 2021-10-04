@@ -18,14 +18,14 @@ var Constructor = function()
                      ["yc", "yc"],];
 
     this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(41, 41), Qt.point(41, 33)]],
-                          ["bd", [Qt.point(-5, 5),  Qt.point(35, 39), Qt.point(35, 34)]],
+                          ["bd", [Qt.point(-5, 5),  Qt.point(34, 42), Qt.point(34, 34)]],
                           ["bh", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
                           ["bm", [Qt.point(-5, 5),  Qt.point(37, 47), Qt.point(37, 40)]],
-                          ["dm", [Qt.point(-5, 5),  Qt.point(35, 50), Qt.point(35, 44)]],
+                          ["dm", [Qt.point(-5, 5),  Qt.point(34, 49), Qt.point(34, 44)]],
                           ["ge", [Qt.point(-5, 5),  Qt.point(39, 37), Qt.point(39, 30)]],
-                          ["ma", [Qt.point(-15, 5), Qt.point(39, 25), Qt.point(39, 20)]],
+                          ["ma", [Qt.point(-15, 5), Qt.point(39, 28), Qt.point(39, 20)]],
                           ["os", [Qt.point(-5, 5),  Qt.point(35, 50), Qt.point(35, 44)]],
-                          ["pf", [Qt.point(-5, 5),  Qt.point(32, 45), Qt.point(32, 40)]],
+                          ["pf", [Qt.point(-5, 5),  Qt.point(30, 48), Qt.point(31, 40)]],
                           ["ti", [Qt.point(-5, 5),  Qt.point(36, 37), Qt.point(36, 30)]],
                           ["yc", [Qt.point(-5, 5),  Qt.point(29, 47), Qt.point(30, 40)]],];
 

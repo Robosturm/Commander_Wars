@@ -17,15 +17,16 @@ var Constructor = function()
                      ["yc", "yc"],];
 
 
-    this.animationData = [["bd", [Qt.point(-39, 38), Qt.point(30, 35)]],
-                          ["bh", [Qt.point(-45, 45), Qt.point(33, 34)]],
-                          ["bm", [Qt.point(-39, 38), Qt.point(30, 35)]],
-                          ["ge", [Qt.point(-43, 45), Qt.point(33, 33)]],
-                          ["ma", [Qt.point(-35, 40), Qt.point(41, 49)]],
-                          ["os", [Qt.point(-43, 38), Qt.point(29, 34)]],
-                          ["pf", [Qt.point(-36, 28), Qt.point(37, 38)]],
-                          ["ti", [Qt.point(-45, 37), Qt.point(32, 34)]],
-                          ["yc", [Qt.point(-40, 40), Qt.point(26, 38)]],];
+    this.animationData = [["bd", [Qt.point(-36, 31), Qt.point(30, 35)]],
+                          ["bh", [Qt.point(-49, 39), Qt.point(33, 34)]],
+                          ["bm", [Qt.point(-36, 31), Qt.point(30, 35)]],
+                          ["dm", [Qt.point(-40, 41), Qt.point(29, 38)]],
+                          ["ge", [Qt.point(-38, 37), Qt.point(33, 33)]],
+                          ["ma", [Qt.point(-22, 39), Qt.point(41, 49)]],
+                          ["os", [Qt.point(-40, 32), Qt.point(29, 34)]],
+                          ["pf", [Qt.point(-29, 28), Qt.point(37, 38)]],
+                          ["ti", [Qt.point(-38, 37), Qt.point(32, 34)]],
+                          ["yc", [Qt.point(-37, 32), Qt.point(26, 38)]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
@@ -62,8 +63,12 @@ var Constructor = function()
             BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon);
             offset = data[0];
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
-                                    Qt.point(130, -80), 600, false,
+                                    Qt.point(130, -80), 600, true,
                                     -1, 1, -1);
+            offset = Qt.point(data[0].x + 45, data[0].y + 5);
+            sprite.loadSprite("rocket_trailing_smoke", false, BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
+            offset = Qt.point(data[0].x + 2, data[0].y);
+            sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("missile_weapon_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);

@@ -2764,98 +2764,98 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="140"/>
+        <location filename="../coreengine/mainapp.cpp" line="145"/>
         <source>Loading Building Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="155"/>
+        <location filename="../coreengine/mainapp.cpp" line="160"/>
         <source>Loading CO Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="165"/>
+        <location filename="../coreengine/mainapp.cpp" line="170"/>
         <source>Loading Animation Textures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="175"/>
+        <location filename="../coreengine/mainapp.cpp" line="180"/>
         <source>Loading Game Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="185"/>
+        <location filename="../coreengine/mainapp.cpp" line="190"/>
         <source>Loading Rule Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="197"/>
+        <location filename="../coreengine/mainapp.cpp" line="202"/>
         <source>Loading Objects Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="207"/>
+        <location filename="../coreengine/mainapp.cpp" line="212"/>
         <source>Loading Terrains Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="217"/>
+        <location filename="../coreengine/mainapp.cpp" line="222"/>
         <source>Loading Units Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="227"/>
+        <location filename="../coreengine/mainapp.cpp" line="232"/>
         <source>Loading Battleanimation Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="234"/>
+        <location filename="../coreengine/mainapp.cpp" line="239"/>
         <source>Loading CO-Perk Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="244"/>
+        <location filename="../coreengine/mainapp.cpp" line="249"/>
         <source>Loading Wiki Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="254"/>
+        <location filename="../coreengine/mainapp.cpp" line="259"/>
         <source>Loading Userdata ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="264"/>
+        <location filename="../coreengine/mainapp.cpp" line="269"/>
         <source>Loading Achievement Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="274"/>
+        <location filename="../coreengine/mainapp.cpp" line="279"/>
         <source>Loading Shop Textures ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="284"/>
+        <location filename="../coreengine/mainapp.cpp" line="289"/>
         <source>Loading sounds ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="294"/>
+        <location filename="../coreengine/mainapp.cpp" line="299"/>
         <source>Loading Scripts ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="583"/>
+        <location filename="../coreengine/mainapp.cpp" line="564"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="589"/>
+        <location filename="../coreengine/mainapp.cpp" line="570"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="591"/>
+        <location filename="../coreengine/mainapp.cpp" line="572"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -3403,126 +3403,126 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="744"/>
+        <location filename="../menue/optionmenue.cpp" line="745"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="751"/>
+        <location filename="../menue/optionmenue.cpp" line="752"/>
         <source>Audio Device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="768"/>
+        <location filename="../menue/optionmenue.cpp" line="769"/>
         <source>Selects the primary audio output device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="783"/>
+        <location filename="../menue/optionmenue.cpp" line="784"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="787"/>
+        <location filename="../menue/optionmenue.cpp" line="788"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="800"/>
+        <location filename="../menue/optionmenue.cpp" line="801"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="804"/>
+        <location filename="../menue/optionmenue.cpp" line="805"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="817"/>
+        <location filename="../menue/optionmenue.cpp" line="818"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="821"/>
+        <location filename="../menue/optionmenue.cpp" line="822"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="864"/>
+        <location filename="../menue/optionmenue.cpp" line="866"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="867"/>
+        <location filename="../menue/optionmenue.cpp" line="869"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="868"/>
+        <location filename="../menue/optionmenue.cpp" line="870"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="869"/>
+        <location filename="../menue/optionmenue.cpp" line="871"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="870"/>
+        <location filename="../menue/optionmenue.cpp" line="872"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="872"/>
+        <location filename="../menue/optionmenue.cpp" line="874"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="881"/>
+        <location filename="../menue/optionmenue.cpp" line="883"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="963"/>
+        <location filename="../menue/optionmenue.cpp" line="965"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="965"/>
+        <location filename="../menue/optionmenue.cpp" line="967"/>
         <source>Filters the mods by the given tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1054"/>
+        <location filename="../menue/optionmenue.cpp" line="1056"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1056"/>
+        <location filename="../menue/optionmenue.cpp" line="1058"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1061"/>
+        <location filename="../menue/optionmenue.cpp" line="1063"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1066"/>
+        <location filename="../menue/optionmenue.cpp" line="1068"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1071"/>
+        <location filename="../menue/optionmenue.cpp" line="1073"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1076"/>
+        <location filename="../menue/optionmenue.cpp" line="1078"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
