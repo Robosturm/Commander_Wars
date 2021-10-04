@@ -1239,9 +1239,18 @@ void GameRules::serializeObject(QDataStream& pStream) const
     CONSOLE_PRINT("storing game rules", Console::eDEBUG);
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());
-    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    for (auto & rule : m_VictoryRules)
     {
-        m_VictoryRules[i]->serializeObject(pStream);
+        auto ruleTypes = rule->getRuleType();
+        for (qint32 i = 0; i < ruleTypes.size(); ++i)
+        {
+            if (ruleTypes[i] == VictoryRule::spinbox &&
+                rule->getRuleValue(i) <= rule->getInfiniteValue(i))
+            {
+                rule->setRuleValue(std::numeric_limits<qint32>::min(), i);
+            }
+        }
+        rule->serializeObject(pStream);
     }
 
     pStream << static_cast<qint32>(m_Weathers.size());

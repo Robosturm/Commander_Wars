@@ -231,3 +231,4 @@ var Init =
         Init.cos[1] = cos[index2];
     }
 }
+

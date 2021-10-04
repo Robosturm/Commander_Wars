@@ -27,7 +27,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HEAVY_HOVERCRAFT.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_HEAVY_HOVERCRAFT.animationData);
+        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HEAVY_HOVERCRAFT.animationData);
         var weaponId = "";
         if (weapon === 1)
         {
