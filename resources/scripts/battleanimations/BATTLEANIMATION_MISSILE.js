@@ -20,6 +20,7 @@ var Constructor = function()
                           ["bm", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["bh", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["ge", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
+                          ["dm", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["ma", [Qt.point(-35, 5), Qt.point(9, 36),  "rocket_launch",   Qt.point(35, 22)]],
                           ["os", [Qt.point(-10, 5), Qt.point(11, 35), "rocket_launch",   Qt.point(35, 22)]],
                           ["pf", [Qt.point(-10, 5), Qt.point(-1, 35), "rocket_launch+1", Qt.point(20, 10)]],
@@ -51,18 +52,16 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
-        var offset = data[1];
-        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
+        sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
                                 Qt.point(128, 64), 400, false,
-                                -1, 1, -1);
-        offset.x -= data[3].x;
-        offset.y -= data[3].y;
-        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), offset,
+                                -1, 1, 0);
+        sprite.loadMovingSprite(data[2], false, sprite.getMaxUnitCount(), Qt.point(data[1].x - data[3].x, data[1].y - data[3].y),
                                 Qt.point(0, 0), 0, false, 1, 1, 0);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_launch.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        sprite.addSpriteShakeY(4, 0.5, 0.0, 75, 0, count);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

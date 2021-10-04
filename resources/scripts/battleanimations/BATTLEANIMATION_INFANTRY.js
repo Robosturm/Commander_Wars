@@ -7,27 +7,31 @@ var Constructor = function()
     this.armyData = [["ac", "ac"],
                      ["bd", "bd"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
+    //                                                          up              down            // normal
     this.animationData = [["ac", [65, Qt.point(-75, 5), Qt.point(15, 19), Qt.point(15, 14), Qt.point(15, 14), Qt.point(-50, 20), -90]],
-                          ["bd", [65, Qt.point(-75, 5), Qt.point(19, 27), Qt.point(21, 16), Qt.point(20, 19), Qt.point(-30, 15), 0]],
-                          ["bh", [65, Qt.point(-75, 5), Qt.point(18, 23), Qt.point(18, 13), Qt.point(18, 16), Qt.point(-30, 15), 0]],
-                          ["bm", [65, Qt.point(-75, 5), Qt.point(14, 26), Qt.point(15, 16), Qt.point(15, 19), Qt.point(-30, 15), 0]],
+                          ["bd", [65, Qt.point(-75, 5), Qt.point(19, 27), Qt.point(21, 16), Qt.point(20, 19), Qt.point(-50, 20), -90]],
+                          ["bh", [65, Qt.point(-75, 5), Qt.point(18, 23), Qt.point(18, 13), Qt.point(18, 16), Qt.point(-50, 20), -90]],
+                          ["bg", [65, Qt.point(-75, 5), Qt.point(18, 23), Qt.point(18, 13), Qt.point(18, 16), Qt.point(-50, 20), -90]],
+                          ["bm", [65, Qt.point(-75, 5), Qt.point(14, 26), Qt.point(15, 16), Qt.point(15, 19), Qt.point(-50, 20), -90]],
                           ["dm", [65, Qt.point(-75, 5), Qt.point(8, 20),  Qt.point(8, 12),  Qt.point(8, 13),  Qt.point(-50, 20), -90]],
-                          ["ge", [65, Qt.point(-75, 5), Qt.point(14, 23), Qt.point(14, 14), Qt.point(14, 15), Qt.point(-30, 15), 0]],
+                          ["ge", [65, Qt.point(-75, 5), Qt.point(14, 23), Qt.point(14, 14), Qt.point(14, 15), Qt.point(-50, 20), -90]],
+                          ["gs", [65, Qt.point(-75, 5), Qt.point(8, 20),  Qt.point(8, 12),  Qt.point(8, 13),  Qt.point(-50, 20), -90]],
                           ["ma", [65, Qt.point(-75, 5), Qt.point(16, 19), Qt.point(16, 14), Qt.point(16, 14), Qt.point(-50, 20), -90]],
-                          ["os", [65, Qt.point(-75, 5), Qt.point(14, 21), Qt.point(14, 11), Qt.point(14, 13), Qt.point(-30, 15), 0]],
+                          ["os", [65, Qt.point(-75, 5), Qt.point(14, 21), Qt.point(14, 11), Qt.point(14, 13), Qt.point(-50, 20), -90]],
                           ["pf", [65, Qt.point(-75, 5), Qt.point(13, 19), Qt.point(13, 14), Qt.point(13, 14), Qt.point(-50, 20), -90]],
                           ["ti", [65, Qt.point(-75, 5), Qt.point(15, 24), Qt.point(15, 19), Qt.point(15, 19), Qt.point(-50, 20), -90]],
-                          ["yc", [65, Qt.point(-75, 5), Qt.point(21, 25), Qt.point(21, 16), Qt.point(21, 18), Qt.point(-30, 15), 0]],];
+                          ["yc", [65, Qt.point(-75, 5), Qt.point(21, 25), Qt.point(21, 16), Qt.point(21, 18), Qt.point(-50, 20), -90]],];
 
     this.getArmyName = function(unit)
     {
@@ -86,12 +90,9 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), data[1],
                                   Qt.point(data[0], 0), 600, false,
                                   1, 1);
-        if (riverName !== "")
-        {
-            sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                    Qt.point(65, 0), 600, false,
-                                    1, 1);
-        }
+        sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                Qt.point(65, 0), 600, false,
+                                1, 1);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -106,11 +107,8 @@ var Constructor = function()
         var offset = Qt.point(data[0] + data[1].x, data[1].y);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
-        if (riverName !== "")
-        {
-            sprite.loadSprite("infantry+" + armyName + riverName + ending,  false,
-                              BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
-        }
+        sprite.loadSpriteV2("infantry+" + armyName + riverName + ending,  GameEnums.Recoloring_None,
+                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -236,7 +234,11 @@ var Constructor = function()
         sprite.loadDyingMovingSprite("infantry+" + armyName + riverName + "+mask",
                                      "infantry+" + armyName + "+dying+mask",
                                      GameEnums.Recoloring_Matrix,
-                                     offset, movement, rotation, 300);
+                                     offset, movement, rotation, 400);
+        sprite.loadDyingMovingSprite("infantry+" + armyName + riverName,
+                                     "infantry+" + armyName + "+dying",
+                                     GameEnums.Recoloring_None,
+                                     offset, movement, rotation, 400);
     };
 };
 

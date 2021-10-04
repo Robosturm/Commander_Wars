@@ -30,6 +30,7 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenwait.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.h"
 #include "3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/tweenshakey.h"
 #include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "3rd_party/oxygine-framework/oxygine/UpdateState.h"

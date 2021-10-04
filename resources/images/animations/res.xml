@@ -19,10 +19,18 @@
                 <image file="labor+mask.png" />
 		
                 <!-- soldier -->
+                <image file="soldier+ac+mask.png" cols = "5" />
+                <image file="soldier+bd+mask.png" cols = "5" />
+                <image file="soldier+bg+mask.png" cols = "5" />
                 <image file="soldier+bh+mask.png" cols = "5" />
                 <image file="soldier+bm+mask.png" cols = "5" />
                 <image file="soldier+ge+mask.png" cols = "5" />
+                <image file="soldier+gs.png" cols = "5" />
+                <image file="soldier+gs+mask.png" cols = "5" />
+                <image file="soldier+ma+mask.png" cols = "5" />
                 <image file="soldier+os+mask.png" cols = "5" />
+                <image file="soldier+pf+mask.png" cols = "5" />
+                <image file="soldier+ti+mask.png" cols = "5" />
 		<image file="soldier+yc+mask.png" cols = "5" />
 		
 		<!-- field marker -->

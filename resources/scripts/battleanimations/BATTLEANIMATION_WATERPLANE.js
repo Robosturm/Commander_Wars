@@ -21,13 +21,13 @@ var Constructor = function()
         {
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(100, 0), 400, false,
-                                    1, 1, -1);
+                                    -1, 1, -1);
         }
         else
         {
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(100, -50), 400, false,
-                                    1, 1, -1);
+                                    -1, 1, -1);
         }
         for (var i = 0; i < count; i++)
         {
@@ -56,7 +56,7 @@ var Constructor = function()
                                     1, 1.0, 0, 300, true);
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                     Qt.point(-127, 0), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
         }
         else
         {
@@ -64,7 +64,7 @@ var Constructor = function()
                               1, 1.0, 0, 400, true);
             sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                     Qt.point(-128, -64), 400, true,
-                                    1, 1, 0, 0, true);
+                                    -1, 1, 0, 0, true);
         }
         sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         for (var i = 0; i < count; i++)

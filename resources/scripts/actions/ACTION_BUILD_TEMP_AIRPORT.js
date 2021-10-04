@@ -56,22 +56,10 @@ var Constructor = function()
         var y = action.getActionTarget().y * map.getImageSize() - 30;
         var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
         captureAnimation.addBackgroundSprite("capture_background");
-        var armyName = unit.getOwner().getArmy().toLowerCase();
-        // bh and bg have the same sprites
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "os") &&
-            (armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
-        {
-            armyName = "os";
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
         Global["TEMPORARY_AIRPORT"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
         captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Matrix);
+        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner(), GameEnums.Recoloring_None);
 
         animation.queueAnimation(captureAnimation);
 

@@ -51,25 +51,26 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     add_definitions(
-        -DQT_DECLARATIVE_DEBUG
-        -DQT_QML_DEBUG
-        -DGAMEDEBUG
-        -DDEBUG_LEVEL=0
-        #-DHEAVY_AI
-        #-DMEMORYTRACING # only enable it if you can deal with a drastical performance decrease
-        -DOXYGINE_DEBUG_SAFECAST
+        -DGAMEDEBUG                 # adds additional js checks and asserts
+        -DDEBUG_LEVEL=0             # default console log level
+        #-DHEAVY_AI                 # experimental heavy ai unfinished
+        #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+        #-DAUDIOSUPPORT             # currently not supported for mingw --> qt bug
+        -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
         )
 
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
+    elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        set(DEPLOY_RESOURCES_AS_FOLDER 1)
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
     endif()
 else("Release")
     message("Compiling as Release")
     add_definitions(
-        -DGAMERELEASE
-        -DDEBUG_LEVEL=1
+        -DDEBUG_LEVEL=1             # default console log level
+        -DAUDIOSUPPORT
         )
     set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()
@@ -178,6 +179,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/tween/tweentogglevisibility.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenwait.cpp
     3rd_party/oxygine-framework/oxygine/tween/tweenscreenshake.cpp
+    3rd_party/oxygine-framework/oxygine/tween/tweenshakey.cpp
     # res stuff
     3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
@@ -229,6 +231,7 @@ set(${PROJECT_NAME}_SRCS
     objects/achievementbanner.cpp
     objects/unitstatisticview.cpp
     # objects base
+    objects/base/textinput.cpp
     objects/base/topbar.cpp
     objects/base/textbox.cpp
     objects/base/h_scrollbar.cpp
@@ -509,8 +512,7 @@ set(${PROJECT_NAME}_SRCS
 
 ##############################################################################
 # OS Specific files #
-##############################################################################
-
+######################################
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
@@ -528,17 +530,21 @@ endif()
 ##############################################################################
 # Resources files #
 ##############################################################################
+########################################
 
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-        "general.qrc"
-    )
-else()
-    qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-                         "general.qrc"
-                         "music.qrc"
-                         "sound.qrc"
-    )
+if (NOT DEPLOY_RESOURCES_AS_FOLDER)
+    message("Using compiled resources")
+    if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
+        )
+    else()
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+                             "general.qrc"
+                             "music.qrc"
+                             "sound.qrc"
+        )
+    endif()
 endif()
 
 ##############################################################################
@@ -582,7 +588,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "2"
+    QT_ANDROID_VERSION_CODE "3"
     )
 
 

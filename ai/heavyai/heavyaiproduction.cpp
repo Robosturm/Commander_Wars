@@ -490,20 +490,17 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQm
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        qint32 infantryUnits = 0;
-        qint32 indirectUnits = 0;
-        qint32 directUnits = 0;
-        qint32 transporterUnits = 0;
-        GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
-                         infantryUnits, indirectUnits, directUnits, transporterUnits,
-                         transportTargets);
+        UnitCountData countData;
+        GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
         double count = pUnits->size();
         if (count > 0)
         {
-            data[DirectUnitRatio]       = static_cast<double>(directUnits)   / count;
-            data[IndirectUnitRatio]     = static_cast<double>(indirectUnits) / count;
-            data[InfantryUnitRatio]     = static_cast<double>(infantryUnits) / count;
-            data[TransportUnitRatio]    = static_cast<double>(transporterUnits) / count;
+            data[DirectUnitRatio]       = static_cast<double>(countData.directUnits)   / count;
+            data[IndirectUnitRatio]     = static_cast<double>(countData.indirectUnits) / count;
+            data[InfantryUnitRatio]     = static_cast<double>(countData.infantryUnits) / count;
+            data[TransportUnitRatio]    = static_cast<double>(countData.transporterUnits) / count;
+            data[SupplyUnitRatio]       = static_cast<double>(countData.supplyUnits) / count;
+            data[SupplyRequiredRatio]   = static_cast<double>(countData.supplyNeededUnits) / count;
         }
         if (pMap->getCurrentDay() >  m_earlyGameDays)
         {
@@ -534,31 +531,40 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQm
         {
             data[EnemyRatio] = static_cast<double>(enemeyCount) / playerCount;
         }
-        double productionCount = 0;
         double unusedCount = 0;
+        float funds = m_pPlayer->getFunds();
         for (qint32 i = 0; i < pBuildings->size(); i++)
         {
             Building* pBuilding = pBuildings->at(i);
             if (pBuilding->isProductionBuilding())
             {
-                productionCount++;
                 if (pBuilding->getTerrain()->getUnit() == nullptr)
                 {
-                    unusedCount++;
                     bool found = false;
                     for (auto & building : m_BuildingData)
                     {
                         if (building.m_pBuilding == pBuilding)
                         {
+                            unusedCount++;
                             found = true;
                             break;
                         }
                     }
                     if (!found)
                     {
-                        BuildingData newData;
-                        newData.m_pBuilding = pBuilding;
-                        m_BuildingData.append(newData);
+                        auto buildList = pBuilding->getConstructionList();
+                        for (auto & unitId : buildList)
+                        {
+                            Unit dummy(unitId, m_pPlayer, false);
+                            if (m_pPlayer->getCosts(unitId) < funds && dummy.hasWeapons())
+                            {
+                                BuildingData newData;
+                                newData.m_pBuilding = pBuilding;
+                                m_BuildingData.append(newData);
+                                unusedCount++;
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -574,9 +580,9 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQm
                 }
             }
         }
-        if (productionCount > 0)
+        if (m_BuildingData.size() > 0)
         {
-            data[ProductionUsage] = static_cast<double>(unusedCount) / productionCount;
+            data[ProductionUsage] = static_cast<double>(unusedCount) / static_cast<double>(m_BuildingData.size());
         }
     }
     return data;

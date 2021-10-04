@@ -486,6 +486,15 @@ public slots:
      */
     void addSpriteScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
     /**
+     * @brief addSpriteShakeY
+     * @param startIntensity
+     * @param startPercent
+     * @param endPercent
+     * @param durationMs
+     * @param delayMs
+     */
+    void addSpriteShakeY(qint32 startIntensity, float startPercent, float endPercent, qint32 durationMs, qint32 delayMs, qint32 loops);
+    /**
      * @brief getUnitBasePosition
      * @param unit
      * @param maxUnitCount

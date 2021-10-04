@@ -17,6 +17,8 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
+            sprite.loadSpriteV2("crystal_tank+fire", GameEnums.Recoloring_None,
+                              BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(-5, 10));
             offset = Qt.point(78, 50);
             sprite.loadSingleMovingSprite("crystalcannon", false,
                                           Qt.point(offset.x, offset.y),

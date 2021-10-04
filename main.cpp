@@ -116,6 +116,7 @@ void registerInterfaceData()
     qRegisterMetaType<QAbstractSocket::SocketState>("QAbstractSocket::SocketState");
     qRegisterMetaType<spTextbox>("spTextbox");
     qRegisterMetaType<spGameAction>("spGameAction");
+    qRegisterMetaType<std::shared_ptr<QEvent>>("std::shared_ptr<QEvent>");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);
@@ -208,14 +209,13 @@ int main(qint32 argc, char* argv[])
     CrashReporter::setSignalHandler(nullptr);
     window.setShuttingDown(true);
     Userdata::getInstance()->release();
-    Console::getInstance()->release();
     Settings::shutdown();
     CONSOLE_PRINT("Shutting down main window", Console::eDEBUG);
     window.shutdown();
     CONSOLE_PRINT("Saving settings", Console::eDEBUG);
     Settings::saveSettings();
     // give os time to save the settings
-    QThread::currentThread()->msleep(250);
+    QThread::currentThread()->msleep(350);
     if (MainServer::exists())
     {
         CONSOLE_PRINT("Shutting dwon game server", Console::eDEBUG);

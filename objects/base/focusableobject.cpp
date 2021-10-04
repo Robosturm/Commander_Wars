@@ -1,5 +1,9 @@
 #include "objects/base/focusableobject.h"
 #include "coreengine/console.h"
+#include "coreengine/mainapp.h"
+
+#include <QClipboard>
+#include <QGuiApplication>
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
@@ -10,6 +14,7 @@ FocusableObject::FocusableObject()
     setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
+    connect(Mainapp::getInstance(), &Mainapp::sigFocusedObjectEvent, this, &FocusableObject::doHandleEvent, Qt::QueuedConnection);
     if (!m_registeredAtStage)
     {
         m_registeredAtStage = true;
@@ -22,6 +27,32 @@ FocusableObject::FocusableObject()
             }
         });
     }
+}
+
+bool FocusableObject::handleEvent(QEvent *event)
+{
+    bool handled = false;
+    if (FocusableObject::getFocusedObject() != nullptr)
+    {
+        switch (event->type())
+        {
+            case QEvent::InputMethodQuery:
+            case QEvent::InputMethod:
+            case QEvent::KeyPress:
+            case QEvent::KeyRelease:
+            {
+                std::shared_ptr<QEvent> ev(event->clone());
+                emit Mainapp::getInstance()->sigFocusedObjectEvent(ev);
+                handled = true;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+    return handled;
 }
 
 
@@ -41,6 +72,11 @@ void FocusableObject::looseFocus()
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            virtualKeyboard->hide();
+        }
     }
 }
 
@@ -51,6 +87,11 @@ void FocusableObject::looseFocusInternal()
         CONSOLE_PRINT("Loosing focus forced by object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
+        auto virtualKeyboard = QGuiApplication::inputMethod();
+        if (virtualKeyboard != nullptr)
+        {
+            virtualKeyboard->hide();
+        }
     }
 }
 

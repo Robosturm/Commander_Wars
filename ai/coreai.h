@@ -29,6 +29,16 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
+    struct UnitCountData
+    {
+        qint32 infantryUnits{0};
+        qint32 indirectUnits{0};
+        qint32 directUnits{0};
+        qint32 transporterUnits{0};
+        qint32 supplyUnits{0};
+        qint32 supplyNeededUnits{0};
+        QVector<std::tuple<Unit*, Unit*>> transportTargets;
+    };
     /**
      * @brief The AISteps enum
      */
@@ -49,8 +59,10 @@ public:
     static const QString ACTION_SUPPORTSINGLE;
     static const QString ACTION_SUPPORTSINGLE_REPAIR;
     static const QString ACTION_SUPPORTSINGLE_FREEREPAIR;
+    static const QString ACTION_SUPPORTSINGLE_SUPPLY;
     static const QString ACTION_SUPPORTALL;
     static const QString ACTION_SUPPORTALL_RATION;
+    static const QString ACTION_SUPPORTALL_RATION_MONEY;
     static const QString ACTION_UNSTEALTH;
     static const QString ACTION_PLACE;
     static const QString ACTION_STEALTH;
@@ -464,6 +476,18 @@ protected:
      */
     bool needsRefuel(Unit* pUnit);
     /**
+     * @brief isRefuelUnit
+     * @param pUnit
+     * @return
+     */
+    bool isRefuelUnit(Unit* pUnit);
+    /**
+     * @brief isRefuelUnit
+     * @param actionList
+     * @return
+     */
+    bool isRefuelUnit(QStringList & actionList);
+    /**
      * @brief hasMissileTarget
      * @return
      */
@@ -487,8 +511,7 @@ protected:
      * @param transportTargets
      */
     void GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
-                          qint32 & infantryUnits, qint32 & indirectUnits,
-                          qint32 & directUnits, qint32 & transporterUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
+                          UnitCountData & countData);
     /**
      * @brief buildCOUnit
      * @return

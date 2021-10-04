@@ -536,7 +536,11 @@ qint32 Unit::getVision(QPoint position)
             }
         }
     }
-    rangeModifier += pMap->getTerrain(position.x(), position.y())->getBonusVision(this);
+    Terrain* pTerrain = pMap->getTerrain(position.x(), position.y());
+    if (pTerrain != nullptr)
+    {
+        rangeModifier += pTerrain->getBonusVision(this);
+    }
     qint32 points = m_vision + rangeModifier;
     if (m_vision >= 1 && points < 1)
     {

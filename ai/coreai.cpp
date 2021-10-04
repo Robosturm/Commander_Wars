@@ -34,8 +34,10 @@ const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
 const QString CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
 const QString CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
 const QString CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
+const QString CoreAI::ACTION_SUPPORTSINGLE_SUPPLY = "ACTION_SUPPORTSINGLE_SUPPLY";
 const QString CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
 const QString CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
+const QString CoreAI::ACTION_SUPPORTALL_RATION_MONEY = "ACTION_SUPPORTALL_RATION_MONEY";
 const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
 const QString CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
 const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
@@ -1683,6 +1685,21 @@ bool CoreAI::needsRefuel(Unit *pUnit)
     return false;
 }
 
+bool CoreAI::isRefuelUnit(Unit* pUnit)
+{
+    QStringList list = pUnit->getActionList();
+    return isRefuelUnit(list);
+}
+
+bool CoreAI::isRefuelUnit(QStringList & actionList)
+{
+    return actionList.contains(ACTION_SUPPORTALL_RATION) ||
+           actionList.contains(ACTION_SUPPORTALL_RATION_MONEY) ||
+           actionList.contains(ACTION_SUPPORTSINGLE_FREEREPAIR) ||
+           actionList.contains(ACTION_SUPPORTSINGLE_REPAIR) ||
+           actionList.contains(ACTION_SUPPORTSINGLE_SUPPLY);
+}
+
 void CoreAI::createIslandMap(QString movementType, QString unitID)
 {
     bool found = false;
@@ -1939,35 +1956,42 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
 }
 
 void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
-                              qint32 & infantryUnits, qint32 & indirectUnits,
-                              qint32 & directUnits, qint32 & transporterUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets)
+                              UnitCountData & countData)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
         if (pUnit->getActionList().contains(ACTION_CAPTURE))
         {
-            infantryUnits++;
+            countData.infantryUnits++;
         }
         else if (pUnit->hasWeapons())
         {
             if (pUnit->getBaseMaxRange() > 1)
             {
-                indirectUnits++;
+                countData.indirectUnits++;
             }
             else
             {
-                directUnits++;
+                countData.directUnits++;
             }
+        }
+        if (needsRefuel(pUnit))
+        {
+            countData.supplyNeededUnits++;
+        }
+        if (isRefuelUnit(pUnit))
+        {
+            countData.supplyUnits++;
         }
         if (pUnit->getLoadingPlace() > 0)
         {
-            transporterUnits++;
+            countData.transporterUnits++;
             QVector<QVector3D> ret;
             QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
             for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
             {
-                transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
+                countData.transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
             }
         }
     }
