@@ -5,6 +5,33 @@ var Constructor = function()
         return 1;
     };
 
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        return true;
+    };
+
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        var startPos = Qt.point(10, 20);
+        var movement = Qt.point(-142, 0);
+        var moveTime = 1420;
+        sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
+        sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
+                                  BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+        sprite.loadMovingSprite("missile_sub",  false,
+                                   BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), startPos, movement, moveTime, false, -1);
+    };
+
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 1420;
+    };
+
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 0;
+    };
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
@@ -13,13 +40,14 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
         sprite.loadMovingSprite("missile_sub",  false,
-                                BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-132, 20), movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix,
-                                  BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(-132, 20), movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        sprite.restoreBackgroundSpeed();
         BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)

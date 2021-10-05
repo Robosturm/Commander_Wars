@@ -155,6 +155,7 @@ signals:
      * @param pAction
      */
     void performAction(spGameAction pAction);
+    void sigNextTurn();
 public slots:
     void rightClickDown(qint32 x, qint32 y);
     void rightClickUp(qint32 x, qint32 y);
@@ -169,6 +170,7 @@ public slots:
     void syncMarkedFields();
 protected slots:
     void zoomChanged(float zoom);
+    void nextTurn();
 protected:
     void nextMarkedField();
     void previousMarkedField();

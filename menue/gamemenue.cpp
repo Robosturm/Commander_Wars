@@ -419,7 +419,6 @@ void GameMenue::connectMap()
     connect(pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigMovedMap, m_IngameInfoBar.get(), &IngameInfoBar::syncMinimapPosition, Qt::QueuedConnection);
-
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
 
@@ -442,14 +441,14 @@ void GameMenue::loadUIButtons()
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 70, 50);
+        pButtonBox->setSize(286 + 110, 50);
         m_CurrentRoundTime->setPosition(108 + 4, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
     else
     {
-        pButtonBox->setSize(286, 50);
+        pButtonBox->setSize(286 + 40, 50);
     }
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -470,6 +469,19 @@ void GameMenue::loadUIButtons()
     });
     pButtonBox->addChild(exitGame);
 
+    m_nextTurnButton = ObjectManager::createIconButton("next_player", 36);
+    m_nextTurnButton->setPosition(exitGame->getX() - 38 - 5, 8);
+    GameMap* pPtrMap = pMap.get();
+    m_nextTurnButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        auto player = pPtrMap->getCurrentPlayer();
+        if (player->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        {
+            emit oxygine::safeCast<HumanPlayerInput*>(player->getBaseGameInput())->sigNextTurn();
+        }
+    });
+    m_nextTurnButton->setEnabled(false);
+    pButtonBox->addChild(m_nextTurnButton);
 
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
@@ -1104,6 +1116,15 @@ void GameMenue::finishActionPerformed()
     pMap->getGameRules()->checkVictory();
     skipAnimations(true);
     pMap->getGameRules()->createFogVision();
+    if (!pMap->getCurrentPlayer()->getIsDefeated() &&
+        pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+    {
+        m_nextTurnButton->setEnabled(true);
+    }
+    else
+    {
+        m_nextTurnButton->setEnabled(false);
+    }
 }
 
 void GameMenue::actionPerformed()

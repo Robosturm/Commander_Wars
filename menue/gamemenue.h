@@ -307,6 +307,7 @@ protected:
     spIngameInfoBar m_IngameInfoBar;
     spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
+    oxygine::spButton m_nextTurnButton;
     static spGameMenue m_pGameMenuInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};

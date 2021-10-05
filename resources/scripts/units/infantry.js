@@ -19,18 +19,18 @@ var Constructor = function()
     };
     // called for loading the main sprite
     this.armyDataStanding = [["os", "os"],
-                     ["bm", "bm"],
-                     ["ge", "ge"],
-                     ["yc", "yc"],
-                     ["bh", "bh"],
-                     ["bg", "bh"],
-                     ["ma", "ma"],
-                     ["ac", "ac"],
-                     ["bd", "bd"],
-                     ["dm", "dm"],
-                     ["gs", "gs"],
-                     ["pf", "pf"],
-                     ["ti", "ti"],];
+                             ["bm", "bm"],
+                             ["ge", "ge"],
+                             ["yc", "yc"],
+                             ["bh", "bh"],
+                             ["bg", "bg"],
+                             ["ma", "ma"],
+                             ["ac", "ac"],
+                             ["bd", "bd"],
+                             ["dm", "dm"],
+                             ["gs", "gs"],
+                             ["pf", "pf"],
+                             ["ti", "ti"],];
     this.loadSprites = function(unit)
     {
         // none neutral player
@@ -51,7 +51,7 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["ma", "ma"],
                      ["ac", "ac"],];
     this.doWalkingAnimation = function(action)

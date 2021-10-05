@@ -5271,5 +5271,6 @@
         <file>resources/images/battleanimations/smuggler/smuggler+mask+4.png</file>
         <file>resources/images/battleanimations/smuggler/smuggler+mask+5.png</file>
         <file>resources/images/battleanimations/smuggler/smuggler+mask+6.png</file>
+        <file>resources/objects/next_player.png</file>
     </qresource>
 </RCC>
