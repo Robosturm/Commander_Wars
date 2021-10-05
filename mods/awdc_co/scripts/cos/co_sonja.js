@@ -27,7 +27,7 @@ CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
             return -1;
     }
 };
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
 {
     return false;
 };

@@ -1,6 +1,8 @@
 #include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
+#include "coreengine/console.h"
+
 #include <limits.h>
 #include <qmath.h>
 
@@ -23,7 +25,7 @@ namespace oxygine
 
         if (m_duration <= timeMS(0))
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::init Tweener duration should be more than ZERO");
+            CONSOLE_PRINT("Tween::init Tweener duration should be more than ZERO", Console::eDEBUG);
             m_duration = timeMS(1);
         }
     }
@@ -45,7 +47,7 @@ namespace oxygine
         }
         else if (m_duration < timeMS(0))
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Tween::init Tweener duration should be more than ZERO");
+            CONSOLE_PRINT("Tween::init2 Tweener duration should be more than ZERO", Console::eDEBUG);
             m_duration = timeMS(1);
         }
     }

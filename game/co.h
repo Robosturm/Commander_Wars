@@ -206,7 +206,7 @@ public slots:
      * @param position
      * @return
      */
-    bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker);
+    bool getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker, bool isDefender);
     /**
      * @brief getVisionrangeModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from

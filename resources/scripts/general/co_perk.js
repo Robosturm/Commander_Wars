@@ -55,7 +55,7 @@ var CO_PERK =
         return 0;
     },
 
-    getFirstStrike : function(co, unit, posX, posY, attacker)
+    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender)
     {
         return false;
     },
