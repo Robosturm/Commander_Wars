@@ -177,6 +177,13 @@ protected:
                           QVector<QVector3D>& targets,
                           spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
     /**
+     * @brief unloadUnits
+     * @param pAction
+     * @param pUnit
+     * @return
+     */
+    bool unloadUnits(spGameAction pAction, Unit* pUnit);
+    /**
      * @brief repairUnits
      * @param pUnits
      * @param pBuildings
