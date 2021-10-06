@@ -81,7 +81,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=20
-    -DREVISION=0
+    -DREVISION=1
     )
 
 ###################################################################################
@@ -584,11 +584,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.20.0"
+    QT_ANDROID_VERSION_NAME "0.20.1"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "3"
+    QT_ANDROID_VERSION_CODE "4"
     )
 
 

@@ -9,9 +9,6 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount());
         var startX = -70;
-        sprite.loadMovingSprite("auto_tank", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
         sprite.loadMovingSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
@@ -27,8 +24,6 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit)
     {
         var offset = Qt.point(-5, 5);
-        sprite.loadSprite("auto_tank",  false,
-                          BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount(), offset);
         sprite.loadSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount(), offset);
     };

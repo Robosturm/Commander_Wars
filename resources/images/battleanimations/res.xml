@@ -770,7 +770,7 @@
         <image file="light_tank/light_tank+os+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+yc+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ma+mg+fire+mask.png" cols = "2" />
-        <image file="light_tank/light_tank+pf+mg+fire+mask.png" />
+        <image file="light_tank/light_tank+pf+mg+fire+mask.png" cols = "2" />
         <image file="light_tank/light_tank+ti+mg+fire+mask.png" />
         <image file="light_tank/light_tank+ac+mg+move+mask.png" />
         <image file="light_tank/light_tank+bd+mg+move+mask.png" />

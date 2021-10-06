@@ -749,6 +749,13 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
     }
 }
 
+bool BattleAnimationSprite::existResAnim(QString spriteID)
+{
+    BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
+    oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
+    return (pAnim != nullptr);
+}
+
 void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs, qint32 loops, bool scaleWithAnimationSpeed)
 {
     if (m_nextFrames.size() > 0)

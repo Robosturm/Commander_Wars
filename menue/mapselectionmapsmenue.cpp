@@ -223,7 +223,9 @@ void MapSelectionMapsMenue::slotButtonNext()
         case MapSelectionStep::selectMap:
         {
             QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
-            if (QFile::exists(mapFile))
+            if (QFile::exists(mapFile) ||
+                mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
+                mapFile == NetworkCommands::SERVERMAPIDENTIFIER)
             {
                 m_pMapSelectionView->loadCurrentMap();
                 QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();

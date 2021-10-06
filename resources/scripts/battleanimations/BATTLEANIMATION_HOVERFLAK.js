@@ -40,9 +40,13 @@ var Constructor = function()
         }
         sprite.loadSpriteV2("hoverflak+" + army + ending + airName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), data[0], loops);
-        sprite.loadSpriteV2("hoverflak+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), data[0],
-                            -1, 1, 0, 0, false, false, 100);
+        var spriteId = "hoverflak+" + army + "+prop+mask";
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_Matrix,
+                                BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), data[0],
+                                -1, 1, 0, 0, false, false, 100);
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

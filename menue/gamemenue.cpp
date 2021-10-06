@@ -789,7 +789,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
         path = pGameAction->getMovePath();
         QVector<QPoint> trapPath;
         qint32 trapPathCost = 0;
-        for (qint32 i = path.size() - 1; i >= 0; i--)
+        for (qint32 i = path.size() - 2; i >= 0; i--)
         {
             // check the movepath for a trap
             QPoint point = path[i];

@@ -30,9 +30,13 @@ var Constructor = function()
         var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
         sprite.loadSpriteV2("artillerycraft+" + army + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0]);
-        sprite.loadSpriteV2("artillerycraft+" + army + "+prop+mask", GameEnums.Recoloring_Matrix,
-                            BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0],
-                            -1, 1, 0, 0, false, false, 100);
+        var spriteId = "artillerycraft+" + army + "+prop+mask";
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_Matrix,
+                                BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0],
+                                -1, 1, 0, 0, false, false, 100);
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
