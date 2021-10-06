@@ -11,6 +11,13 @@ var CO_PERK =
          return true;
     },
 
+    getPerkEnabled : function(co)
+    {
+        // called during the perk selection
+        // use the co object to get the current active perks and define if this perk can be selected or not
+        return true;
+    },
+
     onCOUnitLost : function(co)
     {
     },

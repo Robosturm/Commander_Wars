@@ -34,6 +34,7 @@ public:
      * @return
      */
     QString getGroup(qint32 position);
+
 public slots:
     void removeRessource(QString id);
 private:

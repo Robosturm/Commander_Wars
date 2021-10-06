@@ -97,6 +97,7 @@ void PerkSelection::updatePerksView(CO* pCO)
                 }
             });
             m_Checkboxes.append(pCheckbox);
+            m_perkIds.append(id);
             addChild(pCheckbox);
 
             oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -169,18 +170,40 @@ void PerkSelection::updatePerkCount()
     if (!m_banning)
     {
         bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
-        for (auto & checkbox : m_Checkboxes)
+        for (qint32 i = 0; i < m_Checkboxes.size(); ++i)
         {
-            if (enable || checkbox->getChecked())
+            bool selectable = getPerkEnabled(m_perkIds[i]);
+            if (selectable)
             {
-                checkbox->setEnabled(true);
+                if (enable || m_Checkboxes[i]->getChecked())
+                {
+                    m_Checkboxes[i]->setEnabled(true);
+                }
+                else
+                {
+                    m_Checkboxes[i]->setEnabled(false);
+                }
             }
             else
             {
-                checkbox->setEnabled(false);
+                m_Checkboxes[i]->setEnabled(false);
             }
         }
     }
+}
+
+bool PerkSelection::getPerkEnabled(QString perkId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(m_pCO);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(perkId, "getPerkEnabled", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    return true;
 }
 
 void PerkSelection::toggleAll(bool toggle)
