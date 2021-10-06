@@ -29,7 +29,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/amy.mp3", 3444, 604297)
+                audio.addMusic("resources/music/cos/pink_frontier.mp3", 18552, 99334);
                 break;
         }
     };

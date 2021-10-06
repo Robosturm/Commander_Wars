@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
+                audio.addMusic("resources/music/cos/golden_sun+0.mp3", 3727, 70231)
+                audio.addMusic("resources/music/cos/golden_sun+1.mp3", 2545, 22775);
                 break;
         }
     };

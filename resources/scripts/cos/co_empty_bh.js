@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/sturm.mp3", 4054, 60338);
+                audio.addMusic("resources/music/cos/black_hole+0.mp3", 0, 25431)
+                audio.addMusic("resources/music/cos/black_hole+1.mp3", 0, 42932);
                 break;
         }
     };

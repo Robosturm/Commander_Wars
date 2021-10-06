@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
+                audio.addMusic("resources/music/cos/dark_matter+0.mp3", 7684, 58947)
+                audio.addMusic("resources/music/cos/dark_matter+1.mp3", 16931, 53583);
                 break;
         }
     };

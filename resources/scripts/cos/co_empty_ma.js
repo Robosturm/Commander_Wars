@@ -29,7 +29,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/robosturm.mp3", 1395, 41092);
+                audio.addMusic("resources/music/cos/metal_army.mp3", 0, 106204);
                 break;
         }
     };

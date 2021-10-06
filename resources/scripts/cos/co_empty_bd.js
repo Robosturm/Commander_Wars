@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/forsythe.mp3", 2245, 118383)
+                audio.addMusic("resources/music/cos/brown_desert+0.mp3", 798, 62763)
+                audio.addMusic("resources/music/cos/brown_desert+1.mp3", 41520, 91334);
                 break;
         }
     };

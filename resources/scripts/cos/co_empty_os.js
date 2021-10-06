@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/nell.mp3", 59, 61394);
+                audio.addMusic("resources/music/cos/orange_star+0.mp3", 0, 39498)
+                audio.addMusic("resources/music/cos/orange_star+1.mp3", 0, 39294);
                 break;
         }
     };

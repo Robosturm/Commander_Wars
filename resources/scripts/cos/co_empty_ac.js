@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/brenner.mp3", 631, 59458);
+                audio.addMusic("resources/music/cos/amber_corona+0.mp3", 9126, 99733)
+                audio.addMusic("resources/music/cos/amber_corona+1.mp3", 5695, 73480);
                 break;
         }
     };
