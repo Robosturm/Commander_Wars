@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/eagle.mp3", 27, 67923)
+                audio.addMusic("resources/music/cos/green_earth+0.mp3", 0, 36228)
+                audio.addMusic("resources/music/cos/green_earth+1.mp3", 0, 36053);
                 break;
         }
     };

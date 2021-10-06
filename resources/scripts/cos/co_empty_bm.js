@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/olaf.mp3", 2618, 59888);
+                audio.addMusic("resources/music/cos/blue_moon+0.mp3", 0, 60283)
+                audio.addMusic("resources/music/cos/blue_moon+1.mp3", 0, 24065);
                 break;
         }
     };

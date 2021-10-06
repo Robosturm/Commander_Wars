@@ -29,7 +29,8 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
                 break;
             default:
-                audio.addMusic("resources/music/cos/kanbei.mp3", 4783, 60483);
+                audio.addMusic("resources/music/cos/yellow_comet+0.mp3", 0, 30806)
+                audio.addMusic("resources/music/cos/yellow_comet+1.mp3", 0, 30369);
                 break;
         }
     };
