@@ -20,8 +20,9 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class BattleAnimation;
 class GameMenue;
-typedef oxygine::intrusive_ptr<GameMenue> spGameMenue;
+using spGameMenue = oxygine::intrusive_ptr<GameMenue>;
 
 /**
  * @brief The GameMenue class handles the game :)
@@ -30,12 +31,6 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    ENUM_CLASS  AnimationSkipMode
-    {
-        None,
-        All,
-        Battle
-    };
 
     explicit GameMenue(bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
@@ -76,11 +71,6 @@ public:
      * @return
      */
     qint64 getSyncCounter() const;
-    /**
-     * @brief getSkipMode
-     * @return
-     */
-    AnimationSkipMode getSkipMode();
     /**
      * @brief autoScroll
      */
@@ -299,7 +289,10 @@ protected:
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
     void skipAllAnimations();
-    void skipExceptBattle();
+    bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const;
+    bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const;
+    bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
+
     void doSaveMap();
 protected:
     ReplayRecorder m_ReplayRecorder;

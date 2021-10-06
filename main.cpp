@@ -86,7 +86,7 @@ void registerInterfaceData()
     qRegisterMetaType<GameEnums::LuckDamageMode>("GameEnums::LuckDamageMode");
     qRegisterMetaType<GameEnums::GameRecord_SpecialEvents>("GameEnums::GameRecord_SpecialEvents");
     qRegisterMetaType<GameEnums::GameAi>("GameEnums::GameAi");
-    qRegisterMetaType<GameEnums::AnimationMode>("GameEnums::AnimationMode");
+    qRegisterMetaType<GameEnums::BattleAnimationType>("GameEnums::BattleAnimationType");
     qRegisterMetaType<GameEnums::BuildingTarget>("GameEnums::BuildingTarget");
     qRegisterMetaType<GameEnums::BattleAnimationMode>("GameEnums::BattleAnimationMode");
     qRegisterMetaType<GameEnums::UnitType>("GameEnums::UnitType");

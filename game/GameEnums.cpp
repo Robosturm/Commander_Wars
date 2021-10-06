@@ -78,15 +78,15 @@ void GameEnums::registerEnums()
     value.setProperty("GameAi_Patrol", GameAi_Patrol);
     value.setProperty("GameAi_PatrolLoop", GameAi_PatrolLoop);
 
-    value.setProperty("AnimationMode_None", AnimationMode_None);
-    value.setProperty("AnimationMode_All", AnimationMode_All);
-    value.setProperty("AnimationMode_Own", AnimationMode_Own);
-    value.setProperty("AnimationMode_Ally", AnimationMode_Ally);
-    value.setProperty("AnimationMode_Enemy", AnimationMode_Enemy);
-    value.setProperty("AnimationMode_OnlyBattleAll", AnimationMode_OnlyBattleAll);
-    value.setProperty("AnimationMode_OnlyBattleOwn", AnimationMode_OnlyBattleOwn);
-    value.setProperty("AnimationMode_OnlyBattleAlly", AnimationMode_OnlyBattleAlly);
-    value.setProperty("AnimationMode_OnlyBattleEnemy", AnimationMode_OnlyBattleEnemy);
+    value.setProperty("BattleAnimationMode_None", BattleAnimationMode_None);
+    value.setProperty("BattleAnimationMode_All", BattleAnimationMode_All);
+    value.setProperty("BattleAnimationMode_Own", BattleAnimationMode_Own);
+    value.setProperty("BattleAnimationMode_Ally", BattleAnimationMode_Ally);
+    value.setProperty("BattleAnimationMode_Enemy", BattleAnimationMode_Enemy);
+    value.setProperty("BattleAnimationMode_OnlyBattleAll", BattleAnimationMode_OnlyBattleAll);
+    value.setProperty("BattleAnimationMode_OnlyBattleOwn", BattleAnimationMode_OnlyBattleOwn);
+    value.setProperty("BattleAnimationMode_OnlyBattleAlly", BattleAnimationMode_OnlyBattleAlly);
+    value.setProperty("BattleAnimationMode_OnlyBattleEnemy", BattleAnimationMode_OnlyBattleEnemy);
 
     value.setProperty("BuildingTarget_All", BuildingTarget_All);
     value.setProperty("BuildingTarget_Own", BuildingTarget_Own);

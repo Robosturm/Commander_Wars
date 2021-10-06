@@ -100,8 +100,9 @@ std::chrono::seconds Settings::autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::autoSavingCycle = 0;
 
 // ingame options
-GameEnums::AnimationMode Settings::m_showAnimations = GameEnums::AnimationMode_All;
-GameEnums::BattleAnimationMode Settings::m_battleAnimations = GameEnums::BattleAnimationMode_Detail;
+bool Settings::m_overworldAnimations = true;
+GameEnums::BattleAnimationMode Settings::m_battleAnimationsMode = GameEnums::BattleAnimationMode_All;
+GameEnums::BattleAnimationType Settings::m_battleAnimationType = GameEnums::BattleAnimationType_Detail;
 quint32 Settings::m_animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::m_walkAnimationSpeed = 20;
@@ -158,6 +159,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getOverworldAnimations()
+{
+    return m_overworldAnimations;
+}
+
+void Settings::setOverworldAnimations(bool newOverworldAnimations)
+{
+    m_overworldAnimations = newOverworldAnimations;
 }
 
 qint32 Settings::getTouchPointSensitivity()
@@ -1304,19 +1315,20 @@ void Settings::loadSettings()
 
     // game
     settings.beginGroup("Game");
-    m_showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
-    if (!ok || m_showAnimations < GameEnums::AnimationMode_None || m_showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
+    m_overworldAnimations = settings.value("OverworldAnimations", 1).toBool();
+    m_battleAnimationsMode  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimationMode", 1).toInt(&ok));
+    if (!ok || m_battleAnimationsMode < GameEnums::BattleAnimationMode_None || m_battleAnimationsMode > GameEnums::BattleAnimationMode_OnlyBattleEnemy)
     {
         QString error = "Error in the Ini File: [Game] Setting: ShowAnimations";
         CONSOLE_PRINT(error, Console::eERROR);
-        m_animationSpeed = GameEnums::AnimationMode_All;
+        m_animationSpeed = GameEnums::BattleAnimationMode_All;
     }
-    m_battleAnimations  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimations", 0).toInt(&ok));
-    if (!ok || m_battleAnimations < GameEnums::BattleAnimationMode_Detail || m_battleAnimations > GameEnums::BattleAnimationMode_Overworld)
+    m_battleAnimationType  = static_cast<GameEnums::BattleAnimationType>(settings.value("BattleAnimationType", 0).toInt(&ok));
+    if (!ok || m_battleAnimationType < GameEnums::BattleAnimationType_Detail || m_battleAnimationType > GameEnums::BattleAnimationType_Overworld)
     {
         QString error = "Error in the Ini File: [Game] Setting: BattleAnimations";
         CONSOLE_PRINT(error, Console::eERROR);
-        m_battleAnimations = GameEnums::BattleAnimationMode_Detail;
+        m_battleAnimationType = GameEnums::BattleAnimationType_Detail;
     }
     m_animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
     if(!ok || m_animationSpeed <= 0 ||  m_animationSpeed > 100u)
@@ -1577,8 +1589,9 @@ void Settings::saveSettings()
         settings.endGroup();
 
         settings.beginGroup("Game");
-        settings.setValue("ShowAnimations",                 static_cast<qint32>(m_showAnimations));
-        settings.setValue("BattleAnimations",               static_cast<qint32>(m_battleAnimations));
+        settings.setValue("OverworldAnimations",            m_overworldAnimations);
+        settings.setValue("BattleAnimationMode",            static_cast<qint32>(m_battleAnimationsMode));
+        settings.setValue("BattleAnimationType",            static_cast<qint32>(m_battleAnimationType));
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(m_walkAnimationSpeed));
         settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(m_dialogAnimationSpeed));
@@ -1660,14 +1673,14 @@ void Settings::setMouseSensitivity(float value)
     m_mouseSensitivity = value;
 }
 
-GameEnums::AnimationMode Settings::getShowAnimations()
+GameEnums::BattleAnimationMode Settings::getBattleAnimationMode()
 {
-    return m_showAnimations;
+    return m_battleAnimationsMode;
 }
 
-void Settings::setShowAnimations(GameEnums::AnimationMode value)
+void Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode value)
 {
-    m_showAnimations = value;
+    m_battleAnimationsMode = value;
 }
 
 void Settings::setFullscreen(bool fullscreen)
@@ -1946,14 +1959,14 @@ void Settings::setMultiTurnCounter(const quint32 &value)
     multiTurnCounter = value;
 }
 
-GameEnums::BattleAnimationMode Settings::getBattleAnimations()
+GameEnums::BattleAnimationType Settings::getBattleAnimationType()
 {
-    return m_battleAnimations;
+    return m_battleAnimationType;
 }
 
-void Settings::setBattleAnimations(const GameEnums::BattleAnimationMode &value)
+void Settings::setBattleAnimationType(const GameEnums::BattleAnimationType &value)
 {
-    m_battleAnimations = value;
+    m_battleAnimationType = value;
 }
 
 Qt::Key Settings::getKey_moveMapLeft()

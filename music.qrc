@@ -91,7 +91,6 @@
         <file>resources/music/credits_options/credits+2.mp3</file>
         <file>resources/music/credits_options/credits+3.mp3</file>
         <file>resources/music/credits_options/credits+4.mp3</file>
-        <file>resources/music/credits_options/credits+5.mp3</file>
         <file>resources/music/hauptmenue/Hauptmenue.mp3</file>
         <file>resources/music/hauptmenue/Hauptmenue+1.mp3</file>
         <file>resources/music/mapeditor/mapeditor+0.mp3</file>
@@ -106,5 +105,52 @@
         <file>resources/music/shop/hachi.mp3</file>
         <file>resources/music/victorymenue/victory+0.mp3</file>
         <file>resources/music/victorymenue/victory+1.mp3</file>
+        <file>resources/music/cos/amber_corona+0.mp3</file>
+        <file>resources/music/cos/amber_corona+1.mp3</file>
+        <file>resources/music/cos/black_hole+0.mp3</file>
+        <file>resources/music/cos/black_hole+1.mp3</file>
+        <file>resources/music/cos/blue_moon+0.mp3</file>
+        <file>resources/music/cos/blue_moon+1.mp3</file>
+        <file>resources/music/cos/bolt_guard+0.mp3</file>
+        <file>resources/music/cos/bolt_guard+1.mp3</file>
+        <file>resources/music/cos/brown_desert+0.mp3</file>
+        <file>resources/music/cos/brown_desert+1.mp3</file>
+        <file>resources/music/cos/dark_matter+0.mp3</file>
+        <file>resources/music/cos/dark_matter+1.mp3</file>
+        <file>resources/music/cos/golden_sun+0.mp3</file>
+        <file>resources/music/cos/golden_sun+1.mp3</file>
+        <file>resources/music/cos/green_earth+0.mp3</file>
+        <file>resources/music/cos/green_earth+1.mp3</file>
+        <file>resources/music/cos/metal_army.mp3</file>
+        <file>resources/music/cos/orange_star+0.mp3</file>
+        <file>resources/music/cos/orange_star+1.mp3</file>
+        <file>resources/music/cos/pink_frontier.mp3</file>
+        <file>resources/music/cos/teal_isles+0.mp3</file>
+        <file>resources/music/cos/teal_isles+1.mp3</file>
+        <file>resources/music/cos/yellow_comet+0.mp3</file>
+        <file>resources/music/cos/yellow_comet+1.mp3</file>
+        <file>resources/music/hauptmenue/Hauptmenue+2.mp3</file>
+        <file>resources/music/mapselection/mapselection+3.mp3</file>
+        <file>resources/music/mapselection/mapselection+4.mp3</file>
+        <file>resources/music/mapselection/mapselection+5.mp3</file>
+        <file>resources/music/mapselection/mapselection+6.mp3</file>
+        <file>resources/music/mapselection/mapselection+7.mp3</file>
+        <file>resources/music/mapselection/mapselection+8.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+3.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+4.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+5.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+6.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+7.mp3</file>
+        <file>resources/music/multiplayer/multiplayer+8.mp3</file>
+        <file>resources/music/victorymenue/victory+10.mp3</file>
+        <file>resources/music/victorymenue/victory+11.mp3</file>
+        <file>resources/music/victorymenue/victory+2.mp3</file>
+        <file>resources/music/victorymenue/victory+3.mp3</file>
+        <file>resources/music/victorymenue/victory+4.mp3</file>
+        <file>resources/music/victorymenue/victory+5.mp3</file>
+        <file>resources/music/victorymenue/victory+6.mp3</file>
+        <file>resources/music/victorymenue/victory+7.mp3</file>
+        <file>resources/music/victorymenue/victory+8.mp3</file>
+        <file>resources/music/victorymenue/victory+9.mp3</file>
     </qresource>
 </RCC>

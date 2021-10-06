@@ -39,6 +39,9 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static bool getOverworldAnimations();
+    static void setOverworldAnimations(bool newOverworldAnimations);
+
     static qint32 getTouchPointSensitivity();
     static void setTouchPointSensitivity(qint32 newTouchPointSensitivity);
 
@@ -228,8 +231,8 @@ public slots:
     static bool getAutoEndTurn();
     static void setAutoEndTurn(bool AutoEndTurn);
 
-    static GameEnums::BattleAnimationMode getBattleAnimations();
-    static void setBattleAnimations(const GameEnums::BattleAnimationMode &value);
+    static GameEnums::BattleAnimationType getBattleAnimationType();
+    static void setBattleAnimationType(const GameEnums::BattleAnimationType &value);
 
     static QString getUsername();
     static void setX(const qint32 &x);
@@ -326,8 +329,8 @@ public slots:
     static float getMouseSensitivity();
     static void setMouseSensitivity(float value);
 
-    static GameEnums::AnimationMode getShowAnimations();
-    static void setShowAnimations(GameEnums::AnimationMode value);
+    static GameEnums::BattleAnimationMode getBattleAnimationMode();
+    static void setBattleAnimationMode(GameEnums::BattleAnimationMode value);
 
     static void setFullscreen(bool fullscreen);
 
@@ -520,8 +523,9 @@ private:
 
 
     // ingame options
-    static GameEnums::AnimationMode m_showAnimations;
-    static GameEnums::BattleAnimationMode m_battleAnimations;
+    static bool m_overworldAnimations;
+    static GameEnums::BattleAnimationMode m_battleAnimationsMode;
+    static GameEnums::BattleAnimationType m_battleAnimationType;
     static quint32 m_animationSpeed;
     static quint32 m_walkAnimationSpeed;
     static quint32 battleAnimationSpeed;
