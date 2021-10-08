@@ -94,26 +94,26 @@
         <image file="artillery/artillery+bd+mask.png" cols = "2" />
         <image file="artillery/artillery+bh+mask.png" cols = "2" />
         <image file="artillery/artillery+bm+mask.png" cols = "2" />
-        <image file="artillery/artillery+dm+mask.png" />
+        <image file="artillery/artillery+dm+mask.png" cols = "2" />
         <image file="artillery/artillery+ge+mask.png" cols = "2" />
         <image file="artillery/artillery+os+mask.png" cols = "2" />
         <image file="artillery/artillery+yc+mask.png" cols = "2" />
-        <image file="artillery/artillery+ma+mask.png" />
-        <image file="artillery/artillery+ti+mask.png" />
-        <image file="artillery/artillery+pf+mask.png" />
-        <image file="artillery/artillery+dm+mask.png" />
+        <image file="artillery/artillery+ma+mask.png" cols = "2" />
+        <image file="artillery/artillery+ti+mask.png" cols = "2" />
+        <image file="artillery/artillery+pf+mask.png" cols = "2" />
+        <image file="artillery/artillery+dm+mask.png" cols = "2" />
         <image file="artillery/artillery+ac+fire+mask.png" cols = "8" />
-        <image file="artillery/artillery+bd+fire+mask.png" />
+        <image file="artillery/artillery+bd+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+bh+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+bm+fire+mask.png" cols = "8" />
-        <image file="artillery/artillery+dm+fire+mask.png" />
+        <image file="artillery/artillery+dm+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+ge+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+os+fire+mask.png" cols = "8" />
         <image file="artillery/artillery+yc+fire+mask.png" cols = "8" />
-        <image file="artillery/artillery+ma+fire+mask.png" />
-        <image file="artillery/artillery+ti+fire+mask.png" />
-        <image file="artillery/artillery+pf+fire+mask.png" />
-        <image file="artillery/artillery+dm+fire+mask.png" />
+        <image file="artillery/artillery+ma+fire+mask.png" cols = "8" />
+        <image file="artillery/artillery+ti+fire+mask.png" cols = "8" />
+        <image file="artillery/artillery+pf+fire+mask.png" cols = "8" />
+        <image file="artillery/artillery+dm+fire+mask.png" cols = "8" />
         <!-- battleship -->
         <image file="battleship/battleship+bh.png" cols = "4" />
         <image file="battleship/battleship+bh+mask.png" cols = "4" />
