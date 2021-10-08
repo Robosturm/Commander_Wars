@@ -537,6 +537,11 @@ void NormalAi::readIni(QString name)
         {
             m_cappedFunds = 1999.0f;
         }
+        m_targetPriceDifference = settings.value("TargetPriceDifference", 0.3f).toFloat(&ok);
+        if(!ok)
+        {
+            m_targetPriceDifference = 0.3f;
+        }
 
         settings.endGroup();
     }
@@ -2120,28 +2125,29 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
             }
         }
     }
+    if (productionBuildings <= 0)
+    {
+        return false;
+    }
     UnitCountData countData;
     GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
     QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
     getEnemyDamageCounts(pUnits, pEnemyUnits, attackCount);
     // calc average costs if we would build same cost units on every building
-    float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
-    if (productionBuildings >= GlobalUtils::roundUp(m_fundsPerBuildingFactorB) &&
-        productionBuildings >= m_fundsPerBuildingFactorA)
+    float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorB;
+    if (fundsPerFactory <= m_cappingFunds)
     {
-        // if we have a bigger number of buildings we wanna spam out units but not at an average costs overall buildings
-        // but more a small amount of strong ones and a large amount of cheap ones
-        // so we use a small (x - a) / (x - b) function here
-        fundsPerFactory = funds * (1 - ((productionBuildings - m_fundsPerBuildingFactorA) / (static_cast<float>(productionBuildings) - m_fundsPerBuildingFactorB)));
-        if (fundsPerFactory < m_cappingFunds)
-        {
-            fundsPerFactory = m_cappedFunds;
-        }
-        else if (fundsPerFactory >= m_spamingFunds * 1.5f)
-        {
-            data[UseHighTechUnits] = 1.0f;
-        }
+        fundsPerFactory = m_cappedFunds;
     }
+    else if (fundsPerFactory < m_spamingFunds * m_fundsPerBuildingFactorA)
+    {
+        fundsPerFactory = m_spamingFunds;
+    }
+    else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA)
+    {
+        data[UseHighTechUnits] = 1.0f;
+    }
+    CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), Console::eDEBUG);
     // position 0 direct to indirect ratio
     if (countData.indirectUnits > 0)
     {
@@ -2994,17 +3000,26 @@ float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildDa
     // infantry bonus
     if (data[InfantryUnit] == 1.0f)
     {
+        float infScore = 0.0f;
         if (data[InfantryCount] <= m_minInfantryCount && data[BuildingEnemyRatio] < m_lowOwnBuildingEnemyBuildingRatio)
         {
-            score += (m_minInfantryCount - data[InfantryCount]) * m_minInfantryCount + (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_lowIncomeInfantryBonusMultiplier;
+            infScore += (m_minInfantryCount - data[InfantryCount]) * m_minInfantryCount + (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_lowIncomeInfantryBonusMultiplier;
         }
         else if (data[InfantryUnitRatio] < m_lowInfantryRatio)
         {
-            score += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
+            infScore += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
         }
         else
         {
-            score += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
+            infScore += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
+        }
+        if (infScore > 0.0f)
+        {
+            score += infScore;
+        }
+        else if (unitBuildData.unitId != "INFANTRY")
+        {
+            score += infScore;
         }
     }
     score += calcCostScore(data, unitBuildData);
@@ -3054,18 +3069,18 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     {
         score -= (data[FundsFactoryRatio] - (1.0f - data[UnitEnemyRatio])) * m_expensiveUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio * 0.35f &&
-             data[UseHighTechUnits] < 1.0f)
+    else if (data[FundsFactoryRatio] >= m_cheapUnitRatio - m_targetPriceDifference &&
+            data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
     {
-        score += (1.4f + (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
+             score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio)
+    else if (data[FundsFactoryRatio] < m_cheapUnitRatio - m_targetPriceDifference)
     {
-        score += (1.0f - (m_cheapUnitRatio - data[FundsFactoryRatio])) * m_cheapUnitBonusMultiplier;
+        score -= (1 + m_cheapUnitRatio - m_targetPriceDifference - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
     }
     else
     {
-        score += (m_superiorityRatio - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+        score -= (1 + data[FundsFactoryRatio] - m_cheapUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
     }
     CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +
                   " funds ratio=" + QString::number(data[FundsFactoryRatio]), Console::eDEBUG);

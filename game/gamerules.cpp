@@ -242,11 +242,11 @@ void GameRules::checkVictory()
             // go to victory screen
             if (teamsAlive.size() == 1)
             {
-                emit signalVictory(teamsAlive[0]);
+                emit sigVictory(teamsAlive[0]);
             }
             else
             {
-                emit signalVictory(-1);
+                emit sigVictory(-1);
             }
         }
         if (pMap->getIsHumanMatch())
@@ -266,7 +266,7 @@ void GameRules::checkVictory()
             }
             if (!humanAlive)
             {
-                emit signalVictory(-1);
+                emit sigVictory(-1);
             }
         }
     }

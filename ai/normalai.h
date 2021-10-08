@@ -491,6 +491,7 @@ private:
     float m_averageSupplySupport{8};
     float m_cappingFunds{4700};
     float m_cappedFunds{1999};
+    float m_targetPriceDifference{0.3f};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

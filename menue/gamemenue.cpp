@@ -401,13 +401,13 @@ void GameMenue::loadGameMenue()
 void GameMenue::connectMap()
 {
     spGameMap pMap = GameMap::getInstance();
-    connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
+    connect(pMap->getGameRules(), &GameRules::sigVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
-    connect(pMap.get(), &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
@@ -949,7 +949,7 @@ bool GameMenue::shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const
 
 bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const
 {
-    bool battleActive = false;
+    bool battleActive = true;
     if (pBattleAnimation != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
@@ -995,8 +995,16 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 battleActive = true;
             }
         }
+        else if (animMode == GameEnums::BattleAnimationMode_None)
+        {
+            battleActive = false;
+        }
+        else if (animMode == GameEnums::BattleAnimationMode_All)
+        {
+            battleActive = true;
+        }
     }
-    return battleActive;
+    return !battleActive;
 }
 
 bool GameMenue::shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const
