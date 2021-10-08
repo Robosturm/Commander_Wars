@@ -11,6 +11,13 @@ var CO_PERK =
          return true;
     },
 
+    getPerkEnabled : function(co)
+    {
+        // called during the perk selection
+        // use the co object to get the current active perks and define if this perk can be selected or not
+        return true;
+    },
+
     onCOUnitLost : function(co)
     {
     },
@@ -55,7 +62,7 @@ var CO_PERK =
         return 0;
     },
 
-    getFirstStrike : function(co, unit, posX, posY, attacker)
+    getFirstStrike : function(co, unit, posX, posY, attacker, isDefender)
     {
         return false;
     },

@@ -69,9 +69,13 @@ var Constructor = function()
             sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                       Qt.point(65, 0), 600, false,
                                       1, 1);
-            sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                    Qt.point(65, 0), 600, false,
-                                    1, 1);
+            var spriteId = "mech+" + armyName + riverName + "+walk";
+            if (sprite.existResAnim(spriteId))
+            {
+                sprite.loadMovingSprite(spriteId, false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                        Qt.point(65, 0), 600, false,
+                                        1, 1);
+            }
             for (var i = 0; i < count; i++)
             {
                 sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -111,9 +115,13 @@ var Constructor = function()
         sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
                             false, false, 100, endFrame, startFrame);
-        sprite.loadSpriteV2("mech+" + armyName + riverName + ending, GameEnums.Recoloring_None,
-                            BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
-                            false, false, 100, endFrame, startFrame);
+        var spriteId = "mech+" + armyName + riverName + ending;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_None,
+                                BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
+                                false, false, 100, endFrame, startFrame);
+        }
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -309,10 +317,14 @@ var Constructor = function()
                                          "mech+" + armyName + "+dying+mask",
                                          GameEnums.Recoloring_Matrix,
                                          offset, movement, rotation, 400, 0, 2);
-            sprite.loadDyingMovingSprite("mech+" + armyName + riverName + ending ,
-                                         "mech+" + armyName + "+dying",
-                                         GameEnums.Recoloring_None,
-                                         offset, movement, rotation, 400, 0, 2);
+            var spriteId = "mech+" + armyName + riverName + ending;
+            if (sprite.existResAnim(spriteId))
+            {
+                sprite.loadDyingMovingSprite(spriteId,
+                                             "mech+" + armyName + "+dying",
+                                             GameEnums.Recoloring_None,
+                                             offset, movement, rotation, 400, 0, 2);
+            }
         }
         else
         {

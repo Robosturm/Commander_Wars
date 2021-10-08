@@ -2347,12 +2347,12 @@ qint32 Unit::getTerrainDefenseModifier(QPoint position)
     return modifier;
 }
 
-bool Unit::getFirstStrike(QPoint position, Unit* pAttacker)
+bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
 {
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
         {
             return true;
         }
@@ -2360,7 +2360,7 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker)
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        if (pCO->getFirstStrike(this, position, pAttacker))
+        if (pCO->getFirstStrike(this, position, pAttacker, isDefender))
         {
             return true;
         }

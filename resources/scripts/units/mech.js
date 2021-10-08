@@ -27,7 +27,7 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["ma", "ma"],
                      ["ac", "ac"],
                      ["bd", "bd"],
@@ -55,7 +55,7 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["ma", "ma"],
                      ["ac", "ac"],];
     this.doWalkingAnimation = function(action)

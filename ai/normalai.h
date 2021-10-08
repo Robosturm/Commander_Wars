@@ -177,6 +177,13 @@ protected:
                           QVector<QVector3D>& targets,
                           spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
     /**
+     * @brief unloadUnits
+     * @param pAction
+     * @param pUnit
+     * @return
+     */
+    bool unloadUnits(spGameAction pAction, Unit* pUnit);
+    /**
      * @brief repairUnits
      * @param pUnits
      * @param pBuildings
@@ -484,6 +491,7 @@ private:
     float m_averageSupplySupport{8};
     float m_cappingFunds{4700};
     float m_cappedFunds{1999};
+    float m_targetPriceDifference{0.3f};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

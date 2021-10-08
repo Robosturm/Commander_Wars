@@ -44,6 +44,7 @@ void HumanPlayerInput::init()
         connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
         connect(pMenu->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
         connect(this, &HumanPlayerInput::performAction, pMenu.get(), &GameMenue::performAction, Qt::QueuedConnection);
+        connect(this, &HumanPlayerInput::sigNextTurn, this, &HumanPlayerInput::nextTurn, Qt::QueuedConnection);
         m_Fields.reserve(pMap->getMapWidth() * pMap->getMapHeight() / 4);
         m_FieldPoints.reserve(pMap->getMapWidth() * pMap->getMapHeight() / 4);
     }
@@ -1064,6 +1065,23 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     pMap->addChild(m_ZInformationLabel);
     zoomChanged(pMap->getZoom());
+}
+
+void HumanPlayerInput::nextTurn()
+{
+    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr &&
+        GameAnimationFactory::getAnimationCount() == 0)
+    {
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap->getCurrentPlayer() == m_pPlayer &&
+            m_pGameAction.get() == nullptr)
+        {
+            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+            emit performAction(pAction);
+        }
+    }
 }
 
 void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const MarkedFieldData::ZInformation* pData)

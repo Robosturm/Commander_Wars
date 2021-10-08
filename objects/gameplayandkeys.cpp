@@ -42,26 +42,39 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Ingame Animations: "));
+    pTextfield->setHtmlText(tr("Overworld Animations: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If active walk, capture power animations and so on will be shown"));
+    pCheckbox->setChecked(Settings::getOverworldAnimations());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
                              tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
                              tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
-    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getShowAnimations()));
+    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(sliderOffset - 130, y);
     pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
     m_pOptions->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setShowAnimations(static_cast<GameEnums::AnimationMode>(value));
+        Settings::setBattleAnimationMode(static_cast<GameEnums::BattleAnimationMode>(value));
     });
     y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Battle Animations: "));
+    pTextfield->setHtmlText(tr("Battle Type: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     items = {tr("Detailed"),
@@ -74,12 +87,12 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
                                             "Detailed    - Normal Battleanimation\n"
                                             "Transparent - Colored background is semi-transparent\n"
                                             "Fullscreen  - Animations are upscaled based on the resolution\n"));
-    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimations()));
+    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
     pBattleAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pBattleAnimationMode);
     connect(pBattleAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setBattleAnimations(static_cast<GameEnums::BattleAnimationMode>(value));
+        Settings::setBattleAnimationType(static_cast<GameEnums::BattleAnimationType>(value));
     });
     y += 40;
 
@@ -201,7 +214,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setHtmlText(tr("Auto End Turn: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spCheckbox pCheckbox = spCheckbox::create();
+    pCheckbox = spCheckbox::create();
     pCheckbox->setTooltipText(tr("If active the game will automatically end your turn if you can't give any orders anymore."));
     pCheckbox->setChecked(Settings::getAutoEndTurn());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)

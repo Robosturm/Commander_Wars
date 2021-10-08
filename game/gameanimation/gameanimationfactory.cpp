@@ -162,8 +162,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                                            atkDamage, pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),
                                            defDamage, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID(), (defEndHp <= 0),
                                            pDefUnit->getOwner()->getFieldVisible(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY()));
-        auto battleViewMode = Settings::getBattleAnimations();
-        if (battleViewMode == GameEnums::BattleAnimationMode_Overworld)
+        auto battleViewMode = Settings::getBattleAnimationType();
+        if (battleViewMode == GameEnums::BattleAnimationType_Overworld)
         {
             pRet = createOverworldBattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
                                                   pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
@@ -174,10 +174,10 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                                              pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             oxygine::spSprite pBack;
 
-            if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
-                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
-                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
-                battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent)
+            if (battleViewMode == GameEnums::BattleAnimationType_Fullscreen ||
+                battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent ||
+                battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent ||
+                battleViewMode == GameEnums::BattleAnimationType_DetailTransparent)
             {
                 oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("fullscreen_battlebackground", oxygine::ep_ignore_error);
                 if (pAnim != nullptr)
@@ -196,8 +196,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                     pBack = pRect;
                 }
             }
-            if (battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent ||
-                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+            if (battleViewMode == GameEnums::BattleAnimationType_DetailTransparent ||
+                battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent)
             {
                 pBack->setAlpha(128);
             }
@@ -210,8 +210,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                     scaleFactor /= 2;
                 }
             }
-            if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
-                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+            if (battleViewMode == GameEnums::BattleAnimationType_Fullscreen ||
+                battleViewMode == GameEnums::BattleAnimationType_FullscreenTransparent)
             {
                 float scale = Settings::getHeight() / (pRet->getHeight() - 30);
                 float widthScale = Settings::getWidth() / (pRet->getWidth() - 30);

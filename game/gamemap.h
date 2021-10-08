@@ -237,7 +237,7 @@ public:
 signals:
     void signalExitGame();
     void signalSaveGame();
-    void signalVictoryInfo();
+    void sigVictoryInfo();
     void signalShowCOInfo();
     void sigShowGameInfo(qint32 player);
     void sigShowAttackLog(qint32 player);

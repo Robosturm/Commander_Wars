@@ -113,6 +113,12 @@ signals:
     void sigDetachChild(oxygine::spActor pActor);
 public slots:
     /**
+     * @brief existResAnim
+     * @param spriteID
+     * @return
+     */
+    bool existResAnim(QString spriteID);
+    /**
      * @brief getHasFired
      * @return
      */

@@ -131,29 +131,29 @@ public:
     };
     Q_ENUM(GameAi)
 
-    enum AnimationMode
-    {
-        AnimationMode_None,
-        AnimationMode_All,
-        AnimationMode_Own,
-        AnimationMode_Ally,
-        AnimationMode_Enemy,
-        AnimationMode_OnlyBattleAll,
-        AnimationMode_OnlyBattleOwn,
-        AnimationMode_OnlyBattleAlly,
-        AnimationMode_OnlyBattleEnemy,
-    };
-    Q_ENUM(AnimationMode)
-
     enum BattleAnimationMode
     {
-        BattleAnimationMode_Detail,
-        BattleAnimationMode_Overworld,
-        BattleAnimationMode_Fullscreen,
-        BattleAnimationMode_DetailTransparent,
-        BattleAnimationMode_FullscreenTransparent,
+        BattleAnimationMode_None,
+        BattleAnimationMode_All,
+        BattleAnimationMode_Own,
+        BattleAnimationMode_Ally,
+        BattleAnimationMode_Enemy,
+        BattleAnimationMode_OnlyBattleAll,
+        BattleAnimationMode_OnlyBattleOwn,
+        BattleAnimationMode_OnlyBattleAlly,
+        BattleAnimationMode_OnlyBattleEnemy,
     };
     Q_ENUM(BattleAnimationMode)
+
+    enum BattleAnimationType
+    {
+        BattleAnimationType_Detail,
+        BattleAnimationType_Overworld,
+        BattleAnimationType_Fullscreen,
+        BattleAnimationType_DetailTransparent,
+        BattleAnimationType_FullscreenTransparent,
+    };
+    Q_ENUM(BattleAnimationType)
 
     enum BuildingTarget
     {

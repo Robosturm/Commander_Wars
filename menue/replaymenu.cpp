@@ -8,6 +8,7 @@
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/slider.h"
+#include "objects/base/checkbox.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -33,10 +34,15 @@ ReplayMenu::ReplayMenu(QString filename)
     {
         m_Viewplayer = spViewplayer::create();
         // store animation modes
-        m_storedAnimMode = Settings::getShowAnimations();
-        m_storedBatteAnimMode = Settings::getBattleAnimations();
+        m_storedOverworldAnimations = Settings::getOverworldAnimations();
+        m_storedBattleAnimMode = Settings::getBattleAnimationMode();
+        m_storedBatteAnimType = Settings::getBattleAnimationType();
+        m_storedDialog = Settings::getDialogAnimation();
+
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
+        m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeed();
+        m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeed();
         spGameMap pMap = GameMap::getInstance();
         loadHandling();
         loadGameMenue();
@@ -70,10 +76,15 @@ void ReplayMenu::onEnter()
 
 ReplayMenu::~ReplayMenu()
 {
-    Settings::setShowAnimations(m_storedAnimMode);
-    Settings::setBattleAnimations(m_storedBatteAnimMode);
+    Settings::setOverworldAnimations(m_storedOverworldAnimations);
+    Settings::setBattleAnimationMode(m_storedBattleAnimMode);
+    Settings::setBattleAnimationType(m_storedBatteAnimType);
+    Settings::setDialogAnimation(m_storedDialog);
+
     Settings::setAnimationSpeed(m_storedAnimationSpeed);
     Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
+    Settings::setDialogAnimationSpeed(m_storedDialogAnimationSpeed);
+    Settings::setCaptureAnimationSpeed(m_storedCaptureAnimationSpeed);
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -322,13 +333,21 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     m_replayCounter = 0;
-    m_StoredShowAnimations = Settings::getShowAnimations();
-    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
+    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
+    m_seekingDialog = Settings::getDialogAnimation();
+    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+    Settings::setOverworldAnimations(false);
+    Settings::setDialogAnimation(false);
+    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
+
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    Settings::setShowAnimations(m_StoredShowAnimations);
+    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
+    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
+    Settings::setDialogAnimation(m_seekingDialog);
+
     m_seeking = true;    
 }
 
@@ -437,9 +456,13 @@ void ReplayMenu::togglePlayUi()
 void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    
-    m_StoredShowAnimations = Settings::getShowAnimations();
-    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
+    m_seekingOverworldAnimations = Settings::getOverworldAnimations();
+    m_seekingDialog = Settings::getDialogAnimation();
+    m_seekingBattleAnimations = Settings::getBattleAnimationMode();
+    Settings::setOverworldAnimations(false);
+    Settings::setDialogAnimation(false);
+    Settings::setBattleAnimationMode(GameEnums::BattleAnimationMode::BattleAnimationMode_None);
+
     skipAnimations(false);
     
 }
@@ -447,7 +470,9 @@ void ReplayMenu::startFastForward()
 void ReplayMenu::stopFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    Settings::setShowAnimations(m_StoredShowAnimations);
+    Settings::setBattleAnimationMode(m_seekingBattleAnimations);
+    Settings::setOverworldAnimations(m_seekingOverworldAnimations);
+    Settings::setDialogAnimation(m_seekingDialog);
 }
 
 void ReplayMenu::showConfig()
@@ -520,22 +545,35 @@ void ReplayMenu::showConfig()
     pPanel->addItem(pTextfield);
     y += 40;
 
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Overworld Animations: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spCheckbox pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If active walk, capture power animations and so on will be shown"));
+    pCheckbox->setChecked(Settings::getOverworldAnimations());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setOverworldAnimations, Qt::QueuedConnection);
+    pCheckbox->setPosition(width - 130, y);
+    pPanel->addItem(pCheckbox);
+    y += 40;
+
     pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Ingame Animations: "));
+    pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
                              tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
                              tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
-    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getShowAnimations()));
+    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
     pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
     pPanel->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setShowAnimations(static_cast<GameEnums::AnimationMode>(value));
+        Settings::setBattleAnimationMode(static_cast<GameEnums::BattleAnimationMode>(value));
     });
     y += 40;
 
@@ -547,12 +585,29 @@ void ReplayMenu::showConfig()
     items = {tr("Detailed"), tr("Overworld")};
     spDropDownmenu pBattleAnimationMode = spDropDownmenu::create(450, items);
     pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
-    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimations()));
+    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationType()));
     pBattleAnimationMode->setPosition(width - 130, y);
     pPanel->addItem(pBattleAnimationMode);
     connect(pBattleAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        Settings::setBattleAnimations(static_cast<GameEnums::BattleAnimationMode>(value));
+        Settings::setBattleAnimationType(static_cast<GameEnums::BattleAnimationType>(value));
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Dialogs: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pDialogAnimationMode = spDropDownmenu::create(450, items);
+    pDialogAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
+    pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getDialogAnimation()));
+    pDialogAnimationMode->setPosition(width - 130, y);
+    pPanel->addItem(pDialogAnimationMode);
+    connect(pDialogAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setDialogAnimation(value);
     });
     y += 40;
 
@@ -603,6 +658,39 @@ void ReplayMenu::showConfig()
         Settings::setBattleAnimationSpeed(static_cast<quint32>(value));
     });
     y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spSlider pCaptureAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
+    pCaptureAnimationSpeed->setPosition(width - 130, y);
+    pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getCaptureAnimationSpeedValue()));
+    pPanel->addItem(pCaptureAnimationSpeed);
+    connect(pCaptureAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setCaptureAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(width - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Dialog Speed: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spSlider pDialogAnimationSpeed = spSlider::create(Settings::getWidth() - 20 - width, 1, 100, "");
+    pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
+    pDialogAnimationSpeed->setPosition(width - 130, y);
+    pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getDialogAnimationSpeedValue()));
+    pPanel->addItem(pDialogAnimationSpeed);
+    connect(pDialogAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setDialogAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
     addChild(pBox);    
 }
 

@@ -36,7 +36,7 @@ var Constructor = function()
         // none neutral player
         var player = unit.getOwner();
         // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyDataStanding);
+        var armyName = Global.getArmyNameFromPlayerTable(player, SNIPER.armyDataStanding);
         // load sprites        
         unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
         unit.loadSpriteV2("sniper+" + armyName, GameEnums.Recoloring_None);

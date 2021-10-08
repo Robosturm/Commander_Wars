@@ -100,14 +100,22 @@ private:
     oxygine::spButton m_fastForwardButton;
     oxygine::spButton m_oneStepButton;
     oxygine::spButton m_configButton;
-    GameEnums::AnimationMode m_StoredShowAnimations = GameEnums::AnimationMode_All;
+
+    bool m_seekingOverworldAnimations = false;
+    GameEnums::BattleAnimationMode m_seekingBattleAnimations = GameEnums::BattleAnimationMode_All;
+    bool m_seekingDialog = false;
+
     spHumanPlayerInput m_HumanInput;
     spViewplayer m_Viewplayer;
 
-    GameEnums::AnimationMode m_storedAnimMode;
-    GameEnums::BattleAnimationMode m_storedBatteAnimMode;
+    bool m_storedOverworldAnimations = false;
+    GameEnums::BattleAnimationMode m_storedBattleAnimMode;
+    GameEnums::BattleAnimationType m_storedBatteAnimType;
+    bool m_storedDialog = false;
+    quint32 m_storedDialogAnimationSpeed = 1;
     quint32 m_storedAnimationSpeed = 1;
     quint32 m_storedBattleAnimationSpeed = 1;
+    quint32 m_storedCaptureAnimationSpeed = 1;
 
     bool m_seeking{false};
     bool m_valid{false};
