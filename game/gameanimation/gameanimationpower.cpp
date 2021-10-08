@@ -98,9 +98,12 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     {
         spGameMap pMap = GameMap::getInstance();
         QJSValueList args;
-        QJSValue obj1 = pInterpreter->newQObject(pMap->getCurrentPlayer()->getCO(0));
+        CO* pCO0 = pMap->getCurrentPlayer()->getCO(0);
+        createPowerDescription(pCO0, powerMode, true);
+        QJSValue obj1 = pInterpreter->newQObject(pCO0);
         args << obj1;
         CO* pCO1 = pMap->getCurrentPlayer()->getCO(1);
+        createPowerDescription(pCO1, powerMode, false);
         QJSValue obj2 = pInterpreter->newQObject(pCO1);
         args << obj2;
         QJSValue ret = pInterpreter->doFunction("TAGPOWER", "getTagname", args);
@@ -140,19 +143,13 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     }
     else if (powerMode == GameEnums::PowerMode_Superpower)
     {
-        QJSValue ret = pInterpreter->doFunction(coid, "getSuperPowerName");
-        if (ret.isString())
-        {
-            text = ret.toString();
-        }
+        text = pCO->getSuperPowerName();
+        createPowerDescription(pCO, powerMode, false);
     }
     else
     {
-        QJSValue ret = pInterpreter->doFunction(coid, "getPowerName");
-        if (ret.isString())
-        {
-            text = ret.toString();
-        }
+        text = pCO->getPowerName();
+        createPowerDescription(pCO, powerMode, false);
     }
     // text incoming
     oxygine::TextStyle headline = oxygine::TextStyle(FontManager::getMainFont72());
@@ -238,6 +235,52 @@ GameAnimationPower::~GameAnimationPower()
         pAudioThread->playRandom();
     }
     m_pGameAnimationPower = nullptr;
+}
+
+void GameAnimationPower::createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop)
+{
+    if (!Settings::getSmallScreenDevice())
+    {
+        QString description;
+        switch (powerMode)
+        {
+            case GameEnums::PowerMode_Tagpower:
+            case GameEnums::PowerMode_Superpower:
+            {
+                description = pCo->getSuperPowerDescription();
+                break;
+            }
+            case GameEnums::PowerMode_Power:
+            {
+                description = pCo->getPowerDescription();
+                break;
+            }
+            default:
+            {
+                oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal power mode GameAnimationPower::createPowerDescription");
+                break;
+            }
+        }
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont32());
+        style.color = FontManager::getFontColor();
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+        style.multiline = true;
+        oxygine::spTextField descriptionField = oxygine::spTextField::create();
+        descriptionField->setStyle(style);
+        descriptionField->setHtmlText(description);
+        descriptionField->setSize(Settings::getWidth() - 100, descriptionField->getTextRect().getHeight());
+        descriptionField->setX(50);
+        if (onTop)
+        {
+            descriptionField->setY(20);
+        }
+        else
+        {
+            descriptionField->setY(Settings::getHeight() - descriptionField->getTextRect().getHeight() - 20);
+        }
+        addChild(descriptionField);
+    }
 }
 
 void GameAnimationPower::rightClick()

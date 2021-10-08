@@ -28,7 +28,7 @@ protected slots:
 private:
     friend class oxygine::intrusive_ptr<GameAnimationPower>;
     GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
-
+    void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
 private:
     QTimer m_endTimer;
     CO* m_pCO{nullptr};
