@@ -2146,6 +2146,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
     else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA)
     {
         data[UseHighTechUnits] = 1.0f;
+        CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
     }
     CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), Console::eDEBUG);
     // position 0 direct to indirect ratio
@@ -3061,9 +3062,9 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
-    if ( data[UseHighTechUnits] > 0.0f)
+    if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] >= m_cheapUnitRatio)
     {
-        score -= data[FundsFactoryRatio] * m_expensiveUnitBonusMultiplier;
+        score += data[FundsFactoryRatio] * m_expensiveUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] > m_superiorityRatio)
     {

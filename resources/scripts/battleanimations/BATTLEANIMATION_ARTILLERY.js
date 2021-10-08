@@ -17,16 +17,16 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(42, 34)]],
+    this.animationData = [["ac", [Qt.point(-15, 5), Qt.point(32, 38)]],
                           ["bd", [Qt.point(-5, 5),  Qt.point(41, 36)]],
                           ["bh", [Qt.point(-5, 5),  Qt.point(39, 38)]],
                           ["bm", [Qt.point(-5, 5),  Qt.point(39, 36)]],
-                          ["dm", [Qt.point(-5, 5),  Qt.point(48, 36)]],
+                          ["dm", [Qt.point(-25, 5), Qt.point(28, 40)]],
                           ["ge", [Qt.point(-5, 5),  Qt.point(40, 37)]],
                           ["ma", [Qt.point(-35, 5), Qt.point(13, 43)]],
                           ["os", [Qt.point(-5, 5),  Qt.point(40, 38)]],
-                          ["pf", [Qt.point(-5, 5),  Qt.point(41, 35)]],
-                          ["ti", [Qt.point(-5, 5),  Qt.point(44, 25)]],
+                          ["pf", [Qt.point(-5, 5),  Qt.point(41, 39)]],
+                          ["ti", [Qt.point(-15, 5), Qt.point(34, 29)]],
                           ["yc", [Qt.point(-5, 5),  Qt.point(40, 38)]],];
 
     // -5 5
