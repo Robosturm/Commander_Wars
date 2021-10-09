@@ -10,9 +10,10 @@ var Constructor = function()
     {
         if (co.canUseSuperpower())
         {
-            return true;
+            return GameEnums.PowerMode_Superpower;
         }
-        else
+        else if (powerSurplus <= 0.5 &&
+                 co.canUsePower())
         {
             return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
         }

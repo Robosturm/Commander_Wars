@@ -2222,7 +2222,6 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                     auto & buildingData = m_productionData[index];
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
-                        bool onlyTransporter = true;
                         if (enableList[i2])
                         {
                             float score = 0.0f;
@@ -2271,7 +2270,6 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                                     }
                                     if (!unitData.isTransporter)
                                     {
-                                        onlyTransporter = false;
                                         score = calcBuildScore(data, unitData);
                                     }
                                     else
@@ -2286,38 +2284,35 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                                     score = NO_BUILD_SCORE;
                                 }
                             }
-                            if (!onlyTransporter)
+                            if (score > bestScore)
                             {
-                                if (score > bestScore)
+                                bestScore = score;
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
+                                transporters.append(isTransporter);
+                                qint32 index = 0;
+                                while (index < scores.size())
                                 {
-                                    bestScore = score;
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                    transporters.append(isTransporter);
-                                    qint32 index = 0;
-                                    while (index < scores.size())
+                                    if (scores[index] < bestScore - variance)
                                     {
-                                        if (scores[index] < bestScore - variance)
-                                        {
-                                            buildingIdx.removeAt(index);
-                                            unitIDx.removeAt(index);
-                                            scores.removeAt(index);
-                                            transporters.removeAt(index);
-                                        }
-                                        else
-                                        {
-                                            index++;
-                                        }
+                                        buildingIdx.removeAt(index);
+                                        unitIDx.removeAt(index);
+                                        scores.removeAt(index);
+                                        transporters.removeAt(index);
+                                    }
+                                    else
+                                    {
+                                        index++;
                                     }
                                 }
-                                else if (score >= bestScore - variance)
-                                {
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                    transporters.append(isTransporter);
-                                }
+                            }
+                            else if (score >= bestScore - variance)
+                            {
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
+                                transporters.append(isTransporter);
                             }
                         }
                     }
@@ -2412,7 +2407,7 @@ qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
                 {
                     bonusFactor = m_directIndirectUnitBonusFactor;
                 }
-                auto damageData = calcExpectedFundsDamage(data.m_x, data.m_y, dummy, pEnemyUnits, attackCount, bonusFactor);
+                auto damageData = calcExpectedFundsDamage(data.m_x, data.m_y, dummy, pEnemyUnits, attackCount, bonusFactor, buildData[Movementpoints]);
                 unitData.notAttackableCount = std::get<1>(damageData);
                 unitData.damage =  std::get<0>(damageData);
             }
@@ -2478,7 +2473,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
             {
                 bonusFactor = m_directIndirectUnitBonusFactor;
             }
-            auto damageData = calcExpectedFundsDamage(x, y, dummy, pEnemyUnits, attackCount, bonusFactor);
+            auto damageData = calcExpectedFundsDamage(x, y, dummy, pEnemyUnits, attackCount, bonusFactor, buildData[Movementpoints]);
             unitBuildData.notAttackableCount = std::get<1>(damageData);
             unitBuildData.damage =  std::get<0>(damageData);
             unitBuildData.cost = dummy.getUnitCosts();
@@ -2575,207 +2570,194 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
     return minDistance;
 }
 
-std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor)
+std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor, float myMovepoints)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 notAttackableCount = 0;
     float damageCount = 0;
     float attacksCount = 0;
-    float myMovepoints = dummy.getBaseMovementPoints();
     if (myMovepoints == 0)
     {
         myMovepoints = 1;
     }
     spGameMap pMap = GameMap::getInstance();
-    qint32 maxCounter = pMap->getMapWidth() * pMap->getMapHeight() / (myMovepoints * 2);
     float myFirerange = dummy.getBaseMaxRange();
     float enemyFirerange = dummy.getBaseMaxRange();
     QPoint position = dummy.getPosition();
-    qint32 counter = 1;
-    while (attacksCount  < m_maxBuildingTargetFindLoops &&
-           pEnemyUnits->size() > m_maxBuildingTargetFindLoops &&
-           counter <= maxCounter)
+    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
     {
-        for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
+        Unit* pEnemyUnit = pEnemyUnits->at(i3);
+        QPoint enemyPosition = pEnemyUnit->getPosition();
+        float distance = GlobalUtils::getDistance(position, enemyPosition);
+        float dmg = 0.0f;
+        if (!dummy.getWeapon1ID().isEmpty())
         {
-            Unit* pEnemyUnit = pEnemyUnits->at(i3);
-            QPoint enemyPosition = pEnemyUnit->getPosition();
-            float distance = GlobalUtils::getDistance(position, enemyPosition);
-            if (distance / myMovepoints <= counter &&
-                distance / myMovepoints >= (counter - 1))
+            dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
+        }
+        if (!dummy.getWeapon2ID().isEmpty())
+        {
+            float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
+            if (dmg2 > dmg)
             {
-                float dmg = 0.0f;
-                if (!dummy.getWeapon1ID().isEmpty())
+                dmg = dmg2;
+            }
+        }
+        if (dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
+        {
+            dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
+        }
+        if (dmg > 0.0f)
+        {
+            float counterDmg = 0;
+            if (!pEnemyUnit->getWeapon1ID().isEmpty())
+            {
+                counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
+            }
+            if (!pEnemyUnit->getWeapon2ID().isEmpty())
+            {
+                float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
+                if (dmg2 > counterDmg)
                 {
-                    dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
+                    counterDmg = dmg2;
                 }
-                if (!dummy.getWeapon2ID().isEmpty())
-                {
-                    float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
-                    if (dmg2 > dmg)
-                    {
-                        dmg = dmg2;
-                    }
-                }
-                if (dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
-                {
-                    dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
-                }
-                if (dmg > 0.0f)
-                {
-                    float counterDmg = 0;
-                    if (!pEnemyUnit->getWeapon1ID().isEmpty())
-                    {
-                        counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
-                    }
-                    if (!pEnemyUnit->getWeapon2ID().isEmpty())
-                    {
-                        float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
-                        if (dmg2 > counterDmg)
-                        {
-                            counterDmg = dmg2;
-                        }
-                    }
-                    if (counterDmg > m_scoringCutOffDamageHigh)
-                    {
-                        counterDmg = m_scoringCutOffDamageHigh;
-                    }
-                    else if (counterDmg < m_scoringCutOffDamageLow)
-                    {
-                        counterDmg = 0.0f;
-                    }
-                    float resDamage = 0;
+            }
+            if (counterDmg > m_scoringCutOffDamageHigh)
+            {
+                counterDmg = m_scoringCutOffDamageHigh;
+            }
+            else if (counterDmg < m_scoringCutOffDamageLow)
+            {
+                counterDmg = 0.0f;
+            }
+            float resDamage = 0;
 
-                    float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
-                    if (myMovepoints + myFirerange >= enemyMovepoints)
-                    {
-                        float mult = (myMovepoints + myFirerange + m_smoothingValue) / (enemyMovepoints + enemyFirerange + m_smoothingValue);
-                        if (mult > m_maxDistanceMultiplier)
-                        {
-                            mult = m_maxDistanceMultiplier;
-                        }
-                        resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
-                                    counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue();
-                    }
-                    else
-                    {
-                        float mult = (enemyMovepoints + enemyFirerange + m_smoothingValue) / (myMovepoints + myFirerange + m_smoothingValue);
-                        if (mult > m_maxDistanceMultiplier)
-                        {
-                            mult = m_maxDistanceMultiplier;
-                        }
-                        resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * bonusFactor -
-                                    counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue() * mult;
-                    }
-                    if (resDamage > pEnemyUnit->getUnitValue())
-                    {
-                        resDamage = pEnemyUnit->getUnitValue();
-                    }
-                    float factor = 1.0f;
+            float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
+            if (myMovepoints + myFirerange >= enemyMovepoints)
+            {
+                float mult = (myMovepoints + myFirerange + m_smoothingValue) / (enemyMovepoints + enemyFirerange + m_smoothingValue);
+                if (mult > m_maxDistanceMultiplier)
+                {
+                    mult = m_maxDistanceMultiplier;
+                }
+                resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
+                            counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue();
+            }
+            else
+            {
+                float mult = (enemyMovepoints + enemyFirerange + m_smoothingValue) / (myMovepoints + myFirerange + m_smoothingValue);
+                if (mult > m_maxDistanceMultiplier)
+                {
+                    mult = m_maxDistanceMultiplier;
+                }
+                resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * bonusFactor -
+                            counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue() * mult;
+            }
+            if (resDamage > pEnemyUnit->getUnitValue())
+            {
+                resDamage = pEnemyUnit->getUnitValue();
+            }
+            float factor = 1.0f;
+            if (dmg > m_highDamage)
+            {
+                factor += (attackCount[i3].w() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
+            }
+            else if (dmg > m_midDamage)
+            {
+                factor += (attackCount[i3].z() + m_smoothingValue) / (attackCount[i3].z() + m_smoothingValue);
+            }
+            if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->Unit::getX(), pEnemyUnit->Unit::getY()))
+            {
+                factor += (m_sameIslandBonusInRangeDays - (distance / myMovepoints) * m_sameIslandOutOfDayMalusFactor);
+                if (pEnemyUnit->hasWeapons())
+                {
+                    float notAttackableValue = 0.0f;
                     if (dmg > m_highDamage)
                     {
-                        factor += (attackCount[i3].w() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
+                        notAttackableValue = m_highDamageBonus;
                     }
                     else if (dmg > m_midDamage)
                     {
-                        factor += (attackCount[i3].z() + m_smoothingValue) / (attackCount[i3].z() + m_smoothingValue);
+                        notAttackableValue = m_midDamageBonus;
                     }
-                    if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->Unit::getX(), pEnemyUnit->Unit::getY()))
+                    else if (dmg > m_notAttackableDamage)
                     {
-                        factor += (m_sameIslandBonusInRangeDays - (distance / static_cast<float>(myMovepoints) * m_sameIslandOutOfDayMalusFactor));
-                        if (pEnemyUnit->hasWeapons())
-                        {
-                            float notAttackableValue = 0.0f;
-                            if (dmg > m_highDamage)
-                            {
-                                notAttackableValue = m_highDamageBonus;
-                            }
-                            else if (dmg > m_midDamage)
-                            {
-                                notAttackableValue = m_midDamageBonus;
-                            }
-                            else if (dmg > m_notAttackableDamage)
-                            {
-                                notAttackableValue = m_lowDamageBonus;
-                            }
-                            else
-                            {
-                                factor *= m_veryLowDamageBonus;
-                            }
-                            if (attackCount[i3].y() == 0.0f &&
-                                attackCount[i3].x() == 0.0f &&
-                                attackCount[i3].z() == 0.0f &&
-                                attackCount[i3].w() == 0.0f)
-                            {
-                                notAttackableCount += notAttackableValue;
-                            }
-                            else if (attackCount[i3].y() == 0.0f &&
-                                     attackCount[i3].z() == 0.0f &&
-                                     attackCount[i3].w() == 0.0f)
-                            {
-                                notAttackableCount  += notAttackableValue * m_currentlyNotAttackableBonus;
-                            }
-                        }
-                        else
-                        {
-                            factor *= m_transportBonus;
-                        }
+                        notAttackableValue = m_lowDamageBonus;
                     }
                     else
                     {
-                        factor += (m_differentIslandBonusInRangeDays - (distance / static_cast<float>(myMovepoints) * m_differentIslandOutOfDayMalusFactor));
-                        if (pEnemyUnit->hasWeapons())
-                        {
-                            float notAttackableValue = 0.0f;
-                            if (dmg > m_highDamage)
-                            {
-                                notAttackableValue = m_highDamageBonus;
-                            }
-                            else if (dmg > m_midDamage)
-                            {
-                                notAttackableValue = m_midDamageBonus;
-                            }
-                            else if (dmg > m_notAttackableDamage)
-                            {
-                                notAttackableValue = m_lowDamageBonus;
-                            }
-                            else
-                            {
-                                factor *= m_veryLowDamageBonus;
-                            }
-                            if (attackCount[i3].y() == 0.0f &&
-                                attackCount[i3].x() == 0.0f &&
-                                attackCount[i3].z() == 0.0f &&
-                                attackCount[i3].w() == 0.0f)
-                            {
-                                notAttackableCount += notAttackableValue * m_currentlyNotAttackableBonus;
-                            }
-                            else if (attackCount[i3].x() == 0.0f &&
-                                     attackCount[i3].z() == 0.0f &&
-                                     attackCount[i3].w() == 0.0f)
-                            {
-                                notAttackableCount  += notAttackableValue * m_currentlyNotAttackableBonus * m_currentlyNotAttackableBonus;
-                            }
-                        }
-                        else
-                        {
-                            factor += m_transportBonus;
-                        }
+                        factor *= m_veryLowDamageBonus;
                     }
-                    if (dummy.getBaseMaxRange() > 1)
+                    if (attackCount[i3].y() == 0.0f &&
+                        attackCount[i3].x() == 0.0f &&
+                        attackCount[i3].z() == 0.0f &&
+                        attackCount[i3].w() == 0.0f)
                     {
-                        factor *= 0.60f;
+                        notAttackableCount += notAttackableValue;
                     }
-                    if (factor < 0)
+                    else if (attackCount[i3].y() == 0.0f &&
+                             attackCount[i3].z() == 0.0f &&
+                             attackCount[i3].w() == 0.0f)
                     {
-                        factor = 0;
+                        notAttackableCount  += notAttackableValue * m_currentlyNotAttackableBonus;
                     }
-                    damageCount += resDamage * factor;
-                    attacksCount++;
+                }
+                else
+                {
+                    factor *= m_transportBonus;
                 }
             }
+            else
+            {
+                factor += (m_differentIslandBonusInRangeDays - (distance / myMovepoints) * m_differentIslandOutOfDayMalusFactor);
+                if (pEnemyUnit->hasWeapons())
+                {
+                    float notAttackableValue = 0.0f;
+                    if (dmg > m_highDamage)
+                    {
+                        notAttackableValue = m_highDamageBonus;
+                    }
+                    else if (dmg > m_midDamage)
+                    {
+                        notAttackableValue = m_midDamageBonus;
+                    }
+                    else if (dmg > m_notAttackableDamage)
+                    {
+                        notAttackableValue = m_lowDamageBonus;
+                    }
+                    else
+                    {
+                        factor *= m_veryLowDamageBonus;
+                    }
+                    if (attackCount[i3].y() == 0.0f &&
+                        attackCount[i3].x() == 0.0f &&
+                        attackCount[i3].z() == 0.0f &&
+                        attackCount[i3].w() == 0.0f)
+                    {
+                        notAttackableCount += notAttackableValue * m_currentlyNotAttackableBonus;
+                    }
+                    else if (attackCount[i3].x() == 0.0f &&
+                             attackCount[i3].z() == 0.0f &&
+                             attackCount[i3].w() == 0.0f)
+                    {
+                        notAttackableCount  += notAttackableValue * m_currentlyNotAttackableBonus * m_currentlyNotAttackableBonus;
+                    }
+                }
+                else
+                {
+                    factor += m_transportBonus;
+                }
+            }
+            if (dummy.getBaseMaxRange() > 1)
+            {
+                factor *= 0.60f;
+            }
+            if (factor < 0)
+            {
+                factor = 0;
+            }
+            damageCount += resDamage * factor;
+            attacksCount++;
         }
-        counter++;
     }
     if (attacksCount <= 0)
     {
@@ -2830,25 +2812,26 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     qint32 maxCounter = m_ProducingTransportSearchrange;
     qint32 counter = 1;
     while (relevantUnits->size()  < loadingPlace * m_transporterToRequiredPlaceFactor &&
-           pUnits->size() > loadingPlace * (m_transporterToRequiredPlaceFactor - 1) &&
+           pUnits->size() > loadingPlace &&
            counter <= maxCounter)
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            qint32 distance = GlobalUtils::getDistance(position, pUnits->at(i)->getPosition());
-            if (distance / movement <= counter * maxDayDistance &&
-                distance / movement >= (counter - 1) * maxDayDistance)
+            float distance = GlobalUtils::getDistance(position, pUnits->at(i)->getPosition());
+            if (distance / static_cast<float>(movement) < counter * maxDayDistance &&
+                distance / static_cast<float>(movement) >= (counter - 1) * maxDayDistance)
             {
                 relevantUnits->append(pUnits->at(i));
-            }
-            if (loadingPlace == 1)
-            {
-                if (pUnits->at(i)->getLoadingPlace() == 1)
+                qint32 place = pUnits->at(i)->getLoadingPlace();
+                if (place > 1)
                 {
-                    smallTransporterCount++;
+                    if (place == 1)
+                    {
+                        smallTransporterCount++;
+                    }
+                    ++transporterCount;
                 }
             }
-            ++transporterCount;
         }
         counter++;
     }
@@ -2875,7 +2858,6 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
                     break;
                 }
             }
-
             if (transporter == 0)
             {
                 unitBuildData.noTransporterBonus += m_noTransporterBonus;
@@ -2933,14 +2915,23 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
         if (unitBuildData.transporterCount <= 0 ||
             static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transporterCount) > m_ProducingTransportMinLoadingTransportRatio)
         {
-            score += calcCostScore(data, unitBuildData);
+            if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
+            {
+                score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+            }
+            else
+            {
+                score -= (1 + m_cheapUnitRatio - m_targetPriceDifference - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
+            }
             score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
             score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
+            score += unitBuildData.noTransporterBonus;
             score -= unitBuildData.transportCount;
             CONSOLE_PRINT("NormalAi::calcTransporterScore for " + unitBuildData.unitId +
                           " score=" + QString::number(score) +
                           " loadingCount=" + QString::number(unitBuildData.loadingCount) +
-                          " transportCount=" + QString::number(unitBuildData.transporterCount), Console::eDEBUG);
+                          " transportCount=" + QString::number(unitBuildData.transportCount) +
+                          " transportCounter=" + QString::number(unitBuildData.transporterCount), Console::eDEBUG);
         }
         else if (supplyScore <= 0.0f)
         {
@@ -3062,18 +3053,22 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
-    if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] >= m_cheapUnitRatio)
+    if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] > m_cheapUnitRatio + m_targetPriceDifference)
     {
-        score += data[FundsFactoryRatio] * m_expensiveUnitBonusMultiplier;
+        score += (1 + data[FundsFactoryRatio] - m_cheapUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
+    }
+    else if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] > m_cheapUnitRatio -  m_targetPriceDifference)
+    {
+        score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_expensiveUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] > m_superiorityRatio)
     {
         score -= (data[FundsFactoryRatio] - (1.0f - data[UnitEnemyRatio])) * m_expensiveUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] >= m_cheapUnitRatio - m_targetPriceDifference &&
-            data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
+             data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
     {
-             score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+        score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] < m_cheapUnitRatio - m_targetPriceDifference)
     {
