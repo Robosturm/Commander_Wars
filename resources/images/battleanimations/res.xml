@@ -47,6 +47,9 @@
         <image file="GeneralSprites/rocket_trailing_smoke.png" cols = "4" />
         <image file="GeneralSprites/crystalcannon.png" cols = "21" />
         <image file="GeneralSprites/crystalcannon_trail.png" cols = "21" />
+        <image file="GeneralSprites/flak_shot.png" cols = "6" />
+        <image file="GeneralSprites/flak_shot_air.png" cols = "6" />
+        <image file="GeneralSprites/flak_hit.png" cols = "10" />
         <!-- spotters -->
         <image file="spotter/spotter+ac+mask.png" />
         <image file="spotter/spotter+bm+mask.png" />
