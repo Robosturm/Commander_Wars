@@ -82,11 +82,12 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
 {
     if (co.getIsCO0() === true)
     {
-        if(unit !== null)
+        if(unit !== null &&
+           isDefender)
         {
             var defenderValue = unit.getUnitValue();
             var attackerValue = attacker.getUnitValue();

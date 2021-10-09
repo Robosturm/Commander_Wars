@@ -90,9 +90,13 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), data[1],
                                   Qt.point(data[0], 0), 600, false,
                                   1, 1);
-        sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                Qt.point(65, 0), 600, false,
-                                1, 1);
+        var spriteId = "infantry+" + armyName + riverName + "+walk";
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadMovingSprite(spriteId, false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                    Qt.point(65, 0), 600, false,
+                                    1, 1);
+        }
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
@@ -107,8 +111,12 @@ var Constructor = function()
         var offset = Qt.point(data[0] + data[1].x, data[1].y);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
-        sprite.loadSpriteV2("infantry+" + armyName + riverName + ending,  GameEnums.Recoloring_None,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+        var spriteId = "infantry+" + armyName + riverName + ending;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSpriteV2(spriteId,  GameEnums.Recoloring_None,
+                                BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+        }
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -235,10 +243,14 @@ var Constructor = function()
                                      "infantry+" + armyName + "+dying+mask",
                                      GameEnums.Recoloring_Matrix,
                                      offset, movement, rotation, 400);
-        sprite.loadDyingMovingSprite("infantry+" + armyName + riverName,
-                                     "infantry+" + armyName + "+dying",
-                                     GameEnums.Recoloring_None,
-                                     offset, movement, rotation, 400);
+        var spriteId = "infantry+" + armyName + riverName;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadDyingMovingSprite(spriteId,
+                                         "infantry+" + armyName + "+dying",
+                                         GameEnums.Recoloring_None,
+                                         offset, movement, rotation, 400);
+        }
     };
 };
 

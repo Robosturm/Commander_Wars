@@ -329,22 +329,32 @@ void AudioThread::loadFolder(QString folder)
 void AudioThread::SlotClearPlayList()
 {
 #ifdef AUDIOSUPPORT
-    CONSOLE_PRINT("AudioThread::SlotClearPlayList()", Console::eDEBUG);
+    CONSOLE_PRINT("AudioThread::SlotClearPlayList() start clearing", Console::eDEBUG);
     m_PlayListdata.clear();
     m_currentPlayer = -1;
+    qtWasteTime();
     m_player[0]->m_playListPostiton = -1;
     m_player[1]->m_playListPostiton = -1;
     m_player[0]->m_player.stop();
+    qtWasteTime();
     m_player[0]->m_player.setSource(QUrl());
+    qtWasteTime();
     m_player[1]->m_player.stop();
+    qtWasteTime();
     m_player[1]->m_player.setSource(QUrl());
+    qtWasteTime();
+    CONSOLE_PRINT("AudioThread::SlotClearPlayList() playlist cleared", Console::eDEBUG);
+#endif
+}
+
+void AudioThread::qtWasteTime()
+{
     // wasting some time
-    for (qint32 i = 0; i < 30; ++i)
+    for (qint32 i = 0; i < 10; ++i)
     {
         QApplication::processEvents();
         QThread::msleep(1);
     }
-#endif
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)

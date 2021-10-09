@@ -133,20 +133,29 @@ var Constructor = function()
         }
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, attacker)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
     {
-        // sonja's troops get first strike during counter attacks
-        // meaning her troops attack before they loose their hp
-        switch (co.getPowerMode())
+        if(unit !== null)
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return true;
+                if (isDefender)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             case GameEnums.PowerMode_Power:
                 return false;
             default:
                 return false;
+            }
         }
+        return false;
     };
 
     this.getHpHidden = function(co, unit, posX, posY)

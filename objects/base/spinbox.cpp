@@ -261,7 +261,7 @@ qreal SpinBox::checkInput()
 void SpinBox::setValue(qreal value)
 {    
     QString text = getCurrentText();
-    if (value == m_InfinityValue)
+    if (value <= m_InfinityValue)
     {
         text = "∞";
     }

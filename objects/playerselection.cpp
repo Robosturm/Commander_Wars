@@ -83,25 +83,29 @@ bool PlayerSelection::isOpenPlayer(qint32 player)
 bool PlayerSelection::isClosedPlayer(qint32 player)
 {
     bool ret = false;
-    if (m_pNetworkInterface.get() != nullptr &&
-        player >= 0 &&
-        player < m_playerAIs.size())
+    if (!getIsCampaign())
     {
-        if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 2 &&
-            m_pNetworkInterface->getIsServer())
+        if (m_pNetworkInterface.get() != nullptr &&
+            player >= 0 &&
+            player < m_playerAIs.size())
+        {
+            if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 2 &&
+                m_pNetworkInterface->getIsServer())
+            {
+                ret = true;
+            }
+            else
+            {
+                QString aiName = m_playerAIs[player]->getCurrentItemText();
+                ret = (aiName == tr("Closed"));
+            }
+        }
+        else if (m_pNetworkInterface.get() == nullptr &&
+                 m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1 &&
+                 m_playerAIs[player]->getItemCount() > 1)
         {
             ret = true;
         }
-        else
-        {
-            QString aiName = m_playerAIs[player]->getCurrentItemText();
-            ret = (aiName == tr("Closed"));
-        }
-    }
-    else if (m_pNetworkInterface.get() == nullptr &&
-             m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1)
-    {
-        ret = true;
     }
     return ret;
 }

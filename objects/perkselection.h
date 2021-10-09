@@ -64,9 +64,11 @@ public slots:
     void selectRandomPerks(bool fill);
 private:
     QVector<PerkGroup> getPerksGrouped();
+    bool getPerkEnabled(QString perkId);
 private:
     CO* m_pCO{nullptr};
     QVector<spCheckbox> m_Checkboxes;
+    QStringList m_perkIds;
     qint32 m_maxPerks{0};
     bool m_banning{false};
     QStringList m_perks;

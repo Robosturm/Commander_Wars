@@ -95,11 +95,74 @@ var Constructor = function()
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100, 0);
         return damage;
     };
+
+    this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result)
+    {
+        var baseDamage1 = -1;
+        var baseDamage2 = -1;
+        var weaponID1 = unit.getWeapon1ID();
+        if (unit.hasAmmo1() && weaponID1 !== "" &&
+            unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
+        {
+            baseDamage1 = Global[weaponID1].getBaseDamage(defUnit);
+        }
+        var weaponID2 = unit.getWeapon2ID();
+        if (unit.hasAmmo2() && weaponID2 !== "" &&
+            unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
+        {
+            baseDamage2 = Global[weaponID2].getBaseDamage(defUnit);
+        }
+
+        if ((baseDamage1 >= 0.0) || (baseDamage2 >= 0.0))
+        {
+            if (baseDamage1 >= baseDamage2)
+            {
+                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);;
+                result.y = 0;
+            }
+            else
+            {
+                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
+                result.y = 1;
+            }
+        }
+        return result;
+    };
     this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
         return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getHp() - takenDamage / 10.0),
                                       defender, defender.getPosition(), false,
                                       luckMode)
+    };
+
+    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result)
+    {
+        var baseDamage1 = -1;
+        var baseDamage2 = -1;
+        var weaponID1 = defUnit.getWeapon1ID();
+        if (defUnit.hasAmmo1() && weaponID1 !== "" &&
+            defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y))
+        {
+            baseDamage1 = Global[weaponID1].getBaseDamage(unit);
+
+        }
+        var weaponID2 = defUnit.getWeapon2ID();
+        if (defUnit.hasAmmo2() && weaponID2 !== "" &&
+            defUnit.canAttackWithWeapon(1, x, y, actionTargetField.x, actionTargetField.y))
+        {
+            baseDamage2 = Global[weaponID2].getBaseDamage(unit);
+        }
+        if (baseDamage1 >= baseDamage2)
+        {
+            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender);
+            result.height = 0;
+        }
+        else
+        {
+            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender);
+            result.height = 1;
+        }
+        return result;
     };
     this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
     {
@@ -109,11 +172,7 @@ var Constructor = function()
         {
             if (defender.getMinRange(Qt.point(defender.getX(), defender.getY())) === 1 && defenderWeapon !== "")
             {
-                var health = defender.getHp() - takenDamage / 10.0;
-                if (defender.getFirstStrike(defender.getPosition(), attacker))
-                {
-                    health = defender.getHp();
-                }
+                var health = defender.getHp() - takenDamage / 10.0;                
                 health = globals.roundUp(health);
                 damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defender.getPosition(), health,
                                                 attacker, attackerPosition, true,
@@ -261,66 +320,29 @@ var Constructor = function()
             {
                 defUnit = defender;
             }
-            var baseDamage1 = -1;
-            var baseDamage2 = -1;
             if (defUnit !== null)
             {
                 if (unit.isAttackable(defUnit, ignoreOutOfVisionRange, Qt.point(atkPosX, atkPosY)))
                 {
-                    var weaponID1 = unit.getWeapon1ID();
-                    if (unit.hasAmmo1() && weaponID1 !== "" &&
-                            unit.canAttackWithWeapon(0, atkPosX, atkPosY,x, y))
-                    {
-                        baseDamage1 = Global[weaponID1].getBaseDamage(defUnit);
-                    }
-                    var weaponID2 = unit.getWeapon2ID();
-                    if (unit.hasAmmo2() && weaponID2 !== "" &&
-                            unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
-                    {
-                        baseDamage2 = Global[weaponID2].getBaseDamage(defUnit);
-                    }
-
-                    if ((baseDamage1 >= 0.0) || (baseDamage2 >= 0.0))
-                    {
-                        if (baseDamage1 >= baseDamage2)
-                        {
-                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);;
-                            result.y = 0;
-                        }
-                        else
-                        {
-                            result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID2, attackerTakenDamage, actionTargetField, defUnit, luckMode);
-                            result.y = 1;
-                        }
-                    }
                     if (defUnit.isAttackable(unit, true, actionTargetField, true) &&
                         defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode))
                     {
-                        baseDamage1 = -1;
-                        baseDamage2 = -1;
-                        weaponID1 = defUnit.getWeapon1ID();
-                        if (defUnit.hasAmmo1() && weaponID1 !== "" &&
-                                defUnit.canAttackWithWeapon(0, x, y, atkPosX, atkPosY))
+                        var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
+                        var atkFirststrike = attacker.getFirstStrike(actionTargetField, defUnit, false);
+                        if (defFirststrike && !atkFirststrike)
                         {
-                            baseDamage1 = Global[weaponID1].getBaseDamage(unit);
-
-                        }
-                        weaponID2 = defUnit.getWeapon2ID();
-                        if (defUnit.hasAmmo2() && weaponID2 !== "" &&
-                                defUnit.canAttackWithWeapon(1, x, y, atkPosX, atkPosY))
-                        {
-                            baseDamage2 = Global[weaponID2].getBaseDamage(unit);
-                        }
-                        if (baseDamage1 >= baseDamage2)
-                        {
-                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, result.x + defenderTakenDamage, luckModeDefender);
-                            result.height = 0;
+                            result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result);
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, result.width + attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
                         }
                         else
                         {
-                            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, result.x + defenderTakenDamage, luckModeDefender);
-                            result.height = 1;
+                            result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
+                            result = ACTION_FIRE.calcDefenderWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, result.x + defenderTakenDamage, luckModeDefender, result);
                         }
+                    }
+                    else
+                    {
+                        result = ACTION_FIRE.calcAttackerWeaponDamage(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result);
                     }
                 }
             }
@@ -619,10 +641,22 @@ var Constructor = function()
             defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon);
 
             // only kill units if we should else we stop here
-            if (dontKillUnits  === false)
+            if (dontKillUnits === false)
             {
-                var unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
+                var defFirststrike = defUnit.getFirstStrike(defUnit.getPosition(), attacker, true);
+                var atkFirststrike = attacker.getFirstStrike(attacker.getPosition(), defUnit, false);
+                var unitBattleAnimation = null;
+                if (defFirststrike && !atkFirststrike && counterdamage >= 0)
+                {
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon,
+                                                                                     attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon, attackerDamage);
+                }
+                else
+                {
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
                                                                                      defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon, defenderDamage);
+                }
+
                 ACTION_FIRE.postUnitAnimationAttacker = attacker;
                 ACTION_FIRE.postUnitAnimationDefender = defUnit;
                 unitBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostUnitAnimation");

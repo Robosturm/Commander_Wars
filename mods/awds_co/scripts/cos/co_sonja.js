@@ -86,21 +86,29 @@ CO_SONJA.getPerfectVision = function(co)
     return false;
 };
 
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
 {
     if (co.getIsCO0() === true)
     {
-        // sonja's troops get first strike during counter attacks
-        // meaning her troops attack before they loose their hp
-        switch (co.getPowerMode())
+        if(unit !== null)
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            return true;
-        case GameEnums.PowerMode_Power:
-            return false;
-        default:
-            return false;
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case GameEnums.PowerMode_Power:
+                return false;
+            default:
+                return false;
+            }
         }
     }
     return false;

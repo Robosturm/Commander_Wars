@@ -86,7 +86,7 @@ public:
 
 
 signals:
-    void signalVictory(qint32 team);
+    void sigVictory(qint32 team);
 public slots:
     /**
      * @brief getPowerUsageReduction

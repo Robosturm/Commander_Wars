@@ -204,9 +204,9 @@ protected:
     bool tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
                                      QString & file, qint32 loops, qint32 delay, qreal sound);
     /**
-     * @brief qtWorkaround
+     * @brief qtWasteTime
      */
-    void qtWorkaround();
+    void qtWasteTime();
 private:
     // music playback data
     struct PlaylistData

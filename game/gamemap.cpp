@@ -1368,7 +1368,7 @@ void GameMap::saveGame()
 
 void GameMap::victoryInfo()
 {
-    emit signalVictoryInfo();
+    emit sigVictoryInfo();
 }
 
 void GameMap::showCOInfo()
