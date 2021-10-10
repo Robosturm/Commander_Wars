@@ -31,6 +31,7 @@
         <image file="battlesprites/background/back_beach+sea.png" />
         <image file="battlesprites/background/back_bridge+0.png" />
         <image file="battlesprites/background/back_bridge+1.png" />
+        <image file="battlesprites/background/back_bridge+sea.png" />        
         <image file="battlesprites/background/back_desert.png" />
         <image file="battlesprites/background/back_desert+pipe.png" />
         <image file="battlesprites/background/back_desertbridge.png" />

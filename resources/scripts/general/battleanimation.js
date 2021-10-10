@@ -43,6 +43,11 @@ var BATTLEANIMATION =
             fadeoutTime = 300
             spriteId = "unit_explosion_air";
             offset = Qt.point(-30, 20);
+
+        }
+        else
+        {
+
         }
         if (sprite.getHasFired())
         {
@@ -53,7 +58,8 @@ var BATTLEANIMATION =
             sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
         }
         sprite.loadDyingFadeOutAnimation(fadeoutTime);
-        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset,255)
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset,255);
+
     },
 
     getDyingDurationMS : function(sprite, unit, defender, weapon)

@@ -77,14 +77,14 @@ var Constructor = function()
             BATTLEANIMATION_MEGATANK.loadSprite(sprite, unit, defender, weapon, 0, 0);
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
-                offset = Qt.point(72, 99);
-                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                offset = Qt.point(68, 94);
+                sprite.loadSprite("flak_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0, false, true);
             }
             else
             {
-                offset = Qt.point(72, 94);
-                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                offset = Qt.point(72, 89);
+                sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0, false, true);
             }
             sprite.loadSound("mg_weapon_fire.wav", 1, 0);
@@ -140,12 +140,12 @@ var Constructor = function()
         }
         else
         {
-            var yOffset = 22;
+            var yOffset = 17;
             if (unit.getUnitType()  === GameEnums.UnitType_Air)
             {
-                yOffset = 40
+                yOffset = 35
             }
-            sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(0, yOffset),
                               1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {

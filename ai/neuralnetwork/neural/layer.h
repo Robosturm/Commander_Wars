@@ -29,6 +29,12 @@ public:
     };
     Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> parameters);
     virtual ~Layer() = default;
+    /**
+     * @brief extend
+     * @param count
+     * @param randomize
+     */
+    void extend(quint32 count, bool randomize);
 
     qint32 getId() const;
 

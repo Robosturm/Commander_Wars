@@ -23,8 +23,8 @@ const QStringList HeavyAi::NeuralNetworkNames = {"Production",
 using namespace std::placeholders;
 
 
-HeavyAi::HeavyAi(QString type)
-    : CoreAI(GameEnums::AiTypes_Heavy),
+HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
+    : CoreAI(aiType),
       m_scoreInfos({
 {ACTION_CAPTURE,  std::bind(&HeavyAi::scoreCapture,     this,   _1, _2, _3)},
 {ACTION_FIRE,     std::bind(&HeavyAi::scoreFire,        this,   _1, _2, _3)},
@@ -41,23 +41,24 @@ HeavyAi::HeavyAi(QString type)
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/" + m_aiName.toLower() + ".ini");
-    loadNeuralNetworks();
+    loadNeuralNetworks(aiType);
     if (NeuralNetworkNames.length() != NeuralNetworksMax)
     {
         oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Missing Enum name mapping");
     }
 }
 
-void HeavyAi::loadNeuralNetworks()
+void HeavyAi::loadNeuralNetworks(GameEnums::AiTypes aiType)
 {
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 4);
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 4);
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionCapture], m_neuralNetworks[NeuralNetworks::ActionCapture], static_cast<qint32>(CaptureInfo::CaptureInfoMaxSize), CaptureInfoMaxSize / 4);
+    bool randomize = static_cast<qint32>(aiType) - GameEnums::AiTypes_Heavy >= 3;
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::Production], m_neuralNetworks[NeuralNetworks::Production], static_cast<qint32>(BuildingEntryMaxSize), BuildingEntryMaxSize / 4, randomize);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionFire], m_neuralNetworks[NeuralNetworks::ActionFire], static_cast<qint32>(AttackInfo::AttackInfoMaxSize), AttackInfoMaxSize / 4, randomize);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::ActionCapture], m_neuralNetworks[NeuralNetworks::ActionCapture], static_cast<qint32>(CaptureInfo::CaptureInfoMaxSize), CaptureInfoMaxSize / 4, randomize);
     // todo
-    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::WaitDistanceMultiplier], m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier], 5, 5, WaitTargetTypesMaxSize);
+    loadNeuralNetwork(NeuralNetworkNames[NeuralNetworks::WaitDistanceMultiplier], m_neuralNetworks[NeuralNetworks::WaitDistanceMultiplier], 5, 5, randomize, WaitTargetTypesMaxSize);
 }
 
-void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, qint32 outputSize)
+void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize)
 {
     network = spNeuralNetwork::create();
     network->setNetworkName(netName);
@@ -80,6 +81,11 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
             network->deserializeObject(stream);
+            qint32 inputSize = network->getInputSize();
+            if (inputSize > inputVectorSize)
+            {
+                network->extend(inputSize - inputVectorSize, randomize);
+            }
             found = true;
             break;
         }
@@ -89,7 +95,7 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
         QMap<QString, double> parameters;
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT));
         parameters.insert(Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::Step));
-        parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize) * 3);
+        parameters.insert(Layer::LAYER_PARAMETER_SIZE, static_cast<double>(inputVectorSize));
         network->addLayer(parameters);
         parameters.insert(Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD));
         for (qint32 i = 0; i < netDepth; ++i)

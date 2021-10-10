@@ -900,7 +900,7 @@ void HumanPlayerInput::createMarkedMoveFields()
             }
             else
             {
-                createMarkedField(points[i], QColor(210, 210, 0, 255), Terrain::DrawPriority::MarkedField);
+                createMarkedField(points[i], QColor(160, 50, 160, 255), Terrain::DrawPriority::MarkedField);
             }
         }
         syncMarkedFields();

@@ -39,8 +39,8 @@ var Constructor = function()
         else
         {
             // mg
-            offset = Qt.point(83, 73);
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+            offset = Qt.point(83, 63);
+            sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
             sprite.loadSound("mg_weapon_fire.wav", 1);
         }
@@ -67,7 +67,7 @@ var Constructor = function()
             {
                 yOffset = 40
             }
-            sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(0, yOffset),
                             1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {

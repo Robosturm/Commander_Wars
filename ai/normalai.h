@@ -73,10 +73,11 @@ public:
         UseHighTechUnits = 16,
         SupplyRatio = 17,
         RequiredSupplyRatio = 18,
+        LowFunds = 19,
         Max,
     };
 
-    explicit NormalAi(QString configurationFile);
+    explicit NormalAi(QString configurationFile, GameEnums::AiTypes aiType);
     virtual ~NormalAi() = default;
 signals:
 
@@ -412,7 +413,7 @@ private:
 
     float m_notAttackableDamage{25.0f};
     float m_midDamage{55.0f};
-    float m_highDamage{65.0f};
+    float m_highDamage{75.0f};
     float m_directIndirectRatio{1.75f};
     qint32 m_minSiloDamage{7000};
     float m_minMovementDamage{0.3f};
@@ -492,6 +493,8 @@ private:
     float m_cappingFunds{4700};
     float m_cappedFunds{1999};
     float m_targetPriceDifference{0.3f};
+    float m_highDamageMultiplier{4.0f};
+    float m_fundsPerBuildingFactorC{4};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};

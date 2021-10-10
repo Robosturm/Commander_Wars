@@ -85,6 +85,8 @@ public:
     static const QString ACTION_EXPLODE;
     static const QString ACTION_FLARE;
 
+    static const QString UNIT_INFANTRY;
+
     explicit CoreAI(GameEnums::AiTypes aiType);
     virtual ~CoreAI() = default;
     /**
