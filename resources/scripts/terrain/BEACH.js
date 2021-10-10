@@ -131,13 +131,14 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain, defender)
     {
+        var weatherModifier = TERRAIN.getWeatherModifier();
         if (typeof defender !== 'undefined' &&
             defender !== null &&
             defender.getUnitType() === GameEnums.UnitType_Naval)
         {
-            return "back_beach+sea";
+            return "back_" + weatherModifier + "beach+sea";
         }
-        return "back_beach";
+        return "back_" + weatherModifier + "beach";
     };
 
     this.getDescription = function()

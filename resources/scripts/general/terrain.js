@@ -102,15 +102,8 @@ var TERRAIN =
     {
         if (typeof map !== 'undefined')
         {
-            var weather = map.getGameRules().getCurrentWeather().getWeatherId();
-            if (weather === "WEATHER_SNOW")
-            {
-                return "base_snowair";
-            }
-            else if (weather === "WEATHER_RAIN")
-            {
-                return "base_rainair";
-            }
+            var weatherModifier = TERRAIN.getWeatherModifier();
+            return "base_" + weatherModifier + "air";
         }
         return "base_air";
     },
@@ -124,18 +117,8 @@ var TERRAIN =
         {
             return foreground;
         }
-        else if (weather === "WEATHER_SNOW")
-        {
-            return "fore_snowplains+" + rand.toString();
-        }
-        else if (weather === "WEATHER_RAIN")
-        {
-            return "fore_rainplains+" + rand.toString();
-        }
-        else
-        {
-            return "fore_plains+" + rand.toString();
-        }
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "fore_" + weatherModifier +"plains+" + rand.toString();
     },
 
     getFactoryForeground : function(terrain)

@@ -5362,5 +5362,8 @@
         <file>resources/images/game/battlesprites/base_rainair.png</file>
         <file>resources/images/game/battlesprites/base_rainforest.png</file>
         <file>resources/images/game/battlesprites/background/back_snowforest+2.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainbeach.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbeach.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbeach+sea.png</file>
     </qresource>
 </RCC>

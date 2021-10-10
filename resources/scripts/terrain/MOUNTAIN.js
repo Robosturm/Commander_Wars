@@ -51,11 +51,7 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var rand = globals.randInt(0, 1);
-        var weatherModifier = "";
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            weatherModifier = "snow";
-        }
+        var weatherModifier = TERRAIN.getWeatherModifier();
         return "back_" + weatherModifier + "mountain+" + rand.toString();
     };
     this.getDescription = function()

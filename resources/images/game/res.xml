@@ -37,9 +37,11 @@
         <image file="battlesprites/background/back_airport.png" />
         <image file="battlesprites/background/back_snowairport.png" />
         <image file="battlesprites/background/back_rainairport.png" />
-        <image file="battlesprites/background/back_beach.png" />
+        <image file="battlesprites/background/back_beach.png" />        
+        <image file="battlesprites/background/back_rainbeach+sea.png" />
         <image file="battlesprites/background/back_rainbeach.png" />
-        <image file="battlesprites/background/back_beach+sea.png" />
+        <image file="battlesprites/background/back_snowbeach+sea.png" />
+        <image file="battlesprites/background/back_snowbeach.png" />        
         <image file="battlesprites/background/back_bridge+0.png" />
         <image file="battlesprites/background/back_bridge+1.png" />
         <image file="battlesprites/background/back_rainbridge+0.png" />
