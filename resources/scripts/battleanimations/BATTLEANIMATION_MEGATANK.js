@@ -140,12 +140,13 @@ var Constructor = function()
         }
         else
         {
-            var yOffset = 17;
-            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            var xOffset = 0;
+            var yOffset = 22;
+            if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
-                yOffset = 35
+                yOffset = 45;
             }
-            sprite.loadSprite("flak_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
                               1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {

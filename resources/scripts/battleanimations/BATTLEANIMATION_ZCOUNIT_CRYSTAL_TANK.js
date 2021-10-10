@@ -39,7 +39,7 @@ var Constructor = function()
         else
         {
             // mg
-            offset = Qt.point(83, 63);
+            offset = Qt.point(83, 68);
             sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
             sprite.loadSound("mg_weapon_fire.wav", 1);
@@ -62,12 +62,13 @@ var Constructor = function()
         }
         else
         {
+            var xOffset = 0;
             var yOffset = 22;
-            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            if (defender.getUnitType()  === GameEnums.UnitType_Air)
             {
-                yOffset = 40
+                yOffset = 45;
             }
-            sprite.loadSprite("flak_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
                             1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {

@@ -890,17 +890,30 @@ void HumanPlayerInput::createMarkedMoveFields()
     clearMarkedFields();
     if (m_pUnitPathFindingSystem.get() != nullptr)
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QColor multiTurnColor = QColor(128, 0, 255, 255);
+        QJSValue ret = pInterpreter->doFunction("Global", "getMultiturnFieldColor");
+        if (ret.isString())
+        {
+            multiTurnColor = QColor(ret.toString());
+        }
+        QColor turnColor = QColor(128, 255, 0, 255);
+        ret = pInterpreter->doFunction("Global", "getTurnFieldColor");
+        if (ret.isString())
+        {
+            turnColor = QColor(ret.toString());
+        }
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
         QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
         for (qint32 i = 0; i < points.size(); i++)
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
             {
-                createMarkedField(points[i], QColor(128, 0, 255, 255), Terrain::DrawPriority::MarkedField);
+                createMarkedField(points[i], multiTurnColor, Terrain::DrawPriority::MarkedField);
             }
             else
             {
-                createMarkedField(points[i], QColor(160, 50, 160, 255), Terrain::DrawPriority::MarkedField);
+                createMarkedField(points[i], turnColor, Terrain::DrawPriority::MarkedField);
             }
         }
         syncMarkedFields();

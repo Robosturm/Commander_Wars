@@ -120,20 +120,10 @@ public:
         return 8;
     }
     /**
-     * @brief getFixedSprite only avaible for ingame editor
-     * @return
-     */
-    bool getFixedSprite() const;
-    /**
      * @brief setFixedSprite only avaible for ingame editor
      * @return
      */
     void setFixedSprite(bool FixedSprite);
-    /**
-     * @brief getTerrainSpriteName only avaible for ingame editor
-     * @return
-     */
-    QString getTerrainSpriteName() const;
     /**
      * @brief setTerrainSpriteName only avaible for ingame editor
      * @return
@@ -151,6 +141,16 @@ public:
     bool isValid();
 
 public slots:
+    /**
+     * @brief getFixedSprite only avaible for ingame editor
+     * @return
+     */
+    bool getFixedSprite() const;
+    /**
+     * @brief getTerrainSpriteName only avaible for ingame editor
+     * @return
+     */
+    QString getTerrainSpriteName() const;
     /**
      * @brief createTerrainFindingSystem Note: the path finding system needs to be deleted by the caller using killTerrainFindingSystem()
      * @return a path finding system that contains all connect terrains of the same type

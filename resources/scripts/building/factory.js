@@ -41,7 +41,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_factory";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier + "factory";
     };
 
     this.getDescription = function()

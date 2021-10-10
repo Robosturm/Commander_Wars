@@ -27,6 +27,108 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    m_iniData = { // General
+                  {"MinMovementDamage", "General", &m_minMovementDamage, 0.3f, 0.0f, 1.0f},
+                  {"MinAttackFunds", "General", &m_minAttackFunds, 0.0f, -1.0f, 1.0f},
+                  {"MinSuicideDamage", "General", &m_minSuicideDamage, 0.75f, -1.0f, 1.0f},
+                  {"SpamingFunds", "General", &m_spamingFunds, 7500.0f, 5000.0f, 10000.0f},
+                  {"OwnUnitValue", "General", &m_ownUnitValue, 2.0f, -10.0f, 10.0f},
+                  {"BuildingValue", "General", &m_buildingValue, 1.0f, 1.0f, 1.0f},
+                  {"NotAttackableDamage", "General", &m_notAttackableDamage, 25.0f, 0.0f, 40.0f},
+                  {"MidDamage", "General", &m_midDamage, 55.0f, 40.0f, 60.0f},
+                  {"HighDamage", "General", &m_highDamage, 75.0f, 60.0f, 100.0f},
+                  {"DirectIndirectRatio", "General", &m_directIndirectRatio, 5.0f, 0.2f, 10.0f},
+                  {"MinSiloDamage", "General", &m_minSiloDamage, 7000.0f, 7000.0f, 7000.0f},
+                  {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 3.0f, 3.0f, 3.0f},
+                  // CO Unit
+                  {"CoUnitValue", "CoUnit", &m_slowUnitSpeed, 6000.0f, 5000.0f, 10000.0f},
+                  {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
+                  {"CoUnitRankReduction", "CoUnit", &m_coUnitRankReduction, 1000.0f, 0.0f, 5000.0f},
+                  {"CoUnitScoreMultiplier", "CoUnit", &m_coUnitScoreMultiplier, 1.1f, 1.0f, 3.0f},
+                  {"MinCoUnitCount", "CoUnit", &m_minCoUnitCount, 5.0f, 1.0f, 10.0f},
+                  // Repairing
+                  {"MinUnitHealth", "Repairing", &m_minUnitHealth, 3.0f, 0.0f, 4.0f},
+                  {"MaxUnitHealth", "Repairing", &m_maxUnitHealth, 7.0f, 0.0f, 10.0f},
+                  {"FuelResupply", "Repairing", &m_fuelResupply, 0.33f, 0.0f, 0.5f},
+                  {"AmmoResupply", "Repairing", &m_ammoResupply, 0.25f, 0.0f, 0.5f},
+                  // Moving
+                  {"LockedUnitHp", "Moving", &m_lockedUnitHp, 4.0f, 1.0f, 4.0f},
+                  {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 4.0f},
+                  // Attacking
+                  {"OwnIndirectAttackValue", "Attacking", &m_ownIndirectAttackValue, 2.0f, 0.1f, 10.0f},
+                  {"EnemyKillBonus", "Attacking", &m_enemyKillBonus, 2.0f, 0.1f, 10.0f},
+                  {"EnemyIndirectBonus", "Attacking", &m_enemyIndirectBonus, 3.0f, 0.1f, 10.0f},
+                  {"AntiCaptureHqBonus", "Attacking", &m_antiCaptureHqBonus, 50.0f, 0.0f, 100.0f},
+                  {"AntiCaptureBonus", "Attacking", &m_antiCaptureBonus, 21.0f, 0.0f, 100.0f},
+                  {"AntiCaptureBonusScoreReduction", "Attacking", &m_antiCaptureBonusScoreReduction, 6.0f, 0.0f, 20.0f},
+                  {"AntiCaptureBonusScoreDivider", "Attacking", &m_antiCaptureBonusScoreDivider, 2.0f, 0.1f, 10.0f},
+                  {"EnemyCounterDamageMultiplier", "Attacking", &m_enemyCounterDamageMultiplier, 10.0f, 0.1f, 40.0f},
+                  {"WatermineDamage", "Attacking", &m_watermineDamage, 4.0f, 4.0f, 4.0f},
+                  {"EnemyUnitCountDamageReductionMultiplier", "Attacking", &m_enemyUnitCountDamageReductionMultiplier, 0.5f, 0.0f, 10.0f},
+                  // Production
+                  {"FundsPerBuildingFactorA", "Production", &m_fundsPerBuildingFactorA, 1.85f, 1.0f, 10.0f},
+                  {"FundsPerBuildingFactorB", "Production", &m_fundsPerBuildingFactorB, 2.0f, 1.0f, 10.0f},
+                  {"FundsPerBuildingFactorC", "Production", &m_fundsPerBuildingFactorC, 3.0f, 1.0f, 10.0f},
+                  {"OwnUnitEnemyUnitRatioAverager", "Production", &m_ownUnitEnemyUnitRatioAverager, 10.0f, 5.0f, 30.0f},
+                  {"MaxDayScoreVariancer", "Production", &m_maxDayScoreVariancer, 10.0f, 5.0f, 30.0f},
+                  {"DirectIndirectUnitBonusFactor", "Production", &m_directIndirectUnitBonusFactor, 1.75f, 0.1f, 10.0f},
+                  {"ScoringCutOffDamageHigh", "Production", &m_scoringCutOffDamageHigh, 100.0f, 100.0f, 100.0f},
+                  {"ScoringCutOffDamageLow", "Production", &m_scoringCutOffDamageLow, 7.5f, 0.1f, 40.0f},
+                  {"SmoothingValue", "Production", &m_smoothingValue, 3.0f, 1.0f, 20.0f},
+                  {"MaxDistanceMultiplier", "Production", &m_maxDistanceMultiplier, 1.5f, 1.0f, 10.0f},
+                  {"SameIslandBonusInRangeDays", "Production", &m_sameIslandBonusInRangeDays, 2.0f, 1.0f, 10.0f},
+                  {"SameIslandOutOfDayMalusFactor", "Production", &m_sameIslandOutOfDayMalusFactor, 0.2f, 0.01f, 1.0f},
+                  {"HighDamageBonus", "Production", &m_highDamageBonus, 2.0f, 0.0f, 10.0f},
+                  {"MidDamageBonus", "Production", &m_midDamageBonus, 1.5f, 0.0f, 10.0f},
+                  {"LowDamageBonus", "Production", &m_lowDamageBonus, 1.0f, 0.0f, 10.0f},
+                  {"VeryLowDamageBonus", "Production", &m_veryLowDamageBonus, 0.5f, 0.0f, 10.0f},
+                  {"TransportBonus", "Production", &m_transportBonus, 0.125f, 0.0f, 10.0f},
+                  {"CurrentlyNotAttackableBonus", "Production", &m_currentlyNotAttackableBonus, 0.5f, 0.0f, 10.0f},
+                  {"DifferentIslandBonusInRangeDays", "Production", &m_differentIslandBonusInRangeDays, 1.0f, 1.0f, 1.0f},
+                  {"DifferentIslandOutOfDayMalusFactor", "Production", &m_differentIslandOutOfDayMalusFactor, 0.33f, 0.33f, 0.33f},
+                  {"NoTransporterBonus", "Production", &m_noTransporterBonus, 70.0f, 70.0f, 70.0f},
+                  {"TransporterToRequiredPlaceFactor", "Production", &m_transporterToRequiredPlaceFactor, 6.0f, 6.0f, 6.0f},
+                  {"MinFlyingTransportScoreForBonus", "Production", &m_minFlyingTransportScoreForBonus, 15.0f, 15.0f, 15.0f},
+                  {"FlyingTransporterBonus", "Production", &m_flyingTransporterBonus, 15.0f, 15.0f, 15.0f},
+                  {"SmallTransporterBonus", "Production", &m_smallTransporterBonus, 30.0f, 30.0f, 30.0f},
+                  {"UnitToSmallTransporterRatio", "Production", &m_unitToSmallTransporterRatio, 5.0f, 5.0f, 5.0f},
+                  {"AdditionalLoadingUnitBonus", "Production", &m_additionalLoadingUnitBonus, 10.0f, 10.0f, 10.0f},
+                  {"IndirectUnitAttackCountMalus", "Production", &m_indirectUnitAttackCountMalus, 4.0f, 0.0f, 20.0f},
+                  {"MinAttackCountBonus", "Production", &m_minAttackCountBonus, 5.0f, 0.0f, 20.0f},
+                  {"LowIndirectUnitBonus", "Production", &m_lowIndirectUnitBonus, 30.0f, 0.0f, 100.0f},
+                  {"LowIndirectMalus", "Production", &m_lowIndirectMalus, 30.0f, 0.0f, 100.0f},
+                  {"HighIndirectMalus", "Production", &m_highIndirectMalus, 40.0f, 0.0f, 100.0f},
+                  {"LowDirectUnitBonus", "Production", &m_highIndirectMalus, 35.0f, 0.0f, 100.0f},
+                  {"LowDirectMalus", "Production", &m_lowDirectMalus, 20.0f, 0.0f, 100.0f},
+                  {"HighDirectMalus", "Production", &m_highDirectMalus, 40.0f, 0.0f, 100.0f},
+                  {"MinUnitCountForDamageBonus", "Production", &m_minUnitCountForDamageBonus, 3.0f, 0.0f, 20.0f},
+                  {"CurrentlyNotAttackableScoreBonus", "Production", &m_currentlyNotAttackableScoreBonus, 30.0f, 0.0f, 100.0f},
+                  {"CoUnitBuffBonus", "Production", &m_coUnitBuffBonus, 17.0f, 5.0f, 100.0f},
+                  {"NearEnemyBonus", "Production", &m_nearEnemyBonus, 10.0f, 0.0f, 100.0f},
+                  {"MovementpointBonus", "Production", &m_movementpointBonus, 6.0f, 0.0f, 30.0f},
+                  {"DamageToUnitCostRatioBonus", "Production", &m_damageToUnitCostRatioBonus, 20.0f, 0.0f, 100.0f},
+                  {"SuperiorityRatio", "Production", &m_superiorityRatio, 1.8f, 1.0f, 10.0f},
+                  {"CheapUnitRatio", "Production", &m_cheapUnitRatio, 1.8f, 0.5f, 2.0f},
+                  {"CheapUnitBonusMultiplier", "Production", &m_cheapUnitBonusMultiplier, 45.0f, 0.0f, 100.0f},
+                  {"NormalUnitBonusMultiplier", "Production", &m_normalUnitBonusMultiplier, 45.0f, 0.0f, 100.0f},
+                  {"ExpensiveUnitBonusMultiplier", "Production", &m_expensiveUnitBonusMultiplier, 20.0f, 0.0f, 100.0f},
+                  {"LowOwnBuildingEnemyBuildingRatio", "Production", &m_lowOwnBuildingEnemyBuildingRatio, 1.25f, 0.0f, 10.0f},
+                  {"LowInfantryRatio", "Production", &m_lowInfantryRatio, 0.4f, 0.0f, 1.0f},
+                  {"LowIncomeInfantryBonusMultiplier", "Production", &m_lowIncomeInfantryBonusMultiplier, 50.0f, 0.0f, 100.0f},
+                  {"ProducingTransportSearchrange", "Production", &m_ProducingTransportSearchrange, 6.0f, 6.0f, 6.0f},
+                  {"ProducingTransportSizeBonus", "Production", &m_ProducingTransportSizeBonus, 15.0f, 15.0f, 15.0f},
+                  {"ProducingTransportRatioBonus", "Production", &m_ProducingTransportRatioBonus, 10.0f, 10.0f, 10.0f},
+                  {"ProducingTransportLoadingBonus", "Production", &m_ProducingTransportLoadingBonus, 15.0f, 15.0f, 15.0f},
+                  {"ProducingTransportMinLoadingTransportRatio", "Production", &m_ProducingTransportMinLoadingTransportRatio, 7.0f, 7.0f, 7.0f},
+                  {"BuildingBonusMultiplier", "Production", &m_buildingBonusMultiplier, 6.0f, 0.0f, 30.0f},
+                  {"CanSupplyBonus", "Production", &m_canSupplyBonus, 10.0f, 5.0f, 40.0f},
+                  {"MaxSupplyUnitRatio", "Production", &m_maxSupplyUnitRatio, 0.05f, 0.01f, 0.0f},
+                  {"AverageSupplySupport", "Production", &m_averageSupplySupport, 8.0f, 0.0f, 20.0f},
+                  {"CappingFunds", "Production", &m_cappingFunds, 6500.0f, 2000.0f, 8000.0f},
+                  {"CappedFunds", "Production", &m_cappedFunds, 1500.0f, 1000.0f, 4000.0f},
+                  {"TargetPriceDifference", "Production", &m_cappedFunds, 0.35f, 0.0f, 1.0f},
+                  {"HighDamageMultiplier", "Production", &m_highDamageMultiplier, 4.0f, 0.0f, 20.0f},};
     loadIni( "normal/" + configurationFile);
     setUnitBuildValue("RECON",         0.6f);
     setUnitBuildValue("FLARE",         0.6f);
@@ -39,521 +141,59 @@ void NormalAi::readIni(QString name)
     {
         QSettings settings(name, QSettings::IniFormat);
         CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
-        settings.beginGroup("General");
-        bool ok = false;
-        m_minMovementDamage = settings.value("MinMovementDamage", 0.3f).toFloat(&ok);
-        if(!ok)
-        {
-            m_minMovementDamage = 0.3f;
-        }
-        m_minAttackFunds = settings.value("MinAttackFunds", 0).toFloat(&ok);
-        if(!ok)
-        {
-            m_minAttackFunds = 0;
-        }
-        m_minSuicideDamage = settings.value("MinSuicideDamage", 0.75f).toFloat(&ok);
-        if(!ok)
-        {
-            m_minSuicideDamage = 0.75f;
-        }
-        m_spamingFunds = settings.value("SpamingFunds", 7500).toFloat(&ok);
-        if(!ok)
-        {
-            m_spamingFunds = 0;
-        }
-        m_ownUnitValue = settings.value("OwnUnitValue", 2.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ownUnitValue = 2.0f;
-        }
-        m_buildingValue = settings.value("BuildingValue", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_buildingValue = 1.0f;
-        }
-        m_notAttackableDamage = settings.value("NotAttackableDamage", 25).toFloat(&ok);
-        if(!ok)
-        {
-            m_notAttackableDamage = 25;
-        }
-        m_midDamage = settings.value("MidDamage", 55).toFloat(&ok);
-        if(!ok)
-        {
-            m_midDamage = 55;
-        }
-        m_highDamage = settings.value("HighDamage", 65).toFloat(&ok);
-        if(!ok)
-        {
-            m_highDamage = 65;
-        }
-        m_directIndirectRatio = settings.value("DirectIndirectRatio", 1.75f).toFloat(&ok);
-        if(!ok)
-        {
-            m_directIndirectRatio = 1.75f;
-        }
-        m_minSiloDamage = settings.value("MinSiloDamage", 7000).toFloat(&ok);
-        if(!ok)
-        {
-            m_minSiloDamage = 7000;
-        }
-        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_minSameIslandDistance = 3.0f;
-        }
-        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
-        if(!ok)
-        {
-            m_slowUnitSpeed = 3;
-        }
-        settings.endGroup();
-        settings.beginGroup("CoUnit");
-        m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
-        if(!ok)
-        {
-            m_coUnitValue = 6000;
-        }
-        m_minCoUnitScore = settings.value("MinCoUnitScore", 5000).toFloat(&ok);
-        if(!ok)
-        {
-            m_minCoUnitScore = 5000;
-        }
-        m_coUnitRankReduction = settings.value("CoUnitRankReduction", 1000).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitRankReduction = 1000;
-        }
-        m_coUnitScoreMultiplier = settings.value("CoUnitScoreMultiplier", 1.1f).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitScoreMultiplier = 1.1f;
-        }
-        m_minCoUnitCount = settings.value("MinCoUnitCount", 1.1f).toInt(&ok);
-        if(!ok)
-        {
-            m_minCoUnitCount = 5;
-        }
-        settings.endGroup();
-        settings.beginGroup("Repairing");
-        m_minUnitHealth = settings.value("MinUnitHealth", 3).toInt(&ok);
-        if(!ok)
-        {
-            m_minUnitHealth = 3;
-        }
-        m_maxUnitHealth = settings.value("MaxUnitHealth", 7).toInt(&ok);
-        if(!ok)
-        {
-            m_maxUnitHealth = 7;
-        }
-        m_fuelResupply = settings.value("FuelResupply", 0.33f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fuelResupply = 0.33f;
-        }
-        m_ammoResupply = settings.value("AmmoResupply", 0.25f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ammoResupply = 0.25f;
-        }
-        settings.endGroup();
-        settings.beginGroup("Moving");
-        m_lockedUnitHp = settings.value("LockedUnitHp", 4).toFloat(&ok);
-        if(!ok)
-        {
-            m_lockedUnitHp = 4;
-        }
-        m_noMoveAttackHp = settings.value("NoMoveAttackHp", 3.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_noMoveAttackHp = 3.5f;
-        }
-        settings.endGroup();
-        settings.beginGroup("Attacking");
-        m_ownIndirectAttackValue = settings.value("OwnIndirectAttackValue", 2.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ownIndirectAttackValue= 2.0f;
-        }
-        m_enemyKillBonus = settings.value("EnemyKillBonus", 2.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_enemyKillBonus= 2.0f;
-        }
-        m_enemyIndirectBonus = settings.value("EnemyIndirectBonus", 3.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_enemyIndirectBonus= 3.0f;
-        }
-
-        m_antiCaptureHqBonus = settings.value("AntiCaptureHqBonus", 50.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_antiCaptureHqBonus= 50.0f;
-        }
-        m_antiCaptureBonus = settings.value("AntiCaptureBonus", 21.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_antiCaptureBonus= 21.0f;
-        }
-        m_antiCaptureBonusScoreReduction = settings.value("AntiCaptureBonusScoreReduction", 6.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_antiCaptureBonusScoreReduction= 6.0f;
-        }
-        m_antiCaptureBonusScoreReduction = settings.value("AntiCaptureBonusScoreDivider", 2.0f).toFloat(&ok);
-        if(!ok || m_antiCaptureBonusScoreReduction < 0)
-        {
-            m_antiCaptureBonusScoreReduction = 2.0f;
-        }
-        m_enemyCounterDamageMultiplier = settings.value("EnemyCounterDamageMultiplier", 10.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_enemyCounterDamageMultiplier = 10.0f;
-        }
-        m_watermineDamage = settings.value("WatermineDamage", 4.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_watermineDamage = 4.0f;
-        }
-        m_enemyUnitCountDamageReductionMultiplier = settings.value("EnemyUnitCountDamageReductionMultiplier", 0.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_enemyUnitCountDamageReductionMultiplier = 0.5f;
-        }
-        settings.endGroup();
-        settings.beginGroup("Production");
-        m_fundsPerBuildingFactorA = settings.value("FundsPerBuildingFactorA", 2.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fundsPerBuildingFactorA = 2.5f;
-        }
-        m_fundsPerBuildingFactorB = settings.value("FundsPerBuildingFactorB", 1.65f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fundsPerBuildingFactorB = 1.65f;
-        }
-        m_ownUnitEnemyUnitRatioAverager = settings.value("OwnUnitEnemyUnitRatioAverager", 10).toFloat(&ok);
-        if(!ok)
-        {
-            m_ownUnitEnemyUnitRatioAverager = 10;
-        }
-        m_maxDayScoreVariancer = settings.value("MaxDayScoreVariancer", 10).toFloat(&ok);
-        if(!ok)
-        {
-            m_maxDayScoreVariancer = 10;
-        }
-        m_directIndirectUnitBonusFactor = settings.value("DirectIndirectUnitBonusFactor", 1.75f).toFloat(&ok);
-        if(!ok)
-        {
-            m_directIndirectUnitBonusFactor = 1.75f;
-        }
-        m_maxBuildingTargetFindLoops = settings.value("MaxBuildingTargetFindLoops", 5).toFloat(&ok);
-        if(!ok)
-        {
-            m_maxBuildingTargetFindLoops = 5;
-        }
-        m_scoringCutOffDamageHigh = settings.value("ScoringCutOffDamageHigh", Unit::DAMAGE_100).toFloat(&ok);
-        if(!ok)
-        {
-            m_scoringCutOffDamageHigh = Unit::DAMAGE_100;
-        }
-        m_scoringCutOffDamageLow = settings.value("ScoringCutOffDamageLow", 7.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_scoringCutOffDamageLow = 7.5f;
-        }
-        m_smoothingValue = settings.value("SmoothingValue", 3).toFloat(&ok);
-        if(!ok)
-        {
-            m_smoothingValue = 3;
-        }
-        m_maxDistanceMultiplier = settings.value("MaxDistanceMultiplier", 1.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_maxDistanceMultiplier = 1.5f;
-        }
-        m_sameIslandBonusInRangeDays = settings.value("SameIslandBonusInRangeDays", 2).toFloat(&ok);
-        if(!ok)
-        {
-            m_sameIslandBonusInRangeDays = 2;
-        }
-        m_sameIslandOutOfDayMalusFactor = settings.value("SameIslandOutOfDayMalusFactor", 0.2f).toFloat(&ok);
-        if(!ok)
-        {
-            m_sameIslandOutOfDayMalusFactor = 0.2f;
-        }
-        m_highDamageBonus = settings.value("HighDamageBonus", 2).toFloat(&ok);
-        if(!ok)
-        {
-            m_highDamageBonus = 2;
-        }
-        m_midDamageBonus = settings.value("MidDamageBonus", 1.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_midDamageBonus = 1.5f;
-        }
-
-        m_lowDamageBonus = settings.value("LowDamageBonus", 1).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowDamageBonus = 1;
-        }
-
-        m_veryLowDamageBonus = settings.value("VeryLowDamageBonus", 0.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_veryLowDamageBonus = 0.5f;
-        }
-        m_transportBonus = settings.value("TransportBonus", 0.125f).toFloat(&ok);
-        if(!ok)
-        {
-            m_transportBonus = 0.125f;
-        }
-        m_currentlyNotAttackableBonus = settings.value("CurrentlyNotAttackableBonus", 0.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_currentlyNotAttackableBonus = 0.5f;
-        }
-        m_differentIslandBonusInRangeDays = settings.value("DifferentIslandBonusInRangeDays", 1).toFloat(&ok);
-        if(!ok)
-        {
-            m_differentIslandBonusInRangeDays = 1;
-        }
-        m_differentIslandOutOfDayMalusFactor = settings.value("DifferentIslandOutOfDayMalusFactor", 0.33f).toFloat(&ok);
-        if(!ok)
-        {
-            m_differentIslandOutOfDayMalusFactor = 0.33f;
-        }
-
-        m_noTransporterBonus = settings.value("NoTransporterBonus", 70).toFloat(&ok);
-        if(!ok)
-        {
-            m_noTransporterBonus = 70;
-        }
-        m_transporterToRequiredPlaceFactor = settings.value("TransporterToRequiredPlaceFactor", 3).toFloat(&ok);
-        if(!ok)
-        {
-            m_transporterToRequiredPlaceFactor = 3;
-        }
-
-        m_minFlyingTransportScoreForBonus = settings.value("MinFlyingTransportScoreForBonus", 15).toFloat(&ok);
-        if(!ok)
-        {
-            m_minFlyingTransportScoreForBonus = 15;
-        }
-        m_flyingTransporterBonus = settings.value("FlyingTransporterBonus", 15).toFloat(&ok);
-        if(!ok)
-        {
-            m_flyingTransporterBonus = 15;
-        }
-        m_smallTransporterBonus = settings.value("SmallTransporterBonus", 30).toFloat(&ok);
-        if(!ok)
-        {
-            m_smallTransporterBonus = 30;
-        }
-        m_unitToSmallTransporterRatio = settings.value("UnitToSmallTransporterRatio", 5).toFloat(&ok);
-        if(!ok)
-        {
-            m_unitToSmallTransporterRatio = 5;
-        }
-        m_additionalLoadingUnitBonus = settings.value("AdditionalLoadingUnitBonus", 5).toFloat(&ok);
-        if(!ok)
-        {
-            m_additionalLoadingUnitBonus = 5;
-        }
-        m_indirectUnitAttackCountMalus = settings.value("IndirectUnitAttackCountMalus", 4).toInt(&ok);
-        if(!ok)
-        {
-            m_indirectUnitAttackCountMalus = 4;
-        }
-        m_minAttackCountBonus = settings.value("MinAttackCountBonus", 5).toFloat(&ok);
-        if(!ok)
-        {
-            m_minAttackCountBonus = 5;
-        }
-        m_lowIndirectUnitBonus = settings.value("LowIndirectUnitBonus", 0.3f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowIndirectUnitBonus = 0.3f;
-        }
-        m_lowIndirectMalus = settings.value("LowIndirectMalus", 30.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowIndirectMalus = 30.0f;
-        }
-        m_highIndirectMalus = settings.value("HighIndirectMalus", 40.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_highIndirectMalus = 40.0f;
-        }
-        m_lowDirectUnitBonus = settings.value("LowDirectUnitBonus", 0.35f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowDirectUnitBonus = 0.35f;
-        }
-        m_lowDirectMalus = settings.value("LowDirectMalus", 0.3f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowDirectMalus = 0.3f;
-        }
-        m_highDirectMalus = settings.value("HighDirectMalus", 0.6f).toFloat(&ok);
-        if(!ok)
-        {
-            m_highDirectMalus = 0.6f;
-        }
-
-        m_minUnitCountForDamageBonus = settings.value("MinUnitCountForDamageBonus", 3).toFloat(&ok);
-        if(!ok)
-        {
-            m_minUnitCountForDamageBonus = 3;
-        }
-        m_currentlyNotAttackableScoreBonus = settings.value("CurrentlyNotAttackableScoreBonus", 30).toFloat(&ok);
-        if(!ok)
-        {
-            m_currentlyNotAttackableScoreBonus = 30;
-        }
-        m_coUnitBuffBonus = settings.value("CoUnitBuffBonus", 17).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitBuffBonus = 17;
-        }
-        m_nearEnemyBonus = settings.value("NearEnemyBonus", 10).toFloat(&ok);
-        if(!ok)
-        {
-            m_nearEnemyBonus = 10;
-        }
-        m_movementpointBonus = settings.value("MovementpointBonus", 3.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_movementpointBonus = 3.0f;
-        }
-        m_damageToUnitCostRatioBonus = settings.value("DamageToUnitCostRatioBonus", 20).toFloat(&ok);
-        if(!ok)
-        {
-            m_damageToUnitCostRatioBonus = 20;
-        }
-        m_superiorityRatio = settings.value("SuperiorityRatio", 2.5f).toFloat(&ok);
-        if(!ok)
-        {
-            m_superiorityRatio = 2.5f;
-        }
-        m_cheapUnitRatio = settings.value("CheapUnitRatio", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_cheapUnitRatio = 1.0f;
-        }
-        m_cheapUnitBonusMultiplier = settings.value("CheapUnitBonusMultiplier", 45).toFloat(&ok);
-        if(!ok)
-        {
-            m_cheapUnitBonusMultiplier = 45;
-        }
-        m_normalUnitBonusMultiplier = settings.value("NormalUnitBonusMultiplier", 10).toFloat(&ok);
-        if(!ok)
-        {
-            m_normalUnitBonusMultiplier = 10;
-        }
-        m_damageToUnitCostRatioBonus = settings.value("ExpensiveUnitBonusMultiplier", 5).toFloat(&ok);
-        if(!ok)
-        {
-            m_damageToUnitCostRatioBonus = 5;
-        }
-
-        m_lowOwnBuildingEnemyBuildingRatio = settings.value("LowOwnBuildingEnemyBuildingRatio", 1.25f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowOwnBuildingEnemyBuildingRatio = 1.25f;
-        }
-        m_lowInfantryRatio = settings.value("LowInfantryRatio", 0.4f).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowInfantryRatio = 0.4f;
-        }
-        m_lowIncomeInfantryBonusMultiplier = settings.value("LowIncomeInfantryBonusMultiplier", 50).toFloat(&ok);
-        if(!ok)
-        {
-            m_lowIncomeInfantryBonusMultiplier = 50;
-        }
-
-        m_ProducingTransportSearchrange = settings.value("ProducingTransportSearchrange", 6).toFloat(&ok);
-        if(!ok)
-        {
-            m_ProducingTransportSearchrange = 6;
-        }
-        m_ProducingTransportSizeBonus = settings.value("ProducingTransportSizeBonus", 10).toFloat(&ok);
-        if(!ok)
-        {
-            m_ProducingTransportSizeBonus = 10;
-        }
-        m_ProducingTransportRatioBonus = settings.value("ProducingTransportRatioBonus", 10.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ProducingTransportRatioBonus = 10.0f;
-        }
-        m_ProducingTransportLoadingBonus = settings.value("ProducingTransportLoadingBonus", 15.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ProducingTransportLoadingBonus = 15.0f;
-        }
-        m_ProducingTransportMinLoadingTransportRatio = settings.value("ProducingTransportMinLoadingTransportRatio", 7.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ProducingTransportMinLoadingTransportRatio = 7.0f;
-        }
-        m_buildingBonusMultiplier = settings.value("BuildingBonusMultiplier", 4.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_buildingBonusMultiplier = 4.0f;
-        }
-        m_expensiveUnitBonusMultiplier = settings.value("ExpensiveUnitBonusMultiplier", 4.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_expensiveUnitBonusMultiplier = 4.0f;
-        }
-
-        m_canSupplyBonus = settings.value("CanSupplyBonus", 10.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_canSupplyBonus = 10.0f;
-        }
-        m_maxSupplyUnitRatio = settings.value("MaxSupplyUnitRatio", 0.05f).toFloat(&ok);
-        if(!ok)
-        {
-            m_maxSupplyUnitRatio = 0.05f;
-        }
-        m_averageSupplySupport = settings.value("AverageSupplySupport", 8.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_averageSupplySupport = 8.0f;
-        }
-
-        m_cappingFunds = settings.value("CappingFunds", 4700.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_cappingFunds = 4700.0f;
-        }
-        m_cappedFunds = settings.value("CappedFunds", 1999.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_cappedFunds = 1999.0f;
-        }
-        m_targetPriceDifference = settings.value("TargetPriceDifference", 0.3f).toFloat(&ok);
-        if(!ok)
-        {
-            m_targetPriceDifference = 0.3f;
-        }
-        m_highDamageMultiplier = settings.value("HighDamageMultiplier", 4.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_highDamageMultiplier = 4.0f;
-        }
-        m_fundsPerBuildingFactorC = settings.value("FundsPerBuildingFactorC", 4.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fundsPerBuildingFactorC = 4.0f;
+        QString lastGroup = "";
+        for (auto & entry : m_iniData)
+        {
+            bool ok = false;
+            if (entry.m_group != lastGroup)
+            {
+                if (!lastGroup.isEmpty())
+                {
+                    settings.endGroup();
+                }
+                settings.beginGroup(entry.m_group);
+            }
+            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toFloat(&ok);
+            if (!ok)
+            {
+                *entry.m_value = entry.m_defaultValue;
+            }
         }
-
         settings.endGroup();
     }
+}
+
+void NormalAi::saveIni(QString name) const
+{
+    QSettings settings(name, QSettings::IniFormat);
+    CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
+    QString lastGroup = "";
+    for (auto & entry : m_iniData)
+    {
+        bool ok = false;
+        if (entry.m_group != lastGroup)
+        {
+            if (!lastGroup.isEmpty())
+            {
+                settings.endGroup();
+            }
+            settings.beginGroup(entry.m_group);
+        }
+        settings.setValue(entry.m_name, *entry.m_value);
+    }
+    settings.endGroup();
+}
+
+void NormalAi::randomizeIni(QString name, float chance)
+{
+    for (auto & entry : m_iniData)
+    {
+        if (GlobalUtils::randFloat(0.0f, 1.0f) < chance)
+        {
+            *entry.m_value = GlobalUtils::randFloat(entry.m_minValue, entry.m_maxValue);
+        }
+    }
+    saveIni(name);
 }
 
 void NormalAi::process()
@@ -3092,7 +2732,7 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     {
         if (data[LowFunds] > 0)
         {
-            score += (1 + m_cheapUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+            score += (1 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
         }
         else
         {
@@ -3101,7 +2741,7 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     }
     else
     {
-        score -= (1 + data[FundsFactoryRatio] - m_cheapUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
+        score -= (2 + data[FundsFactoryRatio] - m_cheapUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
     }
     CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +
                   " funds ratio=" + QString::number(data[FundsFactoryRatio]), Console::eDEBUG);

@@ -100,10 +100,17 @@ var TERRAIN =
 
     getTerrainAnimationBase : function(unit, terrain, defender)
     {
-        if (typeof map !== 'undefined' &&
-            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (typeof map !== 'undefined')
         {
-            return "base_snowair";
+            var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+            if (weather === "WEATHER_SNOW")
+            {
+                return "base_snowair";
+            }
+            else if (weather === "WEATHER_RAIN")
+            {
+                return "base_rainair";
+            }
         }
         return "base_air";
     },
@@ -112,13 +119,18 @@ var TERRAIN =
     {
         var rand = globals.randInt(0, 3);
         var foreground = TERRAIN.getFactoryForeground(terrain);
+        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
         if (foreground !== "")
         {
             return foreground;
         }
-        else if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        else if (weather === "WEATHER_SNOW")
         {
             return "fore_snowplains+" + rand.toString();
+        }
+        else if (weather === "WEATHER_RAIN")
+        {
+            return "fore_rainplains+" + rand.toString();
         }
         else
         {
@@ -163,12 +175,23 @@ var TERRAIN =
     getTerrainAnimationBackground : function(unit, terrain, defender)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
+    },
+
+    getWeatherModifier : function()
+    {
         var weatherModifier = "";
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+        if (weather === "WEATHER_SNOW")
         {
             weatherModifier = "snow";
         }
-        return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
+        else if (weather === "WEATHER_RAIN")
+        {
+            weatherModifier = "rain";
+        }
+        return weatherModifier;
     },
 
     getTerrainBackgroundId : function(id, weatherModifier)

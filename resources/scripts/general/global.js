@@ -29,6 +29,18 @@ getGridColor = function()
     return "#B4464646";
 }
 
+getMultiturnFieldColor = function()
+{
+    // the color used for the multi turn path planing tiles
+    return "#8000FF";
+}
+
+getTurnFieldColor = function()
+{
+    // the color used for the normal move tiles
+    return "#80FF00";
+}
+
 getArmyNameFromPlayerTable = function(player, table)
 {
     return Global.getArmyNameFromTable(player.getArmy(), table);

@@ -262,7 +262,8 @@ var BUILDING =
         {
             return "back_deserttown";
         }
-        return "back_town+" + army + "+" + rand.toString();
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 
     getDescription : function(building)

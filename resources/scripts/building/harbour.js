@@ -37,7 +37,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_harbour";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier + "harbour";
     };
 
     this.getDescription = function()
