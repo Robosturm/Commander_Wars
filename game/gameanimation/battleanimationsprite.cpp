@@ -1015,7 +1015,11 @@ void BattleAnimationSprite::setBackgroundSpeed(float speed)
     auto & childs = m_pBackgroundSprite->getChildren();
     for (auto & child : childs)
     {
-        oxygine::safeSpCast<oxygine::SlidingSprite>(child)->setSpeed(speed);
+        auto sprite = oxygine::dynamic_pointer_cast<oxygine::SlidingSprite>(child);
+        if (sprite.get() != nullptr)
+        {
+            sprite->setSpeed(speed);
+        }
     }
 }
 

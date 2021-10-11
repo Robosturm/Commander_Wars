@@ -2717,12 +2717,12 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="63"/>
-        <source>Host Local</source>
+        <source>Direct Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="72"/>
-        <source>Host</source>
+        <source>Server Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3374,7 +3374,17 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="666"/>
-        <source>Server Adress: </source>
+        <source>Dedicated server adress: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="682"/>
+        <source>Dedicated lobby port: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="698"/>
+        <source>Dedicated server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3383,18 +3393,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="682"/>
-        <source>Lobby port: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="686"/>
         <source>Selects the chat port for used to chat with the server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="698"/>
-        <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

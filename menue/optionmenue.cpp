@@ -663,7 +663,7 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Server Adress: "));
+    pTextfield->setHtmlText(tr("Dedicated server adress: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
@@ -679,7 +679,7 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Lobby port: "));
+    pTextfield->setHtmlText(tr("Dedicated lobby port: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
@@ -695,7 +695,7 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Server: "));
+    pTextfield->setHtmlText(tr("Dedicated server: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = spCheckbox::create();
