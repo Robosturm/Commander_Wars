@@ -8,7 +8,9 @@
 
 DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     : QObject(),
-      m_Message(text)
+      m_Message(text),
+      m_Timer(this),
+      m_TimerConnectionTimeout(this)
 {
     setObjectName("DialogConnecting");
     Mainapp* pApp = Mainapp::getInstance();

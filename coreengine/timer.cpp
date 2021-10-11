@@ -1,6 +1,7 @@
 #include "coreengine/timer.h"
 
-Timer::Timer()
+Timer::Timer(QObject* pParent)
+    : QTimer(pParent)
 {
     setObjectName("Timer");
 }

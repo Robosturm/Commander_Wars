@@ -939,6 +939,7 @@ void GameMenue::skipAllAnimations()
             i++;
         }
     }
+    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
 }
 
 bool GameMenue::shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const

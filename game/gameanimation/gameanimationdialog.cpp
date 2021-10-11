@@ -15,6 +15,7 @@
 
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     : GameAnimation (frameTime),
+      m_finishTimer(this),
       m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
     setObjectName("GameAnimationDialog");

@@ -35,6 +35,7 @@ HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
 {ACTION_WAIT,     std::bind(&HeavyAi::scoreWait,        this,   _1, _2, _3)},
                    }),
       m_InfluenceFrontMap(m_IslandMaps),
+      m_timer(this),
       m_aiName(type)
 {
     setObjectName("HeavyAi");

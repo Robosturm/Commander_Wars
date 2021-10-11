@@ -774,23 +774,24 @@ var Constructor = function()
         var atkDamage = globals.roundUp(defStartHp) - globals.roundUp(defEndHp);
         var defDamage = globals.roundUp(atkStartHp) - globals.roundUp(atkEndHp);
         var pAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY(), 70);
-        pAtk.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+        var imageSize = map.getImageSize();
+        pAtk.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
         pAtk.setSound("talongunhit.wav", 1);
         var pDmgTextAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY());
         pDmgTextAtk.addText(atkDamage + " Hp", -8, 0, 2.0, "#FF0000");
-        pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * map.getImageSize(), (pDefTerrain.getY() - 2) * map.getImageSize()), 1000);
+        pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * imageSize, (pDefTerrain.getY() - 2) * imageSize), 1000);
         pDmgTextAtk.addTweenWait(1500);
         pAtk.queueAnimation(pDmgTextAtk);
         if (defenderDamage >= 0)
         {
             // counter damage
             pRet = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
-            pRet.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+            pRet.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
             pRet.setSound("talongunhit.wav", 1);
             pDmgTextAtk.queueAnimation(pRet);
             var pDmgTextDef = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY());
             pDmgTextDef.addText(defDamage + " Hp", -8, 0, 2.0, "#FF0000");
-            pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * map.getImageSize(), (pAtkTerrain.getY() - 2) * map.getImageSize()), 1000);
+            pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * imageSize, (pAtkTerrain.getY() - 2) * imageSize), 1000);
             pDmgTextDef.addTweenWait(1500);
             pRet.queueAnimation(pDmgTextDef);
         }

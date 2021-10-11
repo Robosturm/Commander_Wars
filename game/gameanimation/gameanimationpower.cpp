@@ -34,6 +34,7 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
 
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
     : GameAnimation (frameTime),
+      m_endTimer(this),
       m_pCO(pCO)
 {
     setObjectName("GameAnimationPower");

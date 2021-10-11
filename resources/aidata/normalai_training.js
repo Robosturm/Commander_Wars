@@ -84,7 +84,7 @@ var Init =
             Init.currentMatch.push(aiIdx);
             selection.playerCO1Changed(Init.cos[0], i);
             selection.playerCO2Changed(Init.cos[1], i);
-            map.getPlayer(i).getBaseGameInput().readIni(Init.trainingAis[aiIdx][0]);
+            map.getPlayer(playerIdx).getBaseGameInput().readIni(Init.trainingAis[aiIdx][0]);
         }
         menu.startGame();
     },

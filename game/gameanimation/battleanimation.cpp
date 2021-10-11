@@ -14,6 +14,7 @@
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+      m_battleTimer(this),
       m_pAtkTerrain(pAtkTerrain),
       m_pAtkUnit(pAtkUnit),
       m_atkStartHp(atkStartHp),
@@ -83,6 +84,12 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
+    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", Console::eDEBUG);
+}
+
+BattleAnimation::~BattleAnimation()
+{
+    CONSOLE_PRINT("BattleAnimation::~BattleAnimation()", Console::eDEBUG);
 }
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
