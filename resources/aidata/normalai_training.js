@@ -2,24 +2,24 @@ var Init =
 {
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
-    trainingMap     = "NB4DS.map",                  // map that will be used for training
+    trainingMap     = "Amber Valley.map",           // map that will be used for training
     mutationRate    = 0.1,                          // chance for a weight to mutate at random
-    fogOfWar        = GameEnums.Fog_Off,          // fog of war rule for training
+    fogOfWar        = GameEnums.Fog_Off,            // fog of war rule for training
     maxRuns         = 4000,                         // maximum amount of iterations
     turnLimit       = 40,
     // ai's and names that will be used for training
     topAis          = 1,
     trainingAis     =  [["normal.ini",    2],
                         ["normal0.ini",   2],
-                        //["normal1.ini",   2],
-                        //["normal2.ini",   2],
-                        //["normal3.ini",   2],
-                        //["normal4.ini",   2],
-                        //["normal5.ini",   2],
-                        //["normal6.ini",   2],
-                        //["normal7.ini",   2],
-                        //["normal8.ini",   2],
-                        //["normal9.ini",   2],
+                        ["normal1.ini",   2],
+                        ["normal2.ini",   2],
+                        ["normal3.ini",   2],
+                        ["normal4.ini",   2],
+                        ["normal5.ini",   2],
+                        ["normal6.ini",   2],
+                        ["normal7.ini",   2],
+                        ["normal8.ini",   2],
+                        ["normal9.ini",   2],
     ],
     // internal data
     startAi = 0,

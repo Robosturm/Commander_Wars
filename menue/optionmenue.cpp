@@ -663,11 +663,11 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Dedicated server adress: "));
+    pTextfield->setHtmlText(tr("Dedicated adress: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
-    pTextbox->setTooltipText(tr("Selects the game server you wan't to connect to when playing a multiplayer game."));
+    pTextbox->setTooltipText(tr("Selects the dedicated game server you wan't to connect to when playing a multiplayer game."));
     pTextbox->setCurrentText(Settings::getServerAdress());
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
@@ -679,11 +679,11 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Dedicated lobby port: "));
+    pTextfield->setHtmlText(tr("Dedicated port: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    portBox->setTooltipText(tr("Selects the chat port for used to chat with the server"));
+    portBox->setTooltipText(tr("Selects the dedicated servers chat port for used to chat in the lobby of the dedicated server"));
     portBox->setCurrentValue(Settings::getServerPort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -717,7 +717,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     portBox = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    portBox->setTooltipText(tr("Selects the game port for used to play the game with the server"));
+    portBox->setTooltipText(tr("Selects the game port for used to play the game with the server either with a dedicated server or direct connection."));
     portBox->setCurrentValue(Settings::getGamePort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)

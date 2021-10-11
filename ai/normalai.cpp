@@ -152,6 +152,7 @@ void NormalAi::readIni(QString name)
                     settings.endGroup();
                 }
                 settings.beginGroup(entry.m_group);
+                lastGroup = entry.m_group;
             }
             *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toFloat(&ok);
             if (!ok)
@@ -178,6 +179,7 @@ void NormalAi::saveIni(QString name) const
                 settings.endGroup();
             }
             settings.beginGroup(entry.m_group);
+            lastGroup = entry.m_group;
         }
         settings.setValue(entry.m_name, *entry.m_value);
     }
@@ -2553,7 +2555,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
             score += m_smallTransporterBonus;
         }
         // give a bonus to t-heli's or similar units cause they are mostlikly much faster
-        if (unitBuildData.utilityTransporter && score > m_minFlyingTransportScoreForBonus)
+        if (score > m_minFlyingTransportScoreForBonus)
         {
             score += m_flyingTransporterBonus;
         }
