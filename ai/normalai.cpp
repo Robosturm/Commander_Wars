@@ -120,7 +120,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"ProducingTransportSizeBonus", "Production", &m_ProducingTransportSizeBonus, 15.0f, 15.0f, 15.0f},
                   {"ProducingTransportRatioBonus", "Production", &m_ProducingTransportRatioBonus, 10.0f, 10.0f, 10.0f},
                   {"ProducingTransportLoadingBonus", "Production", &m_ProducingTransportLoadingBonus, 15.0f, 15.0f, 15.0f},
-                  {"ProducingTransportMinLoadingTransportRatio", "Production", &m_ProducingTransportMinLoadingTransportRatio, 7.0f, 7.0f, 7.0f},
+                  {"ProducingTransportMinLoadingTransportRatio", "Production", &m_ProducingTransportMinLoadingTransportRatio, 4.5f, 2.0f, 7.0f},
                   {"BuildingBonusMultiplier", "Production", &m_buildingBonusMultiplier, 6.0f, 0.0f, 30.0f},
                   {"CanSupplyBonus", "Production", &m_canSupplyBonus, 10.0f, 5.0f, 40.0f},
                   {"MaxSupplyUnitRatio", "Production", &m_maxSupplyUnitRatio, 0.05f, 0.01f, 0.0f},
@@ -2467,7 +2467,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     QVector<QVector3D> targets;
     spQmlVectorUnit relevantUnits = spQmlVectorUnit::create();
     QPoint position = dummy.getPosition();
-    qint32 movement = dummy.getBaseMovementPoints();
+    float movement = dummy.getBaseMovementPoints();
     if (movement == 0)
     {
         movement = 1;
@@ -2479,7 +2479,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
     for (qint32 i2 = 0; i2 < pUnits->size(); i2++)
     {
         float distance = GlobalUtils::getDistance(position, pUnits->at(i2)->getPosition());
-        if (distance > maxDayDistance * maxDayDistance)
+        if (distance / movement <= maxDayDistance * maxDayDistance)
         {
             relevantUnits->append(pUnits->at(i2));
         }
@@ -2571,7 +2571,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData, spQmlVectorU
     if (unitBuildData.loadingCount > 0)
     {
         if (unitBuildData.transportCount <= 0 ||
-            static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transportCount) > m_ProducingTransportMinLoadingTransportRatio)
+            static_cast<float>(unitBuildData.loadingCount)  / static_cast<float>(unitBuildData.transportCount) >= m_ProducingTransportMinLoadingTransportRatio)
         {
             if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
             {
