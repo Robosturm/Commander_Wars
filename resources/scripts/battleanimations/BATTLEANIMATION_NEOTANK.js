@@ -31,6 +31,8 @@ var Constructor = function()
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "+stop");
+        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_NEOTANK.armyData);
+        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_NEOTANK.animationData);
         sprite.loadSprite("vehicle_dust_stop",  false,
                           BATTLEANIMATION_NEOTANK.getMaxUnitCount(), Qt.point(data[0] + data[1].x - 20, 7), 1);
     };

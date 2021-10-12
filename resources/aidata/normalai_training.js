@@ -8,7 +8,7 @@ var Init =
     maxRuns         = 4000,                         // maximum amount of iterations
     turnLimit       = 40,
     // ai's and names that will be used for training
-    topAis          = 1,
+    topAis          = 3,
     trainingAis     =  [["normal.ini",    2],
                         ["normal0.ini",   2],
                         ["normal1.ini",   2],
@@ -20,6 +20,7 @@ var Init =
                         ["normal7.ini",   2],
                         ["normal8.ini",   2],
                         ["normal9.ini",   2],
+                        ["normal10.ini",  2],
     ],
     // internal data
     startAi = 0,
@@ -183,6 +184,8 @@ var Init =
             {
                 GameConsole.print("Mutating ai: " + Init.trainingAis[i][0], Init.logLevel);
                 var dummyAi = map.getPlayer(0).getBaseGameInput();
+                var ai = globals.randInt(0, aiNames.length - 1);
+                dummyAi.readIni(aiNames[ai]);
                 dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationRate);
             }
         }
