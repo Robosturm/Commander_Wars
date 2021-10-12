@@ -72,6 +72,11 @@
         <image file="antitankcannon/antitankcannon+yc.png" />
         <image file="antitankcannon/antitankcannon+yc+mask.png" />
         <image file="antitankcannon/antitankcannon+ac+mask.png" />
+        <image file="antitankcannon/antitankcannon+os+fire+mask.png" cols = "4" />
+        <image file="antitankcannon/antitankcannon+bm+fire+mask.png" cols = "4" />
+        <image file="antitankcannon/antitankcannon+ge+fire+mask.png" cols = "4" />
+        <image file="antitankcannon/antitankcannon+yc+fire+mask.png" cols = "4" />
+        <image file="antitankcannon/antitankcannon+ac+fire+mask.png" cols = "4" />
         <!-- apc -->
         <image file="apc/apc+ac+mask.png" />
         <image file="apc/apc+bd+mask.png" />
