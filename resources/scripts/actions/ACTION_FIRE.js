@@ -470,6 +470,7 @@ var Constructor = function()
         }
     };
 
+    this.postAnimationAction = null;
     this.postAnimationUnit = null;
     this.postAnimationAttackerDamage = -1;
     this.postAnimationAttackerWeapon = -1;
@@ -482,6 +483,7 @@ var Constructor = function()
     {
         action.startReading();
         // read action data
+        ACTION_FIRE.postAnimationAction = action;
         ACTION_FIRE.postAnimationTargetX = action.readDataInt32();
         ACTION_FIRE.postAnimationTargetY = action.readDataInt32();
         ACTION_FIRE.postAnimationAttackerDamage = action.readDataInt32();
@@ -629,16 +631,16 @@ var Constructor = function()
             }
 
             // post battle action of the attacking unit
-            attacker.getOwner().postBattleActions(attacker, damage, defUnit, false, attackerWeapon);
-            defOwner.postBattleActions(attacker, damage, defUnit, true, attackerWeapon);
-            attacker.postBattleActions(damage, defUnit, false, attackerWeapon);
-            defUnit.postBattleActions(damage, attacker, true, attackerWeapon);
+            attacker.getOwner().postBattleActions(attacker, damage, defUnit, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            defOwner.postBattleActions(attacker, damage, defUnit, true, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            attacker.postBattleActions(damage, defUnit, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            defUnit.postBattleActions(damage, attacker, true, attackerWeapon, ACTION_FIRE.postAnimationAction);
 
             // post battle action of the defending unit
-            attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, false, defenderWeapon);
-            defOwner.postBattleActions(defUnit, counterdamage, attacker, true, defenderWeapon);
-            attacker.postBattleActions(counterdamage, defUnit, true, defenderWeapon);
-            defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon);
+            attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            defOwner.postBattleActions(defUnit, counterdamage, attacker, true, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            attacker.postBattleActions(counterdamage, defUnit, true, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
 
             // only kill units if we should else we stop here
             if (dontKillUnits === false)
@@ -731,6 +733,7 @@ var Constructor = function()
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;
         ACTION_FIRE.postUnitAnimationDefender = null;
+        ACTION_FIRE.postAnimationAction = null;
     }
 
     this.postBuildingAnimationTerrain = null;
@@ -760,6 +763,7 @@ var Constructor = function()
             Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
+        ACTION_FIRE.postAnimationAction = null;
     };
     this.getDescription = function()
     {

@@ -57,7 +57,6 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
 BattleAnimationSprite::~BattleAnimationSprite()
 {
     stopSound();
-    CONSOLE_PRINT("BattleAnimationSprite::~BattleAnimationSprite()", Console::eDEBUG);
 }
 
 void BattleAnimationSprite::clear()

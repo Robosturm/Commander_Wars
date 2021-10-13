@@ -50,7 +50,7 @@ public:
 
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
-    virtual ~BattleAnimation();
+    virtual ~BattleAnimation() = default;
     virtual void restart() override;
     virtual void stop() override;
     /**

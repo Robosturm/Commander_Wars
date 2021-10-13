@@ -87,7 +87,7 @@ CO_SANJURO.getMovementcostModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

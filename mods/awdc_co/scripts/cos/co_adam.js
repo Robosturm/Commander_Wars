@@ -50,7 +50,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return ret;
 };
 
-CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     var variables = co.getVariables();
     var bonusUnitVariable = variables.createVariable("BONUSUNITS");

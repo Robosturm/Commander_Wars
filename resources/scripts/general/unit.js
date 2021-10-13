@@ -183,7 +183,7 @@ var UNIT =
     },
 
     // unit boosts
-    postBattleActions : function(unit, damage, otherUnit, gotAttacked, weapon)
+    postBattleActions : function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
         // unit the unit getting postBattleAction applied
         // damage taken (if gotAttacked = true) or dealt (if gotAttacked = false)

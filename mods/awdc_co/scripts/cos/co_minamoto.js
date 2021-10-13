@@ -67,7 +67,7 @@ CO_MINAMOTO.getMovementpointModifier = function(co, unit, posX, posY)
 {
     return 0;
 };
-CO_MINAMOTO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_MINAMOTO.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {

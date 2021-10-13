@@ -239,7 +239,7 @@ var CO_PERK =
         return 0;
     },
 
-    postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked)
+    postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         // called after damage was dealt to the defender unit.
         // the damage given is the damage was dealt to the unit.

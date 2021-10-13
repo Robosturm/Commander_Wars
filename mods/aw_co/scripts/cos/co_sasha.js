@@ -43,6 +43,6 @@ CO_SASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
 };

@@ -87,11 +87,6 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     CONSOLE_PRINT("BattleAnimation::BattleAnimation()", Console::eDEBUG);
 }
 
-BattleAnimation::~BattleAnimation()
-{
-    CONSOLE_PRINT("BattleAnimation::~BattleAnimation()", Console::eDEBUG);
-}
-
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
 {
     GameManager* pGameManager = GameManager::getInstance();

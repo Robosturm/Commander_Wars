@@ -1691,8 +1691,7 @@ QString CO::getSuperPowerName()
     return ret;
 }
 
-
-void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon)
+void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postBattleActions";
@@ -1706,6 +1705,8 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     args1 << obj2;
     args1 << gotAttacked;
     args1 << weapon;
+    QJSValue obj4 = pInterpreter->newQObject(pAction);
+    args1 << obj4;
     for (const auto & perk : qAsConst(m_perkList))
     {
         if (isJsFunctionEnabled(perk))

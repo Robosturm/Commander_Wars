@@ -62,7 +62,7 @@ CO_ROBOANDY.getBonusMisfortune = function(co, unit, posX, posY)
 };
 
 
-CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

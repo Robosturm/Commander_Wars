@@ -15,7 +15,7 @@ CO_NANA.getSuperPowerName = function()
 {
     return CO_NANA.getPowerName();
 };
-CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

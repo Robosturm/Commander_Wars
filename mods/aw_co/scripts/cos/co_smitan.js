@@ -15,7 +15,7 @@ CO_SMITAN.getSuperPowerName = function()
 {
     return CO_SMITAN.getPowerName();
 };
-CO_SMITAN.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_SMITAN.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

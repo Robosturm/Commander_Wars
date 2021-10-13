@@ -129,7 +129,7 @@ var Constructor = function()
         }
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         if (!gotAttacked && attacker.getOwner() === co.getOwner())
         {
