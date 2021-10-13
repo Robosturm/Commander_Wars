@@ -1005,7 +1005,7 @@ void BattleAnimationSprite::setBackgroundSprite(oxygine::spSprite newBackgroundS
 
 float BattleAnimationSprite::getBackgroundSpeed()
 {
-    return oxygine::safeSpCast<oxygine::SlidingSprite>(m_pBackgroundSprite->getFirstChild())->getSpeed();
+    return oxygine::safeSpCast<oxygine::SlidingSprite>(m_pBackgroundSprite->getFirstChild())->getSpeedX();
 }
 
 void BattleAnimationSprite::setBackgroundSpeed(float speed)
@@ -1017,7 +1017,7 @@ void BattleAnimationSprite::setBackgroundSpeed(float speed)
         auto sprite = oxygine::dynamic_pointer_cast<oxygine::SlidingSprite>(child);
         if (sprite.get() != nullptr)
         {
-            sprite->setSpeed(speed);
+            sprite->setSpeedX(speed);
         }
     }
 }

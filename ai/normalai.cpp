@@ -42,7 +42,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 3.0f, 3.0f, 3.0f},
                   // CO Unit
-                  {"CoUnitValue", "CoUnit", &m_slowUnitSpeed, 6000.0f, 5000.0f, 10000.0f},
+                  {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 10000.0f},
                   {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
                   {"CoUnitRankReduction", "CoUnit", &m_coUnitRankReduction, 1000.0f, 0.0f, 5000.0f},
                   {"CoUnitScoreMultiplier", "CoUnit", &m_coUnitScoreMultiplier, 1.1f, 1.0f, 3.0f},

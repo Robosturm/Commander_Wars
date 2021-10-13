@@ -11,6 +11,9 @@
         <image file="battlesprites/base_desertforest.png" />
         <image file="battlesprites/base_snowforest.png" />
         <image file="battlesprites/base_rainforest.png" />
+        <image file="battlesprites/over_rain.png" />
+        <image file="battlesprites/over_snow.png" />
+        <image file="battlesprites/over_sandstorm.png" />
         <!-- battle sprite fore -->
         <image file="battlesprites/foreground/fore_factory+0.png" />
         <image file="battlesprites/foreground/fore_factory+1.png" />

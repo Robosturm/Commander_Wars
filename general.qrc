@@ -491,9 +491,6 @@
         <file>resources/images/game/battlesprites/co_front.png</file>
         <file>resources/images/game/battlesprites/background/back_airport.png</file>
         <file>resources/images/game/battlesprites/background/back_beach.png</file>
-        <file>resources/images/game/battlesprites/background/back_desert.png</file>
-        <file>resources/images/game/battlesprites/background/back_desertforest.png</file>
-        <file>resources/images/game/battlesprites/background/back_desertmountain.png</file>
         <file>resources/images/game/battlesprites/background/back_factory.png</file>
         <file>resources/images/game/battlesprites/background/back_forest+0.png</file>
         <file>resources/images/game/battlesprites/background/back_harbour.png</file>
@@ -4829,9 +4826,6 @@
         <file>resources/images/game/battlesprites/background/back_beach+sea.png</file>
         <file>resources/images/game/battlesprites/background/back_bridge+0.png</file>
         <file>resources/images/game/battlesprites/background/back_bridge+1.png</file>
-        <file>resources/images/game/battlesprites/background/back_desert+pipe.png</file>
-        <file>resources/images/game/battlesprites/background/back_desertbridge.png</file>
-        <file>resources/images/game/battlesprites/background/back_desertriver.png</file>
         <file>resources/images/game/battlesprites/background/back_desertruin.png</file>
         <file>resources/images/game/battlesprites/background/back_desertstreet+pipe.png</file>
         <file>resources/images/game/battlesprites/background/back_desertstreet.png</file>
@@ -4849,7 +4843,6 @@
         <file>resources/images/game/battlesprites/background/back_planes.png</file>
         <file>resources/images/game/battlesprites/background/back_river+0.png</file>
         <file>resources/images/game/battlesprites/background/back_river+1.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowbridge.png</file>
         <file>resources/images/game/battlesprites/background/back_snowforest+0.png</file>
         <file>resources/images/game/battlesprites/background/back_snowforest+1.png</file>
         <file>resources/images/game/battlesprites/background/back_snowmountain+0.png</file>
@@ -5295,7 +5288,6 @@
         <file>resources/images/game/battlesprites/background/back_rainbridge+1.png</file>
         <file>resources/images/game/battlesprites/background/back_rainfactory.png</file>
         <file>resources/images/game/battlesprites/background/back_rainforest+0.png</file>
-        <file>resources/images/game/battlesprites/background/back_rainforest+1.png</file>
         <file>resources/images/game/battlesprites/background/back_rainforest+2.png</file>
         <file>resources/images/game/battlesprites/background/back_rainharbour.png</file>
         <file>resources/images/game/battlesprites/background/back_rainhq+.png</file>
@@ -5314,7 +5306,6 @@
         <file>resources/images/game/battlesprites/background/back_rainplanes+street.png</file>
         <file>resources/images/game/battlesprites/background/back_rainplanes+town.png</file>
         <file>resources/images/game/battlesprites/background/back_rainplanes.png</file>
-        <file>resources/images/game/battlesprites/background/back_rainriver+0.png</file>
         <file>resources/images/game/battlesprites/background/back_rainriver+1.png</file>
         <file>resources/images/game/battlesprites/background/back_rainsea.png</file>
         <file>resources/images/game/battlesprites/background/back_rainstreet+forest.png</file>
@@ -5342,7 +5333,6 @@
         <file>resources/images/game/battlesprites/background/back_snowhq+os.png</file>
         <file>resources/images/game/battlesprites/background/back_snowhq+yc.png</file>
         <file>resources/images/game/battlesprites/background/back_snowsea.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowstreet+forest.png</file>
         <file>resources/images/game/battlesprites/background/back_snowtown+bm+0.png</file>
         <file>resources/images/game/battlesprites/background/back_snowtown+bm+1.png</file>
         <file>resources/images/game/battlesprites/background/back_snowtown+ge+0.png</file>
@@ -5361,9 +5351,98 @@
         <file>resources/images/game/battlesprites/foreground/fore_rainstreet+1.png</file>
         <file>resources/images/game/battlesprites/base_rainair.png</file>
         <file>resources/images/game/battlesprites/base_rainforest.png</file>
-        <file>resources/images/game/battlesprites/background/back_snowforest+2.png</file>
         <file>resources/images/game/battlesprites/background/back_rainbeach.png</file>
         <file>resources/images/game/battlesprites/background/back_snowbeach.png</file>
         <file>resources/images/game/battlesprites/background/back_snowbeach+sea.png</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+ac.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+bm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+ge.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+os.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+yc.xcf</file>
+        <file>resources/images/battleanimations/antitankcannon/antitankcannon+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/antitankcannon/antitankcannon+bm+fire+mask.png</file>
+        <file>resources/images/battleanimations/antitankcannon/antitankcannon+ge+fire+mask.png</file>
+        <file>resources/images/battleanimations/antitankcannon/antitankcannon+os+fire+mask.png</file>
+        <file>resources/images/battleanimations/antitankcannon/antitankcannon+yc+fire+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbeach+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbeach.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbridge+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbridge+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertbridge+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertfactory.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertforest+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertforest+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertforest+2.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertharbour.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+ac.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+bh.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+bm.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+ge.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+os.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserthq+yc.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertmountain+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertmountain+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+street.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertplanes.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertriver+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertriver+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertsea.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet+forest.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet+mountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_desertstreet+town.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserttempairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_deserttempharbour.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainbridge+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_raintempairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_raintempharbour.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainwasteland.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbridge+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbridge+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowbridge+sea.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowtempairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowtempharbour.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastebridge.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastefactory.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteforest.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteharbour.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+bh.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+bm.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+ge.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+os.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+yc.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastemountain.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteplains+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteplains.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteriver.png</file>
+        <file>resources/images/game/battlesprites/background/back_wasteruin.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet+pipe.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastestreet.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastetempairport.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastetown.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastewasteland.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertplains+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertplains+1.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertplains+2.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertplains+3.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertstreet+0.png</file>
+        <file>resources/images/game/battlesprites/foreground/fore_desertstreet+1.png</file>
+        <file>resources/images/game/battlesprites/base_desertair.png</file>
+        <file>resources/images/game/battlesprites/base_wasteforest.png</file>
+        <file>resources/images/game/battlesprites/over_rain.png</file>
+        <file>resources/images/game/battlesprites/over_sandstorm.png</file>
+        <file>resources/images/game/battlesprites/over_snow.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainforest+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowforest+2.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainriver+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowstreet+forest.png</file>
     </qresource>
 </RCC>

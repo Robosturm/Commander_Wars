@@ -444,20 +444,32 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBase);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBack);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimFore);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
+
+
+    oxygine::spSlidingSprite pDummy = oxygine::spSlidingSprite::create();
+    pDummy->setPosition(xOffset, yOffset);
+    pDummy->setResAnim(pAnimBase);
+    pDummy->setSize(spriteWidth, spriteHeigth);
+    pDummy->setSpeedX(-1);
+    pDummy->setSpeedY(3);
+    pDummy->setResAnim(pGameManager->getResAnim("over_rain", oxygine::ep_ignore_error));
+    pDummy->setPriority(100000);
+    m_pDetailedViewBox->addChild(pDummy);
+
     if (pUnit.get() != nullptr)
     {
         qint32 hp = -1;

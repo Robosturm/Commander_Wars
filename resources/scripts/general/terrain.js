@@ -180,7 +180,7 @@ var TERRAIN =
         return weatherModifier;
     },
 
-    getTerrainBackgroundId : function(id, weatherModifier)
+    getTerrainBackgroundId : function(id, weatherModifier, pipe = false)
     {
         switch (id)
         {
@@ -208,7 +208,14 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
-            return "back_" + weatherModifier + "planes+pipe";
+            if (pipe)
+            {
+                return "back_" + weatherModifier + "planes";
+            }
+            else
+            {
+                return "back_" + weatherModifier + "planes+pipe";
+            }
         default:
             return "back_" + weatherModifier + "planes";
         }

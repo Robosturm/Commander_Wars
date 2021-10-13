@@ -5,78 +5,162 @@ namespace oxygine
 
     SlidingSprite::SlidingSprite()
     {
-        m_sprites[0] = spSprite::create();
-        m_sprites[1] = spSprite::create();
-        addChild(m_sprites[0]);
-        addChild(m_sprites[1]);
+        for (auto & sprite : m_sprites)
+        {
+            sprite = spSprite::create();
+            addChild(sprite);
+        }
     }
 
     void SlidingSprite::setResAnim(ResAnim* pAnim)
     {
         if (pAnim != nullptr)
         {
-            m_sprites[0]->setResAnim(pAnim);
-            m_sprites[0]->setWidth(pAnim->getWidth());
-            m_sprites[1]->setResAnim(pAnim);
-            m_sprites[1]->setWidth(pAnim->getWidth());
-            m_sprites[0]->setX(0);
-            m_sprites[1]->setX(pAnim->getWidth());
+            for (auto & sprite : m_sprites)
+            {
+                sprite->setResAnim(pAnim);
+                sprite->setWidth(pAnim->getWidth());
+                sprite->setHeight(pAnim->getHeight());
+            }
+            m_sprites[0]->setPosition(0, 0);
+            m_sprites[1]->setPosition(pAnim->getWidth(), 0);
+            m_sprites[2]->setPosition(0, pAnim->getHeight());
+            m_sprites[3]->setPosition(pAnim->getWidth(), pAnim->getHeight());
         }
     }
 
-    float SlidingSprite::getSpeed() const
+    float SlidingSprite::getSpeedX() const
     {
-        return m_speed;
+        return m_speedX;
     }
 
-    void SlidingSprite::setSpeed(float speed)
+    void SlidingSprite::setSpeedX(float speed)
     {
-        m_speed = speed;
+        m_speedX = speed;
     }
 
-    bool SlidingSprite::getFlipped() const
+    float SlidingSprite::getSpeedY() const
     {
-        return m_flipped;
+        return m_speedY;
     }
 
-    void SlidingSprite::setFlipped(bool flipped)
+    void SlidingSprite::setSpeedY(float speed)
     {
-        m_flipped = flipped;
-        m_sprites[0]->setFlippedX(flipped);
-        m_sprites[1]->setFlippedX(flipped);
+        m_speedY = speed;
+    }
+
+    bool SlidingSprite::getFlippedX() const
+    {
+        return m_flippedX;
+    }
+
+    void SlidingSprite::setFlippedX(bool flipped)
+    {
+        m_flippedX = flipped;
+        for (auto & sprite : m_sprites)
+        {
+            sprite->setFlippedX(flipped);
+        }
     }
 
     void SlidingSprite::update(const UpdateState& us)
     {
-        if (m_speed != 0.0f)
+        if (m_speedX != 0.0f)
         {
-            float speed = -m_speed;
-            if (m_flipped)
+            float speed = -m_speedX;
+            if (m_flippedX)
             {
-                speed = m_speed;
+                speed = m_speedX;
             }
-            m_sprites[0]->setX(m_sprites[0]->getX() + speed);
-            m_sprites[1]->setX(m_sprites[1]->getX() + speed);
+            for (auto & sprite : m_sprites)
+            {
+                sprite->setX(sprite->getX() + speed);
+            }
+
             if (speed > 0)
             {
                 if (m_sprites[0]->getX() >= getWidth())
                 {
                     m_sprites[0]->setX(m_sprites[1]->getX() - m_sprites[0]->getWidth());
+                    m_sprites[2]->setX(m_sprites[3]->getX() - m_sprites[2]->getWidth());
                 }
                 if (m_sprites[1]->getX() >= getWidth())
                 {
                     m_sprites[1]->setX(m_sprites[0]->getX() - m_sprites[1]->getWidth());
+                }
+                if (m_sprites[2]->getX() >= getWidth())
+                {
+                    m_sprites[2]->setX(m_sprites[3]->getX() - m_sprites[2]->getWidth());
+                }
+                if (m_sprites[3]->getX() >= getWidth())
+                {
+                    m_sprites[3]->setX(m_sprites[2]->getX() - m_sprites[3]->getWidth());
                 }
             }
             else
             {
                 if (m_sprites[0]->getX() + m_sprites[0]->getWidth() < 0)
                 {
-                    m_sprites[0]->setX(m_sprites[1]->getX() + m_sprites[1]->getWidth());
+                    m_sprites[2]->setX(m_sprites[3]->getX() + m_sprites[2]->getWidth());
                 }
                 if (m_sprites[1]->getX() + m_sprites[1]->getWidth() < 0)
                 {
                     m_sprites[1]->setX(m_sprites[0]->getX() + m_sprites[0]->getWidth());
+                }
+                if (m_sprites[2]->getX() + m_sprites[2]->getWidth() < 0)
+                {
+                    m_sprites[2]->setX(m_sprites[3]->getX() + m_sprites[2]->getWidth());
+                }
+                if (m_sprites[3]->getX() + m_sprites[3]->getWidth() < 0)
+                {
+                    m_sprites[3]->setX(m_sprites[2]->getX() + m_sprites[2]->getWidth());
+                }
+            }            
+        }
+
+        if (m_speedY != 0.0f)
+        {
+            for (auto & sprite : m_sprites)
+            {
+                sprite->setY(sprite->getY() + m_speedY);
+            }
+
+            if (m_speedY > 0)
+            {
+                if (m_sprites[0]->getY() >= getHeight())
+                {
+                    m_sprites[0]->setY(m_sprites[1]->getY() - m_sprites[0]->getHeight());
+                }
+                if (m_sprites[1]->getY() >= getHeight())
+                {
+                    m_sprites[1]->setY(m_sprites[0]->getY() - m_sprites[1]->getHeight());
+                }
+                if (m_sprites[2]->getY() >= getHeight())
+                {
+                    m_sprites[2]->setY(m_sprites[3]->getY() - m_sprites[2]->getHeight());
+                }
+                if (m_sprites[3]->getY() >= getHeight())
+                {
+                    m_sprites[3]->setY(m_sprites[2]->getY() - m_sprites[3]->getHeight());
+                }
+            }
+            else
+            {
+                if (m_sprites[0]->getY() + m_sprites[0]->getHeight() < 0)
+                {
+                    m_sprites[0]->setY(m_sprites[1]->getY() + m_sprites[1]->getHeight());
+                }
+                if (m_sprites[1]->getY() + m_sprites[1]->getHeight() < 0)
+                {
+                    m_sprites[1]->setY(m_sprites[0]->getY() + m_sprites[0]->getHeight());
+                }
+                if (m_sprites[2]->getY() + m_sprites[2]->getHeight() < 0)
+                {
+                    m_sprites[2]->setY(m_sprites[3]->getY() + m_sprites[2]->getHeight());
+                }
+                if (m_sprites[3]->getY() + m_sprites[3]->getHeight() < 0)
+                {
+                    m_sprites[3]->setY(m_sprites[2]->getY() + m_sprites[2]->getHeight());
                 }
             }
         }

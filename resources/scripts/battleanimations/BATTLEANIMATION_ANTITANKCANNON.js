@@ -15,18 +15,16 @@ var Constructor = function()
                           ["ge", [Qt.point(37, 28), "artillery_shot"]],
                           ["yc", [Qt.point(39, 28), "artillery_shot"]],
                           ["ac", [Qt.point(34, 24), "light_shot"]],];
-    //-15 5
-    // 50 32
-    //  0 9
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");
+        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "");
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, ending)
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
-        sprite.loadSpriteV2("antitankcannon+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+        sprite.loadSpriteV2("antitankcannon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
         var spriteId = "antitankcannon+" + armyName;
         if (sprite.existResAnim(spriteId))
@@ -34,7 +32,7 @@ var Constructor = function()
             sprite.loadSprite(spriteId,  false,
                               BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
         }
-    }
+    };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {

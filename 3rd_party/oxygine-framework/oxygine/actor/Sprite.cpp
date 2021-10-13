@@ -119,13 +119,13 @@ namespace oxygine
                 oxygine::SlidingSprite* pSprite1 = dynamic_cast<oxygine::SlidingSprite*>(child.get());
                 if (pSprite1 != nullptr)
                 {
-                    if (pSprite1->getFlipped())
+                    if (pSprite1->getFlippedX())
                     {
-                        pSprite1->setFlipped(!flippedX);
+                        pSprite1->setFlippedX(!flippedX);
                     }
                     else
                     {
-                        pSprite1->setFlipped(flippedX);
+                        pSprite1->setFlippedX(flippedX);
                     }
                 }
             }
