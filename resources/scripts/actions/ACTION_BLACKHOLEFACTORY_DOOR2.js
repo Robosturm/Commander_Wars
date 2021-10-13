@@ -51,18 +51,25 @@ var Constructor = function()
     this.canBuildUnit = function(action)
     {
         var building = action.getTargetBuilding();
-        var x = building.getX() - 1;
-        var y = building.getY() + 1;
-        var units = map.getAllUnitIDs();
-        var buildlist = building.getOwner().getBuildList();
-        for (var i = 0; i < units.length; i++)
+        var owner = building.getOwner();
+        var unitLimit = map.getGameRules().getUnitLimit();
+        var unitCount = unit.getOwner().getUnitCount();
+        if ((unitLimit <= 0 ||
+             unitCount < unitLimit))
         {
-            // check all units if they can move over this terrain
-            if (buildlist.includes(units[i]) &&
-                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
-                Global[units[i]].getCOSpecificUnit() === false)
+            var x = building.getX() - 1;
+            var y = building.getY() + 1;
+            var units = map.getAllUnitIDs();
+            var buildlist = owner.getBuildList();
+            for (var i = 0; i < units.length; i++)
             {
-                return true;
+                // check all units if they can move over this terrain
+                if (buildlist.includes(units[i]) &&
+                        Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
+                        Global[units[i]].getCOSpecificUnit() === false)
+                {
+                    return true;
+                }
             }
         }
         return false;
