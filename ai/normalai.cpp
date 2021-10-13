@@ -127,7 +127,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"AverageSupplySupport", "Production", &m_averageSupplySupport, 8.0f, 0.0f, 20.0f},
                   {"CappingFunds", "Production", &m_cappingFunds, 6500.0f, 2000.0f, 8000.0f},
                   {"CappedFunds", "Production", &m_cappedFunds, 1500.0f, 1000.0f, 4000.0f},
-                  {"TargetPriceDifference", "Production", &m_cappedFunds, 0.35f, 0.0f, 1.0f},
+                  {"TargetPriceDifference", "Production", &m_targetPriceDifference, 0.35f, 0.0f, 1.0f},
                   {"HighDamageMultiplier", "Production", &m_highDamageMultiplier, 4.0f, 0.0f, 20.0f},};
     loadIni( "normal/" + configurationFile);
     setUnitBuildValue("RECON",         0.6f);
