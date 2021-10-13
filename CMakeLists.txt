@@ -70,9 +70,9 @@ else("Release")
     message("Compiling as Release")
     add_definitions(
         -DDEBUG_LEVEL=1             # default console log level
-        -DAUDIOSUPPORT
+        #-DAUDIOSUPPORT
         )
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)
+    set(DEPLOY_RESOURCES_AS_FOLDER 1)
 endif()
 
 ###################################################################################
