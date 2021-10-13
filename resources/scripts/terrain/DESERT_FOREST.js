@@ -42,15 +42,16 @@ var Constructor = function()
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        return "base_forest";
+        return "base_desertforest";
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_forest";
+        return "";
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_forest";
+        var rand = globals.randInt(0, 2);
+        return "back_desertforest+" + rand.toString();
     };
 
     this.getDescription = function()
@@ -79,7 +80,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desertforest";
+        var rand = globals.randInt(0, 2);
+        return "back_desertforest+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

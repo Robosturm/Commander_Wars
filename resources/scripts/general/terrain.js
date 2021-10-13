@@ -100,12 +100,8 @@ var TERRAIN =
 
     getTerrainAnimationBase : function(unit, terrain, defender)
     {
-        if (typeof map !== 'undefined')
-        {
-            var weatherModifier = TERRAIN.getWeatherModifier();
-            return "base_" + weatherModifier + "air";
-        }
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     },
 
     getTerrainAnimationForeground : function(unit, terrain, defender)
@@ -173,6 +169,10 @@ var TERRAIN =
         else if (weather === "WEATHER_RAIN")
         {
             weatherModifier = "rain";
+        }
+        else if (weather === "WEATHER_DESERT")
+        {
+            weatherModifier = "desert";
         }
         return weatherModifier;
     },

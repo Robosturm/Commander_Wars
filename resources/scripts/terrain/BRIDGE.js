@@ -54,6 +54,7 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
+        var weatherModifier = TERRAIN.getWeatherModifier();
         switch (id)
         {
             case "SEA":
@@ -62,12 +63,12 @@ var Constructor = function()
             case "REAF":
             case "ROUGH_SEA":
             {
-                return "back_bridge+sea"
+                return "back_" + weatherModifier + "bridge+sea"
             }
             default:
             {
                 var rand = globals.randInt(0, 1);
-                return "back_bridge+" + rand.toString();
+                return "back_" + weatherModifier + "bridge+" + rand.toString();
             }
         }
     };

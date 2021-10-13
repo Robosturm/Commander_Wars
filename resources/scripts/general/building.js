@@ -228,12 +228,8 @@ var BUILDING =
 
     getTerrainAnimationBase : function(unit, terrain)
     {
-        if (typeof map !== 'undefined' &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            return "base_snowair";
-        }
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     },
 
     getTerrainAnimationForeground : function(unit, terrain)

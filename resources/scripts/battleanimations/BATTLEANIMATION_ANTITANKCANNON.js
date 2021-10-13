@@ -18,17 +18,26 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
         sprite.loadSpriteV2("antitankcannon+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
-        sprite.loadSprite("antitankcannon+" + armyName,  false,
-                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
-    };
+        var spriteId = "antitankcannon+" + armyName;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSprite(spriteId,  false,
+                              BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
+        }
+    }
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         // gun
-        BATTLEANIMATION_ANTITANKCANNON.loadStandingAnimation(sprite, unit, defender, weapon);
+        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
         var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.animationData);
         var offset = data[0];
