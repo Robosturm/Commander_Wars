@@ -254,11 +254,12 @@ var BUILDING =
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
         }
-        if (baseId === "DESERT")
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        if (baseId === "DESERT" ||
+            weatherModifier === "desert")
         {
             return "back_deserttown";
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
         return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 

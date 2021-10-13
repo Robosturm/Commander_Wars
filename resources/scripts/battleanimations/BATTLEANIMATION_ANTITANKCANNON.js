@@ -10,12 +10,14 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["ac", "ac"],];
-    this.animationData = [["os", [Qt.point(30, 28), "artillery_shot"]],
-                          ["bm", [Qt.point(30, 28), "artillery_shot"]],
-                          ["ge", [Qt.point(30, 28), "artillery_shot"]],
-                          ["yc", [Qt.point(30, 28), "artillery_shot"]],
+    this.animationData = [["os", [Qt.point(37, 28), "artillery_shot"]],
+                          ["bm", [Qt.point(37, 28), "artillery_shot"]],
+                          ["ge", [Qt.point(37, 28), "artillery_shot"]],
+                          ["yc", [Qt.point(39, 28), "artillery_shot"]],
                           ["ac", [Qt.point(34, 24), "light_shot"]],];
-
+    //-15 5
+    // 50 32
+    //  0 9
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");

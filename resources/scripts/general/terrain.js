@@ -161,18 +161,21 @@ var TERRAIN =
     getWeatherModifier : function()
     {
         var weatherModifier = "";
-        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
-        if (weather === "WEATHER_SNOW")
+        if (typeof map !== "undefined")
         {
-            weatherModifier = "snow";
-        }
-        else if (weather === "WEATHER_RAIN")
-        {
-            weatherModifier = "rain";
-        }
-        else if (weather === "WEATHER_DESERT")
-        {
-            weatherModifier = "desert";
+            var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+            if (weather === "WEATHER_SNOW")
+            {
+                weatherModifier = "snow";
+            }
+            else if (weather === "WEATHER_RAIN")
+            {
+                weatherModifier = "rain";
+            }
+            else if (weather === "WEATHER_SANDSTORM")
+            {
+                weatherModifier = "desert";
+            }
         }
         return weatherModifier;
     },

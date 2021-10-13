@@ -104,15 +104,33 @@ var Constructor = function()
         var id = TERRAIN.getTerrainAnimationId(terrain);
         switch (id)
         {
+        case "SEA":
+        case "BEACH":
+        case "FOG":
+        case "REAF":
+        case "ROUGH_SEA":
+            return "back_desertplanes+sea";
+        case "FOREST":
+        case "DESERT_FOREST":
+        case "SNOW_FOREST":
+            return "back_desertplanes+forest";
+        case "SNOW_MOUNTAIN":
+        case "DESERT_ROCK":
+        case "MOUNTAIN":
+            return "back_desertplanes+mountain";
+        case "BUILDING":
+            return "back_desertplanes+town";
+        case "STREET":
+            return "back_desertplanes+street";
         case "DESERT_WELD":
         case "SNOW_WELD":
         case "WELD":
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
-            return "back_desert+pipe";
+            return "back_desertplanes+pipe";
         default:
-            return "back_desert";
+            return "back_desertplanes";
         }
     };
 };

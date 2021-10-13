@@ -107,7 +107,7 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        return "back_desertplanes";
     };
 };
 Constructor.prototype = TERRAIN;
