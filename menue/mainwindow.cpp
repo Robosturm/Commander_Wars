@@ -446,7 +446,7 @@ void Mainwindow::loadCampaign(QString filename)
         }
         else
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Mainwindow::loadCampaign not existing savefile was selected");
+            CONSOLE_PRINT("Mainwindow::loadCampaign not existing savefile was selected", Console::eDEBUG);
         }
     }
     else

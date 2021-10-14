@@ -86,7 +86,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), data[1],
                                   Qt.point(data[0], 0), 600, false,
                                   1, 1);
@@ -107,7 +107,7 @@ var Constructor = function()
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         var offset = Qt.point(data[0] + data[1].x, data[1].y);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
@@ -140,7 +140,7 @@ var Constructor = function()
         var armyName = BATTLEANIMATION_INFANTRY.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var position = BATTLEANIMATION.getRelativePosition(unit, defender);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         if (position > 0)
         {
             BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+up", 3);            
@@ -234,7 +234,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_INFANTRY.animationData);
         var offset = Qt.point(-10, 5);
         var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
         var rotation = data[6];

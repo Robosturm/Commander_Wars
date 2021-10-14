@@ -144,7 +144,7 @@ var Constructor = function()
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1, 0, 2);
             var player = unit.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
-            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
             var weaponRes = data[0];
             var offset = data[1];
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
@@ -211,7 +211,7 @@ var Constructor = function()
             sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             var player = unit.getOwner();
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
-            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
             var weaponRes = data[0];
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
@@ -304,7 +304,7 @@ var Constructor = function()
         {
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
             var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
-            var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
+            var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MECH.animationData);
             var offset = Qt.point(-10, 5);
             var rotation = data[3];
             var movement = data[2];

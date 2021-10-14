@@ -158,26 +158,45 @@ var TERRAIN =
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
+    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",       ""]],
+                     ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
+                     ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
+                     ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],
+
     getWeatherModifier : function()
     {
         var weatherModifier = "";
-        if (typeof map !== "undefined")
+        if (typeof map !== 'undefined')
         {
-            var weather = map.getGameRules().getCurrentWeather().getWeatherId();
-            if (weather === "WEATHER_SNOW")
-            {
-                weatherModifier = "snow";
-            }
-            else if (weather === "WEATHER_RAIN")
-            {
-                weatherModifier = "rain";
-            }
-            else if (weather === "WEATHER_SANDSTORM")
-            {
-                weatherModifier = "desert";
-            }
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            weatherModifier = data[1];
         }
         return weatherModifier;
+    },
+
+    getWeatherOverlayId : function(terrain)
+    {
+        var overlay = "";
+        if (typeof map !== "undefined")
+        {
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            overlay         = data[2];
+        }
+        return overlay;
+    },
+
+    getWeatherOverlaySpeed : function(terrain)
+    {
+        var speed = Qt.point(0, 0);
+        if (typeof map !== "undefined")
+        {
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            speed           = data[0];
+        }
+        return speed;
     },
 
     getTerrainBackgroundId : function(id, weatherModifier, pipe = false)

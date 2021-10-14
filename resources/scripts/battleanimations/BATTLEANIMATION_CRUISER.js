@@ -25,7 +25,7 @@ var Constructor = function()
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, data[1], data[2], 0, 0, 0, 0, Qt.point(data[0], 20));
     };
 
@@ -38,7 +38,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0, 0, 0, Qt.point(data[0] + data[1].x, 20));
     };
 
@@ -94,7 +94,7 @@ var Constructor = function()
             }
         }
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 
                                            mgStartFrame, mgEndFrame, 0, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
                                            rocketSprite, mgSprite, mgLoops);
@@ -177,7 +177,7 @@ var Constructor = function()
         }
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, mgEndFrame, mgEndFrame,
                                            rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
                                            "+missile", mgSprite);
@@ -188,7 +188,7 @@ var Constructor = function()
         var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         var rocketEndFrame = 0;
         var mgSprite = "+cannon+fire+air";
         var mgEndFrame = 0;
@@ -267,7 +267,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         return data[2];
     };
 

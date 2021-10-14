@@ -20,10 +20,14 @@ namespace oxygine
         bool getFlippedX() const;
         void setFlippedX(bool flipped);
         virtual void update(const UpdateState& us) override;
+        bool getLocked() const;
+        void setLocked(bool newLocked);
+
     private:
         oxygine::spSprite m_sprites[4];
         float m_speedX{1};
         float m_speedY{0};
         bool m_flippedX{false};
+        bool m_locked{false};
     };
 }

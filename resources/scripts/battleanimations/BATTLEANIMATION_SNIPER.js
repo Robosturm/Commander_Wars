@@ -15,7 +15,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SNIPER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
         var offset = data[0];
         sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
@@ -44,7 +44,7 @@ var Constructor = function()
         BATTLEANIMATION_SNIPER.loadStandingAnimation(sprite, unit, defender, weapon);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SNIPER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_SNIPER.animationData);
         var offset = data[1];
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                         1, 1, 0, 0);

@@ -66,13 +66,12 @@ var Constructor = function()
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
         var rand = globals.randInt(0, 1);
-        var weatherModifier = "";
-        var baseId = terrain.getBaseTerrainID();
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
-            baseId === "SNOW")
+        var foreground = TERRAIN.getFactoryForeground(terrain);
+        if (foreground !== "")
         {
-            weatherModifier = "snow";
+            return foreground;
         }
+        var weatherModifier = TERRAIN.getWeatherModifier();
         return "fore_" + weatherModifier + "street+" + rand.toString();
     };
     this.getTerrainAnimationBackground = function(unit, terrain)

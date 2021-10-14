@@ -47,7 +47,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
         var offset = data[0];
 
         sprite.loadSpriteV2("artillery+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
@@ -63,7 +63,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
         BATTLEANIMATION_ARTILLERY.loadSprite(sprite, unit, defender, weapon, "+fire");
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ARTILLERY.animationData);
         var offset = data[1];
         sprite.loadSprite("artillery_shot", false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);

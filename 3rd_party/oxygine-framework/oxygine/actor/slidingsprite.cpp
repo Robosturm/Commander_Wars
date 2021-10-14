@@ -36,7 +36,10 @@ namespace oxygine
 
     void SlidingSprite::setSpeedX(float speed)
     {
-        m_speedX = speed;
+        if (!m_locked)
+        {
+            m_speedX = speed;
+        }
     }
 
     float SlidingSprite::getSpeedY() const
@@ -46,7 +49,10 @@ namespace oxygine
 
     void SlidingSprite::setSpeedY(float speed)
     {
-        m_speedY = speed;
+        if (!m_locked)
+        {
+            m_speedY = speed;
+        }
     }
 
     bool SlidingSprite::getFlippedX() const
@@ -56,10 +62,13 @@ namespace oxygine
 
     void SlidingSprite::setFlippedX(bool flipped)
     {
-        m_flippedX = flipped;
-        for (auto & sprite : m_sprites)
+        if (!m_locked)
         {
-            sprite->setFlippedX(flipped);
+            m_flippedX = flipped;
+            for (auto & sprite : m_sprites)
+            {
+                sprite->setFlippedX(flipped);
+            }
         }
     }
 
@@ -115,7 +124,7 @@ namespace oxygine
                 {
                     m_sprites[3]->setX(m_sprites[2]->getX() + m_sprites[2]->getWidth());
                 }
-            }            
+            }
         }
 
         if (m_speedY != 0.0f)
@@ -165,5 +174,15 @@ namespace oxygine
             }
         }
         ClipRectActor::update(us);
+    }
+
+    bool SlidingSprite::getLocked() const
+    {
+        return m_locked;
+    }
+
+    void SlidingSprite::setLocked(bool newLocked)
+    {
+        m_locked = newLocked;
     }
 }

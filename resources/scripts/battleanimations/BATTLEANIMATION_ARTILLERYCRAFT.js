@@ -27,7 +27,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERYCRAFT.armyData);
-        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
+        var data = Global.getDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
         sprite.loadSpriteV2("artillerycraft+" + army + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0]);
         var spriteId = "artillerycraft+" + army + "+prop+mask";
@@ -45,7 +45,7 @@ var Constructor = function()
 
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERYCRAFT.armyData);
-        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
+        var data = Global.getDataFromTable(army, BATTLEANIMATION_ARTILLERYCRAFT.animationData);
         var offset = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount());
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,

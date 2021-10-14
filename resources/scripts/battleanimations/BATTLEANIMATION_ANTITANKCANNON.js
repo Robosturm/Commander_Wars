@@ -39,7 +39,7 @@ var Constructor = function()
         // gun
         BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.animationData);
         var offset = data[0];
         var anim = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount());

@@ -142,6 +142,16 @@ public:
 
 public slots:
     /**
+     * @brief getWeatherOverlaySpeed
+     * @return
+     */
+    QPoint getWeatherOverlaySpeed();
+    /**
+     * @brief getWeatherOverlayId
+     * @return
+     */
+    QString getWeatherOverlayId();
+    /**
      * @brief getFixedSprite only avaible for ingame editor
      * @return
      */
