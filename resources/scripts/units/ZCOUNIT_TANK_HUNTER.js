@@ -64,7 +64,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon)
+    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
         if (weapon === 0 && gotAttacked === false && unit.getUnitID() === "ZCOUNIT_TANK_HUNTER" && damage >= 0)
         {

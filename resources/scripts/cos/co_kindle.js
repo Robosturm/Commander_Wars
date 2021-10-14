@@ -339,6 +339,19 @@ var Constructor = function()
     {
         return qsTr("Kindle");
     };
+    this.getAiUsePower = function(co, powerSurplus, turnMode)
+    {
+        // cop spam
+        if (co.canUseSuperpower())
+        {
+            return GameEnums.PowerMode_Superpower;
+        }
+        else if (co.canUsePower())
+        {
+            return GameEnums.PowerMode_Power;
+        }
+        return GameEnums.PowerMode_Off;
+    };
 }
 
 Constructor.prototype = CO;

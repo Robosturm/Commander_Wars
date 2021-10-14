@@ -73,6 +73,12 @@ var Constructor = function()
         return "fore_pipeline";
     };
 
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainBackgroundId(id, "", true);
+    };
+
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units.");

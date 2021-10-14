@@ -73,10 +73,11 @@ public:
         UseHighTechUnits = 16,
         SupplyRatio = 17,
         RequiredSupplyRatio = 18,
+        LowFunds = 19,
         Max,
     };
 
-    explicit NormalAi(QString configurationFile);
+    explicit NormalAi(QString configurationFile, GameEnums::AiTypes aiType);
     virtual ~NormalAi() = default;
 signals:
 
@@ -87,6 +88,15 @@ public slots:
      * @param name
      */
     virtual void readIni(QString name) override;
+    /**
+     * @brief saveIni
+     * @param name
+     */
+    void saveIni(QString name) const;
+    /**
+     * @brief randomizeIni
+     */
+    void randomizeIni(QString name, float chance);
 protected:
     static constexpr float maxDayDistance = 6.0f;;
 
@@ -369,7 +379,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor);
+    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -412,16 +422,16 @@ private:
 
     float m_notAttackableDamage{25.0f};
     float m_midDamage{55.0f};
-    float m_highDamage{65.0f};
+    float m_highDamage{75.0f};
     float m_directIndirectRatio{1.75f};
-    qint32 m_minSiloDamage{7000};
+    float m_minSiloDamage{7000};
     float m_minMovementDamage{0.3f};
     float m_minAttackFunds{0.0f};
     float m_minSuicideDamage{0.75f};
     float m_spamingFunds{7500};
 
-    qint32 m_minUnitHealth{3};
-    qint32 m_maxUnitHealth{7};
+    float m_minUnitHealth{3};
+    float m_maxUnitHealth{7};
     float m_lockedUnitHp{4};
     float m_noMoveAttackHp{3.5f};
     float m_ownIndirectAttackValue{2.0f};
@@ -440,7 +450,6 @@ private:
     float m_maxDayScoreVariancer{10};
     float m_directIndirectUnitBonusFactor{1.2f};
 
-    float m_maxBuildingTargetFindLoops{5};
     float m_scoringCutOffDamageHigh{Unit::DAMAGE_100};
     float m_scoringCutOffDamageLow{7.5f};
     float m_smoothingValue{3};
@@ -462,7 +471,7 @@ private:
     float m_smallTransporterBonus{30};
     float m_unitToSmallTransporterRatio{5};
     float m_additionalLoadingUnitBonus{5};
-    qint32 m_indirectUnitAttackCountMalus{4};
+    float m_indirectUnitAttackCountMalus{4};
     float m_minAttackCountBonus{5};
     float m_lowIndirectUnitBonus{0.3f};
     float m_lowIndirectMalus{30.0f};
@@ -492,12 +501,16 @@ private:
     float m_cappingFunds{4700};
     float m_cappedFunds{1999};
     float m_targetPriceDifference{0.3f};
+    float m_highDamageMultiplier{4.0f};
+    float m_fundsPerBuildingFactorC{4};
 
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};
     float m_ProducingTransportRatioBonus{1.7f};
     float m_ProducingTransportLoadingBonus{15.0f};
     float m_ProducingTransportMinLoadingTransportRatio{7.0f};
+
+    QVector<IniData> m_iniData;
 };
 
 #endif // NORMALAI_H

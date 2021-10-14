@@ -14,7 +14,8 @@
 
 GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime),
-      m_permanent(permanent)
+      m_permanent(permanent),
+      m_endTimer(this)
 {
     setObjectName("GameAnimationNextDay");
     Mainapp* pApp = Mainapp::getInstance();

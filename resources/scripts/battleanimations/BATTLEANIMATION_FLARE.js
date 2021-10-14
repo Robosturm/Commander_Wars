@@ -29,7 +29,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLARE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLARE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FLARE.animationData);
         var offset = data[0];
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);

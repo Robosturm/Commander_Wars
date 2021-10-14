@@ -491,7 +491,7 @@ public slots:
      * @param atkDamage
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon);
+    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief getVariables
      * @return

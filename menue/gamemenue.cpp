@@ -939,6 +939,7 @@ void GameMenue::skipAllAnimations()
             i++;
         }
     }
+    CONSOLE_PRINT("skipAllAnimations remaining Animations=" + QString::number(GameAnimationFactory::getAnimationCount()), Console::eDEBUG);
 }
 
 bool GameMenue::shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const
@@ -956,12 +957,7 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
         GameEnums::BattleAnimationMode animMode = Settings::getBattleAnimationMode();
         Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
         Unit* pDefUnit = pBattleAnimation->getDefUnit();
-        if (animMode == GameEnums::BattleAnimationMode_OnlyBattleAll)
-        {
-            battleActive = true;
-        }
-        else if (animMode == GameEnums::BattleAnimationMode_OnlyBattleOwn ||
-                 animMode == GameEnums::BattleAnimationMode_Own)
+        if (animMode == GameEnums::BattleAnimationMode_Own)
         {
             // only show animation if at least one player is a human
             if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
@@ -970,8 +966,7 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 battleActive = true;
             }
         }
-        else if (animMode == GameEnums::BattleAnimationMode_OnlyBattleAlly ||
-                 animMode == GameEnums::BattleAnimationMode_Ally)
+        else if (animMode == GameEnums::BattleAnimationMode_Ally)
         {
             Player* pPlayer2 = pMap->getCurrentViewPlayer();
             // only show animation if at least one player is an ally
@@ -981,8 +976,7 @@ bool GameMenue::shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) con
                 battleActive = true;
             }
         }
-        else if (animMode == GameEnums::BattleAnimationMode_OnlyBattleEnemy ||
-                 animMode == GameEnums::BattleAnimationMode_Enemy)
+        else if (animMode == GameEnums::BattleAnimationMode_Enemy)
         {
             Player* pPlayer2 = pMap->getCurrentViewPlayer();
             // only show animation if none of the players is human and all units are enemies of the current view player

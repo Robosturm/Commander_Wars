@@ -30,7 +30,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_LANDER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LANDER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_LANDER.animationData);
         sprite.loadMovingSprite("lander+" + armyName,  false,
                                 BATTLEANIMATION_LANDER.getMaxUnitCount(), data[0], movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Matrix,

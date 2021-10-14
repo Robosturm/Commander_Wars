@@ -1317,7 +1317,7 @@ void Settings::loadSettings()
     settings.beginGroup("Game");
     m_overworldAnimations = settings.value("OverworldAnimations", 1).toBool();
     m_battleAnimationsMode  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimationMode", 1).toInt(&ok));
-    if (!ok || m_battleAnimationsMode < GameEnums::BattleAnimationMode_None || m_battleAnimationsMode > GameEnums::BattleAnimationMode_OnlyBattleEnemy)
+    if (!ok || m_battleAnimationsMode < GameEnums::BattleAnimationMode_None || m_battleAnimationsMode > GameEnums::BattleAnimationMode_Enemy)
     {
         QString error = "Error in the Ini File: [Game] Setting: ShowAnimations";
         CONSOLE_PRINT(error, Console::eERROR);

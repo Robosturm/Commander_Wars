@@ -42,7 +42,7 @@ CO_SOPHIE.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, 
     return 0;
 };
 
-CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
 };
 

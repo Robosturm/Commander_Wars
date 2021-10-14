@@ -224,7 +224,7 @@ var Constructor = function()
         destroyed.writeDataBool(false);
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         var variables = co.getVariables();
         var bonusUnitVariable = variables.createVariable("BONUSUNITS");

@@ -24,7 +24,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
         BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(data[0], data[1]), Qt.point(0, 0), 0);
     };
 
@@ -33,7 +33,7 @@ var Constructor = function()
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
         BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, data[1]), Qt.point(data[0], 0), 600);
     };
 
@@ -157,7 +157,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_SUBMARINE.animationData);
         BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(data[0], data[1]), Qt.point(-140, 0), 2000);
         sprite.loadSound("ship_dying_move.wav", -2);
     };

@@ -44,7 +44,7 @@ CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_BEAST.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_BEAST.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

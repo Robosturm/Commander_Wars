@@ -12,20 +12,20 @@ var Constructor = function()
                      ["bg", "bh"],
                      ["ma", "ma"],];
 
-    this.animationData = [["os", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["bm", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["ge", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["yc", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["bh", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["bg", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(96, 76), Qt.point(100, 63), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
-                          ["ma", [0,  Qt.point(-7, 0),   10, Qt.point(45, 71), Qt.point(93, 57), Qt.point(93,  52), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(0, -6),    Qt.point(2, 10), Qt.point(15, -12)]],];
+    this.animationData = [["os", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["bm", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["ge", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["yc", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["bh", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["bg", [20, Qt.point(-85, 0), 850, Qt.point(57, 79), Qt.point(92, 71), Qt.point(100, 58), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(-10, -10), Qt.point(2, -7), Qt.point(-3, -12)]],
+                          ["ma", [0,  Qt.point(-7, 0),   10, Qt.point(45, 71), Qt.point(89, 52), Qt.point(93,  47), Qt.point(0, 0), Qt.point(-5, -5), Qt.point(0, -6),    Qt.point(2, 10), Qt.point(15, -12)]],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, data[1], data[2], 0, 0, 0, 0, Qt.point(data[0], 20));
     };
 
@@ -38,7 +38,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 0, 0, 0, 0, Qt.point(data[0] + data[1].x, 20));
     };
 
@@ -94,7 +94,7 @@ var Constructor = function()
             }
         }
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, 
                                            mgStartFrame, mgEndFrame, 0, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
                                            rocketSprite, mgSprite, mgLoops);
@@ -119,13 +119,13 @@ var Constructor = function()
             if (position > 0)
             {
                 offset = data[4];
-                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                sprite.loadSprite("flak_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0, false, true);
             }
             else
             {
                 offset = data[5];
-                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 100, false, true);
             }
 
@@ -177,7 +177,7 @@ var Constructor = function()
         }
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         BATTLEANIMATION_CRUISER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0, mgEndFrame, mgEndFrame,
                                            rocketEndFrame, rocketEndFrame, Qt.point(data[0] + data[1].x, 20),
                                            "+missile", mgSprite);
@@ -188,7 +188,7 @@ var Constructor = function()
         var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         var rocketEndFrame = 0;
         var mgSprite = "+cannon+fire+air";
         var mgEndFrame = 0;
@@ -232,12 +232,13 @@ var Constructor = function()
         }
         else
         {
+            var xOffset = 0;
             var yOffset = 22;
-            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
-                yOffset = 40
+                yOffset = 45;
             }
-            sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
                               1, 1.0, 0, 0);
             for (i = 0; i < count; i++)
             {
@@ -266,7 +267,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_CRUISER.animationData);
         return data[2];
     };
 

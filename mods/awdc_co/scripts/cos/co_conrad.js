@@ -60,7 +60,7 @@ CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attac
     return attackerBaseHp / 4;
 };
 
-CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {

@@ -11,7 +11,8 @@
 quint32 AchievementBanner::m_activeBanners = 0;
 
 AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
-    : QObject()
+    : QObject(),
+      m_showTimer(this)
 {
     setObjectName("AchievementBanner");
     qint32 bannerWidth = 350;

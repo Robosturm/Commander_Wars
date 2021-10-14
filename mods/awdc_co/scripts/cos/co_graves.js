@@ -15,7 +15,7 @@ CO_GRAVES.getSuperPowerName = function()
 {
     return CO_GRAVES.getPowerName();
 };
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {

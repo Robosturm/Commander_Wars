@@ -2,7 +2,6 @@
 #define MAINAPP_H
 
 #include <atomic>
-#include <QTimer>
 #include <QTranslator>
 #include <QThread>
 #include <QCoreApplication>

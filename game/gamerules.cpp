@@ -19,7 +19,8 @@
 #include "menue/gamemenue.h"
 
 GameRules::GameRules()
-    : QObject()
+    : QObject(),
+      m_RoundTimer(this)
 {
     setObjectName("GameRules");
     Mainapp* pApp = Mainapp::getInstance();

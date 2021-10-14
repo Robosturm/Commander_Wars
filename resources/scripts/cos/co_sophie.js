@@ -180,7 +180,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
@@ -195,7 +195,7 @@ var Constructor = function()
                     if (variable.readDataBool() === false)
                     {
                         variable.writeDataBool(true);
-                        var damageResult = ACTION_FIRE.calcBattleDamage2(attacker, Qt.point(attacker.getX(), attacker.getY()),
+                        var damageResult = ACTION_FIRE.calcBattleDamage2(action, attacker, Qt.point(attacker.getX(), attacker.getY()),
                                                                          defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
                         // do another attack
                         ACTION_FIRE.battle(attacker, damageResult.x, damageResult.y,

@@ -246,7 +246,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         switch (co.getPowerMode())
         {

@@ -70,9 +70,9 @@ else("Release")
     message("Compiling as Release")
     add_definitions(
         -DDEBUG_LEVEL=1             # default console log level
-        -DAUDIOSUPPORT
+        #-DAUDIOSUPPORT
         )
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)
+    set(DEPLOY_RESOURCES_AS_FOLDER 1)
 endif()
 
 ###################################################################################
@@ -81,7 +81,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=20
-    -DREVISION=1
+    -DREVISION=3
     )
 
 ###################################################################################
@@ -584,11 +584,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_NAME "0.20.1"
+    QT_ANDROID_VERSION_NAME "0.20.3"
     )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_ANDROID_VERSION_CODE "4"
+    QT_ANDROID_VERSION_CODE "6"
     )
 
 

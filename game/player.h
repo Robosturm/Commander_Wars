@@ -430,7 +430,7 @@ public slots:
      * @param pAttacker
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon);
+    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked, qint32 weapon, GameAction* pAction);
     /**
      * @brief updatePlayerVision updates the current vision of this player.
      * @brief reduces the timer for vision created for several turns

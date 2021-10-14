@@ -16,7 +16,7 @@ CO_ROBOANDY.getSuperPowerName = function()
     return CO_ROBOANDY.getPowerName();
 };
 
-CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     switch (co.getPowerMode())
     {

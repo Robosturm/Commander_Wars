@@ -1,4 +1,4 @@
-CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

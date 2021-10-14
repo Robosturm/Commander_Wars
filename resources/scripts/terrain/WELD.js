@@ -117,6 +117,11 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainBackgroundId(id, "", true);
+    };
 };
 Constructor.prototype = TERRAIN;
 var WELD = new Constructor();

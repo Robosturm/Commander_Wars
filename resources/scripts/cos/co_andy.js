@@ -9,13 +9,17 @@ var Constructor = function()
 
     this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
     {
-        if (co.canUseSuperpower())
+        if (turnMode === GameEnums.AiTurnMode_StartOfDay)
         {
-            return true;
-        }
-        else
-        {
-            return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
+            if (co.canUseSuperpower())
+            {
+                return GameEnums.PowerMode_Superpower;
+            }
+            else if (powerSurplus <= 0.5 &&
+                     co.canUsePower())
+            {
+                return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
+            }
         }
     };
 

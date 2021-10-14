@@ -39,7 +39,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_airport";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier + "airport";
     };
 
     this.getDescription = function()

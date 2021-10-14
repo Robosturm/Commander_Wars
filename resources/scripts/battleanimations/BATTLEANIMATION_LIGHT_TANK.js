@@ -39,7 +39,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount());
         var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
         var startX = data[3];
         BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+move", -1, Qt.point(startX, 5), Qt.point(65, 0), 600);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 25, 7),
@@ -66,7 +66,7 @@ var Constructor = function()
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
         var startX = data[3] + 65;
         BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+stop", 1, Qt.point(startX, 5));
         sprite.loadSprite("vehicle_dust_stop",  false,
@@ -76,7 +76,7 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
         var startPos = Qt.point(data[3] + 65, 5);
         BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "", 1, startPos);
     };
@@ -86,7 +86,7 @@ var Constructor = function()
         var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var count = sprite.getUnitCount(BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount());
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_LIGHT_TANK.animationData);
         var startPos = Qt.point(data[3] + 65, 5);
         if (weapon === 0)
         {

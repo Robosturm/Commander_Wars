@@ -37,7 +37,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
         var offset = data[0];
         sprite.loadSpriteV2("missile+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset,
@@ -51,7 +51,7 @@ var Constructor = function()
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
         var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MISSILE.animationData);
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
                                 Qt.point(128, 64), 400, false,
                                 -1, 1, 0);

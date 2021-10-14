@@ -100,30 +100,21 @@ var TERRAIN =
 
     getTerrainAnimationBase : function(unit, terrain, defender)
     {
-        if (typeof map !== 'undefined' &&
-            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            return "base_snowair";
-        }
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     },
 
     getTerrainAnimationForeground : function(unit, terrain, defender)
     {
         var rand = globals.randInt(0, 3);
         var foreground = TERRAIN.getFactoryForeground(terrain);
+        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
         if (foreground !== "")
         {
             return foreground;
         }
-        else if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            return "fore_snowplains+" + rand.toString();
-        }
-        else
-        {
-            return "fore_plains+" + rand.toString();
-        }
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "fore_" + weatherModifier +"plains+" + rand.toString();
     },
 
     getFactoryForeground : function(terrain)
@@ -163,15 +154,52 @@ var TERRAIN =
     getTerrainAnimationBackground : function(unit, terrain, defender)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
-        var weatherModifier = "";
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            weatherModifier = "snow";
-        }
+        var weatherModifier = TERRAIN.getWeatherModifier();
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
-    getTerrainBackgroundId : function(id, weatherModifier)
+    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",       ""]],
+                     ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
+                     ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
+                     ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],
+
+    getWeatherModifier : function()
+    {
+        var weatherModifier = "";
+        if (typeof map !== 'undefined')
+        {
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            weatherModifier = data[1];
+        }
+        return weatherModifier;
+    },
+
+    getWeatherOverlayId : function(terrain)
+    {
+        var overlay = "";
+        if (typeof map !== "undefined")
+        {
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            overlay         = data[2];
+        }
+        return overlay;
+    },
+
+    getWeatherOverlaySpeed : function(terrain)
+    {
+        var speed = Qt.point(0, 0);
+        if (typeof map !== "undefined")
+        {
+            var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
+            var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
+            speed           = data[0];
+        }
+        return speed;
+    },
+
+    getTerrainBackgroundId : function(id, weatherModifier, pipe = false)
     {
         switch (id)
         {
@@ -199,7 +227,14 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
-            return "back_" + weatherModifier + "planes+pipe";
+            if (pipe)
+            {
+                return "back_" + weatherModifier + "planes";
+            }
+            else
+            {
+                return "back_" + weatherModifier + "planes+pipe";
+            }
         default:
             return "back_" + weatherModifier + "planes";
         }

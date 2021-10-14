@@ -66,10 +66,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon)
-    {
 
-    };
     this.getCOSpecificUnit = function(building)
     {
         return true;
@@ -80,7 +77,7 @@ var Constructor = function()
         var unitAttackVariable = variables.createVariable("SECOND_ATTACK");
         unitAttackVariable.writeDataInt32(0);
     };
-    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon)
+    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
         if (gotAttacked === false && unit.getUnitID() === "ZCOUNIT_AUTO_TANK")
         {

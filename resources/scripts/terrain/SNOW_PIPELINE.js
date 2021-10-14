@@ -68,10 +68,6 @@ var Constructor = function()
     {
         return "minimap_pipeline";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_pipeline";
-    };
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units and is also hard to cross for those who can.");
@@ -103,7 +99,7 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
-        return TERRAIN.getTerrainBackgroundId(id, "snow");
+        return TERRAIN.getTerrainBackgroundId(id, "snow", true);
     };
 };
 Constructor.prototype = TERRAIN;

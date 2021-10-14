@@ -1,4 +1,4 @@
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

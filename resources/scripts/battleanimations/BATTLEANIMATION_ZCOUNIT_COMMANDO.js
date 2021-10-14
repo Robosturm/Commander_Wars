@@ -84,7 +84,7 @@ var Constructor = function()
     {
         if (weapon === 1)
         {
-            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fired", 1);
+            BATTLEANIMATION_MECH.loadStandingFiredAnimation(sprite, unit, defender, weapon);
         }
         else
         {
@@ -167,6 +167,7 @@ var Constructor = function()
             return true;
         }
     };
+
     this.getMoveInDurationMS = function()
     {
         return 610;
@@ -175,6 +176,28 @@ var Constructor = function()
     this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount();
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 1)
+        {
+            BATTLEANIMATION_MECH.loadDyingAnimation(sprite, unit, defender, weapon);
+        }
+        else
+        {
+            BATTLEANIMATION.loadDyingAnimation(sprite, unit, defender, weapon);
+        }
+    };
+
+    this.getDyingDurationMS = function(sprite, unit, defender, weapon)
+    {
+        return 600;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        return true;
     };
 };
 

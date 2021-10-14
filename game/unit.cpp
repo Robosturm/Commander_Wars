@@ -129,18 +129,20 @@ void Unit::applyMod()
     }
 }
 
-void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked, qint32 weapon)
+void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked, qint32 weapon, GameAction* pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postBattleActions";
     QJSValueList args1;
-    QJSValue obj3 = pInterpreter->newQObject(this);
-    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
     args1 << damage;
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
     args1 << gotAttacked;
     args1 << weapon;
+    QJSValue obj3 = pInterpreter->newQObject(pAction);
+    args1 << obj3;
     pInterpreter->doFunction(m_UnitID, function1, args1);
 }
 

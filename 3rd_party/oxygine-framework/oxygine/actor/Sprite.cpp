@@ -116,16 +116,20 @@ namespace oxygine
             }
             else
             {
-                oxygine::SlidingSprite* pSprite1 = dynamic_cast<oxygine::SlidingSprite*>(child.get());
-                if (pSprite1 != nullptr)
+                oxygine::SlidingSprite* pSprite2 = dynamic_cast<oxygine::SlidingSprite*>(child.get());
+                if (pSprite2 != nullptr)
                 {
-                    if (pSprite1->getFlipped())
+                    if (pSprite2->getFlippedX())
                     {
-                        pSprite1->setFlipped(!flippedX);
+                        pSprite2->setFlippedX(!flippedX);
                     }
                     else
                     {
-                        pSprite1->setFlipped(flippedX);
+                        pSprite2->setFlippedX(flippedX);
+                    }
+                    if (pSprite2->getLocked())
+                    {
+                        continue;
                     }
                 }
             }

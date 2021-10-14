@@ -99,14 +99,9 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
-        var weatherModifier = "";
-        var baseId = terrain.getBaseTerrainID();
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
-            baseId === "SNOW")
-        {
-            weatherModifier = "snow";
-        }
+        var rand = globals.randInt(0, 1);        
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        var baseId = terrain.getBaseTerrainID();        
         return "back_" + weatherModifier + "river+" + rand.toString();
     };
 };

@@ -38,11 +38,25 @@ var BATTLEANIMATION =
         var spriteId = "unit_explosion";
         var fadeoutTime = 600;
         var offset = Qt.point(-20, 20);
+        var maxCount = sprite.getMaxUnitCount();
+        var startCount = sprite.getUnitCount(maxCount, sprite.getDyingStartHp());
+        var endCount = sprite.getUnitCount(maxCount, sprite.getDyingEndHp());
+        var musicSound = "explosion+land.wav";
         if (unit.getUnitType()  === GameEnums.UnitType_Air)
         {
             fadeoutTime = 300
             spriteId = "unit_explosion_air";
             offset = Qt.point(-30, 20);
+            var unitId = unit.getUnitID();
+            if (unitId === "K_HELI" ||
+                unitId === "T_HELI")
+            {
+                musicSound = "explosion+copter.wav";
+            }
+            else
+            {
+                musicSound = "explosion+air.wav";
+            }
         }
         if (sprite.getHasFired())
         {
@@ -53,7 +67,14 @@ var BATTLEANIMATION =
             sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
         }
         sprite.loadDyingFadeOutAnimation(fadeoutTime);
-        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset,255)
+        sprite.loadOnlyDyingMovingSprite(spriteId, GameEnums.Recoloring_None, offset,255);
+        for (var i = maxCount; i >= maxCount - startCount + 1; --i)
+        {
+            if (i < (maxCount - endCount + 1))
+            {
+                sprite.loadSound(musicSound, 1, (i - (maxCount - startCount + 1)) * BATTLEANIMATION.defaultFrameDelay);
+            }
+        }
     },
 
     getDyingDurationMS : function(sprite, unit, defender, weapon)

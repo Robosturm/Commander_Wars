@@ -7,9 +7,14 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
+    this.getAiUsePower = function(co, powerSurplus, turnMode)
     {
-        return CO.getAiUsePowerAlways(co, powerSurplus);
+        // scop spam
+        if (co.canUseSuperpower())
+        {
+            return GameEnums.PowerMode_Superpower;
+        }
+        return GameEnums.PowerMode_Off;
     };
 
     this.init = function(co)

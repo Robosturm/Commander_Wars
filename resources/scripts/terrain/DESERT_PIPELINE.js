@@ -72,10 +72,7 @@ var Constructor = function()
     {
         return "minimap_pipeline";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_pipeline";
-    };
+
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units. It reduces the firerange of indirect units by 1.");
@@ -107,7 +104,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainBackgroundId(id, "desert", true);
     };
 };
 Constructor.prototype = TERRAIN;

@@ -10,7 +10,7 @@ class Timer : public QTimer
 {
     Q_OBJECT
 public:
-    explicit Timer();
+    explicit Timer(QObject* pParent);
     virtual ~Timer() = default;
 public slots:
     void pause();

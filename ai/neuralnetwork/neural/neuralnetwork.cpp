@@ -28,6 +28,14 @@ void NeuralNetwork::addLayer(QMap<QString, double> parameters)
     m_layers.push_back(spLayer::create(m_layers.size(), this, parameters));
 }
 
+void NeuralNetwork::extend(quint32 count, bool randomize)
+{
+    for(qint32 i = 0; i < m_layers.size(); ++i)
+    {
+        m_configuration[i][Layer::LAYER_PARAMETER_SIZE] += count;
+        m_layers[i]->extend(count, randomize);
+    }
+}
 
 void NeuralNetwork::clean()
 {

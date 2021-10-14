@@ -57,7 +57,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_K_HELI.armyData);
         var offset = Qt.point(0, 0);
         var count = sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_K_HELI.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_K_HELI.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_K_HELI.loadSprite(sprite, unit, defender, weapon);

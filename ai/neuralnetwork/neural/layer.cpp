@@ -14,6 +14,33 @@ Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> paramete
 	initLayer();
 }
 
+void Layer::extend(quint32 count, bool randomize)
+{
+    qint32 size = m_parameters[Layer::LAYER_PARAMETER_SIZE];
+    if (m_type == LayerType::STANDARD || m_type == LayerType::INPUT)
+    {
+        for (qint32 i_neuron = 0; i_neuron < count; ++i_neuron)
+        {
+            m_neurons.push_front(spNeuron::create(size + i_neuron, this, m_activation, false));
+        }
+    }
+    if (m_previousLayer != nullptr)
+    {
+        for(auto & n1 : m_previousLayer->m_neurons)
+        {
+            for(qint32 i = size; i < size + count; ++i)
+            {
+                auto & n2 = m_neurons[i];
+                if(!n2->isBias())
+                {
+                    n1->addNext(n2, randomize);
+                }
+            }
+        }
+    }
+    m_parameters[Layer::LAYER_PARAMETER_SIZE] += count;
+}
+
 int Layer::getId() const
 {
     return m_id_layer;

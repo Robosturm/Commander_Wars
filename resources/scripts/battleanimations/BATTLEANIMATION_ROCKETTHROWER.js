@@ -39,7 +39,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
         var offset = data[0];
         sprite.loadSpriteV2("rocketthrower+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, -1, startFrame);
@@ -51,7 +51,7 @@ var Constructor = function()
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ROCKETTHROWER.armyData);
         BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fire");
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ROCKETTHROWER.animationData);
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), data[1],
                                 Qt.point(128, 64), 400, true,

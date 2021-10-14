@@ -36,7 +36,7 @@ var Constructor = function()
         BATTLEANIMATION_MOTORBIKE.loadStandingAnimation(sprite, unit, defender, weapon);
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MOTORBIKE.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_MOTORBIKE.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_MOTORBIKE.animationData);
         var offset = data[0];
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
