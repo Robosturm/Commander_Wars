@@ -448,8 +448,8 @@ void GameMap::importAWDCMap(QString file)
             }
         }
         QStringList list = file.split("/");
-        m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
-        m_mapDescription = "";
+        m_headerInfo.m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
+        m_headerInfo.m_mapDescription = "";
     }
     EditorMenue::getInstance()->optimizePlayers();
     // update the whole fucking map

@@ -211,6 +211,12 @@ private:
      * @param duration
      */
     void startBattleTimer(qint32 duration);
+    /**
+     * @brief addWeatherOverlay
+     * @param actor
+     * @param pTerrain
+     */
+    void addWeatherOverlay(oxygine::spActor & actor, Terrain* pTerrain);
 private:
     QTimer m_battleTimer;
 

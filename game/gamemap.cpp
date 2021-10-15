@@ -54,7 +54,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    m_mapAuthor = Settings::getUsername();
+    m_headerInfo.m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
     m_loaded = true;
@@ -100,7 +100,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
 
 void GameMap::setMapNameFromFilename(QString filename)
 {
-    if (m_mapName.isEmpty())
+    if (m_headerInfo.m_mapName.isEmpty())
     {
         QStringList items = filename.split("/");
         if (items.size() > 0)
@@ -108,7 +108,7 @@ void GameMap::setMapNameFromFilename(QString filename)
             items = items[items.size() - 1].split(".");
             if (items.size() > 0)
             {
-                m_mapName = items[0];
+                m_headerInfo.m_mapName = items[0];
             }
         }
     }
@@ -125,6 +125,7 @@ void GameMap::loadMapData()
         setZoom(1);
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
+    connect(this, &GameMap::sigZoomChanged, this, &GameMap::zoomChanged, Qt::QueuedConnection);
 }
 
 void GameMap::setIsHumanMatch(bool newIsHumanMatch)
@@ -147,13 +148,13 @@ void GameMap::registerMapAtInterpreter()
 
 qint32 GameMap::getUniqueIdCounter()
 {
-    m_UniqueIdCounter++;
+    m_headerInfo.m_uniqueIdCounter++;
     // gurantee that the counter is never 0
-    if (m_UniqueIdCounter == 0)
+    if (m_headerInfo.m_uniqueIdCounter == 0)
     {
-        m_UniqueIdCounter++;
+        m_headerInfo.m_uniqueIdCounter++;
     }
-    return m_UniqueIdCounter;
+    return m_headerInfo.m_uniqueIdCounter;
 }
 
 bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction)
@@ -990,9 +991,12 @@ void GameMap::setZoom(float zoom)
     {
         pMenu->updateSlidingActorSize();
     }
-
-    Interpreter::getInstance()->doFunction("onZoomLevelChanged");
     emit sigZoomChanged(curZoom);
+}
+
+void GameMap::zoomChanged()
+{
+    Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
 void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
@@ -1122,13 +1126,14 @@ void GameMap::serializeObject(QDataStream& pStream) const
     qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
-    pStream << m_mapName;
-    pStream << m_mapAuthor;
-    pStream << m_mapDescription;
+    pStream << m_headerInfo.m_mapName;
+    pStream << m_headerInfo.m_mapAuthor;
+    pStream << m_headerInfo.m_mapDescription;
     pStream << width;
     pStream << heigth;
-    pStream << m_UniqueIdCounter;
+    pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
+    pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
     {
@@ -1170,31 +1175,35 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << m_isHumanMatch;
 }
 
-void GameMap::readMapHeader(QDataStream& pStream,
-                            qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
-                            qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter)
+void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
 {
-    pStream >> version;
-    if (version > 1)
+    pStream >> headerInfo.m_Version;
+    if (headerInfo.m_Version > 1)
     {
-        pStream >> mapName;
+        pStream >> headerInfo.m_mapName;
     }
-    if (version > 4)
+    if (headerInfo.m_Version > 4)
     {
-        pStream >> mapAuthor;
-        pStream >> mapDescription;
+        pStream >> headerInfo.m_mapAuthor;
+        pStream >> headerInfo.m_mapDescription;
     }
-    pStream >> width;
-    pStream >> heigth;
-    if (version > 6)
+    pStream >> headerInfo.m_width;
+    pStream >> headerInfo.m_heigth;
+    if (headerInfo.m_Version > 6)
     {
-        pStream >> uniqueIdCounter;
+        pStream >> headerInfo.m_uniqueIdCounter;
     }
     else
     {
-        uniqueIdCounter = 0;
+        headerInfo.m_uniqueIdCounter = 0;
     }
-    pStream >> playerCount;
+    pStream >> headerInfo.m_playerCount;
+    if (headerInfo.m_Version > 11)
+    {
+        quint64 flags;
+        pStream >> flags;
+        headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(flags);
+    }
 }
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
@@ -1202,15 +1211,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     clearMap();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
-    qint32 version = 0;
-    qint32 heigth = 0;
-    qint32 width = 0;
-    qint32 playerCount = 0;
-    readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
-                  width, heigth, playerCount, m_UniqueIdCounter);
-    CONSOLE_PRINT("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
-    qint32 mapSize = width * heigth;
-    setSize(width * GameMap::getImageSize(), heigth * GameMap::getImageSize());
+    readMapHeader(pStream, m_headerInfo);
+
+    CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
+    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
+    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {
@@ -1220,8 +1225,8 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
-    CONSOLE_PRINT("Loading players count: " + QString::number(playerCount), Console::eDEBUG);
-    for (qint32 i = 0; i < playerCount; i++)
+    CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), Console::eDEBUG);
+    for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
         // create player
         m_players.append(spPlayer::create());
@@ -1230,21 +1235,21 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     qint32 currentPlayerIdx = 0;
-    if (version > 1)
+    if (m_headerInfo.m_Version > 1)
     {
         pStream >> currentPlayerIdx;
         pStream >> m_currentDay;
     }
 
     // restore map
-    for (qint32 y = 0; y < heigth; y++)
+    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
         if (showLoadingScreen)
         {
-            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
+            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
         }
         m_fields.push_back(std::vector<spTerrain>());
-        for (qint32 x = 0; x < width; x++)
+        for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
             m_fields[y].push_back(pTerrain);
@@ -1270,7 +1275,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
     }
-    if (version > 2)
+    if (m_headerInfo.m_Version > 2)
     {
         m_Rules->deserializer(pStream, fast);
     }
@@ -1280,7 +1285,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Record"), 85);
         }
-        if (version > 3)
+        if (m_headerInfo.m_Version > 3)
         {
             m_Recorder->deserializeObject(pStream);
         }
@@ -1288,7 +1293,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading scripts"), 90);
         }
-        if (version > 5)
+        if (m_headerInfo.m_Version > 5)
         {
             m_GameScript->deserializeObject(pStream);
         }
@@ -1300,7 +1305,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
         }
-        if (version > 7)
+        if (m_headerInfo.m_Version > 7)
         {
             bool exists = false;
             pStream >> exists;
@@ -1310,17 +1315,17 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 m_Campaign->deserializeObject(pStream);
             }
         }
-        if (version > 8)
+        if (m_headerInfo.m_Version > 8)
         {
             pStream >> m_mapPath;
         }
-        if (version > 9)
+        if (m_headerInfo.m_Version > 9)
         {
             pStream >> m_mapMusic;
             pStream >> m_startLoopMs;
             pStream >> m_endLoopMs;
         }
-        if (version > 10)
+        if (m_headerInfo.m_Version > 10)
         {
             pStream >> m_isHumanMatch;
         }
@@ -1620,22 +1625,22 @@ GameRecorder* GameMap::getGameRecorder()
 
 QString GameMap::getMapDescription() const
 {
-    return m_mapDescription;
+    return m_headerInfo.m_mapDescription;
 }
 
 void GameMap::setMapDescription(const QString &value)
 {
-    m_mapDescription = value;
+    m_headerInfo.m_mapDescription = value;
 }
 
 QString GameMap::getMapAuthor() const
 {
-    return m_mapAuthor;
+    return m_headerInfo.m_mapAuthor;
 }
 
 void GameMap::setMapAuthor(const QString &value)
 {
-    m_mapAuthor = value;
+    m_headerInfo.m_mapAuthor = value;
 }
 
 qint32 GameMap::getCurrentDay() const
@@ -1954,12 +1959,12 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
 
 QString GameMap::getMapName() const
 {
-    return m_mapName;
+    return m_headerInfo.m_mapName;
 }
 
 void GameMap::setMapName(const QString &value)
 {
-    m_mapName = value;
+    m_headerInfo.m_mapName = value;
 }
 
 void GameMap::nextTurnPlayerTimeout()

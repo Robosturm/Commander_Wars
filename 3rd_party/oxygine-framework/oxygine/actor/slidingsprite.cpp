@@ -90,27 +90,26 @@ namespace oxygine
             {
                 if (m_sprites[0]->getX() >= getWidth())
                 {
-                    m_sprites[0]->setX(m_sprites[1]->getX() - m_sprites[0]->getWidth());
-                    m_sprites[2]->setX(m_sprites[3]->getX() - m_sprites[2]->getWidth());
+                    m_sprites[0]->setX(m_sprites[1]->getX() - m_sprites[1]->getWidth());
                 }
                 if (m_sprites[1]->getX() >= getWidth())
                 {
-                    m_sprites[1]->setX(m_sprites[0]->getX() - m_sprites[1]->getWidth());
+                    m_sprites[1]->setX(m_sprites[0]->getX() - m_sprites[0]->getWidth());
                 }
                 if (m_sprites[2]->getX() >= getWidth())
                 {
-                    m_sprites[2]->setX(m_sprites[3]->getX() - m_sprites[2]->getWidth());
+                    m_sprites[2]->setX(m_sprites[3]->getX() - m_sprites[3]->getWidth());
                 }
                 if (m_sprites[3]->getX() >= getWidth())
                 {
-                    m_sprites[3]->setX(m_sprites[2]->getX() - m_sprites[3]->getWidth());
+                    m_sprites[3]->setX(m_sprites[2]->getX() - m_sprites[2]->getWidth());
                 }
             }
             else
             {
                 if (m_sprites[0]->getX() + m_sprites[0]->getWidth() < 0)
                 {
-                    m_sprites[2]->setX(m_sprites[3]->getX() + m_sprites[2]->getWidth());
+                    m_sprites[0]->setX(m_sprites[1]->getX() + m_sprites[1]->getWidth());
                 }
                 if (m_sprites[1]->getX() + m_sprites[1]->getWidth() < 0)
                 {
@@ -118,7 +117,7 @@ namespace oxygine
                 }
                 if (m_sprites[2]->getX() + m_sprites[2]->getWidth() < 0)
                 {
-                    m_sprites[2]->setX(m_sprites[3]->getX() + m_sprites[2]->getWidth());
+                    m_sprites[2]->setX(m_sprites[3]->getX() + m_sprites[3]->getWidth());
                 }
                 if (m_sprites[3]->getX() + m_sprites[3]->getWidth() < 0)
                 {
@@ -138,19 +137,19 @@ namespace oxygine
             {
                 if (m_sprites[0]->getY() >= getHeight())
                 {
-                    m_sprites[0]->setY(m_sprites[1]->getY() - m_sprites[0]->getHeight());
+                    m_sprites[0]->setY(m_sprites[1]->getY() - m_sprites[1]->getHeight());
                 }
                 if (m_sprites[1]->getY() >= getHeight())
                 {
-                    m_sprites[1]->setY(m_sprites[0]->getY() - m_sprites[1]->getHeight());
+                    m_sprites[1]->setY(m_sprites[0]->getY() - m_sprites[0]->getHeight());
                 }
                 if (m_sprites[2]->getY() >= getHeight())
                 {
-                    m_sprites[2]->setY(m_sprites[3]->getY() - m_sprites[2]->getHeight());
+                    m_sprites[2]->setY(m_sprites[3]->getY() - m_sprites[3]->getHeight());
                 }
                 if (m_sprites[3]->getY() >= getHeight())
                 {
-                    m_sprites[3]->setY(m_sprites[2]->getY() - m_sprites[3]->getHeight());
+                    m_sprites[3]->setY(m_sprites[2]->getY() - m_sprites[2]->getHeight());
                 }
             }
             else
@@ -165,7 +164,7 @@ namespace oxygine
                 }
                 if (m_sprites[2]->getY() + m_sprites[2]->getHeight() < 0)
                 {
-                    m_sprites[2]->setY(m_sprites[3]->getY() + m_sprites[2]->getHeight());
+                    m_sprites[2]->setY(m_sprites[3]->getY() + m_sprites[3]->getHeight());
                 }
                 if (m_sprites[3]->getY() + m_sprites[3]->getHeight() < 0)
                 {

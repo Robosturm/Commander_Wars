@@ -18,7 +18,11 @@ MapMover::MapMover(InGameMenue* pOwner)
 
 void MapMover::mouseWheel(float direction)
 {
-    GameMap::getInstance()->setZoom(direction);
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get())
+    {
+        pMap->setZoom(direction);
+    }
     m_pOwner->centerMapOnCursor();
 }
 

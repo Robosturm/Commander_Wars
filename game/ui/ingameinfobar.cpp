@@ -464,12 +464,11 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     {
         oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
         pWeatherOverlay->setPosition(xOffset, yOffset);
-        pWeatherOverlay->setResAnim(pAnimBase);
+        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
         QPoint speed = pTerrain->getWeatherOverlaySpeed();
         pWeatherOverlay->setSpeedX(speed.x());
         pWeatherOverlay->setSpeedY(speed.y());
-        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setPriority(100000);
         pWeatherOverlay->setLocked(true);
         m_pDetailedViewBox->addChild(pWeatherOverlay);

@@ -55,7 +55,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DDEBUG_LEVEL=0             # default console log level
         #-DHEAVY_AI                 # experimental heavy ai unfinished
         #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-        #-DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
+        #-DAUDIOSUPPORT             # currently not supported for mingw --> qt bug
         -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
         )
 
@@ -68,11 +68,18 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
-    add_definitions(
-        -DDEBUG_LEVEL=1             # default console log level
-        #-DAUDIOSUPPORT
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        add_definitions(
+            -DDEBUG_LEVEL=1             # default console log level
+            #-DAUDIOSUPPORT
         )
-    set(DEPLOY_RESOURCES_AS_FOLDER 1)
+    else()
+        add_definitions(
+            -DDEBUG_LEVEL=1             # default console log level
+            -DAUDIOSUPPORT
+        )
+    endif()
+    set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()
 
 ###################################################################################
@@ -416,6 +423,7 @@ set(${PROJECT_NAME}_SRCS
     mapsupport/importexport_awds.cpp
     mapsupport/importexport_awdc.cpp
     mapsupport/importawbyweb_text.cpp
+    mapsupport/mapfilter.cpp
 
     # ai
     ai/leaf.cpp

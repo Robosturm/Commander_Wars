@@ -38,6 +38,22 @@ public:
     static const qint32 frameTime;
     static constexpr qint32 defaultImageSize = 32;
     /**
+     * @brief The MapHeaderInfo struct read from the filesystem
+     */
+    struct MapHeaderInfo
+    {
+        qint32 m_Version{0};
+        QString m_mapName;
+        QString m_mapAuthor;
+        QString m_mapDescription;
+        qint32 m_width{0};
+        qint32 m_heigth{0};
+        qint32 m_playerCount{0};
+        qint32 m_uniqueIdCounter{0};
+        GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags::None};
+    };
+
+    /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width
      * @param heigth
@@ -140,9 +156,7 @@ public:
      */
     void deserializer(QDataStream& pStream, bool fast);
 
-    static void readMapHeader(QDataStream& pStream,
-                              qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
-                              qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter);
+    static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
      * @brief readMapName
      * @param pStream
@@ -155,7 +169,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 11;
+        return 12;
     }
     /**
      * @brief clearMap
@@ -713,15 +727,15 @@ public slots:
      * @brief showMiddleCrossGrid
      */
     void showMiddleCrossGrid(bool show);
+private slots:
+    void zoomChanged();
 private:
     void loadMapData();
     QColor getGridColor();
 private:
     static spGameMap m_pInstance;
-    QString m_mapName;
-    QString m_mapAuthor;
-    QString m_mapDescription;
     QString m_mapPath;
+    MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
     QVector<spPlayer> m_players;
     QVector<oxygine::spColorRectSprite> m_gridSprites;
@@ -735,7 +749,6 @@ private:
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     bool m_loaded{false};
-    qint32 m_UniqueIdCounter{0};
     QString m_mapMusic;
     QString m_loadedMapMusic;
     qint32 m_startLoopMs{-1};

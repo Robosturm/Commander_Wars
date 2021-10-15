@@ -178,18 +178,10 @@ void NetworkGame::onConnectToLocalServer(quint64)
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     m_data.setMods(mods);
-    qint32 version = 0;
-    qint32 heigth = 0;
-    qint32 width = 0;
-    QString author;
-    QString mapName;
-    QString mapDescription;
-    qint32 playerCount = 0;
-    qint32 uniqueIdCounter = 0;
-    GameMap::readMapHeader(stream, version, mapName, author, mapDescription,
-                           width, heigth, playerCount, uniqueIdCounter);
-    m_data.setMapName(mapName);
-    m_data.setMaxPlayers(playerCount);
+    GameMap::MapHeaderInfo headerInfo;
+    GameMap::readMapHeader(stream, headerInfo);
+    m_data.setMapName(headerInfo.m_mapName);
+    m_data.setMaxPlayers(headerInfo.m_playerCount);
     // free buffer after it has been send to the server
     m_dataBuffer.clear();
 }

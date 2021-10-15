@@ -68,8 +68,6 @@ static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPO
                                                             {"OMEGARAKETE", "ZOMEGA_BASE"},
                                                             {"FABRIK", "ZBLACKHOLE_FACTORY"},};
 
-
-
 static const qint32 unitCount = 38;
 static const QString unitIdMapping[unitCount][2] = {{"FLTR", "AIRCRAFTCARRIER"},
                                                     {"PANZERABWEHRKANONE", "ANTITANKCANNON"},
@@ -126,7 +124,7 @@ void GameMap::importTxtMap(QString file)
             QString line = out.readLine().toUpper();
             if (line.startsWith("KARTENNAME="))
             {
-                m_mapName = line.split("=")[1];
+                m_headerInfo.m_mapName = line.split("=")[1];
             }
             else if (line.startsWith("SPIELER|"))
             {
