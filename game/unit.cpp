@@ -2367,6 +2367,22 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
             return true;
         }
     }
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getFirstStrike";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj2 = pInterpreter->newQObject(pAttacker);
+    args1 << obj2;
+    args1 << isDefender;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    if (erg.isBool() && erg.toBool() == true)
+    {
+        return true;
+    }
     return false;
 }
 
