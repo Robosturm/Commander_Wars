@@ -274,7 +274,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units.");
+        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units and halves their fuel.");
     };
     this.getPowerName = function(co)
     {
@@ -282,7 +282,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and weather changes to rain.");
+        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and halves their fuel and weather changes to rain.");
     };
     this.getSuperPowerName = function(co)
     {
