@@ -1261,7 +1261,6 @@ void Terrain::serializeObject(QDataStream& pStream) const
 
     pStream << m_terrainName;
     pStream << m_terrainDescription;
-    pStream << m_hasStartOfTurn;
     m_Variables.serializeObject(pStream);
 
     pStream << static_cast<qint32>(m_terrainOverlay.size());
@@ -1379,9 +1378,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         pStream >> m_terrainName;
         pStream >> m_terrainDescription;
     }
-    if (version > 5)
+    if (version > 5 && version < 9)
     {
-        pStream >> m_hasStartOfTurn;
+        bool dummy;
+        pStream >> dummy;
     }
     if (version > 6)
     {

@@ -117,7 +117,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 8;
+        return 9;
     }
     /**
      * @brief setFixedSprite only avaible for ingame editor
