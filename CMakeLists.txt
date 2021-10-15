@@ -293,6 +293,8 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/ingame/dialogattacklog.cpp
     objects/dialogs/ingame/dialogunitinfo.cpp
     objects/dialogs/ingame/victoryrulepopup.cpp
+    # objects dialogs map selection
+    objects/dialogs/mapSelection/mapselectionfilterdialog.cpp
 
     #modding
     modding/csvtableimporter.cpp
@@ -516,7 +518,8 @@ set(${PROJECT_NAME}_SRCS
 
     # ui
     ui_reader/uifactory.cpp
-    )
+    ui_reader/createdgui.h ui_reader/createdgui.cpp
+)
 
 ##############################################################################
 # OS Specific files #

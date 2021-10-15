@@ -1,4 +1,4 @@
-#include "colorselectiondialog.h"
+#include "objects/dialogs/colorselectiondialog.h"
 
 #include "coreengine/mainapp.h"
 

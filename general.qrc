@@ -5444,5 +5444,6 @@
         <file>resources/images/game/battlesprites/background/back_snowforest+2.png</file>
         <file>resources/images/game/battlesprites/background/back_rainriver+0.png</file>
         <file>resources/images/game/battlesprites/background/back_snowstreet+forest.png</file>
+        <file>resources/ui/mapSelectionFilterDialog.xml</file>
     </qresource>
 </RCC>

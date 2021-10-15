@@ -269,30 +269,30 @@ public:
 
     enum MapFilterFlags
     {
-        None        = 0x00000,
+        MapFilterFlags_None        = 0x00000,
         // buildings
-        Bases       = 0x00001,
-        Airport     = 0x00002,
-        Harbour     = 0x00004,
-        Tower       = 0x00008,
-        Teleport    = 0x00010,
-        MixedBase   = 0x00020,
-        Predeployed = 0x00040,
+        MapFilterFlags_Bases       = 0x00001,
+        MapFilterFlags_Airport     = 0x00002,
+        MapFilterFlags_Harbour     = 0x00004,
+        MapFilterFlags_Tower       = 0x00008,
+        MapFilterFlags_Teleport    = 0x00010,
+        MapFilterFlags_MixedBase   = 0x00020,
+        MapFilterFlags_Predeployed = 0x00040,
         // map layout
-        Symetric    = 0x00080,
-        PvP         = 0x00100,
-        FTA         = 0x00200,
-        VsAi        = 0x00400,
-        TeamPlay    = 0x00800,
-        Historical  = 0x01000,
+        MapFilterFlags_Symetric    = 0x00080,
+        MapFilterFlags_PvP         = 0x00100,
+        MapFilterFlags_FTA         = 0x00200,
+        MapFilterFlags_VsAi        = 0x00400,
+        MapFilterFlags_TeamPlay    = 0x00800,
+        MapFilterFlags_Historical  = 0x01000,
         // funds
-        LowFunds    = 0x02000,
-        HighFunds   = 0x04000,
+        MapFilterFlags_LowFunds    = 0x02000,
+        MapFilterFlags_HighFunds   = 0x04000,
         // battle type
-        Naval       = 0x08000,
-        Ground      = 0x10000,
-        Air         = 0x20000,
-        Scripted    = 0x40000,
+        MapFilterFlags_Naval       = 0x08000,
+        MapFilterFlags_Ground      = 0x10000,
+        MapFilterFlags_Air         = 0x20000,
+        MapFilterFlags_Scripted    = 0x40000,
     };
     Q_ENUM(MapFilterFlags)
 

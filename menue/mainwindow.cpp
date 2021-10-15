@@ -36,6 +36,8 @@
 
 #include "ui_reader/uifactory.h"
 
+#include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
+
 Mainwindow::Mainwindow()
     : m_cheatTimeout(this)
 {
@@ -263,6 +265,9 @@ Mainwindow::Mainwindow()
     QJSValue obj = pInterpreter->newQObject(this);
     pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
+
+    MapFilter filter;
+    addChild(spMapSelectionFilterDialog::create(filter));
 
     m_cheatTimeout.setSingleShot(true);
     connect(&m_cheatTimeout, &QTimer::timeout, this, &Mainwindow::cheatTimeout, Qt::QueuedConnection);

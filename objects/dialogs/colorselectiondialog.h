@@ -14,7 +14,7 @@
 #include "objects/base/colorselector.h"
 
 class ColorSelectionDialog;
-typedef oxygine::intrusive_ptr<ColorSelectionDialog> spColorSelectionDialog;
+using spColorSelectionDialog = oxygine::intrusive_ptr<ColorSelectionDialog>;
 
 class ColorSelectionDialog : public QObject, public oxygine::Actor
 {

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map name")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the map name.")</tooltip>
+                <startValue>mapSelectionFilter.getMapName()</startValue>
+                <onEvent></onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Author")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the author.")</tooltip>
+                <startValue>mapSelectionFilter.getMapAuthor()</startValue>
+                <onEvent></onEvent>
+            </Textbox>
+
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getWidth() / 2 - 75</x>
+        <y>settings.getHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the map filter dialog")</tooltip>
+        <onEvent>mapSelectionFilter.exit();</onEvent>
+    </Button>
+</ui>

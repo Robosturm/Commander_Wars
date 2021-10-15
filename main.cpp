@@ -52,6 +52,7 @@
 
 #include "objects/base/textbox.h"
 #include "objects/playerselection.h"
+#include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -119,6 +120,8 @@ void registerInterfaceData()
     qRegisterMetaType<spGameAction>("spGameAction");
     qRegisterMetaType<std::shared_ptr<QEvent>>("std::shared_ptr<QEvent>");
 
+
+
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);
     qmlRegisterInterface<Player>("Player", 1);
@@ -171,6 +174,7 @@ void registerInterfaceData()
     qmlRegisterInterface<Achievementmenu>("Achievementmenu", 1);
     qmlRegisterInterface<OptionMenue>("OptionMenue", 1);
     qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
+    qmlRegisterInterface<MapSelectionFilterDialog>("MapSelectionFilterDialog", 1);
 }
 
 int main(qint32 argc, char* argv[])

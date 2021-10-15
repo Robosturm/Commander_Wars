@@ -7,13 +7,14 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
-#include "menue/basemenu.h"
+
+#include "ui_reader/createdgui.h"
 
 class UiFactory : public QObject
 {
     Q_OBJECT
 public:
-    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor & item, Basemenu* pMenu)>;
+    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor & item, CreatedGui* pMenu)>;
     struct FactoryItem
     {
         QString m_id;
@@ -31,7 +32,7 @@ public:
      * @brief createUi
      * @param uiXmlFile
      */
-    void createUi(QString uiXml, Basemenu* pMenu);
+    void createUi(QString uiXml, CreatedGui* pMenu);
     /**
      * @brief getFactoryItems
      * @return
@@ -45,73 +46,73 @@ private:
      * mandatory: x, y, width, heigth, text, font,
      * optional: tooltip, onUpdate
      */
-    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
       * optional: tooltip
       */
-    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
       * optional: tooltip
       */
-    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Slider
       * supported attributes are:
       * mandatory: x, y, width, min, max, onEvent, startValue
       * optional: tooltip
       */
-    bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
       * optional: tooltip
       */
-    bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
       * optional: tooltip
       */
-    bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: Panel
       * supported attributes are:
       * mandatory: x, y, width, height, childs
       */
-    bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: Box
       * supported attributes are:
       * mandatory: x, y, width, height, sprite, childs
      */
-    bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Icon
       * supported attributes are:
       * mandatory: x, y, size, startValue
       */
-    bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, text, onEvent
      * optional: tooltip, width
      */
-    bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
      * Nodename: Button
      * supported attributes are:
      * mandatory: x, y, sprite, onEvent
      */
-    bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
 signals:
     void sigDoEvent(QString command);
 private slots:
@@ -127,7 +128,7 @@ private:
     bool checkElements(QDomNodeList element, QVector<QString> attributes);
     QString getAttribute(QDomNodeList childs, QString attribute);
     QDomNode getNode(QDomNodeList childs, QString attribute);
-    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     qint32 getIntValue(QString line);
     bool getBoolValue(QString line);
     QString getStringValue(QString line);

@@ -50,7 +50,7 @@ public:
         qint32 m_heigth{0};
         qint32 m_playerCount{0};
         qint32 m_uniqueIdCounter{0};
-        GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags::None};
+        GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
     };
 
     /**

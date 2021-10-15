@@ -76,15 +76,16 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
     return m_factoryItems;
 }
 
-void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
+void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
     QStringList uiFiles;
-    uiFiles.append("resources/" + uiXml);
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    for (qint32 i = Settings::getMods().size() - 1; i >= 0; --i)
     {
         uiFiles.append(Settings::getMods().at(i) + "/" + uiXml);
     }
+    uiFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/" + uiXml);
+    uiFiles.append("resources/" + uiXml);
     for (const auto & uiFile : qAsConst(uiFiles))
     {
         if (QFile::exists(uiFile))
@@ -118,6 +119,7 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
                 if (success)
                 {
                     pMenu->addFactoryUiItem(root);
+                    break;
                 }
                 else
                 {
@@ -133,7 +135,7 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
     }
 }
 
-bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu)
+bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     QString name = element.nodeName();
     bool success = false;
@@ -152,7 +154,7 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
     return success;
 }
 
-bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu)
+bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrText, attrFont});
@@ -176,7 +178,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         if (!onUpdateLine.isEmpty())
         {
             Label* pPtr = pLabel.get();
-            connect(pMenu, &Basemenu::sigOnUpdate, pLabel.get(), [=]()
+            connect(pMenu, &CreatedGui::sigOnUpdate, pLabel.get(), [=]()
             {
                 pPtr->setHtmlText(onUpdate<QString>(onUpdateLine));
             });
@@ -189,7 +191,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
     return success;
 }
 
-bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrText, attrOnEvent});
@@ -227,7 +229,7 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
-bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrSprite, attrOnEvent});
@@ -252,7 +254,7 @@ bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, o
     return success;
 }
 
-bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrOnEvent, attrStartValue});
@@ -279,7 +281,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
     return success;
 }
 
-bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrMin,
@@ -312,7 +314,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
     return success;
 }
 
-bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrMin,
@@ -349,7 +351,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
-bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
@@ -385,7 +387,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
     return success;
 }
 
-bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
@@ -413,7 +415,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
     return success;
 }
 
-bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrSize, attrStartValue});
@@ -433,7 +435,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
     return success;
 }
 
-bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu)
+bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrChilds});
@@ -484,7 +486,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
     return success;
 }
 
-bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu)
+bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
 {
     auto childs = element.childNodes();
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite, attrChilds});
