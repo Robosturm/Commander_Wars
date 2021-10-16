@@ -178,10 +178,10 @@ public:
         QVector<UnitBuildData> buildingDataInput;
     };
 
-    explicit HeavyAi(QString type);
+    explicit HeavyAi(QString type, GameEnums::AiTypes aiType);
     virtual ~HeavyAi() = default;
 
-    void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, qint32 outputSize = 1);
+    void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
 public slots:
     /**
      * @brief process
@@ -236,7 +236,7 @@ public slots:
     /**
      * @brief loadNeuralNetworks
      */
-    void loadNeuralNetworks();
+    void loadNeuralNetworks(GameEnums::AiTypes aiType);
     /**
      * @brief combineAi
      * @param aisToUse

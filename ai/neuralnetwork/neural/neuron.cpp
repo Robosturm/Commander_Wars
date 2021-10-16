@@ -30,7 +30,6 @@ void Neuron::trigger()
     {
         e->propagate(value);
     }
-
 }
 
 double Neuron::output()
@@ -104,9 +103,16 @@ void Neuron::addAccumulated(double v)
     m_accumulated += v;
 }
 
-void Neuron::addNext(spNeuron n)
+void Neuron::addNext(spNeuron n, bool random)
 {
-    m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-1, 1)));
+    if (random)
+    {
+        m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-1, 1)));
+    }
+    else
+    {
+        m_next.push_back(spEdge::create(n.get(), this, 0));
+    }
     n->addPrevious(m_next.back());
 }
 

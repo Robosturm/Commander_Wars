@@ -106,10 +106,7 @@ var Constructor = function()
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("pipe_destroyed.wav");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_pipeline";
-    };
+
     this.getDescription = function()
     {
         return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.");
@@ -124,10 +121,7 @@ var Constructor = function()
     {
         return "fore_desertpipe";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "back_desert";
-    };
+
     this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
         return "fore_pipeline";
@@ -135,7 +129,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desert";
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        return TERRAIN.getTerrainBackgroundId(id, "desert", true);
     };
 };
 Constructor.prototype = TERRAIN;

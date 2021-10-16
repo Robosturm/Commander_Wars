@@ -25,8 +25,8 @@ var Constructor = function()
         {
             if (unit.getLoadedUnitCount() < Global[unit.getUnitID()].getLoadingPlace())
             {
-                if ((unitLimit <= 0) ||
-                    (unitCount < unitLimit))
+                if ((unitLimit <= 0 ||
+                    unitCount < unitLimit))
                 {
                     return true;
                 }

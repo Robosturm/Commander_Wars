@@ -66,25 +66,19 @@ var Constructor = function()
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
         var rand = globals.randInt(0, 1);
-        var weatherModifier = "";
-        var baseId = terrain.getBaseTerrainID();
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
-            baseId === "SNOW")
+        var foreground = TERRAIN.getFactoryForeground(terrain);
+        if (foreground !== "")
         {
-            weatherModifier = "snow";
+            return foreground;
         }
+        var weatherModifier = TERRAIN.getWeatherModifier();
         return "fore_" + weatherModifier + "street+" + rand.toString();
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
-        var weatherModifier = "";
+        var weatherModifier = TERRAIN.getWeatherModifier();
         var baseId = terrain.getBaseTerrainID();
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW" ||
-            baseId === "SNOW")
-        {
-            weatherModifier = "snow";
-        }
         switch (id)
         {
         case "SEA":
@@ -106,6 +100,10 @@ var Constructor = function()
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
             return "back_" + weatherModifier + "street+pipe";
+        case "FOREST":
+        case "DESERT_FOREST":
+        case "SNOW_FOREST":
+            return "back_" + weatherModifier + "street+forest";
         default:
             return "back_" + weatherModifier + "street";
         }

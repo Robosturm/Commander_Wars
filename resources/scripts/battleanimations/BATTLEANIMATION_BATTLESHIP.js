@@ -22,7 +22,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
         return data[1];
     };
 
@@ -31,7 +31,7 @@ var Constructor = function()
         sprite.setBackgroundSpeed(sprite.getBackgroundSpeed() + 1);
         var player = unit.getOwner();        
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
         var movement = data[0];
         var moveTime = data[1];
         var offset = Qt.point(data[2], 20);
@@ -63,7 +63,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData);
         var offset = Qt.point(data[2] + data[0].x, 20);
         sprite.loadMovingSprite("battleship+" + armyName,  false,
                                 BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), offset, movement, moveTime, false, -1);
@@ -83,7 +83,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData)
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BATTLESHIP.animationData)
         var offset = data[3];
         for (var i = 0; i < count; i++)
         {

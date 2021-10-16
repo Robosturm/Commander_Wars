@@ -34,7 +34,7 @@ public:
     double output();
     void clean();
     void addAccumulated(double v);
-    void addNext(spNeuron n);
+    void addNext(spNeuron n, bool random = true);
     void addNext(spEdge e);
     void addPrevious(spEdge e);
     qint32 getNeuronId() const;

@@ -85,7 +85,7 @@ CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attac
     return 0;
 };
 
-CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

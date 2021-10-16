@@ -39,7 +39,7 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         var movement = 65;
         sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Matrix, sprite.getMaxUnitCount(), Qt.point(data[0].x - movement, 5),
                                   Qt.point(movement, 0), 600, false, 1, 1);
@@ -55,7 +55,7 @@ var Constructor = function()
     {
         BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         sprite.loadSprite("vehicle_dust_stop",  false,
                           BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(data[0].x - 25, 7), 1);
     };
@@ -68,7 +68,7 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
     {
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         var offset = data[0];
         sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
@@ -80,7 +80,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
         var offset = Qt.point(35, 44);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_RECON.animationData);
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
             BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire+air", 2);

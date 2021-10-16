@@ -49,6 +49,12 @@ public:
      */
     void addLayer(QMap<QString, double> parameters);
     /**
+     * @brief extend
+     * @param count
+     * @param randomize
+     */
+    void extend(quint32 count, bool randomize);
+    /**
      * @brief autogenerate connects all neurons and can be used to randomize all weights
      * @param randomize
      */
@@ -90,6 +96,10 @@ public:
      * @param mutationChance
      */
     void mutateAllWeights(double mutationChance);
+    qint32 getInputSize()
+    {
+        return m_configuration[0][Layer::LAYER_PARAMETER_SIZE];
+    }
 private:
     void setInput(QVector<double> in);
     void trigger();

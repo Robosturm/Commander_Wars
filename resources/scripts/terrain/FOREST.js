@@ -53,14 +53,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            return "base_snowforest";
-        }
-        else
-        {
-            return "base_forest";
-        }
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "forest";
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
@@ -68,12 +62,8 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
-        var weatherModifier = "";
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            weatherModifier = "snow";
-        }
+        var rand = globals.randInt(0, 2);
+        var weatherModifier = TERRAIN.getWeatherModifier();
         return "back_" + weatherModifier + "forest+" + rand.toString();
     };
 };

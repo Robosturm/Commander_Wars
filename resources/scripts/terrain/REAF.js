@@ -64,7 +64,8 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_sea";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()
     {

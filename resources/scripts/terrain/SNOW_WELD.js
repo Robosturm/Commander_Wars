@@ -124,7 +124,7 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var id = TERRAIN.getTerrainAnimationId(terrain);
-        return TERRAIN.getTerrainBackgroundId(id, "snow");
+        return TERRAIN.getTerrainBackgroundId(id, "snow", true);
     };
 };
 Constructor.prototype = TERRAIN;

@@ -27,6 +27,7 @@
 
 VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     : Basemenu(),
+      m_ProgressTimer(this),
       m_pNetworkInterface(pNetworkInterface)
 {
     setObjectName("VictoryMenue");

@@ -62,6 +62,7 @@
 #include "network/mainserver.h"
 
 #include "ai/heavyai.h"
+#include "ai/normalai.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/terrainmanager.h"
@@ -151,6 +152,7 @@ void registerInterfaceData()
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
+    qmlRegisterInterface<NormalAi>("NormalAi", 1);
     qmlRegisterInterface<NeuralNetwork>("NeuralNetwork", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
     qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);

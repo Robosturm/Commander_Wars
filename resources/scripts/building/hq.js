@@ -78,7 +78,8 @@ var Constructor = function()
         {
             armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
-        return "back_hq+" + armyName;
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier + "hq+" + armyName;
     };
 
     this.getDescription = function()

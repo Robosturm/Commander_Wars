@@ -15,7 +15,7 @@ CO_MARY.getSuperPowerName = function()
 {
     return CO_MARY.getPowerName();
 };
-CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
 {
     if (co.getIsCO0() === true)
     {

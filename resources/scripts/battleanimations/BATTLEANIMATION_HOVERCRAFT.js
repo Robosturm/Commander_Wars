@@ -32,7 +32,7 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERCRAFT.armyData);
-        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
+        var data = Global.getDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
         var weaponId = "";
         if (weapon === 1)
         {
@@ -55,7 +55,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount());
         var player = unit.getOwner();
         var army = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_HOVERCRAFT.armyData);
-        var data = Global.getArmyDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
+        var data = Global.getDataFromTable(army, BATTLEANIMATION_HOVERCRAFT.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_HOVERCRAFT.loadSprite(sprite, unit, defender, weapon, "+fire");

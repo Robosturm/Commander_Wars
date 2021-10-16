@@ -138,10 +138,6 @@ public:
         BattleAnimationMode_Own,
         BattleAnimationMode_Ally,
         BattleAnimationMode_Enemy,
-        BattleAnimationMode_OnlyBattleAll,
-        BattleAnimationMode_OnlyBattleOwn,
-        BattleAnimationMode_OnlyBattleAlly,
-        BattleAnimationMode_OnlyBattleEnemy,
     };
     Q_ENUM(BattleAnimationMode)
 

@@ -45,7 +45,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FIGHTER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FIGHTER.animationData);
         var offset = data[0];
         sprite.loadSpriteV2("fighter+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset, -1);
@@ -58,7 +58,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FIGHTER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FIGHTER.animationData);
         var offset = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());        
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,

@@ -60,7 +60,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Host Local"));
+    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Direct Host"));
     addChild(pButtonHost);
     pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -69,7 +69,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Host"));
+    oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Server Host"));
     addChild(pButtonHostOnServer);
     pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
     pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

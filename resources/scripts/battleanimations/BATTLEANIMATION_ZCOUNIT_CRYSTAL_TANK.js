@@ -19,7 +19,7 @@ var Constructor = function()
         {
             sprite.loadSpriteV2("crystal_tank+fire", GameEnums.Recoloring_None,
                               BATTLEANIMATION_ZCOUNIT_CRYSTAL_TANK.getMaxUnitCount(), Qt.point(-5, 10));
-            offset = Qt.point(78, 50);
+            offset = Qt.point(83, 50);
             sprite.loadSingleMovingSprite("crystalcannon", false,
                                           Qt.point(offset.x, offset.y),
                                           Qt.point(0, 0), 0, true,
@@ -39,8 +39,8 @@ var Constructor = function()
         else
         {
             // mg
-            offset = Qt.point(83, 73);
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+            offset = Qt.point(83, 68);
+            sprite.loadSprite("flak_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
             sprite.loadSound("mg_weapon_fire.wav", 1);
         }
@@ -62,12 +62,13 @@ var Constructor = function()
         }
         else
         {
+            var xOffset = 0;
             var yOffset = 22;
-            if (unit.getUnitType()  === GameEnums.UnitType_Air)
+            if (defender.getUnitType()  === GameEnums.UnitType_Air)
             {
-                yOffset = 40
+                yOffset = 45;
             }
-            sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, yOffset),
+            sprite.loadSprite("flak_hit",  false, 5, Qt.point(xOffset, yOffset),
                             1, 1.0, 0, 0, true);
             for (i = 0; i < count; i++)
             {
@@ -93,7 +94,7 @@ var Constructor = function()
     {
         if (weapon === 0)
         {
-            return 1100;
+            return 1900;
         }
         else
         {

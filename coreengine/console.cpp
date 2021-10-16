@@ -179,20 +179,20 @@ void Console::dotask(QString message)
     }
 }
 
-void Console::print(QString message, qint8 LogLevel)
+void Console::print(QString message, qint8 logLevel)
 {
-    print(message, static_cast<eLogLevels>(LogLevel));
+    print(message, static_cast<eLogLevels>(logLevel));
 }
 
-void Console::print(QString message, eLogLevels MsgLogLevel)
+void Console::print(QString message, eLogLevels logLevel)
 {
     QMutexLocker locker(&m_datalocker);
 
-    if (MsgLogLevel >= Console::m_LogLevel)
+    if (logLevel >= Console::m_LogLevel)
     {
         QString msg = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": " + message;
         QString prefix = "";
-        switch (MsgLogLevel)
+        switch (logLevel)
         {
             case eDEBUG:
             {
@@ -232,6 +232,21 @@ void Console::print(QString message, eLogLevels MsgLogLevel)
         while (m_output.size() > m_outputSize)
         {
             m_output.removeFirst();
+        }
+    }
+}
+
+void Console::printObjectDetails(QObject* obj, Console::eLogLevels logLevel)
+{
+    print("Object Info of :" + obj->objectName(), logLevel);
+    const auto * metaObject = obj->metaObject();
+    qint32 functions = metaObject->methodCount();
+    for (qint32 i = 0; i < functions; ++i)
+    {
+        const auto metaFunction = metaObject->method(i);
+        if (metaFunction.methodType() ==  QMetaMethod::Slot)
+        {
+            print("function: " + QString(metaFunction.typeName()) + " " + QString(metaFunction.methodSignature()), logLevel);
         }
     }
 }

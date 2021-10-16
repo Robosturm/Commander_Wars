@@ -46,11 +46,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
 
     m_Send = pObjectManager->createButton(tr("Send"), 150);
     m_Send->setPosition(size.width() - m_Send->getWidth(), size.height() - m_Send->getHeight());
-    Textbox* pChatInput = m_ChatInput.get();
-    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigSendText(pChatInput->getCurrentText());
-    });
+
     connect(this, &Chat::sigSendText, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_Send);
 
@@ -61,6 +57,11 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_ChatInput);
 
+    Textbox* pChatInput = m_ChatInput.get();
+    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigSendText(pChatInput->getCurrentText());
+    });
 
     if (m_pInterface.get() != nullptr)
     {

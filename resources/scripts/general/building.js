@@ -228,12 +228,8 @@ var BUILDING =
 
     getTerrainAnimationBase : function(unit, terrain)
     {
-        if (typeof map !== 'undefined' &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            return "base_snowair";
-        }
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     },
 
     getTerrainAnimationForeground : function(unit, terrain)
@@ -258,11 +254,13 @@ var BUILDING =
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
         }
-        if (baseId === "DESERT")
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        if (baseId === "DESERT" ||
+            weatherModifier === "desert")
         {
             return "back_deserttown";
         }
-        return "back_town+" + army + "+" + rand.toString();
+        return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 
     getDescription : function(building)

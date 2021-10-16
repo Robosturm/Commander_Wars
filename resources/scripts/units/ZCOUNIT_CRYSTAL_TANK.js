@@ -61,7 +61,7 @@ var Constructor = function()
         return GameEnums.UnitType_Ground;
     };
 
-    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked)
+    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
     {
         if (!gotAttacked)
         {

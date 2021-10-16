@@ -39,6 +39,27 @@ public:
         qint32 supplyNeededUnits{0};
         QVector<std::tuple<Unit*, Unit*>> transportTargets;
     };
+
+    struct IniData
+    {
+        IniData(QString name, QString group, float * value, float defaultValue, float minValue, float maxValue)
+            : m_name(name),
+              m_group(group),
+              m_value(value),
+              m_defaultValue(defaultValue),
+              m_minValue(minValue),
+              m_maxValue(maxValue)
+        {
+        }
+        QString m_name;
+        QString m_group;
+        float * m_value;
+        float m_defaultValue;
+        float m_minValue;
+        float m_maxValue;
+    };
+
+
     /**
      * @brief The AISteps enum
      */
@@ -84,6 +105,8 @@ public:
     static const QString ACTION_CO_UNIT_1;
     static const QString ACTION_EXPLODE;
     static const QString ACTION_FLARE;
+
+    static const QString UNIT_INFANTRY;
 
     explicit CoreAI(GameEnums::AiTypes aiType);
     virtual ~CoreAI() = default;
@@ -540,12 +563,12 @@ protected:
     float m_ammoResupply{0.25f};
 
     float m_minCoUnitScore{5000.0f};
-    qint32 m_coUnitValue{6000};
+    float m_coUnitValue{6000};
     float m_coUnitRankReduction{1000.0f};
     float m_coUnitScoreMultiplier{1.1f};
-    qint32 m_minCoUnitCount{5};
+    float m_minCoUnitCount{5};
     float m_minSameIslandDistance{2.5};
-    qint32 m_slowUnitSpeed{4};
+    float m_slowUnitSpeed{4};
 private:
     bool finish{false};
     struct FlareInfo

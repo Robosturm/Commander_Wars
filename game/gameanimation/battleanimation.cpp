@@ -14,6 +14,7 @@
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+      m_battleTimer(this),
       m_pAtkTerrain(pAtkTerrain),
       m_pAtkUnit(pAtkUnit),
       m_atkStartHp(atkStartHp),
@@ -83,6 +84,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_battleTimer.setSingleShot(false);
     connect(&m_battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
+    CONSOLE_PRINT("BattleAnimation::BattleAnimation()", Console::eDEBUG);
 }
 
 void BattleAnimation::createBattleFrame(Unit* pAtkUnit, Unit* pDefUnit)
@@ -490,18 +492,18 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     oxygine::spSlidingSprite pSprite = oxygine::spSlidingSprite::create();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBase);
-    pSprite->setSpeed(speed);
+    pSprite->setSpeedX(speed);
     ret->addChild(pSprite);
     pSprite = oxygine::spSlidingSprite::create();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBack);
-    pSprite->setSpeed(speed);
+    pSprite->setSpeedX(speed);
     ret->addChild(pSprite);
     pSprite = oxygine::spSlidingSprite::create();
     pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
-    pSprite->setSpeed(speed);
+    pSprite->setSpeedX(speed);
     qint32 terrainDefense = pUnit->getTerrainDefense();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
     float defenseY = 5;
@@ -535,6 +537,21 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
         }
     }
 
+    Terrain* pTerrain = pUnit->getTerrain();
+    oxygine::ResAnim* pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
+    if (pAnimWeather != nullptr)
+    {
+        oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
+        pWeatherOverlay->setResAnim(pAnimBase);
+        pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
+        QPoint speed = pTerrain->getWeatherOverlaySpeed();
+        pWeatherOverlay->setSpeedX(speed.x());
+        pWeatherOverlay->setSpeedY(speed.y());
+        pWeatherOverlay->setResAnim(pAnimWeather);
+        pWeatherOverlay->setPriority(100000);
+        pWeatherOverlay->setLocked(true);
+        ret->addChild(pWeatherOverlay);
+    }
     return ret;
 }
 

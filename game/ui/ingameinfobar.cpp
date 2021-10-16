@@ -444,20 +444,37 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBase);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimBack);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
     pTerrainSprite = oxygine::spSlidingSprite::create();
     pTerrainSprite->setPosition(xOffset, yOffset);
     pTerrainSprite->setResAnim(pAnimFore);
     pTerrainSprite->setSize(spriteWidth, spriteHeigth);
-    pTerrainSprite->setSpeed(speed);
+    pTerrainSprite->setSpeedX(speed);
     m_pDetailedViewBox->addChild(pTerrainSprite);
+
+    oxygine::ResAnim* pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
+    if (pAnimWeather != nullptr)
+    {
+        oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
+        pWeatherOverlay->setPosition(xOffset, yOffset);
+        pWeatherOverlay->setResAnim(pAnimBase);
+        pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
+        QPoint speed = pTerrain->getWeatherOverlaySpeed();
+        pWeatherOverlay->setSpeedX(speed.x());
+        pWeatherOverlay->setSpeedY(speed.y());
+        pWeatherOverlay->setResAnim(pAnimWeather);
+        pWeatherOverlay->setPriority(100000);
+        pWeatherOverlay->setLocked(true);
+        m_pDetailedViewBox->addChild(pWeatherOverlay);
+    }
+
     if (pUnit.get() != nullptr)
     {
         qint32 hp = -1;

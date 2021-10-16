@@ -76,14 +76,22 @@ var Constructor = function()
     {
         return "Submarine that can fire at range at enemy forces without taking a lot of risks.";
     };
+
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
+    };
+
 	this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_sea";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_sea";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier +"sea";
     };
 
     this.getTerrainAnimationMoveSpeed = function()

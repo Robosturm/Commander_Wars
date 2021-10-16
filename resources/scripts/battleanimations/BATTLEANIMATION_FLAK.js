@@ -109,13 +109,13 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
         var offset = Qt.point(-10, 5);
         BATTLEANIMATION_FLAK.loadSprite(sprite, unit, defender, weapon, "+fire", Qt.point(-10, 5), Qt.point(0, 0), 0, 2);
         var mgCount = data[0];
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
-            var mgData = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgDataAir);
+            var mgData = Global.getDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgDataAir);
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot_air+flak" + data[3],  false, sprite.getMaxUnitCount(),
@@ -125,7 +125,7 @@ var Constructor = function()
         }
         else
         {
-            var mgData = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgData);
+            var mgData = Global.getDataFromTable(armyName, BATTLEANIMATION_FLAK.animationMgData);
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot+flak" + data[3],  false, sprite.getMaxUnitCount(),
@@ -155,7 +155,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_FLAK.animationData);
         return data[1] + BATTLEANIMATION.defaultFrameDelay * sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
     };
 

@@ -82,7 +82,7 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desertriver";
+        return "back_desertriver+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

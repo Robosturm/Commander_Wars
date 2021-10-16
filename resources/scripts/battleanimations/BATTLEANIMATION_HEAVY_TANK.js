@@ -82,7 +82,7 @@ var Constructor = function()
         var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var count = sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_HEAVY_TANK.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_HEAVY_TANK.animationData);
         if (weapon === 0)
         {
             BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 1);

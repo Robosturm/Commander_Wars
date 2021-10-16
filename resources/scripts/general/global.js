@@ -29,6 +29,18 @@ getGridColor = function()
     return "#B4464646";
 }
 
+getMultiturnFieldColor = function()
+{
+    // the color used for the multi turn path planing tiles
+    return "#8000FF";
+}
+
+getTurnFieldColor = function()
+{
+    // the color used for the normal move tiles
+    return "#329600";
+}
+
 getArmyNameFromPlayerTable = function(player, table)
 {
     return Global.getArmyNameFromTable(player.getArmy(), table);
@@ -46,18 +58,19 @@ getArmyNameFromTable = function(army, table)
     return "os";
 }
 
-getArmyDataFromTable = function(army, table)
+getDataFromTable = function(entry, table)
 {
-    var armyName = army.toLowerCase();
+    var entryName = entry.toLowerCase();
     for (var i = 0; i < table.length; i++)
     {
-        if (table[i][0] === armyName)
+        if (table[i][0] === entryName)
         {
            return table[i][1];
         }
     }
-    return table[0][0];
+    return table[0][1];
 }
+
 replaceTextArgs = function(text, args)
 {
     for (var i = 0; i < args.length; i++)

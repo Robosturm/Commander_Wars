@@ -40,7 +40,6 @@ var Constructor = function()
         {
             return false;
         }
-
     };
     this.getMiniMapIcon = function()
     {
@@ -54,8 +53,24 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
-        return "back_bridge+" + rand.toString();
+        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        switch (id)
+        {
+            case "SEA":
+            case "BEACH":
+            case "FOG":
+            case "REAF":
+            case "ROUGH_SEA":
+            {
+                return "back_" + weatherModifier + "bridge+sea"
+            }
+            default:
+            {
+                var rand = globals.randInt(0, 1);
+                return "back_" + weatherModifier + "bridge+" + rand.toString();
+            }
+        }
     };
     this.getDescription = function()
     {

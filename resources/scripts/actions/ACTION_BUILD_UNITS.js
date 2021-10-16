@@ -12,9 +12,9 @@ var Constructor = function()
             (units.length > 0))
 		{
             var unitCount = building.getOwner().getUnitCount();
-            if ((unitLimit <= 0) ||
-                (unitCount < unitLimit) &&
-                ACTION_BUILD_UNITS.canBuildUnits())
+            if ((unitLimit <= 0 ||
+                unitCount < unitLimit) &&
+                ACTION_BUILD_UNITS.canBuildUnits(building))
             {
                 return true;
             }
@@ -70,7 +70,7 @@ var Constructor = function()
         return "";
     };
 
-    this.canBuildUnits = function()
+    this.canBuildUnits = function(building)
     {
         var units = building.getConstructionList();
         var unitData = [];

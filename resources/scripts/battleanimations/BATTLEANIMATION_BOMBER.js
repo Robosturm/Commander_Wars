@@ -28,7 +28,7 @@ var Constructor = function()
         // get army name
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
         var offset = Qt.point(data[0], 40);
         var movement = data[1];
         var moveTime = data[2];
@@ -55,7 +55,7 @@ var Constructor = function()
         // get army name
         var player = unit.getOwner();        
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
         var offset = Qt.point(data[0] + data[1].x, 40);
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_BOMBER.getMaxUnitCount(), offset, movement, moveTime);
@@ -68,7 +68,7 @@ var Constructor = function()
         var player = unit.getOwner();
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BOMBER.armyData);
         BATTLEANIMATION_BOMBER.loadStandingAnimation(sprite, unit, defender, weapon);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_BOMBER.animationData);
         var count = sprite.getUnitCount(5);
         var startPoint = data[3];
         for (var i = 0; i < count; i++)

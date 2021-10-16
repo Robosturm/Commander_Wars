@@ -234,6 +234,34 @@ qint32 Terrain::getTerrainGroup()
     return 0;
 }
 
+QString Terrain::getWeatherOverlayId()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    // load sprite of the base terrain
+    QString function = "getWeatherOverlayId";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+QPoint Terrain::getWeatherOverlaySpeed()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    // load sprite of the base terrain
+    QString function = "getWeatherOverlaySpeed";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
+    return ret.toVariant().toPoint();
+}
+
 QString Terrain::getDescription()
 {
     if (m_terrainDescription.isEmpty())

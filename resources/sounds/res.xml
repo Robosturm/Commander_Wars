@@ -11,10 +11,10 @@
     <sound file="cancel.wav"                    cachesize = "2"/>
     <sound file="cannon_weapon_explode.wav"     cachesize = "5"/>
     <sound file="cannon_weapon_fire.wav"        cachesize = "5"/>
-    <sound file="capture.wav"                   cachesize = "2"/>
-    <sound file="capture_ally.wav"              cachesize = "5"/>
-    <sound file="capture_down.wav"              cachesize = "5"/>
-    <sound file="capture_enemy.wav"             cachesize = "5"/>
+    <sound file="capture.wav"                   cachesize = "8"/>
+    <sound file="capture_ally.wav"              cachesize = "8"/>
+    <sound file="capture_down.wav"              cachesize = "8"/>
+    <sound file="capture_enemy.wav"             cachesize = "8"/>
     <sound file="capture_jump.wav"              cachesize = "8"/>
     <sound file="checkbox.wav"                  cachesize = "2"/>
     <sound file="crystal_explode.wav"           cachesize = "2"/>

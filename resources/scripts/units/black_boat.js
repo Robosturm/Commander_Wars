@@ -69,17 +69,19 @@ var Constructor = function()
     this.transportList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "ZCOUNIT_AT_CYCLE", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_sea";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_sea";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "back_" + weatherModifier +"sea";
     };
 
     this.getTerrainAnimationMoveSpeed = function()

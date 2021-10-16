@@ -96,17 +96,17 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameEnums::AiTypes type)
         }
         case GameEnums::AiTypes_Normal:
         {
-            ret = spNormalAi::create("normal.ini");
+            ret = spNormalAi::create("normal.ini", type);
             break;
         }
         case GameEnums::AiTypes_NormalOffensive:
         {
-            ret = spNormalAi::create("normalOffensive.ini");
+            ret = spNormalAi::create("normalOffensive.ini", type);
             break;
         }
         case GameEnums::AiTypes_NormalDefensive:
         {
-            ret = spNormalAi::create("normalDefensive.ini");
+            ret = spNormalAi::create("normalDefensive.ini", type);
             break;
         }
         case GameEnums::AiTypes_ProxyAi:
@@ -128,7 +128,7 @@ spBaseGameInputIF BaseGameInputIF::createAi(GameEnums::AiTypes type)
         {
             GameManager* pGameManager = GameManager::getInstance();
             QString id = pGameManager->getHeavyAiID(static_cast<qint32>(type) - GameEnums::AiTypes_Heavy);
-            ret = spHeavyAi::create(id);
+            ret = spHeavyAi::create(id, type);
             break;
         }
     }

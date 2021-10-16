@@ -10,27 +10,36 @@ var Constructor = function()
                      ["ge", "ge"],
                      ["yc", "yc"],
                      ["ac", "ac"],];
-    this.animationData = [["os", [Qt.point(30, 28), "artillery_shot"]],
-                          ["bm", [Qt.point(30, 28), "artillery_shot"]],
-                          ["ge", [Qt.point(30, 28), "artillery_shot"]],
-                          ["yc", [Qt.point(30, 28), "artillery_shot"]],
+    this.animationData = [["os", [Qt.point(37, 28), "artillery_shot"]],
+                          ["bm", [Qt.point(37, 28), "artillery_shot"]],
+                          ["ge", [Qt.point(37, 28), "artillery_shot"]],
+                          ["yc", [Qt.point(39, 28), "artillery_shot"]],
                           ["ac", [Qt.point(34, 24), "light_shot"]],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "");
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
-        sprite.loadSpriteV2("antitankcannon+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
+        sprite.loadSpriteV2("antitankcannon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
-        sprite.loadSprite("antitankcannon+" + armyName,  false,
-                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
+        var spriteId = "antitankcannon+" + armyName;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSprite(spriteId,  false,
+                              BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         // gun
-        BATTLEANIMATION_ANTITANKCANNON.loadStandingAnimation(sprite, unit, defender, weapon);
+        BATTLEANIMATION_ANTITANKCANNON.loadSprite(sprite, unit, defender, weapon, "+fire");
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ANTITANKCANNON.armyData);
-        var data = Global.getArmyDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.animationData);
+        var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ANTITANKCANNON.animationData);
         var offset = data[0];
         var anim = data[1];
         var count = sprite.getUnitCount(BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount());

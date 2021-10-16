@@ -175,7 +175,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
     {
         if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
         {

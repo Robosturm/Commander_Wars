@@ -75,7 +75,8 @@ var Constructor = function()
 
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        return "base_air";
+        var weatherModifier = TERRAIN.getWeatherModifier();
+        return "base_" + weatherModifier + "air";
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain)

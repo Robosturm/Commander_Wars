@@ -470,6 +470,7 @@ var Constructor = function()
         }
     };
 
+    this.postAnimationAction = null;
     this.postAnimationUnit = null;
     this.postAnimationAttackerDamage = -1;
     this.postAnimationAttackerWeapon = -1;
@@ -482,6 +483,7 @@ var Constructor = function()
     {
         action.startReading();
         // read action data
+        ACTION_FIRE.postAnimationAction = action;
         ACTION_FIRE.postAnimationTargetX = action.readDataInt32();
         ACTION_FIRE.postAnimationTargetY = action.readDataInt32();
         ACTION_FIRE.postAnimationAttackerDamage = action.readDataInt32();
@@ -629,16 +631,16 @@ var Constructor = function()
             }
 
             // post battle action of the attacking unit
-            attacker.getOwner().postBattleActions(attacker, damage, defUnit, false, attackerWeapon);
-            defOwner.postBattleActions(attacker, damage, defUnit, true, attackerWeapon);
-            attacker.postBattleActions(damage, defUnit, false, attackerWeapon);
-            defUnit.postBattleActions(damage, attacker, true, attackerWeapon);
+            attacker.getOwner().postBattleActions(attacker, damage, defUnit, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            defOwner.postBattleActions(attacker, damage, defUnit, true, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            attacker.postBattleActions(damage, defUnit, false, attackerWeapon, ACTION_FIRE.postAnimationAction);
+            defUnit.postBattleActions(damage, attacker, true, attackerWeapon, ACTION_FIRE.postAnimationAction);
 
             // post battle action of the defending unit
-            attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, false, defenderWeapon);
-            defOwner.postBattleActions(defUnit, counterdamage, attacker, true, defenderWeapon);
-            attacker.postBattleActions(counterdamage, defUnit, true, defenderWeapon);
-            defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon);
+            attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            defOwner.postBattleActions(defUnit, counterdamage, attacker, true, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            attacker.postBattleActions(counterdamage, defUnit, true, defenderWeapon, ACTION_FIRE.postAnimationAction);
+            defUnit.postBattleActions(counterdamage, attacker, false, defenderWeapon, ACTION_FIRE.postAnimationAction);
 
             // only kill units if we should else we stop here
             if (dontKillUnits === false)
@@ -731,6 +733,7 @@ var Constructor = function()
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;
         ACTION_FIRE.postUnitAnimationDefender = null;
+        ACTION_FIRE.postAnimationAction = null;
     }
 
     this.postBuildingAnimationTerrain = null;
@@ -760,6 +763,7 @@ var Constructor = function()
             Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
+        ACTION_FIRE.postAnimationAction = null;
     };
     this.getDescription = function()
     {
@@ -774,23 +778,24 @@ var Constructor = function()
         var atkDamage = globals.roundUp(defStartHp) - globals.roundUp(defEndHp);
         var defDamage = globals.roundUp(atkStartHp) - globals.roundUp(atkEndHp);
         var pAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY(), 70);
-        pAtk.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+        var imageSize = map.getImageSize();
+        pAtk.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
         pAtk.setSound("talongunhit.wav", 1);
         var pDmgTextAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY());
         pDmgTextAtk.addText(atkDamage + " Hp", -8, 0, 2.0, "#FF0000");
-        pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * map.getImageSize(), (pDefTerrain.getY() - 2) * map.getImageSize()), 1000);
+        pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * imageSize, (pDefTerrain.getY() - 2) * imageSize), 1000);
         pDmgTextAtk.addTweenWait(1500);
         pAtk.queueAnimation(pDmgTextAtk);
         if (defenderDamage >= 0)
         {
             // counter damage
             pRet = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
-            pRet.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2.0);
+            pRet.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
             pRet.setSound("talongunhit.wav", 1);
             pDmgTextAtk.queueAnimation(pRet);
             var pDmgTextDef = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY());
             pDmgTextDef.addText(defDamage + " Hp", -8, 0, 2.0, "#FF0000");
-            pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * map.getImageSize(), (pAtkTerrain.getY() - 2) * map.getImageSize()), 1000);
+            pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * imageSize, (pAtkTerrain.getY() - 2) * imageSize), 1000);
             pDmgTextDef.addTweenWait(1500);
             pRet.queueAnimation(pDmgTextDef);
         }

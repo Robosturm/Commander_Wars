@@ -563,9 +563,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
-                             tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
-                             tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
+    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);
