@@ -88,64 +88,64 @@
         <image file="fog+E+W.png" />
         <image file="fog+W.png" />
         
-        <image file="beach+E+land+N.png" />
-        <image file="beach+E+land+N+S.png" />
-        <image file="beach+E+land+N+S+W.png" />        
-        <image file="beach+E+land+N+W.png" />
-        <image file="beach+E+land+S.png" />
-        <image file="beach+E+land+S+W.png" />
-        <image file="beach+E+S+land+N+W.png" />        
-        <image file="beach+E+W+land+N.png" />        
-        <image file="beach+E+W+land+N+S.png" />        
-        <image file="beach+E+W+land+S.png" />
-        <image file="beach+land+E.png" />
-        <image file="beach+land+E+S.png" />
-        <image file="beach+land+E+S+W.png" />
-        <image file="beach+land+E+W.png" />        
-        <image file="beach+land+N.png" />
-        <image file="beach+land+N+E.png" />
-        <image file="beach+land+N+E+S.png" />
-        <image file="beach+land+N+E+S+W.png" />
-        <image file="beach+land+N+E+W.png" />
-        <image file="beach+land+N+S.png" />
-        <image file="beach+land+N+S+W.png" />
-        <image file="beach+land+N+W.png" />
-        <image file="beach+land+S.png" />
-        <image file="beach+land+S+W.png" />
-        <image file="beach+land+W.png" />        
-        <image file="beach+N+E+land+S+W.png" />
-        <image file="beach+N+land+E.png" />        
-        <image file="beach+N+land+E+S+W.png" />
-        <image file="beach+N+land+E+W.png" />    
-        <image file="beach+N+land+E+S.png" />        
-        <image file="beach+N+land+S+W.png" />
-        <image file="beach+N+land+W.png" />        
-        <image file="beach+N+S+land+E.png" />
-        <image file="beach+N+S+land+E+W.png" />
-        <image file="beach+N+S+land+W.png" />        
-        <image file="beach+N+W+land+E+S.png" />        
-        <image file="beach+S+land+E.png" />
-        <image file="beach+S+land+W.png" />
-        <image file="beach+S+land+E+W.png" />
-        <image file="beach+S+land+N+E.png" />
-        <image file="beach+S+land+N+E+W.png" />
-        <image file="beach+S+land+N+W.png" />        
-        <image file="beach+W+land+E+S.png" />
-        <image file="beach+W+land+N.png" />
-        <image file="beach+W+land+N+E.png" />
-        <image file="beach+S+W+land+N+E.png" />
-        <image file="beach+W+land+N+E+S.png" />
-        <image file="beach+W+land+N+S.png" />
-        <image file="beach+W+land+S.png" />
-        <image file="beach.png" />
-        <image file="beach+NW.png" />
-        <image file="beach+NE.png" />
-        <image file="beach+SW.png" />
-        <image file="beach+SE.png" />
-        <image file="sea+beach+E.png" />
-        <image file="sea+beach+W.png" />
-        <image file="sea+beach+S.png" />
-        <image file="sea+beach+N.png" />
+        <image file="beach+E+land+N.png" cols = "4" />
+        <image file="beach+E+land+N+S.png" cols = "4" />
+        <image file="beach+E+land+N+S+W.png" cols = "4" />        
+        <image file="beach+E+land+N+W.png" cols = "4" />
+        <image file="beach+E+land+S.png" cols = "4" />
+        <image file="beach+E+land+S+W.png" cols = "4" />
+        <image file="beach+E+S+land+N+W.png" cols = "4" />        
+        <image file="beach+E+W+land+N.png" cols = "4" />        
+        <image file="beach+E+W+land+N+S.png" cols = "4" />        
+        <image file="beach+E+W+land+S.png" cols = "4" />
+        <image file="beach+land+E.png" cols = "4" />
+        <image file="beach+land+E+S.png" cols = "4" />
+        <image file="beach+land+E+S+W.png" cols = "4" />
+        <image file="beach+land+E+W.png" cols = "4" />        
+        <image file="beach+land+N.png" cols = "4" />
+        <image file="beach+land+N+E.png" cols = "4" />
+        <image file="beach+land+N+E+S.png" cols = "4" />
+        <image file="beach+land+N+E+S+W.png" cols = "4" />
+        <image file="beach+land+N+E+W.png" cols = "4" />
+        <image file="beach+land+N+S.png" cols = "4" />
+        <image file="beach+land+N+S+W.png" cols = "4" />
+        <image file="beach+land+N+W.png" cols = "4" />
+        <image file="beach+land+S.png" cols = "4" />
+        <image file="beach+land+S+W.png" cols = "4" />
+        <image file="beach+land+W.png" cols = "4" />        
+        <image file="beach+N+E+land+S+W.png" cols = "4" />
+        <image file="beach+N+land+E.png" cols = "4" />        
+        <image file="beach+N+land+E+S+W.png" cols = "4" />
+        <image file="beach+N+land+E+W.png" cols = "4" />    
+        <image file="beach+N+land+E+S.png" cols = "4" />        
+        <image file="beach+N+land+S+W.png" cols = "4" />
+        <image file="beach+N+land+W.png" cols = "4" />        
+        <image file="beach+N+S+land+E.png" cols = "4" />
+        <image file="beach+N+S+land+E+W.png" cols = "4" />
+        <image file="beach+N+S+land+W.png" cols = "4" />        
+        <image file="beach+N+W+land+E+S.png" cols = "4" />        
+        <image file="beach+S+land+E.png" cols = "4" />
+        <image file="beach+S+land+W.png" cols = "4" />
+        <image file="beach+S+land+E+W.png" cols = "4" />
+        <image file="beach+S+land+N+E.png" cols = "4" />
+        <image file="beach+S+land+N+E+W.png" cols = "4" />
+        <image file="beach+S+land+N+W.png" cols = "4" />        
+        <image file="beach+W+land+E+S.png" cols = "4" />
+        <image file="beach+W+land+N.png" cols = "4" />
+        <image file="beach+W+land+N+E.png" cols = "4" />
+        <image file="beach+S+W+land+N+E.png" cols = "4" />
+        <image file="beach+W+land+N+E+S.png" cols = "4" />
+        <image file="beach+W+land+N+S.png" cols = "4" />
+        <image file="beach+W+land+S.png" cols = "4" />
+        <image file="beach.png" cols = "4" />
+        <image file="beach+NW.png" cols = "4" />
+        <image file="beach+NE.png" cols = "4" />
+        <image file="beach+SW.png" cols = "4" />
+        <image file="beach+SE.png" cols = "4" />
+        <image file="sea+beach+E.png" cols = "4" />
+        <image file="sea+beach+W.png" cols = "4" />
+        <image file="sea+beach+S.png" cols = "4" />
+        <image file="sea+beach+N.png" cols = "4" />
                 
         <image file="ruin+0.png" />
         <image file="ruin+1.png" />
