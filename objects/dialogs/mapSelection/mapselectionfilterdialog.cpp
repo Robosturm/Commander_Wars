@@ -48,14 +48,29 @@ void MapSelectionFilterDialog::remove()
     detach();
 }
 
-void MapSelectionFilterDialog::addToFilter(GameEnums::MapFilterFlags flag, bool isOptional)
+bool MapSelectionFilterDialog::isFlagActive(GameEnums::MapFilterFlags flag) const
 {
-    m_mapFilter.addToFilter(flag, isOptional);
+    return m_mapFilter.isFlagActive(flag);
+}
+
+bool MapSelectionFilterDialog::isFlagOption(GameEnums::MapFilterFlags flag) const
+{
+    return m_mapFilter.isFlagOption(flag);
+}
+
+void MapSelectionFilterDialog::addToFilter(GameEnums::MapFilterFlags flag, bool active)
+{
+    m_mapFilter.addToFilter(flag, active);
 }
 
 void MapSelectionFilterDialog::removeFromFilter(GameEnums::MapFilterFlags flag)
 {
     m_mapFilter.removeFromFilter(flag);
+}
+
+void MapSelectionFilterDialog::setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional)
+{
+    m_mapFilter.setFlagOptional(flag, isOptional);
 }
 
 void MapSelectionFilterDialog::setMinHeight(qint32 value)

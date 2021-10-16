@@ -18,14 +18,13 @@ bool MapFilter::matches(GameMap::MapHeaderInfo & info) const
     return matches;
 }
 
-void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool isOptional)
+void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool active)
 {
     bool found = false;
     for (auto & filter : m_filter)
     {
         if (filter.flag == flag)
         {
-            filter.isOptional = isOptional;
             found = true;
             break;
         }
@@ -34,7 +33,7 @@ void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool isOptional)
     {
         FlagFilter filter;
         filter.flag = flag;
-        filter.isOptional = isOptional;
+        filter.isActive = active;
         m_filter.append(filter);
     }
 }
@@ -45,7 +44,43 @@ void MapFilter::removeFromFilter(GameEnums::MapFilterFlags flag)
     {
         if (m_filter[i].flag == flag)
         {
-            m_filter.removeAt(i);
+            m_filter[i].isActive = false;
+            break;
+        }
+    }
+}
+
+bool MapFilter::isFlagActive(GameEnums::MapFilterFlags flag) const
+{
+    for (auto & filter : m_filter)
+    {
+        if (filter.flag == flag)
+        {
+            return filter.isActive;
+        }
+    }
+    return false;
+}
+
+bool MapFilter::isFlagOption(GameEnums::MapFilterFlags flag) const
+{
+    for (auto & filter : m_filter)
+    {
+        if (filter.flag == flag)
+        {
+            return filter.isOptional;
+        }
+    }
+    return false;
+}
+
+void MapFilter::setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional)
+{
+    for (auto & filter : m_filter)
+    {
+        if (filter.flag == flag)
+        {
+            filter.isOptional = isOptional;
             break;
         }
     }

@@ -447,7 +447,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
             }
             else
             {
-                if (isAttackOnTerrainAllowed(pTerrain))
+                if (isAttackOnTerrainAllowed(pTerrain, damage.x()))
                 {
                     if (ret.size() == 0)
                     {
@@ -531,7 +531,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
             }
             else
             {
-                if (isAttackOnTerrainAllowed(pTerrain))
+                if (isAttackOnTerrainAllowed(pTerrain, damage.x()))
                 {
                     ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue, damage.x()));
                     QPoint point = pAction->getActionTarget();
@@ -542,14 +542,17 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
     }
 }
 
-bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
+bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage)
 {
-    Building* pBuilding = pTerrain->getBuilding();
-    if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-        (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner() != m_pPlayer) ||
-        (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
+    if (damage >= m_minTerrainDamage)
     {
-        return true;
+        Building* pBuilding = pTerrain->getBuilding();
+        if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+            (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner() != m_pPlayer) ||
+            (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
+        {
+            return true;
+        }
     }
     return false;
 }
@@ -1618,8 +1621,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
             for (qint32 y = 0; y < heigth; y++)
             {
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                if (isAttackOnTerrainAllowed(pTerrain) &&
-                    pUnit->isEnvironmentAttackable(pTerrain->getID()))
+                if (isAttackOnTerrainAllowed(pTerrain, pUnit->getEnvironmentDamage(pTerrain->getID())))
                 {
                     for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
                     {

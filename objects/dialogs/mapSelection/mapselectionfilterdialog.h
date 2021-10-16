@@ -20,8 +20,11 @@ signals:
     void sigFinished();
 public slots:
     void exit();
-    void addToFilter(GameEnums::MapFilterFlags flag, bool isOptional);
+    void addToFilter(GameEnums::MapFilterFlags flag, bool active);
     void removeFromFilter(GameEnums::MapFilterFlags flag);
+    bool isFlagActive(GameEnums::MapFilterFlags flag) const;
+    bool isFlagOption(GameEnums::MapFilterFlags flag) const;
+    void setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional);
     void setMinHeight(qint32 value);
     qint32 getMinHeight() const;
     void setMaxHeight(qint32 value);

@@ -8,6 +8,7 @@ class MapFilter
     struct FlagFilter
     {
         GameEnums::MapFilterFlags flag;
+        bool isActive{false};
         bool isOptional{false};
         bool matches(GameEnums::MapFilterFlags flags) const;
     };
@@ -22,8 +23,11 @@ public:
     explicit MapFilter() = default;
     virtual ~MapFilter() = default;
 
-    void addToFilter(GameEnums::MapFilterFlags flag, bool isOptional);
+    bool isFlagActive(GameEnums::MapFilterFlags flag) const;
+    bool isFlagOption(GameEnums::MapFilterFlags flag) const;
+    void addToFilter(GameEnums::MapFilterFlags flag, bool active);
     void removeFromFilter(GameEnums::MapFilterFlags flag);
+    void setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional);
 
     bool matches(GameMap::MapHeaderInfo & info) const;
 

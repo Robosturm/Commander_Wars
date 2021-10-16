@@ -867,6 +867,27 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
+
+float Unit::getEnvironmentDamage(QString terrainID)
+{
+    float damage = 0;
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    if (hasAmmo1() && !m_weapon1ID.isEmpty())
+    {
+        damage = pWeaponManager->getEnviromentDamage(m_weapon1ID, terrainID);
+    }
+    if (hasAmmo2() && !m_weapon2ID.isEmpty())
+    {
+        float damage2 = pWeaponManager->getEnviromentDamage(m_weapon2ID, terrainID);
+        if (damage2 > damage)
+        {
+            damage = damage2;
+        }
+    }
+    return damage;
+}
+
+
 bool Unit::isAttackableFromPosition(Unit* pDefender, QPoint unitPos)
 {
     return isAttackable(pDefender, false, unitPos);

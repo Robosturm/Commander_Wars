@@ -328,7 +328,7 @@ protected:
      * @param pTerrain
      * @return
      */
-    bool isAttackOnTerrainAllowed(Terrain* pTerrain);
+    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage);
     /**
      * @brief processPredefinedAi
      * @return
@@ -569,6 +569,7 @@ protected:
     float m_minCoUnitCount{5};
     float m_minSameIslandDistance{2.5};
     float m_slowUnitSpeed{4};
+    float m_minTerrainDamage{20.0f};
 private:
     bool finish{false};
     struct FlareInfo

@@ -55,6 +55,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   // Moving
                   {"LockedUnitHp", "Moving", &m_lockedUnitHp, 4.0f, 1.0f, 4.0f},
                   {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 4.0f},
+                  {"MinTerrainDamage", "Moving", &m_minTerrainDamage, 20.0f, 20.0f, 20.0f},
                   // Attacking
                   {"OwnIndirectAttackValue", "Attacking", &m_ownIndirectAttackValue, 2.0f, 0.1f, 10.0f},
                   {"EnemyKillBonus", "Attacking", &m_enemyKillBonus, 2.0f, 0.1f, 10.0f},

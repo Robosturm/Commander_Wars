@@ -1111,7 +1111,7 @@ float HeavyAi::scoreFire(spGameAction action, UnitData & unitData, QVector<doubl
                 }
             }
         }
-        else if (m_enableNeutralTerrainAttack)
+        else if (isAttackOnTerrainAllowed(pTerrain, data.x()))
         {
             Building* pBuilding = pTerrain->getBuilding();
             double atkDamage = data.x();
@@ -1447,9 +1447,7 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                          pBuilding->getHp() > 0 &&
                          m_pPlayer->isEnemy(pBuilding->getOwner()) &&
                          pUnit->isEnvironmentAttackable(pBuilding->getBuildingID())) ||
-                        (m_enableNeutralTerrainAttack &&
-                         isAttackOnTerrainAllowed(pTerrain) &&
-                         pUnit->isEnvironmentAttackable(pTerrain->getID())))
+                        (isAttackOnTerrainAllowed(pTerrain, pUnit->getEnvironmentDamage(pTerrain->getID()))))
                     {
                         Unit* pTargetUnit = pTerrain->getUnit();
                         float alliedmultiplier = 1.0f;

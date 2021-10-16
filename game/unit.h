@@ -899,6 +899,12 @@ public slots:
      */
     bool isEnvironmentAttackable(QString terrainID);
     /**
+     * @brief Unit::getEnvironmentDamage
+     * @param terrainID
+     * @return
+     */
+    float getEnvironmentDamage(QString terrainID);
+    /**
      * @brief canMoveOver
      * @param x
      * @param y

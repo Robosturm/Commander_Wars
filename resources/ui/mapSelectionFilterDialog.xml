@@ -7,11 +7,19 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>10</x>
+                <x>settings.getWidth() / 2 - 150</x>
                 <y>10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map Filter Settings")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
                 <width>150</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Map name")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
                 <font>main24</font>
             </Label>
             <Textbox>
@@ -19,7 +27,7 @@
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the map name.")</tooltip>
-                <startValue>mapSelectionFilter.getMapName()</startValue>
+                <startValue>return mapSelectionFilter.getMapName()</startValue>
                 <onEvent></onEvent>
             </Textbox>
             <Label>
@@ -27,7 +35,7 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>150</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Author")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
                 <font>main24</font>
             </Label>
             <Textbox>
@@ -35,10 +43,153 @@
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the author.")</tooltip>
-                <startValue>mapSelectionFilter.getMapAuthor()</startValue>
+                <startValue>return mapSelectionFilter.getMapAuthor()</startValue>
                 <onEvent></onEvent>
             </Textbox>
-
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum amount of players for the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMinPlayer()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMinPlayer(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>10</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum amount of players for the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMaxPlayer()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMaxPlayer(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum width of the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMinWidth()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMinWidth(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>10</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum width of the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMaxWidth()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMaxWidth(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum height of the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMinHeight()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMinHeight(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>10</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","-")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum height of the map")</tooltip>
+                <startValue>return mapSelectionFilter.getMaxHeight()</startValue>
+                <infinite>0</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapSelectionFilter.setMaxHeight(value)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Bases:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have bases.")</tooltip>
+                <startValue>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, mapSelectionFilter.isFlagActive(GameEnums.MapFilterFlags_Bases))</startValue>
+                <onEvent>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, value);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have bases.")</tooltip>
+                <startValue>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, mapSelectionFilter.isFlagOption(GameEnums.MapFilterFlags_Bases))</startValue>
+                <onEvent>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, value);</onEvent>
+            </Checkbox>
         </childs>
     </Panel>
     <Button>
