@@ -1,18 +1,16 @@
-#include "dialogcostyle.h"
-
-#include "qfile.h"
+#include "objects/dialogs/dialogcostyle.h"
 
 #include "coreengine/mainapp.h"
-
 #include "coreengine/userdata.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
 
 #include "spritingsupport/spritecreator.h"
+
+#include <QFile>
 
 DialogCOStyle::DialogCOStyle(QString coid)
     : QObject(),
@@ -186,15 +184,14 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             m_pPredefinedStyles = nullptr;
         }
         oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));
-        QString filePath = pAnim->getResPath();
+        QString filePath = GlobalUtils::makePathRelative(pAnim->getResPath());
         QString style = m_Styles[index];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
         QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
         if (!file.exists())
         {
-            m_ResFilePath = oxygine::Resource::RCC_PREFIX_PATH +  m_ResFilePath;
-            file.setFileName(m_ResFilePath + "+table.png");
+            file.setFileName(oxygine::Resource::RCC_PREFIX_PATH + m_ResFilePath + "+table.png");
         }
         if (file.exists())
         {
@@ -350,7 +347,8 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
 void DialogCOStyle::updateSprites()
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
-    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+    oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
+    float scale = pAnim->getScaleFactor();
+    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), scale, false);
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
 }

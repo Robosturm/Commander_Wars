@@ -200,42 +200,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="72"/>
+        <location filename="../objects/coinfoactor.cpp" line="78"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="91"/>
+        <location filename="../objects/coinfoactor.cpp" line="97"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="111"/>
+        <location filename="../objects/coinfoactor.cpp" line="117"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="156"/>
+        <location filename="../objects/coinfoactor.cpp" line="162"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="162"/>
+        <location filename="../objects/coinfoactor.cpp" line="168"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="168"/>
+        <location filename="../objects/coinfoactor.cpp" line="174"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="174"/>
+        <location filename="../objects/coinfoactor.cpp" line="180"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="245"/>
+        <location filename="../objects/coinfoactor.cpp" line="253"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -628,23 +628,23 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="39"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="37"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="51"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="123"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="121"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="208"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="229"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="205"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="226"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1265,387 +1265,387 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="89"/>
+        <location filename="../menue/editormenue.cpp" line="88"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Saves a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Loads a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Edit and create a script for any map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Edit and create a campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Undo Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="97"/>
         <source>Redo Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="97"/>
         <source>Redo the last undo command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Exits the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Create a new map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Edit the information for a map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Resize Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Resizes the map using left, top, right and bottom size changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="104"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="105"/>
+        <location filename="../menue/editormenue.cpp" line="104"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="106"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="107"/>
+        <location filename="../menue/editormenue.cpp" line="106"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="108"/>
+        <location filename="../menue/editormenue.cpp" line="107"/>
         <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="109"/>
+        <location filename="../menue/editormenue.cpp" line="108"/>
         <source>Creates a new random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="109"/>
         <source>Toggle Grid Strg+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="110"/>
+        <location filename="../menue/editormenue.cpp" line="109"/>
         <source>Shows or hides a grid layout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Toggle Cross Strg+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="111"/>
+        <location filename="../menue/editormenue.cpp" line="110"/>
         <source>Shows or hides the cross marking the middle of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="113"/>
+        <location filename="../menue/editormenue.cpp" line="112"/>
         <source>Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="114"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="114"/>
+        <location filename="../menue/editormenue.cpp" line="113"/>
         <source>Selects the editor mode placing the current tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="115"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="115"/>
+        <location filename="../menue/editormenue.cpp" line="114"/>
         <source>Selects the editor mode deleting units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
+        <location filename="../menue/editormenue.cpp" line="115"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="116"/>
+        <location filename="../menue/editormenue.cpp" line="115"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Edit Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="117"/>
+        <location filename="../menue/editormenue.cpp" line="116"/>
         <source>Selects the editor mode editing the style of a terrain or building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="117"/>
         <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="118"/>
+        <location filename="../menue/editormenue.cpp" line="117"/>
         <source>Edit the CO&apos;s and player start setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="119"/>
+        <location filename="../menue/editormenue.cpp" line="118"/>
         <source>Selects the editor rules for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="120"/>
+        <location filename="../menue/editormenue.cpp" line="119"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="123"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="123"/>
+        <location filename="../menue/editormenue.cpp" line="122"/>
         <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="124"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
         <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="124"/>
+        <location filename="../menue/editormenue.cpp" line="123"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="124"/>
         <source>Paste Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="125"/>
+        <location filename="../menue/editormenue.cpp" line="124"/>
         <source>Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="128"/>
+        <location filename="../menue/editormenue.cpp" line="127"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="128"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="129"/>
+        <location filename="../menue/editormenue.cpp" line="128"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="130"/>
+        <location filename="../menue/editormenue.cpp" line="129"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="131"/>
+        <location filename="../menue/editormenue.cpp" line="130"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="132"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="132"/>
+        <location filename="../menue/editormenue.cpp" line="131"/>
         <source>Deletes the current map and imports an AW DoR/DC Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="133"/>
+        <location filename="../menue/editormenue.cpp" line="132"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="133"/>
+        <location filename="../menue/editormenue.cpp" line="132"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="482"/>
+        <location filename="../menue/editormenue.cpp" line="481"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="486"/>
+        <location filename="../menue/editormenue.cpp" line="485"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="495"/>
+        <location filename="../menue/editormenue.cpp" line="494"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="499"/>
+        <location filename="../menue/editormenue.cpp" line="498"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="508"/>
+        <location filename="../menue/editormenue.cpp" line="507"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="512"/>
+        <location filename="../menue/editormenue.cpp" line="511"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="521"/>
+        <location filename="../menue/editormenue.cpp" line="520"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="525"/>
+        <location filename="../menue/editormenue.cpp" line="524"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="719"/>
+        <location filename="../menue/editormenue.cpp" line="731"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1721,7 +1721,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
         <location filename="../game/gamemap.cpp" line="464"/>
         <location filename="../game/gamemap.cpp" line="518"/>
-        <location filename="../game/gamemap.cpp" line="1249"/>
+        <location filename="../game/gamemap.cpp" line="1283"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1737,7 +1737,7 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="464"/>
-        <location filename="../game/gamemap.cpp" line="1249"/>
+        <location filename="../game/gamemap.cpp" line="1283"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1752,27 +1752,27 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1226"/>
+        <location filename="../game/gamemap.cpp" line="1260"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1276"/>
+        <location filename="../game/gamemap.cpp" line="1310"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1286"/>
+        <location filename="../game/gamemap.cpp" line="1320"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1294"/>
+        <location filename="../game/gamemap.cpp" line="1328"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1306"/>
+        <location filename="../game/gamemap.cpp" line="1340"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2854,238 +2854,135 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="70"/>
+        <location filename="../menue/mainwindow.cpp" line="68"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="86"/>
+        <location filename="../menue/mainwindow.cpp" line="84"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="97"/>
+        <location filename="../menue/mainwindow.cpp" line="95"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="108"/>
+        <location filename="../menue/mainwindow.cpp" line="106"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="119"/>
+        <location filename="../menue/mainwindow.cpp" line="117"/>
         <source>Load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="130"/>
+        <location filename="../menue/mainwindow.cpp" line="128"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="141"/>
+        <location filename="../menue/mainwindow.cpp" line="139"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="152"/>
+        <location filename="../menue/mainwindow.cpp" line="150"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="163"/>
+        <location filename="../menue/mainwindow.cpp" line="161"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="174"/>
+        <location filename="../menue/mainwindow.cpp" line="172"/>
         <source>Shop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="185"/>
+        <location filename="../menue/mainwindow.cpp" line="183"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="196"/>
+        <location filename="../menue/mainwindow.cpp" line="194"/>
         <source>Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="207"/>
+        <location filename="../menue/mainwindow.cpp" line="205"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="218"/>
+        <location filename="../menue/mainwindow.cpp" line="216"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="230"/>
+        <location filename="../menue/mainwindow.cpp" line="228"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="254"/>
+        <location filename="../menue/mainwindow.cpp" line="252"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="254"/>
+        <location filename="../menue/mainwindow.cpp" line="252"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="588"/>
+        <location filename="../menue/mainwindow.cpp" line="583"/>
         <source>Do you want to enable all current items in the shop?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MapEditDialog</name>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="39"/>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="43"/>
-        <source>The name of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="52"/>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="56"/>
-        <source>The author of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="65"/>
-        <source>Description:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="69"/>
-        <source>The description for the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="78"/>
-        <source>Script:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="81"/>
-        <source>Select File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="85"/>
-        <source>The relative path from the exe to the script associated with this map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="99"/>
-        <source>Width:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="103"/>
-        <source>The width of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="112"/>
-        <source>Heigth:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="116"/>
-        <source>The heigth of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="125"/>
-        <source>Player:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="129"/>
-        <source>The amount of players for this map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="138"/>
-        <source>Turn Limit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="142"/>
-        <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="151"/>
-        <source>Deploy Limit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="155"/>
-        <source>The amount of units allowed to be deploayed to get a maximum score.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="161"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="184"/>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="68"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="70"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="77"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="79"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="86"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="88"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="95"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="97"/>
+        <source>Map filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="106"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="105"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="116"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="115"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="126"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="126"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="137"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>

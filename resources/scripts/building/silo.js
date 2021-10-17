@@ -28,6 +28,11 @@ var Constructor = function()
     {
         return qsTr("Empty missile silo which provides some defence.");
     };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_missile+1";
+    };
 }
 
 Constructor.prototype = BUILDING;

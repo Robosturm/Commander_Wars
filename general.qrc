@@ -5445,5 +5445,12 @@
         <file>resources/images/game/battlesprites/background/back_rainriver+0.png</file>
         <file>resources/images/game/battlesprites/background/back_snowstreet+forest.png</file>
         <file>resources/ui/mapSelectionFilterDialog.xml</file>
+        <file>resources/images/game/battlesprites/background/back_missile+0.png</file>
+        <file>resources/images/game/battlesprites/background/back_missile+1.png</file>
+        <file>resources/images/game/battlesprites/background/back_radar.png</file>
+        <file>resources/images/game/battlesprites/background/back_rainruin.png</file>
+        <file>resources/images/game/battlesprites/background/back_snowruin.png</file>
+        <file>resources/images/game/battlesprites/background/back_tower.png</file>
+        <file>resources/ui/mapEditDialog.xml</file>
     </qresource>
 </RCC>

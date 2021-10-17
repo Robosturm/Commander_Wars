@@ -1133,6 +1133,7 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << heigth;
     pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
+    updateMapFlags();
     pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
@@ -1173,6 +1174,39 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << m_startLoopMs;
     pStream << m_endLoopMs;
     pStream << m_isHumanMatch;
+}
+
+void GameMap::updateMapFlags() const
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            QString id = m_fields[y][x]->getID();
+            if (id == "TELEPORTTILE")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Teleport);
+            }
+            else if (id == "FACTORY")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Bases);
+            }
+            else if (id == "AIRPORT")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Airport);
+            }
+            else if (id == "HARBOUR")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Harbour);
+            }
+            else if (id == "TOWER")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Tower);
+            }
+        }
+    }
 }
 
 void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
@@ -2244,6 +2278,16 @@ void GameMap::showMiddleCrossGrid(bool show)
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
     }
+}
+
+GameEnums::MapFilterFlags GameMap::getMapFlags() const
+{
+    return m_headerInfo.m_mapFlags;
+}
+
+void GameMap::setMapFlags(GameEnums::MapFilterFlags flags)
+{
+    m_headerInfo.m_mapFlags = flags;
 }
 
 QColor GameMap::getGridColor()

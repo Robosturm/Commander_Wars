@@ -50,7 +50,7 @@ public:
         qint32 m_heigth{0};
         qint32 m_playerCount{0};
         qint32 m_uniqueIdCounter{0};
-        GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
+        mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
     };
 
     /**
@@ -727,11 +727,22 @@ public slots:
      * @brief showMiddleCrossGrid
      */
     void showMiddleCrossGrid(bool show);
+    /**
+     * @brief getMapFlags
+     * @return
+     */
+    GameEnums::MapFilterFlags getMapFlags() const;
+    /**
+     * @brief setMapFlags
+     * @param flags
+     */
+    void setMapFlags(GameEnums::MapFilterFlags flags);
 private slots:
     void zoomChanged();
 private:
     void loadMapData();
     QColor getGridColor();
+    void updateMapFlags() const;
 private:
     static spGameMap m_pInstance;
     QString m_mapPath;

@@ -202,6 +202,8 @@
         <!-- ruin -->
         <image file="battlesprites/background/back_ruin.png" />
         <image file="battlesprites/background/back_desertruin.png" />
+        <image file="battlesprites/background/back_snowruin.png" />
+        <image file="battlesprites/background/back_rainruin.png" />
         <!-- sea -->
         <image file="battlesprites/background/back_sea.png" />
         <image file="battlesprites/background/back_rainsea.png" />
@@ -238,6 +240,13 @@
         <image file="battlesprites/background/back_raintown+yc+0.png" />
         <image file="battlesprites/background/back_raintown+yc+1.png" />
         <image file="battlesprites/background/back_deserttown.png" />
+        <!-- tower -->
+        <image file="battlesprites/background/back_tower.png" />
+        <!-- tower -->
+        <image file="battlesprites/background/back_radar.png" />
+        <!-- missile -->
+        <image file="battlesprites/background/back_missile+0.png" />
+        <image file="battlesprites/background/back_missile+1.png" />
         <!-- temporary stuff -->
         <image file="battlesprites/background/back_tempairport.png" />
         <image file="battlesprites/background/back_tempharbour.png" />

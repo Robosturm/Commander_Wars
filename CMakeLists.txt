@@ -351,6 +351,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/filesupport.cpp
     coreengine/globalutils.cpp
     coreengine/scriptvariablefile.cpp
+    coreengine/metatyperegister.cpp
 
     # network engine
     network/tcpclient.cpp

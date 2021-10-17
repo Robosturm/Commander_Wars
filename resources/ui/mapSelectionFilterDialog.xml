@@ -7,17 +7,17 @@
         <height>settings.getHeight() - 80</height>
         <childs>
             <Label>
-                <x>settings.getWidth() / 2 - 150</x>
+                <x>settings.getWidth() / 2 - 300</x>
                 <y>10</y>
-                <width>300</width>
-                <height>30</height>
+                <width>600</width>
+                <height>60</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map Filter Settings")</text>
-                <font>main24</font>
+                <font>main48</font>
             </Label>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 20</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Map name:")</text>
                 <font>main24</font>
@@ -27,13 +27,13 @@
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the map name.")</tooltip>
-                <startValue>return mapSelectionFilter.getMapName()</startValue>
-                <onEvent></onEvent>
+                <startValue>mapSelectionFilter.getMapName()</startValue>
+                <onEvent>mapSelectionFilter.setMapName(input)</onEvent>
             </Textbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
                 <font>main24</font>
@@ -43,13 +43,13 @@
                 <y>lastY</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Name or part of the author.")</tooltip>
-                <startValue>return mapSelectionFilter.getMapAuthor()</startValue>
-                <onEvent></onEvent>
+                <startValue>mapSelectionFilter.getMapAuthor()</startValue>
+                <onEvent>mapSelectionFilter.setMapAuthor(input)</onEvent>
             </Textbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
                 <font>main24</font>
@@ -59,11 +59,11 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum amount of players for the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMinPlayer()</startValue>
-                <infinite>0</infinite>
-                <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMinPlayer(value)</onEvent>
+                <startValue>mapSelectionFilter.getMinPlayer()</startValue>
+                <infinite>1</infinite>
+                <min>1</min>
+                <max>100</max>
+                <onEvent>mapSelectionFilter.setMinPlayer(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>lastX + lastWidth + 10</x>
@@ -78,16 +78,16 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum amount of players for the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMaxPlayer()</startValue>
-                <infinite>0</infinite>
-                <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMaxPlayer(value)</onEvent>
+                <startValue>mapSelectionFilter.getMaxPlayer()</startValue>
+                <infinite>1</infinite>
+                <min>1</min>
+                <max>100</max>
+                <onEvent>mapSelectionFilter.setMaxPlayer(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
                 <font>main24</font>
@@ -97,11 +97,11 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum width of the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMinWidth()</startValue>
+                <startValue>mapSelectionFilter.getMinWidth()</startValue>
                 <infinite>0</infinite>
                 <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMinWidth(value)</onEvent>
+                <max>999</max>
+                <onEvent>mapSelectionFilter.setMinWidth(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>lastX + lastWidth + 10</x>
@@ -116,16 +116,16 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum width of the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMaxWidth()</startValue>
+                <startValue>mapSelectionFilter.getMaxWidth()</startValue>
                 <infinite>0</infinite>
                 <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMaxWidth(value)</onEvent>
+                <max>999</max>
+                <onEvent>mapSelectionFilter.setMaxWidth(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
                 <font>main24</font>
@@ -135,11 +135,11 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Minimum height of the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMinHeight()</startValue>
+                <startValue>mapSelectionFilter.getMinHeight()</startValue>
                 <infinite>0</infinite>
                 <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMinHeight(value)</onEvent>
+                <max>999</max>
+                <onEvent>mapSelectionFilter.setMinHeight(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>lastX + lastWidth + 10</x>
@@ -154,16 +154,24 @@
                 <y>lastY</y>
                 <width>150</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Maximum height of the map")</tooltip>
-                <startValue>return mapSelectionFilter.getMaxHeight()</startValue>
+                <startValue>mapSelectionFilter.getMaxHeight()</startValue>
                 <infinite>0</infinite>
                 <min>0</min>
-                <max>999999</max>
-                <onEvent>mapSelectionFilter.setMaxHeight(value)</onEvent>
+                <max>999</max>
+                <onEvent>mapSelectionFilter.setMaxHeight(input)</onEvent>
             </Spinbox>
             <Label>
                 <x>10</x>
                 <y>lastY + lastHeight + 10</y>
-                <width>150</width>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Has to be placed")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
                 <height>30</height>
                 <text>QT_TRANSLATE_NOOP("GAME","Bases:")</text>
                 <font>main24</font>
@@ -172,23 +180,587 @@
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have bases.")</tooltip>
-                <startValue>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, mapSelectionFilter.isFlagActive(GameEnums.MapFilterFlags_Bases))</startValue>
-                <onEvent>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, value);</onEvent>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Bases)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Bases, input);</onEvent>
             </Checkbox>
             <Label>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <width>150</width>
+                <width>200</width>
                 <height>30</height>
-                <text>QT_TRANSLATE_NOOP("GAME","Optional:")</text>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
                 <font>main24</font>
             </Label>
             <Checkbox>
                 <x>lastX + lastWidth + 10</x>
                 <y>lastY</y>
-                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have bases.")</tooltip>
-                <startValue>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, mapSelectionFilter.isFlagOption(GameEnums.MapFilterFlags_Bases))</startValue>
-                <onEvent>mapSelectionFilter.addToFilter(GameEnums.MapFilterFlags_Bases, value);</onEvent>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Bases)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Bases, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Airports:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have airports.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Airport)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Airport, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Airport)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Airport, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Harbours:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have harbours.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Harbour)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Harbour, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Harbour)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Harbour, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Towers:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have towers.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Tower)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Tower, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Tower)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Tower, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Teleport tiles:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have teleport tiles.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Teleport)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Teleport, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Teleport)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Teleport, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Predeployed:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to be predeoployed.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Predeployed)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Predeployed, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Predeployed)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Predeployed, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map layout")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Mixed bases:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have mixed bases.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_MixedBase)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_MixedBase, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_MixedBase)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_MixedBase, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to be predeoployed.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Symetric)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Symetric, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Symetric)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Symetric, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","PvP:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to be a player versus player map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_PvP)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_PvP, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_PvP)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_PvP, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","FTA:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map needs to have a first turn advantage.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_FTA)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_FTA, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_FTA)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_FTA, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Versus AI:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed to be played against an ai.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_VsAi)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_VsAi, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_VsAi)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_VsAi, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Team Play:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed to be played teams versus teams.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_TeamPlay)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_TeamPlay, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_TeamPlay)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_TeamPlay, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Historical:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as historical map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Historical)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Historical, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Historical)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Historical, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Funds")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Low funds:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as low funds map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_LowFunds)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_LowFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_LowFunds)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_LowFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","High funds:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as high funds map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_HighFunds)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_HighFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_HighFunds)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_HighFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle type")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Naval map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as naval map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Naval)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Naval, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Naval)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Naval, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Ground map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as ground map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Ground)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Ground, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Ground)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Ground, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Air map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as air map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Air)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Air, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Air)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Air, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as scripted map.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagActive(GameEnums.MapFilterFlags_Scripted)</startValue>
+                <onEvent>mapSelectionFilter.setFlagActive(GameEnums.MapFilterFlags_Scripted, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Is Optional:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the flag is optional to find. If all active flags are optional at least one must but found.")</tooltip>
+                <startValue>mapSelectionFilter.getFlagOptional(GameEnums.MapFilterFlags_Scripted)</startValue>
+                <onEvent>mapSelectionFilter.setFlagOptional(GameEnums.MapFilterFlags_Scripted, input);</onEvent>
             </Checkbox>
         </childs>
     </Panel>

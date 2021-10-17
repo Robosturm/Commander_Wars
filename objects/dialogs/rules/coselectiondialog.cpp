@@ -146,7 +146,7 @@ void COSelectionDialog::showCOInfo()
         }
         else if (index >= m_coids.size())
         {
-            coid = m_coids[index];
+            coid = m_coids[0];
         }
         else
         {

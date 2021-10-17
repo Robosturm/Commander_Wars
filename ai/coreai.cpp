@@ -1306,7 +1306,8 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits
             {
                 // could we beat his ass? -> i mean can we attack him
                 // if so this is a great island
-                if (pLoadedUnit->isAttackable(pEnemy, true))
+                if (pLoadedUnit->isAttackable(pEnemy, true) ||
+                    pLoadedUnit->getLoadedUnitCount() > 0)
                 {
                     checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
                                             loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets);

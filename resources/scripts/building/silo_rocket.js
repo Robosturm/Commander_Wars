@@ -28,6 +28,11 @@ var Constructor = function()
     {
         return qsTr("<r>Missile can be launched once, by Infantry unit. Damage across </r><div c='#00ff00'>13 square </div><r>area.</r>");
     };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_missile+0";
+    };
 }
 
 Constructor.prototype = BUILDING;

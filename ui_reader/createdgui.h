@@ -16,7 +16,7 @@ public:
     void addFactoryUiItem(oxygine::spActor pItem);
 signals:
     void sigOnUpdate();
-private:
+protected:
     QVector<oxygine::spActor> m_factoryUiItem;
 };
 

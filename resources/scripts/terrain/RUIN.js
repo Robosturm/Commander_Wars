@@ -68,8 +68,13 @@ var Constructor = function()
         var baseId = terrain.getBaseTerrainID();
         if (baseId === "DESERT")
         {
-            baseId = "desert";
+            weatherModifier = "desert";
         }
+        else
+        {
+            weatherModifier = TERRAIN.getWeatherModifier();
+        }
+
         return "back_" + weatherModifier + "ruin";
     };
 };

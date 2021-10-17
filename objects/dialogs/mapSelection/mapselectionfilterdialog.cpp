@@ -8,7 +8,7 @@
 
 constexpr const char* const MapSelectionFilter = "mapSelectionFilter";
 
-MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter & filter)
+MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
     : m_mapFilter(filter)
 {
     setObjectName("MapSelectionFilterDialog");
@@ -34,8 +34,8 @@ MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter & filter)
 
 MapSelectionFilterDialog::~MapSelectionFilterDialog()
 {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(MapSelectionFilter);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->deleteObject(MapSelectionFilter);
 }
 
 void MapSelectionFilterDialog::exit()
@@ -48,106 +48,111 @@ void MapSelectionFilterDialog::remove()
     detach();
 }
 
-bool MapSelectionFilterDialog::isFlagActive(GameEnums::MapFilterFlags flag) const
+bool MapSelectionFilterDialog::getFlagActive(GameEnums::MapFilterFlags flag) const
 {
-    return m_mapFilter.isFlagActive(flag);
+    return m_mapFilter->getFlagActive(flag);
 }
 
-bool MapSelectionFilterDialog::isFlagOption(GameEnums::MapFilterFlags flag) const
+void MapSelectionFilterDialog::setFlagActive(GameEnums::MapFilterFlags flag, bool isActive)
 {
-    return m_mapFilter.isFlagOption(flag);
+    m_mapFilter->setFlagActive(flag, isActive);
 }
 
-void MapSelectionFilterDialog::addToFilter(GameEnums::MapFilterFlags flag, bool active)
+bool MapSelectionFilterDialog::getFlagOptional(GameEnums::MapFilterFlags flag) const
 {
-    m_mapFilter.addToFilter(flag, active);
+    return m_mapFilter->getFlagOptional(flag);
+}
+
+void MapSelectionFilterDialog::addToFilter(GameEnums::MapFilterFlags flag, bool active, bool isOptional)
+{
+    m_mapFilter->addToFilter(flag, active, isOptional);
 }
 
 void MapSelectionFilterDialog::removeFromFilter(GameEnums::MapFilterFlags flag)
 {
-    m_mapFilter.removeFromFilter(flag);
+    m_mapFilter->removeFromFilter(flag);
 }
 
 void MapSelectionFilterDialog::setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional)
 {
-    m_mapFilter.setFlagOptional(flag, isOptional);
+    m_mapFilter->setFlagOptional(flag, isOptional);
 }
 
 void MapSelectionFilterDialog::setMinHeight(qint32 value)
 {
-    m_mapFilter.setMinHeight(value);
+    m_mapFilter->setMinHeight(value);
 }
 
 qint32 MapSelectionFilterDialog::getMinHeight() const
 {
-    return m_mapFilter.getMinHeight();
+    return m_mapFilter->getMinHeight();
 }
 
 void MapSelectionFilterDialog::setMaxHeight(qint32 value)
 {
-    m_mapFilter.setMaxHeight(value);
+    m_mapFilter->setMaxHeight(value);
 }
 
 qint32 MapSelectionFilterDialog::getMaxHeight() const
 {
-    return m_mapFilter.getMaxHeight();
+    return m_mapFilter->getMaxHeight();
 }
 
 void MapSelectionFilterDialog::setMinWidth(qint32 value)
 {
-    m_mapFilter.setMinWidth(value);
+    m_mapFilter->setMinWidth(value);
 }
 
 qint32 MapSelectionFilterDialog::getMinWidth() const
 {
-    return m_mapFilter.getMinWidth();
+    return m_mapFilter->getMinWidth();
 }
 
 void MapSelectionFilterDialog::setMaxWidth(qint32 value)
 {
-    m_mapFilter.setMaxWidth(value);
+    m_mapFilter->setMaxWidth(value);
 }
 
 qint32 MapSelectionFilterDialog::getMaxWidth() const
 {
-    return m_mapFilter.getMaxWidth();
+    return m_mapFilter->getMaxWidth();
 }
 void MapSelectionFilterDialog::setMinPlayer(qint32 value)
 {
-    m_mapFilter.setMinPlayer(value);
+    m_mapFilter->setMinPlayer(value);
 }
 
 qint32 MapSelectionFilterDialog::getMinPlayer() const
 {
-    return m_mapFilter.getMinPlayer();
+    return m_mapFilter->getMinPlayer();
 }
 
 void MapSelectionFilterDialog::setMaxPlayer(qint32 value)
 {
-    m_mapFilter.setMaxPlayer(value);
+    m_mapFilter->setMaxPlayer(value);
 }
 
 qint32 MapSelectionFilterDialog::getMaxPlayer() const
 {
-    return m_mapFilter.getMaxPlayer();
+    return m_mapFilter->getMaxPlayer();
 }
 
-const QString & MapSelectionFilterDialog::getMapAuthor() const
+QString MapSelectionFilterDialog::getMapAuthor() const
 {
-    return m_mapFilter.getMapAuthor();
+    return m_mapFilter->getMapAuthor();
 }
 
 void MapSelectionFilterDialog::setMapAuthor(const QString &newMapAuthor)
 {
-    m_mapFilter.setMapAuthor(newMapAuthor);
+    m_mapFilter->setMapAuthor(newMapAuthor);
 }
 
-const QString & MapSelectionFilterDialog::getMapName() const
+QString MapSelectionFilterDialog::getMapName() const
 {
-    return m_mapFilter.getMapName();
+    return m_mapFilter->getMapName();
 }
 
 void MapSelectionFilterDialog::setMapName(const QString &newMapName)
 {
-    m_mapFilter.setMapName(newMapName);
+    m_mapFilter->setMapName(newMapName);
 }

@@ -48,6 +48,11 @@ var Constructor = function()
     {
         return qsTr("Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.");
     };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_missile+0";
+    };
 }
 
 Constructor.prototype = BUILDING;

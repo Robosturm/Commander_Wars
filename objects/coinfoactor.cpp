@@ -49,15 +49,21 @@ COInfoActor::COInfoActor(qint32 width)
     m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
     addChild(m_pCurrentCO);
 
+    m_pCurrentCoFaction = oxygine::spSprite::create();
+    m_pCurrentCoFaction->setPosition(Settings::getWidth() * 0.25f, 100);
+    m_pCurrentCoFaction->setScale(2.0f);
+    addChild(m_pCurrentCoFaction);
+
     m_COName = oxygine::spTextField::create();
     m_COName->setStyle(headerStyle);
+    m_COName->setY(m_pCurrentCoFaction->getY() + 40);
     addChild(m_COName);
 
     style.multiline = true;
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
-    m_COBio->setPosition(10, m_COBio->getY() + 120);
+    m_COBio->setPosition(10, m_COName->getY() + 60);
     addChild(m_COBio);
 
     m_HitSprite = oxygine::spBox9Sprite::create();
@@ -178,7 +184,7 @@ COInfoActor::COInfoActor(qint32 width)
 
 void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 {
-    
+    GameManager* pGameManager = GameManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     QString coid = "";
@@ -217,9 +223,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         {
             coName = value.toString();
         }
+        auto* pResAnim = pGameManager->getResAnim("icon_" + pCO->getCOArmy().toLower(), oxygine::ep_ignore_error);
+        m_pCurrentCoFaction->setResAnim(pResAnim);
     }
     m_COName->setHtmlText(coName);
-    m_COName->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
+    m_COName->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth());
     if (pCO.get() != nullptr)
     {
         coBio = pCO->getBio();

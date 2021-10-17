@@ -64,6 +64,7 @@ protected:
 protected:
     spCoPowermeter m_pCoPowermeter{nullptr};
 
+    oxygine::spSprite m_pCurrentCoFaction;
     oxygine::spSprite m_pCurrentCO;
 
     oxygine::spTextField m_COName;

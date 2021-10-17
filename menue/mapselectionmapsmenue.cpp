@@ -26,6 +26,8 @@
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
 
+#include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
+
 #include "ui_reader/uifactory.h"
 
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
@@ -70,27 +72,36 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     addChild(m_pButtonBack);
     m_pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit buttonBack();
+        emit sigButtonBack();
     });
-    connect(this, &MapSelectionMapsMenue::buttonBack, this, &MapSelectionMapsMenue::slotButtonBack, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::sigButtonBack, this, &MapSelectionMapsMenue::buttonBack, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
     m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pButtonNext);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit buttonNext();
+        emit sigButtonNext();
     });
-    connect(this, &MapSelectionMapsMenue::buttonNext, this, &MapSelectionMapsMenue::slotButtonNext, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::sigButtonNext, this, &MapSelectionMapsMenue::buttonNext, Qt::QueuedConnection);
 
     m_pRandomMap = ObjectManager::createButton(tr("Random Map"));
     m_pRandomMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     addChild(m_pRandomMap);
     m_pRandomMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit randomMap();
+        emit sigRandomMap();
     });
-    connect(this, &MapSelectionMapsMenue::randomMap, this, &MapSelectionMapsMenue::showRandomMap, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::sigRandomMap, this, &MapSelectionMapsMenue::showRandomMap, Qt::QueuedConnection);
+
+    m_pMapFilter = ObjectManager::createButton(tr("Map filter"));
+    m_pMapFilter->setPosition(m_pRandomMap->getX() + m_pRandomMap->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
+    addChild(m_pMapFilter);
+    m_pMapFilter->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigMapFilter();
+    });
+    connect(this, &MapSelectionMapsMenue::sigMapFilter, this, &MapSelectionMapsMenue::showMapFilter, Qt::QueuedConnection);
 
     m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
     m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
@@ -128,9 +139,9 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     addChild(m_pButtonStart);
     m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit buttonStartGame();
+        emit sigButtonStartGame();
     });
-    connect(this, &MapSelectionMapsMenue::buttonStartGame, this, &MapSelectionMapsMenue::startGame, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::sigButtonStartGame, this, &MapSelectionMapsMenue::startGame, Qt::QueuedConnection);
 
     qint32 yPos = 10;
     if (heigth <  0)
@@ -166,7 +177,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     pApp->continueRendering();
 }
 
-void MapSelectionMapsMenue::slotButtonBack()
+void MapSelectionMapsMenue::buttonBack()
 {    
     CONSOLE_PRINT("slotButtonBack()", Console::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
@@ -214,7 +225,7 @@ void MapSelectionMapsMenue::slotButtonBack()
     Mainapp::getInstance()->continueRendering();
 }
 
-void MapSelectionMapsMenue::slotButtonNext()
+void MapSelectionMapsMenue::buttonNext()
 {    
     CONSOLE_PRINT("slotButtonNext()", Console::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
@@ -287,7 +298,7 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
     if (info.isFile())
     {
         m_pMapSelectionView->setCurrentFile(info.filePath());
-        emit buttonNext();
+        emit sigButtonNext();
     }    
 }
 
@@ -300,12 +311,14 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 void MapSelectionMapsMenue::hideMapSelection()
 {    
     m_pRandomMap->setVisible(false);
+    m_pMapFilter->setVisible(false);
     m_pMapSelectionView->setVisible(false);    
 }
 
 void MapSelectionMapsMenue::showMapSelection()
 {    
     m_pRandomMap->setVisible(true);
+    m_pMapFilter->setVisible(true);
     m_pMapSelectionView->setVisible(true);    
 }
 
@@ -428,7 +441,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
     pGameMap->setMapDescription(description);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
     m_pMapSelectionView->setCurrentMap(pGameMap);
-    emit buttonNext();
+    emit sigButtonNext();
     
 }
 
@@ -493,6 +506,13 @@ void MapSelectionMapsMenue::showSaveMap()
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
+}
+
+void MapSelectionMapsMenue::showMapFilter()
+{
+    spMapSelectionFilterDialog mapSelectionFilterDialog = spMapSelectionFilterDialog::create(m_pMapSelectionView->getMapSelection()->getMapFilter());
+    addChild(mapSelectionFilterDialog);
+    connect(mapSelectionFilterDialog.get(), &MapSelectionFilterDialog::sigFinished, m_pMapSelectionView->getMapSelection(), &MapSelection::filterChanged, Qt::QueuedConnection);
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)

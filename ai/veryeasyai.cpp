@@ -521,9 +521,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit pUnits)
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            // we don't support multi transporting for the ai for now this will break the system trust me
-            pUnit->getLoadingPlace() <= 0)
+        if (!pUnit->getHasMoved())
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;

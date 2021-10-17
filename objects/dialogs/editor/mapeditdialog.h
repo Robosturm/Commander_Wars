@@ -3,53 +3,67 @@
 
 #include <QObject>
 
-
-#include "3rd_party/oxygine-framework/oxygine-framework.h"
-
-#include "objects/base/panel.h"
-
-#include "objects/base/textbox.h"
-
-#include "objects/base/spinbox.h"
+#include "ui_reader/createdgui.h"
+#include "game/GameEnums.h"
 
 class MapEditDialog;
-typedef oxygine::intrusive_ptr<MapEditDialog> spMapEditDialog;
+using spMapEditDialog = oxygine::intrusive_ptr<MapEditDialog>;
 
-
-class MapEditDialog : public QObject, public oxygine::Actor
+class MapEditDialog : public CreatedGui
 {
     Q_OBJECT
 public:
-    explicit MapEditDialog(QString mapName, QString author, QString description, QString scriptFile,
-                           qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                           qint32 turnLimit, quint32 buildLimit);
-    virtual ~MapEditDialog() = default;
+    struct MapEditInfo
+    {
+        QString mapName;
+        QString author;
+        QString description;
+        QString scriptFile;
+        qint32 mapWidth{20};
+        qint32 mapHeigth{20};
+        qint32 playerCount{4};
+        qint32 turnLimit{0};
+        quint32 deployLimit{0};
+        GameEnums::MapFilterFlags mapFlags{GameEnums::MapFilterFlags_None};
+    };
+    explicit MapEditDialog(MapEditInfo info);
+    virtual ~MapEditDialog();
 
 signals:
-    void editFinished(QString mapName, QString author, QString description, QString scriptFile,
-                      qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                      qint32 turnLimit, quint32 buildLimit);
+    void editFinished(MapEditInfo info);
     void sigCanceled();
-    void sigshowSelectScript();
     void sigFinished();
 public slots:
-    void scriptFileChanged(QString file);
     void showSelectScript();
+
+    void setMapName(QString name);
+    QString getMapName() const;
+    void setMapAuthor(QString name);
+    QString getMapAuthor() const;
+    void setMapDescription(QString name);
+    QString getMapDescription() const;
+    void setMapScript(QString name);
+    QString getMapScript() const;
+    void setMapWidth(qint32 value);
+    qint32 getMapWidth() const;
+    void setMapHeight(qint32 value);
+    qint32 getMapHeight() const;
+    void setMapPlayerCount(qint32 value);
+    qint32 getMapPlayerCount() const;
+    void setMapTurnLimit(qint32 value);
+    qint32 getMapTurnLimit() const;
+    void setMapDeployLimit(qint32 value);
+    qint32 getMapDeployLimit() const;
+    void setMapFlag(GameEnums::MapFilterFlags flag, bool value);
+    bool getMapFlag(GameEnums::MapFilterFlags flag) const;
+
+    void cancel();
+    void finished();
+private slots:
+    void scriptFileChanged(QString file);
     void remove();
 private:
-    oxygine::spButton m_OkButton;
-    oxygine::spButton m_ExitButton;
-    spTextbox m_MapName;
-    spTextbox m_MapAuthor;
-    spTextbox m_MapDescription;
-    spTextbox m_MapScriptFile;
-    oxygine::spButton m_ScriptButton;
-    spSpinBox m_MapWidth;
-    spSpinBox m_MapHeigth;
-    spSpinBox m_MapPlayerCount;
-    spSpinBox m_MapTurnLimit;
-    spSpinBox m_UnitBuildLimit;
-
+    MapEditInfo m_info;
 };
 
 #endif // MAPEDITDIALOG_H

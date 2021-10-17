@@ -44,48 +44,49 @@ private:
      * Nodename: Label
      * supported attributes are:
      * mandatory: x, y, width, heigth, text, font,
-     * optional: tooltip, onUpdate
+     * optional: tooltip, onUpdate, id
      */
     bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
-      * optional: tooltip
+      * optional: tooltip, id
       */
     bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
-      * optional: tooltip
+      * optional: tooltip, id
       */
     bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
       * Nodename: Slider
       * supported attributes are:
       * mandatory: x, y, width, min, max, onEvent, startValue
-      * optional: tooltip
+      * optional: tooltip, id
       */
     bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip
+      * optional: tooltip, id
       */
     bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: TimeSpinbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
-      * optional: tooltip
+      * optional: tooltip, id
       */
     bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
       * Nodename: Panel
       * supported attributes are:
       * mandatory: x, y, width, height, childs
+      * optional: tooltip, id
       */
     bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
     /**
@@ -133,13 +134,14 @@ private:
     bool getBoolValue(QString line);
     QString getStringValue(QString line);
     oxygine::TextStyle getStyle(QString styleName);
+    QString getId(QString attribute);
     template<typename TType>
     void onEvent(QString line, TType value)
     {
         QString args;
         if constexpr(std::is_same<QString, TType>::value)
         {
-            args = "var input = " + value + ";";
+            args = "var input = \"" + value + "\";";
         }
         else
         {
@@ -181,6 +183,7 @@ private:
     static UiFactory* m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
+    quint32 m_creationCount{0};
 };
 
 #endif // UIFACTORY_H

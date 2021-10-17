@@ -18,7 +18,7 @@ bool MapFilter::matches(GameMap::MapHeaderInfo & info) const
     return matches;
 }
 
-void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool active)
+void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool active, bool isOptional)
 {
     bool found = false;
     for (auto & filter : m_filter)
@@ -34,6 +34,7 @@ void MapFilter::addToFilter(GameEnums::MapFilterFlags flag, bool active)
         FlagFilter filter;
         filter.flag = flag;
         filter.isActive = active;
+        filter.isOptional = isOptional;
         m_filter.append(filter);
     }
 }
@@ -50,7 +51,19 @@ void MapFilter::removeFromFilter(GameEnums::MapFilterFlags flag)
     }
 }
 
-bool MapFilter::isFlagActive(GameEnums::MapFilterFlags flag) const
+void MapFilter::setFlagActive(GameEnums::MapFilterFlags flag, bool isActive)
+{
+    for (auto & filter : m_filter)
+    {
+        if (filter.flag == flag)
+        {
+            filter.isActive = isActive;
+            break;
+        }
+    }
+}
+
+bool MapFilter::getFlagActive(GameEnums::MapFilterFlags flag)
 {
     for (auto & filter : m_filter)
     {
@@ -59,10 +72,15 @@ bool MapFilter::isFlagActive(GameEnums::MapFilterFlags flag) const
             return filter.isActive;
         }
     }
+    FlagFilter filter;
+    filter.flag = flag;
+    filter.isActive = false;
+    filter.isOptional = false;
+    m_filter.append(filter);
     return false;
 }
 
-bool MapFilter::isFlagOption(GameEnums::MapFilterFlags flag) const
+bool MapFilter::getFlagOptional(GameEnums::MapFilterFlags flag)
 {
     for (auto & filter : m_filter)
     {
@@ -71,6 +89,11 @@ bool MapFilter::isFlagOption(GameEnums::MapFilterFlags flag) const
             return filter.isOptional;
         }
     }
+    FlagFilter filter;
+    filter.flag = flag;
+    filter.isActive = false;
+    filter.isOptional = false;
+    m_filter.append(filter);
     return false;
 }
 
@@ -104,25 +127,28 @@ bool MapFilter::matchesMapFlags(GameEnums::MapFilterFlags flags) const
     qint32 count = 0;
     for (auto & filter : m_filter)
     {
-        bool flagMatches = filter.matches(flags);
-        if (filter.isOptional)
+        if (filter.isActive)
         {
-            hasOptional = true;
-        }
-        if (flagMatches)
-        {
-            ++count;
-        }
-        else if (!filter.isOptional)
-        {
-            matches = false;
-            break;
+            bool flagMatches = filter.matches(flags);
+            if (filter.isOptional)
+            {
+                hasOptional = true;
+            }
+            if (flagMatches)
+            {
+                ++count;
+            }
+            else if (!filter.isOptional)
+            {
+                matches = false;
+                break;
+            }
         }
     }
     return matches && (!hasOptional || count > 0);
 }
 
-const QString &MapFilter::getMapName() const
+QString MapFilter::getMapName() const
 {
     return m_mapName;
 }
@@ -132,7 +158,7 @@ void MapFilter::setMapName(const QString &newMapName)
     m_mapName = newMapName;
 }
 
-const QString &MapFilter::getMapAuthor() const
+QString MapFilter::getMapAuthor() const
 {
     return m_mapAuthor;
 }

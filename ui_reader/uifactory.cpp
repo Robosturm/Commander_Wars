@@ -44,6 +44,7 @@ static const char* const attrMax = "max";
 static const char* const attrChilds = "childs";
 static const char* const attrSprite = "sprite";
 static const char* const attrUnit = "unit";
+static const char* const attrId = "Id";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -78,6 +79,7 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
 
 void UiFactory::createUi(QString uiXml, CreatedGui* pMenu)
 {
+    m_creationCount = 0;
     QStringList uiFiles;
     // make sure to overwrite existing js stuff
     for (qint32 i = Settings::getMods().size() - 1; i >= 0; --i)
@@ -167,6 +169,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         QString text = translate(getAttribute(childs, attrText));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
         auto style = getStyle(getAttribute(childs, attrFont));
+        QString id = getId(getAttribute(childs, attrId));
         spLabel pLabel = spLabel::create(width);
         pLabel->setHeight(height);
         pLabel->setX(x);
@@ -174,6 +177,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setStyle(style);
         pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
+        pLabel->setObjectName(id);
         QString onUpdateLine = getAttribute(childs, attrOnUpdate);
         if (!onUpdateLine.isEmpty())
         {
@@ -263,6 +267,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         qint32 x = getIntValue(getAttribute(childs, attrX));
         qint32 y = getIntValue(getAttribute(childs, attrY));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
+        QString id = getId(getAttribute(childs, attrId));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         bool value = getBoolValue(getAttribute(childs, attrStartValue));
         spCheckbox pCheckbox = spCheckbox::create();
@@ -270,6 +275,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         pCheckbox->setY(y);
         pCheckbox->setChecked(value);
         pCheckbox->setTooltipText(tooltip);
+        pCheckbox->setObjectName(id);
         parent->addChild(pCheckbox);
         connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
         {
@@ -297,12 +303,14 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         qint32 value = getIntValue(getAttribute(childs,attrStartValue));
+        QString id = getId(getAttribute(childs, attrId));
         spSpinBox pSpinBox = spSpinBox::create(width, min, max, SpinBox::Mode::Int);
         pSpinBox->setX(x);
         pSpinBox->setY(y);
         pSpinBox->setInfinityValue(infinite);
         pSpinBox->setTooltipText(tooltip);
         pSpinBox->setCurrentValue(value);
+        pSpinBox->setObjectName(id);
         connect(pSpinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
         {
             onEvent(onEventLine, value);
@@ -321,6 +329,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
                                           attrMax, attrOnEvent, attrStartValue});
     if (success)
     {
+        QString id = getId(getAttribute(childs, attrId));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -340,6 +349,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
         pSlider->setY(y);
         pSlider->setTooltipText(tooltip);
         pSlider->setCurrentValue(value);
+        pSlider->setObjectName(id);
         connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
         {
             onEvent(onEventLine, value);
@@ -357,6 +367,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
+        QString id = getId(getAttribute(childs, attrId));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -372,6 +383,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
         pTextbox->setPosition(x, y);
         pTextbox->setTooltipText(tooltip);
         pTextbox->setCurrentText(value);
+        pTextbox->setObjectName(id);
         connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString value)
         {
             onEvent(onEventLine, value);
@@ -393,6 +405,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
+        QString id = getId(getAttribute(childs, attrId));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -404,6 +417,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
         pSpinBox->setY(y);
         pSpinBox->setTooltipText(tooltip);
         pSpinBox->setCurrentValue(value);
+        pSpinBox->setObjectName(id);
         connect(pSpinBox.get(), &TimeSpinBox::sigValueChanged, this, [=](qint32 value)
         {
             onEvent(onEventLine, value);
@@ -625,7 +639,8 @@ bool UiFactory::getBoolValue(QString line)
 
 QString UiFactory::getStringValue(QString line)
 {
-    QJSValue erg = Interpreter::getInstance()->evaluate(line);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->evaluate(line);
     QString value;
     if (erg.isError())
     {
@@ -646,6 +661,20 @@ oxygine::TextStyle UiFactory::getStyle(QString styleName)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     return style;
+}
+
+QString UiFactory::getId(QString attribute)
+{
+    QString ret = "object" + QString::number(m_creationCount);
+    if (attribute.isEmpty())
+    {
+        ret = attribute;
+    }
+    else
+    {
+        ++m_creationCount;
+    }
+    return ret;
 }
 
 QString UiFactory::translate(QString line)

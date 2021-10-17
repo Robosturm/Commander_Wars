@@ -16,7 +16,6 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/dialogs/filedialog.h"
-#include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/dialogs/editor/dialogmodifyunit.h"
 #include "objects/dialogs/editor/dialogmodifybuilding.h"
 #include "objects/dialogs/rules/playerselectiondialog.h"
@@ -621,7 +620,12 @@ void EditorMenue::showImportAwByWeb()
 
 void EditorMenue::showNewMap()
 {
-    spMapEditDialog mapEditDialog = spMapEditDialog::create("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
+    MapEditDialog::MapEditInfo info;
+    info.author = Settings::getUsername();
+    info.mapWidth = 20;
+    info.mapHeigth = 20;
+    info.playerCount = 4;
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -631,10 +635,18 @@ void EditorMenue::showNewMap()
 void EditorMenue::showEditMap()
 {
     spGameMap pGameMap = GameMap::getInstance();
-    spMapEditDialog mapEditDialog = spMapEditDialog::create(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
-                                                            pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
-                                                            pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
-                                                            pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
+    MapEditDialog::MapEditInfo info;
+    info.mapName = pGameMap->getMapName();
+    info.author = pGameMap->getMapAuthor();
+    info.description = pGameMap->getMapDescription();
+    info.scriptFile = pGameMap->getGameScript()->getScriptFile();
+    info.mapWidth = pGameMap->getMapWidth();
+    info.mapHeigth = pGameMap->getMapHeight();
+    info.playerCount = pGameMap->getPlayerCount();
+    info.turnLimit = pGameMap->getGameRecorder()->getMapTime();
+    info.deployLimit = pGameMap->getGameRecorder()->getDeployLimit();
+    info.mapFlags = pGameMap->getMapFlags();
+    spMapEditDialog mapEditDialog = spMapEditDialog::create(info);
     connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
     connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
     addChild(mapEditDialog);
@@ -1643,39 +1655,37 @@ void EditorMenue::importCoWTxTMap(QString filename)
     updateGrids();
 }
 
-void EditorMenue::newMap(QString mapName, QString author, QString description, QString scriptFile,
-                         qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                         qint32 turnLimit, quint32 buildLimit)
+void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 {
     CONSOLE_PRINT("EditorMenue::newMap", Console::eDEBUG);
     cleanTemp(-1);
     spGameMap pMap = GameMap::getInstance();
-    pMap->setMapName(mapName);
-    pMap->setMapAuthor(author);
-    pMap->setMapDescription(description);
-    pMap->getGameScript()->setScriptFile(scriptFile);
-    pMap->newMap(mapWidth, mapHeigth, playerCount);
-    pMap->getGameRecorder()->setDeployLimit(buildLimit);
-    pMap->getGameRecorder()->setMapTime(turnLimit);
+    pMap->setMapName(info.mapName);
+    pMap->setMapAuthor(info.author);
+    pMap->setMapDescription(info.description);
+    pMap->getGameScript()->setScriptFile(info.scriptFile);
+    pMap->newMap(info.mapWidth, info.mapHeigth, info.playerCount);
+    pMap->setMapFlags(info.mapFlags);
+    pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
+    pMap->getGameRecorder()->setMapTime(info.turnLimit);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     updateGrids();
 }
 
-void EditorMenue::changeMap(QString mapName, QString author, QString description, QString scriptFile,
-                            qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                            qint32 turnLimit, quint32 buildLimit)
+void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 {    
     CONSOLE_PRINT("EditorMenue::changeMap", Console::eDEBUG);
     createTempFile();
     spGameMap pMap = GameMap::getInstance();
-    pMap->setMapName(mapName);
-    pMap->setMapAuthor(author);
-    pMap->setMapDescription(description);
-    pMap->getGameScript()->setScriptFile(scriptFile);
-    pMap->changeMap(mapWidth, mapHeigth, playerCount);
-    pMap->getGameRecorder()->setDeployLimit(buildLimit);
-    pMap->getGameRecorder()->setMapTime(turnLimit);
+    pMap->setMapName(info.mapName);
+    pMap->setMapAuthor(info.author);
+    pMap->setMapDescription(info.description);
+    pMap->getGameScript()->setScriptFile(info.scriptFile);
+    pMap->changeMap(info.mapWidth, info.mapHeigth, info.playerCount);
+    pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
+    pMap->getGameRecorder()->setMapTime(info.turnLimit);
+    pMap->setMapFlags(info.mapFlags);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     updateGrids();

@@ -44,6 +44,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_radar";
+    };
 }
 
 Constructor.prototype = BUILDING;

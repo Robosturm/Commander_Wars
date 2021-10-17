@@ -23,11 +23,12 @@ public:
     explicit MapFilter() = default;
     virtual ~MapFilter() = default;
 
-    bool isFlagActive(GameEnums::MapFilterFlags flag) const;
-    bool isFlagOption(GameEnums::MapFilterFlags flag) const;
-    void addToFilter(GameEnums::MapFilterFlags flag, bool active);
-    void removeFromFilter(GameEnums::MapFilterFlags flag);
+    void setFlagActive(GameEnums::MapFilterFlags flag, bool isOptional);
+    bool getFlagActive(GameEnums::MapFilterFlags flag);
     void setFlagOptional(GameEnums::MapFilterFlags flag, bool isOptional);
+    bool getFlagOptional(GameEnums::MapFilterFlags flag);
+    void addToFilter(GameEnums::MapFilterFlags flag, bool active, bool isOptional);
+    void removeFromFilter(GameEnums::MapFilterFlags flag);
 
     bool matches(GameMap::MapHeaderInfo & info) const;
 
@@ -46,10 +47,10 @@ public:
     void setMaxPlayer(qint32 value);
     qint32 getMaxPlayer() const;
 
-    const QString &getMapAuthor() const;
+    QString getMapAuthor() const;
     void setMapAuthor(const QString &newMapAuthor);
 
-    const QString &getMapName() const;
+    QString getMapName() const;
     void setMapName(const QString &newMapName);
 
 private:
