@@ -25,6 +25,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
@@ -32,7 +36,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,ZWELD_E_W,ZWELD_N_S", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
         if (typeof map !== 'undefined')
@@ -76,7 +80,7 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,ZWELD_E_W,ZWELD_N_S", false, false, GameEnums.Directions_Direct, true);
         if ((surroundings === "+E+W") || (surroundings === "+N+S"))
         {
             return true;

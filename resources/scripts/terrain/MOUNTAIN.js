@@ -24,9 +24,18 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("mountain" + surroundings);
+        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_North, false);
+        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_South, false);
+        if (surroundings !== "")
+        {
+            terrain.loadBaseSprite("mountain" + surroundings);
+        }
+        else
+        {
+            surroundings = terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_East, false);
+            surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_West, false);
+            terrain.loadBaseSprite("mountain" + surroundings);
+        }
     };
     this.getMiniMapIcon = function()
     {
@@ -34,8 +43,7 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit)
     {
-        var infantry = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-        if (infantry.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             return 3;
         }

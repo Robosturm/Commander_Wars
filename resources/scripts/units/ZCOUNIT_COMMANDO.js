@@ -73,7 +73,8 @@ var Constructor = function()
             var terrainId = terrain.getID();
             if (terrainId === "MOUNTAIN" ||
                 terrainId === "SNOW_MOUNTAIN" ||
-                terrainId === "DESERT_ROCK")
+                terrainId === "DESERT_ROCK" ||
+                terrainId === "WASTE_MOUNTAIN")
             {
                 var cloaked = unit.getCloaked();
                 unit.setCloaked(1);

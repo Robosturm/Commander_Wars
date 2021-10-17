@@ -17,6 +17,10 @@ var Constructor = function()
     {
         return 2;
     };
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    {
+        terrain.loadBaseTerrain("PLAINS");
+    };
     this.loadBaseSprite = function(terrain)
     {
         var random = globals.randInt(0, 3);

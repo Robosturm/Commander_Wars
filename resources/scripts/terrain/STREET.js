@@ -98,7 +98,7 @@ var Constructor = function()
         case "WELD":
         case "PIPELINE":
         case "DESERT_PIPELINE":
-        case "SNOW_PIPELINE":
+        case "SNOW_PIPELINE":                
             return "back_" + weatherModifier + "street+pipe";
         case "FOREST":
         case "DESERT_FOREST":

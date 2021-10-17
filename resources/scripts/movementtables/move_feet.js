@@ -36,12 +36,19 @@ var Constructor = function()
                                 ["MOUNTAIN", 2],
                                 ["DESERT_ROCK", 2],
                                 ["DESERT_TRY_RIVER", 2],
+                                ["DESERT_RUIN", 1],
                                 ["RIVER", 2],
                                 ["SNOW", 2],
                                 ["SNOW_DESTROYEDWELD", 2],
                                 ["SNOW_FOREST", 2],
                                 ["SNOW_WASTELAND", 2],
                                 ["SNOW_MOUNTAIN", 3],
+                                ["SNOW_RUIN", 2],
+                                ["WASTE",  1],
+                                ["WASTE_FOREST", 1],
+                                ["WASTE_MOUNTAIN", 2],
+                                ["WASTE_WASTELAND", 1],
+                                ["WASTE_RUIN", 1],
                                 ["TELEPORTTILE", 0]];
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)

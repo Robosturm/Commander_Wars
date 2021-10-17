@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return -1;
     };
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    {
+        terrain.loadBaseTerrain("DESERT");
+    };
     this.loadBaseSprite = function(terrain)
     {
         terrain.loadBaseSprite("desert_wasteland");

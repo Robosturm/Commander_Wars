@@ -38,8 +38,7 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit)
     {
-        var infantry = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-        if (infantry.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             return 3;
         }

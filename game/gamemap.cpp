@@ -17,7 +17,6 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamerulemanager.h"
 
-#include "game/terrain.h"
 #include "game/unit.h"
 #include "game/player.h"
 #include "game/co.h"

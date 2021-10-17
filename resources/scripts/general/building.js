@@ -260,6 +260,11 @@ var BUILDING =
         {
             return "back_deserttown";
         }
+        else if (baseId === "WASTE")
+        {
+            return "back_wastetown";
+        }
+
         return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 

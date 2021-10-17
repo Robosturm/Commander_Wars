@@ -311,7 +311,7 @@ public slots:
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(QString spriteID);
+    void loadBaseSprite(QString spriteID, qint32 frameTime = 100);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -424,6 +424,12 @@ public slots:
      * @return
      */
     QStringList getTerrainSprites();
+    /**
+     * @brief existsResAnim
+     * @param spriteId
+     * @return
+     */
+    bool existsResAnim(QString spriteId);
 protected:
     /**
      * @brief createBuildingDownStream

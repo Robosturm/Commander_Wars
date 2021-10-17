@@ -370,10 +370,17 @@
         <image file="minimap/minimap_desert_rock.png" />
         <image file="minimap/minimap_desert_try_river.png" />
         <image file="minimap/minimap_desert_wasteland.png" />
+        <image file="minimap/minimap_desert_ruin.png" />        
         <image file="minimap/minimap_snow.png" />
         <image file="minimap/minimap_snow_forest.png" />
         <image file="minimap/minimap_snow_mountain.png" />
         <image file="minimap/minimap_snow_wasteland.png" />
+        <image file="minimap/minimap_snow_ruin.png" />
+        <image file="minimap/minimap_waste.png" />
+        <image file="minimap/minimap_waste_forest.png" />
+        <image file="minimap/minimap_waste_mountain.png" />
+        <image file="minimap/minimap_waste_wasteland.png" />
+        <image file="minimap/minimap_waste_ruin.png" />        
         <image file="minimap/minimap_teleport.png" />
         <image file="minimap/minimap_volcan.png" />
         

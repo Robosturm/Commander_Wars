@@ -11,9 +11,10 @@ var Constructor = function()
                     if (map.onMap(posX, posY))
                     {
                         var terrainID = map.getTerrain(posX, posY).getID();
-                        var isMountain = (terrainID === "MOUNTAIN") ||
-                                (terrainID === "DESERT_ROCK") ||
-                                (terrainID === "SNOW_MOUNTAIN");
+                        var isMountain = terrainID === "MOUNTAIN" ||
+                                         terrainID === "DESERT_ROCK" ||
+                                         terrainID === "SNOW_MOUNTAIN" ||
+                                         terrainID === "WASTE_MOUNTAIN";
                         if (isMountain)
                         {
                             return -999;

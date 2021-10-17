@@ -22,7 +22,8 @@ var TERRAIN =
     terrainGroupNameMapping = [qsTr("Sea"),
                                qsTr("Normal"),
                                qsTr("Desert"),
-                               qsTr("Snow")],
+                               qsTr("Snow"),
+                               qsTr("Waste")],
 
     getTerrainGroupName : function(item)
     {
@@ -143,7 +144,12 @@ var TERRAIN =
         {
             var upTerrain = map.getTerrain(x, y);
             id = upTerrain.getID();
-            if (upTerrain.getBuilding() !== null)
+            if (id === "ZWELD_E_W" ||
+                id === "ZWELD_N_S")
+            {
+                id = "PIPELINE";
+            }
+            else if (upTerrain.getBuilding() !== null)
             {
                 id = "BUILDING";
             }
@@ -158,7 +164,7 @@ var TERRAIN =
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
-    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",       ""]],
+    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",        ""]],
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
                      ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
                      ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],

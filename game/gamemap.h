@@ -23,13 +23,13 @@
 #include <vector>
 
 class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
 class GameMap;
-typedef oxygine::intrusive_ptr<GameMap> spGameMap;
+using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
 class InGameMenue;
-typedef oxygine::intrusive_ptr<InGameMenue> spInGameMenue;
+using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
 
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {

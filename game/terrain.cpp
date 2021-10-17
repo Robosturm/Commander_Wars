@@ -349,7 +349,7 @@ void Terrain::loadBaseTerrain(QString terrainID)
     addChild(m_pBaseTerrain);
 }
 
-void Terrain::loadBaseSprite(QString spriteID)
+void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -358,7 +358,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), -1);
             pSprite->addTween(tween);
         }
         else
@@ -401,14 +401,23 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
-    if (m_pTerrainSprite.get() && m_x >= 0 && m_y >= 0)
+    if (m_pTerrainSprite.get() != nullptr)
     {
-        m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+        if (m_pTerrainSprite.get() && m_x >= 0 && m_y >= 0)
+        {
+            m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+        }
+        else
+        {
+            m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
+        }
     }
-    else
-    {
-        m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
-    }
+}
+
+bool Terrain::existsResAnim(QString spriteId)
+{
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    return pTerrainManager->getResAnim(spriteId, oxygine::error_policy::ep_ignore_error) != nullptr;
 }
 
 QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)

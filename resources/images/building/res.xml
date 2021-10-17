@@ -72,6 +72,20 @@
         <image file="gate+n+s.png" />
         <image file="gate+n+s+mask.png" />
         
+        <!-- weld -->
+        <image file="weld+e+w.png" />
+        <image file="weld+e+w+mask.png" />
+        <image file="weld+n+s.png" />
+        <image file="weld+n+s+mask.png" />
+        <image file="desert_weld+e+w.png" />
+        <image file="desert_weld+e+w+mask.png" />
+        <image file="desert_weld+n+s.png" />
+        <image file="desert_weld+n+s+mask.png" />        
+        <image file="snow_weld+e+w.png" />
+        <image file="snow_weld+e+w+mask.png" />
+        <image file="snow_weld+n+s.png" />
+        <image file="snow_weld+n+s+mask.png" />
+        
         <!-- hq -->
         <image file="hq+ac.png" cols = "2" />
         <image file="hq+ac+mask.png" cols = "2" />

@@ -20,13 +20,27 @@ var Constructor = function()
     {
         terrain.loadBaseTerrain("SEA");
     };
-    this.loadBaseSprite = function (terrain) {
+    this.isSeaTile = function(x, y)
+    {
+        GameConsole.print("x=" + x + " y=" + y, 1);
+        if (map.onMap(x, y))
+        {
+            if (map.getTerrain(x, y).getBaseTerrainID() === "SEA")
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+        return false;
+    };
+    this.loadBaseSprite = function (terrain)
+    {
         var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
-        // var surroundingsSea = terrain.getSurroundings("SEA", false, false, GameEnums.Directions_Direct, false);
-        // GameConsole.print("surroundingsLand: " + surroundingsLand, 1);
-        // GameConsole.print("surroundingsBeach: " + surroundingsBeach, 1);
-
+        var frameTime = 150;
         if (surroundingsLand !== "")
         {
             if (surroundingsLand === "+S" && surroundingsBeach.includes("+N"))
@@ -45,16 +59,36 @@ var Constructor = function()
             {
                 surroundingsBeach = surroundingsBeach.replace("+E", "");
             }
-            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand);
-
-        }
-        else if (surroundingsBeach !== "")
-        {
-            terrain.loadBaseSprite("beach");
+            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand, frameTime);
         }
         else
         {
-            terrain.loadBaseSprite("beach");
+            var x = terrain.getX();
+            var y = terrain.getY();
+            if (x >= 0 && y >= 0)
+            {
+                if (!BEACH.isSeaTile(x, y - 2))
+                {
+                    surroundingsBeach = surroundingsBeach.replace("+N", "");
+                }
+                if (!BEACH.isSeaTile(x, y + 2))
+                {
+                    surroundingsBeach = surroundingsBeach.replace("+S", "");
+                }
+                if (!BEACH.isSeaTile(x + 2, y))
+                {
+                    surroundingsBeach = surroundingsBeach.replace("+E", "");
+                }
+                if (!BEACH.isSeaTile(x - 2, y))
+                {
+                    surroundingsBeach = surroundingsBeach.replace("+W", "");
+                }
+                terrain.loadBaseSprite("beach" + surroundingsBeach, frameTime);
+            }
+            else
+            {
+                terrain.loadBaseSprite("beach");
+            }
         }
     };
     this.canBePlaced = function (x, y) {
@@ -122,6 +156,24 @@ var Constructor = function()
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
         }
+
+        // var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
+        // if (surroundingsBeach.includes("+N"))
+        // {
+        //     terrain.loadOverlaySprite("sea+beach+N");
+        // }
+        // if (surroundingsBeach.includes("+S"))
+        // {
+        //     terrain.loadOverlaySprite("sea+beach+S");
+        // }
+        // if (surroundingsBeach.includes("+E"))
+        // {
+        //     terrain.loadOverlaySprite("sea+beach+E");
+        // }
+        // if (surroundingsBeach.includes("+W"))
+        // {
+        //     terrain.loadOverlaySprite("sea+beach+W");
+        // }
     };
 
     this.getMiniMapIcon = function()

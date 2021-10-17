@@ -24,9 +24,63 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("forest" + surroundings);
+        var directSurroundings = terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_All, false);
+        if (surroundings !== "+E" &&
+            surroundings !== "+W" &&
+            surroundings !== "+E+W")
+        {
+            if (!(directSurroundings.includes("+S") && directSurroundings.includes("+E")))
+            {
+                surroundings = surroundings.replace("+SE", "");
+            }
+            if (!(directSurroundings.includes("+N") && directSurroundings.includes("+E")))
+            {
+                surroundings = surroundings.replace("+NE", "");
+            }
+            if (!(directSurroundings.includes("+N") && directSurroundings.includes("+W")))
+            {
+                surroundings = surroundings.replace("+NW", "");
+            }
+            if (!(directSurroundings.includes("+S") && directSurroundings.includes("+W")))
+            {
+                surroundings = surroundings.replace("+SW", "");
+            }
+
+            if (directSurroundings.includes("+S") &&
+                (!surroundings.includes("+SW") &&
+                 !surroundings.includes("+SE")))
+            {
+                surroundings = surroundings.replace("+S", "");
+            }
+            if (directSurroundings.includes("+N") &&
+                (!surroundings.includes("+NW") &&
+                 !surroundings.includes("+NE")))
+            {
+                surroundings = surroundings.replace("+N", "");
+            }
+            if (directSurroundings.includes("+E") &&
+                (!surroundings.includes("+SE") &&
+                 !surroundings.includes("+NE")))
+            {
+                surroundings = surroundings.replace("+E", "");
+            }
+            if (directSurroundings.includes("+W") &&
+                (!surroundings.includes("+SW") &&
+                 !surroundings.includes("+NW")))
+            {
+                surroundings = surroundings.replace("+W", "");
+            }
+        }
+        if (terrain.existsResAnim("forest" + surroundings))
+        {
+            terrain.loadBaseSprite("forest" + surroundings);
+        }
+        else
+        {
+            GameConsole.print("missing sprite " + surroundings, 1);
+            terrain.loadBaseSprite("forest");
+        }
     };
     this.getMiniMapIcon = function()
     {
@@ -45,10 +99,28 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["forest.png",
+        return ["forest",
+                "forest+N",
+                "forest+S",
                 "forest+E",
+                "forest+W",
+                "forest+N+S",
                 "forest+E+W",
-                "forest+W"];
+                "forest+E+SE+S",
+                "forest+E+SE+S+SW+W",
+                "forest+N+NE+E",
+                "forest+N+NE+E+SE+S.png",
+                "forest+N+NE+E+SE+S+SW+W+NW",
+                "forest+N+NE+E+S+SW+W",
+                "forest+N+NE+E+W+NW",
+                "forest+N+S+SW+W+NW",
+                "forest+S+SW+W",
+                "forest+N+W+NW",
+                "forest+N+E+SE+S+W+NW",
+                "forest+N+E+SE+S+SW+W+NW",
+                "forest+N+NE+E+SE+S+SW+W",
+                "forest+N+NE+E+S+SW+W+NW",
+                "forest+N+NE+E+SE+S+W+NW",];
     };
 
     this.getTerrainAnimationBase = function(unit, terrain)
