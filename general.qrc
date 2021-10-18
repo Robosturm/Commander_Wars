@@ -5459,17 +5459,8 @@
         <file>resources/images/terrain/desert_ruin+0.png</file>
         <file>resources/images/terrain/desert_ruin+1.png</file>
         <file>resources/images/terrain/desert_ruin+2.png</file>
-        <file>resources/images/terrain/forest+E+S+W.png</file>
-        <file>resources/images/terrain/forest+E+S.png</file>
-        <file>resources/images/terrain/forest+N+E+S+W.png</file>
-        <file>resources/images/terrain/forest+N+E+S.png</file>
-        <file>resources/images/terrain/forest+N+E+W.png</file>
-        <file>resources/images/terrain/forest+N+E.png</file>
-        <file>resources/images/terrain/forest+N+S+W.png</file>
         <file>resources/images/terrain/forest+N+S.png</file>
-        <file>resources/images/terrain/forest+N+W.png</file>
         <file>resources/images/terrain/forest+N.png</file>
-        <file>resources/images/terrain/forest+S+W.png</file>
         <file>resources/images/terrain/forest+S.png</file>
         <file>resources/images/terrain/mountain+N+S.png</file>
         <file>resources/images/terrain/mountain+N.png</file>
@@ -5846,10 +5837,6 @@
         <file>resources/images/terrain/forest+N+S+SW+W+NW.png</file>
         <file>resources/images/terrain/forest+N+W+NW.png</file>
         <file>resources/images/terrain/forest+S+SW+W.png</file>
-        <file>resources/SNOW_FOREST.js</file>
-        <file>resources/SNOW_MOUNTAIN.js</file>
-        <file>resources/SNOW_PIPELINE.js</file>
-        <file>resources/SNOW_RUIN.js</file>
         <file>resources/scripts/terrain/WASTE_FOREST.js</file>
         <file>resources/scripts/terrain/WASTE_MOUNTAIN.js</file>
         <file>resources/scripts/terrain/WASTE_RUIN.js</file>
@@ -5858,5 +5845,61 @@
         <file>mods/awdc_image/scripts/terrain/mountain.js</file>
         <file>resources/scripts/building/zweld_n_s.js</file>
         <file>resources/scripts/building/zweld_e_w.js</file>
+        <file>mods/awdc_image/images/building/temporary_airport+mask.png</file>
+        <file>mods/awdc_image/images/building/temporary_airport+neutral.png</file>
+        <file>mods/awdc_image/images/building/temporary_airport.png</file>
+        <file>mods/awdc_image/images/building/temporary_harbour+mask.png</file>
+        <file>mods/awdc_image/images/building/temporary_harbour+neutral.png</file>
+        <file>mods/awdc_image/images/building/temporary_harbour.png</file>
+        <file>resources/images/terrain/beach+E+W.png</file>
+        <file>resources/images/terrain/sea+desert+E+S+W.png</file>
+        <file>resources/images/terrain/sea+desert+E+S.png</file>
+        <file>resources/images/terrain/sea+desert+E+W.png</file>
+        <file>resources/images/terrain/sea+desert+E.png</file>
+        <file>resources/images/terrain/sea+desert+N+E+S+W.png</file>
+        <file>resources/images/terrain/sea+desert+N+E+S.png</file>
+        <file>resources/images/terrain/sea+desert+N+E+W.png</file>
+        <file>resources/images/terrain/sea+desert+N+E.png</file>
+        <file>resources/images/terrain/sea+desert+N+S+W.png</file>
+        <file>resources/images/terrain/sea+desert+N+S.png</file>
+        <file>resources/images/terrain/sea+desert+N+W.png</file>
+        <file>resources/images/terrain/sea+desert+N.png</file>
+        <file>resources/images/terrain/sea+desert+S+W.png</file>
+        <file>resources/images/terrain/sea+desert+S.png</file>
+        <file>resources/images/terrain/sea+desert+W.png</file>
+        <file>resources/images/terrain/sea+snow+E+S+W.png</file>
+        <file>resources/images/terrain/sea+snow+E+S.png</file>
+        <file>resources/images/terrain/sea+snow+E+W.png</file>
+        <file>resources/images/terrain/sea+snow+E.png</file>
+        <file>resources/images/terrain/sea+snow+N+E+S+W.png</file>
+        <file>resources/images/terrain/sea+snow+N+E+S.png</file>
+        <file>resources/images/terrain/sea+snow+N+E+W.png</file>
+        <file>resources/images/terrain/sea+snow+N+E.png</file>
+        <file>resources/images/terrain/sea+snow+N+S+W.png</file>
+        <file>resources/images/terrain/sea+snow+N+S.png</file>
+        <file>resources/images/terrain/sea+snow+N+W.png</file>
+        <file>resources/images/terrain/sea+snow+N.png</file>
+        <file>resources/images/terrain/sea+snow+S+W.png</file>
+        <file>resources/images/terrain/sea+snow+S.png</file>
+        <file>resources/images/terrain/sea+snow+W.png</file>
+        <file>resources/images/terrain/sea+waste+E+S+W.png</file>
+        <file>resources/images/terrain/sea+waste+E+S.png</file>
+        <file>resources/images/terrain/sea+waste+E+W.png</file>
+        <file>resources/images/terrain/sea+waste+E.png</file>
+        <file>resources/images/terrain/sea+waste+N+E+S+W.png</file>
+        <file>resources/images/terrain/sea+waste+N+E+S.png</file>
+        <file>resources/images/terrain/sea+waste+N+E+W.png</file>
+        <file>resources/images/terrain/sea+waste+N+E.png</file>
+        <file>resources/images/terrain/sea+waste+N+S+W.png</file>
+        <file>resources/images/terrain/sea+waste+N+S.png</file>
+        <file>resources/images/terrain/sea+waste+N+W.png</file>
+        <file>resources/images/terrain/sea+waste+N.png</file>
+        <file>resources/images/terrain/sea+waste+S+W.png</file>
+        <file>resources/images/terrain/sea+waste+S.png</file>
+        <file>resources/images/terrain/sea+waste+W.png</file>
+        <file>resources/scripts/building/zdesertweld_e_w.js</file>
+        <file>resources/scripts/building/zdesertweld_n_s.js</file>
+        <file>resources/scripts/building/zsnowweld_e_w.js</file>
+        <file>resources/scripts/building/zsnowweld_n_s.js</file>
     </qresource>
 </RCC>

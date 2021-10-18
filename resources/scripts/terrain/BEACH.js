@@ -118,6 +118,22 @@ var Constructor = function()
 
     this.loadOverlaySprite = function(terrain)
     {
+        var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsSnow !== "")
+        {
+            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow);
+        }
+        var surroundingsWaste = terrain.getSurroundings("WASTE", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsWaste !== "")
+        {
+            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste);
+        }
+        var surroundingsDesert = terrain.getSurroundings("DESERT", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsDesert !== "")
+        {
+            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
+        }
+
         // load river overlay
         var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         // load overlay south east

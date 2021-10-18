@@ -36,7 +36,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,ZWELD_E_W,ZWELD_N_S", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
         if (typeof map !== 'undefined')

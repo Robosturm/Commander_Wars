@@ -87,6 +87,12 @@ var Constructor = function()
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
             return "back_desertstreet+pipe";
         default:
             return "back_desertstreet";

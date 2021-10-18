@@ -20,12 +20,32 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsPlains = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
-        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
-        if (surroundings !== "")
+        var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsPlains !== "")
         {
-            terrain.loadOverlaySprite("sea" + surroundings);
+            terrain.loadOverlaySprite("sea" + surroundingsPlains);
         }
+        var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsSnow !== "")
+        {
+            terrain.loadOverlaySprite("sea+snow" + surroundingsSnow);
+        }
+        var surroundingsWaste = terrain.getSurroundings("WASTE", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsWaste !== "")
+        {
+            terrain.loadOverlaySprite("sea+waste" + surroundingsWaste);
+        }
+        var surroundingsDesert = terrain.getSurroundings("DESERT", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsDesert !== "")
+        {
+            terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
+        }
+
+        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+        // if (surroundings !== "")
+        // {
+        //     terrain.loadOverlaySprite("sea" + surroundings);
+        // }
 
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
@@ -63,6 +83,7 @@ var Constructor = function()
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
         }
+
         // load river overlay
         var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All, false);
         var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);

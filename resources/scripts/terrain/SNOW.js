@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsPlains = terrain.getSurroundings("PLAINS,SEA", true, false, GameEnums.Directions_Direct, false);
+        var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
         {
             terrain.loadOverlaySprite("plains+N");

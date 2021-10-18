@@ -205,6 +205,29 @@ var TERRAIN =
         return speed;
     },
 
+    isPipeline : function(terrain)
+    {
+        var id = terrain.getID();
+        switch (id)
+        {
+        case "DESERT_WELD":
+        case "SNOW_WELD":
+        case "WELD":
+        case "PIPELINE":
+        case "DESERT_PIPELINE":
+        case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
+            return true;
+        default:
+            return false;
+        }
+    },
+
     getTerrainBackgroundId : function(id, weatherModifier, pipe = false)
     {
         switch (id)
@@ -233,6 +256,12 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
             if (pipe)
             {
                 return "back_" + weatherModifier + "planes";
