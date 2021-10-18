@@ -101,7 +101,14 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_wasteplains";
+        if (TERRAIN.isPipeline(TERRAIN.getTerrainAnimationId(terrain)))
+        {
+            return "back_wasteplains+pipe";
+        }
+        else
+        {
+            return "back_wasteplains";
+        }
     };
     
     this.getTerrainSprites = function()

@@ -205,10 +205,9 @@ var TERRAIN =
         return speed;
     },
 
-    isPipeline : function(terrain)
+    isPipeline : function(terrainId)
     {
-        var id = terrain.getID();
-        switch (id)
+        switch (terrainId)
         {
         case "DESERT_WELD":
         case "SNOW_WELD":

@@ -198,7 +198,14 @@
         <image file="battlesprites/background/back_deserthq+bm.png" />
         <image file="battlesprites/background/back_deserthq+ge.png" />
         <image file="battlesprites/background/back_deserthq+os.png" />
-        <image file="battlesprites/background/back_deserthq+yc.png" />
+        <image file="battlesprites/background/back_deserthq+yc.png" />        
+        <image file="battlesprites/background/back_wastehq+.png" />
+        <image file="battlesprites/background/back_wastehq+ac.png" />
+        <image file="battlesprites/background/back_wastehq+bh.png" />
+        <image file="battlesprites/background/back_wastehq+bm.png" />
+        <image file="battlesprites/background/back_wastehq+ge.png" />
+        <image file="battlesprites/background/back_wastehq+os.png" />
+        <image file="battlesprites/background/back_wastehq+yc.png" />
         <!-- ruin -->
         <image file="battlesprites/background/back_ruin.png" />
         <image file="battlesprites/background/back_desertruin.png" />
