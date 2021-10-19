@@ -29,6 +29,7 @@
         <image file="superpower.png" />
         <image file="atkRange.png" />
         <image file="moveRange.png" />
+        <image file="defenseStar.png" />        
 
         <!-- general co images -->
         <image file="co_civilian1+info.png" />

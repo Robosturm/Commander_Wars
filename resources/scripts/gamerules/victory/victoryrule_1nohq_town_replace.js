@@ -66,37 +66,12 @@ var Constructor = function()
         var variableName = "Active" + playerID.toString();
         var variables = rule.getVariables();
         var variable = variables.getVariable(variableName);
-        var variableHqXsName = "HqXs" + playerID.toString();
-        var variableHqYsName = "HqYs" + playerID.toString();
-        var variableHqXs = variables.createVariable(variableHqXsName);
-        var variableHqYs = variables.createVariable(variableHqYsName);
-        var pointsX = variableHqXs.readDataListInt32();
-        var pointsY = variableHqYs.readDataListInt32();
-        var buildings = player.getBuildings();
-        for (var i2 = 0; i2 < buildings.size(); i2++)
+        var buildings = player.getBuildings("HQ");
+        for (var i2 = 1; i2 < buildings.size(); i2++)
         {
-            var building = buildings.at(i2);
-            if (building.getBuildingID() === "HQ")
-            {
-                var found = false;
-                var x = building.getX();
-                var y = building.getY();
-                for (var i = 0; i < pointsX.length; i++)
-                {
-                    if (pointsX[i] === x &&
-                        pointsY[i] === y)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (found === false)
-                {
-                    var terrain = building.getTerrain();
-                    terrain.loadBuilding("TOWN");
-                    terrain.getBuilding().setOwner(player);
-                }
-            }
+            var terrain = buildings.at(i2).getTerrain();
+            terrain.loadBuilding("TOWN");
+            terrain.getBuilding().setOwner(player);
         }
         buildings.remove();
         var value = variable.readDataBool();

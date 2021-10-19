@@ -403,14 +403,7 @@ void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
     }
     if (m_pTerrainSprite.get() != nullptr)
     {
-        if (m_pTerrainSprite.get() && m_x >= 0 && m_y >= 0)
-        {
-            m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
-        }
-        else
-        {
-            m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
-        }
+        m_pTerrainSprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
     }
 }
 
@@ -597,7 +590,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-    pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
+    pSprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
     addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

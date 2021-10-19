@@ -31,7 +31,10 @@ var Constructor = function()
     {
         return 20000;
     };
-
+    this.canMoveAndFire = function()
+    {
+        return true;
+    };
     this.getName = function()
     {
         return qsTr("Aircraft Carrier");

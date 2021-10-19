@@ -1968,7 +1968,7 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     return ret;
 }
 
-QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
+QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1980,7 +1980,8 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
             spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr && pBuilding->getTerrain() == m_fields[y][x].get())
             {
-                if ((pBuilding->getOwner() == pPlayer))
+                if (pBuilding->getOwner() == pPlayer &&
+                    (id.isEmpty() || pBuilding->getBuildingID() == id))
                 {
                     ret->append(pBuilding.get());
                 }

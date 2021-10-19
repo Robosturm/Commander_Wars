@@ -5,12 +5,11 @@
 #include <QPoint>
 
 #include "game/GameEnums.h"
-
+#include "game/ui/customcoboostinfo.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-
 #include "coreengine/scriptvariables.h"
 
 class Unit;
@@ -644,6 +643,40 @@ public slots:
      * @param coid
      */
     QString getActiveCoStyle();
+    /**
+     * @brief showDefaultUnitGlobalBoost
+     * @return
+     */
+    bool showDefaultUnitGlobalBoost();
+    /**
+     * @brief getCustomUnitGlobalBoostCount
+     * @return
+     */
+    qint32 getCustomUnitGlobalBoostCount();
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info);
+
+    /**
+     * @brief showDefaultUnitZoneBoost
+     * @return
+     */
+    bool showDefaultUnitZoneBoost();
+    /**
+     * @brief getCustomUnitZoneBoostCount
+     * @return
+     */
+    qint32 getCustomUnitZoneBoostCount();
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
+
 protected:
     void limitPowerbar(float previousValue);
 

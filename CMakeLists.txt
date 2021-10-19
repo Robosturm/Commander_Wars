@@ -408,6 +408,7 @@ set(${PROJECT_NAME}_SRCS
     game/ui/playerinfo.cpp
     game/ui/ingameinfobar.cpp
     game/ui/copowermeter.cpp
+    game/ui/customcoboostinfo.cpp
 
     # game input
     gameinput/basegameinputif.cpp

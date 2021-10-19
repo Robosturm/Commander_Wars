@@ -317,7 +317,7 @@ public slots:
      * @brief getBuildings
      * @return
      */
-    QmlVectorBuilding* getBuildings();
+    QmlVectorBuilding* getBuildings(QString id = "");
     /**
      * @brief updateCORange
      */

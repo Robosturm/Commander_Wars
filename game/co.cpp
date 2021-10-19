@@ -1716,6 +1716,93 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     }
 }
 
+
+bool CO::showDefaultUnitGlobalBoost()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool ret = true;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitGlobalBoost", args);
+    if (value.isBool())
+    {
+        ret = value.toBool();
+    }
+    return ret;
+}
+
+qint32 CO::getCustomUnitGlobalBoostCount()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoostCount", args);
+    if (value.isNumber())
+    {
+        ret = value.toNumber();
+    }
+    return ret;
+}
+
+void CO::getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    args << index;
+    QJSValue obj1 = pInterpreter->newQObject(&info);
+    args << obj1;
+    pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoost", args);
+}
+
+bool CO::showDefaultUnitZoneBoost()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool ret = true;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitZoneBoost", args);
+    if (value.isBool())
+    {
+        ret = value.toBool();
+    }
+    return ret;
+}
+
+qint32 CO::getCustomUnitZoneBoostCount()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoostCount", args);
+    if (value.isNumber())
+    {
+        ret = value.toNumber();
+    }
+    return ret;
+}
+
+void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    args << index;
+    QJSValue obj1 = pInterpreter->newQObject(&info);
+    args << obj1;
+    pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoost", args);
+}
+
 void CO::serializeObject(QDataStream& pStream) const
 {
     CONSOLE_PRINT("storing co", Console::eDEBUG);
@@ -1859,7 +1946,6 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
         loadResAnim(coid, file, colorTable, maskTable, useColorBox);
     }
 }
-
 
 void CO::setCoStyleFromUserdata()
 {

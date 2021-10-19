@@ -1,19 +1,13 @@
 #include "coinfoactor.h"
 
-#include "resource_management/cospritemanager.h"
-
 #include "coreengine/mainapp.h"
 
-#include "resource_management/objectmanager.h"
-
-#include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
-
+#include "resource_management/objectmanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/coperkmanager.h"
 
 #include "game/gamemap.h"
@@ -358,27 +352,52 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     m_GlobalBoosts->setPosition(10, y);
     y += 40;
-    for (qint32 i = 0; i < sortedUnits.size(); i++)
+    qint32 customCount = pCO->getCustomUnitGlobalBoostCount();
+    if (customCount > 0)
     {
-        QString unitID = sortedUnits[i];
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-        pUnit->setVirtuellX(-2);
-        pUnit->setVirtuellY(-2);
-        showCOBoost(pUnit, pCO, x, y);
+        for (qint32 i = 0; i < customCount; i++)
+        {
+            showCustomCOBoost(pCO, x, y, i, true);
+        }
+        x = 10;
+        y += 60;
     }
-    x = 10;
-    y += 40;
+    if (pCO->showDefaultUnitGlobalBoost())
+    {
+        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        {
+            QString unitID = sortedUnits[i];
+            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+            pUnit->setVirtuellX(-2);
+            pUnit->setVirtuellY(-2);
+            showCOBoost(pUnit, pCO, x, y);
+        }
+        x = 10;
+        y += 60;
+    }
     m_CoBoost->setPosition(10, y);
     y += 40;
-    for (qint32 i = 0; i < sortedUnits.size(); i++)
+    customCount = pCO->getCustomUnitZoneBoostCount();
+    if (customCount > 0)
     {
-        QString unitID = sortedUnits[i];
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-        showCOBoost(pUnit, pCO, x, y);
+        for (qint32 i = 0; i < customCount; i++)
+        {
+            showCustomCOBoost(pCO, x, y, i, false);
+        }
+        x = 10;
+        y += 60;
+    }
+    if (pCO->showDefaultUnitZoneBoost())
+    {
+        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        {
+            QString unitID = sortedUnits[i];
+            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+            showCOBoost(pUnit, pCO, x, y);
+        }
     }
     setHeight(y + 100);
-    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
-    
+    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);    
 }
 
 void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
@@ -471,6 +490,81 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     }
 
     m_UnitDataActors[i]->addChild(pUnit);
+    if (x + 120 > m_pCurrentCO->getX() - 50)
+    {
+        x = 10;
+        y += 60;
+    }
+    else
+    {
+        x += 100;
+    }
+}
+
+void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 index, bool global)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    m_UnitDataActors.append(oxygine::spActor::create());
+    qint32 i = m_UnitDataActors.size() - 1;
+    m_UnitDataActors[i]->setPosition(x, y);
+
+    CustomCoBoostInfo info;
+    if (global)
+    {
+        pCO->getCustomUnitGlobalBoost(index, info);
+    }
+    else
+    {
+        pCO->getCustomUnitZoneBoost(index, info);
+    }
+    WikiDatabase* pDatabase = WikiDatabase::getInstance();
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(info.getIconId(), GameMap::defaultImageSize * 2));
+    QString wikiLink = info.getLink();
+    m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowLink(wikiLink);
+    });
+    addChild(m_UnitDataActors[i]);
+    // gather basic co information
+    qint32 offBonus = 0;
+    qint32 defBonus = 0;
+    createStrengthBar(m_UnitDataActors[i], info.getOffensiveBoost(), 0);
+    createStrengthBar(m_UnitDataActors[i], info.getDefensiveBoost(), GameMap::getImageSize() / 2);
+
+    auto icons = info.getBonusIcons();
+    auto bonus = info.getIconBonus();
+    for (qint32 i2 = 0; i2 < icons.size(); ++i2)
+    {
+        if (i2 < 2)
+        {
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            pSprite->setResAnim(pCOSpriteManager->getResAnim(icons[i2]));
+            pSprite->setY(5 +  GameMap::getImageSize());
+            if (i2 > 0)
+            {
+                pSprite->setX(25 +  GameMap::getImageSize());
+            }
+            pSprite->setScale(2.0f);
+            m_UnitDataActors[i]->addChild(pSprite);
+            oxygine::spTextField pText = oxygine::spTextField::create();
+            pText->setStyle(style);
+            pText->setHtmlText(bonus[i2]);
+            pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
+            pText->setScale(0.75f);
+            m_UnitDataActors[i]->addChild(pText);
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Unable to show bonus icon " + icons[i] + " because it exceeds the maximum of 2");
+        }
+    }
     if (x + 120 > m_pCurrentCO->getX() - 50)
     {
         x = 10;

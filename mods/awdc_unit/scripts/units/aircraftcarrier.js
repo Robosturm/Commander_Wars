@@ -20,3 +20,8 @@ AIRCRAFTCARRIER.getBaseCost = function()
 {
     return 28000;
 };
+
+AIRCRAFTCARRIER.canMoveAndFire = function()
+{
+    return false;
+};

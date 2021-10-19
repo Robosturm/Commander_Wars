@@ -653,7 +653,7 @@ public slots:
      * @param pPlayer
      * @return
      */
-    QmlVectorBuilding* getBuildings(Player* pPlayer);
+    QmlVectorBuilding* getBuildings(Player* pPlayer, QString id = "");
     /**
      * @brief importTxtMap imports a map in old CoW text-format
      */

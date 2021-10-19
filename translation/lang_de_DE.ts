@@ -195,47 +195,47 @@
 <context>
     <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="43"/>
+        <location filename="../objects/coinfoactor.cpp" line="37"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="78"/>
+        <location filename="../objects/coinfoactor.cpp" line="72"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="97"/>
+        <location filename="../objects/coinfoactor.cpp" line="91"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="117"/>
+        <location filename="../objects/coinfoactor.cpp" line="111"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="162"/>
+        <location filename="../objects/coinfoactor.cpp" line="156"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="168"/>
+        <location filename="../objects/coinfoactor.cpp" line="162"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="174"/>
+        <location filename="../objects/coinfoactor.cpp" line="168"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="180"/>
+        <location filename="../objects/coinfoactor.cpp" line="174"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="253"/>
+        <location filename="../objects/coinfoactor.cpp" line="247"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>

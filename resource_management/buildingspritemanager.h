@@ -9,6 +9,14 @@ class BuildingSpriteManager : public QObject, public RessourceManagement<Buildin
     Q_OBJECT
 public slots:
     void removeRessource(QString id);
+    /**
+     * @brief getLoadedRessources
+     * @return
+     */
+    QStringList getLoadedBuildings()
+    {
+        return m_loadedRessources;
+    }
 protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();

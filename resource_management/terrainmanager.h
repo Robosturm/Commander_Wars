@@ -25,13 +25,13 @@ public:
      * @return
      */
     QString getTerrainGroupName(qint32 group);
+public slots:
+    void removeRessource(QString id);
     /**
      * @brief getTerrainsSorted
      * @return
      */
     QStringList getTerrainsSorted();
-public slots:
-    void removeRessource(QString id);
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

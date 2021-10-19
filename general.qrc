@@ -5901,5 +5901,8 @@
         <file>resources/scripts/building/zdesertweld_n_s.js</file>
         <file>resources/scripts/building/zsnowweld_e_w.js</file>
         <file>resources/scripts/building/zsnowweld_n_s.js</file>
+        <file>resources/images/co/defenseStar.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastehq+ac.png</file>
     </qresource>
 </RCC>

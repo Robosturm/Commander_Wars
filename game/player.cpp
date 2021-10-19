@@ -1500,9 +1500,9 @@ QmlVectorBuilding* Player::getEnemyBuildings()
     return ret;
 }
 
-QmlVectorBuilding* Player::getBuildings()
+QmlVectorBuilding* Player::getBuildings(QString id)
 {
-    return GameMap::getInstance()->getBuildings(this);
+    return GameMap::getInstance()->getBuildings(this, id);
 }
 
 void Player::updateVisualCORange()
