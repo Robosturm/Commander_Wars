@@ -66,51 +66,51 @@
         <image file="sea+S.png" cols = "4" />
         <image file="sea+S+W.png" cols = "4" />
         <image file="sea+W.png" cols = "4" />
-        <image file="sea+snow+E.png" cols = "4" />
-        <image file="sea+snow+E+S.png" cols = "4" />
-        <image file="sea+snow+E+S+W.png" cols = "4" />
-        <image file="sea+snow+E+W.png" cols = "4" />
-        <image file="sea+snow+N.png" cols = "4" />
-        <image file="sea+snow+N+E.png" cols = "4" />
-        <image file="sea+snow+N+E+S.png" cols = "4" />
-        <image file="sea+snow+N+E+S+W.png" cols = "4" />
-        <image file="sea+snow+N+E+W.png" cols = "4" />
-        <image file="sea+snow+N+S.png" cols = "4" />
-        <image file="sea+snow+N+S+W.png" cols = "4" />
-        <image file="sea+snow+N+W.png" cols = "4" />
-        <image file="sea+snow+S.png" cols = "4" />
-        <image file="sea+snow+S+W.png" cols = "4" />
-        <image file="sea+snow+W.png" cols = "4" />
-        <image file="sea+desert+E.png" cols = "4" />
-        <image file="sea+desert+E+S.png" cols = "4" />
-        <image file="sea+desert+E+S+W.png" cols = "4" />
-        <image file="sea+desert+E+W.png" cols = "4" />
-        <image file="sea+desert+N.png" cols = "4" />
-        <image file="sea+desert+N+E.png" cols = "4" />
-        <image file="sea+desert+N+E+S.png" cols = "4" />
-        <image file="sea+desert+N+E+S+W.png" cols = "4" />
-        <image file="sea+desert+N+E+W.png" cols = "4" />
-        <image file="sea+desert+N+S.png" cols = "4" />
-        <image file="sea+desert+N+S+W.png" cols = "4" />
-        <image file="sea+desert+N+W.png" cols = "4" />
-        <image file="sea+desert+S.png" cols = "4" />
-        <image file="sea+desert+S+W.png" cols = "4" />
-        <image file="sea+desert+W.png" cols = "4" />        
-        <image file="sea+waste+E.png" cols = "4" />
-        <image file="sea+waste+E+S.png" cols = "4" />
-        <image file="sea+waste+E+S+W.png" cols = "4" />
-        <image file="sea+waste+E+W.png" cols = "4" />
-        <image file="sea+waste+N.png" cols = "4" />
-        <image file="sea+waste+N+E.png" cols = "4" />
-        <image file="sea+waste+N+E+S.png" cols = "4" />
-        <image file="sea+waste+N+E+S+W.png" cols = "4" />
-        <image file="sea+waste+N+E+W.png" cols = "4" />
-        <image file="sea+waste+N+S.png" cols = "4" />
-        <image file="sea+waste+N+S+W.png" cols = "4" />
-        <image file="sea+waste+N+W.png" cols = "4" />
-        <image file="sea+waste+S.png" cols = "4" />
-        <image file="sea+waste+S+W.png" cols = "4" />
-        <image file="sea+waste+W.png" cols = "4" />
+        <image file="sea+snow+E.png" />
+        <image file="sea+snow+E+S.png" />
+        <image file="sea+snow+E+S+W.png" />
+        <image file="sea+snow+E+W.png" />
+        <image file="sea+snow+N.png" />
+        <image file="sea+snow+N+E.png" />
+        <image file="sea+snow+N+E+S.png" />
+        <image file="sea+snow+N+E+S+W.png" />
+        <image file="sea+snow+N+E+W.png" />
+        <image file="sea+snow+N+S.png" />
+        <image file="sea+snow+N+S+W.png" />
+        <image file="sea+snow+N+W.png" />
+        <image file="sea+snow+S.png" />
+        <image file="sea+snow+S+W.png" />
+        <image file="sea+snow+W.png" />
+        <image file="sea+desert+E.png" />
+        <image file="sea+desert+E+S.png" />
+        <image file="sea+desert+E+S+W.png" />
+        <image file="sea+desert+E+W.png" />
+        <image file="sea+desert+N.png" />
+        <image file="sea+desert+N+E.png" />
+        <image file="sea+desert+N+E+S.png" />
+        <image file="sea+desert+N+E+S+W.png" />
+        <image file="sea+desert+N+E+W.png" />
+        <image file="sea+desert+N+S.png" />
+        <image file="sea+desert+N+S+W.png" />
+        <image file="sea+desert+N+W.png" />
+        <image file="sea+desert+S.png" />
+        <image file="sea+desert+S+W.png" />
+        <image file="sea+desert+W.png" />
+        <image file="sea+waste+E.png" />
+        <image file="sea+waste+E+S.png"  />
+        <image file="sea+waste+E+S+W.png" />
+        <image file="sea+waste+E+W.png" />
+        <image file="sea+waste+N.png" />
+        <image file="sea+waste+N+E.png" />
+        <image file="sea+waste+N+E+S.png" />
+        <image file="sea+waste+N+E+S+W.png" />
+        <image file="sea+waste+N+E+W.png" />
+        <image file="sea+waste+N+S.png" />
+        <image file="sea+waste+N+S+W.png" />
+        <image file="sea+waste+N+W.png" />
+        <image file="sea+waste+S.png" />
+        <image file="sea+waste+S+W.png" />
+        <image file="sea+waste+W.png" />
         
         <image file="rough_sea+N+E+S+W.png" cols = "4" />
         
