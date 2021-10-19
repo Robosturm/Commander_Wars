@@ -55,9 +55,14 @@ var Constructor = function()
             {
                 fuelCosts = 0;
             }
-            unit.setFuel(unit.getFuel() - fuelCosts);
+            unit.setFuel(unit.getFuel() - fuelCosts);            
         }
         UNIT.transporterRefilling(unit);
+        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        {
+            var transportUnit = unit.getLoadedUnit(i);
+            UNIT.repairUnit(transportUnit, 2);
+        }
     };
     this.createExplosionAnimation = function(x, y, unit)
     {
