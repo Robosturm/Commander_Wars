@@ -91,6 +91,8 @@
         <image file="hq+ac+mask.png" cols = "2" />
         <image file="hq+bd.png" cols = "2" />
         <image file="hq+bd+mask.png" cols = "2" />
+        <image file="hq+bg.png" cols = "2" />
+        <image file="hq+bg+mask.png" cols = "2" />
         <image file="hq+bh.png" cols = "2" />
         <image file="hq+bh+mask.png" cols = "2" />
         <image file="hq+bm.png" cols = "2" />
@@ -110,7 +112,7 @@
         <image file="hq+ti.png" cols = "2" />
         <image file="hq+ti+mask.png" cols = "2" />
         <image file="hq+yc.png" cols = "2" />
-        <image file="hq+yc+mask.png" cols = "2" />        
+        <image file="hq+yc+mask.png" cols = "2" />
         <image file="hq+neutral.png" />
         
         <!-- Block Hole Stuff -->
