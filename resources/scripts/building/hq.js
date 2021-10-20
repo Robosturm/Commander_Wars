@@ -7,11 +7,6 @@ var Constructor = function()
         {
             // get army name
             var armyName = building.getOwner().getArmy().toLowerCase();
-            // bh and bg have the same sprites
-            if (armyName === "bg")
-            {
-                armyName = "bh"
-            }
             building.loadSprite("hq+" + armyName, false);
             building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Matrix);
         }
