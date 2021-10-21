@@ -371,7 +371,8 @@ void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
-    else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName) || QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
+    else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
+             QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
@@ -570,7 +571,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
 void Terrain::loadOverlaySprite(QString spriteID)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
@@ -584,6 +585,10 @@ void Terrain::loadOverlaySprite(QString spriteID)
             pSprite->setResAnim(pAnim);
         }
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eERROR);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     addChild(pSprite);

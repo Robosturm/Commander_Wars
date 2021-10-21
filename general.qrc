@@ -754,9 +754,6 @@
         <file>resources/images/terrain/plasma+S.png</file>
         <file>resources/images/terrain/plasma+S+W.png</file>
         <file>resources/images/terrain/plasma+W.png</file>
-        <file>resources/images/terrain/reaf+1+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf+2+N+E+S+W.png</file>
-        <file>resources/images/terrain/reaf+3+N+E+S+W.png</file>
         <file>resources/images/terrain/reaf+N+E+S+W.png</file>
         <file>resources/images/terrain/res.xml</file>
         <file>resources/images/terrain/river.png</file>
@@ -5887,5 +5884,51 @@
         <file>resources/images/game/battlesprites/background/back_wastehq+ac.png</file>
         <file>resources/images/building/hq+bg.png</file>
         <file>resources/images/building/hq+bg+mask.png</file>
+        <file>resources/images/terrain/reaf+0+N+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+E.png</file>
+        <file>resources/images/terrain/reaf+E+S.png</file>
+        <file>resources/images/terrain/reaf+N.png</file>
+        <file>resources/images/terrain/reaf+N+E.png</file>
+        <file>resources/images/terrain/reaf+N+W.png</file>
+        <file>resources/images/terrain/reaf+S.png</file>
+        <file>resources/images/terrain/reaf+S+W.png</file>
+        <file>resources/images/terrain/reaf+W.png</file>
+        <file>resources/images/terrain/sea+E+bridge.png</file>
+        <file>resources/images/terrain/sea+E+NW.png</file>
+        <file>resources/images/terrain/sea+E+S+NW.png</file>
+        <file>resources/images/terrain/sea+E+SW.png</file>
+        <file>resources/images/terrain/sea+E+W+bridge.png</file>
+        <file>resources/images/terrain/sea+N+E+SW.png</file>
+        <file>resources/images/terrain/sea+N+SE.png</file>
+        <file>resources/images/terrain/sea+N+SE+SW.png</file>
+        <file>resources/images/terrain/sea+N+SW.png</file>
+        <file>resources/images/terrain/sea+N+W+SE.png</file>
+        <file>resources/images/terrain/sea+NE+NW.png</file>
+        <file>resources/images/terrain/sea+NE+SE.png</file>
+        <file>resources/images/terrain/sea+NE+SE+SW.png</file>
+        <file>resources/images/terrain/sea+NE+SW.png</file>
+        <file>resources/images/terrain/sea+S+NE.png</file>
+        <file>resources/images/terrain/sea+S+NE+NW.png</file>
+        <file>resources/images/terrain/sea+S+NW.png</file>
+        <file>resources/images/terrain/sea+S+W+NE.png</file>
+        <file>resources/images/terrain/sea+SE+SW.png</file>
+        <file>resources/images/terrain/sea+W+bridge.png</file>
+        <file>resources/images/terrain/sea+W+NE.png</file>
+        <file>resources/images/terrain/sea+W+SE.png</file>
+        <file>resources/images/terrain/sea+E+SW+NW.png</file>
+        <file>resources/images/terrain/sea+NE+SE+NW.png</file>
+        <file>resources/images/terrain/sea+NE+SE+SW+NW.png</file>
+        <file>resources/images/terrain/sea+NE+SW+NW.png</file>
+        <file>resources/images/terrain/sea+SE+NW.png</file>
+        <file>resources/images/terrain/sea+SE+SW+NW.png</file>
+        <file>resources/images/terrain/sea+SW+NW.png</file>
+        <file>resources/images/terrain/sea+W+NE+SE.png</file>
+        <file>resources/images/terrain/reaf+1+N+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+2+N+E+S+W.png</file>
+        <file>resources/images/terrain/reaf+3+N+E+S+W.png</file>
+        <file>resources/images/terrain/sea+overlay+NE.png</file>
+        <file>resources/images/terrain/sea+overlay+NW.png</file>
+        <file>resources/images/terrain/sea+overlay+SE.png</file>
+        <file>resources/images/terrain/sea+overlay+SW.png</file>
     </qresource>
 </RCC>

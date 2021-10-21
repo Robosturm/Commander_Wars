@@ -20,14 +20,110 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var random = globals.randInt(0, 3);
-        if (random > 0)
+        var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
+        var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
+        GameConsole.print("Reaf surroundings " + surroundingsPlainsDiagonal + " and " + surroundingsPlainsDirect, 1);
+        if (surroundingsPlainsDirect !== "")
         {
-            terrain.loadBaseSprite("reaf+" + random.toString() + "+N+E+S+W");
+            terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect);
+        }
+        else if (surroundingsPlainsDiagonal !== "")
+        {
+            if (surroundingsPlainsDiagonal.includes("+NE") &&
+                surroundingsPlainsDiagonal.includes("+SE") &&
+                surroundingsPlainsDiagonal.includes("+SW") ||
+                surroundingsPlainsDiagonal === "+SE")
+            {
+                terrain.loadBaseSprite("reaf+E+S");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+SE") &&
+                     surroundingsPlainsDiagonal.includes("+SW") &&
+                     surroundingsPlainsDiagonal.includes("+NW") ||
+                     surroundingsPlainsDiagonal === "+SW")
+            {
+                terrain.loadBaseSprite("reaf+S+W");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+SW") &&
+                     surroundingsPlainsDiagonal.includes("+NW") &&
+                     surroundingsPlainsDiagonal.includes("+NE") ||
+                     surroundingsPlainsDiagonal === "+NW")
+            {
+                terrain.loadBaseSprite("reaf+N+W");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+NW") &&
+                     surroundingsPlainsDiagonal.includes("+NE") &&
+                     surroundingsPlainsDiagonal.includes("+SE") ||
+                     surroundingsPlainsDiagonal === "+NE")
+            {
+                terrain.loadBaseSprite("reaf+N+E");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+SE") &&
+                surroundingsPlainsDiagonal.includes("+SW"))
+            {
+                terrain.loadBaseSprite("reaf+S");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+NE") &&
+                     surroundingsPlainsDiagonal.includes("+NW"))
+            {
+                terrain.loadBaseSprite("reaf+N");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+NE") &&
+                     surroundingsPlainsDiagonal.includes("+SE"))
+            {
+                terrain.loadBaseSprite("reaf+E");
+            }
+            else if (surroundingsPlainsDiagonal.includes("+NW") &&
+                     surroundingsPlainsDiagonal.includes("+SW"))
+            {
+                terrain.loadBaseSprite("reaf+W");
+            }
         }
         else
         {
-            terrain.loadBaseSprite("reaf+N+E+S+W");
+            var random = globals.randInt(0, 3);
+            terrain.loadBaseSprite("reaf+" + random.toString() + "+N+E+S+W");
+        }
+    };
+
+    this.loadOverlaySprite = function(terrain)
+    {
+        // load coast overlay
+        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+        // load overlay south east
+        if (!surroundings.includes("+S") && !surroundings.includes("+E"))
+        {
+            var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
+            if (surroundingsSE !== "")
+            {
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsSE);
+            }
+        }
+        // load overlay north east
+        if (!surroundings.includes("+N") && !surroundings.includes("+E"))
+        {
+            var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
+            if (surroundingsNE !== "")
+            {
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsNE);
+            }
+        }
+        // load overlay south west
+        if (!surroundings.includes("+S") && !surroundings.includes("+W"))
+        {
+            var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
+            if (surroundingsSW !== "")
+            {
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsSW);
+            }
+        }
+        // load overlay north west
+        if (!surroundings.includes("+N") && !surroundings.includes("+W"))
+        {
+            var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
+            if (surroundingsNW !== "")
+            {
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsNW);
+            }
         }
     };
     this.getDefense = function()
@@ -43,16 +139,49 @@ var Constructor = function()
         var terrain = map.getTerrain(x, y);
         if (terrain.getBaseTerrainID() === "SEA")
         {
-            // it's a sea nice
-            var surroundings = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_Direct);
-            // we need sea all around us :)
-
-            if (surroundings === "+N+E+S+W")
+            var diagonalCount = 0;
+            var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
+            var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
+            if (surroundingsPlainsDiagonal.includes("+SE"))
+            {
+                diagonalCount++;
+            }
+            if (surroundingsPlainsDiagonal.includes("+SW"))
+            {
+                diagonalCount++;
+            }
+            if (surroundingsPlainsDiagonal.includes("+NE"))
+            {
+                diagonalCount++;
+            }
+            if (surroundingsPlainsDiagonal.includes("+NW"))
+            {
+                diagonalCount++;
+            }
+            var directCount = 0;
+            if (surroundingsPlainsDirect.includes("+N"))
+            {
+                directCount++;
+            }
+            if (surroundingsPlainsDirect.includes("+S"))
+            {
+                directCount++;
+            }
+            if (surroundingsPlainsDirect.includes("+E"))
+            {
+                directCount++;
+            }
+            if (surroundingsPlainsDirect.includes("+W"))
+            {
+                directCount++;
+            }
+            if ((directCount <= 2 && diagonalCount <= 2) ||
+                (directCount == 0 && diagonalCount <= 3))
             {
                 return true;
             }
         }
-            return false;
+        return false;
     };
     this.getMiniMapIcon = function()
     {

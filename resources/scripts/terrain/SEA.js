@@ -16,15 +16,58 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain, currentTerrainID)
     {
-        terrain.loadBaseSprite("sea");
+        var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
+
+        var surroundingsBride = terrain.getSurroundings("BRIDGE", false, false, GameEnums.Directions_Direct, false, true);
+        if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge"))
+        {
+            GameConsole.print("using bridge", 1);
+            surroundingsPlains += "+bridge";
+        }
+        else
+        {
+            var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+            // load overlay north east
+            if (!surroundings.includes("+N") && !surroundings.includes("+E"))
+            {
+                var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
+                if (surroundingsNE !== "")
+                {
+                    surroundingsPlains += surroundingsNE;
+                }
+            }
+            // load overlay south east
+            if (!surroundings.includes("+S") && !surroundings.includes("+E"))
+            {
+                var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
+                if (surroundingsSE !== "")
+                {
+                    surroundingsPlains += surroundingsSE;
+                }
+            }
+            // load overlay south west
+            if (!surroundings.includes("+S") && !surroundings.includes("+W"))
+            {
+                var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
+                if (surroundingsSW !== "")
+                {
+                    surroundingsPlains +=  surroundingsSW;
+                }
+            }
+            // load overlay north west
+            if (!surroundings.includes("+N") && !surroundings.includes("+W"))
+            {
+                var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
+                if (surroundingsNW !== "")
+                {
+                    surroundingsPlains += surroundingsNW;
+                }
+            }
+        }
+        terrain.loadBaseSprite("sea" + surroundingsPlains);
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
-        if (surroundingsPlains !== "")
-        {
-            terrain.loadOverlaySprite("sea" + surroundingsPlains);
-        }
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
         {
@@ -39,49 +82,6 @@ var Constructor = function()
         if (surroundingsDesert !== "")
         {
             terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
-        }
-
-        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
-        // if (surroundings !== "")
-        // {
-        //     terrain.loadOverlaySprite("sea" + surroundings);
-        // }
-
-        // load overlay south east
-        if (!surroundings.includes("+S") && !surroundings.includes("+E"))
-        {
-            var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
-            if (surroundingsSE !== "")
-            {
-                terrain.loadOverlaySprite("sea" + surroundingsSE);
-            }
-        }
-        // load overlay north east
-        if (!surroundings.includes("+N") && !surroundings.includes("+E"))
-        {
-            var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
-            if (surroundingsNE !== "")
-            {
-                terrain.loadOverlaySprite("sea" + surroundingsNE);
-            }
-        }
-        // load overlay south west
-        if (!surroundings.includes("+S") && !surroundings.includes("+W"))
-        {
-            var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
-            if (surroundingsSW !== "")
-            {
-                terrain.loadOverlaySprite("sea" + surroundingsSW);
-            }
-        }
-        // load overlay north west
-        if (!surroundings.includes("+N") && !surroundings.includes("+W"))
-        {
-            var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
-            if (surroundingsNW !== "")
-            {
-                terrain.loadOverlaySprite("sea" + surroundingsNW);
-            }
         }
 
         // load river overlay

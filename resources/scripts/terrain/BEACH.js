@@ -40,7 +40,6 @@ var Constructor = function()
     {
         var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
-        var frameTime = 150;
         if (surroundingsLand !== "")
         {
             if (surroundingsLand === "+S" && surroundingsBeach.includes("+N"))
@@ -59,7 +58,7 @@ var Constructor = function()
             {
                 surroundingsBeach = surroundingsBeach.replace("+E", "");
             }
-            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand, frameTime);
+            terrain.loadBaseSprite("beach" + surroundingsBeach + "+land" + surroundingsLand);
         }
         else
         {
@@ -83,7 +82,7 @@ var Constructor = function()
                 {
                     surroundingsBeach = surroundingsBeach.replace("+W", "");
                 }
-                terrain.loadBaseSprite("beach" + surroundingsBeach, frameTime);
+                terrain.loadBaseSprite("beach" + surroundingsBeach);
             }
             else
             {
@@ -133,8 +132,7 @@ var Constructor = function()
         {
             terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
         }
-
-        // load river overlay
+        // load coast overlay
         var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
@@ -142,7 +140,7 @@ var Constructor = function()
             var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
-                terrain.loadOverlaySprite("sea" + surroundingsSE);
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsSE);
             }
         }
         // load overlay north east
@@ -151,7 +149,7 @@ var Constructor = function()
             var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
-                terrain.loadOverlaySprite("sea" + surroundingsNE);
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsNE);
             }
         }
         // load overlay south west
@@ -160,7 +158,7 @@ var Constructor = function()
             var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
-                terrain.loadOverlaySprite("sea" + surroundingsSW);
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsSW);
             }
         }
         // load overlay north west
@@ -169,27 +167,9 @@ var Constructor = function()
             var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
-                terrain.loadOverlaySprite("sea" + surroundingsNW);
+                terrain.loadOverlaySprite("sea+overlay" + surroundingsNW);
             }
         }
-
-        // var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
-        // if (surroundingsBeach.includes("+N"))
-        // {
-        //     terrain.loadOverlaySprite("sea+beach+N");
-        // }
-        // if (surroundingsBeach.includes("+S"))
-        // {
-        //     terrain.loadOverlaySprite("sea+beach+S");
-        // }
-        // if (surroundingsBeach.includes("+E"))
-        // {
-        //     terrain.loadOverlaySprite("sea+beach+E");
-        // }
-        // if (surroundingsBeach.includes("+W"))
-        // {
-        //     terrain.loadOverlaySprite("sea+beach+W");
-        // }
     };
 
     this.getMiniMapIcon = function()
