@@ -864,7 +864,6 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         pSprite->setResAnim(pAnim);
     }
     pSprite->setColor(color);
-    pSprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {

@@ -62,7 +62,6 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
     m_CurrentSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
-    m_CurrentSelector->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime * 2), -1);

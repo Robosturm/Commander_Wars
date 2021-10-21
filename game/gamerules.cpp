@@ -738,7 +738,6 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
             {
                 sprite->setHeight(GameMap::getImageSize() + 1);
             }
-            sprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -786,7 +785,6 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
             {
                 sprite->setHeight(GameMap::getImageSize() + 1);
             }
-            sprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -852,7 +850,6 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             {
                 sprite->setHeight(GameMap::getImageSize() + 1);
             }
-            sprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -869,8 +866,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             }
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());            
-            sprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
+            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(0, 0, 0, 255);
             sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
             pTerrain->addChild(sprite);

@@ -37,6 +37,7 @@ COStyleMenu::COStyleMenu()
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
     sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
     sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    sprite->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f));
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");

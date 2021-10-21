@@ -81,6 +81,7 @@ void InGameMenue::changeBackground(QString background)
     m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
     m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
     m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    m_backgroundSprite->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f));
 }
 
 void InGameMenue::loadHandling()

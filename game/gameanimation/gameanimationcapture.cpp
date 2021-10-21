@@ -42,7 +42,6 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         if (m_buildingSprites.get() == nullptr)
         {
             m_buildingSprites = oxygine::spSprite::create();
-            m_buildingSprites->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
             addChild(m_buildingSprites);
             createBuildingAnimation(pAnim, startPlayer, capturedPlayer);
             m_buildingResAnim = oxygine::spSingleResAnim::create();
