@@ -1,18 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
-#include "3rd_party/oxygine-framework/oxygine/Input.h"
-#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
-#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
-#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
-#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
-#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+
 #include <qmutex.h>
 
 #include "coreengine/console.h"

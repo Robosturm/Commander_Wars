@@ -1,4 +1,5 @@
-#include "qbuffer.h"
+#include <QBuffer>
+#include <QFile>
 
 #include "network/mainserver.h"
 

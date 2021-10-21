@@ -1,3 +1,5 @@
+#include <QFile>
+
 #include "network/networkgame.h"
 
 #include "multiplayer/networkcommands.h"

@@ -22,8 +22,6 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -179,8 +177,6 @@ void FileDialog::showFolder(QString folder)
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
         oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());

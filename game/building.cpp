@@ -234,7 +234,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
-        pSprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
+        pSprite->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.1f, 0.1f));
         addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
         m_addPlayerColor.append(mode);

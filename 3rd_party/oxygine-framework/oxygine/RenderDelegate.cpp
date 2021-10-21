@@ -7,7 +7,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
-#include "3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.h"
 
@@ -86,85 +85,9 @@ namespace oxygine
         }
     }
 
-    void RenderDelegate::render(MaskedSprite* sprite, const RenderState& parentRS)
-    {
-        Sprite* maskSprite = sprite->getMask();
-        if (!maskSprite)
-        {
-            sprite->Sprite::render(parentRS);
-            return;
-        }
-
-        const Diffuse& df = maskSprite->getAnimFrame().getDiffuse();
-        if (!df.base)
-        {
-            sprite->Sprite::render(parentRS);
-            return;
-        }
-
-
-        Material::null->apply();
-
-        AffineTransform world = maskSprite->computeGlobalTransform();
-
-        RectF maskDest = maskSprite->getDestRect();
-        RectF maskSrc = maskSprite->getSrcRect();
-
-
-        bool useR             = sprite->getUseRChannel();
-        bool rchannel         = useR ? true    : (df.alpha ? true     : false);
-        spTexture maskTexture = useR ? df.base : (df.alpha ? df.alpha : df.base);
-
-        STDRenderer* renderer = STDRenderer::getCurrent();
-
-        ClipUV clipUV = ClipUV(
-                            world.transform(maskDest.getLeftTop()),
-                            world.transform(maskDest.getRightTop()),
-                            world.transform(maskDest.getLeftBottom()),
-                            maskSrc.getLeftTop(),
-                            maskSrc.getRightTop(),
-                            maskSrc.getLeftBottom());
-
-        Vector2 v(1.0f / maskTexture->getWidth(), 1.0f / maskTexture->getHeight());
-        maskSrc.expand(v, v);
-
-
-
-        qint32 sflags = renderer->getBaseShaderFlags();
-        qint32 baseShaderFlags = sflags;
-
-        baseShaderFlags |= UberShaderProgram::MASK;
-        if (rchannel)
-        {
-            baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
-        }
-        VideoDriver::Uniform3f msk[4];
-        clipUV.get(msk);
-        VideoDriver::Uniform4f clipMask = VideoDriver::Uniform4f(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
-
-        rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
-
-        ShaderProgramChangedHook hook;
-        hook.hook = [&]()
-        {
-            VideoDriver::instance->setUniform("clip_mask", clipMask);
-            VideoDriver::instance->setUniform("msk", msk, 4);
-        };
-
-        renderer->pushShaderSetHook(&hook);
-        renderer->setBaseShaderFlags(baseShaderFlags);
-
-        sprite->Sprite::render(parentRS);
-
-        Material::null->apply();
-
-        renderer->popShaderSetHook();
-        renderer->setBaseShaderFlags(sflags);
-    }
-
     void RenderDelegate::doRender(Sprite* sprite, const RenderState& rs)
     {
-        if (!sprite->getAnimFrame().getDiffuse().base)
+        if (!sprite->getAnimFrame().getTexture())
         {
             return;
         }

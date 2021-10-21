@@ -515,8 +515,6 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::spBox9Sprite pPanel = oxygine::spBox9Sprite::create();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
-        pPanel->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pPanel->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pPanel->setResAnim(pAnim);
         pPanel->setX(x);
         pPanel->setY(y);

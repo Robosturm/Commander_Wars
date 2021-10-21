@@ -128,8 +128,6 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                 pAnim = pGameManager->getResAnim("menu+middle+mask");
                 pItemBox->setResAnim(pAnim);
                 pItemBox->setSize(pAnim->getSize());
-                pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
                 pItemBox->setHeight(GameMap::getImageSize());
                 pItemBox->setY(y);
@@ -291,8 +289,6 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     pItemBox->setResAnim(pAnim);
     pItemBox->setSize(pAnim->getSize());
     pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
-    pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pItemBox->addChild(icon);
     icon->setPosition(3, 0);
     pItemBox->setHeight(GameMap::getImageSize());
@@ -375,8 +371,6 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
     pBottomBox->setSize(pAnim->getSize());
     pBottomBox->setColorTable(pPlayer->getColorTableAnim(), true);
     pBottomBox->setWidth(width);
-    pBottomBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setY(y);
     pBottomBox->setX(x);
     addChild(pBottomBox);
@@ -391,8 +385,6 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
     pTopBox->setResAnim(pAnim);
     pTopBox->setSize(pAnim->getSize());
     pTopBox->setColorTable(pPlayer->getColorTableAnim(), true);
-    pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setWidth(width);
     pTopBox->setX(x);
     addChild(pTopBox);

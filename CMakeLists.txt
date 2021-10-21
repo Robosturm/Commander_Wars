@@ -142,7 +142,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Draggable.cpp
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp
     3rd_party/oxygine-framework/oxygine/Font.cpp
-    3rd_party/oxygine-framework/oxygine/Image.cpp
     3rd_party/oxygine-framework/oxygine/Input.cpp
     3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp
     3rd_party/oxygine-framework/oxygine/Material.cpp
@@ -154,8 +153,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
-    3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
     3rd_party/oxygine-framework/oxygine/core/Object.cpp
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
@@ -171,7 +168,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/Button.cpp
     3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp
     3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp
@@ -192,7 +188,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResBuffer.cpp
     3rd_party/oxygine-framework/oxygine/res/ResFont.cpp
     3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp
     3rd_party/oxygine-framework/oxygine/res/Resource.cpp
@@ -202,8 +197,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/text_utils/Aligner.cpp
     3rd_party/oxygine-framework/oxygine/text_utils/Node.cpp
     3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
-    # text utils
-    3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.cpp
     # closure
     3rd_party/oxygine-framework/oxygine/core/closure.h
     # math

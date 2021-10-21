@@ -518,8 +518,6 @@ void VictoryMenue::createStatisticsView()
         m_statisticsBox->setPosition(5, 100);
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    m_statisticsBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_statisticsBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_statisticsBox->setResAnim(pAnim);
     m_statisticsBox->setVisible(false);
     addChild(m_statisticsBox);

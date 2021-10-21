@@ -14,7 +14,6 @@ namespace oxygine
     {
         if (matA->m_base       != matB->m_base ||
             matA->m_table      != matB->m_table ||
-            matA->m_alpha      != matB->m_alpha ||
             matA->m_blend      != matB->m_blend ||
             matA->m_flags      != matB->m_flags ||
             matA->m_uberShader != matB->m_uberShader ||
@@ -36,7 +35,6 @@ namespace oxygine
     void Material::rehash(size_t& hash) const
     {
         hash_combine(hash, m_base.get());
-        hash_combine(hash, m_alpha.get());
         hash_combine(hash, m_table.get());
         hash_combine(hash, static_cast<qint32>(m_blend));
         hash_combine(hash, m_flags);
@@ -80,7 +78,6 @@ namespace oxygine
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, m_table);
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, m_base);
-        rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, m_alpha);
         rsCache().setBlendMode(m_blend);
     }
 

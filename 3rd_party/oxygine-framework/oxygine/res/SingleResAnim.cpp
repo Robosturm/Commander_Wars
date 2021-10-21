@@ -1,11 +1,11 @@
 #include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
-#include "qthread.h"
-#include "qapplication.h"
+#include <QApplication>
+
+#include "spritingsupport/spritecreator.h"
 
 namespace oxygine
 {
@@ -30,59 +30,19 @@ namespace oxygine
         ResAnim::init(file, columns, rows, scaleFactor, addTransparentBorder);
     }
 
-    void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
+                             bool clamp2Edge, quint32 linearFilter)
     {
+        SpriteCreator::convertToRgba(image);
         m_scaleFactor = scaleFactor;
-        if (original == nullptr)
-        {
-            return;
-        }
         m_frames.clear();
         m_texture = nullptr;
         m_texture = VideoDriver::instance->createTexture();
-        m_texture->init(original->lock());
-        ResAnim::init(m_texture, original->getSize(), columns, rows, scaleFactor, addTransparentBorder);
-        Point originalSize = original->getSize();
-
-        qint32 frame_width = originalSize.x / columns;
-        qint32 frame_height = originalSize.y / rows;
-
-        Vector2 frameSize((float)frame_width, (float)frame_height);
-        qint32 i = 0;
-        for (qint32 y = 0; y < rows; ++y)
-        {
-            for (qint32 x = 0; x < columns; ++x)
-            {
-                Rect src;
-                src.pos = Point(x * frame_width, y * frame_height);
-                src.size = Point(frame_width, frame_height);
-
-
-                Rect bounds;
-                HitTestData ht;
-                const ImageData& im = original->lock(src);
-                Image::makeAlpha(im, bounds, m_data, ht, true);
-
-                m_frames[i].setHitTestData(ht);
-                ++i;
-            }
-        }
-
-        i = 0;
-        for (qint32 y = 0; y < rows; ++y)
-        {
-            for (qint32 x = 0; x < columns; ++x)
-            {
-                HitTestData ht = m_frames[i].getHitTestData();
-                if (m_data.length() > 0)
-                {
-                    ht.data = &m_data[reinterpret_cast<size_t>(ht.data)];
-                }
-                m_frames[i].setHitTestData(ht);
-                ++i;
-            }
-        }
-
+        m_texture->init(image);
+        m_texture->setClamp2Edge(clamp2Edge);
+        m_texture->setLinearFilter(linearFilter);
+        Point originalSize = Point(image.width(), image.height());
+        ResAnim::init(m_texture, image.size(), columns, rows, scaleFactor, addTransparentBorder);
     }
 
     spTexture SingleResAnim::getTexture() const

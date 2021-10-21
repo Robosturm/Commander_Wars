@@ -90,8 +90,6 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
 
     oxygine::spBox9Sprite pPanelbox = oxygine::spBox9Sprite::create();
     pAnim = pObjectManager->getResAnim("panel");
-    pPanelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pPanelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pPanelbox->setResAnim(pAnim);
     pPanelbox->setX(m_CoDescription->getX() + m_CoDescription->getScaledWidth());
     pPanelbox->setY(startY);

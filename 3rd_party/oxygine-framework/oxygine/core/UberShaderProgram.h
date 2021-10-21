@@ -27,14 +27,13 @@ namespace oxygine
         {
             SAMPLER_BASE,
             SAMPLER_TABLE,
-            SAMPLER_ALPHA,
             SAMPLER_MASK,
             SAMPLER_NUM,
         };
         explicit UberShaderProgram() = default;
         virtual ~UberShaderProgram();
         ShaderProgram* getShaderProgram(qint32 flags);
-        void apply(VideoDriver* driver, spTexture base, spTexture alpha);
+        void apply(VideoDriver* driver, spTexture base);
         void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader, const QString& fracMatrixShader);
         void release();
     protected:

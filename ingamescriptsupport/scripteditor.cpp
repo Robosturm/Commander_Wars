@@ -23,8 +23,6 @@ ScriptEditor::ScriptEditor()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -285,8 +283,6 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
     oxygine::spBox9Sprite pSpritebox = oxygine::spBox9Sprite::create();
-    pSpritebox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pSpritebox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pSpritebox->setResAnim(pAnim);
     pSpritebox->setSize(x + 140 * 3 + 10, 50);
     pSpritebox->setPosition(5, y);

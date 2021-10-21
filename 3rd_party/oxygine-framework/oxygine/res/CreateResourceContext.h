@@ -11,7 +11,6 @@ namespace oxygine
     public:
         explicit XmlWalker(QString path,
                            float scaleFactor,
-                           bool alpha,
                            QDomElement xml);
         virtual ~XmlWalker() = default;
         bool empty() const
@@ -31,10 +30,6 @@ namespace oxygine
         {
             return m_scaleFactor;
         }
-        bool getAlphaHitTest() const
-        {
-            return m_alphaHitTest;
-        }
         QString getType() const
         {
             return m_root.nodeName();
@@ -51,7 +46,6 @@ namespace oxygine
         QDomElement m_last;
         bool m_notStarted;
         float m_scaleFactor;
-        bool m_alphaHitTest;
     };
 
     class CreateResourceContext
@@ -62,6 +56,6 @@ namespace oxygine
         Resources* m_resources{nullptr};
         QString m_xml_name;
         bool m_addTransparentBorder{false};
-        XmlWalker m_walker{"", 1.0f, false, QDomElement()};
+        XmlWalker m_walker{"", 1.0f, QDomElement()};
     };
 }

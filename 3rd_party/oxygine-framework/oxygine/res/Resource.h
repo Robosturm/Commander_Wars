@@ -46,14 +46,6 @@ namespace oxygine
         /**returns id from xml node. Function is helper*/
         static QString extractID(const QDomElement& node, QString file, QString def);
         static QString extractID(QString file);
-
-        virtual void setLinearFilter(quint32)
-        {
-        }
-        virtual quint32 getLinearFilter() const
-        {
-            return 0;
-        }
         /**
          * @brief getName
          * @return

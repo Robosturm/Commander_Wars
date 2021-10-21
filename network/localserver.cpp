@@ -1,4 +1,5 @@
-#include <qlocalsocket.h>
+#include <QLocalSocket>
+#include <QFile>
 
 #include "network/localserver.h"
 

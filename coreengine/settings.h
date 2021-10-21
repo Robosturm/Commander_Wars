@@ -189,9 +189,6 @@ public slots:
     static void setWalkAnimationSpeed(const quint32 &value);
     static float getWalkAnimationSpeed();
 
-    static quint32 getSpriteFilter();
-    static void setSpriteFilter(quint32 spriteFilter);
-
     static qint32 getShowCoCount();
     static void setShowCoCount(const qint32 &showCoCount);
 
@@ -542,7 +539,6 @@ private:
     static float m_mouseSensitivity;
     static bool m_record;
     static qint32 m_showCoCount;
-    static quint32 m_spriteFilter;
     static bool m_showIngameCoordinates;
     static GameEnums::COInfoPosition coInfoPosition;
     static bool m_autoScrolling;

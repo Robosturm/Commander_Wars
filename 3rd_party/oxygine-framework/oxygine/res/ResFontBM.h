@@ -32,7 +32,7 @@ namespace oxygine
             QString file;
             spTexture texture;
         };
-        void addPage(qint32 tw, qint32 th, QString head, QString file);
+        void addPage(QString head, QString file);
         void _loadPage(const page& p);
         virtual void _load() override;
         virtual void _unload() override;

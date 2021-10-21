@@ -428,8 +428,6 @@ void GameMenue::loadUIButtons()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     qint32 roundTime = pMap->getGameRules()->getRoundTimeMs();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -485,8 +483,6 @@ void GameMenue::loadUIButtons()
 
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -508,8 +504,6 @@ void GameMenue::loadUIButtons()
     if (m_pNetworkInterface.get() != nullptr)
     {
         pButtonBox = oxygine::spBox9Sprite::create();
-        pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pButtonBox->setResAnim(pAnim);
         pButtonBox->setSize(144, 50);
         pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight());

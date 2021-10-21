@@ -508,31 +508,6 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(touchPointSensitivity);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Sprite Aliasing: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked ingame sprites will be aliased smoother."));
-    pCheckbox->setChecked(Settings::getSpriteFilter() != GL_NEAREST);
-    pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
-    {
-        if (value)
-        {
-            Settings::setSpriteFilter(GL_LINEAR_MIPMAP_LINEAR);
-            pApp->applyFilter(GL_LINEAR_MIPMAP_LINEAR );
-        }
-        else
-        {
-            Settings::setSpriteFilter(GL_NEAREST);
-            pApp->applyFilter(GL_NEAREST);
-        }
-    });
-    m_pOptions->addItem(pCheckbox);
-    y += 40;
-
     showSoundOptions(m_pOptions, sliderOffset, y, this);
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -913,8 +888,6 @@ void OptionMenue::showMods()
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
 
         spCheckbox modCheck = spCheckbox::create();
         m_ModCheckboxes.append(modCheck);

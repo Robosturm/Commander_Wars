@@ -73,9 +73,6 @@ namespace oxygine
 
         resources& _getResources();
         resourcesMap& _getResourcesMap();
-
-        virtual void setLinearFilter(quint32 linearFilter) override;
-        virtual quint32 getLinearFilter() const override;
     protected:
         void updateName(QString filename);
         virtual void _load() override;

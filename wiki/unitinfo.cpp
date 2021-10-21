@@ -67,8 +67,6 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setPosition(width - 210, y);
     pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
     addChild(pSpriteBox);

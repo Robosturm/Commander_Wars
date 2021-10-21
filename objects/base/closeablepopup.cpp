@@ -15,8 +15,6 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
 
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     pBox->setSize(width, heigth);
 

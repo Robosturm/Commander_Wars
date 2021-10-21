@@ -145,8 +145,6 @@ MapSelectionView::MapSelectionView()
     m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
-    m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
     styleMain16.color = FontManager::getFontColor();
     styleMain16.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;

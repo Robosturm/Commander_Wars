@@ -20,8 +20,6 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
     m_pBox = oxygine::spBox9Sprite::create();
-    m_pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBox->setResAnim(pAnim);
     m_pBox->setSize(33, heigth);
     addChild(m_pBox);
@@ -84,8 +82,6 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 
     m_slider = oxygine::spBox9Sprite::create();
     pAnim = pObjectManager->getResAnim("h_scrollbar");
-    m_slider->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_slider->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_slider->setResAnim(pAnim);
 
     qint32 sliderHeight = 50;

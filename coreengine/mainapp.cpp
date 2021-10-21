@@ -66,7 +66,6 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
-    connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
 }
@@ -301,7 +300,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::LoadingScripts:
         {
-            applyFilter(Settings::getSpriteFilter());
             // start after ressource loading
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
@@ -338,21 +336,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         emit sigNextStartUpStep(static_cast<StartupPhase>(static_cast<qint8>(step) + 1));
     }
-}
-
-void Mainapp::applyFilter(quint32 filter)
-{
-    // load ressources by creating the singletons
-    BuildingSpriteManager::getInstance()->setLinearFilter(filter);
-    COSpriteManager::getInstance()->setLinearFilter(filter);
-    GameAnimationManager::getInstance()->setLinearFilter(filter);
-    GameManager::getInstance()->setLinearFilter(filter);
-    GameRuleManager::getInstance()->setLinearFilter(filter);
-    TerrainManager::getInstance()->setLinearFilter(filter);
-    UnitSpriteManager::getInstance()->setLinearFilter(filter);
-    BattleAnimationManager::getInstance()->setLinearFilter(filter);
-    COPerkManager::getInstance()->setLinearFilter(filter);
-    WikiDatabase::getInstance()->setLinearFilter(filter);
 }
 
 void Mainapp::doScreenshot()

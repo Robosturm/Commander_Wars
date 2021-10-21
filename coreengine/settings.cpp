@@ -118,7 +118,6 @@ qint32 Settings::m_MenuItemCount = 13;
 qint32 Settings::m_MenuItemRowCount = 2;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
-quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
 GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
 bool Settings::m_autoScrolling = true;
 bool Settings::m_autoCamera = true;
@@ -700,16 +699,6 @@ float Settings::getWalkAnimationSpeed()
         return 100.0f / (101.0f - m_walkAnimationSpeed);
     }
     return 100;
-}
-
-quint32 Settings::getSpriteFilter()
-{
-    return m_spriteFilter;
-}
-
-void Settings::setSpriteFilter(quint32 spriteFilter)
-{
-    m_spriteFilter = spriteFilter;
 }
 
 qint32 Settings::getShowCoCount()
@@ -1387,14 +1376,7 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_MenuItemRowCount = 1;
     }
-    m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
-    m_spriteFilter = settings.value("SpriteFilter", GL_LINEAR_MIPMAP_LINEAR).toInt(&ok);
-    if(!ok || m_spriteFilter < GL_NEAREST)
-    {
-        QString error = "Error in the Ini File: [Game] Setting: SpriteFilter";
-        CONSOLE_PRINT(error, Console::eERROR);
-        m_showCoCount = 0;
-    }
+    m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();    
     if (Settings::getSmallScreenDevice())
     {
         m_showCoCount = settings.value("ShowCoCount", 1).toInt(&ok);
@@ -1606,7 +1588,6 @@ void Settings::saveSettings()
         settings.setValue("MenuItemRowCount",               m_MenuItemRowCount);
         settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
         settings.setValue("ShowCoCount",                    m_showCoCount);
-        settings.setValue("SpriteFilter",                   m_spriteFilter);
         settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
         settings.setValue("AutoScrolling",                  m_autoScrolling);
         settings.setValue("AutoCamera",                     m_autoCamera);

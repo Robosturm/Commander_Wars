@@ -59,8 +59,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     pAnim = pObjectManager->getResAnim("mapSelectionTop");
     oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
-    pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBackground->setResAnim(pAnim);
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);
@@ -72,8 +70,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
 
     pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
     m_SelectedItem = oxygine::spBox9Sprite::create();
-    m_SelectedItem->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_SelectedItem->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_SelectedItem->setResAnim(pAnim);
     m_SelectedItem->setSize(width - 12, m_itemHeigth);
     m_SelectedItem->setPosition(5, y);
@@ -96,8 +92,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     {
         pAnim = pObjectManager->getResAnim("mapSelectionItem");
         pBackground = oxygine::spBox9Sprite::create();
-        pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBackground->setResAnim(pAnim);
         pBackground->setSize(width, m_itemHeigth);
         pBackground->setPosition(0, y - m_ItemContainer->getY());
@@ -151,8 +145,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     }
     pAnim = pObjectManager->getResAnim("mapSelectionBottom");
     pBackground = oxygine::spBox9Sprite::create();
-    pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBackground->setResAnim(pAnim);
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);

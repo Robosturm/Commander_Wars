@@ -73,7 +73,6 @@ namespace oxygine
             driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);
-            driver->setUniformInt("alpha_texture", UberShaderProgram::SAMPLER_ALPHA);
             driver->setUniformInt("mask_texture", UberShaderProgram::SAMPLER_MASK);
             s.program = pgl;
         }
@@ -89,12 +88,8 @@ namespace oxygine
         }
     }
 
-    void UberShaderProgram::apply(VideoDriver* driver, spTexture base, spTexture alpha)
+    void UberShaderProgram::apply(VideoDriver* driver, spTexture base)
     {
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
-        if (alpha)
-        {
-            driver->setTexture(UberShaderProgram::SAMPLER_ALPHA, alpha);
-        }
     }
 }

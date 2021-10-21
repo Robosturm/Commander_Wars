@@ -15,7 +15,6 @@ namespace oxygine
     class UpdateState;
     class Actor;
     class ClipRectActor;
-    class MaskedSprite;
     class Sprite;
     class TextField;
     class ColorRectSprite;

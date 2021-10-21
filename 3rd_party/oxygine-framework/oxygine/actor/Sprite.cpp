@@ -7,7 +7,6 @@
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 
 namespace oxygine
 {
@@ -48,31 +47,15 @@ namespace oxygine
         {
             return true;
         }
-        const HitTestData& ad = m_frame.getHitTestData();
-        if (!ad.data)
+        ResAnim* pAnim = m_frame.getResAnim();
+        if (pAnim == nullptr)
         {
-            return true;
+            return false;
         }
-        const qint32 BITS = (sizeof(int32_t) * 8);
-
-        const unsigned char* buff = ad.data;
-        if (buff != nullptr)
-        {
-            Vector2 pos = localPosition * m_frame.getResAnim()->getAppliedScale();
-            pos = pos.div(m_localScale);
-            Point lp = pos.cast<Point>() / Image::HIT_TEST_DOWNSCALE;
-            Rect r(0, 0, ad.w, ad.h);
-            if (r.pointIn(lp))
-            {
-                const int32_t* ints = reinterpret_cast<const int32_t*>(buff + lp.y * ad.pitch);
-
-                qint32 n = lp.x / BITS;
-                qint32 b = lp.x % BITS;
-
-                return (ints[n] >> b) & 1;
-            }
-        }
-        return false;
+        Vector2 pos = localPosition * pAnim->getAppliedScale();
+        pos = pos.div(m_localScale);
+        Point lp = pos.cast<Point>();
+        return m_frame.getHits(lp);
     }
 
     void Sprite::setFlippedX(bool flippedX)
@@ -207,10 +190,10 @@ namespace oxygine
         if (pAnim.get() != nullptr)
         {
             const auto & frame = pAnim->getFrame(0, 0);
-            if (m_mat->m_table != frame.getDiffuse().base)
+            if (m_mat->m_table != frame.getTexture())
             {
                 m_mat = m_mat->clone();
-                m_mat->m_table = frame.getDiffuse().base;
+                m_mat->m_table = frame.getTexture();
                 m_mat->setMatrixMode(matrix);
                 m_mat = MaterialCache::mc().cache(*m_mat.get());
                 matChanged();
@@ -274,15 +257,12 @@ namespace oxygine
         __setSize(m_frame.getSize().mult(m_localScale));
 
 
-        const Diffuse& df = m_frame.getDiffuse();
-        if (df.base  != m_mat->m_base ||
-            df.alpha != m_mat->m_alpha)
+        const spTexture& texture = m_frame.getTexture();
+        if (texture != m_mat->m_base)
         {
 
             spMaterial mat = m_mat->clone();
-            mat->m_base  = df.base;
-            mat->m_alpha = df.alpha;
-            mat->m_flags = df.flags;
+            mat->m_base  = texture;
             if (GameWindow::getWindow()->isWorker())
             {
                 QMutexLocker lock(&m_Locked);
@@ -335,7 +315,7 @@ namespace oxygine
 
     RectF Sprite::getDestRect() const
     {
-        if (!m_frame.getDiffuse().base)
+        if (!m_frame.getTexture())
         {
             return Actor::getDestRect();
         }

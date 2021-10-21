@@ -62,6 +62,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
     m_CurrentSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
+    m_CurrentSelector->setDestRecModifier(oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f));
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime * 2), -1);
@@ -553,8 +554,6 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSprite = oxygine::spBox9Sprite::create();
-    pSprite->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pSprite->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     addChild(pSprite);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSprite->setResAnim(pAnim);

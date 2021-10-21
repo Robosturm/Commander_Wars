@@ -13,7 +13,6 @@ namespace oxygine
         virtual ~RenderDelegate() = default;
         void render(Actor*, const RenderState&);
         void render(ClipRectActor*, const RenderState&);
-        void render(MaskedSprite*, const RenderState&);
         void doRender(Sprite*, const RenderState&);
         void doRender(TextField*, const RenderState&);
         void doRender(ColorRectSprite*, const RenderState&);

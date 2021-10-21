@@ -1,12 +1,26 @@
 var Constructor = function()
 {
+
+    this.buildingData = [["ac", "ac"],
+                         ["bd", "bd"],
+                         ["bh", "bh"],
+                         ["bg", "bg"],
+                         ["bm", "bm"],
+                         ["dm", "dm"],
+                         ["ge", "ge"],
+                         ["gs", "gs"],
+                         ["ma", "ma"],
+                         ["os", "os"],
+                         ["pf", "pf"],
+                         ["ti", "ti"],
+                         ["yc", "yc"],];
     // called for loading the main sprite
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)
         {
-            // get army name
-            var armyName = building.getOwner().getArmy().toLowerCase();
+            var player = building.getOwner();
+            var armyName = Global.getArmyNameFromPlayerTable(player, HQ.buildingData);
             building.loadSprite("hq+" + armyName, false);
             building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Matrix);
         }

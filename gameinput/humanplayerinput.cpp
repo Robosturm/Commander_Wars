@@ -1117,8 +1117,6 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     constexpr qint32 baseWidth = 90;
     constexpr qint32 textWidth = 60;

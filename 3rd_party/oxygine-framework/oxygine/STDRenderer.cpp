@@ -1,9 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
@@ -230,22 +228,18 @@ namespace oxygine
 
     void STDRenderer::restore()
     {
-        Image memwhite;
-        memwhite.init(4, 4, ImageData::TF_R8G8B8A8);
-
-        oxygine::operations::op_fill fill;
-        ImageData im = memwhite.lock();
-        oxygine::operations::applyOperation(fill, im);
-
+        QImage imgWhite(4, 4, QImage::Format_RGBA8888);
+        imgWhite.fill(Qt::white);
         white = VideoDriver::instance->createTexture();
-        white->init(im);
+        white->init(imgWhite);
         white->setLinearFilter(GL_LINEAR);
         white->setClamp2Edge(false);
 
 
-        memwhite.fillZero();
+        QImage imgTransparent(4, 4, QImage::Format_RGBA8888);
+        imgTransparent.fill(Qt::transparent);
         invisible = VideoDriver::instance->createTexture();
-        invisible->init(im);
+        invisible->init(imgTransparent);
         invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
 

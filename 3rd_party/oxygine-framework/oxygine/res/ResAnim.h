@@ -16,11 +16,11 @@ namespace oxygine
         virtual ~ResAnim() = default;
 
         void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
-        void init(QImage & img, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
-        virtual void init(Image* original, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
-        void init(animationFrames& frames, qint32 columns, float scaleFactor, float appliedScale = 1);
+        virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
+                          bool clamp2Edge = true, quint32 linearFilter = GL_NEAREST);
+        void init(qint32 columns, float scaleFactor, float appliedScale = 1);
         /**creates animation frames from Texture*/
-        void init(spTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        void init(spTexture texture, const QSize& originalSize, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
 
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);

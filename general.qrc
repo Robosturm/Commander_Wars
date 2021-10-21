@@ -5265,18 +5265,6 @@
         <file>resources/images/battleanimations/smuggler/smuggler+mask+5.png</file>
         <file>resources/images/battleanimations/smuggler/smuggler+mask+6.png</file>
         <file>resources/objects/next_player.png</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bd.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+dm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ma.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+pf.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
         <file>resources/images/battleanimations/GeneralSprites/flak_hit.png</file>
         <file>resources/images/battleanimations/GeneralSprites/flak_shot.png</file>
         <file>resources/images/battleanimations/GeneralSprites/flak_shot_air.png</file>
@@ -5354,11 +5342,6 @@
         <file>resources/images/game/battlesprites/background/back_rainbeach.png</file>
         <file>resources/images/game/battlesprites/background/back_snowbeach.png</file>
         <file>resources/images/game/battlesprites/background/back_snowbeach+sea.png</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+yc.xcf</file>
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+ac+fire+mask.png</file>
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+bm+fire+mask.png</file>
         <file>resources/images/battleanimations/antitankcannon/antitankcannon+ge+fire+mask.png</file>
@@ -5452,8 +5435,6 @@
         <file>resources/images/game/battlesprites/background/back_snowruin.png</file>
         <file>resources/images/game/battlesprites/background/back_tower.png</file>
         <file>resources/ui/mapEditDialog.xml</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bh+air.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bh.xcf</file>
         <file>resources/images/terrain/beach+N+E+S+W.png</file>
         <file>resources/images/terrain/beach+N+S.png</file>
         <file>resources/images/terrain/desert_ruin+0.png</file>
@@ -5904,5 +5885,7 @@
         <file>resources/images/co/defenseStar.png</file>
         <file>resources/images/game/battlesprites/background/back_wastehq+.png</file>
         <file>resources/images/game/battlesprites/background/back_wastehq+ac.png</file>
+        <file>resources/images/building/hq+bg.png</file>
+        <file>resources/images/building/hq+bg+mask.png</file>
     </qresource>
 </RCC>

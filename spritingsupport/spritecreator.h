@@ -173,6 +173,11 @@ public:
      * @param rows
      */
     static void preProcessMask(QImage & mask, const QImage & overlay, qint32 columns, qint32 rows);
+    /**
+     * @brief convertToRgba
+     * @param input
+     */
+    static void convertToRgba(QImage & input);
 };
 
 #endif // SPRITECREATOR_H

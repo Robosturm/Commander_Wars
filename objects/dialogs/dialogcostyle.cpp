@@ -26,8 +26,6 @@ DialogCOStyle::DialogCOStyle(QString coid)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -299,8 +297,6 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pBox->setResAnim(pAnim);
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + style + "+nrm"));    
     float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
     pBox->setPosition(m_boxWidth, 10);
     m_boxWidth += pBox->getWidth() + 10;

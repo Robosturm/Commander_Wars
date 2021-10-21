@@ -668,16 +668,12 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     }
     oxygine::spBox9Sprite pStartBox = oxygine::spBox9Sprite::create();
     pStartBox->setResAnim(pStartAnim);
-    pStartBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pStartBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pStartBox->setSize(static_cast<qint32>(width * divider) + 1, 8);
     pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
     pActor->addChild(pStartBox);
 
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
-    pEndBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pEndBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pEndBox->setSize(static_cast<qint32>(width * (1.0f - divider)) + 2, 8);
     pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getWidth(), y);
     pActor->addChild(pEndBox);
