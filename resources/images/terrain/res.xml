@@ -424,10 +424,16 @@
         <image file="snow+S.png" />
         <image file="snow+E.png" />
         <image file="snow+N.png" />
+
         <image file="snow_forest.png" />
         <image file="snow_forest+E.png" />
         <image file="snow_forest+E+W.png" />
         <image file="snow_forest+W.png" />
+        <image file="snow_forest+SE.png" />
+        <image file="snow_forest+NE.png" />
+        <image file="snow_forest+SW.png" />
+        <image file="snow_forest+NW.png" />
+
         <image file="snow_wasteland.png" />
         <image file="snow_mountain.png" />
         <image file="snow_mountain+E.png" />
@@ -473,11 +479,15 @@
         <image file="desert+S.png" />
         <image file="desert+E.png" />
         <image file="desert+N.png" />
-        
+
         <image file="desert_forest.png" />
         <image file="desert_forest+E.png" />
         <image file="desert_forest+E+W.png" />
         <image file="desert_forest+W.png" />
+        <image file="desert_forest+SE.png" />
+        <image file="desert_forest+NE.png" />
+        <image file="desert_forest+SW.png" />
+        <image file="desert_forest+NW.png" />
         
         <image file="desert_wasteland.png" />
         

@@ -5,7 +5,7 @@ var PLAYER =
 
     getDefaultPlayerColors : function()
     {
-        return PLAYER.defaultColors.length;
+        return PLAYER.defaultColors.length - 1;
     },
     // mapping table for table color to display color
     defaultColors : [["#f00008", "#f05038"], // os
@@ -35,7 +35,7 @@ var PLAYER =
     getDefaultColor : function(index)
     {
         var color = "#000000";
-        if (index < PLAYER.defaultColors.length)
+        if (index < PLAYER.defaultColors.length - 1)
         {
             color = PLAYER.defaultColors[index][0];
         }

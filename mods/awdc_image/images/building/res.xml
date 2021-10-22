@@ -32,6 +32,11 @@
         <image file="mine+mask.png" cols = "2" />
         <image file="mine+neutral.png" />
         
+        <!-- radar -->
+        <image file="radar.png" cols = "2" />
+        <image file="radar+mask.png" cols = "2" />
+        <image file="radar+neutral.png" />
+        
         <!-- silo -->
         <image file="silo.png" />
         <image file="silo+rocket.png" />
