@@ -39,6 +39,14 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("SNOW_WASTELAND");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
+        else if (currentTerrainID === "WASTE_WASTELAND")
+        {
+            terrain.loadBaseTerrain("WASTE_WASTELAND");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");

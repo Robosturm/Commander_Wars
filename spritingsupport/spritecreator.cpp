@@ -818,7 +818,7 @@ void SpriteCreator::convertToRgba(QImage & input)
             }
             else
             {
-                output.setPixel(x, y, input.pixel(x, y));
+                output.setPixelColor(x, y, pixel);
             }
         }
     }

@@ -15,11 +15,6 @@ var Constructor = function()
     {
         return 0;
     };
-
-    this.getBaseTerrain = function(building)
-    {
-        return "DESERT";
-    };
     this.getName = function()
     {
         return qsTr("Desert Weld");

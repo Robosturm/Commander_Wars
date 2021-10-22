@@ -38,7 +38,7 @@ getMultiturnFieldColor = function()
 getTurnFieldColor = function()
 {
     // the color used for the normal move tiles
-    return "#329600";
+    return "#0000FF";
 }
 
 getArmyNameFromPlayerTable = function(player, table)

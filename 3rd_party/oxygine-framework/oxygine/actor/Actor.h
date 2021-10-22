@@ -458,7 +458,7 @@ namespace oxygine
         Actor* m_parent;
         tweens m_tweens;
         children m_children;
-        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.501f, 0.501f, 0.0f, 0.0f)};
+        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.55f, 0.55f, 0.0f, 0.0f)};
         union
         {
             //dont change order!!! or brake statements: if (_pressedOvered == _overred)

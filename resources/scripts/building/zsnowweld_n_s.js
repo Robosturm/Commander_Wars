@@ -11,10 +11,6 @@ var Constructor = function()
         building.loadSprite("snow_weld+N+S", false);
         building.loadSpriteV2("snow_weld+N+S+mask", GameEnums.Recoloring_Matrix);
     };
-    this.getBaseTerrain = function(building)
-    {
-        return "SNOW";
-    };
     this.getBaseIncome = function()
     {
         return 0;
