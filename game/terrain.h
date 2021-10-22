@@ -140,7 +140,18 @@ public:
      */
     bool isValid();
 
+
 public slots:
+    /**
+     * @brief getHasFlowDirection
+     * @return
+     */
+    bool getHasFlowDirection() const;
+    /**
+     * @brief setHasFlowDirection
+     * @param newHasFlowDirection
+     */
+    void setHasFlowDirection(bool newHasFlowDirection);
     /**
      * @brief getWeatherOverlaySpeed
      * @return
@@ -503,6 +514,7 @@ private:
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
     bool m_hasStartOfTurn{false};
+    bool m_hasFlowDirection{false};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;

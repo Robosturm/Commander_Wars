@@ -453,6 +453,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     setWidth(width * GameMap::getImageSize());
     setHeight(heigth * GameMap::getImageSize());
 
+    QVector<QPoint> flowPoints;
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites
@@ -464,7 +465,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                m_fields[y][x]->loadSprites();
+                if (m_fields[y][x]->getHasFlowDirection())
+                {
+                    flowPoints.append(QPoint(x, y));
+                }
+                else
+                {
+                    m_fields[y][x]->loadSprites();
+                }
                 if (m_fields[y][x]->getUnit() != nullptr)
                 {
                     m_fields[y][x]->getUnit()->updateSprites(editor);
@@ -479,33 +487,35 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     else
     {
         // more optimized for a single terrain :)
-        for (qint32 y = yInput -1; y <= yInput + 1; y++)
+        for (qint32 y = yInput -3; y <= yInput + 3; y++)
         {
-            for (qint32 x = xInput -1; x <= xInput + 1; x++)
+            for (qint32 x = xInput -3; x <= xInput + 3; x++)
             {
                 if (onMap(x, y))
                 {
-                    m_fields[y][x]->loadSprites();
-                    if (m_fields[y][x]->getUnit() != nullptr)
+                    if (m_fields[y][x]->getHasFlowDirection())
                     {
-                        m_fields[y][x]->getUnit()->updateSprites(editor);
+                        flowPoints.append(QPoint(x, y));
                     }
-                    if (m_fields[y][x]->getBuilding() != nullptr)
+                    else
                     {
-                        m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
+                        m_fields[y][x]->loadSprites();
+                        if (m_fields[y][x]->getUnit() != nullptr)
+                        {
+                            m_fields[y][x]->getUnit()->updateSprites(editor);
+                        }
+                        if (m_fields[y][x]->getBuilding() != nullptr)
+                        {
+                            m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
+                        }
                     }
-                }
-            }
-            for (qint32 x = xInput + 2; x < width; x++)
-            {
-                if (onMap(x, y))
-                {
-                    spTerrain pTerrain = m_fields[y][x];
-                    pTerrain->detach();
-                    addChild(pTerrain);
                 }
             }
         }
+    }
+    for (const auto & point : qAsConst(flowPoints))
+    {
+
     }
 
     CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);

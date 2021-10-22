@@ -59,6 +59,16 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
             GameMap::getImageSize());
 }
 
+bool Terrain::getHasFlowDirection() const
+{
+    return m_hasFlowDirection;
+}
+
+void Terrain::setHasFlowDirection(bool newHasFlowDirection)
+{
+    m_hasFlowDirection = newHasFlowDirection;
+}
+
 bool Terrain::getHasStartOfTurn() const
 {
     return m_hasStartOfTurn;

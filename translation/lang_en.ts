@@ -1719,9 +1719,9 @@ Distributed for units beeing spawned at the given rate.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
-        <location filename="../game/gamemap.cpp" line="463"/>
-        <location filename="../game/gamemap.cpp" line="517"/>
-        <location filename="../game/gamemap.cpp" line="1282"/>
+        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="527"/>
+        <location filename="../game/gamemap.cpp" line="1292"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1736,43 +1736,43 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="463"/>
-        <location filename="../game/gamemap.cpp" line="1282"/>
+        <location filename="../game/gamemap.cpp" line="464"/>
+        <location filename="../game/gamemap.cpp" line="1292"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="517"/>
+        <location filename="../game/gamemap.cpp" line="527"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="527"/>
+        <location filename="../game/gamemap.cpp" line="537"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1259"/>
+        <location filename="../game/gamemap.cpp" line="1269"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1309"/>
+        <location filename="../game/gamemap.cpp" line="1319"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1319"/>
+        <location filename="../game/gamemap.cpp" line="1329"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1327"/>
+        <location filename="../game/gamemap.cpp" line="1337"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1339"/>
+        <location filename="../game/gamemap.cpp" line="1349"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
