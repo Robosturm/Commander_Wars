@@ -112,7 +112,7 @@ public slots:
     void allPlayerStartFundsChanged(float value);
     void playerStartFundsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
-    void playerColorChanged(QColor value, qint32 playerIdx, qint32 item);
+    void playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item);
     void selectedArmyChanged(qint32 player, QString army);
     void showSelectCO(qint32 player, quint8 co);
     void playerCO1Changed(QString coid, qint32 playerIdx);
@@ -218,6 +218,36 @@ protected:
      * @brief changeTeams
      */
     void changeAllTeams(qint32 value);
+    /**
+     * @brief getDefaultColorCount
+     * @return
+     */
+    qint32 getDefaultColorCount();
+    /**
+     * @brief getDefaultColor
+     * @param index
+     * @return
+     */
+    QColor getDefaultColor(qint32 index);
+    /**
+     * @brief getDisplayColor
+     * @param index
+     * @param exists
+     * @return
+     */
+    QColor getDisplayColor(qint32 index, bool & exists);
+    /**
+     * @brief tableColorToDisplayColor
+     * @param tableColor
+     * @return
+     */
+    QColor tableColorToDisplayColor(QColor tableColor);
+    /**
+     * @brief displayColorToTableColor
+     * @param displayColor
+     * @return
+     */
+    QColor displayColorToTableColor(QColor displayColor);
 private:
     // player selection
     spPanel m_pPlayerSelection;

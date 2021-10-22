@@ -7,33 +7,34 @@ var PLAYER =
     {
         return PLAYER.defaultColors.length;
     },
-    defaultColors : [   "#f00008", // os
-                        "#0098f8", // bm
-                        "#00c010", // ge
-                        "#d08000", // yc
-                        "#6038a0", // bh
-                        "#5c5663", // bg
-                        "#797b78", // ma
-                        "#e88613", // ac
-                        "#bc8248", // bd
-                        "#bf901c", // gs
-                        "#ff33cc", // pf
-                        "#17a195", // ti
-                        "#800080", // dm
-                        "#01cbff",
-                        "#006400",
-                        "#ff0000",
-                        "#c4443d",
-                        "#a29db9",
-                        "#617c0e",
-                        "#2342ba",
-                        "#85927b",],
+    // mapping table for table color to display color
+    defaultColors : [["#f00008", "#f00008"], // os
+                     ["#0098f8", "#0098f8"], // bm
+                     ["#00c010", "#00c010"], // ge
+                     ["#d08000", "#d08000"], // yc
+                     ["#6038a0", "#6038a0"], // bh
+                     ["#5c5663", "#5c5663"], // bg
+                     ["#797b78", "#797b78"], // ma
+                     ["#e88613", "#e88613"], // ac
+                     ["#bc8248", "#bc8248"], // bd
+                     ["#bf901c", "#bf901c"], // gs
+                     ["#ff33cc", "#ff33cc"], // pf
+                     ["#17a195", "#17a195"], // ti
+                     ["#800080", "#800080"], // dm
+                     ["#01cbff", "#01cbff"],
+                     ["#006400", "#006400"],
+                     ["#ff0000", "#ff0000"],
+                     ["#c4443d", "#c4443d"],
+                     ["#a29db9", "#a29db9"],
+                     ["#617c0e", "#617c0e"],
+                     ["#2342ba", "#2342ba"],
+                     ["#85927b", "#85927b"],],
     getDefaultColor : function(index)
     {
         var color = "#000000";
         if (index < PLAYER.defaultColors.length)
         {
-            color = PLAYER.defaultColors[index];
+            color = PLAYER.defaultColors[index][0];
         }
         else
         {
@@ -57,6 +58,16 @@ var PLAYER =
         }
         return color;
     },
+    getDisplayColor : function(index)
+    {
+        var color = "";
+        if (index < PLAYER.defaultColors.length)
+        {
+            color = PLAYER.defaultColors[index][1];
+        }
+        return color;
+    },
+
     colorTables : [ "orange_star",
                     "blue_moon",
                     "green_earth",
