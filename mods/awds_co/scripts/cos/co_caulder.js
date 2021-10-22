@@ -1,5 +1,7 @@
 CO_CAULDER.coZoneBonus = 0;
 CO_CAULDER.coGlobalBonus = 20;
+CO_CAULDER.powerBonus = 30;
+CO_CAULDER.superPowerBonus = 50;
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                          defender, defPosX, defPosY, isDefender, action)
@@ -10,11 +12,11 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 50;
+            return CO_CAULDER.superPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 30;
+            return CO_CAULDER.powerBonus;
         default:
-            return 20;
+            return CO_CAULDER.coGlobalBonus;
         }
     }
 };
@@ -28,11 +30,11 @@ CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 50;
+            return CO_CAULDER.superPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 30;
+            return CO_CAULDER.powerBonus;
         default:
-            return 20;
+            return CO_CAULDER.coGlobalBonus;
         }
     }
 };

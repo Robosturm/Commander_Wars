@@ -123,6 +123,7 @@ public:
      * @brief setFinishNode
      */
     virtual void setFinishNode(qint32 x, qint32 y);
+public slots:
     /**
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x
@@ -148,7 +149,6 @@ public:
      * @return
      */
     QVector<QPoint> getAllNodePoints(qint32 maxRange = infinite);
-public slots:
     /**
      * @brief isReachable
      * @param x

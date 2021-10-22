@@ -180,8 +180,8 @@ var Constructor = function()
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
-            buildingId === "TOWN" ||
-            buildingId === "HQ")
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
         {
             return ["ZCOUNIT_PARTISAN"];
         }
@@ -203,19 +203,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Alexander captures revolt against capturing each day which increases the resistance 1.");
+        return qsTr("Alexander is loved by his citizens so much that they have a tendency to resist being captured.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nPartisan\n") +
-                   qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
+                   qsTr("\nGlobal Effect: \nBuildings that Alexander owns put up a fight when being captured by enemy soldiers. Each building recovers 1 capture point each day while under siege.")
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Alexander's troops capture at a faster rate, while enemy captures are forced to restart.");
+        return qsTr("Alexander's charisma and brilliant speech wins over the people. Alexander's troops capture at a faster rate, while enemy captures are forced to restart entirely.");
     };
     this.getPowerName = function(co)
     {
@@ -223,7 +223,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Enemies receive no income, and half of their current funds are diverted to Alexander.");
+        return qsTr("Enemies receive no income for this turn, and half of their current funds are diverted to Alexander.");
     };
     this.getSuperPowerName = function(co)
     {
@@ -231,23 +231,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Comrades, I beg of you to see from my eyes..."),
-                qsTr("There is more to war than simply bullets and explosions."),
-                qsTr("Express yourselves, my dear people, through actions rather than words!"),
-                qsTr("Now we shall see where their sympathies really belong."),
-                qsTr("Perhaps this will get you to negotiate instead..."),
-                qsTr("You can only win a war if your people support you, and they prefer me!")];
+        return [qsTr("Comrades! I beg of you to come to your senses!"),
+                qsTr("There is more to war than bullets and explosions."),
+                qsTr("The people will rally under my cause!"),
+                qsTr("Now we shall see where their loyalties truly belong."),
+                qsTr("Perhaps this will get you to consider a peaceful resolution!"),
+                qsTr("You can only win a war if your people support you, allow me to demonstrate!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Ironically, your shortcomings stemmed from within your own ranks."),
-                qsTr("Ah, I see now! This is why the citizens were on my side all along."),
-                qsTr("Only through unrivaled determination did I achieve success.")];
+        return [qsTr("Your shortcomings stemmed from within your own ranks."),
+                qsTr("The citizens were on my side all along."),
+                qsTr("Only through unrivaled support did I achieve success.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
-                qsTr("It's the blasted weather! That was the problem! Hssss!")];
+        return [qsTr("I failed my people, but I will free them soon."),
+                qsTr("You have the support of your people....for now.")];
     };
     this.getName = function()
     {

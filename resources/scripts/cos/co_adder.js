@@ -216,7 +216,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nHot Tank\n") +
-                   qsTr("\nGlobal Effect: \nNo bonus.") +
+                   qsTr("\nGlobal Effect: \nNone.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
         return text;

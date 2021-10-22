@@ -3,7 +3,7 @@ CO_CAULDER.init = function(co)
     co.setPowerStars(0);
     co.setSuperpowerStars(7);
 };
-CO_CASSIDY.activateSuperpower = function(co, powerMode)
+CO_CAULDER.activateSuperpower = function(co, powerMode)
 {
     CO_CAULDER.activatePower(co, powerMode);
 };
@@ -17,6 +17,8 @@ CO_CAULDER.getSuperPowerName = function()
 };
 CO_CAULDER.coZoneBonus = 0;
 CO_CAULDER.coGlobalBonus = 20;
+CO_CAULDER.powerBonus = 30;
+CO_CAULDER.superPowerBonus = 30;
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                          defender, defPosX, defPosY, isAttacker, action)
@@ -28,7 +30,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            return 30;
+            return CO_CAULDER.powerBonus;
         default:
             return CO_CAULDER.coGlobalBonus;
         }
@@ -45,7 +47,7 @@ CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            return 30;
+            return CO_CAULDER.powerBonus;
         default:
             return CO_CAULDER.coGlobalBonus;
         }

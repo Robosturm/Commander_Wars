@@ -267,6 +267,10 @@ public slots:
      */
     void loadSprites();
     /**
+     * @brief unloadSprites
+     */
+    void unloadSprites();
+    /**
      * @brief getMinimapIcon
      * @return
      */
@@ -441,6 +445,11 @@ public slots:
      * @return
      */
     bool existsResAnim(QString spriteId);
+    /**
+     * @brief updateFlowSprites
+     * @param pPfs
+     */
+    void updateFlowSprites(TerrainFindingSystem* pPfs);
 protected:
     /**
      * @brief createBuildingDownStream

@@ -269,7 +269,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are weaker and Sea units stronger") +
+        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point and have increased firepower. Air units suffer from reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nNaval units have ncreased firepower.");
     };
     this.getPowerDescription = function(co)
@@ -298,10 +298,10 @@ var Constructor = function()
                 qsTr("Drake is taking the helm!")];
     };
     this.getVictorySentences = function(co)
-    {
-        return [qsTr("I'm just glad I survived that..."),
-                qsTr("That was some rough sailing! Blow me down... we finally won.")];
-    };
+        {
+            return [qsTr("I'm just glad I survived that..."),
+                    qsTr("That was some rough sailing!")];
+        };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("A job well done! You've beaten me."),

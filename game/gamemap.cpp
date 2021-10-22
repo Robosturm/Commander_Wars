@@ -24,6 +24,7 @@
 #include "game/gameanimation/gameanimationnextday.h"
 #include "game/building.h"
 #include "game/gamemap.h"
+#include "game/terrainfindingsystem.h"
 
 #include "gameinput/humanplayerinput.h"
 
@@ -513,9 +514,17 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
         }
     }
-    for (const auto & point : qAsConst(flowPoints))
+    while (flowPoints.size() > 0)
     {
-
+        QPoint pos = flowPoints[0];
+        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getTerrainID(), pos.x(), pos.y());
+        pPfs->explore();
+        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
+        auto points = pPfs->getAllNodePoints();
+        for (const auto & point : qAsConst(points))
+        {
+            flowPoints.removeAll(point);
+        }
     }
 
     CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);

@@ -304,7 +304,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
     addChild(m_pBaseTerrain);
 }
 
-void Terrain::loadSprites()
+void Terrain::unloadSprites()
 {
     // unload old stuff
     if (m_pTerrainSprite.get() != nullptr)
@@ -320,6 +320,11 @@ void Terrain::loadSprites()
         }
         m_pOverlaySprites.clear();
     }
+}
+
+void Terrain::loadSprites()
+{
+    unloadSprites();
     // load sub terrain
     if (m_pBaseTerrain.get() != nullptr)
     {
@@ -412,6 +417,18 @@ void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
     {
         CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
+}
+
+void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "updateFlowSprites";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pPfs);
+    args1 << obj2;
+    pInterpreter->doFunction(m_terrainID, function1, args1);
 }
 
 bool Terrain::existsResAnim(QString spriteId)

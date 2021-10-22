@@ -256,7 +256,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return  qsTr("\nSpecial Unit:\nKirov\n") +
-                qsTr("\nGlobal Effect: \nAir units are stronger and Sea units weaker") +
+                qsTr("\nGlobal Effect: \nAir units are stronger and use less fuel, but Sea units are weaker in comparison.") +
                 qsTr("\n\nCO Zone Effect: \nAir units have increased firepower.");
     };
     this.getPowerDescription = function(co)
@@ -269,7 +269,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All non-infantry units that have already carried out orders may move again.");
+        return qsTr("All non-infantry units that have already carried out orders may move again with no firepower penalty.");
     };
     this.getSuperPowerName = function(co)
     {

@@ -231,8 +231,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
-                   qsTr("\nGlobal Effect: \nNo bonus.") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
+                   qsTr("\nGlobal Effect: \nNone") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
         return text;

@@ -8,9 +8,9 @@ CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 50;
+            return CO_BRENNER.superPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 30;
+            return CO_BRENNER.powerBonus;
         default:
             return 10;
         }

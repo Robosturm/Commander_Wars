@@ -400,19 +400,19 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired one HP less on the building.");
+        return qsTr("Units heal at half the normal rate on owned properties, but units still heal while standing next to them.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
-                   qsTr("\nGlobal Effect: \nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
+                   qsTr("\nGlobal Effect: \nUnits heal only 1 HP while on an owned property, however, units will still heal from any owned property within 1 space of a unit. This effect stacks with each additional nearby property.") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property.");
+        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property.");
     };
     this.getPowerName = function(co)
     {
@@ -420,7 +420,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property. Enemies nearby their own property suffer three HP of damage from each property.");
+        return qsTr("Units within two spaces of any owned properties receive firepower bonuses and restore 3 HP per nearby property. Enemies within two spaces of their own properties suffer 3 HP of damage per nearby property.");
     };
     this.getSuperPowerName = function(co)
     {
@@ -430,21 +430,21 @@ var Constructor = function()
     {
         return [qsTr("You'll regret angering me!"),
                 qsTr("It's time you learned the real power of the crystals!"),
-                qsTr("You were probably enjoying this battle, until now!"),
-                qsTr("Witness the power the Black Crystal gave to me!"),
+                qsTr("You were probably enjoying this battle... until now!"),
+                qsTr("Witness the power of the black crystal!"),
                 qsTr("I hope you're ready for what's coming next!"),
-                qsTr("See, now my army really shines, like diamonds!")];
+                qsTr("Now my army will really shine... like diamonds!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("I'm unbreakable, just like a diamond!"),
+        return [qsTr("I'm the brightest crystal of all!"),
                 qsTr("Haha, you were shattered!"),
                 qsTr("I'll leave you to clean this up, 'kay?")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("My diamonds didn't help me."),
-                qsTr("My diamonds broke?")];
+        return [qsTr("My crystals failed me."),
+                qsTr("My diamonds shattered?")];
     };
     this.getName = function()
     {

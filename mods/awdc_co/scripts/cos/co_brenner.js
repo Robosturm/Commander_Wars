@@ -1,3 +1,5 @@
+CO_BRENNER.powerBonus = 30;
+CO_BRENNER.superPowerBonus = 30;
 CO_BRENNER.init = function(co)
 {
     co.setPowerStars(3);

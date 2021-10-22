@@ -204,7 +204,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.");
+        return qsTr("A bandit working for Caulder. Believes there is no law but The Beast's Law. Driven by rage and greed.");
     };
     this.getHits = function(co)
     {
@@ -212,17 +212,17 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Orders");
+        return qsTr("Duty and Honor");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His Units have extremly high firepowers, but take damage when ever they attack.");
+        return qsTr("His units have the potential for high firepower, but their reckless tendencies often get them hurt.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nAT Cycle\n") +
-                   qsTr("\nGlobal Effect: \nNo bonus.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking. His Units take 1 Damage after attacking.");
+                   qsTr("\nGlobal Effect: \nNone.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking but also receive 1 HP of extra damage in recoil.");
         text = replaceTextArgs(text, [CO_BEAST.coZoneBonus]);
         return text;
     };
@@ -231,35 +231,35 @@ var Constructor = function()
         return qsTr("Restores two HP to all units.");
     };
     this.getPowerName = function(co)
-    {
-        return qsTr("Dopping");
-    };
+        {
+            return qsTr("Steroids");
+        };
     this.getSuperPowerDescription = function(co)
     {
         return qsTr("Restores 3 HP to all units. Units movement is increases by one space.");
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Steroids");
+        return qsTr("Beast's Law");
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Loot them!"),
-                qsTr("Rob them!"),
-                qsTr("The first one gets the money!"),
-                qsTr("Those Steroids, you can't stand them!"),
-                qsTr("Burn down all the towns!")];
+        return [qsTr("The Beast will tear you to shreds!"),
+                qsTr("I need a place to aim!"),
+                qsTr("Leave their corpses where they fall!"),
+                qsTr("Graaahhhh!!"),
+                qsTr("Kill anyone who stands in the way!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("All that loot is mine!"),
-                qsTr("Burn down all the towns!"),
-                qsTr("I did it! Did you see that!?")];
+        return [qsTr("Gwar har har har!"),
+                qsTr("You can't stand up to The Beast!"),
+                qsTr("There's no law like the Beast's law!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Argghhh!"),
-                qsTr("We need more steroids. Next time!")];
+        return [qsTr("You ain't seen the last of The Beast!"),
+                qsTr("Head for the hills, roaches! We're outmanned!")];
     };
     this.getName = function()
     {
