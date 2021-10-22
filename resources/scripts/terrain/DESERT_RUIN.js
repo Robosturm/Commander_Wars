@@ -24,7 +24,22 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        terrain.loadBaseTerrain("DESERT");
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
     };
     this.getVisionHide = function()
     {

@@ -8,6 +8,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(RIVER.getName());
+        //terrain.setHasFlowDirection(true);
     };
     this.getName = function()
     {
@@ -22,6 +23,10 @@ var Constructor = function()
         else if (currentTerrainID === "DESERT")
         {
             terrain.loadBaseTerrain("DESERT");
+        }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
         }
         else
         {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 5.0.1, 2021-10-20T21:36:28. -->
+<!-- Written by QtCreator 5.0.1, 2021-10-22T13:39:55. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -640,6 +640,7 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Commander_Wars</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:Commander_Wars</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Commander_Wars</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

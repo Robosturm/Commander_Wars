@@ -20,7 +20,22 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        terrain.loadBaseTerrain("WASTE");
+        if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
     };
     this.loadBaseSprite = function(terrain)
     {
