@@ -431,7 +431,7 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
 QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCount)
 {
     QPoint ret = QPoint((unitCount * 70) % 100,
-                        20 * (maxUnitCount - unitCount));
+                        15 * (maxUnitCount - unitCount) + 8);
     return ret;
 }
 
