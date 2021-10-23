@@ -19,7 +19,8 @@
 #include "coreengine/fileserializable.h"
 
 class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
+
 class GameAction : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -331,6 +332,14 @@ public slots:
      * @brief reset
      */
     void reset();
+    /**
+     * @brief getPerformingUnit returns the unit performing unit mainly useful in case of post actions where the unit already moved or got loaded etc.
+     * @return
+     */
+    Unit* getPerformingUnit()
+    {
+        return m_perfomingUnit.get();
+    }
 protected:
     void printAction();
 private:
@@ -362,15 +371,11 @@ private:
       * needed for ai simulations
       */
     Unit* m_pTargetUnit{nullptr};
-
+    spUnit m_perfomingUnit;
     QVector<QPoint> m_MultiTurnPath;
-
     bool m_isLocal{false};
-
     qint64 m_syncCounter{0};
-
     qint64 m_roundTimerTime{0};
-
     qint32 m_player{-1};
 };
 

@@ -6,6 +6,7 @@
 #include <QRectF>
 
 #include "gameinput/basegameinputif.h"
+#include "game/gameaction.h"
 
 #include "ai/decisionquestion.h"
 #include "ai/islandmap.h"
@@ -14,8 +15,6 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
-class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class Unit;
 class CO;
 class UnitPathFindingSystem;

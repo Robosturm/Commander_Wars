@@ -5713,5 +5713,9 @@
         <file>resources/images/battleanimations/.gitraws/flak+yc.xcf</file>
         <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
         <file>resources/images/game/icon_fire.png</file>
+        <file>resources/scripts/cos/co_cairn.js</file>
+        <file>resources/images/co/bd/co_cairn+face.png</file>
+        <file>resources/images/co/bd/co_cairn+info.png</file>
+        <file>resources/images/co/bd/co_cairn+nrm.png</file>
     </qresource>
 </RCC>

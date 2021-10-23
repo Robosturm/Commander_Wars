@@ -87,6 +87,7 @@ void GameAction::perform()
     {
         printAction();
     }
+    m_perfomingUnit = getTargetUnit();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
     QJSValueList args1;

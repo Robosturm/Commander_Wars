@@ -20,7 +20,7 @@ class Terrain;
 class GameAction;
 
 class Building;
-typedef oxygine::intrusive_ptr<Building> spBuilding;
+using spBuilding = oxygine::intrusive_ptr<Building>;
 
 class Building : public Tooltip, public FileSerializable
 {
