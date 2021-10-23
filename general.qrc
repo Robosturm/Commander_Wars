@@ -5791,7 +5791,6 @@
         <file>resources/images/terrain/riverend+n+1+land+NW.png</file>
         <file>resources/images/terrain/riverend+N+1+land+W.png</file>
         <file>resources/images/terrain/riverend+N+2.png</file>
-        <file>resources/images/terrain/riverend+n+2+land+N.png</file>
         <file>resources/images/terrain/riverend+N+3.png</file>
         <file>resources/images/terrain/riverend+N+4.png</file>
         <file>resources/images/terrain/riverend+S+1.png</file>
@@ -5824,5 +5823,7 @@
         <file>resources/images/terrain/riverend+W+2.png</file>
         <file>resources/images/terrain/riverend+W+3.png</file>
         <file>resources/images/terrain/riverend+W+4.png</file>
+        <file>resources/images/terrain/riverend+N+1+land+N+W.png</file>
+        <file>resources/images/terrain/riverend+N+1+land+NW.png</file>
     </qresource>
 </RCC>
