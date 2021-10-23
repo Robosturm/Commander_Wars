@@ -308,7 +308,7 @@
         <image file="menu+bottom+mask.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
         <!-- Human Player menu icons -->
         <image file="wait.png" />
-        <image file="fire.png" />
+        <image file="icon_fire.png" />
         <image file="capture.png" />
         <image file="next_player.png" />
         <image file="join.png" />

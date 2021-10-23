@@ -14,6 +14,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.getBuildingWidth = function()
     {
         // one field width default for most buildings

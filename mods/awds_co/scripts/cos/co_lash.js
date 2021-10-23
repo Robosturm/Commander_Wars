@@ -1,3 +1,5 @@
+CO_LASH.globalTerrainBonus = 5;
+CO_LASH.zoneTerrainBonus = 0;
 CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isDefender, action)
 {
@@ -12,9 +14,9 @@ CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
                     if (co.getPowerMode() > GameEnums.PowerMode_Off)
                     {
-                        return terrainDefense * 5 + 10;
+                        return terrainDefense * CO_LASH.globalTerrainBonus + 10;
                     }
-                    return terrainDefense * 5;
+                    return terrainDefense * CO_LASH.globalTerrainBonus;
                 }
                 else if (co.getPowerMode() > GameEnums.PowerMode_Off)
                 {
@@ -47,7 +49,7 @@ CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY)
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return map.getTerrain(posX, posY).getBaseDefense();
+            return map.getTerrain(posX, posY).getBaseDefense() * CO_LASH.terrainDefenseModifier;
         case GameEnums.PowerMode_Power:
             return 0;
         default:

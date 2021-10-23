@@ -18,6 +18,10 @@ var Constructor = function()
             building.loadSprite("blackhole+factory+neutral", false);
         }
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.startOfTurn = function(building)
     {
         building.setFireCount(7);

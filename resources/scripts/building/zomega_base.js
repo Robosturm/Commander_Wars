@@ -18,6 +18,10 @@ var Constructor = function()
             building.loadSprite("omega+base+neutral", false);
         }
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.getBaseIncome = function()
     {
         return 0;

@@ -11,6 +11,10 @@ var Constructor = function()
         building.loadSprite("deathray+E", false);
         building.loadSpriteV2("deathray+E+mask", GameEnums.Recoloring_Matrix);
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.getBaseIncome = function()
     {
         return 0;

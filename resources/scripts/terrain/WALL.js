@@ -74,10 +74,6 @@ var Constructor = function()
     {
         return "fore_walltop";
     };
-    this.getDefense = function()
-    {
-        return 4;
-    };
 };
 Constructor.prototype = TERRAIN;
 var WALL = new Constructor();

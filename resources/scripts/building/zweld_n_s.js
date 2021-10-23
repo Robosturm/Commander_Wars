@@ -24,6 +24,10 @@ var Constructor = function()
     {
         return "minimap_weld";
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.onDestroyed = function(terrain)
     {
         // called when the terrain is destroyed and replacing of this terrain starts

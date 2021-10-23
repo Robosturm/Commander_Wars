@@ -416,7 +416,6 @@
         <file>resources/images/game/dm.png</file>
         <file>resources/images/game/dv.png</file>
         <file>resources/images/game/exitgame.png</file>
-        <file>resources/images/game/fire.png</file>
         <file>resources/images/game/flareshot.png</file>
         <file>resources/images/game/ge.png</file>
         <file>resources/images/game/gs.png</file>
@@ -2325,7 +2324,6 @@
         <file>maps/2_player/NORTH STAR.map</file>
         <file>maps/2_player/Okehazama.map</file>
         <file>maps/2_player/ORBITAL RING.map</file>
-        <file>maps/2_player/Paintball Arena 2v2.map</file>
         <file>maps/2_player/Pipes Aplenty.map</file>
         <file>maps/2_player/Piston Dam.map</file>
         <file>maps/2_player/Pitted Map.map</file>
@@ -5714,5 +5712,6 @@
         <file>resources/images/battleanimations/.gitraws/flak+ti.xcf</file>
         <file>resources/images/battleanimations/.gitraws/flak+yc.xcf</file>
         <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
+        <file>resources/images/game/icon_fire.png</file>
     </qresource>
 </RCC>

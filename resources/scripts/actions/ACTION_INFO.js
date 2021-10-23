@@ -75,7 +75,7 @@ var Constructor = function()
         data.addData(qsTr("Unit Info"), "UNIT", "unit_info");
         data.addData(qsTr("Unit Statistics"), "STATISTICS", "statistics");
         data.addData(qsTr("Game Info"), "GAME", "intel");
-        data.addData(qsTr("Attack Log"), "ATTACK", "fire");
+        data.addData(qsTr("Attack Log"), "ATTACK", "icon_fire");
         data.addData(qsTr("Rules"), "RULES", "wiki");
         data.addData(qsTr("Wiki"), "WIKI", "wiki");
     };

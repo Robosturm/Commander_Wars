@@ -15,6 +15,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.actionList = ["ACTION_TALON_GUN"];
     this.startOfTurn = function(building)
     {

@@ -8,7 +8,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(RIVER.getName());
-        //terrain.setHasFlowDirection(true);
+        // terrain.setHasFlowDirection(true);
     };
     this.getName = function()
     {
@@ -108,6 +108,14 @@ var Constructor = function()
         var weatherModifier = TERRAIN.getWeatherModifier();
         var baseId = terrain.getBaseTerrainID();        
         return "back_" + weatherModifier + "river+" + rand.toString();
+    };
+    this.updateFlowSprites = function(terrain, pPfs)
+    {
+        var points = pPfs.getAllNodePoints();
+        GameConsole.print(points.length, 1);
+        for (var i = 0; i < points.length; ++i)
+        {
+        }
     };
 };
 Constructor.prototype = TERRAIN;

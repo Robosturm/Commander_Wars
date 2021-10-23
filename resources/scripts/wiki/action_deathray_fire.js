@@ -4,7 +4,7 @@ var Constructor = function()
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
-        wikipage.loadImage("fire", 2);
+        wikipage.loadImage("icon_fire", 2);
         wikipage.loadText(qsTr("Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days."));
     };
 

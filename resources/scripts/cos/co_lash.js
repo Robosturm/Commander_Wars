@@ -130,6 +130,9 @@ var Constructor = function()
     {
         return "BH";
     };
+    this.globalTerrainBonus = 0;
+    this.zoneTerrainBonus = 10;
+    this.terrainDefenseModifier = 1;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action)
     {
@@ -146,13 +149,13 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     if (attacker.useTerrainDefense())
                     {
-                        return terrainDefense * 15 + 10;
+                        return terrainDefense * CO_LASH.globalTerrainBonus + 10;
                     }
                     return 10;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return terrainDefense * 15 + 10;
+                        return terrainDefense * CO_LASH.zoneTerrainBonus + 10;
                     }
                     break;
                 }
@@ -168,7 +171,7 @@ var Constructor = function()
                                        defender, defPosX, defPosY, isAttacker, action)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+            co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return 10;
         }
@@ -180,7 +183,7 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return map.getTerrain(posX, posY).getBaseDefense();
+                return map.getTerrain(posX, posY).getBaseDefense() * CO_LASH.terrainDefenseModifier;
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
@@ -280,6 +283,106 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Lash");
+    };
+
+
+    this.showDefaultUnitGlobalBoost = function(co)
+    {
+        return false;
+    };
+    this.getCustomUnitGlobalBoostCount = function(co)
+    {
+        return terrainSpriteManager.getTerrainCount() +
+               buildingSpriteManager.getBuildingCount();
+    };
+    this.getCustomUnitGlobalBoost = function(co, index, info)
+    {
+        var terrains = terrainSpriteManager.getTerrainsSorted();
+        var buildings = buildingSpriteManager.getLoadedBuildings();
+        var id = "";
+        if (index < terrains.length)
+        {
+            id = terrains[index];
+        }
+        else
+        {
+            id = buildings[index - terrains.length];
+        }
+        info.setIconId(id);
+        info.setLink(id);
+        var defenseStars = Global[id].getDefense(null);
+        var powerMode = co.getPowerMode();
+        var defenseBoost = 0;
+        var offensiveBoost = 0;
+        if (powerMode === GameEnums.PowerMode_Tagpower ||
+            powerMode === GameEnums.PowerMode_Superpower)
+        {
+            defenseBoost = 10;
+            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.terrainDefenseModifier);
+            info.addBonusIcon("moveRange", "=1");
+            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars * (1 + CO_LASH.terrainDefenseModifier) + 10;
+        }
+        else if (powerMode === GameEnums.PowerMode_Power)
+        {
+            defenseBoost = 10;
+            info.addBonusIcon("moveRange", "=1");
+            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+        }
+        else
+        {
+            offensiveBoost = CO_LASH.globalTerrainBonus * defenseStars;
+        }
+        info.setOffensiveBoost(offensiveBoost);
+        info.setDefensiveBoost(defenseBoost);
+    };
+    this.showDefaultUnitZoneBoost = function(co)
+    {
+        return false;
+    };
+    this.getCustomUnitZoneBoostCount = function(co)
+    {
+        return terrainSpriteManager.getTerrainCount() +
+               buildingSpriteManager.getBuildingCount();
+    };
+    this.getCustomUnitZoneBoost = function(co, index, info)
+    {
+        var terrains = terrainSpriteManager.getTerrainsSorted();
+        var buildings = buildingSpriteManager.getLoadedBuildings();
+        var id = "";
+        if (index < terrains.length)
+        {
+            id = terrains[index];
+        }
+        else
+        {
+            id = buildings[index - terrains.length];
+        }
+        info.setIconId(id);
+        info.setLink(id);
+        var defenseStars = Global[id].getDefense(null);
+        var powerMode = co.getPowerMode();
+        var defenseBoost = 0;
+        var offensiveBoost = 0;
+        if (powerMode === GameEnums.PowerMode_Tagpower ||
+            powerMode === GameEnums.PowerMode_Superpower)
+        {
+            defenseBoost = 10;
+            info.addBonusIcon("defenseStar", "+" + defenseStars * CO_LASH.terrainDefenseModifier);
+            info.addBonusIcon("moveRange", "=1");
+            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars * (1 + CO_LASH.terrainDefenseModifier) + 10;
+        }
+        else if (powerMode === GameEnums.PowerMode_Power)
+        {
+            defenseBoost = 10;
+            info.addBonusIcon("moveRange", "=1");
+            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+        }
+        else
+        {
+            offensiveBoost = CO_LASH.zoneTerrainBonus * defenseStars + 10;
+        }
+        info.setOffensiveBoost(offensiveBoost);
+        info.setDefensiveBoost(defenseBoost);
     };
 }
 

@@ -351,7 +351,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     m_GlobalBoosts->setPosition(10, y);
-    y += 40;
+    constexpr qint32 textAdvance = 25;
+    y += GameMap::getImageSize() * 2 + textAdvance;
     qint32 customCount = pCO->getCustomUnitGlobalBoostCount();
     if (customCount > 0)
     {
@@ -360,7 +361,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             showCustomCOBoost(pCO, x, y, i, true);
         }
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + textAdvance;
     }
     if (pCO->showDefaultUnitGlobalBoost())
     {
@@ -373,10 +374,10 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             showCOBoost(pUnit, pCO, x, y);
         }
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + textAdvance;
     }
     m_CoBoost->setPosition(10, y);
-    y += 40;
+    y += GameMap::getImageSize() * 2 + textAdvance;
     customCount = pCO->getCustomUnitZoneBoostCount();
     if (customCount > 0)
     {
@@ -385,7 +386,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             showCustomCOBoost(pCO, x, y, i, false);
         }
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + textAdvance;
     }
     if (pCO->showDefaultUnitZoneBoost())
     {
@@ -470,7 +471,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
-        pSprite->setPosition(25 +  GameMap::getImageSize(), 5 +  GameMap::getImageSize());
+        pSprite->setPosition(20 +  GameMap::getImageSize(), 5 + GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
         oxygine::spTextField pText = oxygine::spTextField::create();
@@ -493,7 +494,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     if (x + 120 > m_pCurrentCO->getX() - 50)
     {
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + 25;
     }
     else
     {
@@ -549,7 +550,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
             pSprite->setY(5 +  GameMap::getImageSize());
             if (i2 > 0)
             {
-                pSprite->setX(25 +  GameMap::getImageSize());
+                pSprite->setX(20 +  GameMap::getImageSize());
             }
             pSprite->setScale(2.0f);
             m_UnitDataActors[i]->addChild(pSprite);
@@ -568,7 +569,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
     if (x + 120 > m_pCurrentCO->getX() - 50)
     {
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + 25;
     }
     else
     {

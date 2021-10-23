@@ -16,6 +16,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.actionList = ["ACTION_CANNON_FIRE"];
     this.startOfTurn = function(building)
     {

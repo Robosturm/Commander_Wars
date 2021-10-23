@@ -1,3 +1,5 @@
+CO_LASH.globalTerrainBonus = 10;
+CO_LASH.zoneTerrainBonus = 0;
 CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isDefender, action)
 {
@@ -10,7 +12,7 @@ CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 if (attacker.useTerrainDefense())
                 {
                     var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
-                    return terrainDefense * 10;
+                    return terrainDefense * CO_LASH.globalTerrainBonus;
                 }
                 else if (co.getPowerMode() > GameEnums.PowerMode_Off)
                 {

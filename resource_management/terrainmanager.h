@@ -32,6 +32,14 @@ public slots:
      * @return
      */
     QStringList getTerrainsSorted();
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getTerrainCount()
+    {
+        return m_loadedRessources.size();
+    }
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

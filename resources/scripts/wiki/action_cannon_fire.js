@@ -4,7 +4,7 @@ var Constructor = function()
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
-        wikipage.loadImage("fire", 2);
+        wikipage.loadImage("icon_fire", 2);
         wikipage.loadText(qsTr("Orders a minicannon or black cannon to attack a single unit to deal some damage to it."));
     };
 

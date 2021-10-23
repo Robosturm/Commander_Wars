@@ -17,6 +17,14 @@ public slots:
     {
         return m_loadedRessources;
     }
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getBuildingCount()
+    {
+        return m_loadedRessources.size();
+    }
 protected:
     friend RessourceManagement<BuildingSpriteManager>;
     BuildingSpriteManager();

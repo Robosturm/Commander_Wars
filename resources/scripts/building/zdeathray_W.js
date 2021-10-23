@@ -15,6 +15,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDefense = function(building)
+    {
+        return 0;
+    };
     this.actionList = ["ACTION_DEATHRAY_FIRE"];
     this.getDamage = function(building, unit)
     {

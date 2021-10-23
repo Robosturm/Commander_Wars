@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "fire";
+        return "icon_fire";
     };
     this.getStepInputType = function(action)
     {

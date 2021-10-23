@@ -318,7 +318,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         }
         else if (pTerrainManager->exists(file))
         {
-            spTerrain pTerrain = Terrain::createTerrain(file, -1, -1, "");
+            spTerrain pTerrain = Terrain::createTerrain(file, -10, -10, "");
             pTerrain->loadSprites();
             return pTerrain;
         }
