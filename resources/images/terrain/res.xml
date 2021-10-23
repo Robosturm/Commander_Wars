@@ -317,13 +317,11 @@
         <image file="river+0+land+E+S+W.png" cols = "8" />
         <image file="river+1+land+E+S+W.png" cols = "8" />
         <image file="river+0+land+N+E+S.png" cols = "8" />
-        <image file="river+1+land+N+E+S.png" cols = "8" />        
+        <image file="river+1+land+N+E+S.png" cols = "8" />
         <image file="river+0+land+N+E+W.png" cols = "8" />
-        <image file="river+1+land+N+E+W.png" cols = "8" />        
+        <image file="river+1+land+N+E+W.png" cols = "8" />
         <image file="river+0+land+N+S+W.png" cols = "8" />
-        <image file="river+1+land+N+S+W.png" cols = "8" />        
-        <image file="river+0+land+E+S+W.png" cols = "8" />
-        <image file="river+1+land+E+S+W.png" cols = "8" />        
+        <image file="river+1+land+N+S+W.png" cols = "8" />
         <image file="river+E+land+N.png" cols = "8" />
         <image file="river+E+land+N+S.png" cols = "8" />
         <image file="river+E+land+N+SE.png" cols = "8" />
