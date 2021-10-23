@@ -81,22 +81,7 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["river",
-                "river+E",
-                "river+E+S",
-                "river+E+S+W",
-                "river+E+W",
-                "river+N",
-                "river+N+E",
-                "river+N+E+S",
-                "river+N+E+S+W",
-                "river+N+E+W",
-                "river+N+S",
-                "river+N+S+W",
-                "river+N+W",
-                "river+S",
-                "river+S+W",
-                "river+W"];
+        return [];
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
