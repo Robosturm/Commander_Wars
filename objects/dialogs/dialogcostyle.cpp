@@ -138,8 +138,11 @@ DialogCOStyle::DialogCOStyle(QString coid)
         m_maskTable = std::get<3>(*currentStyle);
         for (qint32 i = 0; i < m_maskTable.width(); i++)
         {
-            QColor color = m_maskTable.pixelColor(i, 0);
-            m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+            if (i < m_Pixels.size())
+            {
+                QColor color = m_maskTable.pixelColor(i, 0);
+                m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+            }
         }
     }
     updateSprites();
@@ -240,8 +243,11 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             {
                 for (qint32 i = 0; i < m_maskTable.width(); i++)
                 {
-                    QColor color = m_maskTable.pixelColor(i, 0);
-                    m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+                    if (i < m_Pixels.size())
+                    {
+                        QColor color = m_maskTable.pixelColor(i, 0);
+                        m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+                    }
                 }
             }
             updateSprites();
