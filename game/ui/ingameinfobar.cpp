@@ -81,7 +81,7 @@ IngameInfoBar::IngameInfoBar()
     {
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
-    m_pDetailedViewBox->setSize(131, 200);
+    m_pDetailedViewBox->setSize(130, 199);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());

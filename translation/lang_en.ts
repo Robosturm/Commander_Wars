@@ -628,23 +628,23 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="35"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="36"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="47"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="48"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="119"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="120"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="203"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="224"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="208"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="229"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>

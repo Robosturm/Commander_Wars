@@ -52,7 +52,7 @@ var Constructor = function()
 
         sprite.loadSpriteV2("artillery+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, endFrame, startFrame);
-        BATTLEANIMATION.loadSpotter(sprite, unit);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
 

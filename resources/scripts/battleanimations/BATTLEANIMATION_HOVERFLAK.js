@@ -47,6 +47,7 @@ var Constructor = function()
                                 BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), data[0],
                                 -1, 1, 0, 0, false, false, 100);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

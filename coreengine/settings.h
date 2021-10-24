@@ -38,7 +38,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static bool getUseCoMinis();
+    static void setUseCoMinis(bool newUseCoMinis);
+
     static bool getOverworldAnimations();
     static void setOverworldAnimations(bool newOverworldAnimations);
 
@@ -528,6 +532,7 @@ private:
     static quint32 battleAnimationSpeed;
     static quint32 m_dialogAnimationSpeed;
     static quint32 m_captureAnimationSpeed;
+    static bool m_useCoMinis;
     static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;

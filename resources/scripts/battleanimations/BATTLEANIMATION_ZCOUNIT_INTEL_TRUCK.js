@@ -8,6 +8,7 @@ var Constructor = function()
     {
         sprite.loadSpriteV2("intel_truck+mask",  GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 };
 

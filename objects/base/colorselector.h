@@ -41,6 +41,7 @@ private:
     qint32 m_pixelSize;
     bool m_barUpdating{false};
     bool m_boxUpdating{false};
+    QElapsedTimer m_trigger;
 };
 
 #endif // COLORSELECTOR_H

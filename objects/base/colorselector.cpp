@@ -94,11 +94,13 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         {
             pEvent->stopPropagation();
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
+            if (pTouchEvent != nullptr &&
+                m_trigger.elapsed() >= 50)
             {
                 qint32 red = pTouchEvent->localPosition.x / (pixelSize);
                 qint32 green = pTouchEvent->localPosition.y / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
+                m_trigger.start();
             }
             FocusableObject::looseFocus();
         }
@@ -172,10 +174,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         {
             pEvent->stopPropagation();
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
+            if (pTouchEvent != nullptr &&
+                m_trigger.elapsed() >= 50)
             {
                 qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
                 emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
+                m_trigger.start();
             }
             FocusableObject::looseFocus();
         }
@@ -205,6 +209,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_ColorDialog->addChild(m_Cursor2);
 
     selecetedColorChanged(m_CurrentColor);
+    m_trigger.start();
 }
 
 void ColorSelector::selecetedColorChanged(QColor color)

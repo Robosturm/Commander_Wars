@@ -115,7 +115,7 @@ public slots:
     /**
      * @brief existResAnim
      * @param spriteID
-     * @return
+     * @return checks if either a battleanimation sprite or co-sprite with this name exists
      */
     bool existResAnim(QString spriteID);
     /**
@@ -402,6 +402,30 @@ public slots:
                                   bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0,
                                   float rotation = 0, quint8 alpha = 255);
     /**
+     * @brief loadCoMini
+     * @param spriteID
+     * @param mode
+     * @param offset
+     * @param movement
+     * @param moveTime
+     * @param deleteAfter
+     * @param loop
+     * @param scale
+     * @param priority
+     * @param showDelay
+     * @param _invertFlipX
+     * @param frameTime
+     * @param frames
+     * @param startFrame
+     * @param rotation
+     * @param alpha
+     */
+    void loadCoMini(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
+                    QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                    bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime, qint32 frames = -1, qint32 startFrame = 0,
+                    float rotation = 0, quint8 alpha = 255);
+    /**
      * @brief getImpactDurationMS
      * @return
      */
@@ -510,6 +534,31 @@ public slots:
     QPoint getUnitBasePosition(qint32 unit, qint32 maxUnitCount, qint32 unitsAlive);
 private slots:
     void startNextUnitFrames();
+private:
+    /**
+     * @brief loadSpriteInternal
+     * @param pAnim
+     * @param mode
+     * @param offset
+     * @param movement
+     * @param moveTime
+     * @param deleteAfter
+     * @param loops
+     * @param scale
+     * @param priority
+     * @param showDelay
+     * @param _invertFlipX
+     * @param frameTime
+     * @param frames
+     * @param startFrame
+     * @param rotation
+     * @param alpha
+     */
+    void loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnums::Recoloring mode, QPoint offset,
+                            QPoint movement, qint32 moveTime, bool deleteAfter,
+                            qint32 loops, float scale, short priority, qint32 showDelay,
+                            bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
+                            float rotation, quint8 alpha);
 private:
     struct SoundData
     {

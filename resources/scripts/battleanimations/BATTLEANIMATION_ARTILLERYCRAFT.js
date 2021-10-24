@@ -37,6 +37,7 @@ var Constructor = function()
                                 BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), data[0],
                                 -1, 1, 0, 0, false, false, 100);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
