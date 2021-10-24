@@ -11,18 +11,16 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/GameEnums.h"
-#include "game/gameaction.h"
 
 #include "objects/base/tooltip.h"
-
-class GameAction;
-class GameAnimation;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class Player;
 class Terrain;
 class Unit;
-typedef oxygine::intrusive_ptr<Unit> spUnit;
+class GameAction;
+class GameAnimation;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spUnit = oxygine::intrusive_ptr<Unit>;
 
 class Unit : public Tooltip, public FileSerializable
 {

@@ -398,7 +398,7 @@ var PLAYER =
 
     getArmyCOsBD : function()
     {
-        return ["CO_EMPTY_BD", "CO_GAGE", "CO_TASHA", "CO_ADAM", "CO_FORSYTHE",
+        return ["CO_EMPTY_BD", "CO_GAGE", "CO_TASHA", "CO_FORSYTHE", "CO_ADAM", "CO_CAIRN",
                 "CO_ZANDRA", "CO_RANDOM"];
     },
 

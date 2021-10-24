@@ -246,6 +246,9 @@
         <image file="bm/co_grit+alt3+face.png" cols = "3" />            
         
         <!-- BD -->
+        <image file="bd/co_cairn+nrm.png" />
+        <image file="bd/co_cairn+info.png" />
+        <image file="bd/co_cairn+face.png" cols = "3" />  
         <image file="bd/co_tempest+nrm.png" />
         <image file="bd/co_tempest+info.png" />
         <image file="bd/co_tempest+face.png" cols = "3" />
@@ -274,7 +277,7 @@
         <image file="bd/co_artemis+info.png" />
         <image file="bd/co_artemis+face.png" cols = "3" />
         <image file="bd/co_officier_bd+face.png" cols = "3" />        
-        <image file="bd/co_officier_bd+info.png" />    
+        <image file="bd/co_officier_bd+info.png" />  
         
         <!-- dm -->
         <image file="dm/co_graves+nrm.png" />

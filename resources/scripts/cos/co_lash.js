@@ -285,7 +285,6 @@ var Constructor = function()
         return qsTr("Lash");
     };
 
-
     this.showDefaultUnitGlobalBoost = function(co)
     {
         return false;
