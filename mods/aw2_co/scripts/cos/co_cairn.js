@@ -5,19 +5,7 @@ CO_CAIRN.getTerrainDefenseModifier = function(co, unit, posX, posY)
     {
         if (CO_CAIRN.isWildernessTile(posX, posY))
         {
-            switch (co.getPowerMode())
-            {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-            case GameEnums.PowerMode_Power:
-                return CO_CAIRN.coZoneStarBonus;
-            default:
-
-                if (co.inCORange(Qt.point(posX, posY), unit))
-                {
-                    return CO_CAIRN.coZoneStarBonus;
-                }
-            }
+            return CO_CAIRN.coZoneStarBonus;
         }
     }
     return 0;
@@ -60,14 +48,7 @@ CO_CAIRN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                         return 10 + startpower;
                     }
                 default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        return 10 + startpower;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return startpower;
                 }
             }
         }
@@ -127,8 +108,7 @@ CO_CAIRN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return 10;
         }
