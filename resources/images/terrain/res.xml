@@ -77,21 +77,18 @@
         <image file="sea+N+E+S.png" cols = "8" />
         <image file="sea+N+E+W.png" cols = "8" />
         <image file="sea+N+S+W.png" cols = "8" />
-        <image file="sea+N+E+S+W.png" cols = "8" />
-        
+        <image file="sea+N+E+S+W.png" cols = "8" />        
         <image file="sea+NE+SE+SW+NW.png" cols = "8" />
         <image file="sea+NE+SW+NW.png" cols = "8" />
         <image file="sea+NE+SE+SW.png" cols = "8" />
         <image file="sea+SE+SW+NW.png" cols = "8" />
-        <image file="sea+NE+SE+NW.png" cols = "8" />
-        
+        <image file="sea+NE+SE+NW.png" cols = "8" />        
         <image file="sea+NE+NW.png" cols = "8" />        
         <image file="sea+NE+SE.png" cols = "8" />
         <image file="sea+NE+SW.png" cols = "8" />
         <image file="sea+SE+NW.png" cols = "8" />
         <image file="sea+SW+NW.png" cols = "8" />
-        <image file="sea+SE+SW.png" cols = "8" />
-        
+        <image file="sea+SE+SW.png" cols = "8" />        
         <image file="sea+NE.png" cols = "8" />
         <image file="sea+NW.png" cols = "8" />
         <image file="sea+SE.png" cols = "8" />

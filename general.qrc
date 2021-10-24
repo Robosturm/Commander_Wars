@@ -5717,5 +5717,12 @@
         <file>resources/images/co/bd/co_cairn+face.png</file>
         <file>resources/images/co/bd/co_cairn+info.png</file>
         <file>resources/images/co/bd/co_cairn+nrm.png</file>
+        <file>mods/aw2_co/scripts/cos/co_cairn.js</file>
+        <file>mods/aw_co/scripts/cos/co_cairn.js</file>
+        <file>mods/awdc_co/scripts/cos/co_cairn.js</file>
+        <file>mods/awdc_image/images/building/radar+mask.png</file>
+        <file>mods/awdc_image/images/building/radar+neutral.png</file>
+        <file>mods/awdc_image/images/building/radar.png</file>
+        <file>mods/awds_co/scripts/cos/co_cairn.js</file>
     </qresource>
 </RCC>

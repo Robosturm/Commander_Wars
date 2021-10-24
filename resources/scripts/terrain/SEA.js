@@ -134,6 +134,59 @@ var Constructor = function()
     {
         return qsTr("Calm sea. Naval and air forces have good mobility.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["sea",
+                "sea+N",
+                "sea+E",
+                "sea+S",
+                "sea+W",
+                "sea+E+SW+NW",
+                "sea+E+SW",
+                "sea+E+NW",
+                "sea+N+SE+SW",
+                "sea+N+SE",
+                "sea+N+SW",
+                "sea+W+NE+SE",
+                "sea+W+NE",
+                "sea+W+SE",
+                "sea+S+NE+NW",
+                "sea+S+NE",
+                "sea+S+NW",
+                "sea+N+E",
+                "sea+E+S",
+                "sea+E+W",
+                "sea+N+S",
+                "sea+N+W",
+                "sea+S+W",
+                "sea+N+W+SE",
+                "sea+E+S+NW",
+                "sea+S+W+NE",
+                "sea+N+E+SW",
+                "sea+E+S+W",
+                "sea+N+E+S",
+                "sea+N+E+W",
+                "sea+N+S+W",
+                "sea+N+E+S+W",
+                "sea+NE+SE+SW+NW",
+                "sea+NE+SW+NW",
+                "sea+NE+SE+SW",
+                "sea+SE+SW+NW",
+                "sea+NE+SE+NW",
+                "sea+NE+NW",
+                "sea+NE+SE",
+                "sea+NE+SW",
+                "sea+SE+NW",
+                "sea+SW+NW",
+                "sea+SE+SW",
+                "sea+NE",
+                "sea+NW",
+                "sea+SE",
+                "sea+SW",];
+    };
+
 };
 Constructor.prototype = TERRAIN;
 var SEA = new Constructor();

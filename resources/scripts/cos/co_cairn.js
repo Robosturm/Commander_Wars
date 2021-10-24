@@ -10,7 +10,7 @@ var Constructor = function()
     this.init = function(co)
     {
         co.setPowerStars(2);
-        co.setSuperpowerStars(4);
+        co.setSuperpowerStars(3);
     };
 
     this.activatePower = function(co)
@@ -123,7 +123,6 @@ var Constructor = function()
                 break;
         }
     };
-
     this.getCOUnitRange = function(co)
     {
         return 4;
@@ -135,6 +134,7 @@ var Constructor = function()
     this.coZoneStarBonus = 2;
     this.coFirepowerDebuff = 10;
     this.defaultModifier = 10;
+    this.globalRules = false;
     this.wilderness = ["DESERT_FOREST",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
@@ -171,12 +171,12 @@ var Constructor = function()
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                return 2;
+                return CO_CAIRN.coZoneStarBonus;
             default:
 
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return 2;
+                    return CO_CAIRN.coZoneStarBonus;
                 }
             }
         }
@@ -421,6 +421,160 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Cairn");
+    };
+
+
+    this.showDefaultUnitGlobalBoost = function(co)
+    {
+        return false;
+    };
+    this.getCustomUnitGlobalBoostCount = function(co)
+    {
+        return terrainSpriteManager.getTerrainCount() +
+               buildingSpriteManager.getBuildingCount();
+    };
+    this.getCustomUnitGlobalBoost = function(co, index, info)
+    {
+        var terrains = terrainSpriteManager.getTerrainsSorted();
+        var buildings = buildingSpriteManager.getLoadedBuildings();
+        var id = "";
+        var wilderness = false;
+        var building = false;
+        if (index < terrains.length)
+        {
+            id = terrains[index];
+            wilderness = CO_CAIRN.wilderness.includes(id);
+        }
+        else
+        {
+            id = buildings[index - terrains.length];
+            building = true;
+        }
+        info.setIconId(id);
+        info.setLink(id);
+        var defenseStars = Global[id].getDefense(null);
+        var powerMode = co.getPowerMode();
+        var defenseBoost = 0;
+        var offensiveBoost = 0;
+        if (powerMode === GameEnums.PowerMode_Tagpower ||
+            powerMode === GameEnums.PowerMode_Superpower)
+        {
+            defenseBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+                offensiveBoost = 10 * (defenseStars + CO_CAIRN.coZoneStarBonus) + 10;
+            }
+            else if (building)
+            {
+                offensiveBoost = 0;
+            }
+            else
+            {
+                offensiveBoost = 10;
+            }
+        }
+        else if (powerMode === GameEnums.PowerMode_Power)
+        {
+            defenseBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("moveRange", "=1");
+                info.addBonusIcon("atkRange", "+1");
+                offensiveBoost = CO_CAIRN.zoneTerrainBonus * defenseStars + 10;
+            }
+        }
+        else if (CO_CAIRN.globalRules)
+        {
+            defenseBoost = 10;
+            offensiveBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+            }
+            else if (building)
+            {
+                offensiveBoost = -10;
+            }
+        }
+        info.setOffensiveBoost(offensiveBoost);
+        info.setDefensiveBoost(defenseBoost);
+    };
+    this.showDefaultUnitZoneBoost = function(co)
+    {
+        return false;
+    };
+    this.getCustomUnitZoneBoostCount = function(co)
+    {
+        return terrainSpriteManager.getTerrainCount() +
+               buildingSpriteManager.getBuildingCount();
+    };
+    this.getCustomUnitZoneBoost = function(co, index, info)
+    {
+        var terrains = terrainSpriteManager.getTerrainsSorted();
+        var buildings = buildingSpriteManager.getLoadedBuildings();
+        var id = "";
+        var wilderness = false;
+        var building = false;
+        if (index < terrains.length)
+        {
+            id = terrains[index];
+            wilderness = CO_CAIRN.wilderness.includes(id);
+        }
+        else
+        {
+            id = buildings[index - terrains.length];
+            building = true;
+        }
+        info.setIconId(id);
+        info.setLink(id);
+        var defenseStars = Global[id].getDefense(null);
+        var powerMode = co.getPowerMode();
+        var defenseBoost = 0;
+        var offensiveBoost = 0;
+        if (powerMode === GameEnums.PowerMode_Tagpower ||
+            powerMode === GameEnums.PowerMode_Superpower)
+        {
+            defenseBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+                offensiveBoost = 10 * (defenseStars + CO_CAIRN.coZoneStarBonus) + 10;
+            }
+            else if (building)
+            {
+                offensiveBoost = 0;
+            }
+            else
+            {
+                offensiveBoost = 10;
+            }
+        }
+        else if (powerMode === GameEnums.PowerMode_Power)
+        {
+            defenseBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("moveRange", "=1");
+                info.addBonusIcon("atkRange", "+1");
+                offensiveBoost = CO_CAIRN.zoneTerrainBonus * defenseStars + 10;
+            }
+        }
+        else
+        {
+            defenseBoost = 10;
+            offensiveBoost = 10;
+            if (wilderness)
+            {
+                info.addBonusIcon("defenseStar", "+" + CO_CAIRN.coZoneStarBonus);
+            }
+            else if (building)
+            {
+                offensiveBoost = 0;
+            }
+        }
+        info.setOffensiveBoost(offensiveBoost);
+        info.setDefensiveBoost(defenseBoost);
     };
 }
 
