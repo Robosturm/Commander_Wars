@@ -5724,5 +5724,6 @@
         <file>mods/awdc_image/images/building/radar+neutral.png</file>
         <file>mods/awdc_image/images/building/radar.png</file>
         <file>mods/awds_co/scripts/cos/co_cairn.js</file>
+        <file>resources/images/battleanimations/ranger/ranger+fire+mask.png</file>
     </qresource>
 </RCC>

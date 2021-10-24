@@ -138,13 +138,17 @@ var Constructor = function()
     this.wilderness = ["DESERT_FOREST",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
+                       "DESERT_WASTELAND",
                        "FOREST",
                        "RIVER",
                        "MOUNTAIN",
+                       "WASTELAND",
                        "SNOW_FOREST",
                        "SNOW_MOUNTAIN",
+                       "SNOW_WASTELAND",
                        "WASTE_FOREST",
-                       "WASTE_MOUNTAIN"];
+                       "WASTE_MOUNTAIN",
+                       "WASTE_WASTELAND"];
     // todo should waste land count?
     this.isWildernessTile = function(x, y)
     {

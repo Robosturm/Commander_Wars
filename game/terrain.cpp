@@ -153,11 +153,15 @@ void Terrain::setFixedSprite(bool FixedSprite)
 
 void Terrain::init()
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->init();
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
+    else
+    {
+        createBaseTerrain("PLAINS");
+    }
     QString function = "init";
     QJSValueList args;
     QJSValue objArg = pInterpreter->newQObject(this);
@@ -1336,7 +1340,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     bool hasBaseTerrain = false;
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
-    {
+    {        
         m_pBaseTerrain = createTerrain("", m_x, m_y, "");
         m_pBaseTerrain->deserializer(pStream, fast);
         if (!fast)
