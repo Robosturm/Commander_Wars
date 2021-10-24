@@ -104,6 +104,24 @@ namespace oxygine
                     maskExtend = varMaskExtend.toBool();
                 }
             }
+            quint32 linearFilter = m_linearFilter;
+            if (child_node.hasAttribute("linearFilter"))
+            {
+                QVariant linearFilter = QVariant(child_node.attribute("linearFilter"));
+                if (linearFilter.typeId() == QMetaType::QString &&
+                    !linearFilter.isNull() &&
+                    child_node.hasAttribute("linearFilter"))
+                {
+                    if (linearFilter.toBool())
+                    {
+                        linearFilter = GL_LINEAR;
+                    }
+                    else
+                    {
+                        linearFilter = GL_NEAREST;
+                    }
+                }
+            }
             if (rows <= 0)
             {
                 rows = 1;
@@ -133,7 +151,7 @@ namespace oxygine
             }
             spResAnim ra = spResAnim::create(this);
             ra->setResPath(path);
-            ra->init(img, columns, rows, walker.getScaleFactor() * scaleFactor, context.m_addTransparentBorder, m_clamp2edge, m_linearFilter);
+            ra->init(img, columns, rows, walker.getScaleFactor() * scaleFactor, context.m_addTransparentBorder, m_clamp2edge, linearFilter);
             ra->setParent(this);
             init_resAnim(ra, file, child_node);
             // add loaded res anim

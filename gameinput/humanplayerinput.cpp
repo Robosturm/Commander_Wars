@@ -161,7 +161,14 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         {
             if (!m_FieldPoints.contains(QVector3D(point.x(), point.y(), 1)))
             {
-                createMarkedField(point.toPoint(), QColor(255, 127, 39), Terrain::DrawPriority::MarkedFieldMap);
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QColor viewColor = QColor(255, 127, 39, 255);
+                QJSValue ret = pInterpreter->doFunction("Global", "getVisionFieldColor");
+                if (ret.isString())
+                {
+                    viewColor = QColor(ret.toString());
+                }
+                createMarkedField(point.toPoint(), viewColor, Terrain::DrawPriority::MarkedFieldMap);
             }
         }
     }
