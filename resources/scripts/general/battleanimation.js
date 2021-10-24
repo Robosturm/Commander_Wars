@@ -200,6 +200,39 @@ var BATTLEANIMATION =
                        ["bh", ""],
                        ["bg", ""],
                        ["ma", ""],],
+    loadSpotterOrCoMini : function(sprite, unit, spotterNeeded)
+    {
+        var coMiniLoaded = false;
+        if (settings.getUseCoMinis())
+        {
+            var owner = unit.getOwner();
+            var co = owner.getCO(0);
+            var coid = "";
+            if (co !== null && co.getCOUnit() === unit)
+            {
+                coid = co.getCoID();
+            }
+            else
+            {
+                co = owner.getCO(1);
+                if (co !== null && co.getCOUnit() === unit)
+                {
+                    coid = co.getCoID();
+                }
+            }
+            if (coid !== "" &&
+                sprite.existResAnim(coid + "+mini"))
+            {
+                sprite.loadCoMini(coid + "+mini", GameEnums.Recoloring_None, Qt.point(90, 5),
+                                  Qt.point(0, 0), 1, false, 1, 1, 20);
+                coMiniLoaded = true;
+            }
+        }
+        if (!coMiniLoaded && spotterNeeded)
+        {
+            BATTLEANIMATION.loadSpotter(sprite, unit);
+        }
+    },
     loadSpotter : function(sprite, unit)
     {
         var player = unit.getOwner();

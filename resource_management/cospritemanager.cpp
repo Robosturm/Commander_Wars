@@ -69,6 +69,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
     bool nrmFound = false;
     bool faceFound = false;
     bool infoFound = false;
+    bool miniFound = false;
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
     oxygine::spResAnim pCOAnim;
@@ -97,6 +98,16 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
             pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
             m_Ressources[i] = CoSprite(coidLower + "+info", pCOAnim);
             infoFound = true;
+        }
+        else if (coidLower + "+mini" == m_Ressources[i].m_spriteId)
+        {
+            pAnim = oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error);
+            if (pAnim.get() != nullptr)
+            {
+                pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+                m_Ressources[i] = CoSprite(coidLower + "+mini", pCOAnim);
+                infoFound = true;
+            }
         }
     }
     pAnim = nullptr;
@@ -138,6 +149,20 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
             if (pCOAnim.get() != nullptr)
             {
                 m_Ressources.append(CoSprite(coidLower + "+nrm", pCOAnim));
+            }
+        }
+    }
+    pAnim = nullptr;
+    pCOAnim = nullptr;
+    if (!miniFound)
+    {
+        oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error));
+        if (pAnim.get() != nullptr)
+        {
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            if (pCOAnim.get() != nullptr)
+            {
+                m_Ressources.append(CoSprite(coidLower + "+mini", pCOAnim));
             }
         }
     }

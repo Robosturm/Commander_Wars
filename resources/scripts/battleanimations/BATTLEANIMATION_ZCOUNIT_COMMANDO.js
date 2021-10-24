@@ -33,6 +33,7 @@ var Constructor = function()
         var offset = Qt.point(-10, 5);
         sprite.loadSpriteV2("commando+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount(), offset, count);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)

@@ -19,6 +19,7 @@ var Constructor = function()
         {
             sprite.loadSound("tank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadSprite = function(sprite, unit)
@@ -26,6 +27,7 @@ var Constructor = function()
         var offset = Qt.point(-5, 5);
         sprite.loadSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_AUTO_TANK.getMaxUnitCount(), offset);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)

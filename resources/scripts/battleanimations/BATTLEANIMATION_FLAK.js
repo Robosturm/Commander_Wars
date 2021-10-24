@@ -102,6 +102,7 @@ var Constructor = function()
         }
         sprite.loadMovingSpriteV2("flak+" + armyName + spriteId + airName + "+mask",  GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), startPos, movement, moveTime, false, loops);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     }
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

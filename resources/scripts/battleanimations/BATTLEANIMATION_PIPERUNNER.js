@@ -9,6 +9,7 @@ var Constructor = function()
     {
         sprite.loadSpriteV2("piperunner+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(10, 30));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -27,6 +28,7 @@ var Constructor = function()
                                           1, 1, 5, i * 300);
             sprite.loadSound("pipecannon_weapon_fire.wav", 1, i * 300);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

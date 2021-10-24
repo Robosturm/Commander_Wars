@@ -11,7 +11,7 @@ var Constructor = function()
         var offset = Qt.point(-30, 5);
         sprite.loadSpriteV2("siege_cannon+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_SIEGE_CANNON.getMaxUnitCount(), offset);
-        BATTLEANIMATION.loadSpotter(sprite, unit);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

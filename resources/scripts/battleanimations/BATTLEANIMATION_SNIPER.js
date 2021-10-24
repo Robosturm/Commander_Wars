@@ -19,7 +19,7 @@ var Constructor = function()
         var offset = data[0];
         sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
-        BATTLEANIMATION.loadSpotter(sprite, unit);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
 
     };
 

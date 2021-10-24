@@ -74,6 +74,7 @@ var Constructor = function()
         }
         sprite.loadMovingSpriteV2("heavy_tank+" + armyName + weaponId + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount(), startPos, movement, moveTime, false, loops);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

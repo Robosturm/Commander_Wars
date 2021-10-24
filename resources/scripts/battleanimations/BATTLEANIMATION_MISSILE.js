@@ -42,7 +42,7 @@ var Constructor = function()
         sprite.loadSpriteV2("missile+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset,
                             1, 1, 0, 0, false, false, 200, endFrame, startFrame);
-        BATTLEANIMATION.loadSpotter(sprite, unit);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

@@ -108,6 +108,7 @@ quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::m_walkAnimationSpeed = 20;
 quint32 Settings::m_dialogAnimationSpeed = 20;
 quint32 Settings::m_captureAnimationSpeed = 1;
+bool Settings::m_useCoMinis = true;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
@@ -158,6 +159,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getUseCoMinis()
+{
+    return m_useCoMinis;
+}
+
+void Settings::setUseCoMinis(bool newUseCoMinis)
+{
+    m_useCoMinis = newUseCoMinis;
 }
 
 bool Settings::getOverworldAnimations()
@@ -1401,6 +1412,7 @@ void Settings::loadSettings()
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
     m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
+    m_useCoMinis = settings.value("UseCoMinis", true).toBool();
     if (Settings::hasSmallScreen())
     {
         m_autoScrolling = false;
@@ -1577,8 +1589,9 @@ void Settings::saveSettings()
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(m_walkAnimationSpeed));
         settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(m_dialogAnimationSpeed));
-        settings.setValue("CaptureAnimationSpeed",          static_cast<qint32>(m_captureAnimationSpeed));
+        settings.setValue("CaptureAnimationSpeed",          static_cast<qint32>(m_captureAnimationSpeed));        
         settings.setValue("AnimationSpeed",                 m_animationSpeed);
+        settings.setValue("UseCoMinis",                     m_useCoMinis);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
         settings.setValue("Username",                       m_Username);

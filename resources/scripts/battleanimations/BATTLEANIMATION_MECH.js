@@ -81,6 +81,7 @@ var Constructor = function()
             {
                 sprite.loadSound("infantry_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
             }
+            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
         }
         else
         {
@@ -123,6 +124,7 @@ var Constructor = function()
                                 BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count, 1, 0, 0,
                                 false, false, 100, endFrame, startFrame);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -326,6 +328,7 @@ var Constructor = function()
                                              GameEnums.Recoloring_None,
                                              offset, movement, rotation, 400, 0, 2);
             }
+            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
         }
         else
         {

@@ -32,6 +32,7 @@ var Constructor = function()
             sprite.loadSprite(spriteId,  false,
                               BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

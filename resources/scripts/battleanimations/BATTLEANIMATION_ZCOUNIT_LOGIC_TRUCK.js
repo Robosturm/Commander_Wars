@@ -8,6 +8,7 @@ var Constructor = function()
     {
         sprite.loadSpriteV2("logi_truck+mask",  GameEnums.Recoloring_Matrix,
                           BATTLEANIMATION_ZCOUNIT_LOGIC_TRUCK.getMaxUnitCount(), Qt.point(0, 10));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 };
 
