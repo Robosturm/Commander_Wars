@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -189,6 +190,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         QString style = m_Styles[index];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
+        CONSOLE_PRINT("Using res file path: " + m_ResFilePath, Console::eDEBUG);
         QFile file(Settings::getUserPath() + m_ResFilePath + "+table.png");
         if (!file.exists())
         {
@@ -198,7 +200,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         {
             m_useColorBox = false;
             QVector<QString> items;
-            m_baseColorTable.load(m_ResFilePath + "+table.png");
+            m_baseColorTable.load(file.fileName());
             m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             for (qint32 i = 0; i < m_baseColorTable.height(); i++)
