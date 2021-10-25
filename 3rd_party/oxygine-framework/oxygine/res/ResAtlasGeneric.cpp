@@ -132,7 +132,8 @@ namespace oxygine
             }
             if (path.endsWith("+mask.png") && maskExtend)
             {
-                QString basePath = path.replace("+mask.png", ".png");
+                QString basePath = path;
+                basePath = basePath.replace("+mask.png", ".png");
                 QString overlayPath = basePath;
                 if (QFile::exists(Settings::getUserPath() + basePath))
                 {

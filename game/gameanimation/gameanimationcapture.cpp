@@ -52,13 +52,20 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         {
             path = oxygine::Resource::RCC_PREFIX_PATH + pAnim->getResPath();
         }
-        QImage preCaptureImage(path);
-        QImage captureImage(path);
-        getRecoloredImage(startPlayer, capturedPlayer, mode,
-                          preCaptureImage, captureImage);
-        pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
-        pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
-        m_buildingSprites->setResAnim(m_buildingResAnim.get());
+        if (QFile::exists(path))
+        {
+            QImage preCaptureImage(path);
+            QImage captureImage(path);
+            getRecoloredImage(startPlayer, capturedPlayer, mode,
+                              preCaptureImage, captureImage);
+            pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
+            pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
+            m_buildingSprites->setResAnim(m_buildingResAnim.get());
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to locate file: " + path, Console::eDEBUG);
+        }
     }
     else
     {
