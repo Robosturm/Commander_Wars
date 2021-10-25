@@ -18,7 +18,7 @@ var Constructor = function()
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
 
-        var surroundingsBride = terrain.getSurroundings("BRIDGE", false, false, GameEnums.Directions_Direct, false, true);
+        var surroundingsBride = terrain.getSurroundings("BRIDGE", false, false, GameEnums.Directions_North, false, true);
         if (surroundingsBride !== "" && terrain.existsResAnim("sea" + surroundingsPlains + "+bridge"))
         {
             GameConsole.print("using bridge", 1);
