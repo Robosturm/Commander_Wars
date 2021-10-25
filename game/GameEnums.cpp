@@ -161,6 +161,11 @@ void GameEnums::registerEnums()
     value.setProperty("MapFilterFlags_Air", MapFilterFlags_Air);
     value.setProperty("MapFilterFlags_Scripted", MapFilterFlags_Scripted);
 
+    value.setProperty("FlowDirections_North", FlowDirections_North);
+    value.setProperty("FlowDirections_South", FlowDirections_South);
+    value.setProperty("FlowDirections_East",  FlowDirections_East);
+    value.setProperty("FlowDirections_West",  FlowDirections_West);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

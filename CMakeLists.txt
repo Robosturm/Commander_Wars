@@ -397,6 +397,9 @@ set(${PROJECT_NAME}_SRCS
     # replay/observer
     game/viewplayer.cpp
 
+    # terrain flow data
+    game/jsData/terrainflowdata.cpp
+
     #ui
     game/ui/playerinfo.cpp
     game/ui/ingameinfobar.cpp

@@ -8,7 +8,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(RIVER.getName());
-        // terrain.setHasFlowDirection(true);
+        terrain.setHasFlowDirection(true);
     };
     this.getName = function()
     {
@@ -96,11 +96,9 @@ var Constructor = function()
     };
     this.updateFlowSprites = function(terrain, pPfs)
     {
-        var points = pPfs.getAllNodePoints();
-        GameConsole.print(points.length, 1);
-        for (var i = 0; i < points.length; ++i)
-        {
-        }
+        var flowData = pPfs.getFlowData();
+        GameConsole.print(flowData.size(), 1);
+        GameConsole.print(flowData.getCosts(0), 1);
     };
 };
 Constructor.prototype = TERRAIN;

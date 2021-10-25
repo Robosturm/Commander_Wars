@@ -57,6 +57,16 @@ public:
     };
     Q_ENUM(Directions)
 
+    enum FlowDirections
+    {
+        FlowDirections_None     = 0,
+        FlowDirections_North    = 0x1,
+        FlowDirections_East     = 0x2,
+        FlowDirections_South    = 0x4,
+        FlowDirections_West     = 0x8,
+    };
+    Q_ENUM(FlowDirections)
+
     enum AIQuestionType
     {
         AIQuestionType_Equal,

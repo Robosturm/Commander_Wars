@@ -3,12 +3,19 @@
 
 #include "coreengine/pathfindingsystem.h"
 
+#include "game/jsData/terrainflowdata.h"
+
 class TerrainFindingSystem;
 using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
 class TerrainFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
+    struct PositionFlowData
+    {
+        QPoint current;
+        QPoint next;
+    };
 public:
     explicit TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);
     virtual ~TerrainFindingSystem() = default;
@@ -38,8 +45,22 @@ public slots:
      * @brief killTerrainFindingSystem
      */
     void killTerrainFindingSystem();
+    /**
+     * @brief getFlowData
+     * @return
+     */
+    TerrainFlowData* getFlowData();
+    /**
+     * @brief getDirection
+     * @param cur
+     * @param next
+     * @return
+     */
+    GameEnums::FlowDirections getDirection(QPoint cur, QPoint next) const;
+
 private:
     QString m_terrainID;
+    TerrainFlowData m_data;
 };
 
 #endif // TERRAINFINDINGSYSTEM_H

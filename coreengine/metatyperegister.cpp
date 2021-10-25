@@ -42,6 +42,9 @@
 #include "game/gamescript.h"
 #include "game/GameEnums.h"
 
+#include "game/ui/customcoboostinfo.h"
+#include "game/jsData/terrainflowdata.h"
+
 #include "wiki/wikidatabase.h"
 #include "wiki/wikiview.h"
 
@@ -168,5 +171,6 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
     qmlRegisterInterface<MapSelectionFilterDialog>("MapSelectionFilterDialog", 1);
     qmlRegisterInterface<MapEditDialog>("MapEditDialog", 1);
-
+    qmlRegisterInterface<CustomCoBoostInfo>("CustomCoBoostInfo", 1);
+    qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
 }

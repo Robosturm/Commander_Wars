@@ -130,19 +130,19 @@ public slots:
      * @param y
      * @return the first point is the target and the last point is the start
      */
-    QVector<QPoint> getPath(qint32 x, qint32 y);
+    QVector<QPoint> getPath(qint32 x, qint32 y) const;
     /**
      * @brief getTargetPath
      * @return
      */
-    QVector<QPoint> getTargetPath();
+    QVector<QPoint> getTargetPath() const;
     /**
      * @brief getCosts
      * @param x
      * @param y
      * @return
      */
-    qint32 getTargetCosts(qint32 x, qint32 y);
+    qint32 getTargetCosts(qint32 x, qint32 y) const;
     /**
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @param maxRange max costs of the target fields (costs need to be smaller than this value)
@@ -155,7 +155,7 @@ public slots:
      * @param y
      * @return if the given field is reachable
      */
-    bool isReachable(qint32 x, qint32 y);
+    bool isReachable(qint32 x, qint32 y) const;
     /**
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @return
@@ -174,7 +174,7 @@ public slots:
      * @param y
      * @return
      */
-    inline qint32 getIndex(qint32 x, qint32 y)
+    inline qint32 getIndex(qint32 x, qint32 y) const
     {
         return x + y * m_width;
     }
