@@ -238,10 +238,16 @@ var BUILDING =
     },
 
 
-    armyData = [["os", "os"],
+    armyData = [["ac", "yc"],
+                ["os", "os"],
                 ["bm", "bm"],
                 ["ge", "ge"],
-                ["yc", "yc"],],
+                ["yc", "yc"],
+                ["gs", "yc"],
+                ["ti", "ge"],
+                ["dm", "ge"],
+                ["pf", "os"],
+                ["bd", "bm"],],
 
     getTerrainAnimationBackground : function(unit, terrain)
     {

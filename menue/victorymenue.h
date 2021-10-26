@@ -94,7 +94,16 @@ protected:
     /**
      * @brief drawGraphStep
      */
-    void drawGraphStep(qint32 progress);
+    qint32 drawGraphStep(qint32 progress);
+    /**
+     * @brief drawEvents
+     * @param pStartRecord
+     * @param player
+     * @param startPoint
+     * @param progress
+     */
+    void drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
+                    QPointF startPoint, qint32 progress);
     /**
      * @brief getStepTime
      * @return

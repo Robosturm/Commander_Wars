@@ -546,7 +546,7 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
-        textField->setHtmlText(tr("Building Hidding:"));
+        textField->setHtmlText(tr("Building Hiding:"));
         textField->setPosition(30, y);
         addChild(textField);
         pCheckbox = spCheckbox::create();
