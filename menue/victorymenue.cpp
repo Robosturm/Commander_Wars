@@ -786,8 +786,8 @@ void VictoryMenue::updateGraph()
             qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
             if (progress < pMap->getCurrentDay())
             {
-                drawGraphStep(progress);
-                m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
+                qint32 nextStep = drawGraphStep(progress);
+                m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)] = nextStep;
             }
         }
         else
@@ -838,12 +838,17 @@ void VictoryMenue::finishGraph()
     }
 }
 
-void VictoryMenue::drawGraphStep(qint32 progress)
+qint32 VictoryMenue::drawGraphStep(qint32 progress)
 {
-    GameManager* pGameManager = GameManager::getInstance();
+    constexpr qint32 lineWidth = 5;
     spGameMap pMap = GameMap::getInstance();
     DayToDayRecord* pStartRecord = nullptr;
     DayToDayRecord* pEndRecord = nullptr;
+    qint32 endProgress = progress + 1;
+    if (m_lineLength < lineWidth * 2.5f)
+    {
+        endProgress = progress + qCeil(lineWidth * 2.5f / m_lineLength);
+    }
     if (pMap->getCurrentDay() == 1)
     {
         pStartRecord = pMap->getGameRecorder()->getDayRecord(0);
@@ -852,12 +857,12 @@ void VictoryMenue::drawGraphStep(qint32 progress)
     else if (progress < pMap->getCurrentDay() - 1)
     {
         pStartRecord = pMap->getGameRecorder()->getDayRecord(progress);
-        pEndRecord = pMap->getGameRecorder()->getDayRecord(progress + 1);
+        pEndRecord = pMap->getGameRecorder()->getDayRecord(endProgress);
     }
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)
     {
-        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX((progress + 1) * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
+        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX(endProgress * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
         // add player lines
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
@@ -865,7 +870,7 @@ void VictoryMenue::drawGraphStep(qint32 progress)
             QPointF endPoint(-1, -1);
 
             startPoint.setX(progress * m_lineLength);
-            endPoint.setX((progress + 1) * m_lineLength);
+            endPoint.setX(endProgress * m_lineLength);
 
             switch (m_CurrentGraphMode)
             {
@@ -917,67 +922,74 @@ void VictoryMenue::drawGraphStep(qint32 progress)
             }
             if (startPoint.y() >= 0 && endPoint.y() >= 0)
             {
-                qint32 lineWidth = 5;
                 startPoint.setY(m_pGraphBackground->getHeight() - startPoint.y() * m_pGraphBackground->getHeight());
                 endPoint.setY(m_pGraphBackground->getHeight() - endPoint.y() * m_pGraphBackground->getHeight());
                 oxygine::spActor line = createLine(endPoint - startPoint, lineWidth, pMap->getPlayer(i)->getColor());
                 line->setPosition(startPoint.x(), startPoint.y() - lineWidth / 2);
                 m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(line);
             }
-            for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
-            {
-                SpecialEvent* pEvent = pStartRecord->getSpecialEvent(event);
-                if (pEvent->getOwner() == i)
-                {
-                    oxygine::spSprite pSprite = oxygine::spSprite::create();
-                    oxygine::ResAnim* pAnim = nullptr;
-                    switch (pEvent->getEvent())
-                    {
-                        case GameEnums::GameRecord_SpecialEvents_Power:
-                        {
-                            pAnim = pGameManager->getResAnim("power");
-                            break;
-                        }
-                        case GameEnums::GameRecord_SpecialEvents_SuperPower:
-                        {
-                            pAnim = pGameManager->getResAnim("superpower");
-                            break;
-                        }
-                        case GameEnums::GameRecord_SpecialEvents_HQCaptured:
-                        {
-                            pAnim = pGameManager->getResAnim("hq+captured");
-                            QColor color = pMap->getPlayer(i)->getColor();
-                            pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
-                            break;
-                        }
-                        case GameEnums::GameRecord_SpecialEvents_HQLost:
-                        {
-                            pAnim = pGameManager->getResAnim("hq+lost");
-                            QColor color = pMap->getPlayer(i)->getColor();
-                            pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
-                            break;
-                        }
-                    }
-                    pSprite->setResAnim(pAnim);
-                    pSprite->setScale(2.0f);
-                    if (startPoint.y() < 0)
-                    {
-                        if (progress >= 0)
-                        {
-                            oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->getLastChild();
-                            if (pActor.get() != nullptr)
-                            {
-                                startPoint.setY(pActor->getY());
-                            }
-                        }
-                    }
-                    pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
-                    m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(pSprite);
-                }
-            }
+            drawPlayerEvents(pStartRecord, i, startPoint, progress);
         }
     }
+    return endProgress;
+}
 
+void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
+                              QPointF startPoint, qint32 progress)
+{
+    spGameMap pMap = GameMap::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
+    for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
+    {
+        SpecialEvent* pEvent = pStartRecord->getSpecialEvent(event);
+        if (pEvent->getOwner() == player)
+        {
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            oxygine::ResAnim* pAnim = nullptr;
+            switch (pEvent->getEvent())
+            {
+                case GameEnums::GameRecord_SpecialEvents_Power:
+                {
+                    pAnim = pGameManager->getResAnim("power");
+                    break;
+                }
+                case GameEnums::GameRecord_SpecialEvents_SuperPower:
+                {
+                    pAnim = pGameManager->getResAnim("superpower");
+                    break;
+                }
+                case GameEnums::GameRecord_SpecialEvents_HQCaptured:
+                {
+                    pAnim = pGameManager->getResAnim("hq+captured");
+                    QColor color = pMap->getPlayer(player)->getColor();
+                    pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
+                    break;
+                }
+                case GameEnums::GameRecord_SpecialEvents_HQLost:
+                {
+                    pAnim = pGameManager->getResAnim("hq+lost");
+                    QColor color = pMap->getPlayer(player)->getColor();
+                    pSprite->setColor(color.red(), color.green(), color.blue(), color.alpha());
+                    break;
+                }
+            }
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(2.0f);
+            if (startPoint.y() < 0)
+            {
+                if (progress >= 0)
+                {
+                    oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->getLastChild();
+                    if (pActor.get() != nullptr)
+                    {
+                        startPoint.setY(pActor->getY());
+                    }
+                }
+            }
+            pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
+            m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->addChild(pSprite);
+        }
+    }
 }
 
 qint32 VictoryMenue::getStepTime()
