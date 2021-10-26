@@ -4096,7 +4096,7 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="549"/>
-        <source>Building Hidding:</source>
+        <source>Building Hiding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

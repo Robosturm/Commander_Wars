@@ -720,6 +720,7 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
 
         soundCache->sound[i]->setVolume(sound);
         soundCache->sound[i]->setLoopCount(loops);
+        soundCache->sound[i]->setMuted(false);
         // start play
         if (delay > 0)
         {
@@ -749,7 +750,9 @@ void AudioThread::SlotStopSound(QString file)
             if (soundCache->sound[i].get() != nullptr &&
                 soundCache->sound[i]->isPlaying())
             {
-                soundCache->sound[i]->stop();
+                soundCache->sound[i]->setLoopCount(0);
+                soundCache->sound[i]->setMuted(true);
+                // soundCache->sound[i]->stop();
             }
         }
     }
@@ -766,7 +769,9 @@ void AudioThread::SlotStopAllSounds()
             if (soundCache->sound[i].get() != nullptr)
             {
                 soundCache->timer[i]->stop();
-                soundCache->sound[i]->stop();
+                soundCache->sound[i]->setLoopCount(0);
+                soundCache->sound[i]->setMuted(true);
+                // soundCache->sound[i]->stop();
             }
         }
     }
