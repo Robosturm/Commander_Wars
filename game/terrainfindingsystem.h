@@ -15,6 +15,7 @@ class TerrainFindingSystem : public PathFindingSystem
     {
         QPoint current;
         QPoint next;
+        qint32 cost{0};
     };
 public:
     explicit TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);

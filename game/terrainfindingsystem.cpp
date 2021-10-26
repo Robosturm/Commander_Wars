@@ -60,15 +60,17 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
     const qint32 size = circle->size();
     QVector<PositionFlowData> flowList;
     // determine start search pattern
-    PositionFlowData startData;
-    startData.current = m_StartPoint;
     for (qint32 i = size - 1; i >= 0; --i)
     {
         qint32 index = qAbs(i - 1) % size;
         QPoint pos = m_StartPoint + circle->at(index);
-        if (getTargetCosts(pos.x(), pos.y()) > 0)
+        qint32 cost = getTargetCosts(pos.x(), pos.y());
+        if (cost >= 0)
         {
+            PositionFlowData startData;
+            startData.current = m_StartPoint;
             startData.next = pos;
+            startData.cost = cost;
             if (flowList.size() == 0)
             {
                 m_data.addData(m_StartPoint, 0, getDirection(startData.current, startData.next));
@@ -79,9 +81,16 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
     while (flowList.size() > 0)
     {
         auto & current = flowList.front();
+        for (qint32 i = size - 1; i >= 0; --i)
+        {
+            qint32 index = qAbs(i - 1) % size;
+            QPoint pos = current.next + circle->at(index);
+            qint32 cost = getTargetCosts(pos.x(), pos.y());
+            if (cost > current.cost)
+            {
 
-
-
+            }
+        }
         flowList.pop_front();
     }
     return &m_data;
