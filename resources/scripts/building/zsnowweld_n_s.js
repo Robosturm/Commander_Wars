@@ -5,7 +5,7 @@ var Constructor = function()
         building.setHp(100);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
         building.loadSprite("snow_weld+N+S", false);

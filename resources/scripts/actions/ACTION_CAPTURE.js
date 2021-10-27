@@ -14,7 +14,6 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    // called for loading the main sprite
     this.canBePerformed = function(action)
     {
         var unit = action.getTargetUnit();

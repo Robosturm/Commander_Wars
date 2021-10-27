@@ -21,7 +21,7 @@ var Constructor = function()
     {
         return 2500;
     };
-    // called for loading the main sprite
+    
     this.armyDataStanding = [["os", "os"],
                      ["bm", "bm"],
                      ["ge", "ge"],

@@ -17,7 +17,7 @@ var Constructor = function()
         unit.setMaxRange(5);
 		unit.setVision(3);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("battleship+mask", GameEnums.Recoloring_Matrix);

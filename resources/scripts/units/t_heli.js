@@ -22,7 +22,7 @@ var Constructor = function()
     {
         return 5000;
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("t_heli+mask", GameEnums.Recoloring_Matrix);

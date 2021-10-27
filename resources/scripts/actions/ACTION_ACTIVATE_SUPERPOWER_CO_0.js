@@ -1,6 +1,5 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
     this.canBePerformed = function(action)
     {
         var co = map.getCurrentPlayer().getCO(0);

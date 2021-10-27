@@ -6,7 +6,7 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
 
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
         building.loadSprite("black_cannon+N", false);

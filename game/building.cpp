@@ -67,7 +67,12 @@ QStringList Building::getBaseTerrain()
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
-    return ret.toVariant().toStringList();
+    QStringList retList = ret.toVariant().toStringList();
+    if (retList.size() == 0)
+    {
+        retList.append("PLAINS");
+    }
+    return retList;
 }
 
 void Building::scaleAndShowOnSingleTile()

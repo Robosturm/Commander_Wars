@@ -5,7 +5,7 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
          building.loadSpriteV2("talon+gun+destroyed", GameEnums.Recoloring_Matrix);

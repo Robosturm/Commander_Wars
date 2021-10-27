@@ -1,7 +1,6 @@
 // this is the base class for terrain
 var BUILDING =
 {
-
     // loader for stuff which needs C++ Support
     init : function (building)
     {
@@ -44,7 +43,6 @@ var BUILDING =
         // one field heigth default for most buildings
         return 1;
     },
-    // called for loading the main sprites
     loadSprites : function(building, neutral)
     {
     },

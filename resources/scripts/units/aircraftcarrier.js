@@ -14,10 +14,10 @@ var Constructor = function()
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
         unit.setMinRange(3);
-        unit.setMaxRange(8);
+        unit.setMaxRange(6);
 		unit.setVision(4);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("aircraftcarrier+mask", GameEnums.Recoloring_Matrix);

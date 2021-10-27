@@ -13,6 +13,7 @@ public:
     virtual ~TerrainFlowData() = default;
 public slots:
     void addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection);
+    void addFlowDirection(qint32 index, GameEnums::FlowDirections newFlowDirection);
     QPoint getPosition(qint32 index) const;
     qint32 getCosts(qint32 index) const;
     const GameEnums::FlowDirections getFlowDirection(qint32 index) const;
@@ -22,6 +23,8 @@ public slots:
     {
         return m_positions.size();
     }
+    void print();
+    void mergeFlows();
 private:
     QVector<QPoint> m_positions;
     QVector<qint32> m_costs;

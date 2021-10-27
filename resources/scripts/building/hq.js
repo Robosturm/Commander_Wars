@@ -14,7 +14,7 @@ var Constructor = function()
                          ["pf", "pf"],
                          ["ti", "ti"],
                          ["yc", "yc"],];
-    // called for loading the main sprite
+    
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)

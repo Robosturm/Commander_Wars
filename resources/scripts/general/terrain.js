@@ -59,7 +59,7 @@ var TERRAIN =
     loadBaseTerrain : function(terrain, currentTerrainID)
     {
     },
-    // called for loading the main sprite
+    
     loadBaseSprite : function(terrain)
     {
     },

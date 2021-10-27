@@ -18,7 +18,7 @@ var Constructor = function()
         unit.setVision(1);
 
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("artillery+mask", GameEnums.Recoloring_Matrix);

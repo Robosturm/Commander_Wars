@@ -17,7 +17,7 @@ var Constructor = function()
         unit.setMaxRange(3);
         unit.setVision(2);
     };
-    // called for loading the main sprite
+    
     this.armyDataStanding = [["os", "os"],
                      ["bm", "bm"],
                      ["ge", "ge"],

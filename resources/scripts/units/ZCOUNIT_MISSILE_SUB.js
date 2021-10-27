@@ -40,7 +40,7 @@ var Constructor = function()
         }
     };
     this.actionList = ["ACTION_FIRE", "ACTION_STEALTH", "ACTION_UNSTEALTH", "ACTION_JOIN", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("missile_sub+mask", GameEnums.Recoloring_Matrix);

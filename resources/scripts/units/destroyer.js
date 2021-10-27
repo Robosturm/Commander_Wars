@@ -17,7 +17,7 @@ var Constructor = function()
         unit.setMaxRange(1);
         unit.setVision(1);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Matrix);
