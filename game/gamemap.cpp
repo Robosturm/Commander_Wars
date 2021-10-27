@@ -483,7 +483,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                if (m_fields[y][x]->getHasFlowDirection())
+                if (m_fields[y][x]->getHasFlowDirection() &&
+                    !m_fields[y][x]->getFixedSprite())
                 {
                     flowPoints.append(QPoint(x, y));
                 }
@@ -511,7 +512,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             {
                 if (onMap(x, y))
                 {
-                    if (m_fields[y][x]->getHasFlowDirection())
+                    if (m_fields[y][x]->getHasFlowDirection() &&
+                        !m_fields[y][x]->getFixedSprite())
                     {
                         flowPoints.append(QPoint(x, y));
                     }
@@ -534,7 +536,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
-        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getTerrainID(), pos.x(), pos.y());
+        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
         m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
         auto points = pPfs->getAllNodePoints();

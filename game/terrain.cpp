@@ -326,15 +326,19 @@ void Terrain::unloadSprites()
     }
 }
 
-void Terrain::loadSprites()
+void Terrain::loadBaseTerrainSprites()
 {
-    unloadSprites();
     // load sub terrain
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->loadSprites();
     }
-    // load main terrain
+}
+
+void Terrain::loadSprites()
+{
+    unloadSprites();
+    loadBaseTerrainSprites();
     Interpreter* pInterpreter = Interpreter::getInstance();
     if (m_FixedSprite)
     {
@@ -433,6 +437,14 @@ void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
     QJSValue obj2 = pInterpreter->newQObject(pPfs);
     args1 << obj2;
     pInterpreter->doFunction(m_terrainID, function1, args1);
+}
+
+QStringList Terrain::getFlowTiles()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getFlowTiles";
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
+    return ret.toVariant().toStringList();
 }
 
 bool Terrain::existsResAnim(QString spriteId)

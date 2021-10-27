@@ -309,8 +309,9 @@
         <image file="street+S+W.png" />
         <image file="street+W.png" />
         
-        <image file="river+0.png" cols = "8" />
-        <image file="river+1.png" cols = "8" />
+        <!-- river endings -->
+        <image file="river+0+land+N+E+S+W.png" cols = "8" />
+        <image file="river+1+land+N+E+S+W.png" cols = "8" />
         <image file="river+0+land+E+S+W.png" cols = "8" />
         <image file="river+1+land+E+S+W.png" cols = "8" />
         <image file="river+0+land+N+E+S.png" cols = "8" />
@@ -319,51 +320,70 @@
         <image file="river+1+land+N+E+W.png" cols = "8" />
         <image file="river+0+land+N+S+W.png" cols = "8" />
         <image file="river+1+land+N+S+W.png" cols = "8" />
-        <image file="river+E+land+N.png" cols = "8" />
+        <!-- river corners -->
+        <image file="river+S+W+land+N+W.png" cols = "8" />
+        <image file="river+S+W+land+N+W+SE.png" cols = "8" />
+        <image file="river+E+S+land+N+E.png" cols = "8" />
+        <image file="river+E+S+land+N+E+SW.png" cols = "8" />        
+        <image file="river+N+E+land+N+W.png" cols = "8" />
+        <image file="river+N+E+land+N+W+SE.png" cols = "8" />
+        <image file="river+E+S+land+S+W.png" cols = "8" />
+        <image file="river+E+S+land+S+W+NE.png" cols = "8" />
+        <image file="river+N+E+land+E+S.png" cols = "8" />
+        <image file="river+N+E+land+E+S+NW.png" cols = "8" />
+        <image file="river+N+W+land+S+W.png" cols = "8" />
+        <image file="river+N+W+land+S+W+NE.png" cols = "8" />
+        <image file="river+N+W+land+N+E.png" cols = "8" />
+        <image file="river+N+W+land+N+E+SW.png" cols = "8" />
+        <image file="river+S+W+land+E+S.png" cols = "8" />
+        <image file="river+S+W+land+E+S+NW.png" cols = "8" />
+        <!-- direct flow tiles -->
+        <image file="river+S+land+E+W.png" cols = "8" />
+        <image file="river+N+land+E+W.png" cols = "8" />
         <image file="river+E+land+N+S.png" cols = "8" />
+        <image file="river+W+land+N+S.png" cols = "8" />
+        <image file="river+S+land+E+W+bridge.png" cols = "8" />
+
+        
         <image file="river+E+land+N+SE.png" cols = "8" />
-        <image file="river+E+land+N+W.png" cols = "8" />
-        <image file="river+E+land+N+W+SE.png" cols = "8" />
-        <image file="river+E+land+S.png" cols = "8" />
         <image file="river+E+land+S+NE.png" cols = "8" />
         <image file="river+E+land+S+NE+NW.png" cols = "8" />
-        <image file="river+E+land+S+W.png" cols = "8" />
-        <image file="river+E+land+S+W+NE.png" cols = "8" />        
+        <image file="river+W+land+S+NW.png" cols = "8" />
+        <image file="river+W+land+N+SW.png" cols = "8" />
+        
+        
+        <image file="river+E+land+S.png" cols = "8" />
+        <image file="river+E+land+N.png" cols = "8" />
+        
+        
+        <image file="river+E.png" cols = "8" />
+        <image file="river+W.png" cols = "8" />
+        <image file="river+N.png" cols = "8" />
+        <image file="river+S.png" cols = "8" />
+        
+             
+        <image file="river+N+land+W+NE+SE.png" cols = "8" />
         <image file="river+E+S+land+N+SE+SW.png" cols = "8" />
         <image file="river+E+S+land+N+SW.png" cols = "8" />
         <image file="river+E+S+land+W+NE.png" cols = "8" />
         <image file="river+E+S+land+W+NE+SE.png" cols = "8" />        
-        <image file="river+E+W+land+S+NE+NW.png" cols = "8" />        
-        <image file="river+N.png" cols = "8" />
+        <image file="river+E+W+land+S+NE+NW.png" cols = "8" />   
         <image file="river+N+E+land+S+NE+NW.png" cols = "8" />
         <image file="river+N+E+land+S+NW.png" cols = "8" />
         <image file="river+N+E+land+W+NE+SE.png" cols = "8" />
         <image file="river+N+E+land+W+SE.png" cols = "8" />
         <image file="river+N+land+E.png" cols = "8" />
         <image file="river+N+land+E+NW.png" cols = "8" />
-        <image file="river+N+land+E+S.png" cols = "8" />
-        <image file="river+N+land+E+S+NW.png" cols = "8" />
         <image file="river+N+land+E+SW+NW.png" cols = "8" />
-        <image file="river+N+land+E+W.png" cols = "8" />
-        <image file="river+N+land+S+W.png" cols = "8" />
-        <image file="river+N+land+S+W+NE.png" cols = "8" />
         <image file="river+N+land+W+NE.png" cols = "8" />
-        <image file="river+N+land+W+NE+SE.png" cols = "8" />
         <image file="river+N+W+land+E+SW.png" cols = "8" />
         <image file="river+N+W+land+E+SW+NW.png" cols = "8" />
         <image file="river+N+W+land+S+NE.png" cols = "8" />
-        <image file="river+N+W+land+S+NE+NW.png" cols = "8" />
-        <image file="river+S.png" cols = "8" />
+        <image file="river+N+W+land+S+NE+NW.png" cols = "8" />        
         <image file="river+S+land+E.png" cols = "8" />
         <image file="river+S+land+E+SW.png" cols = "8" />
-        <image file="river+S+land+E+SW+NW.png" cols = "8" />
-        <image file="river+S+land+E+W.png" cols = "8" />
-        <image file="river+S+land+E+W+bridge.png" cols = "8" />
-        <image file="river+S+land+N+E.png" cols = "8" />
-        <image file="river+S+land+N+E+SW.png" cols = "8" />
+        <image file="river+S+land+E+SW+NW.png" cols = "8" />        
         <image file="river+S+land+N+SE+SW.png" cols = "8" />
-        <image file="river+S+land+N+W.png" cols = "8" />
-        <image file="river+S+land+N+W+SE.png" cols = "8" />
         <image file="river+S+land+NE+SE+SW+NW.png" cols = "8" />
         <image file="river+S+land+W.png" cols = "8" />
         <image file="river+S+land+W+NE+SE.png" cols = "8" />
@@ -372,19 +392,11 @@
         <image file="river+S+W+land+E+SW+NW.png" cols = "8" />
         <image file="river+S+W+land+N+SE.png" cols = "8" />
         <image file="river+S+W+land+N+SE+SW.png" cols = "8" />
-        <image file="river+W+land+E+S.png" cols = "8" />
-        <image file="river+W+land+E+S+NW.png" cols = "8" />
         <image file="river+W+land+N.png" cols = "8" />
-        <image file="river+W+land+N+E.png" cols = "8" />
-        <image file="river+W+land+N+E+SW.png" cols = "8" />
-        <image file="river+W+land+N+S.png" cols = "8" />
-        <image file="river+W+land+N+SW.png" cols = "8" />
         <image file="river+W+land+S.png" cols = "8" /> 
         <image file="river+W+land+S+NE+NW.png" cols = "8" /> 
-        <image file="river+W+land+S+NW.png" cols = "8" /> 
-        <image file="river+E.png" cols = "8" />
-        <image file="river+W.png" cols = "8" />
         <!-- water falls -->
+        <!--
         <image file="riverend+E+1.png" cols = "8" />
         <image file="riverend+E+2.png" cols = "8" />
         <image file="riverend+E+3.png" cols = "8" />
@@ -435,7 +447,8 @@
         <image file="riverend+sea+N+E+S.png" cols = "8" />
         <image file="riverend+sea+N+E+W.png" cols = "8" />
         <image file="riverend+sea+N+S+W.png" cols = "8" />
-
+        -->
+        
         <!-- plasma -->
         <image file="plasma.png" cols = "3" />
         <image file="plasma+E.png" cols = "3" />

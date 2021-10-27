@@ -323,4 +323,14 @@ var TERRAIN =
     {
         return 0;
     },
+
+    // the tiles considered for flowing
+    getFlowTiles : function()
+    {
+        return [];
+    },
+    // gets called with a terrain pfs in order to create the flow sprites
+    updateFlowSprites : function(terrain, pPfs)
+    {
+    },
 };

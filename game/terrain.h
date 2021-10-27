@@ -271,6 +271,10 @@ public slots:
      */
     void unloadSprites();
     /**
+     * @brief loadBaseTerrainSprites
+     */
+    void loadBaseTerrainSprites();
+    /**
      * @brief getMinimapIcon
      * @return
      */
@@ -450,6 +454,11 @@ public slots:
      * @param pPfs
      */
     void updateFlowSprites(TerrainFindingSystem* pPfs);
+    /**
+     * @brief getFlowTiles
+     * @return
+     */
+    QStringList getFlowTiles();
 protected:
     /**
      * @brief createBuildingDownStream

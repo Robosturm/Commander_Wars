@@ -39,6 +39,7 @@ bool TerrainFindingSystem::finished(qint32, qint32, qint32)
 {
     return false;
 }
+
 qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, qint32)
 {
     if (m_movecosts[index][0] == infinite)
@@ -81,8 +82,12 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
         auto current = flowList.front();
         flowList.pop_front();
         qint32 flowSource = m_data.size();
-        m_data.addFlowDirection(current.flowListSource, current.flowDirection);
-        m_data.addData(current.next, current.cost, current.flowDirection);
+        m_data.addFlowDirection(current.flowListSource, current.flowDirection);        
+        bool exists = m_data.addData(current.next, current.cost, current.flowDirection);
+        if (exists)
+        {
+            continue;
+        }
         // remove items with the same target field as us from the list
         qint32 i2 = 0;
         while (i2 < flowList.size())
@@ -98,9 +103,38 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
         }
         // add new neighbours
         bool initialAdded = false;
+        qint32 offset = 0;
+        switch (getDirection(current.current, current.next))
+        {
+            case GameEnums::FlowDirections_East:
+            {
+                offset = 1;
+                break;
+            }
+            case GameEnums::FlowDirections_West:
+            {
+                offset = 3;
+                break;
+            }
+            case GameEnums::FlowDirections_South:
+            {
+                offset = 0;
+                break;
+            }
+            case GameEnums::FlowDirections_North:
+            {
+                offset = 2;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+
         for (qint32 i = 0; i < size; ++i)
         {
-            QPoint pos = current.next + circle->at(i);
+            QPoint pos = current.next + circle->at((i + offset) % size);
             qint32 cost = getTargetCosts(pos.x(), pos.y());
             if (cost > current.cost)
             {
@@ -123,7 +157,6 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
             }
         }
     }
-    m_data.mergeFlows();
     m_data.print();
     return &m_data;
 }
@@ -174,6 +207,10 @@ void TerrainFindingSystem::addStartFlows(const spQmlVectorPoint & circle, const 
             }
             flowList.append(startData);
         }
+    }
+    if (flowList.length() == 0)
+    {
+        m_data.addData(m_StartPoint, 0, GameEnums::FlowDirections_None);
     }
 }
 

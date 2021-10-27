@@ -19,11 +19,20 @@ void TerrainFlowData::clear()
     m_flowDirections.clear();
 }
 
-void TerrainFlowData::addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection)
+bool TerrainFlowData::addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection)
 {
-    m_positions.append(newPosition);
-    m_costs.append(newCosts);
-    m_flowDirections.append(newFlowDirection);
+    qint32 index = m_positions.indexOf(newPosition);
+    if (index >= 0)
+    {
+        m_flowDirections[index] = static_cast<GameEnums::FlowDirections>(m_flowDirections[index] | newFlowDirection);
+    }
+    else
+    {
+        m_positions.append(newPosition);
+        m_costs.append(newCosts);
+        m_flowDirections.append(newFlowDirection);
+    }
+    return index >= 0;
 }
 
 void TerrainFlowData::addFlowDirection(qint32 index, GameEnums::FlowDirections newFlowDirection)
@@ -87,25 +96,10 @@ QString TerrainFlowData::getFlowString(qint32 index) const
     return ret;
 }
 
-void TerrainFlowData::mergeFlows()
-{
-    for (qint32 i = 0; i < m_flowDirections.size(); ++i)
-    {
-        QPoint & pos = m_positions[i];
-        for (qint32 i2 = 0; i2 < m_flowDirections.size(); ++i2)
-        {
-            QPoint & next = m_positions[i2];
-            if ((next.y() == pos.y() && qAbs(pos.x() - next.x()) == 1) ||
-                (next.x() == pos.x() && qAbs(pos.y() - next.y()) == 1))
-            {
-                // addFlowDirection(i
-            }
-        }
-    }
-}
-
 void TerrainFlowData::print()
 {
+    CONSOLE_PRINT("River length = " + QString::number(m_positions.size()), Console::eDEBUG);
+
     for (qint32 i = 0; i < m_flowDirections.size(); ++i)
     {
         CONSOLE_PRINT("X=" + QString::number(m_positions[i].x()) +
