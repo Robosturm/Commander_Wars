@@ -25,6 +25,12 @@ using spBuilding = oxygine::intrusive_ptr<Building>;
 class Building : public Tooltip, public FileSerializable
 {
     Q_OBJECT
+    enum class DrawPriority
+    {
+        Default = 0,
+        Overlay = 100,
+    };
+
 public:
     static const float animationSpeed;
 
@@ -411,8 +417,19 @@ public slots:
      * @return
      */
     GameEnums::BuildingTarget getBuildingTargets();
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged();
+    /**
+     * @brief loadWeatherOverlaySpriteV2
+     * @param spriteID
+     * @param mode
+     */
+    void loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recoloring mode);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
+    QVector<oxygine::spSprite> m_pWeatherOverlaySprites;
 
     QVector<GameEnums::Recoloring> m_addPlayerColor;
     /**

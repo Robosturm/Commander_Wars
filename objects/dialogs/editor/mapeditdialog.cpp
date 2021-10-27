@@ -64,7 +64,7 @@ QString MapEditDialog::getMapName() const
 
 void MapEditDialog::setMapAuthor(QString name)
 {
-    m_info.mapName = name;
+    m_info.author = name;
 }
 
 QString MapEditDialog::getMapAuthor() const

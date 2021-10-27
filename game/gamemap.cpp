@@ -439,6 +439,23 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
+void GameMap::onWeatherChanged()
+{
+    CONSOLE_PRINT("GameMap::onWeatherChanged()", Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            if (m_fields[y][x]->getBuilding() != nullptr)
+            {
+                m_fields[y][x]->getBuilding()->onWeatherChanged();
+            }
+        }
+    }
+}
+
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
     CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);

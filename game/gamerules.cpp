@@ -504,7 +504,7 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
         if (apply)
         {
             setCurrentWeather(m_WeatherDays[0][startPlayer]);
-        }
+        }        
     }
 }
 
@@ -521,11 +521,12 @@ void GameRules::setCurrentWeather(qint32 weatherId)
             }
             m_CurrentWeather = weatherId;
             m_Weathers[m_CurrentWeather]->activate();
+            spGameMap pMap = GameMap::getInstance();
+            pMap->onWeatherChanged();
         }
         // create weather sprites :)
         createWeatherSprites();
-    }
-    
+    }    
 }
 
 void GameRules::createWeatherSprites()
