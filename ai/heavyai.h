@@ -78,6 +78,7 @@ class HeavyAi : public CoreAI
         TerrainDefense,         // 10
         ProductionOwner,        // 11
         FrontTile,              // 12
+        // add is co unit
         BasicFieldInfoMaxSize,
     };
 
