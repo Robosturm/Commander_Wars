@@ -737,6 +737,10 @@ public slots:
      * @param flags
      */
     void setMapFlags(GameEnums::MapFilterFlags flags);
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged();
 private slots:
     void zoomChanged();
 private:

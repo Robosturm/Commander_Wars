@@ -293,4 +293,10 @@ var BUILDING =
     onCaptured : function(building)
     {
     },
+
+    onWeatherChanged : function(building)
+    {
+        // called when the weather changes
+        // call loadWeatherOverlaySpriteV2 to load an sprite overlay
+    },
 };
