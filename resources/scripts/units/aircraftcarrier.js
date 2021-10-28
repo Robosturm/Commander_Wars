@@ -13,8 +13,8 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-        unit.setMinRange(3);
-        unit.setMaxRange(8);
+        unit.setMinRange(2);
+        unit.setMaxRange(6);
 		unit.setVision(4);
     };
     // called for loading the main sprite
