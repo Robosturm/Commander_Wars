@@ -11,6 +11,7 @@ class TerrainFlowData : public QObject
 public:
     explicit TerrainFlowData();
     virtual ~TerrainFlowData() = default;
+
 public slots:
     bool addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection);
     void addFlowDirection(qint32 index, GameEnums::FlowDirections newFlowDirection);
@@ -26,9 +27,21 @@ public slots:
         return m_positions.size();
     }
     void print();
+    /**
+     * @brief getOverlayTiles
+     * @param terrains
+     * @return
+     */
+    QVector<QPoint> getOverlayTiles(QStringList terrains);
+    /**
+     * @brief getOverlayTileMapping
+     * @return
+     */
+    QVector<qint32> getOverlayTileMapping() const;
 private:
     QVector<QPoint> m_positions;
     QVector<qint32> m_costs;
-    QVector<GameEnums::FlowDirections> m_flowDirections;
+    QVector<GameEnums::FlowDirections> m_flowDirections;    
+    QVector<qint32> m_overlayTileMapping;
 };
 

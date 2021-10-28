@@ -82,11 +82,12 @@ var Constructor = function()
                 RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
             }
         }
+        RIVER.loadSeaOverlays(flowData);
     };
     this.loadSpriteFromFlowData = function(terrain, pos, flowData, index)
     {
         var flow = flowData.getFlowString(index);
-        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, true, GameEnums.Directions_Direct);
+        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
         if (surroundingsDirect === "+N+E+S+W" ||
             surroundingsDirect === "+E+S+W" ||
             surroundingsDirect === "+N+S+W" ||
@@ -98,7 +99,7 @@ var Constructor = function()
         }
         else
         {
-            var surroundingsDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, true, GameEnums.Directions_Diagnonal);
+            var surroundingsDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
             if (surroundingsDirect.includes("+N"))
             {
                 surroundingsDiagonal = surroundingsDiagonal.replace("+NE", "").replace("+NW", "");
@@ -164,6 +165,78 @@ var Constructor = function()
                         }
                     }
                 }
+            }
+        }
+    };
+    this.loadSeaOverlays = function(flowData)
+    {
+        var overlayTiles = flowData.getOverlayTiles(["SEA", "REAF"]);
+        var tileMapping = flowData.getOverlayTileMapping();
+        var length = overlayTiles.length
+        for (var i  = 0; i < length; ++i)
+        {
+            var surroundingsRiverDirect = terrain.getSurroundings("RIVER,BRIDGE", false, false, GameEnums.Directions_Direct);
+            var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
+            var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE", false, true, GameEnums.Directions_Diagnonal);
+            for (var i2 = 1; i2 <= 4; ++i2)
+            {
+                var endString = "+" + i2.toString();
+                switch (i2)
+                {
+                case 1:
+                {
+                    if (surroundingsRiverDirect.includes("+N") ||
+                        surroundingsRiverDirect.includes("+W"))
+                    {
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (surroundingsRiverDirect.includes("+N") ||
+                        surroundingsRiverDirect.includes("+E"))
+                    {
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (surroundingsRiverDirect.includes("+S") ||
+                        surroundingsRiverDirect.includes("+E"))
+                    {
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (surroundingsRiverDirect.includes("+S") ||
+                        surroundingsRiverDirect.includes("+W"))
+                    {
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    break;
+                }
+                }
+                // todo select
             }
         }
     };

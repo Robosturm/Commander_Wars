@@ -3,6 +3,10 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
+#include "coreengine/qmlvector.h"
+#include "coreengine/globalutils.h"
+
+#include "game/gamemap.h"
 
 TerrainFlowData::TerrainFlowData()
 {
@@ -179,4 +183,32 @@ void TerrainFlowData::print()
                       " Y=" + QString::number(m_positions[i].y()) +
                       " Direction=" + getFlowString(i), Console::eDEBUG);
     }
+}
+
+QVector<QPoint> TerrainFlowData::getOverlayTiles(QStringList terrains)
+{
+    QVector<QPoint> ret;
+    spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
+    spGameMap pMap = GameMap::getInstance();
+    const qint32 size = circle->size();
+    for (qint32 i2 = 0; i2 < m_positions.size(); ++i2)
+    {
+        for (qint32 i = 0; i < size; ++i)
+        {
+            QPoint newPos = m_positions[i2] + circle->at(i);
+            if (pMap->onMap(newPos.x(), newPos.y()) &&
+                !ret.contains(newPos) &&
+                terrains.contains(pMap->getTerrain(newPos.x(), newPos.y())->getID()))
+            {
+                ret.append(newPos);
+                m_overlayTileMapping.append(i2);
+            }
+        }
+    }
+    return ret;
+}
+
+QVector<qint32> TerrainFlowData::getOverlayTileMapping() const
+{
+    return m_overlayTileMapping;
 }
