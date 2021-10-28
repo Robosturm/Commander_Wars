@@ -487,7 +487,8 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFinding
             QVector<QPoint> targets = pPfs->getAllNodePoints();
             for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
-                if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+                Terrain* pTerrain = pMap->getTerrain(targets[i2].x(), targets[i2].y());
+                if (pTerrain->getUnit() == nullptr)
                 {
                     pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
                     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -2127,6 +2128,12 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
         return true;
     }
     return false;
+}
+
+bool CoreAI::isMoveableTile(Building* pBuilding)
+{
+    return pBuilding == nullptr || pBuilding->getOwner()->isEnemy(m_pPlayer) ||
+            !pBuilding->isProductionBuilding();
 }
 
 void CoreAI::serializeObject(QDataStream& stream) const

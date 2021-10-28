@@ -390,6 +390,7 @@ void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
         }
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+        pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
         addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
@@ -419,6 +420,7 @@ void Terrain::loadBaseSprite(QString spriteID, qint32 frameTime)
             pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
         }
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+        pSprite->setPriority(static_cast<qint32>(DrawPriority::Terrain));
         m_pTerrainSprite = pSprite;
     }
     else
@@ -447,11 +449,20 @@ QStringList Terrain::getFlowTiles()
     return ret.toVariant().toStringList();
 }
 
-bool Terrain::existsResAnim(QString spriteId)
+bool Terrain::existsResAnim(QString spriteId) const
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     return pTerrainManager->getResAnim(spriteId, oxygine::error_policy::ep_ignore_error) != nullptr;
 }
+
+QString Terrain::getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const
+{
+    QString ret;
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    ret = pTerrainManager->getFittingResAnim(spriteIdStart, spriteIdEnd);
+    return ret;
+}
+
 
 QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)
 {
@@ -634,6 +645,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
         CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eERROR);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+    pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
     addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

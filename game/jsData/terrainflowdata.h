@@ -18,6 +18,8 @@ public slots:
     qint32 getCosts(qint32 index) const;
     const GameEnums::FlowDirections getFlowDirection(qint32 index) const;
     QString getFlowString(qint32 index) const;
+    QString getFlowDirectionString(GameEnums::FlowDirections flowDirection) const;
+    QStringList getAlternateFlowString(GameEnums::FlowDirections flowDirection) const;
     void clear();
     qint32 size() const
     {

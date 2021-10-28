@@ -548,7 +548,12 @@ protected:
      * @return
      */
     bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
-
+    /**
+     * @brief isMoveableBuilding
+     * @param pBuilding
+     * @return
+     */
+    bool isMoveableTile(Building* pBuilding);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

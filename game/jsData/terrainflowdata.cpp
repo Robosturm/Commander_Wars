@@ -75,24 +75,97 @@ QString TerrainFlowData::getFlowString(qint32 index) const
     QString ret;
     if (index >= 0 && index < m_flowDirections.size())
     {
-        auto flowDirection = m_flowDirections.at(index);
-        if (flowDirection & GameEnums::FlowDirections_North)
+        ret = getFlowDirectionString(m_flowDirections.at(index));
+    }
+    return ret;
+}
+
+QString TerrainFlowData::getFlowDirectionString(GameEnums::FlowDirections flowDirection) const
+{
+    QString ret;
+    if (flowDirection & GameEnums::FlowDirections_North)
+    {
+        ret += "+N";
+    }
+    if (flowDirection & GameEnums::FlowDirections_East)
+    {
+        ret += "+E";
+    }
+    if (flowDirection & GameEnums::FlowDirections_South)
+    {
+        ret += "+S";
+    }
+    if (flowDirection & GameEnums::FlowDirections_West)
+    {
+        ret += "+W";
+    }
+    return ret;
+}
+
+QStringList TerrainFlowData::getAlternateFlowString(GameEnums::FlowDirections flowDirection) const
+{
+    QStringList ret;
+    qint32 count = 0;
+    if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_North) == GameEnums::FlowDirections::FlowDirections_North)
+    {
+        ++count;
+    }
+    if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_South) == GameEnums::FlowDirections::FlowDirections_South)
+    {
+        ++count;
+    }
+    if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_East) == GameEnums::FlowDirections::FlowDirections_East)
+    {
+        ++count;
+    }
+    if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_West) == GameEnums::FlowDirections::FlowDirections_West)
+    {
+        ++count;
+    }
+    if (count > 1)
+    {
+        if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_North) == GameEnums::FlowDirections::FlowDirections_North)
         {
-            ret += "+N";
+            auto direction = static_cast<GameEnums::FlowDirections>(flowDirection & ~GameEnums::FlowDirections_North);
+            ret.append(getFlowDirectionString(direction));
+            auto list = getAlternateFlowString(direction);
+            if (list.size() > 0)
+            {
+                ret.append(list);
+            }
         }
-        if (flowDirection & GameEnums::FlowDirections_East)
+        if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_South) == GameEnums::FlowDirections::FlowDirections_South)
         {
-            ret += "+E";
+            auto direction = static_cast<GameEnums::FlowDirections>(flowDirection & ~GameEnums::FlowDirections_South);
+            ret.append(getFlowDirectionString(direction));
+            auto list = getAlternateFlowString(direction);
+            if (list.size() > 0)
+            {
+                ret.append(list);
+            }
         }
-        if (flowDirection & GameEnums::FlowDirections_South)
+        if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_West) == GameEnums::FlowDirections::FlowDirections_West)
         {
-            ret += "+S";
+            auto direction = static_cast<GameEnums::FlowDirections>(flowDirection & ~GameEnums::FlowDirections_West);
+            ret.append(getFlowDirectionString(direction));
+            auto list = getAlternateFlowString(direction);
+            if (list.size() > 0)
+            {
+                ret.append(list);
+            }
         }
-        if (flowDirection & GameEnums::FlowDirections_West)
+        if (static_cast<GameEnums::FlowDirections>(flowDirection & GameEnums::FlowDirections_East) == GameEnums::FlowDirections::FlowDirections_East)
         {
-            ret += "+W";
+            auto direction = static_cast<GameEnums::FlowDirections>(flowDirection & ~GameEnums::FlowDirections_East);
+            ret.append(getFlowDirectionString(direction));
+            auto list = getAlternateFlowString(direction);
+            if (list.size() > 0)
+            {
+                ret.append(list);
+            }
         }
     }
+    ret.removeDuplicates();
     return ret;
 }
 

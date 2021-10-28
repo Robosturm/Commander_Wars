@@ -13,7 +13,7 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-        unit.setMinRange(3);
+        unit.setMinRange(2);
         unit.setMaxRange(6);
 		unit.setVision(4);
     };

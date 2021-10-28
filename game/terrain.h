@@ -46,6 +46,7 @@ public:
     {
         MarkedFieldMap,
         Terrain = 0,
+        TerrainOverlay,
         Shroud,
         Building,
         Fog,
@@ -448,7 +449,14 @@ public slots:
      * @param spriteId
      * @return
      */
-    bool existsResAnim(QString spriteId);
+    bool existsResAnim(QString spriteId) const;
+    /**
+     * @brief getFittingResAnim
+     * @param spriteIdStart
+     * @param spriteIdEnd
+     * @return
+     */
+    QString getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const;
     /**
      * @brief updateFlowSprites
      * @param pPfs

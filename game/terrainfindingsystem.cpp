@@ -157,7 +157,6 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
             }
         }
     }
-    m_data.print();
     return &m_data;
 }
 

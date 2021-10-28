@@ -40,6 +40,13 @@ public slots:
     {
         return m_loadedRessources.size();
     }
+    /**
+     * @brief getFittingResAnim
+     * @param spriteIdStart
+     * @param spriteIdEnd
+     * @return
+     */
+    QString getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const;
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

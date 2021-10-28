@@ -429,6 +429,7 @@ private:
     float m_minAttackFunds{0.0f};
     float m_minSuicideDamage{0.75f};
     float m_spamingFunds{7500};
+    float m_ownProdctionMalus{5000.0f};
 
     float m_minUnitHealth{3};
     float m_maxUnitHealth{7};

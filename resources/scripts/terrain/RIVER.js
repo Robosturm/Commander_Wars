@@ -68,23 +68,24 @@ var Constructor = function()
     };
     this.updateFlowSprites = function(terrain, pPfs)
     {
-        var flowData = pPfs.getFlowData();
+        var flowData = pPfs.getFlowData();        
+        flowData.print();
         var length = flowData.size()
         for (var i  = 0; i < length; ++i)
         {
             var pos = flowData.getPosition(i);
-            var flow = flowData.getFlowString(i);
             var currentTerrain = map.getTerrain(pos.x, pos.y);
             if (currentTerrain.getID() === "RIVER")
             {
                 currentTerrain.unloadSprites();
                 currentTerrain.loadBaseTerrainSprites();
-                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flow);
+                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
             }
         }
     };
-    this.loadSpriteFromFlowData = function(terrain, pos, flow)
+    this.loadSpriteFromFlowData = function(terrain, pos, flowData, index)
     {
+        var flow = flowData.getFlowString(index);
         var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, true, GameEnums.Directions_Direct);
         if (surroundingsDirect === "+N+E+S+W" ||
             surroundingsDirect === "+E+S+W" ||
@@ -114,10 +115,55 @@ var Constructor = function()
             {
                 surroundingsDiagonal = surroundingsDiagonal.replace("+SW", "").replace("+NW", "");
             }
-            var animName = "river" + flow + "+land" + surroundingsDirect + surroundingsDiagonal;
+            var landEnding = "";
+            if (surroundingsDirect !== "" ||
+                surroundingsDiagonal !== "")
+            {
+                landEnding = "+land" + surroundingsDirect + surroundingsDiagonal;
+            }
+            var animName = "river" + flow + landEnding;
             if (terrain.existsResAnim(animName))
             {
                 terrain.loadBaseSprite(animName);
+            }
+            else
+            {
+                var flowDirection = flowData.getFlowDirection(index);
+                var altFlows = flowData.getAlternateFlowString(flowDirection);
+                var length = altFlows.length;
+                var loaded = false;
+                for (var i = 0; i < length; ++i)
+                {
+                    var flowString = altFlows[i];
+                    animName = "river" + flowString + landEnding;
+                    if (terrain.existsResAnim(animName))
+                    {
+                        terrain.loadBaseSprite(animName);
+                        loaded = true;
+                        break;
+                    }
+                }
+                if (!loaded)
+                {
+                    animName = "river+S" + landEnding;
+                    if (terrain.existsResAnim(animName))
+                    {
+                        terrain.loadBaseSprite(animName);
+                    }
+                    else
+                    {
+                        var fallbackAnim = terrain.getFittingResAnim("river", landEnding);
+                        if (fallbackAnim !== "")
+                        {
+                            terrain.loadBaseSprite(fallbackAnim);
+                        }
+                        else
+                        {
+                            // fallback so at least a river is shown
+                            terrain.loadBaseSprite("river+S+land+NE+SE+SW+NW");
+                        }
+                    }
+                }
             }
         }
     };
