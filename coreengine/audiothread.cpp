@@ -731,15 +731,8 @@ void AudioThread::SlotStopSound(QString file)
 
 void AudioThread::stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex)
 {
-    soundData->sound[soundIndex]->stop();
-    auto url = soundData->sound[soundIndex]->source();
-    auto name = soundData->sound[soundIndex]->objectName();
-    soundData->sound[soundIndex] = nullptr;
-    soundData->sound[soundIndex] = std::make_shared<QSoundEffect>(this);
-    soundData->sound[soundIndex]->setObjectName(name);
-    soundData->sound[soundIndex]->setAudioDevice(m_audioDevice);
-    soundData->sound[soundIndex]->setSource(url);
-    connect(soundData->timer[soundIndex].get(), &QTimer::timeout, soundData->sound[soundIndex].get(), &QSoundEffect::play);
+    soundData->sound[soundIndex]->setVolume(0);
+    soundData->sound[soundIndex]->setLoopCount(0);
 }
 
 void AudioThread::SlotStopAllSounds()
