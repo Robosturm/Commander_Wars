@@ -4,6 +4,8 @@
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
 
+#include <QFile>
+#include <QFileInfo>
 #include <QDir>
 #include <QDirIterator>
 #include <QList>
@@ -13,9 +15,8 @@
 AudioThread::AudioThread()
     :
 #ifdef AUDIOSUPPORT
-      m_audioOutput(this),
+      m_audioOutput(this)
 #endif
-      m_positionUpdateTimer(this)
 {
     setObjectName("AudioThread");
     Interpreter::setCppOwnerShip(this);
@@ -46,8 +47,6 @@ AudioThread::~AudioThread()
     for (auto & player : m_player)
     {
         player->m_player.stop();
-        player->m_playerFile.close();
-        QApplication::processEvents();
     }
     for (auto & cache : m_soundCaches)
     {
@@ -59,7 +58,6 @@ AudioThread::~AudioThread()
                 cache->sound[i]->stop();
                 cache->sound[i].reset();
                 cache->timer[i].reset();
-                QApplication::processEvents();
             }
         }
     }
@@ -77,16 +75,6 @@ void AudioThread::initAudio()
     createPlayer(1);
     // everything needs to be created in the context of this thread
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
-    m_positionUpdateTimer.setInterval(1);
-    m_positionUpdateTimer.setSingleShot(false);
-    connect(&m_positionUpdateTimer, &QTimer::timeout, this, [=]()
-    {
-        if (m_currentPlayer >= 0)
-        {
-            SlotCheckMusicEnded(m_player[m_currentPlayer]->m_player.position());
-        }
-    });
-    m_positionUpdateTimer.start();
 #endif
 }
 
@@ -94,7 +82,7 @@ void AudioThread::createPlayer(qint32 player)
 {
 #ifdef AUDIOSUPPORT
     CONSOLE_PRINT("AudioThread::createPlayer() " + QString::number(player), Console::eDEBUG);
-    m_player[player].reset(new Player(this, m_player[player].get()));
+    m_player[player].reset(new Player(this));
     m_player[player]->m_player.setAudioOutput(&m_audioOutput);
     // connect media state handling
     connect(&m_player[player]->m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newState)
@@ -111,6 +99,7 @@ void AudioThread::createPlayer(qint32 player)
     {
         reportReplayError(player, error, errorString);
     }, Qt::QueuedConnection);
+    connect(&m_player[player]->m_player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
 #endif
 }
 
@@ -209,18 +198,6 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         cache->timer[i]->setObjectName("SoundEffectTimer");
         connect(cache->timer[i].get(), &QTimer::timeout, cache->sound[i].get(), &QSoundEffect::play);
         cache->timer[i]->setSingleShot(true);
-        // qt workaround wait for each sound to be loaded before going to the next one
-        // to prevent a crash in the process loading the sounds
-        while (!cache->sound[i]->isLoaded())
-        {
-            QApplication::processEvents();
-        }
-        // waste some time
-        for (qint32 i = 0; i < 2; ++i)
-        {
-            QApplication::processEvents();
-            QThread::msleep(1);
-        }
     }
     m_soundCaches.insert(file, cache);
 #endif
@@ -332,29 +309,14 @@ void AudioThread::SlotClearPlayList()
     CONSOLE_PRINT("AudioThread::SlotClearPlayList() start clearing", Console::eDEBUG);
     m_PlayListdata.clear();
     m_currentPlayer = -1;
-    qtWasteTime();
     m_player[0]->m_playListPostiton = -1;
     m_player[1]->m_playListPostiton = -1;
     m_player[0]->m_player.stop();
-    qtWasteTime();
     m_player[0]->m_player.setSource(QUrl());
-    qtWasteTime();
     m_player[1]->m_player.stop();
-    qtWasteTime();
     m_player[1]->m_player.setSource(QUrl());
-    qtWasteTime();
     CONSOLE_PRINT("AudioThread::SlotClearPlayList() playlist cleared", Console::eDEBUG);
 #endif
-}
-
-void AudioThread::qtWasteTime()
-{
-    // wasting some time
-    for (qint32 i = 0; i < 10; ++i)
-    {
-        QApplication::processEvents();
-        QThread::msleep(1);
-    }
 }
 
 void AudioThread::SlotPlayMusic(qint32 file)
@@ -370,11 +332,7 @@ void AudioThread::SlotPlayMusic(qint32 file)
             player->m_playListPostiton = -1;
         }
         m_player[m_currentPlayer]->m_playListPostiton = file;
-        // m_player[m_currentPlayer]->m_playerFile.close();
-        // m_player[m_currentPlayer]->m_playerFile.setFileName(m_PlayListdata[file].m_file);
-        // m_player[m_currentPlayer]->m_playerFile.open(QIODevice::ReadOnly);
-        // m_player[m_currentPlayer]->m_player.setSourceDevice(&m_player[m_currentPlayer]->m_playerFile, m_PlayListdata[file].getUrl());
-        m_player[m_currentPlayer]->m_player.setSource(m_PlayListdata[file].getUrl());
+        loadMediaForFile(m_player[m_currentPlayer].get(), m_PlayListdata[file].m_file);
         m_player[m_currentPlayer]->m_player.play();
         bufferOtherPlayer();
         m_currentMedia = file;
@@ -384,6 +342,26 @@ void AudioThread::SlotPlayMusic(qint32 file)
         CONSOLE_PRINT("AudioThread::SlotPlayMusic Trying to play unknown music index", Console::eERROR);
     }
 #endif
+}
+
+void AudioThread::loadMediaForFile(Player* pPlayer, QString filePath)
+{
+//    QFileInfo fileInfo(filePath);
+//    QString tempPath;
+//    if (!fileInfo.exists() ||
+//        filePath.startsWith(oxygine::Resource::RCC_PREFIX_PATH))
+//    {
+//        if (!pPlayer->m_currentTempFile.isEmpty())
+//        {
+//            QFile::remove(pPlayer->m_currentTempFile);
+//        }
+//        tempPath = "temp/" + fileInfo.fileName();
+//        QFile::copy(filePath, tempPath);
+//        pPlayer->m_currentTempFile = tempPath;
+//    }
+//    auto fullPath = QUrl::fromLocalFile(QFileInfo(tempPath).absoluteFilePath());
+//    pPlayer->m_player.setSource(fullPath);
+    pPlayer->m_player.setSource(GlobalUtils::getUrlForFile(filePath));
 }
 
 void AudioThread::SlotPlayRandom()
@@ -417,14 +395,9 @@ void AudioThread::initialAudioBuffering()
         {
             m_player[0]->m_player.stop();
             m_player[0]->m_playListPostiton = GlobalUtils::randIntBase(0, size - 1);
-            // m_player[0]->m_playerFile.close();
-            // m_player[0]->m_playerFile.setFileName(m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
-            // m_player[0]->m_playerFile.open(QIODevice::ReadOnly);
-            // m_player[0]->m_player.setSourceDevice(&m_player[0]->m_playerFile, m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
-            m_player[0]->m_player.setSource(m_PlayListdata[m_player[0]->m_playListPostiton].getUrl());
+            loadMediaForFile(m_player[0].get(), m_PlayListdata[m_player[0]->m_playListPostiton].m_file);
             m_player[0]->m_playerStartPosition = 0;
             CONSOLE_PRINT("Buffering music for player 0: " + m_PlayListdata[m_player[0]->m_playListPostiton].m_file + " at position " + QString::number(m_player[0]->m_playerStartPosition), Console::eDEBUG);
-            QApplication::processEvents();
         }
         else
         {
@@ -449,11 +422,7 @@ void AudioThread::bufferOtherPlayer()
         m_player[bufferPlayer]->m_player.stop();
         qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
         m_player[bufferPlayer]->m_playListPostiton = newMedia;
-        // m_player[bufferPlayer]->m_playerFile.close();
-        // m_player[bufferPlayer]->m_playerFile.setFileName(m_PlayListdata[newMedia].m_file);
-        // m_player[bufferPlayer]->m_playerFile.open(QIODevice::ReadOnly);
-        // m_player[bufferPlayer]->m_player.setSourceDevice(&m_player[bufferPlayer]->m_playerFile, m_PlayListdata[newMedia].getUrl());
-        m_player[bufferPlayer]->m_player.setSource(m_PlayListdata[newMedia].getUrl());
+        loadMediaForFile(m_player[bufferPlayer].get(), m_PlayListdata[m_player[bufferPlayer]->m_playListPostiton].m_file);
         if (m_PlayListdata[newMedia].m_startpointMs > 0 && newMedia == m_player[m_currentPlayer]->m_playListPostiton)
         {
             m_player[bufferPlayer]->m_playerStartPosition = m_PlayListdata[newMedia].m_startpointMs;
@@ -464,7 +433,6 @@ void AudioThread::bufferOtherPlayer()
         }
         m_player[bufferPlayer]->m_player.setPosition(0);
         CONSOLE_PRINT("Buffering music for player: " + QString::number(bufferPlayer) + ": " + m_PlayListdata[newMedia].m_file + " at position " + QString::number(m_player[bufferPlayer]->m_playerStartPosition), Console::eDEBUG);
-        QApplication::processEvents();
     }
     else
     {
@@ -479,7 +447,7 @@ void AudioThread::SlotSetVolume(qint32 value)
     qreal sound = (static_cast<qreal>(value) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
     qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
-    // qreal resultingVolume = qRound(volume * 100);
+
     CONSOLE_PRINT("Setting volume to : " + QString::number(volume), Console::eDEBUG);
     m_audioOutput.setVolume(volume);
 #endif
@@ -550,6 +518,10 @@ void AudioThread::mediaStatusChanged(QMediaPlayer &player, qint32 playerIndex, Q
             }
             break;
         }
+        case QMediaPlayer::InvalidMedia:
+        {
+            CONSOLE_PRINT("Invalid media detected for player " + QString::number(playerIndex), Console::eWARNING);
+        }
         default:
         {
             break;
@@ -564,7 +536,7 @@ void AudioThread::loadNextAudioFile(qint32 playerIndex)
     qint32 playListEntry = m_player[playerIndex]->m_playListPostiton;
     if (playListEntry >= 0 && playListEntry < m_PlayListdata.size())
     {
-        m_player[playerIndex]->m_player.setSource(m_PlayListdata[playListEntry].getUrl());
+        loadMediaForFile(m_player[playerIndex].get(), m_PlayListdata[playListEntry].m_file);
         m_player[playerIndex]->m_player.setPosition(0);
         CONSOLE_PRINT("Rebuffering music cause it changed to no media for player: " + QString::number(playerIndex) + ": " + m_PlayListdata[playListEntry].m_file + " at position " + QString::number(m_player[playerIndex]->m_playerStartPosition), Console::eDEBUG);
         m_player[playerIndex]->m_player.play();
@@ -750,13 +722,24 @@ void AudioThread::SlotStopSound(QString file)
             if (soundCache->sound[i].get() != nullptr &&
                 soundCache->sound[i]->isPlaying())
             {
-                soundCache->sound[i]->setLoopCount(0);
-                soundCache->sound[i]->setMuted(true);
-                // soundCache->sound[i]->stop();
+                stopSound(soundCache, i);
             }
         }
     }
 #endif
+}
+
+void AudioThread::stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex)
+{
+    soundData->sound[soundIndex]->stop();
+    auto url = soundData->sound[soundIndex]->source();
+    auto name = soundData->sound[soundIndex]->objectName();
+    soundData->sound[soundIndex] = nullptr;
+    soundData->sound[soundIndex] = std::make_shared<QSoundEffect>(this);
+    soundData->sound[soundIndex]->setObjectName(name);
+    soundData->sound[soundIndex]->setAudioDevice(m_audioDevice);
+    soundData->sound[soundIndex]->setSource(url);
+    connect(soundData->timer[soundIndex].get(), &QTimer::timeout, soundData->sound[soundIndex].get(), &QSoundEffect::play);
 }
 
 void AudioThread::SlotStopAllSounds()
@@ -766,12 +749,10 @@ void AudioThread::SlotStopAllSounds()
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
         {
-            if (soundCache->sound[i].get() != nullptr)
+            if (soundCache->sound[i].get() != nullptr &&
+                soundCache->sound[i]->isPlaying())
             {
-                soundCache->timer[i]->stop();
-                soundCache->sound[i]->setLoopCount(0);
-                soundCache->sound[i]->setMuted(true);
-                // soundCache->sound[i]->stop();
+                stopSound(soundCache, i);
             }
         }
     }

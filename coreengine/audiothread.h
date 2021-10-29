@@ -26,6 +26,17 @@ private:
         std::shared_ptr<QTimer> timer[MAX_SAME_SOUNDS];
         qint32 nextSoundToUse = 0;
     };
+    struct Player
+    {
+        Player(QObject* parent)
+            : m_player(parent)
+        {
+        }
+        QMediaPlayer m_player;
+        QString m_currentTempFile;
+        qint32 m_playerStartPosition{0};
+        qint32 m_playListPostiton{-1};
+    };
 public:
     explicit AudioThread();
     virtual ~AudioThread();
@@ -204,9 +215,12 @@ protected:
     bool tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
                                      QString & file, qint32 loops, qint32 delay, qreal sound);
     /**
-     * @brief qtWasteTime
+     * @brief stopSound
+     * @param soundData
+     * @param soundIndex
      */
-    void qtWasteTime();
+    void stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex);
+    void loadMediaForFile(Player* pPlayer, QString filePath);
 private:
     // music playback data
     struct PlaylistData
@@ -217,36 +231,15 @@ private:
               m_file(file)
         {
         }
-        QUrl getUrl()
-        {
-            return GlobalUtils::getUrlForFile(m_file);
-        }
         qint32 m_startpointMs{-1};
         qint32 m_endpointMs{-1};
         QString m_file;
     };
-    struct Player
-    {
-        Player(QObject* parent, Player* player)
-            : m_player(parent),
-              m_playerFile(parent)
-        {
-            if (player != nullptr)
-            {
-                m_playerStartPosition = player->m_playerStartPosition;
-                m_playListPostiton = player->m_playListPostiton;
-            }
-        }
-        QFile m_playerFile;
-        QMediaPlayer m_player;
-        qint32 m_playerStartPosition{0};
-        qint32 m_playListPostiton{-1};
-    };
+
     QScopedPointer<Player> m_player[2];
     QVector<PlaylistData> m_PlayListdata;
     qint32 m_currentPlayer{-1};
     qint32 m_currentMedia{-1};
-    QTimer m_positionUpdateTimer;
     // sound playback data
     QMap<QString, std::shared_ptr<SoundData>> m_soundCaches;
     // general audio info
