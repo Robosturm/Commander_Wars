@@ -69,7 +69,6 @@ var Constructor = function()
     this.updateFlowSprites = function(terrain, pPfs)
     {
         var flowData = pPfs.getFlowData();        
-        flowData.print();
         var length = flowData.size()
         for (var i  = 0; i < length; ++i)
         {
@@ -175,9 +174,13 @@ var Constructor = function()
         var length = overlayTiles.length
         for (var i  = 0; i < length; ++i)
         {
+            var pos = overlayTiles[i];
+            var terrain = map.getTerrain(pos.x, pos.y);
             var surroundingsRiverDirect = terrain.getSurroundings("RIVER,BRIDGE", false, false, GameEnums.Directions_Direct);
             var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
-            var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE", false, true, GameEnums.Directions_Diagnonal);
+            var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
+            GameConsole.print("River: " + surroundingsRiverDirect, 1);
+            GameConsole.print("Land: " + surroundingsLandDirect + surroundingsLandDiagonal, 1);
             for (var i2 = 1; i2 <= 4; ++i2)
             {
                 var endString = "+" + i2.toString();
@@ -188,7 +191,23 @@ var Constructor = function()
                     if (surroundingsRiverDirect.includes("+N") ||
                         surroundingsRiverDirect.includes("+W"))
                     {
-
+                        if (surroundingsLandDirect.includes("+N") &&
+                            surroundingsLandDirect.includes("+W"))
+                        {
+                            endString += "+land+N+W";
+                        }
+                        else if (surroundingsLandDirect.includes("+N"))
+                        {
+                            endString += "+land+N";
+                        }
+                        else if (surroundingsLandDirect.includes("+W"))
+                        {
+                            endString += "+land+W";
+                        }
+                        else if (surroundingsLandDiagonal.includes("+NW"))
+                        {
+                            endString += "+land+NW";
+                        }
                     }
                     else
                     {
@@ -201,7 +220,22 @@ var Constructor = function()
                     if (surroundingsRiverDirect.includes("+N") ||
                         surroundingsRiverDirect.includes("+E"))
                     {
-
+                        if (surroundingsLandDirect.includes("+N+E"))
+                        {
+                            endString += "+land+N+E";
+                        }
+                        else if (surroundingsLandDirect.includes("+N"))
+                        {
+                            endString += "+land+N";
+                        }
+                        else if (surroundingsLandDirect.includes("+E"))
+                        {
+                            endString += "+land+E";
+                        }
+                        else if (surroundingsLandDiagonal.includes("+NE"))
+                        {
+                            endString += "+land+NE";
+                        }
                     }
                     else
                     {
@@ -214,7 +248,22 @@ var Constructor = function()
                     if (surroundingsRiverDirect.includes("+S") ||
                         surroundingsRiverDirect.includes("+E"))
                     {
-
+                        if (surroundingsLandDirect.includes("+E+S"))
+                        {
+                            endString += "+land+E+S";
+                        }
+                        else if (surroundingsLandDirect.includes("+S"))
+                        {
+                            endString += "+land+S";
+                        }
+                        else if (surroundingsLandDirect.includes("+E"))
+                        {
+                            endString += "+land+E";
+                        }
+                        else if (surroundingsLandDiagonal.includes("+SE"))
+                        {
+                            endString += "+land+SE";
+                        }
                     }
                     else
                     {
@@ -227,7 +276,22 @@ var Constructor = function()
                     if (surroundingsRiverDirect.includes("+S") ||
                         surroundingsRiverDirect.includes("+W"))
                     {
-
+                        if (surroundingsLandDirect.includes("+S+W"))
+                        {
+                            endString += "+land+S+W";
+                        }
+                        else if (surroundingsLandDirect.includes("+S"))
+                        {
+                            endString += "+land+S";
+                        }
+                        else if (surroundingsLandDirect.includes("+W"))
+                        {
+                            endString += "+land+W";
+                        }
+                        else if (surroundingsLandDiagonal.includes("+SW"))
+                        {
+                            endString += "+land+SW";
+                        }
                     }
                     else
                     {
@@ -236,7 +300,43 @@ var Constructor = function()
                     break;
                 }
                 }
-                // todo select
+                var index = tileMapping[i];
+                var flow = flowData.getFlowString(index);
+                var animName = "riverend" + flow + endString;
+                if (terrain.existsResAnim(animName))
+                {
+                    terrain.loadOverlaySprite(animName);
+                    GameConsole.print("Loaded: " + animName, 1);
+                }
+                else
+                {
+                    var flowDirection = flowData.getFlowDirection(index);
+                    var altFlows = flowData.getAlternateFlowString(flowDirection);
+                    var altFlowlength = altFlows.length;
+                    var loaded = false;
+                    for (var i3 = 0; i3 < altFlowlength; ++i3)
+                    {
+                        var flowString = altFlows[i3];
+                        animName = "riverend" + flowString + endString;
+                        GameConsole.print("Trying: " + animName, 1);
+                        if (terrain.existsResAnim(animName))
+                        {
+                            terrain.loadOverlaySprite(animName);
+                            GameConsole.print("Fallback 1 Loaded: " + animName, 1);
+                            loaded = true;
+                            break;
+                        }
+                    }
+                    if (!loaded)
+                    {
+                        animName = terrain.getFittingResAnim("riverend", endString);
+                        if (animName !== "")
+                        {
+                            terrain.loadOverlaySprite(animName);
+                            GameConsole.print("Fallback 2 Loaded: " + animName, 1);
+                        }
+                    }
+                }
             }
         }
     };

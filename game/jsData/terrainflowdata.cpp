@@ -189,6 +189,10 @@ QVector<QPoint> TerrainFlowData::getOverlayTiles(QStringList terrains)
 {
     QVector<QPoint> ret;
     spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
+    // circle->append(QPoint(1, 1));
+    // circle->append(QPoint(-1, 1));
+    // circle->append(QPoint(-1, -1));
+    // circle->append(QPoint(1, -1));
     spGameMap pMap = GameMap::getInstance();
     const qint32 size = circle->size();
     for (qint32 i2 = 0; i2 < m_positions.size(); ++i2)
