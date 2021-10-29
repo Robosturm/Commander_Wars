@@ -5927,5 +5927,9 @@
         <file>resources/images/terrain/riverend+W+4+land+S.png</file>
         <file>resources/images/terrain/riverend+W+4+land+SW.png</file>
         <file>resources/images/terrain/riverend+W+4+land+W.png</file>
+        <file>resources/images/terrain/riverend+E+2+land+NE.png</file>
+        <file>resources/images/terrain/riverend+E+3+land+E+S.png</file>
+        <file>resources/images/terrain/riverend+E+3+land+S.png</file>
+        <file>resources/images/terrain/riverend+E+3+land+SE.png</file>
     </qresource>
 </RCC>

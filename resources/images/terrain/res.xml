@@ -416,6 +416,7 @@
         <image file="riverend+E+2+land+N+E.png" cols = "8" />
         <image file="riverend+N+2+land+N+E.png" cols = "8" />
         <image file="riverend+N+2+land+NE.png" cols = "8" />
+        <image file="riverend+E+2+land+NE.png" cols = "8" />
 
         <image file="riverend+N+3.png" cols = "8" />
         <image file="riverend+E+3.png" cols = "8" />
@@ -426,8 +427,11 @@
         <image file="riverend+S+3+land+E.png" cols = "8" />
         <image file="riverend+S+3+land+S.png" cols = "8" />
         <image file="riverend+W+3+land+S.png" cols = "8" />
+        <image file="riverend+E+3+land+S.png" cols = "8" />
         <image file="riverend+S+3+land+E+S.png" cols = "8" />
-        <image file="riverend+S+3+land+SE.png" cols = "8" />
+        <image file="riverend+E+3+land+E+S.png" cols = "8" /> 
+        <image file="riverend+S+3+land+SE.png" cols = "8" />       
+        <image file="riverend+E+3+land+SE.png" cols = "8" />
 
         <image file="riverend+N+4.png" cols = "8" />
         <image file="riverend+E+4.png" cols = "8" />

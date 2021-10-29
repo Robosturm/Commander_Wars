@@ -41,7 +41,7 @@ public slots:
 private:
     QVector<QPoint> m_positions;
     QVector<qint32> m_costs;
-    QVector<GameEnums::FlowDirections> m_flowDirections;    
+    QVector<GameEnums::FlowDirections> m_flowDirections;
     QVector<qint32> m_overlayTileMapping;
 };
 
