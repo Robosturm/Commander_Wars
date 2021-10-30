@@ -27,8 +27,10 @@ class Building : public Tooltip, public FileSerializable
     Q_OBJECT
     enum class DrawPriority
     {
-        Default = 0,
-        Overlay = 100,
+        Mask = 0,
+        NoneMask,
+        Overlay,
+        OverlayNoneMask,
     };
 
 public:

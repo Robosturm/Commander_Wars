@@ -206,6 +206,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         }
         // repaint the building?
         bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+        pSprite->setPriority(static_cast<qint16>(DrawPriority::Mask));
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -225,7 +226,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         }
         else
         {
-            pSprite->setPriority(1);
+            pSprite->setPriority(static_cast<qint16>(DrawPriority::NoneMask));
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
@@ -240,7 +241,6 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
         addChild(pSprite);
-        pSprite->setPriority(static_cast<qint16>(DrawPriority::Default));
         m_pBuildingSprites.append(pSprite);
         m_addPlayerColor.append(mode);
     }
@@ -287,6 +287,7 @@ void Building::loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recolorin
         }
         // repaint the building?
         bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+        pSprite->setPriority(static_cast<qint16>(DrawPriority::Overlay));
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -306,7 +307,7 @@ void Building::loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recolorin
         }
         else
         {
-            pSprite->setPriority(1);
+            pSprite->setPriority(static_cast<qint16>(DrawPriority::OverlayNoneMask));
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
@@ -320,7 +321,6 @@ void Building::loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recolorin
             pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
-        pSprite->setPriority(static_cast<qint16>(DrawPriority::Overlay));
         addChild(pSprite);
         m_pWeatherOverlaySprites.append(pSprite);
     }

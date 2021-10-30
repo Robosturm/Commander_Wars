@@ -49,8 +49,8 @@ var Init =
     {
         GameConsole.print("Preparing next match", Init.logLevel);
         menu.selectMap(Init.trainingFolder, Init.trainingMap);
-        menu.slotButtonNext();
-        menu.slotButtonNext();
+        menu.buttonNext();
+        menu.buttonNext();
         var gameRules = map.getGameRules();
         gameRules.addVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
         var victoryRule = gameRules.getVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
@@ -183,9 +183,9 @@ var Init =
             }
             if (mutate)
             {
-                GameConsole.print("Mutating ai: " + Init.trainingAis[i][0], Init.logLevel);
-                var dummyAi = map.getPlayer(0).getBaseGameInput();
                 var ai = mutateCount % Init.topAis;
+                GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
+                var dummyAi = map.getPlayer(0).getBaseGameInput();
                 dummyAi.readIni(aiNames[ai]);
                 dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationRate);
                 ++mutateCount;

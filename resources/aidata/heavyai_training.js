@@ -47,8 +47,8 @@ var Init =
     {
         GameConsole.print("Preparing next match", Init.logLevel);
         menu.selectMap(Init.trainingFolder, Init.trainingMap);
-        menu.slotButtonNext();
-        menu.slotButtonNext();
+        menu.buttonNext();
+        menu.buttonNext();
         var gameRules = map.getGameRules();
         gameRules.addVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
         var victoryRule = gameRules.getVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
@@ -166,6 +166,7 @@ var Init =
             aiNames.push(bestAis[i][0][0]);
             GameConsole.print(aiNames[i] + " with " + bestAis[i][1] + " won matches", Init.logLevel);
         }
+        var mutateCount = 0;
         for (i = 0; i < Init.trainingAis.length; ++i)
         {
             var mutate = true;
@@ -181,9 +182,10 @@ var Init =
             {
                 GameConsole.print("Mutating ai: " + Init.trainingAis[i][0], Init.logLevel);
                 var dummyAi = map.getPlayer(0).getBaseGameInput();
-                var ai = globals.randInt(0, aiNames.length * 2);
+                var ai = globals.randInt(0, aiNames.length + 1);
                 if (ai < aiNames.length)
                 {
+                    ai = mutateCount % Init.topAis;
                     var aiName = [aiNames[ai]];
                     dummyAi.combineAi(aiName);
                 }
@@ -200,6 +202,7 @@ var Init =
                         dummyAi.mutateNeuralNetwork(i2, Init.mutationRate);
                     }
                 }
+                ++mutateCount;
             }
         }
         Init.runCount = Init.runCount + 1;
