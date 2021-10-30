@@ -1081,8 +1081,6 @@
         <file>resources/images/co/ac/co_brenner+face.png</file>
         <file>resources/images/co/ac/co_brenner+info.png</file>
         <file>resources/images/co/ac/co_brenner+nrm.png</file>
-        <file>resources/images/co/ac/co_davis+face.png</file>
-        <file>resources/images/co/ac/co_davis+info.png</file>
         <file>resources/images/co/ac/co_empty_ac+face.png</file>
         <file>resources/images/co/ac/co_empty_ac+info.png</file>
         <file>resources/images/co/ac/co_empty_ac+nrm.png</file>
@@ -5210,7 +5208,7 @@
         <file>resources/images/terrain/waste_wasteland+0.png</file>
         <file>resources/images/terrain/waste_wasteland+1.png</file>
         <file>resources/images/terrain/waste_wasteland+2.png</file>
-        <file>resources/images/terrain/waste_wasteland+3.png</file>        
+        <file>resources/images/terrain/waste_wasteland+3.png</file>
         <file>resources/scripts/terrain/DESERT_RUIN.js</file>
         <file>resources/scripts/terrain/SNOW_RUIN.js</file>
         <file>resources/scripts/terrain/WASTE.js</file>
@@ -5385,29 +5383,6 @@
         <file>resources/images/terrain/snow_forest+NW.png</file>
         <file>resources/images/terrain/snow_forest+SE.png</file>
         <file>resources/images/terrain/snow_forest+SW.png</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bd.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+dm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ma.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+pf.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
         <file>resources/images/game/icon_fire.png</file>
         <file>resources/images/terrain/river+0+land+E+S+W.png</file>
         <file>resources/images/terrain/river+0+land+N+E+S.png</file>
@@ -5579,16 +5554,6 @@
         <file>resources/images/co/ti/co_greyfield+mini.png</file>
         <file>resources/images/co/yc/co_grimm+alt.png</file>
         <file>resources/images/co/yc/co_grimm.png</file>
-        <file>resources/images/co/yc/co_kanbei+alt.png</file>
-        <file>resources/images/co/yc/co_kanbei+alt2.png</file>
-        <file>resources/images/co/yc/co_kanbei+alt3.png</file>
-        <file>resources/images/co/yc/co_kanbei.png</file>
-        <file>resources/images/co/yc/co_sensei+alt.png</file>
-        <file>resources/images/co/yc/co_sensei.png</file>
-        <file>resources/images/co/yc/co_sonja+alt.png</file>
-        <file>resources/images/co/yc/co_sonja+alt2.png</file>
-        <file>resources/images/co/yc/co_sonja+alt3.png</file>
-        <file>resources/images/co/yc/co_sonja.png</file>
         <file>resources/images/co/co_davis.png</file>
         <file>resources/images/co/dm/co_beast+mini.png</file>
         <file>resources/images/co/dm/co_caulder+mini.png</file>
@@ -5643,5 +5608,167 @@
         <file>resources/images/terrain/riverend+E+3+land+E+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+SE.png</file>
+        <file>resources/images/co/ac/co_davis+nrm.png</file>
+        <file>resources/images/co/ac/co_mary+alt+table.png</file>
+        <file>resources/images/co/ac/co_mary+table.png</file>
+        <file>resources/images/co/ac/co_officier_ac+nrm.png</file>
+        <file>resources/images/co/ac/co_ozzy+alt+table.png</file>
+        <file>resources/images/co/ac/co_ozzy+table.png</file>
+        <file>resources/images/co/ac/co_sabaki+alt+table.png</file>
+        <file>resources/images/co/ac/co_sabaki+table.png</file>
+        <file>resources/images/co/ac/co_sophie+alt+table.png</file>
+        <file>resources/images/co/ac/co_sophie+table.png</file>
+        <file>resources/images/co/bd/co_adam+alt+table.png</file>
+        <file>resources/images/co/bd/co_adam+table.png</file>
+        <file>resources/images/co/bd/co_artemis+table.png</file>
+        <file>resources/images/co/bd/co_officier_bd+nrm.png</file>
+        <file>resources/images/co/bd/co_tempest+table.png</file>
+        <file>resources/images/co/bd/co_zandra+alt+table.png</file>
+        <file>resources/images/co/bd/co_zandra+table.png</file>
+        <file>resources/images/co/bg/co_officier_bg+face.png</file>
+        <file>resources/images/co/bg/co_officier_bg+info.png</file>
+        <file>resources/images/co/bh/co_adder+alt2+nrm.png</file>
+        <file>resources/images/co/bh/co_flak+alt2+nrm.png</file>
+        <file>resources/images/co/bh/co_hawke+alt2+nrm.png</file>
+        <file>resources/images/co/bh/co_lash+alt2+nrm.png</file>
+        <file>resources/images/co/bm/co_alexander+alt+table.png</file>
+        <file>resources/images/co/bm/co_alexander+table.png</file>
+        <file>resources/images/co/bm/co_colin+alt2+face.png</file>
+        <file>resources/images/co/bm/co_colin+alt2+info.png</file>
+        <file>resources/images/co/bm/co_colin+alt2+nrm.png</file>
+        <file>resources/images/co/bm/co_grit+alt2+table.png</file>
+        <file>resources/images/co/bm/co_grit+alt4+face.png</file>
+        <file>resources/images/co/bm/co_grit+alt4+info.png</file>
+        <file>resources/images/co/bm/co_grit+alt4+nrm.png</file>
+        <file>resources/images/co/bm/co_grit+alt5+face.png</file>
+        <file>resources/images/co/bm/co_grit+alt5+info.png</file>
+        <file>resources/images/co/bm/co_grit+alt5+nrm.png</file>
+        <file>resources/images/co/bm/co_grit+alt6+face.png</file>
+        <file>resources/images/co/bm/co_grit+alt6+info.png</file>
+        <file>resources/images/co/bm/co_grit+alt6+nrm.png</file>
+        <file>resources/images/co/bm/co_officier_bm+alt+face.png</file>
+        <file>resources/images/co/bm/co_officier_bm+alt+info.png</file>
+        <file>resources/images/co/bm/co_olaf+alt4+face.png</file>
+        <file>resources/images/co/bm/co_olaf+alt4+info.png</file>
+        <file>resources/images/co/bm/co_olaf+alt4+nrm.png</file>
+        <file>resources/images/co/dm/co_fanatic+nrm.png</file>
+        <file>resources/images/co/dm/co_graves+alt+table.png</file>
+        <file>resources/images/co/dm/co_graves+table.png</file>
+        <file>resources/images/co/dm/co_julia+alt+table.png</file>
+        <file>resources/images/co/dm/co_julia+table.png</file>
+        <file>resources/images/co/dm/co_melanthe+alt+table.png</file>
+        <file>resources/images/co/dm/co_melanthe+table.png</file>
+        <file>resources/images/co/dm/co_officier_dm+nrm.png</file>
+        <file>resources/images/co/dm/co_varlot+alt+table.png</file>
+        <file>resources/images/co/dm/co_varlot+table.png</file>
+        <file>resources/images/co/dm/co_yukio+alt+table.png</file>
+        <file>resources/images/co/dm/co_yukio+table.png</file>
+        <file>resources/images/co/ge/co_drake+alt4+face.png</file>
+        <file>resources/images/co/ge/co_drake+alt4+info.png</file>
+        <file>resources/images/co/ge/co_drake+alt4+nrm.png</file>
+        <file>resources/images/co/ge/co_eagle+alt3+face.png</file>
+        <file>resources/images/co/ge/co_eagle+alt3+info.png</file>
+        <file>resources/images/co/ge/co_eagle+alt3+nrm.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+face.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+info.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+nrm.png</file>
+        <file>resources/images/co/ge/co_officier_ge+alt+face.png</file>
+        <file>resources/images/co/ge/co_officier_ge+alt+info.png</file>
+        <file>resources/images/co/ge/co_peter+alt+table.png</file>
+        <file>resources/images/co/ge/co_peter+table.png</file>
+        <file>resources/images/co/ge/co_smitan+alt+table.png</file>
+        <file>resources/images/co/ge/co_smitan+table.png</file>
+        <file>resources/images/co/gs/co_meiyo+alt+table.png</file>
+        <file>resources/images/co/gs/co_meiyo+table.png</file>
+        <file>resources/images/co/gs/co_minamoto+table.png</file>
+        <file>resources/images/co/gs/co_sanjuro+alt+table.png</file>
+        <file>resources/images/co/gs/co_sanjuro+table.png</file>
+        <file>resources/images/co/gs/co_xavier+alt+table.png</file>
+        <file>resources/images/co/gs/co_xavier+table.png</file>
+        <file>resources/images/co/ma/co_epoch+alt+table.png</file>
+        <file>resources/images/co/ma/co_epoch+table.png</file>
+        <file>resources/images/co/ma/co_ik_486_b7+table.png</file>
+        <file>resources/images/co/ma/co_napoleon+table.png</file>
+        <file>resources/images/co/ma/co_roboandy+table.png</file>
+        <file>resources/images/co/ma/co_robosturm+table.png</file>
+        <file>resources/images/co/os/co_andy+alt3+face.png</file>
+        <file>resources/images/co/os/co_andy+alt3+info.png</file>
+        <file>resources/images/co/os/co_andy+alt3+nrm.png</file>
+        <file>resources/images/co/os/co_hachi+alt2+face.png</file>
+        <file>resources/images/co/os/co_hachi+alt2+info.png</file>
+        <file>resources/images/co/os/co_hachi+alt2+nrm.png</file>
+        <file>resources/images/co/os/co_max+alt3+face.png</file>
+        <file>resources/images/co/os/co_max+alt3+info.png</file>
+        <file>resources/images/co/os/co_max+alt3+nrm.png</file>
+        <file>resources/images/co/os/co_nell+alt4+face.png</file>
+        <file>resources/images/co/os/co_nell+alt4+info.png</file>
+        <file>resources/images/co/os/co_nell+alt4+nrm.png</file>
+        <file>resources/images/co/os/co_officier_os+alt+face.png</file>
+        <file>resources/images/co/os/co_officier_os+alt+info.png</file>
+        <file>resources/images/co/os/co_sami+alt3+face.png</file>
+        <file>resources/images/co/os/co_sami+alt3+info.png</file>
+        <file>resources/images/co/os/co_sami+alt3+nrm.png</file>
+        <file>resources/images/co/pf/co_aira+alt+table.png</file>
+        <file>resources/images/co/pf/co_aira+table.png</file>
+        <file>resources/images/co/pf/co_alexis+alt+table.png</file>
+        <file>resources/images/co/pf/co_alexis+table.png</file>
+        <file>resources/images/co/pf/co_amy+alt+table.png</file>
+        <file>resources/images/co/pf/co_amy+table.png</file>
+        <file>resources/images/co/pf/co_carmen+table.png</file>
+        <file>resources/images/co/pf/co_mina+alt+table.png</file>
+        <file>resources/images/co/pf/co_mina+table.png</file>
+        <file>resources/images/co/pf/co_nana+alt+table.png</file>
+        <file>resources/images/co/pf/co_nana+table.png</file>
+        <file>resources/images/co/ti/co_carrie+table.png</file>
+        <file>resources/images/co/ti/co_cassidy+alt+table.png</file>
+        <file>resources/images/co/ti/co_cassidy+table.png</file>
+        <file>resources/images/co/ti/co_conrad+alt+table.png</file>
+        <file>resources/images/co/ti/co_conrad+table.png</file>
+        <file>resources/images/co/ti/co_davis+face.png</file>
+        <file>resources/images/co/ti/co_davis+info.png</file>
+        <file>resources/images/co/ti/co_davis+nrm.png</file>
+        <file>resources/images/co/ti/co_joey+alt+table.png</file>
+        <file>resources/images/co/ti/co_joey+table.png</file>
+        <file>resources/images/co/ti/co_koshi+table.png</file>
+        <file>resources/images/co/ti/co_officier_ti+nrm.png</file>
+        <file>resources/images/co/ti/co_walter+alt+table.png</file>
+        <file>resources/images/co/ti/co_walter+table.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt4+nrm.png</file>
+        <file>resources/images/co/yc/co_officier_yc+alt+face.png</file>
+        <file>resources/images/co/yc/co_officier_yc+alt+info.png</file>
+        <file>resources/images/co/yc/co_rattigan+alt+table.png</file>
+        <file>resources/images/co/yc/co_rattigan+table.png</file>
+        <file>resources/images/co/yc/co_sensei+alt2+nrm.png</file>
+        <file>resources/images/co/yc/co_sonja+alt2+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt4+face.png</file>
+        <file>resources/images/co/yc/co_sonja+alt4+info.png</file>
+        <file>resources/images/co/yc/co_sonja+alt4+nrm.png</file>
+        <file>resources/images/co/yc/co_sonja+alt5+nrm.png</file>
+        <file>resources/images/co/yc/co_sonja+alt6+nrm.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt+mini.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt2+mini.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt3+mini.png</file>
+        <file>resources/images/co/yc/co_kanbei+mini.png</file>
+        <file>resources/images/co/yc/co_sensei+alt+mini.png</file>
+        <file>resources/images/co/yc/co_sensei+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt2+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt3+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt4+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+mini.png</file>
+        <file>resources/images/co/bh/co_adder+alt2+face.png</file>
+        <file>resources/images/co/bh/co_adder+alt2+info.png</file>
+        <file>resources/images/co/bh/co_flak+alt2+face.png</file>
+        <file>resources/images/co/bh/co_flak+alt2+info.png</file>
+        <file>resources/images/co/bh/co_hawke+alt2+face.png</file>
+        <file>resources/images/co/bh/co_hawke+alt2+info.png</file>
+        <file>resources/images/co/bh/co_lash+alt2+face.png</file>
+        <file>resources/images/co/bh/co_lash+alt2+info.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt4+face.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt4+info.png</file>
+        <file>resources/images/co/yc/co_sensei+alt2+face.png</file>
+        <file>resources/images/co/yc/co_sensei+alt2+info.png</file>
+        <file>resources/images/co/yc/co_sonja+alt5+face.png</file>
+        <file>resources/images/co/yc/co_sonja+alt5+info.png</file>
     </qresource>
 </RCC>

@@ -412,7 +412,7 @@ void COSelection::hoveredCOChanged(QString coid)
         oxygine::ResAnim* pAnim = nullptr;
         if (!coid.isEmpty())
         {
-            pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
+            pAnim = pCOSpriteManager->getResAnim(coid + "+nrm", oxygine::ep_ignore_error);
         }
         m_pCurrentCO->setResAnim(pAnim);
     }

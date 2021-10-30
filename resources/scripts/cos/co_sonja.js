@@ -3,8 +3,8 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
-        return ["+alt", "+alt2", "+alt3"];
+        
+        return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5"];
     };
 
     this.init = function(co)

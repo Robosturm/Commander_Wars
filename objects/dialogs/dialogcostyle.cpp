@@ -303,49 +303,52 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     pBox->setResAnim(pAnim);
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + style + "+nrm"));    
-    float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
-    pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
-    pBox->setPosition(m_boxWidth, 10);
-    m_boxWidth += pBox->getWidth() + 10;
-    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    m_pCOPanel->addItem(pBox);
-    // add some event handling :)
-    qint32 index = m_pCOBoxes.size();
-    auto* pPtrBox = pBox.get();
-    pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(m_currentCOID + style + "+nrm", oxygine::ep_ignore_error);
+    if (pAnim != nullptr)
     {
-        for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
+        float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
+        pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
+        pBox->setPosition(m_boxWidth, 10);
+        m_boxWidth += pBox->getWidth() + 10;
+        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+        m_pCOPanel->addItem(pBox);
+        // add some event handling :)
+        qint32 index = m_pCOBoxes.size();
+        auto* pPtrBox = pBox.get();
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
-            if (m_pCOBoxes[i].get() != pPtrBox)
+            for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+                if (m_pCOBoxes[i].get() != pPtrBox)
+                {
+                    m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+                }
             }
-        }
-        pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-        emit sigCOStyleChanged(index);
-    });
-    if (select)
-    {
-        for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
+            pPtrBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+            emit sigCOStyleChanged(index);
+        });
+        if (select)
         {
-            if (m_pCOBoxes[i].get() != pPtrBox)
+            for (qint32 i = 0; i < m_pCOBoxes.size(); i++)
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+                if (m_pCOBoxes[i].get() != pPtrBox)
+                {
+                    m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+                }
             }
+            pBox->setAddColor(QColor(32, 200, 32, 0));
         }
-        pBox->setAddColor(QColor(32, 200, 32, 0));
-    }
-    oxygine::spSprite pCO = oxygine::spSprite::create();
-    pCO->setResAnim(pAnim);
-    pCO->setScale(scale);
-    pCO->setPosition(10, 10);
-    pBox->addChild(pCO);
-    m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
+        oxygine::spSprite pCO = oxygine::spSprite::create();
+        pCO->setResAnim(pAnim);
+        pCO->setScale(scale);
+        pCO->setPosition(10, 10);
+        pBox->addChild(pCO);
+        m_pCOPanel->setContentWidth(pBox->getX() + pBox->getWidth() + 50);
 
-    m_pCOSprites.append(pCO);
-    m_pCOBoxes.append(pBox);
-    m_pResAnims.append(oxygine::spResAnim());
+        m_pCOSprites.append(pCO);
+        m_pCOBoxes.append(pBox);
+        m_pResAnims.append(oxygine::spResAnim());
+    }
 }
 
 void DialogCOStyle::updateSprites()
