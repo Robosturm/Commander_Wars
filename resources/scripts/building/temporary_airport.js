@@ -64,6 +64,17 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Air];
     };
+	this.onWeatherChanged = function(building)
+	{	
+		if (typeof map !== 'undefined')
+        {
+			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+			if (weather === "WEATHER_SNOW")
+				{
+					building.loadWeatherOverlaySpriteV2("temporary_airport+snow", false);
+				};
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

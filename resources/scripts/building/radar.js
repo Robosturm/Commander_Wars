@@ -49,6 +49,17 @@ var Constructor = function()
     {
         return "back_radar";
     };
+	this.onWeatherChanged = function(building)
+	{	
+		if (typeof map !== 'undefined')
+        {
+			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+			if (weather === "WEATHER_SNOW")
+				{
+					building.loadWeatherOverlaySpriteV2("radar+snow", false);
+				};
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

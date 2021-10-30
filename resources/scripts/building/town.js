@@ -43,6 +43,17 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Ground, GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Infantry];
     };
+	this.onWeatherChanged = function(building)
+	{	
+		if (typeof map !== 'undefined')
+        {
+			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+			if (weather === "WEATHER_SNOW")
+				{
+					building.loadWeatherOverlaySpriteV2("town+snow", false);
+				};
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

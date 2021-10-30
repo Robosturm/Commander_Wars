@@ -39,6 +39,17 @@ var Constructor = function()
     {
         return true;
     };
+	this.onWeatherChanged = function(building)
+	{	
+		if (typeof map !== 'undefined')
+        {
+			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+			if (weather === "WEATHER_SNOW")
+				{
+					building.loadWeatherOverlaySpriteV2("labor+snow", false);
+				};
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

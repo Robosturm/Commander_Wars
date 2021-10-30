@@ -122,6 +122,26 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Ground, GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Infantry];
     };
+	this.onWeatherChanged = function(building)
+	{	
+		if (typeof map !== 'undefined')
+        {
+			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
+			if (weather === "WEATHER_SNOW")
+				{
+					if (building.getOwnerID() >= 0)
+					{
+						var player = building.getOwner();
+						var armyName = Global.getArmyNameFromPlayerTable(player, HQ.buildingData);
+						building.loadWeatherOverlaySpriteV2("hq+" + armyName + "+snow", false);
+					}
+					else
+					{
+						building.loadWeatherOverlaySpriteV2("hq+neutral+snow", false);
+					};
+				};
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;
