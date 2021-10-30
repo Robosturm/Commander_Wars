@@ -137,8 +137,6 @@
         <image file="ac/co_isabella+info.png" />
         <image file="ac/co_isabella+mini.png" />
         <image file="ac/co_isabella+face.png" cols = "3" />
-        <image file="ac/co_davis+face.png" cols = "3" />
-        <image file="ac/co_davis+info.png" />
         <image file="ac/co_officier_ac+face.png" cols = "3" />        
         <image file="ac/co_officier_ac+info.png" />    
         
@@ -524,7 +522,10 @@
         <image file="ti/co_carrie+info.png" />
         <image file="ti/co_carrie+face.png" cols = "3" />
         <image file="ti/co_officier_ti+face.png" cols = "3" />        
-        <image file="ti/co_officier_ti+info.png" />    
+        <image file="ti/co_officier_ti+info.png" />  
+        <image file="ti/co_davis+nrm.png" />
+        <image file="ti/co_davis+face.png" cols = "3" />
+        <image file="ti/co_davis+info.png" />  
         
         <!-- YC -->
         <image file="yc/co_kanbei+nrm.png" />

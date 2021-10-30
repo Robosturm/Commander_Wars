@@ -83,12 +83,14 @@ void AudioThread::initAudio()
 
 void AudioThread::createPlayer()
 {
+#ifdef AUDIOSUPPORT
     CONSOLE_PRINT("AudioThread::createPlayer()", Console::eDEBUG);
     m_player.reset(new Player(this));
     m_player->m_player.setAudioOutput(&m_audioOutput);
     connect(&m_player->m_player, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::mediaStatusChanged, Qt::QueuedConnection);
     connect(&m_player->m_player, &QMediaPlayer::playbackStateChanged, this, &AudioThread::mediaPlaybackStateChanged, Qt::QueuedConnection);
     connect(&m_player->m_player, &QMediaPlayer::errorOccurred, this, &AudioThread::reportReplayError, Qt::QueuedConnection);
+#endif
 }
 
 void AudioThread::createSoundCache()
@@ -167,6 +169,7 @@ void AudioThread::readSoundCacheFromXml(QString folder)
 
 void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 {
+#ifdef AUDIOSUPPORT
     if (count > SoundData::MAX_SAME_SOUNDS)
     {
         count = SoundData::MAX_SAME_SOUNDS;
@@ -185,6 +188,7 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
         cache->timer[i]->setSingleShot(true);
     }
     m_soundCaches.insert(file, cache);
+#endif
 }
 
 qint32 AudioThread::getSoundsBuffered()
