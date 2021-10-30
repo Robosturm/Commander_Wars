@@ -606,6 +606,12 @@
         <image file="yc/co_sonja+alt4+info.png" />
         <image file="yc/co_sonja+alt4+nrm.png" scale_factor = "1.8" />
         <image file="yc/co_sonja+alt4+face.png" cols = "3" />
+        <image file="yc/co_sonja+alt5+info.png" />
+        <image file="yc/co_sonja+alt5+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt5+face.png" cols = "3" />
+        <image file="yc/co_sonja+alt6+info.png" />
+        <image file="yc/co_sonja+alt6+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt6+face.png" cols = "3" />
         <image file="yc/co_sensei+nrm.png" />
         <image file="yc/co_sensei+info.png" />
         <image file="yc/co_sensei+face.png" cols = "3" />

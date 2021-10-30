@@ -4,7 +4,7 @@ var Constructor = function()
     {
         // string array containing the endings of the alternate co style
         
-        return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5"];
+        return ["+alt", "+alt2", "+alt3", "+alt4", "+alt5", "+alt6"];
     };
 
     this.init = function(co)

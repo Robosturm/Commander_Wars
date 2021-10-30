@@ -5770,5 +5770,27 @@
         <file>resources/images/co/yc/co_sensei+alt2+info.png</file>
         <file>resources/images/co/yc/co_sonja+alt5+face.png</file>
         <file>resources/images/co/yc/co_sonja+alt5+info.png</file>
+        <file>resources/images/co/bg/co_officier_bg+table.png</file>
+        <file>resources/images/co/bh/co_officier_bh+table.png</file>
+        <file>resources/images/co/bm/co_officier_bm+alt+table.png</file>
+        <file>resources/images/co/bm/co_officier_bm+table.png</file>
+        <file>resources/images/co/ge/co_officier_ge+alt+table.png</file>
+        <file>resources/images/co/ge/co_officier_ge+table.png</file>
+        <file>resources/images/co/os/co_andy+alt2+table.png</file>
+        <file>resources/images/co/os/co_andy+alt3+table.png</file>
+        <file>resources/images/co/os/co_hachi+alt2+table.png</file>
+        <file>resources/images/co/os/co_max+alt2+table.png</file>
+        <file>resources/images/co/os/co_max+alt3+table.png</file>
+        <file>resources/images/co/os/co_nell+alt2+table.png</file>
+        <file>resources/images/co/os/co_nell+alt3+table.png</file>
+        <file>resources/images/co/os/co_nell+alt4+table.png</file>
+        <file>resources/images/co/os/co_officier_os+alt+table.png</file>
+        <file>resources/images/co/os/co_officier_os+table.png</file>
+        <file>resources/images/co/os/co_sami+alt2+table.png</file>
+        <file>resources/images/co/os/co_sami+alt3+table.png</file>
+        <file>resources/images/co/yc/co_officier_yc+alt+table.png</file>
+        <file>resources/images/co/yc/co_officier_yc+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt6+face.png</file>
+        <file>resources/images/co/yc/co_sonja+alt6+info.png</file>
     </qresource>
 </RCC>
