@@ -226,7 +226,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        var fallbackAnim = terrain.getFittingResAnim("river", landEnding);
+                        var fallbackAnim = terrain.getFittingResAnim("river+", landEnding);
                         if (fallbackAnim !== "")
                         {
                             terrain.loadBaseSprite(fallbackAnim);
