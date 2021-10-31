@@ -19,7 +19,6 @@ namespace oxygine
     spSTDRenderer STDRenderer::instance;
     spSTDRenderer STDRenderer::current;
     spTexture STDRenderer::white;
-    spTexture STDRenderer::invisible;
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
@@ -193,12 +192,6 @@ namespace oxygine
             white->release();
         }
         white = nullptr;
-
-        if (invisible)
-        {
-            invisible->release();
-        }
-        invisible = nullptr;
         instance = nullptr;
         current = nullptr;
     }
@@ -210,14 +203,7 @@ namespace oxygine
         {
             white->release();
         }
-        white = 0;
-
-        if (invisible)
-        {
-            invisible->release();
-        }
-        invisible = 0;
-
+        white = nullptr;
         uberShader.release();
     }
 
@@ -228,21 +214,12 @@ namespace oxygine
 
     void STDRenderer::restore()
     {
-        QImage imgWhite(4, 4, QImage::Format_RGBA8888);
+        QImage imgWhite(32, 32, QImage::Format_RGBA8888);
         imgWhite.fill(Qt::white);
         white = VideoDriver::instance->createTexture();
         white->init(imgWhite);
-        white->setLinearFilter(GL_LINEAR);
+        white->setLinearFilter(GL_NEAREST);
         white->setClamp2Edge(false);
-
-
-        QImage imgTransparent(4, 4, QImage::Format_RGBA8888);
-        imgTransparent.fill(Qt::transparent);
-        invisible = VideoDriver::instance->createTexture();
-        invisible->init(imgTransparent);
-        invisible->setLinearFilter(GL_LINEAR);
-        invisible->setClamp2Edge(false);
-
         m_restored = true;
     }
 

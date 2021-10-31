@@ -933,8 +933,8 @@ namespace oxygine
         {
             return false;
         }
-        rs.transform.x = floorf(rs.transform.x);
-        rs.transform.y = floorf(rs.transform.y);
+        rs.transform.x = static_cast<qint32>(rs.transform.x);
+        rs.transform.y = static_cast<qint32>(rs.transform.y);
         m_onScreen = onScreen(rs);
         if (m_onScreen)
         {
@@ -960,19 +960,9 @@ namespace oxygine
         m_rdelegate->render(this, parentRS);
     }
 
-    oxygine::RectF Actor::getDestRecModifier() const
-    {
-        return m_DestRecModifier;
-    }
-
-    void Actor::setDestRecModifier(const oxygine::RectF &DestRecModifier)
-    {
-        m_DestRecModifier = DestRecModifier;
-    }
-
     RectF Actor::getDestRect() const
     {
-        return RectF(m_DestRecModifier.pos, getSize() + m_DestRecModifier.size);
+        return RectF(Point(0.0f, 0.0f), getSize());
     }
 
     spTween Actor::__addTween(spTween tween, bool)

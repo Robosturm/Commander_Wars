@@ -874,16 +874,16 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
-        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));        
         pMap->addChild(pSprite);
     }
     else
     {
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPriority(static_cast<qint16>(drawPriority));
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+        pSprite->setPosition(0, 0);
         pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
     }
     return pSprite;

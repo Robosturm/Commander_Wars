@@ -18,7 +18,6 @@ namespace oxygine
         m_guideX[1] = 0.0f;
         m_guideY[0] = 0.0f;
         m_guideY[1] = 0.0f;
-        setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
     oxygine::RectF Box9Sprite::getInnerArea()

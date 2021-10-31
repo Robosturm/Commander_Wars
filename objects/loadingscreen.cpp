@@ -33,7 +33,6 @@ void LoadingScreen::show()
     pBackground = pBackgroundManager->getResAnim("loadingscreen");
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
-    sprite->setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f));
     addChild(sprite);
 
     sprite->setResAnim(pBackground);

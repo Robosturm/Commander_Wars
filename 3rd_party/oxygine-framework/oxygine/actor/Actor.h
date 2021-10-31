@@ -377,9 +377,6 @@ namespace oxygine
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
         virtual bool getBounds(RectF&) const;
-        oxygine::RectF getDestRecModifier() const;
-        void setDestRecModifier(const oxygine::RectF &DestRecModifier);
-
         static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
         static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
@@ -458,7 +455,6 @@ namespace oxygine
         Actor* m_parent;
         tweens m_tweens;
         children m_children;
-        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.69f, 0.69f, 0.0f, 0.0f)};
         union
         {
             //dont change order!!! or brake statements: if (_pressedOvered == _overred)

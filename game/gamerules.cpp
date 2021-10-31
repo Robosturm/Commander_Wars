@@ -668,7 +668,7 @@ void GameRules::createFogVision()
                     }
                     case GameEnums::Fog_OfShroud:
                     {
-                        createFieldFogShrouded(x, y, pPlayer, fogOfWarColor);
+                        createFieldFogShrouded(x, y, pPlayer, fogOfMistColor, fogOfWarColor);
                         break;
                     }
                     case GameEnums::Fog_OfMist:
@@ -731,14 +731,6 @@ void GameRules::createFieldFogMist(qint32 x, qint32 y, Player* pPlayer, QColor f
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfMistColor);
-            if (x == pMap->getMapWidth() - 1)
-            {
-                sprite->setWidth(GameMap::getImageSize() + 1);
-            }
-            if (y == pMap->getMapHeight() - 1)
-            {
-                sprite->setHeight(GameMap::getImageSize() + 1);
-            }
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -778,14 +770,6 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            if (x == pMap->getMapWidth() - 1)
-            {
-                sprite->setWidth(GameMap::getImageSize() + 1);
-            }
-            if (y == pMap->getMapHeight() - 1)
-            {
-                sprite->setHeight(GameMap::getImageSize() + 1);
-            }
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -799,7 +783,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
     }
 }
 
-void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor)
+void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor, QColor fogOfWarColor)
 {
     spGameMap pMap = GameMap::getInstance();
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
@@ -843,14 +827,6 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
             oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(fogOfWarColor);
-            if (x == pMap->getMapWidth() - 1)
-            {
-                sprite->setWidth(GameMap::getImageSize() + 1);
-            }
-            if (y == pMap->getMapHeight() - 1)
-            {
-                sprite->setHeight(GameMap::getImageSize() + 1);
-            }
             sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
             sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             pMap->addChild(sprite);
@@ -877,7 +853,14 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
         }
         case GameEnums::VisionType_Mist:
         {
-            oxygine::handleErrorPolicy(oxygine::ep_show_error, "illegal vision type mist of war during shroud of war");
+            // create fog of war sprite
+            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
+            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            sprite->setColor(fogOfMistColor);
+            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+            sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+            pMap->addChild(sprite);
+            m_FogSprites[x][y] = sprite;
             break;
         }
     }

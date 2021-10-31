@@ -281,10 +281,10 @@
         <image file="weather/weather_sandstorm.png" cols = "16" />
         <image file="weather/weather_rain.png" cols = "16" />
         <image file="weather/weather_snow.png" cols = "16" />        
-        <image file="weather/weather_symbol_sandstorm.png" linearFilter="true" />
-        <image file="weather/weather_symbol_rain.png" linearFilter="true" />
-        <image file="weather/weather_symbol_snow.png" linearFilter="true" />
-        <image file="weather/weather_symbol_sun.png" linearFilter="true" />
+        <image file="weather/weather_symbol_sandstorm.png" />
+        <image file="weather/weather_symbol_rain.png" />
+        <image file="weather/weather_symbol_snow.png" />
+        <image file="weather/weather_symbol_sun.png" />
         <!-- player info stuff -->
         <image file="2co.png" />
         <image file="co.png" />
@@ -297,7 +297,7 @@
         <image file="superpowerstarhalf.png" cols = "13" />
         
         <!-- on map stuff -->
-        <image file="marked+field.png" cols = "4" linearFilter="true" />
+        <image file="marked+field.png" cols = "4" />
         <image file="defenseStar.png" />
         
         <image file="arrow+unit.png" cols = "10" />
