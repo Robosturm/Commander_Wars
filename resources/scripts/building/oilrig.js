@@ -43,15 +43,12 @@ var Constructor = function()
     {
         return true;
     };
-	this.onWeatherChanged = function(building)
+	this.onWeatherChanged = function(building, weather)
 	{	
-		if (typeof map !== 'undefined')
-        {
-			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
-			if (weather === "WEATHER_SNOW")
-				{
-					building.loadWeatherOverlaySpriteV2("oilrig+snow", false);
-				};
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("oilrig+snow", false);
 		};
 	};
 }

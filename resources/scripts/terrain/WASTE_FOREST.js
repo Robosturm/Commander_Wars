@@ -43,6 +43,47 @@ var Constructor = function()
         surroundings += terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_West, false);
         terrain.loadBaseSprite("waste_forest" + surroundings);
     };
+    this.loadOverlaySprite = function(terrain)
+    {
+        // Check every side.
+        var surroundings = terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_Direct, false);
+        // Load overlay south east, strict.
+        if (surroundings.includes("+S") && surroundings.includes("+E"))
+        {
+            var surroundingsSE = terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_SouthEast, false);
+            if (surroundingsSE !== "")
+            {
+                terrain.loadOverlaySprite("waste_forest+SE");
+            }
+        }
+        // Load overlay north east, strict.
+        if (surroundings.includes("+N") && surroundings.includes("+E"))
+        {
+            var surroundingsNE = terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_NorthEast, false);
+            if (surroundingsNE !== "")
+            {
+                terrain.loadOverlaySprite("waste_forest+NE");
+            }
+        }
+        // Load overlay south west, strict.
+        if (surroundings.includes("+S") && surroundings.includes("+W"))
+        {
+            var surroundingsSW = terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_SouthWest, false);
+            if (surroundingsSW !== "")
+            {
+                terrain.loadOverlaySprite("waste_forest+SW");
+            }
+        }
+        // Load overlay northwest, strict.
+        if (surroundings.includes("+N") && surroundings.includes("+W"))
+        {
+            var surroundingsNW = terrain.getSurroundings("WASTE_FOREST", false, false, GameEnums.Directions_NorthWest, false);
+            if (surroundingsNW !== "")
+            {
+                terrain.loadOverlaySprite("waste_forest+NW");
+            }
+        }
+    };
     this.getMiniMapIcon = function()
     {
         return "minimap_waste_forest";

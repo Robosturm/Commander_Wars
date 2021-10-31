@@ -49,15 +49,12 @@ var Constructor = function()
     {
         return "back_tower";
     };
-	this.onWeatherChanged = function(building)
+	this.onWeatherChanged = function(building, weather)
 	{	
-		if (typeof map !== 'undefined')
-        {
-			var weather = map.getGameRules().getCurrentWeather().getWeatherId();
-			if (weather === "WEATHER_SNOW")
-				{
-					building.loadWeatherOverlaySpriteV2("tower+snow", false);
-				};
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("tower+snow", false);
 		};
 	};
 }

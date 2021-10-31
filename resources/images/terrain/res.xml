@@ -689,6 +689,10 @@
         <image file="waste_forest+E.png" />
         <image file="waste_forest+E+W.png" />
         <image file="waste_forest+W.png" />
+        <image file="waste_forest+SE.png" />
+        <image file="waste_forest+NE.png" />
+        <image file="waste_forest+SW.png" />
+        <image file="waste_forest+NW.png" />
         
         <image file="waste_wasteland+0.png" />
         <image file="waste_wasteland+1.png" />
