@@ -253,7 +253,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
 /**
  * @brief onWeatherChanged
  */
-void Building::onWeatherChanged()
+void Building::onWeatherChanged(Weather* pWeather)
 {
     for (auto & weatherOverlay : m_pWeatherOverlaySprites)
     {
@@ -265,7 +265,8 @@ void Building::onWeatherChanged()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    args1 << m_neutralLoaded;
+    QJSValue obj2 = pInterpreter->newQObject(pWeather);
+    args1 << obj2;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
 }
 
@@ -424,7 +425,11 @@ void Building::updateBuildingSprites(bool neutral)
     args1 << neutral;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
     m_neutralLoaded = neutral;
-    onWeatherChanged();
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        onWeatherChanged(pMap->getGameRules()->getCurrentWeather());
+    }
 }
 
 bool Building::canBuildingBePlaced(Terrain* pTerrain)

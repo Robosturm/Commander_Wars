@@ -439,7 +439,7 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
-void GameMap::onWeatherChanged()
+void GameMap::onWeatherChanged(Weather* pWeather)
 {
     CONSOLE_PRINT("GameMap::onWeatherChanged()", Console::eDEBUG);
     qint32 heigth = getMapHeight();
@@ -450,7 +450,7 @@ void GameMap::onWeatherChanged()
         {
             if (m_fields[y][x]->getBuilding() != nullptr)
             {
-                m_fields[y][x]->getBuilding()->onWeatherChanged();
+                m_fields[y][x]->getBuilding()->onWeatherChanged(pWeather);
             }
         }
     }

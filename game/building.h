@@ -18,6 +18,7 @@ class Player;
 class Unit;
 class Terrain;
 class GameAction;
+class Weather;
 
 class Building;
 using spBuilding = oxygine::intrusive_ptr<Building>;
@@ -422,7 +423,7 @@ public slots:
     /**
      * @brief onWeatherChanged
      */
-    void onWeatherChanged();
+    void onWeatherChanged(Weather* pWeather);
     /**
      * @brief loadWeatherOverlaySpriteV2
      * @param spriteID
