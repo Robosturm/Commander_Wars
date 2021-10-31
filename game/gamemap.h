@@ -480,6 +480,36 @@ public slots:
      */
     void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false);
     /**
+     * @brief updateSpritesOfTiles
+     * @param points
+     * @param editor
+     * @param showLoadingScreen
+     */
+    void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
+    /**
+     * @brief updateTileSprites
+     * @param x
+     * @param y
+     * @param flowPoints
+     * @param editor
+     */
+    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false);
+    /**
+     * @brief updateFlowTiles
+     * @param flowPoints
+     */
+    void updateFlowTiles(QVector<QPoint> & flowPoints);
+    /**
+     * @brief syncTerrainAnimations
+     * @param showLoadingScreen
+     */
+    void syncTerrainAnimations(bool showLoadingScreen = false);
+    /**
+     * @brief finishUpdateSprites
+     * @param showLoadingScreen
+     */
+    void finishUpdateSprites(bool showLoadingScreen);
+    /**
      * @brief syncUnitsAndBuildings
      */
     void syncUnitsAndBuildingAnimations();

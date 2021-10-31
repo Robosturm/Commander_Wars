@@ -459,7 +459,6 @@ void GameMap::onWeatherChanged(Weather* pWeather)
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
     CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
-
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
@@ -483,23 +482,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                if (m_fields[y][x]->getHasFlowDirection() &&
-                    !m_fields[y][x]->getFixedSprite())
-                {
-                    flowPoints.append(QPoint(x, y));
-                }
-                else
-                {
-                    m_fields[y][x]->loadSprites();
-                }
-                if (m_fields[y][x]->getUnit() != nullptr)
-                {
-                    m_fields[y][x]->getUnit()->updateSprites(editor);
-                }
-                if (m_fields[y][x]->getBuilding() != nullptr)
-                {
-                    m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
-                }
+                updateTileSprites(x, y, flowPoints, editor);
             }
         }
     }
@@ -512,27 +495,67 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             {
                 if (onMap(x, y))
                 {
-                    if (m_fields[y][x]->getHasFlowDirection() &&
-                        !m_fields[y][x]->getFixedSprite())
-                    {
-                        flowPoints.append(QPoint(x, y));
-                    }
-                    else
-                    {
-                        m_fields[y][x]->loadSprites();
-                        if (m_fields[y][x]->getUnit() != nullptr)
-                        {
-                            m_fields[y][x]->getUnit()->updateSprites(editor);
-                        }
-                        if (m_fields[y][x]->getBuilding() != nullptr)
-                        {
-                            m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
-                        }
-                    }
+                    updateTileSprites(x, y, flowPoints, editor);
                 }
             }
         }
     }
+    updateFlowTiles(flowPoints);
+    syncTerrainAnimations(showLoadingScreen);
+    finishUpdateSprites(showLoadingScreen);
+}
+
+void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, bool showLoadingScreen)
+{
+    QVector<QPoint> flowPoints;
+    for (const auto & point : points)
+    {
+        for (qint32 y = point.y() -3; y <= point.y() + 3; y++)
+        {
+            for (qint32 x = point.x() -3; x <= point.x() + 3; x++)
+            {
+                if (!points.contains(QPoint(x, y)))
+                {
+                    if (onMap(x, y))
+                    {
+                        updateTileSprites(x, y, flowPoints, editor);
+                    }
+                }
+            }
+        }
+        if (onMap(point.x(), point.y()))
+        {
+            updateTileSprites(point.x(), point.y(), flowPoints, editor);
+        }
+    }
+    updateFlowTiles(flowPoints);
+    syncTerrainAnimations(showLoadingScreen);
+    finishUpdateSprites(showLoadingScreen);
+}
+
+void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor)
+{
+    if (m_fields[y][x]->getHasFlowDirection() &&
+        !m_fields[y][x]->getFixedSprite())
+    {
+        flowPoints.append(QPoint(x, y));
+    }
+    else
+    {
+        m_fields[y][x]->loadSprites();
+    }
+    if (m_fields[y][x]->getUnit() != nullptr)
+    {
+        m_fields[y][x]->getUnit()->updateSprites(editor);
+    }
+    if (m_fields[y][x]->getBuilding() != nullptr)
+    {
+        m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
+    }
+}
+
+void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
+{
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
@@ -545,21 +568,11 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             flowPoints.removeAll(point);
         }
     }
+}
 
-    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
-    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
-    for (qint32 y = 0; y < heigth; y++)
-    {
-        if (showLoadingScreen)
-        {
-            pLoadingScreen->setProgress(tr("Synchronizing Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 50 + 40 * y / heigth);
-        }
-        for (qint32 x = 0; x < width; x++)
-        {
-            m_fields[y][x]->syncAnimation(timeMs);
-        }
-    }
-    
+void GameMap::finishUpdateSprites(bool showLoadingScreen)
+{
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading weather for snowy times"), 95);
@@ -576,6 +589,26 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     if (showLoadingScreen)
     {
         pLoadingScreen->hide();
+    }
+}
+
+void GameMap::syncTerrainAnimations(bool showLoadingScreen)
+{
+    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        if (showLoadingScreen)
+        {
+            pLoadingScreen->setProgress(tr("Synchronizing Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 50 + 40 * y / heigth);
+        }
+        for (qint32 x = 0; x < width; x++)
+        {
+            m_fields[y][x]->syncAnimation(timeMs);
+        }
     }
 }
 
