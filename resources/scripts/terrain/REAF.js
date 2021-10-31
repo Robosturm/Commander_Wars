@@ -22,7 +22,6 @@ var Constructor = function()
     {
         var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
         var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
-        GameConsole.print("Reaf surroundings " + surroundingsPlainsDiagonal + " and " + surroundingsPlainsDirect, 1);
         if (surroundingsPlainsDirect !== "")
         {
             terrain.loadBaseSprite("reaf" + surroundingsPlainsDirect);
