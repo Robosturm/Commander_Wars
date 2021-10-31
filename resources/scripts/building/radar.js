@@ -49,6 +49,14 @@ var Constructor = function()
     {
         return "back_radar";
     };
+	this.onWeatherChanged = function(building, weather)
+	{	
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("radar+snow", false);
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

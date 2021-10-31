@@ -55,6 +55,14 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
     };
+	this.onWeatherChanged = function(building, weather)
+	{	
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("harbour+snow", false);
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;
