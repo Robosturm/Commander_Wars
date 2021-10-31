@@ -1337,6 +1337,8 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     QVector<QPoint> points;
     spGameMap pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
@@ -1392,11 +1394,14 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     {
         pMap->updateSpritesOfTiles(points);
     }
+    pApp->continueRendering();
 }
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     spGameMap pMap = GameMap::getInstance();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
@@ -1469,6 +1474,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         GameMap::getInstance()->syncUnitsAndBuildingAnimations();
     }
+    pApp->continueRendering();
 }
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)

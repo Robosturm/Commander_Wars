@@ -5792,5 +5792,38 @@
         <file>resources/images/co/yc/co_officier_yc+table.png</file>
         <file>resources/images/co/yc/co_sonja+alt6+face.png</file>
         <file>resources/images/co/yc/co_sonja+alt6+info.png</file>
+        <file>resources/images/terrain/riverend+e+2+land+NE.png</file>
+        <file>resources/images/terrain/riverend+e+3+land+S.png</file>
+        <file>resources/images/terrain/riverend+e+3+land+S+E.png</file>
+        <file>resources/images/terrain/riverend+e+3+land+SE.png</file>
+        <file>resources/images/terrain/waste_forest+NE.png</file>
+        <file>resources/images/terrain/waste_forest+NW.png</file>
+        <file>resources/images/terrain/waste_forest+SE.png</file>
+        <file>resources/images/terrain/waste_forest+SW.png</file>
+        <file>resources/images/building/airport+snow.png</file>
+        <file>resources/images/building/factory+snow.png</file>
+        <file>resources/images/building/harbour+snow.png</file>
+        <file>resources/images/building/hq+ac+snow.png</file>
+        <file>resources/images/building/hq+bd+snow.png</file>
+        <file>resources/images/building/hq+bg+snow.png</file>
+        <file>resources/images/building/hq+bh+snow.png</file>
+        <file>resources/images/building/hq+bm+snow.png</file>
+        <file>resources/images/building/hq+dm+snow.png</file>
+        <file>resources/images/building/hq+ge+snow.png</file>
+        <file>resources/images/building/hq+gs+snow.png</file>
+        <file>resources/images/building/hq+ma+snow.png</file>
+        <file>resources/images/building/hq+neutral+snow.png</file>
+        <file>resources/images/building/hq+os+snow.png</file>
+        <file>resources/images/building/hq+pf+snow.png</file>
+        <file>resources/images/building/hq+ti+snow.png</file>
+        <file>resources/images/building/hq+yc+snow.png</file>
+        <file>resources/images/building/labor+snow.png</file>
+        <file>resources/images/building/oilrig+snow.png</file>
+        <file>resources/images/building/pipestation+snow.png</file>
+        <file>resources/images/building/radar+snow.png</file>
+        <file>resources/images/building/temporary_airport+snow.png</file>
+        <file>resources/images/building/temporary_harbour+snow.png</file>
+        <file>resources/images/building/tower+snow.png</file>
+        <file>resources/images/building/town+snow.png</file>
     </qresource>
 </RCC>
