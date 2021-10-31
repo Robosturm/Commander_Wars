@@ -27,7 +27,7 @@ namespace oxygine
     void Material::init()
     {
         m_addColor = QColor(0, 0, 0, 0);
-        m_blend = VideoDriver::blend_premultiplied_alpha;
+        m_blend = VideoDriver::blend_alpha;
         m_flags = 0;
         m_uberShader = &STDRenderer::uberShader;
     }

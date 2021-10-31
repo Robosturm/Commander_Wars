@@ -42,7 +42,6 @@ namespace oxygine
 
         /**White 4x4 Texture*/
         static spTexture white;
-        static spTexture invisible;
         static UberShaderProgram uberShader;
         static QString fracShaderBody;
         static QString fracTableShaderBody;

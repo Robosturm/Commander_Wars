@@ -292,7 +292,7 @@ var BUILDING =
     {
     },
 
-    onWeatherChanged : function(building)
+    onWeatherChanged : function(building, weather)
     {
         // called when the weather changes
         // call loadWeatherOverlaySpriteV2 to load an sprite overlay

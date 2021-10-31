@@ -740,7 +740,7 @@ public slots:
     /**
      * @brief onWeatherChanged
      */
-    void onWeatherChanged();
+    void onWeatherChanged(Weather* pWeather);
 private slots:
     void zoomChanged();
 private:

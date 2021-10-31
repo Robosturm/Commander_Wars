@@ -12,7 +12,6 @@ namespace oxygine
         Material mat;
         mat.m_base = STDRenderer::white;
         m_mat = MaterialCache::mc().cache(mat);
-        setDestRecModifier(oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f));
     }
 
     void ColorRectSprite::doRender(const RenderState& rs)

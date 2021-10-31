@@ -322,8 +322,6 @@ namespace oxygine
         RectF r = m_frame.getDestRect();
         r.pos = r.pos.mult(m_localScale);
         r.size = r.size.mult(m_localScale);
-        r.pos += m_DestRecModifier.pos;
-        r.size += m_DestRecModifier.size;
         return r;
     }
 

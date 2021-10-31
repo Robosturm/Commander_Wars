@@ -91,9 +91,7 @@ namespace oxygine
         {
             return;
         }
-
         QColor color = rs.getFinalColor(sprite->getColor());
-
         sprite->getMaterial()->apply();
         sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
@@ -115,8 +113,8 @@ namespace oxygine
 
     void RenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
-        sprite->getMaterial()->apply();
         QColor color = rs.getFinalColor(sprite->getColor());
+        sprite->getMaterial()->apply();
         sprite->getMaterial()->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 }

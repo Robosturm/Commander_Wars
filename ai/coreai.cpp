@@ -2132,7 +2132,8 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
 
 bool CoreAI::isMoveableTile(Building* pBuilding)
 {
-    return pBuilding == nullptr || pBuilding->getOwner()->isEnemy(m_pPlayer) ||
+    return pBuilding == nullptr || pBuilding->getOwner() == nullptr ||
+            pBuilding->getOwner()->isEnemy(m_pPlayer) ||
             !pBuilding->isProductionBuilding();
 }
 

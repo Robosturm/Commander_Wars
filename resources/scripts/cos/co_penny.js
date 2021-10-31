@@ -80,21 +80,12 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    return 45;
-                }
                 return 30;
             case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    // apply sandstorm buff :)
-                    return 25;
-                }
                 return 10;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                        co.getPowerMode() > GameEnums.PowerMode_Off)
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
                 {
                     return 10;
                 }
@@ -127,7 +118,7 @@ var Constructor = function()
             {
                 if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
                 {
-                    return 3;
+                    return 2;
                 }
             }
         }
@@ -171,7 +162,7 @@ var Constructor = function()
                 map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                    co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return true;
             }
@@ -214,7 +205,10 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Changes the weather to a random one and her troops get a buff depending on the new weather.");
+        return qsTr("Changes the weather to a random one and she gets a firepower boost.\n") +
+               qsTr("During rain she gets additionally improved vision.\n") +
+               qsTr("During snow she gets additionally improved movement.\n") +
+               qsTr("During sandstorm she gets additionally improved firerange for her indirects.\n");
     };
     this.getSuperPowerName = function(co)
     {

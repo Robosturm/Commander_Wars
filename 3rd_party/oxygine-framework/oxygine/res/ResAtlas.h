@@ -24,6 +24,6 @@ namespace oxygine
     protected:
         //settings from xml
         quint32 m_linearFilter{GL_NEAREST};
-        bool m_clamp2edge{true};
+        bool m_clamp2edge{false};
     };
 }
