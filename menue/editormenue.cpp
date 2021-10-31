@@ -1343,7 +1343,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     {
         case EditorSelection::PlacementSize::None:
         {
-            break;
+            return;
         }
         case EditorSelection::PlacementSize::Small:
         {
@@ -1381,22 +1381,17 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
-            if (points.size() < 14)
-            {
-                pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
-            }
-            else
-            {
-                pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
-            }
-            
+            pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
-    if (points.size() >= 14)
+    if (points.size() > 10)
     {
         pMap->updateSprites();
     }
-
+    else
+    {
+        pMap->updateSpritesOfTiles(points);
+    }
 }
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
@@ -1408,7 +1403,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         case EditorSelection::PlacementSize::None:
         {
-            break;
+            return;
         }
         case EditorSelection::PlacementSize::Small:
         {
@@ -1459,18 +1454,16 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
-                if (points.size() < 14)
-                {
-                    pMap->updateTerrain(points.at(i).x(), points.at(i).y());
-                    pMap->updateSprites(points.at(i).x(), points.at(i).y());
-                }
-                
             }
         }
     }
-    if (points.size() >= 14)
+    if (points.size() > 10)
     {
         pMap->updateSprites();
+    }
+    else
+    {
+        pMap->updateSpritesOfTiles(points);
     }
     if (Settings::getSyncAnimations())
     {
@@ -1486,7 +1479,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     {
         case EditorSelection::PlacementSize::None:
         {
-            break;
+            return;
         }
         case EditorSelection::PlacementSize::Small:
         {
