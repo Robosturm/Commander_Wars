@@ -4,15 +4,16 @@
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include <QDomDocument>
-#include <qstring.h>
-#include <qmap.h>
+#include <QString>
+#include <QMap>
+#include <vector>
 
 namespace oxygine
 {
     class Resources: public Resource
     {
     public:
-        using resources = QVector<spResource>;
+        using resources = std::vector<spResource>;
         using resourcesMap = QMap<QString, spResource>;
         using createResourceCallback = spResource(*)(CreateResourceContext& context);
 

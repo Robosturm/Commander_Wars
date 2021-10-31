@@ -11,9 +11,9 @@ namespace oxygine
         ls.cb = cb;
         ls.id = m_lastID;
         bool added = false;
-        for (qint32 i = 0; i < m_listeners.size(); ++i)
+        for (auto i = m_listeners.begin(); i != m_listeners.end(); ++i)
         {
-            if (et < m_listeners[i].type)
+            if (et < i->type)
             {
                 m_listeners.insert(i, ls);
                 added = true;

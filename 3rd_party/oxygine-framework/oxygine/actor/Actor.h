@@ -457,7 +457,6 @@ namespace oxygine
         children m_children;
         union
         {
-            //dont change order!!! or brake statements: if (_pressedOvered == _overred)
             struct
             {
                 pointer_index m_overred;

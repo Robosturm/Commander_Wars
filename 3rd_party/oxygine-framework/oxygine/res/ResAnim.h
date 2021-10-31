@@ -3,10 +3,11 @@
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
 #include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include <vector>
 
 namespace oxygine
 {
-    using animationFrames = QVector<AnimationFrame>;
+    using animationFrames = std::vector<AnimationFrame>;
     class ResAnim;
     using spResAnim = intrusive_ptr<ResAnim>;
     class ResAnim: public Resource

@@ -233,7 +233,6 @@ namespace oxygine
         return true;
     }
 
-
     text::Node* TextField::getRootNode()
     {
         if (!m_style.font)
