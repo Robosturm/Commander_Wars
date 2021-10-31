@@ -1337,8 +1337,6 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
     QVector<QPoint> points;
     spGameMap pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
@@ -1370,6 +1368,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             break;
         }
     }
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     for (qint32 i = 0; i < points.size(); i++)
     {
         // nice we can place the terrain
@@ -1399,9 +1399,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->pauseRendering();
+    CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);    
     spGameMap pMap = GameMap::getInstance();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
@@ -1433,6 +1431,8 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
     if (pCurrentBuilding->getBuildingWidth() > 1 ||
         pCurrentBuilding->getBuildingHeigth() > 1)

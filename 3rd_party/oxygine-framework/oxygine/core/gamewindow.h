@@ -158,6 +158,10 @@ namespace oxygine
 
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
         bool sameTouchpoint(QPointF pos1, QPointF pos2) const;
+        bool isMainThread() const
+        {
+            return QThread::currentThreadId() == m_mainHandle;
+        }
     protected:
         bool m_renderEnabled = true;
 

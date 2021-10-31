@@ -226,7 +226,7 @@ namespace oxygine
     {
         if (!m_shuttingDown)
         {
-            if (QThread::currentThreadId() == m_mainHandle)
+            if (isMainThread())
             {
                 loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
             }
