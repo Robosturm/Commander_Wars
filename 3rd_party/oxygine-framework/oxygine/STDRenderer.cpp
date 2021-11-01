@@ -303,7 +303,7 @@ namespace oxygine
         m_vdecl = decl;
     }
 
-    void STDRenderer::addVertices(std::vector<VertexPCT2> & data)
+    void STDRenderer::addVertices(const std::vector<VertexPCT2> & data)
     {
         m_verticesData.insert(m_verticesData.end(), data.begin(), data.end());
         checkDrawBatch();

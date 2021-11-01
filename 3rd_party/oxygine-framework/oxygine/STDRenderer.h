@@ -83,7 +83,7 @@ namespace oxygine
 
         /**Draws existing batch immediately.*/
         void flush();
-        void addVertices(std::vector<VertexPCT2> & data);
+        void addVertices(const std::vector<VertexPCT2> & data);
 
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();
