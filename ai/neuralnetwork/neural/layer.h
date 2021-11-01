@@ -2,7 +2,7 @@
 #define LAYER_H
 
 #include <QMap>
-#include <QVector>
+#include <vector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -91,7 +91,7 @@ private:
     NeuralNetwork* m_net{nullptr};
     Layer* m_previousLayer{nullptr};
     qint32 m_id_layer;
-    QVector<spNeuron> m_neurons;
+    std::vector<spNeuron> m_neurons;
     LayerType m_type;
     Neuron::ActivationFunction m_activation;
     QMap<QString, double> m_parameters;

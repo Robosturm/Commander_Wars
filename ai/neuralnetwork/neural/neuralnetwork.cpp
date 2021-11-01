@@ -154,6 +154,6 @@ void NeuralNetwork::deserializeObject(QDataStream& pStream)
             layer->setPreviousLayer(m_layers[i - 1].get());
         }
         layer->deserializeObject(pStream);
-        m_layers.append(layer);
+        m_layers.push_back(layer);
     }
 }

@@ -1,7 +1,7 @@
 #ifndef NEURON_H
 #define NEURON_H
 
-#include <QVector>
+#include <vector>
 
 #include "ai/neuralnetwork/neural/edge.h"
 
@@ -77,8 +77,8 @@ private:
     double m_accumulated = 0.0;
 
     double m_threshold = 0.0;
-    QVector<spEdge> m_next;
-    QVector<spEdge> m_previous;
+    std::vector<spEdge> m_next;
+    std::vector<spEdge> m_previous;
     ActivationFunction m_activation_function;
     bool m_is_bias = false;
 };

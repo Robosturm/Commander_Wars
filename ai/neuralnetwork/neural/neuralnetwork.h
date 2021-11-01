@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QVector>
 #include <QObject>
+#include <vector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -107,7 +108,7 @@ private:
     void connectComplete();
     void randomizeAllWeights();
 private:
-    QVector<spLayer> m_layers;
+    std::vector<spLayer> m_layers;
     double m_fitness;
     QVector<QMap<QString, double>> m_configuration;
     double m_maxWeight = 1;

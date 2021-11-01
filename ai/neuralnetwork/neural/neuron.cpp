@@ -212,7 +212,7 @@ void Neuron::deserializeObject(QDataStream& pStream)
         }
         spEdge pEdge = spEdge::create(this, previous, 0);
         pEdge->deserializeObject(pStream);
-        m_previous.append(pEdge);
+        m_previous.push_back(pEdge);
         if (previous != nullptr)
         {
             previous->addNext(pEdge);

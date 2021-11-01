@@ -5825,5 +5825,10 @@
         <file>resources/images/building/temporary_harbour+snow.png</file>
         <file>resources/images/building/tower+snow.png</file>
         <file>resources/images/building/town+snow.png</file>
+        <file>resources/scripts/cos/co_davis.js</file>
+        <file>mods/aw2_co/scripts/cos/co_davis.js</file>
+        <file>mods/aw_co/scripts/cos/co_davis.js</file>
+        <file>mods/awdc_co/scripts/cos/co_davis.js</file>
+        <file>mods/awds_co/scripts/cos/co_davis.js</file>
     </qresource>
 </RCC>

@@ -283,7 +283,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
                            "CO_RATTIGAN", "CO_ROBOANDY", "CO_ROBOSTURM", "CO_SABAKI", "CO_SAMI",
                            "CO_SANJURO", "CO_SASHA", "CO_SENSEI", "CO_SMITAN", "CO_SONJA", "CO_SOPHIE",
                            "CO_STURM", "CO_TABITHA", "CO_TASHA", "CO_VARLOT", "CO_VON_BOLT",
-                           "CO_WAYLON", "CO_WILL", "CO_XAVIER", "CO_ZANDRA"});
+                           "CO_WAYLON", "CO_WILL", "CO_XAVIER", "CO_ZANDRA", "CO_DAVIS", "CO_CAIRN"});
     }
     else if (item == 1) // advance wars dc
     {

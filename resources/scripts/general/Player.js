@@ -416,8 +416,8 @@ var PLAYER =
 
     getArmyCOsTI : function()
     {
-        return ["CO_EMPTY_TI", "CO_CONRAD", "CO_CASSIDY", "CO_WAYLON",
-                "CO_GREYFIELD", "CO_JOEY", "CO_WALTER", "CO_RANDOM"];
+        return ["CO_EMPTY_TI", "CO_DAVIS", "CO_WAYLON", "CO_GREYFIELD",
+                "CO_CONRAD", "CO_CASSIDY", "CO_JOEY", "CO_WALTER", "CO_RANDOM"];
     },
 
     getArmyCOsDM : function()
