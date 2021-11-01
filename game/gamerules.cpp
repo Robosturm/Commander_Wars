@@ -521,12 +521,19 @@ void GameRules::setCurrentWeather(qint32 weatherId)
             }
             m_CurrentWeather = weatherId;
             m_Weathers[m_CurrentWeather]->activate();
-            spGameMap pMap = GameMap::getInstance();
-            pMap->onWeatherChanged(m_Weathers[m_CurrentWeather].get());
         }
+    }    
+}
+
+void GameRules::onWeatherChanged()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        pMap->onWeatherChanged(m_Weathers[m_CurrentWeather].get());
         // create weather sprites :)
         createWeatherSprites();
-    }    
+    }
 }
 
 void GameRules::createWeatherSprites()

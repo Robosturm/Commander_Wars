@@ -74,4 +74,8 @@ var ANIMATION =
         map.getTerrain(x, y).getUnit().setHp(hp);
     },
 
+    preOnAnimationChangedAnimation : function(animation)
+    {
+        map.getGameRules().onWeatherChanged();
+    },
 };

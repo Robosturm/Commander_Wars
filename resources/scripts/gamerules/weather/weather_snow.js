@@ -28,6 +28,7 @@ var Constructor = function()
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation.setSound("snow.wav");
+        animation.setStartOfAnimationCall("ANIMATION", "preOnAnimationChangedAnimation");
         if (queueAnimation !== null)
         {
             queueAnimation.queueAnimation(animation);

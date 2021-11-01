@@ -444,6 +444,10 @@ public slots:
      * @param weatherId
      */
     void setCurrentWeather(qint32 weatherId);
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged();
 
     bool getRankingSystem() const;
     void setRankingSystem(bool RankingSystem);
