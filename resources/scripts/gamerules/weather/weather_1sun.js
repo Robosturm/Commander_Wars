@@ -13,11 +13,20 @@ var Constructor = function()
 
     this.activate = function(weather)
     {
+        var animationCount = GameAnimationFactory.getAnimationCount();
+        var queueAnimation = null;
+        if (animationCount > 0)
+        {
+            queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
+        }
         var animation = GameAnimationFactory.createAnimation(0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        animation.setSound("power_colin.wav");
-        audio.playSound("sun.wav");
+        animation.setSound("sun.wav");
+        if (queueAnimation !== null)
+        {
+            queueAnimation.queueAnimation(animation);
+        }
     };
 }
 
