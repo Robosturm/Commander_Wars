@@ -511,8 +511,7 @@ var CO =
 
     getAddtionalCoFaces : function()
     {
-        return ["co_davis",
-                "co_fanatic",
+        return ["co_fanatic",
                 "co_cyrus",
                 "co_dr_morris",
                 "co_major",

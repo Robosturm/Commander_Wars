@@ -653,6 +653,20 @@ void RuleSelection::showRuleSelection(bool advanced)
 
         textField = spLabel::create(textWidth - 40);
         textField->setStyle(style);
+        textField->setHtmlText(tr("HP Defense Impact:"));
+        textField->setPosition(30, y);
+        addChild(textField);
+        pCheckbox = spCheckbox::create();
+        pCheckbox->setTooltipText(tr("If checked the impact of terrain defense stars is reduced the less hp a unit has."));
+        pCheckbox->setPosition(textWidth, textField->getY());
+        pCheckbox->setEnabled(m_ruleChangeEabled);
+        addChild(pCheckbox);
+        pCheckbox->setChecked(pMap->getGameRules()->getHpDefenseReduction());
+        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setHpDefenseReduction, Qt::QueuedConnection);
+        y += 40;
+
+        textField = spLabel::create(textWidth - 40);
+        textField->setStyle(style);
         textField->setHtmlText(tr("Ship bridges:"));
         textField->setPosition(30, y);
         addChild(textField);

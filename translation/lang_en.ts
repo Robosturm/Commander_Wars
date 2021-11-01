@@ -4163,96 +4163,106 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="656"/>
-        <source>Ship bridges:</source>
+        <source>HP Defense Impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="660"/>
-        <source>If checked ships and boats can move through bridges placed on sea tiles, like in advance wars darc conflict.</source>
+        <source>If checked the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="670"/>
-        <source>Transporter refresh: </source>
+        <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="674"/>
-        <source>If checked units can move after getting unload. If the unit remained in their transporter for more than one turn.</source>
+        <source>If checked ships and boats can move through bridges placed on sea tiles, like in advance wars darc conflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="684"/>
-        <source>Round Time: </source>
+        <source>Transporter refresh: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="688"/>
+        <source>If checked units can move after getting unload. If the unit remained in their transporter for more than one turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="698"/>
+        <source>Round Time: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="702"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="701"/>
+        <location filename="../objects/ruleselection.cpp" line="715"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="704"/>
+        <location filename="../objects/ruleselection.cpp" line="718"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="708"/>
+        <location filename="../objects/ruleselection.cpp" line="722"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="728"/>
+        <location filename="../objects/ruleselection.cpp" line="742"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="735"/>
+        <location filename="../objects/ruleselection.cpp" line="749"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="739"/>
+        <location filename="../objects/ruleselection.cpp" line="753"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="749"/>
+        <location filename="../objects/ruleselection.cpp" line="763"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="753"/>
+        <location filename="../objects/ruleselection.cpp" line="767"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="763"/>
+        <location filename="../objects/ruleselection.cpp" line="777"/>
         <source>Unit sell value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="767"/>
+        <location filename="../objects/ruleselection.cpp" line="781"/>
         <source>The amount of funds you get back for selling a unit. Only has an impact if the sell action is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="780"/>
+        <location filename="../objects/ruleselection.cpp" line="794"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="784"/>
+        <location filename="../objects/ruleselection.cpp" line="798"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="798"/>
+        <location filename="../objects/ruleselection.cpp" line="812"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

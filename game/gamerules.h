@@ -62,7 +62,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 21;
+        return 22;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -84,10 +84,19 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
-
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getHpDefenseReduction
+     * @return
+     */
+    bool getHpDefenseReduction() const;
+    /**
+     * @brief setHpDefenseReduction
+     * @param newHpDefenseReduction
+     */
+    void setHpDefenseReduction(bool newHpDefenseReduction);
     /**
      * @brief getPowerUsageReduction
      * @return
@@ -606,6 +615,7 @@ private:
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
     quint8 m_terrainDefense{10};
+    bool m_hpDefenseReduction{true};
     bool m_victory{false};
     float m_resellValue{0.5f};
     bool m_transporterRefresh{true};

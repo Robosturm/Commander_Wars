@@ -954,6 +954,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getHpDefenseReduction() const
+{
+    return m_hpDefenseReduction;
+}
+
+void GameRules::setHpDefenseReduction(bool newHpDefenseReduction)
+{
+    m_hpDefenseReduction = newHpDefenseReduction;
+}
+
 GameEnums::PowerGainMode GameRules::getPowerGainMode() const
 {
     return m_powerGainMode;
@@ -1296,6 +1306,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << static_cast<qint32>(m_powerGainMode);
     pStream << m_powerUsageReduction;
     pStream << m_powerLoose;
+    pStream << m_hpDefenseReduction;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1582,5 +1593,9 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_powerGainMode = static_cast<GameEnums::PowerGainMode>(value);
         pStream >> m_powerUsageReduction;
         pStream >> m_powerLoose;
+    }
+    if (version > 21)
+    {
+        pStream >> m_hpDefenseReduction;
     }
 }

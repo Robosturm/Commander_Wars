@@ -1558,7 +1558,12 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
     }
     if (useTerrainDefense())
     {
-        bonus += getTerrainDefense(position.x(), position.y()) * pMap->getGameRules()->getTerrainDefense();
+        float hpReductionMalus = 1.0f;
+        if ( pMap->getGameRules()->getHpDefenseReduction())
+        {
+            hpReductionMalus = static_cast<float>(getHpRounded()) / MAX_UNIT_HP;
+        }
+        bonus += getTerrainDefense(position.x(), position.y()) * pMap->getGameRules()->getTerrainDefense() * hpReductionMalus;
     }
     if (m_pTerrain != nullptr)
     {
