@@ -19,8 +19,8 @@ class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
-                                  QVector<qint32> costList = QVector<qint32>(), QVector<bool> enabledList = QVector<bool>());
+    explicit HumanPlayerInputMenu(const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+                                  const QVector<qint32> & costList = QVector<qint32>(), const QVector<bool> & enabledList = QVector<bool>());
     virtual ~HumanPlayerInputMenu() = default;
     /**
      * @brief setMenuPosition changes the position of this menu

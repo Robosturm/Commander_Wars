@@ -2527,12 +2527,12 @@ void Unit::moveUnitAction(GameAction* pAction)
         value = 0;
     }
     setFuel(value);
-    moveUnit(pAction->getMovePath());
+    auto path = pAction->getMovePath();
+    moveUnit(path);
 }
 
-void Unit::moveUnit(QVector<QPoint> movePath)
-{
-    
+void Unit::moveUnit(QVector<QPoint> & movePath)
+{    
     if (movePath.size() < 1)
     {
         movePath.append(QPoint(Unit::getX(), Unit::getY()));

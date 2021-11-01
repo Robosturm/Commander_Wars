@@ -41,7 +41,7 @@ public:
      * @param path the path the unit should go
      * @return the costs needed when using the given path
      */
-    qint32 getCosts(QVector<QPoint> path);
+    qint32 getCosts(const QVector<QPoint> & path);
     /**
      * @brief getClosestReachableMovePath
      * @param target

@@ -101,7 +101,7 @@ public:
         return m_configuration[0][Layer::LAYER_PARAMETER_SIZE];
     }
 private:
-    void setInput(QVector<double> in);
+    void setInput(const QVector<double> & in);
     void trigger();
     void clean();
     void connectComplete();

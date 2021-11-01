@@ -9,7 +9,7 @@
 
 const char* const ROOT = "::::";
 
-FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile, bool preview)
+FileDialog::FileDialog(QString startFolder, const QVector<QString> & wildcards, QString startFile, bool preview)
     : m_preview(preview),
       m_pathPrefix(Settings::getUserPath())
 {

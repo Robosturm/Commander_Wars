@@ -45,7 +45,7 @@ void NeuralNetwork::clean()
     }
 }
 
-void NeuralNetwork::setInput(QVector<double> in)
+void NeuralNetwork::setInput(const QVector<double> & in)
 {
 	clean();
     for(qint32 i = 0; i < in.size(); ++i)

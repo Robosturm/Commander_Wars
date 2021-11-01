@@ -155,7 +155,7 @@ protected:
      * @param y
      * @param itemIndex
      */
-    void createArmySelection(qint32 ai, QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player);
+    void createArmySelection(qint32 ai, const QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player);
     /**
      * @brief getSelectableArmies
      * @return

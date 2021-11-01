@@ -875,7 +875,7 @@ void PlayerSelection::showPlayerSelection()
     pApp->continueRendering();
 }
 
-void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player)
+void PlayerSelection::createArmySelection(qint32 ai, const QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player)
 {
     auto creator = [](QString army)
     {

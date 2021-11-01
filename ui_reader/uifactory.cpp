@@ -571,7 +571,7 @@ QDomNode UiFactory::getNode(QDomNodeList childs, QString attribute)
     return QDomElement();
 }
 
-bool UiFactory::checkElements(QDomNodeList childs, QVector<QString> attributes)
+bool UiFactory::checkElements(QDomNodeList childs, const QVector<QString> & attributes)
 {
     bool ret = true;
     qint32 childCount = childs.count();

@@ -568,7 +568,7 @@ public slots:
      * @brief moveUnit moves the unit to the target path
      * @param movePath
      */
-    void moveUnit(QVector<QPoint> movePath);
+    void moveUnit(QVector<QPoint> & movePath);
     /**
      * @brief moveUnitToField
      * @param x

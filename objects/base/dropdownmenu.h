@@ -16,7 +16,7 @@ class DropDownmenu : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenu(qint32 width, QVector<QString> items);
+    explicit DropDownmenu(qint32 width, const QVector<QString> & items);
     virtual ~DropDownmenu() = default;
     /**
      * @brief getCurrentItemText text of the current item
@@ -42,7 +42,7 @@ public:
      * @brief changeList
      * @param items
      */
-    void changeList(QVector<QString> items);
+    void changeList(const QVector<QString> & items);
 signals:
     void sigItemChanged(qint32 item);
 public slots:

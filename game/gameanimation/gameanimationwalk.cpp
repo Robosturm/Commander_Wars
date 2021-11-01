@@ -10,7 +10,7 @@
 #include "game/co.h"
 #include "game/gameanimation/gameanimationfactory.h"
 
-GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
+GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
       m_pUnit(pUnit),
       m_movePath(movePath)

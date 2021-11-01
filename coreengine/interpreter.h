@@ -48,51 +48,50 @@ public:
      * @brief reloadInterpreter
      * @param runtime
      */
-    static void reloadInterpreter(QString runtime);
+    static void reloadInterpreter(const QString & runtime);
 
 signals:
 
 public slots:
-    void openScript(QString script, bool setup);
-    void loadScript(QString content, QString script);
-    QJSValue doFunction(QString func, const QJSValueList& args = QJSValueList());
-    QJSValue doFunction(QString obj, QString func, const QJSValueList& args = QJSValueList());
+    void openScript(const QString & script, bool setup);
+    void loadScript(const QString & content, const QString & script);
+    QJSValue doFunction(const QString & func, const QJSValueList& args = QJSValueList());
+    QJSValue doFunction(const QString & obj, const QString & func, const QJSValueList& args = QJSValueList());
     void cleanMemory();
     /**
      * @brief doString immediatly interprates the string with the javascript-interpreter
      * @param task string parsed to the interpreter
      */
-    QJSValue doString(QString task);
+    QJSValue doString(const QString & task);
     /**
      * @brief pushInt
      * @param value
      */
-    void pushInt(QString name, qint32 value);
-    void pushDouble(QString name, double value);
-    void pushString(QString name, QString value);
-    void pushObject(QString name, QObject* object);
+    void pushInt(const QString & name, qint32 value);
+    void pushDouble(const QString & name, double value);
+    void pushString(const QString & name, const QString & value);
+    void pushObject(const QString & name, QObject* object);
     QJSValue newQObject(QObject* object);
-    void deleteObject(QString name);
+    void deleteObject(const QString & name);
 
-    qint32 getGlobalInt(QString var);
-    bool getGlobalBool(QString var);
-    double getGlobalDouble(QString var);
-    QString getGlobalString(QString var);
-    QJSValue getGlobal(QString var);
-    void setGlobal(QString var, QJSValue obj);
+    qint32 getGlobalInt(const QString & var);
+    bool getGlobalBool(const QString & var);
+    double getGlobalDouble(const QString & var);
+    QString getGlobalString(const QString & var);
+    QJSValue getGlobal(const QString & var);
+    void setGlobal(const QString & var, const QJSValue & obj);
     /**
      * @brief exists checks if the js object exists
      * @param object
      * @return
      */
-    bool exists(QString object);
+    bool exists(const QString & object);
     /**
      * @brief exists checks if the js object and function exists
      * @param object
      * @return
      */
-    bool exists(QString object, QString function);
-
+    bool exists(const QString & object, const QString & function);
 
 private:
     friend class oxygine::intrusive_ptr<Interpreter>;

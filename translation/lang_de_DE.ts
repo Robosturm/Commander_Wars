@@ -1742,13 +1742,13 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="606"/>
-        <source>Synchronizing Map Row </source>
+        <location filename="../game/gamemap.cpp" line="578"/>
+        <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="578"/>
-        <source>Loading weather for snowy times</source>
+        <location filename="../game/gamemap.cpp" line="606"/>
+        <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3618,8 +3618,8 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <location filename="../mapsupport/randomMapGenerator.cpp" line="850"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="935"/>
         <location filename="../mapsupport/randomMapGenerator.cpp" line="939"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1131"/>
-        <location filename="../mapsupport/randomMapGenerator.cpp" line="1173"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1130"/>
+        <location filename="../mapsupport/randomMapGenerator.cpp" line="1172"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>

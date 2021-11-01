@@ -15,7 +15,7 @@ class DecisionNode : public QObject, public FileSerializable, public oxygine::re
     Q_OBJECT
 public:
         DecisionNode();
-        DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode> pNodes);
+        DecisionNode(spDecisionQuestion pQuestion, const QVector<spDecisionNode> & pNodes);
         virtual ~DecisionNode() = default;
 
         virtual void serializeObject(QDataStream& pStream) const override;

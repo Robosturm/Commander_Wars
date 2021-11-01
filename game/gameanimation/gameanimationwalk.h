@@ -20,7 +20,7 @@ class GameAnimationWalk : public GameAnimation
 {
     Q_OBJECT
 public:
-    explicit GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath);
+    explicit GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath);
     virtual ~GameAnimationWalk() = default;
 signals:
 

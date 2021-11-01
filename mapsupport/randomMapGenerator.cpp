@@ -24,14 +24,14 @@
 const char* const RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
 qint32 RandomMapGenerator::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                                      bool roadSupport, qint32 seed,
-                                     QVector<std::tuple<QString, float>> terrains,
-                                     QVector<std::tuple<QString, float>> buildings,
-                                     QVector<float> ownedBaseSize,
+                                     const QVector<std::tuple<QString, float>> & terrains,
+                                     const QVector<std::tuple<QString, float>> & buildings,
+                                     const QVector<float> & ownedBaseSize,
                                      float startBaseSize,
-                                     QVector<std::tuple<QString, float>> units,
+                                     const QVector<std::tuple<QString, float>> & units,
                                      qint32 unitCount,
                                      float startBaseUnitSize,
-                                     QVector<float> unitDistribution,
+                                     const QVector<float> & unitDistribution,
                                      bool unitsDistributed,
                                      bool mirrored)
 {
@@ -606,7 +606,7 @@ void RandomMapGenerator::randomMapCreateRoad(QRandomGenerator& randInt, QVector<
     }
 }
 
-QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
+QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, const QVector<std::tuple<QString, float>> & buildingDistributions, const QVector<float> & ownedBaseSize,
                                                              float startBaseSize, qint32& progress, qint32 maxProgess)
 {
     CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), Console::eDEBUG);
@@ -709,8 +709,8 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 buildings, Q
     return playerPositions;
 }
 
-void RandomMapGenerator::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions,
-                                                 QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt)
+void RandomMapGenerator::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID, qint32 buildings, const QVector<QPoint> & playerPositions,
+                                                 const QVector<float> & ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt)
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 mapWidth = pMap->getMapWidth();
@@ -817,7 +817,7 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(QString buildingId, qint32 x, 
     return false;
 }
 
-QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 width, qint32 heigth, qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
+QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 width, qint32 heigth, qint32 buildings, QRandomGenerator& randInt, const QVector<std::tuple<QString, float>> & buildingDistributions, const QVector<float> & ownedBaseSize,
                                                              float startBaseSize, qint32& progress, qint32 maxProgess, MirrorMode mirrorX, MirrorMode mirrorY)
 {
     CONSOLE_PRINT("RandomMapGenerator::randomMapCreateBuildings " + QString::number(buildings) + " and startBaseSize " + QString::number(startBaseSize), Console::eDEBUG);
@@ -946,9 +946,8 @@ QVector<QPoint> RandomMapGenerator::randomMapCreateBuildings(qint32 width, qint3
     return playerPositions;
 }
 
-
-void RandomMapGenerator::randomMapPlaceBuildings(qint32 width, qint32 heigth, QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions,
-                                                 QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt, MirrorMode mirrorX, MirrorMode mirrorY)
+void RandomMapGenerator::randomMapPlaceBuildings(qint32 width, qint32 heigth, QString buildingId, QString baseTerrainID, qint32 buildings, const QVector<QPoint> & playerPositions,
+                                                 const QVector<float> & ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt, MirrorMode mirrorX, MirrorMode mirrorY)
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 mapWidth = pMap->getMapWidth();
@@ -1197,7 +1196,7 @@ void RandomMapGenerator::randomMapPlaceUnits(QVector<std::tuple<QString, float>>
     }
 }
 
-void RandomMapGenerator::randomMapSpawnUnit(QString unitId, qint32 hqPos, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt,
+void RandomMapGenerator::randomMapSpawnUnit(QString unitId, qint32 hqPos, bool nearHq, const QVector<QPoint> & playerPositions, QRandomGenerator& randInt,
                                             MirrorMode mirrorX, MirrorMode mirrorY)
 {
     spGameMap pMap = GameMap::getInstance();

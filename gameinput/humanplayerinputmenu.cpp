@@ -17,8 +17,8 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
-                                           QVector<qint32> costList, QVector<bool> enabledList)
+HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+                                           const QVector<qint32> & costList, const QVector<bool> & enabledList)
     : m_ActionIDs(actionIDs),
       m_CostList(costList),
       m_EnabledList(enabledList)

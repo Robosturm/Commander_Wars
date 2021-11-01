@@ -67,15 +67,10 @@ namespace oxygine
         virtual void setEnabled(bool enabled);
 
     protected:
-
-        struct listenerbase
+        struct listener
         {
             EventCallback cb;
             qint32 id;
-        };
-
-        struct listener : public listenerbase
-        {
             eventType type;
         };
 

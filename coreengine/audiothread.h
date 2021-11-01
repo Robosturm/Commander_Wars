@@ -212,7 +212,6 @@ protected:
      */
     void stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex);
     void loadMediaForFile(QString filePath);
-    void qtWasteTime();
 private:
     // music playback data
     struct PlaylistData
