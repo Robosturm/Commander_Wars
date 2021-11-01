@@ -69,7 +69,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pLabel->setHtmlText(tr("Player: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    QVector<QString> items;
+    QStringList items;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {

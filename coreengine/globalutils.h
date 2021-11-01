@@ -87,7 +87,7 @@ public slots:
      * @param filter
      * @return
      */
-    static QStringList getFiles(QString folder, QStringList filter);
+    static QStringList getFiles(const QString & folder, const QStringList & filter);
     /**
      * @brief importFilesFromDirectory
      * @param folder

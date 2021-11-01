@@ -558,7 +558,7 @@ public slots:
      * @brief setPerkList
      * @param perks
      */
-    void setPerkList(QStringList perks);
+    void setPerkList(const QStringList & perks);
     /**
      * @brief addPerk
      * @param perk

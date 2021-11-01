@@ -396,7 +396,7 @@ public slots:
      * @param whitelist
      * @return
      */
-    qint32 getBuildingListCount(QStringList list, bool whitelist = true);
+    qint32 getBuildingListCount(const QStringList & list, bool whitelist = true);
     /**
      * @brief getUnitCount
      * @return
@@ -503,13 +503,13 @@ public slots:
      * @brief setBuildList
      * @param BuildList
      */
-    void setBuildList(const QStringList BuildList);
+    void setBuildList(const QStringList & BuildList);
     /**
      * @brief changeBuildlist
      * @param unitID
      * @param remove
      */
-    void changeBuildlist(const QString unitID, bool remove = false);/**
+    void changeBuildlist(const QString& unitID, bool remove = false);/**
      * @brief getVariables
      * @return
      */

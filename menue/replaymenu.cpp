@@ -491,7 +491,7 @@ void ReplayMenu::showConfig()
     qint32 width = 450;
     qint32 y = 10;
     QVector<qint32> teams;
-    QVector<QString> teamNames;
+    QStringList teamNames;
     spGameMap pMap = GameMap::getInstance();
     teamNames.append(tr("Current Team"));
     teamNames.append(tr("All Teams"));
@@ -557,7 +557,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
+    QStringList items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);

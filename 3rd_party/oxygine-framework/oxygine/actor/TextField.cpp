@@ -145,7 +145,7 @@ namespace oxygine
         m_root->updateMaterial(*m_mat.get());
     }
 
-    void TextField::setText(QString str)
+    void TextField::setText(const QString & str)
     {
         m_htmlText = false;
         if (m_text != str)
@@ -155,13 +155,12 @@ namespace oxygine
         }
     }
 
-    QString TextField::getText() const
+    const QString & TextField::getText() const
     {
-         QString ret = m_text;
-         return ret;
+         return m_text;
     }
 
-    void TextField::setHtmlText(QString str)
+    void TextField::setHtmlText(const QString & str)
     {
         m_htmlText = true;
         if (m_text != str)
@@ -181,12 +180,12 @@ namespace oxygine
         return m_style.linesOffset;
     }
 
-    TextStyle::VerticalAlign    TextField::getVAlign() const
+    TextStyle::VerticalAlign TextField::getVAlign() const
     {
         return m_style.vAlign;
     }
 
-    TextStyle::HorizontalAlign  TextField::getHAlign() const
+    TextStyle::HorizontalAlign TextField::getHAlign() const
     {
         return m_style.hAlign;
     }

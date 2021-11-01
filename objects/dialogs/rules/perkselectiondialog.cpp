@@ -47,7 +47,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         pLabel->setHtmlText("Perk's of CO:");
         pLabel->setPosition(30, 30);
         pSpriteBox->addChild(pLabel);
-        QVector<QString> list;
+        QStringList list;
         CO* pCO = pPlayer->getCO(0);
 
         if (pCO != nullptr)
@@ -237,9 +237,9 @@ void PerkSelectionDialog::showSavePerklist()
     addChild(pSaveInput);
 }
 
-QVector<QString> PerkSelectionDialog::getNameList(QString path)
+QStringList PerkSelectionDialog::getNameList(QString path)
 {
-    QVector<QString> items;
+    QStringList items;
     QStringList filters;
     filters << "*.bl";
     QDirIterator dirIter(path, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);

@@ -147,7 +147,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction

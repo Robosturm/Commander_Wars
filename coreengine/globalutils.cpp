@@ -273,7 +273,7 @@ void GlobalUtils::setUseSeed(bool useSeed)
     m_useSeed = useSeed;
 }
 
-QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
+QStringList GlobalUtils::getFiles(const QString & folder, const QStringList & filter)
 {
     QStringList ret;
 

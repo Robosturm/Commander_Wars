@@ -93,7 +93,6 @@ var Constructor = function()
         }
         else
         {
-            GameConsole.print("missing sprite " + surroundings, 1);
             terrain.loadBaseSprite("forest");
         }
     };

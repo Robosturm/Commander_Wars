@@ -484,12 +484,12 @@ void PlayerSelection::showPlayerSelection()
     }
 
     y += 10 + allIncomeSpinBox->getHeight();
-    QVector<QString> teamList;
+    QStringList teamList;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
+    QStringList defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
     Interpreter* pInterpreter = Interpreter::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
 #if HEAVY_AI
@@ -503,7 +503,7 @@ void PlayerSelection::showPlayerSelection()
 #endif
     defaultAiList.append(tr("Closed"));
 
-    QVector<QString> aiList = defaultAiList;
+    QStringList aiList = defaultAiList;
     if (isCampaign)
     {
         aiList = {tr("Human")};

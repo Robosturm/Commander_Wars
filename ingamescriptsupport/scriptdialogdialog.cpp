@@ -123,7 +123,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     {
         pPtrDialog->text = text;
     });
-    QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
+    QStringList moods = {tr("Normal"), tr("Happy"), tr("Sad")};
     spDropDownmenu moodMenu = spDropDownmenu::create(150, moods);
     moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
     moodMenu->setPosition(posX, y);
@@ -134,7 +134,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         pPtrDialog->mood = static_cast<GameEnums::COMood>(item);
     });
 
-    QVector<QString> ids;
+    QStringList ids;
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
     ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
@@ -256,7 +256,7 @@ void ScriptDialogDialog::showChangeBackground()
         folder = file.path();
         fileName = file.fileName();
     }
-    spFileDialog pFileDialog = spFileDialog::create(folder, QVector<QString>(1, "*.png"), fileName, true);
+    spFileDialog pFileDialog = spFileDialog::create(folder, QStringList(1, "*.png"), fileName, true);
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
     

@@ -42,7 +42,7 @@ public slots:
 private slots:
     void remove();
 private:
-    QVector<QString> getNameList();
+    QStringList getNameList();
     QVector<CoGroup> getCoGroups();
 private:
     oxygine::spButton m_OkButton;

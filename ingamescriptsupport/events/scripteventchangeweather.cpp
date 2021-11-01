@@ -92,7 +92,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 70);
     pBox->addItem(pText);
 
-    QVector<QString> weatherStrings;
+    QStringList weatherStrings;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
     {

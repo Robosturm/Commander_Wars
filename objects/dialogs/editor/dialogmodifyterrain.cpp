@@ -171,7 +171,7 @@ void DialogModifyTerrain::terrainClicked(QString id)
 void DialogModifyTerrain::showLoadDialog()
 {
     
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "customTerrainImages";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName(), true);

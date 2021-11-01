@@ -43,7 +43,7 @@ namespace oxygine
         return m_font.get();
     }
 
-    void ResFontBM::init(QString path, bool premultipliedAlpha)
+    void ResFontBM::init(const QString & path, bool premultipliedAlpha)
     {
         m_premultipliedAlpha = premultipliedAlpha;
         m_file = path;
@@ -98,7 +98,7 @@ namespace oxygine
         }
     }
 
-    void ResFontBM::addPage(QString head, QString textureFile)
+    void ResFontBM::addPage(const QString & head, const QString & textureFile)
     {
         page p;
         if (!head.isEmpty())
@@ -335,7 +335,7 @@ namespace oxygine
         }
     }
 
-    const Font* ResFontBM::getFont(QString, int) const
+    const Font* ResFontBM::getFont(const QString &, int) const
     {
         return m_font.get();
     }

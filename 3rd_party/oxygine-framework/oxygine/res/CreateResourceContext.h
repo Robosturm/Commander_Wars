@@ -9,20 +9,20 @@ namespace oxygine
     class XmlWalker
     {
     public:
-        explicit XmlWalker(QString path,
+        explicit XmlWalker(const QString & path,
                            float scaleFactor,
-                           QDomElement xml);
+                           const QDomElement & xml);
         virtual ~XmlWalker() = default;
         bool empty() const
         {
             return m_root.isNull();
         }
-        QString getCurrentFolder() const
+        const QString & getCurrentFolder() const
         {
             return m_path;
         }
-        QString getPath(QString attrName) const;
-        QDomElement getNode() const
+        QString getPath(const QString & attrName) const;
+        const QDomElement & getNode() const
         {
             return m_root;
         }
@@ -38,7 +38,7 @@ namespace oxygine
         XmlWalker next();
 
     private:
-        void _checkSetAttributes(QDomElement node);
+        void _checkSetAttributes(const QDomElement & node);
 
     private:
         QString m_path;

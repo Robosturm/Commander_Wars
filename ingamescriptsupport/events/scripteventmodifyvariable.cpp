@@ -108,7 +108,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modifier: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    QVector<QString> items = {"=", "+", "-", "*", "/", "%"};
+    QStringList items = {"=", "+", "-", "*", "/", "%"};
     spDropDownmenu dropDown = spDropDownmenu::create(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets modified."));
     dropDown->setPosition(width, 70);

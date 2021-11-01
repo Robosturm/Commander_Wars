@@ -25,7 +25,7 @@ public:
      * @param folders
      * @return
      */
-    static QByteArray getHash(QStringList filter, const QStringList & folders);
+    static QByteArray getHash(const QStringList & filter, const QStringList & folders);
     /**
      * @brief writeByteArray
      * @param stream

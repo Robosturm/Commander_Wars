@@ -368,7 +368,7 @@ void OptionMenue::showSettings()
             supportedSizes.removeAt(count);
         }
     }
-    QVector<QString> displaySizes;
+    QStringList displaySizes;
     qint32 currentDisplayMode = 0;
     for  (qint32 i = 0; i < supportedSizes.size(); i++)
     {
@@ -417,7 +417,7 @@ void OptionMenue::showSettings()
     pTextfield->setHtmlText(tr("Screen Mode: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
+    QStringList items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = spDropDownmenu::create(400, items);
     pScreenModes->setTooltipText(tr("Selects the screen mode for the game"));
     pScreenModes->setPosition(sliderOffset - 130, y);
@@ -729,7 +729,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pTextfield);
     auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
     const auto deviceInfos = QMediaDevices::audioOutputs();
-    QVector<QString> items;
+    QStringList items;
     qint32 currentItem = 0;
 
     for (qint32 i = 0; i < deviceInfos.size(); ++i)
@@ -841,7 +841,7 @@ void OptionMenue::showMods()
     pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
     qint32 y = 0;
-    QVector<QString> versions = {tr("Unkown"),
+    QStringList versions = {tr("Unkown"),
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
                                  tr("Advance Wars DC")};
@@ -858,7 +858,7 @@ void OptionMenue::showMods()
     pLabel->setHtmlText(tr("Tag Filter:"));
     pLabel->setY(y);
     m_ModSelector->addChild(pLabel);
-    QVector<QString> tags;
+    QStringList tags;
     QStringList currentMods = Settings::getMods();
     qint32 width = 0;
     qint32 mods = 0;

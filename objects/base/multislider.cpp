@@ -7,7 +7,7 @@
 
 #include "coreengine/mainapp.h"
 
-Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values)
+Multislider::Multislider(QStringList texts, qint32 width, QVector<qint32> values)
 {
     setObjectName("Multislider");
     Mainapp* pApp = Mainapp::getInstance();

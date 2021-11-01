@@ -227,8 +227,6 @@ namespace oxygine
                     click = *te;
                     click.type = TouchEvent::CLICK;
                     click.bubbles = true;
-                    //will be dispatched later after UP
-
                     setNotPressed(te->mouseButton);
                 }
             }

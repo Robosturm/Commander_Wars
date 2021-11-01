@@ -437,7 +437,7 @@ void EditorMenue::updateGrids()
 
 void EditorMenue::showSaveMap()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
@@ -449,7 +449,7 @@ void EditorMenue::showSaveMap()
 
 void EditorMenue::showLoadMap()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -558,7 +558,7 @@ void EditorMenue::showEditCampaign()
 
 void EditorMenue::showImportCoWTxTMap()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -570,7 +570,7 @@ void EditorMenue::showImportCoWTxTMap()
 
 void EditorMenue::showImportAwdsAws()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -582,7 +582,7 @@ void EditorMenue::showImportAwdsAws()
 
 void EditorMenue::showExportAwdsAws()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.aws");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -594,7 +594,7 @@ void EditorMenue::showExportAwdsAws()
 
 void EditorMenue::showImportAwdsAw4()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.aw4");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -606,7 +606,7 @@ void EditorMenue::showImportAwdsAw4()
 
 void EditorMenue::showImportAwByWeb()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.txt");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

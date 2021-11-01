@@ -12,7 +12,7 @@ namespace oxygine
     public:
         explicit SingleResAnim();
         virtual ~SingleResAnim();
-        void init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
+        virtual void init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder) override;
         virtual void init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
                           bool clamp2Edge = true, quint32 linearFilter = GL_NEAREST) override;
         spTexture getTexture() const;

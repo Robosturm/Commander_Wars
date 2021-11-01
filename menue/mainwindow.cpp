@@ -411,7 +411,7 @@ void Mainwindow::enterShopMenu()
 
 void Mainwindow::enterLoadGame()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.sav");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
@@ -421,7 +421,7 @@ void Mainwindow::enterLoadGame()
 
 void Mainwindow::enterLoadCampaign()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
@@ -460,7 +460,7 @@ void Mainwindow::loadCampaign(QString filename)
 void Mainwindow::enterReplayGame()
 {
     Mainapp::getInstance()->pauseRendering();
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.rec");
     QString path = Settings::getUserPath() + "data/records";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);

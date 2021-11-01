@@ -1024,7 +1024,7 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUn
     return found;
 }
 
-void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
 {
     spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     spGameMap pMap = GameMap::getInstance();
@@ -1075,7 +1075,7 @@ void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQml
     }
 }
 
-void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1697,7 +1697,7 @@ bool CoreAI::isRefuelUnit(Unit* pUnit)
     return isRefuelUnit(list);
 }
 
-bool CoreAI::isRefuelUnit(QStringList & actionList)
+bool CoreAI::isRefuelUnit(const QStringList & actionList)
 {
     return actionList.contains(ACTION_SUPPORTALL_RATION) ||
            actionList.contains(ACTION_SUPPORTALL_RATION_MONEY) ||

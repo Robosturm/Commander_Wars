@@ -20,7 +20,7 @@ class Multislider : public Tooltip
 {
     Q_OBJECT
 public:
-    explicit Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values = {});
+    explicit Multislider(QStringList texts, qint32 width, QVector<qint32> values = {});
     virtual ~Multislider() = default;
     qint32 getSliderValue(qint32 slider);
     virtual void setEnabled(bool value) override;

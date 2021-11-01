@@ -61,7 +61,7 @@ namespace oxygine
         init(columns, scaleFactor);
     }
 
-    void ResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void ResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         QImage img(file);
         init(img, columns, rows, scaleFactor, addTransparentBorder);

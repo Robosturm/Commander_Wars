@@ -56,7 +56,7 @@ var Constructor = function()
                     animation.writeDataInt32(unit.getX());
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
-                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationDamage");
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
@@ -105,7 +105,7 @@ var Constructor = function()
                     animation.writeDataString(invasion[i % invasion.length]);
                     animation.writeDataInt32(co.getOwner().getPlayerID());
                     animation.writeDataInt32(10);
-                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
+                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
 
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)

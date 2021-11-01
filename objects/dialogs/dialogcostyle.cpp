@@ -199,7 +199,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         if (file.exists())
         {
             m_useColorBox = false;
-            QVector<QString> items;
+            QStringList items;
             m_baseColorTable.load(file.fileName());
             m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
@@ -225,7 +225,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             m_baseColorTable = SpriteCreator::createColorTable(src);
             m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
-            QVector<QString> items;
+            QStringList items;
             items.append(tr("CO Style ") + QString::number(0));
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
             m_pSpriteBox->addChild(m_pPredefinedStyles);

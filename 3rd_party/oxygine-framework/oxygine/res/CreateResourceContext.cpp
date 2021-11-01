@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    XmlWalker::XmlWalker(QString path, float scaleFactor, QDomElement xml)
+    XmlWalker::XmlWalker(const QString & path, float scaleFactor, const QDomElement & xml)
         : m_path(path),
           m_root(xml),
           m_notStarted(true),
@@ -13,7 +13,7 @@ namespace oxygine
     {
     }
 
-    QString XmlWalker::getPath(QString attrName) const
+    QString XmlWalker::getPath(const QString & attrName) const
     {
         QString str = m_root.attribute(attrName);
         return m_path + str;
@@ -54,7 +54,7 @@ namespace oxygine
         return XmlWalker(m_path, m_scaleFactor, m_last);
     }
 
-    void XmlWalker::_checkSetAttributes(QDomElement node)
+    void XmlWalker::_checkSetAttributes(const QDomElement & node)
     {
         auto attr = node.attributes();
         for (qint32 i = 0; i < attr.size(); i++)

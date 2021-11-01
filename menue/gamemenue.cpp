@@ -1523,7 +1523,7 @@ void GameMenue::showCOInfo()
 
 void GameMenue::saveGame()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
@@ -1552,7 +1552,7 @@ QString GameMenue::getSaveFileEnding()
 void GameMenue::showSaveAndExitGame()
 {    
     CONSOLE_PRINT("showSaveAndExitGame()", Console::eDEBUG);
-    QVector<QString> wildcards;
+    QStringList wildcards;
     if (m_pNetworkInterface.get() != nullptr ||
         m_Multiplayer)
     {

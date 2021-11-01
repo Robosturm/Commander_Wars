@@ -64,7 +64,7 @@ CreditsMenue::CreditsMenue()
         {
             QString headline = line.remove(0, line.indexOf(":") + 1);
             m_Headlines.append(headline);
-            m_Authors.append(QVector<QString>());
+            m_Authors.append(QStringList());
             while (!stream.atEnd())
             {
                 line = stream.readLine();

@@ -40,7 +40,7 @@ public slots:
 protected:
     void addDropDownText(QString spriteID, qint32 id, qint32 dropDownWidth);
 private:
-    QVector<QString> m_ItemTexts;
+    QStringList m_ItemTexts;
     std::function<oxygine::spActor(QString item)> m_Creator;
     QVector<oxygine::spBox9Sprite> m_Items;
     QString m_currentText;

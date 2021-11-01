@@ -182,9 +182,9 @@ void ActionListDialog::remove()
     detach();
 }
 
-QVector<QString> ActionListDialog::getNameList()
+QStringList ActionListDialog::getNameList()
 {
-    QVector<QString> items;
+    QStringList items;
     QStringList filters;
     filters << "*.bl";
     QDirIterator dirIter("data/actionbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);

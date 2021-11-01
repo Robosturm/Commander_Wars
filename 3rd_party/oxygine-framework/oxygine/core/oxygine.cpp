@@ -18,7 +18,7 @@ namespace oxygine
             CONSOLE_PRINT("core::reset() done", Console::eDEBUG);
         }
     }
-    void handleErrorPolicy(error_policy ep, QString message)
+    void handleErrorPolicy(error_policy ep, const QString & message)
     {
         switch (ep)
         {

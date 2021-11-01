@@ -82,7 +82,7 @@ public:
      * @brief createActionMenu creates the menu for selecting the next action
      * @param actionIDs
      */
-    void createActionMenu(QStringList actionIDs, qint32 x, qint32 y);
+    void createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y);
     /**
      * @brief attachActionMenu
      * @param x

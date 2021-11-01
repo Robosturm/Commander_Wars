@@ -21,8 +21,8 @@ namespace oxygine
         @param creation callback
         @param resource type string identifier. Max id length is 15 chars. These IDs are already occupied: 'set', 'atlas', ' image', 'font', 'buffer'
         */
-        static void registerResourceType(createResourceCallback creationCallback, QString resTypeID);
-        static void unregisterResourceType(QString resTypeID);
+        static void registerResourceType(createResourceCallback creationCallback, const QString & resTypeID);
+        static void unregisterResourceType(const QString & resTypeID);
 
         explicit Resources() = default;
         virtual ~Resources();
@@ -31,7 +31,7 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        bool loadXML(const QString xmlFile, bool addTransparentBorder);
+        bool loadXML(const QString & xmlFile, bool addTransparentBorder);
 
         /**Adds Resource*/
         void add(spResource r);
@@ -51,31 +51,28 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(QString id, error_policy ep = ep_show_error) const;
+        Resource* get(const QString & id, error_policy ep = ep_show_error) const;
 
         /** get resource by id
         @param resource id
         */
-        virtual ResAnim* getResAnim(QString id, error_policy ep = ep_show_error) const;
+        virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_show_error) const;
 
         /** get animation resource by id
         @param resource id
         */
-        ResFont* getResFont(QString id, error_policy ep = ep_show_error) const;
+        ResFont* getResFont(const QString & id, error_policy ep = ep_show_error) const;
 
         template<class T>
-        T* getT(QString id, error_policy ep = ep_show_error) const
+        T* getT(const QString & id, error_policy ep = ep_show_error) const
         {
             return safeCast<T*>(get(id, ep));
         }
 
-        /**collects all resources into vector*/
-        void collect(resources&);
-
         resources& _getResources();
         resourcesMap& _getResourcesMap();
     protected:
-        void updateName(QString filename);
+        void updateName(const QString & filename);
         virtual void _load() override;
         void _unload() override;
         struct registeredResource

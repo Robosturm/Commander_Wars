@@ -83,7 +83,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Terrain: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    QVector<QString> items;
+    QStringList items;
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     qint32 currentItem = sortedTerrains.indexOf(m_newTerrainID);

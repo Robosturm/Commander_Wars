@@ -1440,7 +1440,7 @@ QStringList CO::getPerkList()
     return ret;
 }
 
-void CO::setPerkList(QStringList perks)
+void CO::setPerkList(const QStringList & perks)
 {
     m_perkList.clear();
     m_perkList.append(m_coID);

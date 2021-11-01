@@ -27,8 +27,8 @@ protected slots:
     virtual void onEnter() override;
 private:
     QElapsedTimer m_speedTimer;
-    QVector<QString> m_Headlines;
-    QVector<QVector<QString>> m_Authors;
+    QStringList m_Headlines;
+    QVector<QStringList> m_Authors;
     qint32 m_creditsHeigth{100};
     oxygine::spActor m_creditsActor;
 };

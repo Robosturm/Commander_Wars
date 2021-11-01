@@ -66,7 +66,7 @@ namespace oxygine
         {
         public:
             static qint32 m_defMissingGlyph;
-            explicit TextNode(QString v);
+            explicit TextNode(const QString & v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
             virtual void xfinalPass(Aligner& rd) override;

@@ -11,7 +11,7 @@ namespace oxygine
     public:
         explicit ResFont() = default;
         virtual ~ResFont() = default;
-        virtual const Font* getFont(QString name = "", qint32 size = 0) const = 0;
+        virtual const Font* getFont(const QString & name = "", qint32 size = 0) const = 0;
         qint32 getSize() const
         {
             return m_size;

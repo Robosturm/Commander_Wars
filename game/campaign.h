@@ -20,7 +20,7 @@ class Campaign : public QObject, public FileSerializable, public oxygine::ref_co
 public:
     struct CampaignMapInfo
     {
-        CampaignMapInfo(QString folder, QStringList mapFilenames)
+        CampaignMapInfo(const QString & folder, const QStringList & mapFilenames)
             : m_folder(folder),
               m_mapFilenames(mapFilenames)
         {

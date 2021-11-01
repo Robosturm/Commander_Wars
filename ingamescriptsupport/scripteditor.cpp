@@ -45,7 +45,7 @@ ScriptEditor::ScriptEditor()
     m_ConditionPanel = spPanel::create(true, size, size);
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
-    QVector<QString> items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
+    QStringList items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
                               tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
                               tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
@@ -186,7 +186,7 @@ void ScriptEditor::exitEditor()
 
 void ScriptEditor::showSaveScript()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
@@ -196,7 +196,7 @@ void ScriptEditor::showSaveScript()
 
 void ScriptEditor::showLoadScript()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");

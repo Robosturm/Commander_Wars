@@ -16,7 +16,7 @@ class DropDownmenu : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenu(qint32 width, const QVector<QString> & items);
+    explicit DropDownmenu(qint32 width, const QStringList & items);
     virtual ~DropDownmenu() = default;
     /**
      * @brief getCurrentItemText text of the current item
@@ -42,7 +42,7 @@ public:
      * @brief changeList
      * @param items
      */
-    void changeList(const QVector<QString> & items);
+    void changeList(const QStringList & items);
 signals:
     void sigItemChanged(qint32 item);
 public slots:
@@ -51,7 +51,7 @@ protected:
     void addDropDownText(QString text, qint32 id);
 private:
     oxygine::spTextField m_Textfield;
-    QVector<QString> m_ItemTexts;
+    QStringList m_ItemTexts;
 };
 
 #endif // DROPDOWNMENU_H

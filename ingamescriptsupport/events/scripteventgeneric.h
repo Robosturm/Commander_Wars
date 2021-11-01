@@ -38,7 +38,7 @@ public:
         qreal max{9999};
         qreal infinite{0};
         // dropdown
-        QVector<QString> items;
+        QStringList items;
         QStringList data;
         // file selection
         QString filter;

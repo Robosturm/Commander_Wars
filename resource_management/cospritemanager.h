@@ -7,7 +7,7 @@ class COSpriteManager : public QObject, public RessourceManagement<COSpriteManag
 {
     Q_OBJECT
 public:
-    QVector<QString> getSpriteCOIDs();
+    QStringList getSpriteCOIDs();
     /**
      * @brief getCOStyles
      * @param id
@@ -26,7 +26,7 @@ public:
      * @param ep
      * @return
      */
-    virtual oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+    virtual oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
     /**
      * @brief release
      */

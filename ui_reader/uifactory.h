@@ -126,7 +126,7 @@ private:
      * @param attributes
      * @return
      */
-    bool checkElements(QDomNodeList element, const QVector<QString> & attributes);
+    bool checkElements(QDomNodeList element, const QStringList & attributes);
     QString getAttribute(QDomNodeList childs, QString attribute);
     QDomNode getNode(QDomNodeList childs, QString attribute);
     bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);

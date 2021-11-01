@@ -51,7 +51,7 @@ signals:
     void sigShowSavePerklist();
     void sigSelectRandomPerks();
 private:
-    QVector<QString> getNameList(QString path);
+    QStringList getNameList(QString path);
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_CancelButton;

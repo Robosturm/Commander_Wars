@@ -672,7 +672,7 @@ qint32 Player::getBuildingCount(QString buildingID)
     return ret;
 }
 
-qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
+qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -974,13 +974,13 @@ QStringList Player::getCOUnits(Building* pBuilding)
     return ret;
 }
 
-void Player::setBuildList(const QStringList BuildList)
+void Player::setBuildList(const QStringList & BuildList)
 {
     m_BuildList = BuildList;
     m_BuildlistChanged = true;
 }
 
-void Player::changeBuildlist(const QString unitID, bool remove)
+void Player::changeBuildlist(const QString& unitID, bool remove)
 {
     if (remove)
     {

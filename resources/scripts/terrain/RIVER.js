@@ -369,10 +369,6 @@ var Constructor = function()
                 {
                     terrain.loadBaseSprite(animName);
                 }
-                else
-                {
-                    GameConsole.print("Failed to load " + animName, 1);
-                }
             }
         }
     };

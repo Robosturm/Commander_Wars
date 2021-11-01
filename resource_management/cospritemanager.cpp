@@ -20,9 +20,9 @@ void COSpriteManager::release()
     m_Ressources.clear();
 }
 
-QVector<QString> COSpriteManager::getSpriteCOIDs()
+QStringList COSpriteManager::getSpriteCOIDs()
 {
-    QVector<QString> ret;
+    QStringList ret;
     for (auto iter = m_resourcesMap.begin(); iter != m_resourcesMap.end(); ++iter)
     {
         QString id(iter.key());
@@ -168,7 +168,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
     }
 }
 
-oxygine::ResAnim* COSpriteManager::getResAnim(QString id, oxygine::error_policy ep) const
+oxygine::ResAnim* COSpriteManager::getResAnim(const QString & id, oxygine::error_policy ep) const
 {
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {

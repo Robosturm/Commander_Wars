@@ -152,7 +152,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
 {
     
     // dummy impl for loading
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);

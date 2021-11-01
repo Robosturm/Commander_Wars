@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
-#include <QVector>
+#include <vector>
 
 namespace oxygine
 {
@@ -72,9 +72,9 @@ namespace oxygine
         StretchMode m_horzMode;
         float m_guideX[2];
         float m_guideY[2];
-        QVector<float> m_guidesX;
-        QVector<float> m_guidesY;
-        QVector<float> m_pointsX;
-        QVector<float> m_pointsY;
+        std::vector<float> m_guidesX;
+        std::vector<float> m_guidesY;
+        std::vector<float> m_pointsX;
+        std::vector<float> m_pointsY;
     };
 }

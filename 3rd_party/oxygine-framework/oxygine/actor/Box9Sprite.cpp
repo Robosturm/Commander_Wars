@@ -172,7 +172,7 @@ namespace oxygine
         RectF srcFrameRect = m_frame.getSrcRect();
 
         m_guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        m_guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
+        m_guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[0] / fFrameWidth);
         m_guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[1] / fFrameWidth);
         m_guidesX[3] = srcFrameRect.getRight();
 

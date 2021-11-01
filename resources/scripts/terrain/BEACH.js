@@ -22,7 +22,6 @@ var Constructor = function()
     };
     this.isSeaTile = function(x, y)
     {
-        GameConsole.print("x=" + x + " y=" + y, 1);
         if (map.onMap(x, y))
         {
             if (map.getTerrain(x, y).getBaseTerrainID() === "SEA")

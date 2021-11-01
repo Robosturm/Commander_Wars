@@ -521,7 +521,7 @@ void VictoryMenue::createStatisticsView()
     m_statisticsBox->setResAnim(pAnim);
     m_statisticsBox->setVisible(false);
     addChild(m_statisticsBox);
-    QVector<QString> items;
+    QStringList items;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));

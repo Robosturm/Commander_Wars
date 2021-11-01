@@ -239,7 +239,7 @@ DialogRandomMap::DialogRandomMap()
     m_unitDistributionLabel->setHtmlText(tr("Units spawn mode:"));
     m_unitDistributionLabel->setPosition(30, 5 + y );
     m_pPanel->addItem(m_unitDistributionLabel);
-    QVector<QString> items = {tr("Random"), tr("Distributed")};
+    QStringList items = {tr("Random"), tr("Distributed")};
     m_unitDistributionSelection = spDropDownmenu::create(300, items);
     m_unitDistributionSelection->setTooltipText(tr("Random for units getting spawned at random.\nDistributed for units beeing spawned at the given rate."));
     m_unitDistributionSelection->setPosition(text->getX() + width, text->getY());
@@ -366,7 +366,7 @@ void DialogRandomMap::remove()
 
 void DialogRandomMap::showGeneratorSelection()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "data/randomMaps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -402,7 +402,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         QList<QVariant> buildingChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getBuildingBaseChances").toVariant().toList();
         m_UnitIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBases").toVariant().toStringList();
         QList<QVariant> unitChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBaseChances").toVariant().toList();
-        QVector<QString> terrainStrings;
+        QStringList terrainStrings;
         QVector<qint32> terrainChances;
         if (m_TerrainIDs.size() == terrainChancesVariant.size())
         {
@@ -426,7 +426,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 
         m_BuildingChanceLabel->setY(m_TerrainChances->getY() + 40 * terrainStrings.size());
 
-        QVector<QString> buildingStrings;
+        QStringList buildingStrings;
         QVector<qint32> buildingChances;
         if (m_BuildingIDs.size() == buildingChancesVariant.size())
         {
@@ -458,7 +458,7 @@ void DialogRandomMap::playerChanged(qreal)
     {
         m_OwnerDistribution->detach();
     }
-    QVector<QString> playerStrings;
+    QStringList playerStrings;
     QVector<qint32> playerChances;
     playerStrings.append(tr("Neutral"));
     playerChances.append(100);
@@ -486,7 +486,7 @@ void DialogRandomMap::createUnitChances()
         m_UnitChances->detach();
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QVector<QString> unitStrings;
+    QStringList unitStrings;
     if (m_UnitIDs.size() == m_UnitChanceValues.size())
     {
         for (qint32 i = 0; i < m_UnitIDs.size(); i++)
@@ -503,7 +503,7 @@ void DialogRandomMap::createUnitChances()
     m_unitDistributionSelection->setY(m_unitsNearHq->getY() + 40);
     m_UnitDistributionLabel->setY(m_unitDistributionSelection->getY() + 40);
 
-    QVector<QString> playerStrings;
+    QStringList playerStrings;
     QVector<qint32> playerChances;
     for (qint32 i = 0; i < player - 1; i++)
     {

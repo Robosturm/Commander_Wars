@@ -216,7 +216,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     y += 60;
 
 
-    QVector<QString> weatherStrings;
+    QStringList weatherStrings;
     QVector<qint32> weatherChances;
     for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
     {
@@ -409,7 +409,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("CO Powergain zone: "));
         textField->setPosition(30, y);
         addChild(textField);
-        QVector<QString> zoneModes = {tr("Global"), tr("Global and CO Zone Bonus"), tr("Only CO Zone")};
+        QStringList zoneModes = {tr("Global"), tr("Global and CO Zone Bonus"), tr("Only CO Zone")};
         spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, zoneModes);
         pDropDownmenu->setTooltipText(tr("Defines where a player can gain power for his co powermeter."));
         pDropDownmenu->setPosition(textWidth, textField->getY());
@@ -428,7 +428,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("CO Powergain mode: "));
         textField->setPosition(30, y);
         addChild(textField);
-        QVector<QString> gainModes = {tr("Money"), tr("Money only attacker"), tr("HP"), tr("HP only attacker")};
+        QStringList gainModes = {tr("Money"), tr("Money only attacker"), tr("HP"), tr("HP only attacker")};
         pDropDownmenu = spDropDownmenu::create(400, gainModes);
         pDropDownmenu->setTooltipText(tr("Defines how the powermeter fills."));
         pDropDownmenu->setPosition(textWidth, textField->getY());
@@ -503,7 +503,7 @@ void RuleSelection::showRuleSelection(bool advanced)
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
     addChild(textField);
-    QVector<QString> fogModes = {tr("Off"), tr("Mist of War"), tr("Fog of War"), tr("Shroud of War")};
+    QStringList fogModes = {tr("Off"), tr("Mist of War"), tr("Fog of War"), tr("Shroud of War")};
     spDropDownmenu fogOfWar = spDropDownmenu::create(400, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
@@ -563,7 +563,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         textField->setHtmlText(tr("Day Screen: "));
         textField->setPosition(30, y);
         addChild(textField);
-        QVector<QString> dayModes = {tr("Default"), tr("Permanent")};
+        QStringList dayModes = {tr("Default"), tr("Permanent")};
         spDropDownmenu pDropDownmenu = spDropDownmenu::create(400, dayModes);
         pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war."));
         pDropDownmenu->setPosition(textWidth, textField->getY());
@@ -1030,7 +1030,7 @@ void RuleSelection::showActionBannlist()
 
 void RuleSelection::showSelectScript()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

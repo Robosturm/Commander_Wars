@@ -342,9 +342,9 @@ void COBannListDialog::showSaveBannlist()
     
 }
 
-QVector<QString> COBannListDialog::getNameList()
+QStringList COBannListDialog::getNameList()
 {
-    QVector<QString> items = {tr("Commander Wars"),
+    QStringList items = {tr("Commander Wars"),
                               tr("Advance Wars DoR"),
                               tr("Advance Wars DS"),
                               tr("Advance Wars 2"),

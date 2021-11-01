@@ -448,7 +448,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
 void MapSelectionMapsMenue::showLoadRules()
 {
     
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -459,7 +459,7 @@ void MapSelectionMapsMenue::showLoadRules()
 
 void MapSelectionMapsMenue::showSaveRules()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -500,7 +500,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
 
 void MapSelectionMapsMenue::showSaveMap()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

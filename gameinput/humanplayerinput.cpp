@@ -743,7 +743,7 @@ void HumanPlayerInput::finishAction()
     cleanUpInput();
 }
 
-void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
+void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y)
 {
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();

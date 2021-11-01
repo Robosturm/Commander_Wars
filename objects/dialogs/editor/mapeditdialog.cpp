@@ -180,7 +180,7 @@ void MapEditDialog::scriptFileChanged(QString file)
 
 void MapEditDialog::showSelectScript()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

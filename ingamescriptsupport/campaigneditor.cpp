@@ -177,7 +177,7 @@ void CampaignEditor::exitEditor()
 
 void CampaignEditor::showAddCampaign()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
@@ -187,7 +187,7 @@ void CampaignEditor::showAddCampaign()
 
 void CampaignEditor::showSaveCampaign()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
@@ -197,7 +197,7 @@ void CampaignEditor::showSaveCampaign()
 
 void CampaignEditor::showLoadCampaign()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.jsm");
     QString path = Settings::getUserPath() + "maps/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
@@ -865,7 +865,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setPosition(30, y);
     pPanel->addItem(pText);
 
-    QVector<QString> items = {"===", "!==", "&gt;=", "&lt;="};
+    QStringList items = {"===", "!==", "&gt;=", "&lt;="};
     spDropDownmenu dropDown = spDropDownmenu::create(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);

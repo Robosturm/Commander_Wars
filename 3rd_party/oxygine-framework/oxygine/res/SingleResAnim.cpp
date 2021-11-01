@@ -25,7 +25,7 @@ namespace oxygine
         // }
     }
 
-    void SingleResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
+    void SingleResAnim::init(const QString & file, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
         ResAnim::init(file, columns, rows, scaleFactor, addTransparentBorder);
     }
