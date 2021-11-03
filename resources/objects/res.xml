@@ -4,7 +4,7 @@
     <atlas linearFilter="false">
         <!-- button -->
         <image file="button.png" cols = "3"         guideX1="9" guideX2="319" guideY1="6" guideY2="34"/>
-        <image file="button_square.png" cols = "3"  guideX1="2" guideX2="24"  guideY1="2" guideY2="28"/>
+        <image file="button_square.png" cols = "3"  guideX1="2" guideX2="28"  guideY1="2" guideY2="20"/>
         <image file="checkbox.png" cols = "4" />
         <!-- button icons -->
         <image file="settings.png" />
@@ -14,6 +14,8 @@
         <image file="one_step.png" />
         <image file="perk.png" />
         <image file="next_player.png" />
+        <image file="previous_unit.png" />
+        <image file="next_unit.png" />  
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
         <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>

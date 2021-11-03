@@ -109,7 +109,7 @@ private:
      */
     bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu);
     /**
-     * Nodename: Button
+     * Nodename: IconButton
      * supported attributes are:
      * mandatory: x, y, sprite, onEvent
      * optional: enabled

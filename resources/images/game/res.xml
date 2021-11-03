@@ -341,7 +341,7 @@
         <image file="nickname.png" />
         <image file="music.png" />
         <image file="wiki.png" />
-        <image file="statistics.png" />        
+        <image file="statistics.png" />   
         
         <!-- z information label -->
         <image file="z_information_label.png" cols = "8" />

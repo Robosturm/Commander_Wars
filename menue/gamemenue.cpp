@@ -473,21 +473,6 @@ void GameMenue::loadUIButtons()
     });
     pButtonBox->addChild(exitGame);
 
-
-    m_humanQuickButtons = spHumanQuickButtons::create();
-    m_humanQuickButtons->setEnabled(false);
-    addChild(m_humanQuickButtons);
-//    GameMap* pPtrMap = pMap.get();
-//    m_nextTurnButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-//    {
-//        auto player = pPtrMap->getCurrentPlayer();
-//        if (player->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-//        {
-//            emit oxygine::safeCast<HumanPlayerInput*>(player->getBaseGameInput())->sigNextTurn();
-//        }
-//    });
-
-
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setResAnim(pAnim);
@@ -529,6 +514,10 @@ void GameMenue::loadUIButtons()
         });
         pButtonBox->addChild(m_ChatButton);
     }
+
+    m_humanQuickButtons = spHumanQuickButtons::create();
+    m_humanQuickButtons->setEnabled(false);
+    addChild(m_humanQuickButtons);
 }
 
 void GameMenue::updateTimer()

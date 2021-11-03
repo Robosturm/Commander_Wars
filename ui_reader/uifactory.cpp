@@ -162,6 +162,13 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
     {
         CONSOLE_PRINT("Unable to create item: " + name + ".", Console::eERROR);
     }
+    else
+    {
+        if (item.get() != nullptr)
+        {
+            pMenu->addFactoryUiItem(item);
+        }
+    }
     return success;
 }
 
@@ -523,7 +530,7 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
             if (!node.isNull())
             {
                 oxygine::spActor panelItem;
-                success = success && createItem(parent, node.toElement(), panelItem, pMenu);
+                success = success && createItem(pPanel, node.toElement(), panelItem, pMenu);
                 if (panelItem.get() != nullptr)
                 {
                     pPanel->addItem(panelItem);
@@ -559,7 +566,6 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         qint32 width = getIntValue(getAttribute(childs, attrWidth));
         qint32 height = getIntValue(getAttribute(childs, attrHeight));
         QString spriteId = getStringValue(getAttribute(childs, attrSprite));
-        QSize size = QSize(width, height);
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::spBox9Sprite pPanel = oxygine::spBox9Sprite::create();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
@@ -567,6 +573,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
         pPanel->setX(x);
         pPanel->setY(y);
         pPanel->setSize(width, height);
+        pPanel->setScale(1);
         auto node = getNode(childs, attrChilds).firstChild();
         while (!node.isNull())
         {
@@ -577,7 +584,7 @@ bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine:
             if (!node.isNull())
             {
                 oxygine::spActor panelItem;
-                success = success && createItem(parent, node.toElement(), panelItem, pMenu);
+                success = success && createItem(pPanel, node.toElement(), panelItem, pMenu);
                 if (panelItem.get() != nullptr)
                 {
                     pPanel->addChild(panelItem);
@@ -631,7 +638,7 @@ bool UiFactory::checkElements(QDomNodeList childs, const QStringList & attribute
             {
                 break;
             }
-            else if (i == childCount)
+            else if (i == childCount - 1)
             {
                 CONSOLE_PRINT("Missing attribute: " + attr, Console::eERROR);
                 ret = false;

@@ -5830,5 +5830,8 @@
         <file>mods/aw_co/scripts/cos/co_davis.js</file>
         <file>mods/awdc_co/scripts/cos/co_davis.js</file>
         <file>mods/awds_co/scripts/cos/co_davis.js</file>
+        <file>resources/ui/humanQuickButtons.xml</file>
+        <file>resources/objects/next_unit.png</file>
+        <file>resources/objects/previous_unit.png</file>
     </qresource>
 </RCC>

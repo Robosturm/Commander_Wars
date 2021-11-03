@@ -23,9 +23,9 @@ void CreatedGui::setEnabled(bool value)
     for (auto & item : m_factoryUiItem)
     {
         spMoveInButton pMoveInButton = oxygine::dynamic_pointer_cast<MoveInButton>(item);
-        if (pMoveInButton.get() != nullptr)
+        if (pMoveInButton.get() == nullptr)
         {
-            item->setEnabled(false);
+            item->setEnabled(value);
         }
     }
 }

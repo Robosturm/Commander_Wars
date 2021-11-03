@@ -1086,18 +1086,32 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     zoomChanged(pMap->getZoom());
 }
 
-void HumanPlayerInput::nextTurn()
+bool HumanPlayerInput::inputAllowed()
 {
-    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr &&
-        GameAnimationFactory::getAnimationCount() == 0)
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        pMenu->getFocused())
     {
         spGameMap pMap = GameMap::getInstance();
         if (pMap->getCurrentPlayer() == m_pPlayer &&
             m_pGameAction.get() == nullptr)
         {
-            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+            return true;
+        }
+    }
+    return false;
+}
+
+void HumanPlayerInput::nextTurn()
+{
+    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (inputAllowed())
+    {
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+        if (pAction->canBePerformed())
+        {
             emit performAction(pAction);
         }
     }
@@ -1395,51 +1409,74 @@ void HumanPlayerInput::deleteArrow()
     m_Arrows.clear();
 }
 
+void HumanPlayerInput::gotoNext()
+{
+    if (inputAllowed())
+    {
+        if (m_FieldPoints.size() > 0)
+        {
+            nextMarkedField();
+        }
+        else
+        {
+            nextSelectOption();
+        }
+    }
+}
+
+void HumanPlayerInput::performBasicAction(QString action)
+{
+    if (inputAllowed())
+    {
+        spGameAction pAction = spGameAction::create(action);
+        if (pAction->canBePerformed())
+        {
+            emit performAction(pAction);
+        }
+    }
+}
+
+void HumanPlayerInput::gotoPrevious()
+{
+    if (inputAllowed())
+    {
+        if (m_FieldPoints.size() > 0)
+        {
+            previousMarkedField();
+        }
+        else
+        {
+            previousSelectOption();
+        }
+    }
+}
+
 void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 {
     spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr &&
-        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
-        pMenu->getFocused())
+    if (inputAllowed())
     {
-        if (GameAnimationFactory::getAnimationCount() == 0)
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getKey_next() ||
+            cur == Settings::getKey_next2())
         {
-            // for debugging
-            Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_next() ||
-                cur == Settings::getKey_next2())
-            {
-                if (m_FieldPoints.size() > 0)
-                {
-                    nextMarkedField();
-                }
-                else
-                {
-                    nextSelectOption();
-                }
-            }
-            else if (cur == Settings::getKey_previous() ||
-                     cur == Settings::getKey_previous2())
-            {
-                if (m_FieldPoints.size() > 0)
-                {
-                    previousMarkedField();
-                }
-                else
-                {
-                    previousSelectOption();
-                }
-            }
-            else if (cur == Settings::getKey_ShowAttackFields() ||
-                     cur == Settings::getKey_ShowAttackFields2())
-            {
-                showSelectedUnitAttackableFields(true);
-            }
-            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                     cur == Settings::getKey_ShowIndirectAttackFields2())
-            {
-                showSelectedUnitAttackableFields(false);
-            }
+            gotoNext();
+        }
+        else if (cur == Settings::getKey_previous() ||
+                 cur == Settings::getKey_previous2())
+        {
+            gotoPrevious();
+        }
+        else if (cur == Settings::getKey_ShowAttackFields() ||
+                 cur == Settings::getKey_ShowAttackFields2())
+        {
+            showSelectedUnitAttackableFields(true);
+        }
+        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                 cur == Settings::getKey_ShowIndirectAttackFields2())
+        {
+            showSelectedUnitAttackableFields(false);
         }
     }
 }
