@@ -4,7 +4,7 @@ const QString Layer::LAYER_PARAMETER_SIZE = "SIZE";
 const QString Layer::LAYER_PARAMETER_TYPE = "TYPE";
 const QString Layer::LAYER_PARAMETER_ACTIVATION = "ACTIVATION";
 
-Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> parameters)
+Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> & parameters)
 {
     m_id_layer = id_layer;
     m_net = net;

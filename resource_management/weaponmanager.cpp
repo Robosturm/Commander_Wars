@@ -9,7 +9,7 @@
 
 #include "modding/csvtableimporter.h"
 
-float WeaponManager::getBaseDamage(QString weaponID, Unit* pDefender)
+float WeaponManager::getBaseDamage(const QString & weaponID, Unit* pDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseDamage";
@@ -27,7 +27,7 @@ float WeaponManager::getBaseDamage(QString weaponID, Unit* pDefender)
     }
 }
 
-float WeaponManager::getEnviromentDamage(QString weaponID, QString terrainID)
+float WeaponManager::getEnviromentDamage(const QString & weaponID, const QString & terrainID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnviromentDamage";

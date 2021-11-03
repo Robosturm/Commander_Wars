@@ -245,7 +245,7 @@ public slots:
      * @param filename
      * @return
      */
-    ScriptVariableFile* getScriptVariableFile(QString filename);
+    ScriptVariableFile* getScriptVariableFile(const QString & filename);
 private:
     void showAchieved();
     void reset();

@@ -35,10 +35,10 @@ AudioThread::AudioThread()
         connect(this, &AudioThread::sigPlaySound,         this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopSound,         this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
         connect(this, &AudioThread::sigStopAllSounds,     this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
-        connect(this, &AudioThread::sigInitAudio,            this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::sigCreateSoundCache,     this, &AudioThread::createSoundCache, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigInitAudio,         this, &AudioThread::initAudio, Qt::BlockingQueuedConnection);
+        connect(this, &AudioThread::sigCreateSoundCache,  this, &AudioThread::createSoundCache, Qt::BlockingQueuedConnection);
         connect(this, &AudioThread::sigChangeAudioDevice, this, &AudioThread::SlotChangeAudioDevice, Qt::BlockingQueuedConnection);
-        connect(this, &AudioThread::sigLoadNextAudioFile,     this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
+        connect(this, &AudioThread::sigLoadNextAudioFile, this, &AudioThread::loadNextAudioFile, Qt::QueuedConnection);
     }
 }
 
@@ -179,7 +179,7 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
     for (qint32 i = 0; i < count; ++i)
     {
         cache->sound[i] = std::make_shared<QSoundEffect>(this);
-        cache->sound[i]->setObjectName(file);
+        cache->sound[i]->setObjectName(file + QString::number(i));
         cache->sound[i]->setAudioDevice(m_audioDevice);
         cache->sound[i]->setSource(GlobalUtils::getUrlForFile(folder + file));
         cache->timer[i] = std::make_shared<QTimer>(this);
@@ -621,6 +621,11 @@ void AudioThread::SlotStopSound(QString file)
             {
                 stopSound(soundCache, i);
             }
+            if (soundCache->timer[i].get() != nullptr &&
+                soundCache->timer[i]->isActive())
+            {
+                soundCache->timer[i]->stop();
+            }
         }
     }
 #endif
@@ -643,6 +648,11 @@ void AudioThread::SlotStopAllSounds()
                 soundCache->sound[i]->isPlaying())
             {
                 stopSound(soundCache, i);
+            }
+            if (soundCache->timer[i].get() != nullptr &&
+                soundCache->timer[i]->isActive())
+            {
+                soundCache->timer[i]->stop();
             }
         }
     }

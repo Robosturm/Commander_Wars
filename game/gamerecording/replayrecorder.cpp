@@ -103,7 +103,7 @@ void ReplayRecorder::recordAction(spGameAction pAction)
     }
 }
 
-bool ReplayRecorder::loadRecord(QString filename)
+bool ReplayRecorder::loadRecord(const QString & filename)
 {
     m_recordFile.setFileName(filename);
     if (m_recordFile.exists())

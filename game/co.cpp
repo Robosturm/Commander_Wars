@@ -48,7 +48,7 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-float CO::getUnitBuildValue(QString unitID)
+float CO::getUnitBuildValue(const QString & unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
@@ -680,7 +680,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(QString id, qint32 baseCost)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -1448,7 +1448,7 @@ void CO::setPerkList(const QStringList & perks)
     m_perkList.append(perks);
 }
 
-void CO::addPerk(QString perk)
+void CO::addPerk(const QString & perk)
 {
     if (!m_perkList.contains(perk))
     {
@@ -1456,7 +1456,7 @@ void CO::addPerk(QString perk)
     }
 }
 
-void CO::removePerk(QString perk)
+void CO::removePerk(const QString & perk)
 {
     m_perkList.removeAll(perk);
 }
@@ -2056,7 +2056,7 @@ void CO::setCoRangeEnabled(bool coRangeEnabled)
     m_coRangeEnabled = coRangeEnabled;
 }
 
-oxygine::ResAnim* CO::getResAnim(QString id, oxygine::error_policy ep) const
+oxygine::ResAnim* CO::getResAnim(const QString & id, oxygine::error_policy ep) const
 {
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {

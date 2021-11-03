@@ -22,7 +22,7 @@ void NeuralNetwork::autogenerate(bool randomize)
     }	
 }
 
-void NeuralNetwork::addLayer(QMap<QString, double> parameters)
+void NeuralNetwork::addLayer(QMap<QString, double> & parameters)
 {
     m_configuration.append(parameters);
     m_layers.push_back(spLayer::create(m_layers.size(), this, parameters));

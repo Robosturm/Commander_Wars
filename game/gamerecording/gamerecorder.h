@@ -202,7 +202,7 @@ public slots:
      * @param player
      * @param unitId is optional to make it upwards compatible
      */
-    void buildUnit(qint32 player, QString unitId = "");
+    void buildUnit(qint32 player, const QString & unitId = "");
     /**
      * @brief getBuildedUnits
      * @param player
@@ -249,8 +249,8 @@ public slots:
      * @param defenderOwnerID
      */
     void logAttack(qint32 day,
-                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
+                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, const QString & attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, const QString & defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
     /**
      * @brief getAttackLog
      * @param player

@@ -71,13 +71,13 @@ public slots:
      * @param message
      * @param LogLevel
      */
-    static void print(QString message, qint8 logLevel);
+    static void print(const QString & message, qint8 logLevel);
     /**
      * @brief Print
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void print(QString message, Console::eLogLevels logLevel);
+    static void print(const QString & message, Console::eLogLevels logLevel);
     /**
      * @brief printObject
      * @param message
@@ -201,8 +201,6 @@ protected:
 private:
     friend class oxygine::intrusive_ptr<Console>;
     explicit Console();
-
-    void createSprites(QString file, QImage& colorTable, QImage maskTable);
 
 private:
     static eLogLevels m_LogLevel;

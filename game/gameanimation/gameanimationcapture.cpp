@@ -27,7 +27,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
     m_frameTime = GameMap::frameTime / Settings::getCaptureAnimationSpeed();
 }
 
-void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
+void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
@@ -168,7 +168,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
     }
 }
 
-void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
+void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -262,7 +262,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
     }
 }
 
-void GameAnimationCapture::addBackgroundSprite(QString spriteID)
+void GameAnimationCapture::addBackgroundSprite(const QString & spriteID)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);

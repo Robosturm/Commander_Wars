@@ -109,7 +109,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
     return pGameAnimationPower.get();
 }
 
-GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
+GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     
     spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime);

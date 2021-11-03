@@ -62,7 +62,7 @@ public:
      * @param weatherID
      * @return
      */
-    inline bool existsWeather(QString weatherID)
+    inline bool existsWeather(const QString & weatherID)
     {
         return m_loadedWeather.contains(weatherID);
     }
@@ -71,7 +71,7 @@ public:
      * @param ruleID
      * @return
      */
-    inline bool existsVictoryRule(QString ruleID)
+    inline bool existsVictoryRule(const QString & ruleID)
     {
         return m_loadedVictoryRules.contains(ruleID);
     }
@@ -102,7 +102,7 @@ public:
      * @param ruleID
      * @return
      */
-    inline bool existsGameRule(QString ruleID)
+    inline bool existsGameRule(const QString & ruleID)
     {
         return m_loadedGameRules.contains(ruleID);
     }

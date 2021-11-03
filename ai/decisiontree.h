@@ -14,7 +14,7 @@ class DecisionTree : public QObject, public FileSerializable
 public:
     DecisionTree(spDecisionNode pRootNode);
     DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
-    DecisionTree(QString treeFile, QString trainingDataFile);
+    DecisionTree(const QString & treeFile, const QString & trainingDataFile);
 
     virtual ~DecisionTree() = default;
 

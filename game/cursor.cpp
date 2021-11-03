@@ -21,7 +21,7 @@ Cursor::Cursor()
     connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
 }
 
-void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, float scale)
+void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffset, float scale)
 {
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();

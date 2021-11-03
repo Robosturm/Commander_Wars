@@ -46,7 +46,7 @@ public slots:
      * @param spriteIdEnd
      * @return
      */
-    QString getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const;
+    QString getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const;
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

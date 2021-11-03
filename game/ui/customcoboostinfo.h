@@ -23,7 +23,7 @@ public slots:
     qint32 getDefensiveBoost() const;
     void setDefensiveBoost(qint32 newDefensiveBoost);
 
-    void addBonusIcon(QString id, QString value);
+    void addBonusIcon(const QString & id, const QString & value);
 
     const QString &getLink() const;
     void setLink(const QString &newLink);

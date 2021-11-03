@@ -48,7 +48,7 @@ public:
      * SIZE
      * ACTIVATION (LINEAR=0, SIGMOID=1, RELU=2)
      */
-    void addLayer(QMap<QString, double> parameters);
+    void addLayer(QMap<QString, double> & parameters);
     /**
      * @brief extend
      * @param count

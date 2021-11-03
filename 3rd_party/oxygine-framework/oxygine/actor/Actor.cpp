@@ -15,7 +15,7 @@ namespace oxygine
     Actor::Actor()
         : m_rdelegate(RenderDelegate::instance.get()),
           m_stage(nullptr),
-          m_flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
+          m_flags(flag_visible | flag_fastTransform),
           m_alpha(255),
           m_extendedIsOn(0),
           m_parent(nullptr),
@@ -294,21 +294,18 @@ namespace oxygine
         }
 
         event->phase = Event::phase_capturing;
-        if (!touchEvent || (m_flags & flag_touchChildrenEnabled))
+        auto iter = m_children.end();
+        while (iter != m_children.begin())
         {
-            auto iter = m_children.end();
-            while (iter != m_children.begin())
-            {
-                iter--;
-                iter->get()->handleEvent(event);
-            }
+            iter--;
+            iter->get()->handleEvent(event);
         }
         if (touchEvent)
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
             if (!event->target)
             {
-                if ((m_flags & flag_touchEnabled) && isOn(me->localPosition, me->__localScale))
+                if (isOn(me->localPosition, me->__localScale))
                 {
                     event->phase = Event::phase_target;
                     event->target = this;

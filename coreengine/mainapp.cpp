@@ -538,7 +538,7 @@ void Mainapp::setSlave(bool slave)
     m_slave = slave;
 }
 
-void Mainapp::showCrashReport(QString log)
+void Mainapp::showCrashReport(const QString & log)
 {
     static qint32 counter = 0;
     if (QGuiApplication::instance()->thread() == QThread::currentThread())

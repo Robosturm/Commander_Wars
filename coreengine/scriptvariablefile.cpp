@@ -4,7 +4,7 @@
 
 #include <QFile>
 
-ScriptVariableFile::ScriptVariableFile(QString filename)
+ScriptVariableFile::ScriptVariableFile(const QString & filename)
     : QObject(),
       m_filename(filename)
 {

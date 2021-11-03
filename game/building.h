@@ -194,13 +194,13 @@ public slots:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(QString sprite, bool addPlayerColor);
+    void loadSprite(const QString & sprite, bool addPlayerColor);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode);
     /**
      * @brief updatePlayerColor
      * @param visible
@@ -429,7 +429,7 @@ public slots:
      * @param spriteID
      * @param mode
      */
-    void loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    void loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     QVector<oxygine::spSprite> m_pWeatherOverlaySprites;

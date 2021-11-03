@@ -83,18 +83,18 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
+    set(DEPLOY_RESOURCES_AS_FOLDER 0)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        add_definitions(
-            -DDEBUG_LEVEL=0             # default console log level
-            -DAUDIOSUPPORT
-        )
-    else()
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
             #-DAUDIOSUPPORT
         )
+    else()
+        add_definitions(
+            -DDEBUG_LEVEL=1             # default console log level
+            -DAUDIOSUPPORT
+        )
     endif()
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)
 endif()
 
 ###################################################################################
@@ -420,6 +420,7 @@ set(${PROJECT_NAME}_SRCS
     game/ui/ingameinfobar.cpp
     game/ui/copowermeter.cpp
     game/ui/customcoboostinfo.cpp
+    game/ui/humanquickbuttons.cpp
 
     # game input
     gameinput/basegameinputif.cpp

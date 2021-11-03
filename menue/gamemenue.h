@@ -17,6 +17,7 @@
 #include "game/gamemap.h"
 #include "game/ui/playerinfo.h"
 #include "game/ui/ingameinfobar.h"
+#include "game/ui/humanquickbuttons.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 
@@ -111,7 +112,7 @@ public slots:
      * @param previousPoint
      * @return
      */
-    bool isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    bool isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
     /**
      * @brief finsihActionPerformed
      */
@@ -300,7 +301,7 @@ protected:
     spIngameInfoBar m_IngameInfoBar;
     spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
-    oxygine::spButton m_nextTurnButton;
+    spHumanQuickButtons m_humanQuickButtons;
     static spGameMenue m_pGameMenuInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};

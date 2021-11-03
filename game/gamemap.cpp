@@ -704,7 +704,7 @@ void GameMap::removePlayer(qint32 index)
     m_players.removeAt(index);
 }
 
-Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
+Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range)
 {
     CONSOLE_PRINT("spawning Unit", Console::eDEBUG);
     if (owner != nullptr)
@@ -850,7 +850,7 @@ qint32 GameMap::getMapHeight() const
     return m_fields.size();
 }
 
-qint32 GameMap::getBuildingCount(QString buildingID)
+qint32 GameMap::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -1069,7 +1069,7 @@ void GameMap::zoomChanged()
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
+void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
 {
     if (onMap(x, y))
     {
@@ -1123,7 +1123,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
     }
 }
 
-void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
+void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
 {
     replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
     if (checkPlacement)
@@ -1136,7 +1136,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
     }
 }
 
-void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
+void GameMap::replaceBuilding(const QString & buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
@@ -1171,7 +1171,7 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
-bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
+bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
@@ -2302,9 +2302,9 @@ void GameMap::showGrid(bool show)
         for (qint32 x = 1; x < mapWidth; ++x)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-            pSprite->setSize(1, mapHeight * m_imagesize + 1);
+            pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
-            pSprite->setPosition(x * m_imagesize - 1, 1);
+            pSprite->setPosition(x * m_imagesize, 0);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
             addChild(pSprite);
             m_gridSprites.append(pSprite);
@@ -2312,8 +2312,8 @@ void GameMap::showGrid(bool show)
         for (qint32 y = 1; y < mapHeight; ++y)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-            pSprite->setSize(mapWidth * m_imagesize + 1, 1);
-            pSprite->setPosition(1, y * m_imagesize - 1);
+            pSprite->setSize(mapWidth * m_imagesize, 1);
+            pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
             addChild(pSprite);
@@ -2335,15 +2335,15 @@ void GameMap::showMiddleCrossGrid(bool show)
         float mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
         oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-        pSprite->setSize(3, mapHeight * m_imagesize + 1);
+        pSprite->setSize(3, mapHeight * m_imagesize);
         pSprite->setColor(gridColor);
-        pSprite->setPosition(mapWidth / 2.0f * m_imagesize, 1);
+        pSprite->setPosition(mapWidth * 0.5f * m_imagesize - 1, 0);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
         pSprite = oxygine::spColorRectSprite::create();
-        pSprite->setSize(mapWidth * m_imagesize + 1, 3);
-        pSprite->setPosition(1, mapHeight / 2 * m_imagesize);
+        pSprite->setSize(mapWidth * m_imagesize, 3);
+        pSprite->setPosition(0, mapHeight * 0.5f * m_imagesize - 1);
         pSprite->setColor(gridColor);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);

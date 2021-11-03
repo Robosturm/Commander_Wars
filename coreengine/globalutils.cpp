@@ -425,7 +425,7 @@ QString GlobalUtils::makePathRelative(QString file, bool full)
     return file;
 }
 
-QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
+QFileInfoList GlobalUtils::getInfoList(const QString & folder, const QStringList & list)
 {
     QFileInfoList infoList;
     infoList.append(QDir(Settings::getUserPath() + folder).entryInfoList(QDir::Dirs));
@@ -454,7 +454,7 @@ QFileInfoList GlobalUtils::getInfoList(QString folder, QStringList list)
     return infoList;
 }
 
-QUrl GlobalUtils::getUrlForFile(QString file)
+QUrl GlobalUtils::getUrlForFile(const QString & file)
 {
     QUrl url;
     if (file.startsWith(oxygine::Resource::RCC_PREFIX_PATH))

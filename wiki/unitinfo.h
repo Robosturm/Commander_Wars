@@ -21,7 +21,7 @@ public:
      * @brief createWeaponTable
      * @param weaponID
      */
-    void createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint32 width);
+    void createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width);
     /**
      * @brief createLoadingTable
      * @param pUnit
@@ -29,7 +29,7 @@ public:
      * @param y
      * @param width
      */
-    void createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width);
+    void createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width);
     /**
      * @brief createLoadedUnits
      * @param pUnit

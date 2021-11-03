@@ -22,7 +22,7 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
     return 0;
 }
 
-QString TerrainManager::getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const
+QString TerrainManager::getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const
 {
     QString ret;
     const auto & keys = m_resourcesMap.keys();

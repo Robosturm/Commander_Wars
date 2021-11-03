@@ -176,7 +176,7 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(QString spriteID, bool addPlayerColor)
+void Building::loadSprite(const QString & spriteID, bool addPlayerColor)
 {
     if (addPlayerColor)
     {
@@ -188,7 +188,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
     }
 }
 
-void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -270,7 +270,7 @@ void Building::onWeatherChanged(Weather* pWeather)
     pInterpreter->doFunction(m_BuildingID, function1, args1);
 }
 
-void Building::loadWeatherOverlaySpriteV2(QString spriteID, GameEnums::Recoloring mode)
+void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);

@@ -14,6 +14,7 @@ MapSelectionFilterDialog::MapSelectionFilterDialog(MapFilter* filter)
     setObjectName("MapSelectionFilterDialog");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

@@ -2060,7 +2060,7 @@ qint32 NormalAi::getIndexInProductionData(Building* pBuilding)
     return ret;
 }
 
-qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
+qint32 NormalAi::getUnitProductionIdx(qint32 index, const QString & unitId,
                                       spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                       QVector<QVector4D> & attackCount, QVector<float> & buildData)

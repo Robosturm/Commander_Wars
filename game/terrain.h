@@ -54,7 +54,7 @@ public:
         MarkedField,
         Arrow
     };
-    static spTerrain createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID);
+    static spTerrain createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID);
 
     virtual ~Terrain() = default;
 
@@ -185,7 +185,7 @@ public slots:
     /**
      * @brief removeTerrainOverlay
      */
-    void removeTerrainOverlay(QString id);
+    void removeTerrainOverlay(const QString & id);
     /**
      * @brief getVariables
      * @return
@@ -321,17 +321,17 @@ public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain(QString  currentTerrainID);
+    void createBaseTerrain(const QString & currentTerrainID);
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID
      */
-    void loadBaseTerrain(QString terrainID);
+    void loadBaseTerrain(const QString & terrainID);
     /**
      * @brief loadBaseSprite loads the sprite for this terrain
      * @param spriteID
      */
-    void loadBaseSprite(QString spriteID, qint32 frameTime = 100);
+    void loadBaseSprite(const QString & spriteID, qint32 frameTime = 100);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
      * @param list the list as string split with ,
@@ -342,12 +342,12 @@ public slots:
      * @param recursionCount how deep the game searches for base terrain id's -1 for infinite
      * @return
      */
-    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
+    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
      */
-    void loadOverlaySprite(QString spriteID);
+    void loadOverlaySprite(const QString & spriteID);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
      * @return the base terrainID
@@ -405,7 +405,7 @@ public slots:
      * @brief loadBuilding deletes the current building by loading the given building ID.
      * @param buildingID
      */
-    void loadBuilding(QString buildingID);
+    void loadBuilding(const QString & buildingID);
     /**
      * @brief getDefense
      */
@@ -449,14 +449,14 @@ public slots:
      * @param spriteId
      * @return
      */
-    bool existsResAnim(QString spriteId) const;
+    bool existsResAnim(const QString & spriteId) const;
     /**
      * @brief getFittingResAnim
      * @param spriteIdStart
      * @param spriteIdEnd
      * @return
      */
-    QString getFittingResAnim(QString spriteIdStart, QString spriteIdEnd) const;
+    QString getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const;
     /**
      * @brief updateFlowSprites
      * @param pPfs

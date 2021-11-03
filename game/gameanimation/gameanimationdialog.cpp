@@ -243,12 +243,12 @@ void GameAnimationDialog::setColor(QColor color)
     m_TextMask->setColor(color);
 }
 
-void GameAnimationDialog::setDialog(QString text)
+void GameAnimationDialog::setDialog(const QString & text)
 {
     m_Text = text;
 }
 
-void GameAnimationDialog::setCO(QString coid, GameEnums::COMood mood)
+void GameAnimationDialog::setCO(const QString & coid, GameEnums::COMood mood)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString resAnim = coid.toLower() + "+face";
@@ -306,7 +306,7 @@ void GameAnimationDialog::restart()
     }
 }
 
-void GameAnimationDialog::loadBackground(QString file)
+void GameAnimationDialog::loadBackground(const QString & file)
 {
     if (!file.isEmpty())
     {
@@ -335,7 +335,7 @@ void GameAnimationDialog::loadBackground(QString file)
     }
 }
 
-void GameAnimationDialog::loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale)
+void GameAnimationDialog::loadCoSprite(const QString & coid, float offsetX, float offsetY, bool flippedX, float scale)
 {
     if (!coid.isEmpty())
     {

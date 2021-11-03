@@ -179,12 +179,12 @@ void Console::dotask(QString message)
     }
 }
 
-void Console::print(QString message, qint8 logLevel)
+void Console::print(const QString & message, qint8 logLevel)
 {
     print(message, static_cast<eLogLevels>(logLevel));
 }
 
-void Console::print(QString message, eLogLevels logLevel)
+void Console::print(const QString & message, eLogLevels logLevel)
 {
     QMutexLocker locker(&m_datalocker);
 

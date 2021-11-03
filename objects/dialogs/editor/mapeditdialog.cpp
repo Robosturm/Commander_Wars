@@ -18,6 +18,8 @@ MapEditDialog::MapEditDialog(MapEditInfo info)
     setObjectName("MapEditDialog");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");

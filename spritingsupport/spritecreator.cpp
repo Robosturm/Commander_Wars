@@ -114,7 +114,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
     }
 }
 
-void SpriteCreator::applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor)
+void SpriteCreator::applyImageTable(QString file, const QImage & inTableImg, const QImage & outTableImg, QColor eraseColor)
 {
     QString orgFile = file;
     QString maskFile = file;
@@ -214,7 +214,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
 }
 
-void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskTable)
+void SpriteCreator::createSprites(QString file, QImage& colorTable, const QImage & maskTable)
 {
     QString orgFile = file;
     QString maskFile = file;
@@ -295,7 +295,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
     return oxygine::spResAnim();
 }
 
-QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save)
+QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const QImage & maskTableImg, bool useColorBox, bool save)
 {
     QImage orgImg(input);
     QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);

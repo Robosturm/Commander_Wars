@@ -69,7 +69,7 @@ QByteArray Filesupport::readByteArray(QDataStream& stream)
     return array;
 }
 
-void Filesupport::storeList(QString file, const QStringList & items, QString folder)
+void Filesupport::storeList(const QString & file, const QStringList & items, const QString & folder)
 {
     QDir dir(folder);
     dir.mkpath(".");
@@ -84,12 +84,12 @@ void Filesupport::storeList(QString file, const QStringList & items, QString fol
     }
 }
 
-Filesupport::StringList Filesupport::readList(QString file, QString folder)
+Filesupport::StringList Filesupport::readList(const QString & file, const QString & folder)
 {
     return readList(folder + file);
 }
 
-Filesupport::StringList Filesupport::readList(QString file)
+Filesupport::StringList Filesupport::readList(const QString & file)
 {
     QFile dataFile(file);
     dataFile.open(QIODevice::ReadOnly);

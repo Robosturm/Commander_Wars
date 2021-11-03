@@ -21,8 +21,8 @@ public:
     static qint32 randIntBase(qint32 low, qint32 high);
     static float randFloatBase(float low, float high);
     static double randDoubleBase(double low, double high);
-    static QFileInfoList getInfoList(QString folder, QStringList list = QStringList());
-    static QUrl getUrlForFile(QString file);
+    static QFileInfoList getInfoList(const QString & folder, const QStringList & list = QStringList());
+    static QUrl getUrlForFile(const QString & file);
 
 public slots:
     static QString makePathRelative(QString file, bool full = true);

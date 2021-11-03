@@ -5,7 +5,7 @@
 
 #include "resource_management/objectmanager.h"
 
-void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 range, QColor color)
+void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)
 {
     
     for (qint32 i = 0; i <= range; i++)
@@ -26,7 +26,7 @@ void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, QStri
     
 }
 
-void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 range, QColor color)
+void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim(prefix + "+bottom");
@@ -123,7 +123,7 @@ void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite,
     pOutlineSprite->addChild(pSprite);
 }
 
-void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 range, QColor color)
+void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim(prefix + "+bottom");
@@ -220,7 +220,7 @@ void CreateOutline::createOuterTopBottomOutline(oxygine::spActor pOutlineSprite,
     pOutlineSprite->addChild(pSprite);
 }
 
-void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 i, qint32 range, QColor color)
+void CreateOutline::createOutline(oxygine::spActor pOutlineSprite, const QString & prefix, qint32 i, qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim(prefix + "+bottom");

@@ -16,8 +16,8 @@ public:
      */
     virtual void reset() override;
 
-    QString getActionIcon(QString actionID);
-    oxygine::spSprite getIcon(QString icon);
+    QString getActionIcon(const QString & actionID);
+    oxygine::spSprite getIcon(const QString & icon);
     /**
      * @brief getDescription
      * @param position
@@ -55,7 +55,7 @@ protected:
     GameManager();
 private:
     virtual ~GameManager() = default;
-    oxygine::spSprite getIconSprite(QString icon);
+    oxygine::spSprite getIconSprite(const QString & icon);
     QStringList m_loadedHeavyAis;
 };
 

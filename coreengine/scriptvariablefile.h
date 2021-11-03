@@ -11,7 +11,7 @@ class ScriptVariableFile : public QObject, public FileSerializable, public oxygi
 {
         Q_OBJECT
     public:
-        explicit ScriptVariableFile(QString filename);
+        explicit ScriptVariableFile(const QString & filename);
         virtual ~ScriptVariableFile() = default;
         /**
          * @brief serialize stores the object

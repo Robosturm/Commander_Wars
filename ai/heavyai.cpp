@@ -670,7 +670,7 @@ void HeavyAi::scoreActions(UnitData & unit)
     }
 }
 
-bool HeavyAi::isScoringAllowed(QString action, QStringList actions)
+bool HeavyAi::isScoringAllowed(const QString & action, const QStringList & actions)
 {
     bool ret = false;
     if (m_aiStep >= AISteps::moveTransporters)
@@ -868,7 +868,7 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, QVector<do
     return ret;
 }
 
-void HeavyAi::getFunctionType(QString action, FunctionType & type, qint32 & index)
+void HeavyAi::getFunctionType(const QString & action, FunctionType & type, qint32 & index)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     index = -1;

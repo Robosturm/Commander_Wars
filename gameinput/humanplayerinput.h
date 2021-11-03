@@ -162,7 +162,7 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
-    void menuItemSelected(QString itemID, qint32 cost);
+    void menuItemSelected(const QString & itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
     QStringList getViewplayerActionList();

@@ -153,7 +153,7 @@ public slots:
      * @param unitID
      * @return
      */
-    float getUnitBuildValue(QString unitID);
+    float getUnitBuildValue(const QString & unitID);
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
@@ -277,13 +277,13 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(QString id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    qint32 getCosts(QString id);
+    qint32 getCosts(const QString & id);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
@@ -317,7 +317,7 @@ public slots:
      * @brief getBuildings
      * @return
      */
-    QmlVectorBuilding* getBuildings(QString id = "");
+    QmlVectorBuilding* getBuildings(const QString & id = "");
     /**
      * @brief updateCORange
      */
@@ -389,7 +389,7 @@ public slots:
      * @brief getBuildingCount
      * @return
      */
-    qint32 getBuildingCount(QString buildingID = "");
+    qint32 getBuildingCount(const QString & buildingID = "");
     /**
      * @brief getBuildingListCount
      * @param list
@@ -401,14 +401,14 @@ public slots:
      * @brief getUnitCount
      * @return
      */
-    qint32 getUnitCount(QString unitID = "");
+    qint32 getUnitCount(const QString & unitID = "");
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    qint32 getUnitCount(Unit* pUnit, QString unitID);
+    qint32 getUnitCount(Unit* pUnit, const QString & unitID);
     /**
      * @brief getTeam
      * @return
@@ -529,7 +529,7 @@ private:
      * @param tablename
      * @return
      */
-    bool loadTableFromFile(QString tablename);
+    bool loadTableFromFile(const QString & tablename);
     /**
      * @brief colorToTable
      * @param baseColor

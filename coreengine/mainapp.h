@@ -161,7 +161,7 @@ public slots:
      * @brief showCrashReport
      * @param log
      */
-    static void showCrashReport(QString log);
+    static void showCrashReport(const QString & log);
     /**
      * @brief loadArgs
      * @param args

@@ -40,7 +40,7 @@ const QStringList &CustomCoBoostInfo::getBonusIcons() const
     return m_bonusIcons;
 }
 
-void CustomCoBoostInfo::addBonusIcon(QString id, QString value)
+void CustomCoBoostInfo::addBonusIcon(const QString & id, const QString & value)
 {
     m_bonusIcons.append(id);
     m_iconBonus.append(value);

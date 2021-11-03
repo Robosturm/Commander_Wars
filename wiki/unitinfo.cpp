@@ -394,7 +394,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
 }
 
-void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint32 width)
+void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& y, qint32 width)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -437,7 +437,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     }
 }
 
-void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width)
+void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qint32& y, qint32 width)
 {
     qint32 x = 0;
     for (const auto& unitID : loadables)

@@ -321,7 +321,7 @@ protected:
      * @param unitId
      * @return
      */
-    qint32 getUnitProductionIdx(qint32 index, QString unitId,
+    qint32 getUnitProductionIdx(qint32 index, const QString & unitId,
                                 spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
                                 spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                 QVector<QVector4D> & attackCount, QVector<float> & buildData);

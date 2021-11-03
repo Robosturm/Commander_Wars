@@ -95,7 +95,7 @@ GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y
     return GameEnums::Directions_East;
 }
 
-void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float scaling)
+void GameAnimationWalk::loadSprite(const QString & spriteID, bool addPlayerColor, float scaling)
 {
     if (addPlayerColor)
     {
@@ -107,7 +107,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
     }
 }
 
-void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, float scaling)
+void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, float scaling)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);

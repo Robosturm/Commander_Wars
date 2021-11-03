@@ -19,7 +19,7 @@ GameAction::GameAction()
     m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
-GameAction::GameAction(QString actionID)
+GameAction::GameAction(const QString & actionID)
     : m_actionID(actionID),
       m_target(-1, -1)
 {
@@ -203,7 +203,7 @@ qint32 GameAction::getMovePathLength()
     return m_Movepath.size();
 }
 
-bool GameAction::canBePerformed(QString actionID, bool emptyField)
+bool GameAction::canBePerformed(const QString & actionID, bool emptyField)
 {
     if (!actionID.isEmpty())
     {
@@ -255,7 +255,7 @@ bool GameAction::isFinalStep()
     return isFinalStep(m_actionID);
 }
 
-bool GameAction::isFinalStep(QString actionID)
+bool GameAction::isFinalStep(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isFinalStep";
@@ -269,7 +269,7 @@ bool GameAction::isFinalStep(QString actionID)
     return false;
 }
 
-QString GameAction::getActionText(QString actionID)
+QString GameAction::getActionText(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionText";
@@ -282,7 +282,7 @@ QString GameAction::getActionText(QString actionID)
     return "";
 }
 
-QString GameAction::getActionIcon(QString actionID)
+QString GameAction::getActionIcon(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";

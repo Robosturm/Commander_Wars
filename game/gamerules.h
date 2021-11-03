@@ -358,19 +358,19 @@ public slots:
      */
     void checkVictory();
     qint32 getVictoryTeam();
-    void addVictoryRule(QString rule);
-    void removeVictoryRule(QString rule);
-    VictoryRule* getVictoryRule(QString rule);
+    void addVictoryRule(const QString & rule);
+    void removeVictoryRule(const QString & rule);
+    VictoryRule* getVictoryRule(const QString & rule);
 
-    void addGameRule(QString rule);
-    GameRule* getGameRule(QString rule);
-    void removeGameRule(QString rule);
+    void addGameRule(const QString & rule);
+    GameRule* getGameRule(const QString & rule);
+    void removeGameRule(const QString & rule);
     /**
      * @brief addWeather
      * @param weatherId
      * @param weatherChance
      */
-    void addWeather(QString weatherId, qint32 weatherChance);
+    void addWeather(const QString & weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param weatherId
@@ -417,13 +417,13 @@ public slots:
      * @brief getCurrentWeather
      * @return
      */
-    Weather* getWeather(QString weatherId);
+    Weather* getWeather(const QString & weatherId);
     /**
      * @brief getWeatherChance
      * @param index
      * @return
      */
-    qint32 getWeatherChance(QString weatherId);
+    qint32 getWeatherChance(const QString & weatherId);
     /**
      * @brief getWeatherCount
      * @return
@@ -441,7 +441,7 @@ public slots:
      * @param weatherId
      * @param duration
      */
-    void changeWeather(QString weatherId, qint32 duration, qint32 startDay = 0);
+    void changeWeather(const QString & weatherId, qint32 duration, qint32 startDay = 0);
     /**
      * @brief changeWeather changes the weather for n-days
      * @param weatherId

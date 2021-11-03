@@ -7,7 +7,7 @@
 #include "game/co.h"
 #include "game/unitpathfindingsystem.h"
 
-IslandMap::IslandMap(QString unitID, Player* pOwner)
+IslandMap::IslandMap(const QString & unitID, Player* pOwner)
       : m_pOwner(pOwner)
 {
     setObjectName("IslandMap");

@@ -57,7 +57,7 @@ GameRules::GameRules()
     m_allowedActions = GameManager::getInstance()->getLoadedRessources();
 }
 
-void GameRules::addGameRule(QString rule)
+void GameRules::addGameRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_GameRules.size(); i++)
@@ -74,7 +74,7 @@ void GameRules::addGameRule(QString rule)
     }
 }
 
-GameRule* GameRules::getGameRule(QString rule)
+GameRule* GameRules::getGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -103,7 +103,7 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
-void GameRules::removeGameRule(QString rule)
+void GameRules::removeGameRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_GameRules.size(); i++)
     {
@@ -115,7 +115,7 @@ void GameRules::removeGameRule(QString rule)
     }
 }
 
-void GameRules::addVictoryRule(QString rule)
+void GameRules::addVictoryRule(const QString & rule)
 {
     bool found = false;
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
@@ -132,7 +132,7 @@ void GameRules::addVictoryRule(QString rule)
     }
 }
 
-VictoryRule* GameRules::getVictoryRule(QString rule)
+VictoryRule* GameRules::getVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -161,7 +161,7 @@ void GameRules::addVictoryRule(spVictoryRule rule)
     }
 }
 
-void GameRules::removeVictoryRule(QString rule)
+void GameRules::removeVictoryRule(const QString & rule)
 {
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
@@ -274,7 +274,7 @@ void GameRules::checkVictory()
      
 }
 
-void GameRules::addWeather(QString weatherId, qint32 weatherChance)
+void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
 {
     bool found = false;
     for (qint32 i = 0; i < m_Weathers.size(); i++)
@@ -334,7 +334,7 @@ Weather* GameRules::getWeather(qint32 index)
     return nullptr;
 }
 
-Weather* GameRules::getWeather(QString weatherId)
+Weather* GameRules::getWeather(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
@@ -346,7 +346,7 @@ Weather* GameRules::getWeather(QString weatherId)
     return nullptr;
 }
 
-qint32 GameRules::getWeatherChance(QString weatherId)
+qint32 GameRules::getWeatherChance(const QString & weatherId)
 {
     for (qint32 i = 0; i < m_WeatherChances.size(); i++)
     {
@@ -434,7 +434,7 @@ void GameRules::setStartWeather(qint32 index)
     m_StartWeather = index;
 }
 
-void GameRules::changeWeather(QString weatherId, qint32 duration, qint32 startDay)
+void GameRules::changeWeather(const QString & weatherId, qint32 duration, qint32 startDay)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {

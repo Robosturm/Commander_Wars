@@ -609,7 +609,7 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
     
 }
 
-void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
+void HumanPlayerInput::menuItemSelected(const QString & itemID, qint32 cost)
 {
     CONSOLE_PRINT("HumanPlayerInput::menuItemSelected", Console::eDEBUG);
     if (m_pGameAction.get() != nullptr)

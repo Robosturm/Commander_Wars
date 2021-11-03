@@ -38,7 +38,7 @@ private:
     qint32 createTopSprite(qint32 x, qint32 width, Player* pPlayer);
     qint32 createBottomSprite(qint32 x, qint32 y, qint32 width, Player* pPlayer);
     oxygine::spBox9Sprite createMenuItem(bool enabled, qint32& x, qint32& y, qint32 width, oxygine::TextStyle style,
-                                         QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item,
+                                         const QString & text, const QString & action, qint32 costs, oxygine::spActor icon, qint32 item,
                                          Player* pPlayer);
     void updateItemPositionAndVisibility();
     void scroll(qint32 count);

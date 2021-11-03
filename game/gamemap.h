@@ -80,7 +80,7 @@ public:
      * @param heigth
      * @param playerCount
      */
-    void newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain = "PLAINS");
+    void newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString & baseTerrain = "PLAINS");
     /**
      * @brief changeMap
      * @param width
@@ -443,7 +443,7 @@ public slots:
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(QString buildingID);
+    qint32 getBuildingCount(const QString & buildingID);
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -463,7 +463,7 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range = 0);
+    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0);
     /**
      * @brief refillAll refills all units ammo and fuel
      */
@@ -563,7 +563,7 @@ public slots:
      * @param y position
      * @return true if this terrain can be placed
      */
-    bool canBePlaced(QString terrainID, qint32 x, qint32 y);
+    bool canBePlaced(const QString & terrainID, qint32 x, qint32 y);
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
@@ -576,7 +576,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
+    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -584,14 +584,14 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
+    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
     /**
      * @brief replaceBuilding
      * @param buildingID
      * @param x
      * @param y
      */
-    void replaceBuilding(QString buildingID, qint32 x, qint32 y);
+    void replaceBuilding(const QString & buildingID, qint32 x, qint32 y);
     /**
      * @brief getPlayerCount
      * @return number of players on the map

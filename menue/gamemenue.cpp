@@ -142,6 +142,12 @@ GameMenue::GameMenue()
     pApp->continueRendering();
 }
 
+GameMenue::~GameMenue()
+{
+    CONSOLE_PRINT("Deleting game menu singleton", Console::eDEBUG);
+    m_pGameMenuInstance = nullptr;
+}
+
 void GameMenue::onEnter()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -439,14 +445,14 @@ void GameMenue::loadUIButtons()
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 110, 50);
+        pButtonBox->setSize(286 + 70, 50);
         m_CurrentRoundTime->setPosition(108 + 4, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
     else
     {
-        pButtonBox->setSize(286 + 40, 50);
+        pButtonBox->setSize(286, 50);
     }
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -467,19 +473,20 @@ void GameMenue::loadUIButtons()
     });
     pButtonBox->addChild(exitGame);
 
-    m_nextTurnButton = ObjectManager::createIconButton("next_player", 36);
-    m_nextTurnButton->setPosition(exitGame->getX() - 38 - 5, 8);
-    GameMap* pPtrMap = pMap.get();
-    m_nextTurnButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        auto player = pPtrMap->getCurrentPlayer();
-        if (player->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-        {
-            emit oxygine::safeCast<HumanPlayerInput*>(player->getBaseGameInput())->sigNextTurn();
-        }
-    });
-    m_nextTurnButton->setEnabled(false);
-    pButtonBox->addChild(m_nextTurnButton);
+
+    m_humanQuickButtons = spHumanQuickButtons::create();
+    m_humanQuickButtons->setEnabled(false);
+    addChild(m_humanQuickButtons);
+//    GameMap* pPtrMap = pMap.get();
+//    m_nextTurnButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+//    {
+//        auto player = pPtrMap->getCurrentPlayer();
+//        if (player->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+//        {
+//            emit oxygine::safeCast<HumanPlayerInput*>(player->getBaseGameInput())->sigNextTurn();
+//        }
+//    });
+
 
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
@@ -546,12 +553,6 @@ void GameMenue::updateTimer()
 bool GameMenue::getGameStarted() const
 {
     return m_gameStarted;
-}
-
-GameMenue::~GameMenue()
-{
-    CONSOLE_PRINT("Deleting game menu singleton", Console::eDEBUG);
-    m_pGameMenuInstance = nullptr;
 }
 
 void GameMenue::editFinishedCanceled()
@@ -841,7 +842,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
     }
 }
 
-bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
+bool GameMenue::isTrap(const QString & function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
 {
     spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
@@ -1000,7 +1001,6 @@ bool GameMenue::shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const
     return !Settings::getOverworldAnimations();
 }
 
-
 void GameMenue::finishActionPerformed()
 {
     CONSOLE_PRINT("Doing post action update", Console::eDEBUG);
@@ -1023,11 +1023,11 @@ void GameMenue::finishActionPerformed()
     if (!pMap->getCurrentPlayer()->getIsDefeated() &&
         pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
     {
-        m_nextTurnButton->setEnabled(true);
+        m_humanQuickButtons->setEnabled(true);
     }
     else
     {
-        m_nextTurnButton->setEnabled(false);
+        m_humanQuickButtons->setEnabled(false);
     }
 }
 

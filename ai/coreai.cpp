@@ -1706,7 +1706,7 @@ bool CoreAI::isRefuelUnit(const QStringList & actionList)
            actionList.contains(ACTION_SUPPORTSINGLE_SUPPLY);
 }
 
-void CoreAI::createIslandMap(QString movementType, QString unitID)
+void CoreAI::createIslandMap(const QString & movementType, const QString & unitID)
 {
     bool found = false;
 
@@ -1764,7 +1764,7 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding)
     return false;
 }
 
-bool CoreAI::onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
+bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {

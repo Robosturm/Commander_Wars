@@ -462,7 +462,7 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -490,7 +490,7 @@ protected:
      * @param movementType
      * @param unitID
      */
-    void createIslandMap(QString movementType, QString unitID);
+    void createIslandMap(const QString & movementType, const QString & unitID);
     /**
      * @brief needsRefuel
      * @param pUnit

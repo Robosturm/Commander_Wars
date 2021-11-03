@@ -38,7 +38,7 @@ QStringList COSpriteManager::getSpriteCOIDs()
     return ret;
 }
 
-QStringList COSpriteManager::getCOStyles(QString id)
+QStringList COSpriteManager::getCOStyles(const QString & id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
@@ -61,7 +61,7 @@ QStringList COSpriteManager::getCOStyles(qint32 position)
     return QStringList();
 }
 
-void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
+void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);
@@ -180,7 +180,7 @@ oxygine::ResAnim* COSpriteManager::getResAnim(const QString & id, oxygine::error
     return oxygine::Resources::getResAnim(id, ep);
 }
 
-void COSpriteManager::removeRessource(QString id)
+void COSpriteManager::removeRessource(const QString & id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); ++i)
     {

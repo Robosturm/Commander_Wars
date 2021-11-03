@@ -280,7 +280,7 @@ void HumanPlayerInputMenu::updateItemPositionAndVisibility()
 }
 
 oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32& x, qint32& y, qint32 width, oxygine::TextStyle style,
-                                                           QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item,
+                                                           const QString & text, const QString & action, qint32 costs, oxygine::spActor icon, qint32 item,
                                                            Player* pPlayer)
 {
     GameManager* pGameManager = GameManager::getInstance();

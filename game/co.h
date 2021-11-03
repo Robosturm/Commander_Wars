@@ -83,7 +83,7 @@ public:
      * @param ep
      * @return
      */
-    oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const;
+    oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_show_error) const;
 
 
 signals:
@@ -114,7 +114,7 @@ public slots:
      * @param unitID
      * @return
      */
-    float getUnitBuildValue(QString unitID);
+    float getUnitBuildValue(const QString & unitID);
     /**
      * @brief getCOName
      * @return
@@ -384,7 +384,7 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(QString id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost);
     /**
      * @brief getCOArmy
      */
@@ -563,12 +563,12 @@ public slots:
      * @brief addPerk
      * @param perk
      */
-    void addPerk(QString perk);
+    void addPerk(const QString & perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    void removePerk(QString perk);
+    void removePerk(const QString & perk);
     /**
      * @brief getBio
      * @return

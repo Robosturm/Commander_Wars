@@ -13,7 +13,7 @@ public:
      * @param id
      * @return
      */
-    QStringList getCOStyles(QString id);
+    QStringList getCOStyles(const QString & id);
     /**
      * @brief getCOStyles
      * @param position
@@ -32,7 +32,7 @@ public:
      */
     void release();
 signals:
-    void sigLoadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void sigLoadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
     QStringList getCoIds()
     {
@@ -45,12 +45,12 @@ public slots:
      * @param colorTable
      * @param maskTable
      */
-    void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+    void loadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox);
     /**
      * @brief removeRessource
      * @param id
      */
-    void removeRessource(QString id);
+    void removeRessource(const QString & id);
     /**
      * @brief getArmyList
      * @param coids

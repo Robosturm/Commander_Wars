@@ -26,7 +26,7 @@ DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVecto
  * @param file
  * @param trainingFile
  */
-DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
+DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDataFile)
 {
     setObjectName("DecisionTree");
     QFile file(treeFile);
