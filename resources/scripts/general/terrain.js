@@ -238,6 +238,9 @@ var TERRAIN =
         case "ROUGH_SEA":
             return "back_" + weatherModifier + "planes+sea";
         case "FOREST":
+        case "FOREST1":
+        case "FOREST2":
+        case "FOREST3":
         case "DESERT_FOREST":
         case "SNOW_FOREST":
             return "back_" + weatherModifier + "planes+forest";

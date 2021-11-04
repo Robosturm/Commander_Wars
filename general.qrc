@@ -664,10 +664,6 @@
         <file>resources/images/terrain/fog+E.png</file>
         <file>resources/images/terrain/fog+E+W.png</file>
         <file>resources/images/terrain/fog+W.png</file>
-        <file>resources/images/terrain/forest.png</file>
-        <file>resources/images/terrain/forest+E.png</file>
-        <file>resources/images/terrain/forest+E+W.png</file>
-        <file>resources/images/terrain/forest+W.png</file>
         <file>resources/images/terrain/meteor.png</file>
         <file>resources/images/terrain/meteor+E.png</file>
         <file>resources/images/terrain/meteor+E+S.png</file>
@@ -1980,6 +1976,7 @@
         <file>resources/scripts/movementtables/move_tire_b.js</file>
         <file>resources/scripts/movementtables/movement_csv_import.txt</file>
         <file>resources/scripts/shop/shopitem_shop.js</file>
+        <file>resources/scripts/terrain/__BASEFOREST.js</file>
         <file>resources/scripts/terrain/BEACH.js</file>
         <file>resources/scripts/terrain/BRIDGE.js</file>
         <file>resources/scripts/terrain/DESERT.js</file>
@@ -3449,7 +3446,6 @@
         <file>mods/map_creator/scripts/terrain/DESTROYEDWELD.js</file>
         <file>mods/map_creator/scripts/terrain/FIRE.js</file>
         <file>mods/map_creator/scripts/terrain/FOG.js</file>
-        <file>mods/map_creator/scripts/terrain/FOREST.js</file>
         <file>mods/map_creator/scripts/terrain/METEOR.js</file>
         <file>mods/map_creator/scripts/terrain/MOUNTAIN.js</file>
         <file>mods/map_creator/scripts/terrain/PIPELINE.js</file>
@@ -5173,9 +5169,6 @@
         <file>resources/images/terrain/desert_ruin+0.png</file>
         <file>resources/images/terrain/desert_ruin+1.png</file>
         <file>resources/images/terrain/desert_ruin+2.png</file>
-        <file>resources/images/terrain/forest+N+S.png</file>
-        <file>resources/images/terrain/forest+N.png</file>
-        <file>resources/images/terrain/forest+S.png</file>
         <file>resources/images/terrain/mountain+N+S.png</file>
         <file>resources/images/terrain/mountain+N.png</file>
         <file>resources/images/terrain/mountain+S.png</file>
@@ -5248,21 +5241,6 @@
         <file>resources/images/terrain/beach+S+W.png</file>
         <file>resources/images/terrain/beach+S.png</file>
         <file>resources/images/terrain/beach+W.png</file>
-        <file>resources/images/terrain/forest+E+SE+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+E+SE+S.png</file>
-        <file>resources/images/terrain/forest+N+E+SE+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+E+SE+S+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E.png</file>
-        <file>resources/images/terrain/forest+N+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+W+NW.png</file>
-        <file>resources/images/terrain/forest+S+SW+W.png</file>
         <file>resources/scripts/terrain/WASTE_FOREST.js</file>
         <file>resources/scripts/terrain/WASTE_MOUNTAIN.js</file>
         <file>resources/scripts/terrain/WASTE_RUIN.js</file>
@@ -5608,7 +5586,6 @@
         <file>resources/images/terrain/riverend+E+3+land+E+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+SE.png</file>
-        <file>resources/images/co/ac/co_davis+nrm.png</file>
         <file>resources/images/co/ac/co_mary+alt+table.png</file>
         <file>resources/images/co/ac/co_mary+table.png</file>
         <file>resources/images/co/ac/co_officier_ac+nrm.png</file>
@@ -5861,7 +5838,6 @@
         <file>resources/images/co/ge/co_eagle+alt2+table.png</file>
         <file>resources/images/co/ge/co_eagle+alt3+mini.png</file>
         <file>resources/images/co/ge/co_eagle+alt3+table.png</file>
-        <file>resources/images/co/ge/co_jess+alt+2mini.png</file>
         <file>resources/images/co/ge/co_jess+alt2+table.png</file>
         <file>resources/images/co/os/co_andy+alt3+mini.png</file>
         <file>resources/images/co/os/co_hachi+alt2+mini.png</file>
@@ -5937,5 +5913,84 @@
         <file>resources/images/terrain/creeper+12+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+13+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+ac.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+bm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+ge.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+os.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/antitankcannon+yc.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+ac.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+bd.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+bh.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+bm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+dm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+ge.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+ma.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+os.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+pf.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+ti.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/artillery+yc.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+bh.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+bm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+ge.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+os.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+ti.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/flak+yc.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+ac.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+bd.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+bh.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+bm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+dm.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+ge.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+gs.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+ma.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+os.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+pf.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+ti.xcf</file>
+        <file>resources/images/battleanimations/.gitraws/recon+yc.xcf</file>
+        <file>resources/images/terrain/forest_style0+E+W.png</file>
+        <file>resources/images/terrain/forest_style0+E.png</file>
+        <file>resources/images/terrain/forest_style0+NE.png</file>
+        <file>resources/images/terrain/forest_style0+NW.png</file>
+        <file>resources/images/terrain/forest_style0+SE.png</file>
+        <file>resources/images/terrain/forest_style0+SW.png</file>
+        <file>resources/images/terrain/forest_style0+W.png</file>
+        <file>resources/images/terrain/forest_style0.png</file>
+        <file>resources/images/terrain/forest_style1+E+W.png</file>
+        <file>resources/images/terrain/forest_style1+E.png</file>
+        <file>resources/images/terrain/forest_style1+NE.png</file>
+        <file>resources/images/terrain/forest_style1+NW.png</file>
+        <file>resources/images/terrain/forest_style1+SE.png</file>
+        <file>resources/images/terrain/forest_style1+SW.png</file>
+        <file>resources/images/terrain/forest_style1+W.png</file>
+        <file>resources/images/terrain/forest_style1.png</file>
+        <file>resources/images/terrain/forest_style2+E+W.png</file>
+        <file>resources/images/terrain/forest_style2+E.png</file>
+        <file>resources/images/terrain/forest_style2+NE.png</file>
+        <file>resources/images/terrain/forest_style2+NW.png</file>
+        <file>resources/images/terrain/forest_style2+SE.png</file>
+        <file>resources/images/terrain/forest_style2+SW.png</file>
+        <file>resources/images/terrain/forest_style2+W.png</file>
+        <file>resources/images/terrain/forest_style2.png</file>
+        <file>resources/images/terrain/forest_style3+E+W.png</file>
+        <file>resources/images/terrain/forest_style3+E.png</file>
+        <file>resources/images/terrain/forest_style3+NE.png</file>
+        <file>resources/images/terrain/forest_style3+NW.png</file>
+        <file>resources/images/terrain/forest_style3+SE.png</file>
+        <file>resources/images/terrain/forest_style3+SW.png</file>
+        <file>resources/images/terrain/forest_style3+W.png</file>
+        <file>resources/images/terrain/forest_style3.png</file>
+        <file>resources/images/terrain/reaf+1+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+2+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+3+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+S+E.png</file>
+        <file>resources/images/terrain/river+N+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+N+W+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+S+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+S+W+land+E+NW+SW.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+mini.png</file>
+        <file>resources/scripts/terrain/FOREST1.js</file>
+        <file>resources/scripts/terrain/FOREST2.js</file>
+        <file>resources/scripts/terrain/FOREST3.js</file>
     </qresource>
 </RCC>
