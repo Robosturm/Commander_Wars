@@ -51,7 +51,7 @@ var Constructor = function()
         // Load overlay south east, strict.
         if (surroundings.includes("+S") && surroundings.includes("+E"))
         {
-            var surroundingsSE = terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_SouthEast, false);
+            var surroundingsSE = terrain.getSurroundings(terrainId, false, false, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
                 terrain.loadOverlaySprite(spriteId + "+SE");
