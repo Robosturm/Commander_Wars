@@ -664,10 +664,6 @@
         <file>resources/images/terrain/fog+E.png</file>
         <file>resources/images/terrain/fog+E+W.png</file>
         <file>resources/images/terrain/fog+W.png</file>
-        <file>resources/images/terrain/forest.png</file>
-        <file>resources/images/terrain/forest+E.png</file>
-        <file>resources/images/terrain/forest+E+W.png</file>
-        <file>resources/images/terrain/forest+W.png</file>
         <file>resources/images/terrain/meteor.png</file>
         <file>resources/images/terrain/meteor+E.png</file>
         <file>resources/images/terrain/meteor+E+S.png</file>
@@ -1980,6 +1976,7 @@
         <file>resources/scripts/movementtables/move_tire_b.js</file>
         <file>resources/scripts/movementtables/movement_csv_import.txt</file>
         <file>resources/scripts/shop/shopitem_shop.js</file>
+        <file>resources/scripts/terrain/__BASEFOREST.js</file>
         <file>resources/scripts/terrain/BEACH.js</file>
         <file>resources/scripts/terrain/BRIDGE.js</file>
         <file>resources/scripts/terrain/DESERT.js</file>
@@ -3449,7 +3446,6 @@
         <file>mods/map_creator/scripts/terrain/DESTROYEDWELD.js</file>
         <file>mods/map_creator/scripts/terrain/FIRE.js</file>
         <file>mods/map_creator/scripts/terrain/FOG.js</file>
-        <file>mods/map_creator/scripts/terrain/FOREST.js</file>
         <file>mods/map_creator/scripts/terrain/METEOR.js</file>
         <file>mods/map_creator/scripts/terrain/MOUNTAIN.js</file>
         <file>mods/map_creator/scripts/terrain/PIPELINE.js</file>
@@ -5173,9 +5169,6 @@
         <file>resources/images/terrain/desert_ruin+0.png</file>
         <file>resources/images/terrain/desert_ruin+1.png</file>
         <file>resources/images/terrain/desert_ruin+2.png</file>
-        <file>resources/images/terrain/forest+N+S.png</file>
-        <file>resources/images/terrain/forest+N.png</file>
-        <file>resources/images/terrain/forest+S.png</file>
         <file>resources/images/terrain/mountain+N+S.png</file>
         <file>resources/images/terrain/mountain+N.png</file>
         <file>resources/images/terrain/mountain+S.png</file>
@@ -5248,21 +5241,6 @@
         <file>resources/images/terrain/beach+S+W.png</file>
         <file>resources/images/terrain/beach+S.png</file>
         <file>resources/images/terrain/beach+W.png</file>
-        <file>resources/images/terrain/forest+E+SE+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+E+SE+S.png</file>
-        <file>resources/images/terrain/forest+N+E+SE+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+E+SE+S+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+SW+W.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+SE+S.png</file>
-        <file>resources/images/terrain/forest+N+NE+E+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+NE+E.png</file>
-        <file>resources/images/terrain/forest+N+S+SW+W+NW.png</file>
-        <file>resources/images/terrain/forest+N+W+NW.png</file>
-        <file>resources/images/terrain/forest+S+SW+W.png</file>
         <file>resources/scripts/terrain/WASTE_FOREST.js</file>
         <file>resources/scripts/terrain/WASTE_MOUNTAIN.js</file>
         <file>resources/scripts/terrain/WASTE_RUIN.js</file>
@@ -5608,7 +5586,6 @@
         <file>resources/images/terrain/riverend+E+3+land+E+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+S.png</file>
         <file>resources/images/terrain/riverend+E+3+land+SE.png</file>
-        <file>resources/images/co/ac/co_davis+nrm.png</file>
         <file>resources/images/co/ac/co_mary+alt+table.png</file>
         <file>resources/images/co/ac/co_mary+table.png</file>
         <file>resources/images/co/ac/co_officier_ac+nrm.png</file>
@@ -5833,5 +5810,152 @@
         <file>resources/ui/humanQuickButtons.xml</file>
         <file>resources/objects/next_unit.png</file>
         <file>resources/objects/previous_unit.png</file>
+        <file>resources/images/co/bh/co_adder+alt2+mini.png</file>
+        <file>resources/images/co/bh/co_adder+alt2+table.png</file>
+        <file>resources/images/co/bh/co_flak+alt2+mini.png</file>
+        <file>resources/images/co/bh/co_flak+alt2+table.png</file>
+        <file>resources/images/co/bh/co_hawke+alt2+mini.png</file>
+        <file>resources/images/co/bh/co_hawke+alt2+table.png</file>
+        <file>resources/images/co/bh/co_lash+alt2+mini.png</file>
+        <file>resources/images/co/bh/co_lash+alt2+table.png</file>
+        <file>resources/images/co/bm/co_colin+alt2+mini.png</file>
+        <file>resources/images/co/bm/co_colin+alt2+table.png</file>
+        <file>resources/images/co/bm/co_grit+alt3+table.png</file>
+        <file>resources/images/co/bm/co_grit+alt4+mini.png</file>
+        <file>resources/images/co/bm/co_grit+alt4+table.png</file>
+        <file>resources/images/co/bm/co_grit+alt5+mini.png</file>
+        <file>resources/images/co/bm/co_grit+alt5+table.png</file>
+        <file>resources/images/co/bm/co_grit+alt6+mini.png</file>
+        <file>resources/images/co/bm/co_grit+alt6+table.png</file>
+        <file>resources/images/co/bm/co_olaf+alt2+table.png</file>
+        <file>resources/images/co/bm/co_olaf+alt3+table.png</file>
+        <file>resources/images/co/bm/co_olaf+alt4+mini.png</file>
+        <file>resources/images/co/bm/co_olaf+alt4+table.png</file>
+        <file>resources/images/co/ge/co_drake+alt2+table.png</file>
+        <file>resources/images/co/ge/co_drake+alt3+table.png</file>
+        <file>resources/images/co/ge/co_drake+alt4+mini.png</file>
+        <file>resources/images/co/ge/co_drake+alt4+table.png</file>
+        <file>resources/images/co/ge/co_eagle+alt2+table.png</file>
+        <file>resources/images/co/ge/co_eagle+alt3+mini.png</file>
+        <file>resources/images/co/ge/co_eagle+alt3+table.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+table.png</file>
+        <file>resources/images/co/os/co_andy+alt3+mini.png</file>
+        <file>resources/images/co/os/co_hachi+alt2+mini.png</file>
+        <file>resources/images/co/os/co_max+alt3+mini.png</file>
+        <file>resources/images/co/os/co_nell+alt4+mini.png</file>
+        <file>resources/images/co/os/co_sami+alt3+mini.png</file>
+        <file>resources/images/co/ti/co_davis+mini.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt2+table.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt3+table.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt4+mini.png</file>
+        <file>resources/images/co/yc/co_kanbei+alt4+table.png</file>
+        <file>resources/images/co/yc/co_sensei+alt2+mini.png</file>
+        <file>resources/images/co/yc/co_sensei+alt2+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt3+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt4+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt5+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt5+table.png</file>
+        <file>resources/images/co/yc/co_sonja+alt6+mini.png</file>
+        <file>resources/images/co/yc/co_sonja+alt6+table.png</file>
+        <file>resources/images/terrain/creeper+0.png</file>
+        <file>resources/images/terrain/creeper+0+E+S.png</file>
+        <file>resources/images/terrain/creeper+0+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+0+N+E.png</file>
+        <file>resources/images/terrain/creeper+0+N+E+S.png</file>
+        <file>resources/images/terrain/creeper+0+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+0+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+0+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+0+N+W.png</file>
+        <file>resources/images/terrain/creeper+0+S+W.png</file>
+        <file>resources/images/terrain/creeper+1.png</file>
+        <file>resources/images/terrain/creeper+1+N+E.png</file>
+        <file>resources/images/terrain/creeper+1+N+E+S.png</file>
+        <file>resources/images/terrain/creeper+1+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+1+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+1+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+1+N+W.png</file>
+        <file>resources/images/terrain/creeper+1+S+E.png</file>
+        <file>resources/images/terrain/creeper+1+S+E+W.png</file>
+        <file>resources/images/terrain/creeper+1+S+W.png</file>
+        <file>resources/images/terrain/creeper+2+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+2+N+E.png</file>
+        <file>resources/images/terrain/creeper+2+N+E+S.png</file>
+        <file>resources/images/terrain/creeper+2+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+2+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+2+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+2+S+E.png</file>
+        <file>resources/images/terrain/creeper+2+S+W.png</file>
+        <file>resources/images/terrain/creeper+3+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+3+N+E+S.png</file>
+        <file>resources/images/terrain/creeper+3+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+3+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+3+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+3+N+W.png</file>
+        <file>resources/images/terrain/creeper+3+S+E.png</file>
+        <file>resources/images/terrain/creeper+4+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+4+N+E+S.png</file>
+        <file>resources/images/terrain/creeper+4+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+4+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+4+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+4+N+W.png</file>
+        <file>resources/images/terrain/creeper+5+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+5+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+5+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+5+N+S+W.png</file>
+        <file>resources/images/terrain/creeper+5+N+W.png</file>
+        <file>resources/images/terrain/creeper+6+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+6+N+E+W.png</file>
+        <file>resources/images/terrain/creeper+7+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+8+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+9+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+10+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+11+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+12+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+13+N+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>        
+        <file>resources/images/terrain/forest_style0+E+W.png</file>
+        <file>resources/images/terrain/forest_style0+E.png</file>
+        <file>resources/images/terrain/forest_style0+NE.png</file>
+        <file>resources/images/terrain/forest_style0+NW.png</file>
+        <file>resources/images/terrain/forest_style0+SE.png</file>
+        <file>resources/images/terrain/forest_style0+SW.png</file>
+        <file>resources/images/terrain/forest_style0+W.png</file>
+        <file>resources/images/terrain/forest_style0.png</file>
+        <file>resources/images/terrain/forest_style1+E+W.png</file>
+        <file>resources/images/terrain/forest_style1+E.png</file>
+        <file>resources/images/terrain/forest_style1+NE.png</file>
+        <file>resources/images/terrain/forest_style1+NW.png</file>
+        <file>resources/images/terrain/forest_style1+SE.png</file>
+        <file>resources/images/terrain/forest_style1+SW.png</file>
+        <file>resources/images/terrain/forest_style1+W.png</file>
+        <file>resources/images/terrain/forest_style1.png</file>
+        <file>resources/images/terrain/forest_style2+E+W.png</file>
+        <file>resources/images/terrain/forest_style2+E.png</file>
+        <file>resources/images/terrain/forest_style2+NE.png</file>
+        <file>resources/images/terrain/forest_style2+NW.png</file>
+        <file>resources/images/terrain/forest_style2+SE.png</file>
+        <file>resources/images/terrain/forest_style2+SW.png</file>
+        <file>resources/images/terrain/forest_style2+W.png</file>
+        <file>resources/images/terrain/forest_style2.png</file>
+        <file>resources/images/terrain/forest_style3+E+W.png</file>
+        <file>resources/images/terrain/forest_style3+E.png</file>
+        <file>resources/images/terrain/forest_style3+NE.png</file>
+        <file>resources/images/terrain/forest_style3+NW.png</file>
+        <file>resources/images/terrain/forest_style3+SE.png</file>
+        <file>resources/images/terrain/forest_style3+SW.png</file>
+        <file>resources/images/terrain/forest_style3+W.png</file>
+        <file>resources/images/terrain/forest_style3.png</file>
+        <file>resources/images/terrain/reaf+1+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+2+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+3+N+E+S+W .png</file>
+        <file>resources/images/terrain/reaf+S+E.png</file>
+        <file>resources/images/terrain/river+N+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+N+W+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+S+land+E+NW+SW.png</file>
+        <file>resources/images/terrain/river+S+W+land+E+NW+SW.png</file>
+        <file>resources/images/co/ge/co_jess+alt2+mini.png</file>
+        <file>resources/scripts/terrain/FOREST1.js</file>
+        <file>resources/scripts/terrain/FOREST2.js</file>
+        <file>resources/scripts/terrain/FOREST3.js</file>
     </qresource>
 </RCC>

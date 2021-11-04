@@ -88,7 +88,6 @@ CO_LIN.getPerfectVision = function(co)
 {
     if (co.getIsCO0() === true)
     {
-        // return true if forest and reafs etc are disabled in fog of war see sonja
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
