@@ -5912,42 +5912,7 @@
         <file>resources/images/terrain/creeper+11+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+12+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+13+N+E+S+W.png</file>
-        <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/antitankcannon+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bd.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+dm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ma.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+pf.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/artillery+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/flak+yc.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/missile_sub.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+ac.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+bd.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+bh.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+bm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+dm.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+ge.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+gs.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+ma.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+os.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+pf.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+ti.xcf</file>
-        <file>resources/images/battleanimations/.gitraws/recon+yc.xcf</file>
+        <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>        
         <file>resources/images/terrain/forest_style0+E+W.png</file>
         <file>resources/images/terrain/forest_style0+E.png</file>
         <file>resources/images/terrain/forest_style0+NE.png</file>
