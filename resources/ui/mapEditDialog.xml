@@ -1,0 +1,453 @@
+<?xml version="1.0"?>
+<ui>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>settings.getWidth() - 20</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>settings.getWidth() / 2 - 300</x>
+                <y>10</y>
+                <width>600</width>
+                <height>60</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map Settings")</text>
+                <font>main48</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 20</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Name:")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 310</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The name of the map.")</tooltip>
+                <startValue>mapEdit.getMapName()</startValue>
+                <onEvent>mapEdit.setMapName(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Author:")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 310</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The author of the map.")</tooltip>
+                <startValue>mapEdit.getMapAuthor()</startValue>
+                <onEvent>mapEdit.setMapAuthor(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Description:")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>settings.getWidth() - 310</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The description for the map.")</tooltip>
+                <startValue>mapEdit.getMapDescription()</startValue>
+                <onEvent>mapEdit.setMapDescription(input)</onEvent>
+            </Textbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Script:")</text>
+                <font>main24</font>
+            </Label>
+            <Textbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <Id>"ScriptTextbox"</Id>
+                <width>settings.getWidth() - 470</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The relative path from the exe to the script associated with this map.")</tooltip>
+                <startValue>mapEdit.getMapScript()</startValue>
+                <onEvent>mapEdit.setMapScript(input)</onEvent>
+            </Textbox>
+            <Button>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Select File")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Shows the scriptfile select dialog ")</tooltip>
+                <onEvent>mapEdit.showSelectScript();</onEvent>
+            </Button>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Player:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>150</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of players for this map.")</tooltip>
+                <startValue>mapEdit.getMapPlayerCount()</startValue>
+                <infinite>0</infinite>
+                <min>2</min>
+                <max>100</max>
+                <onEvent>mapEdit.setMapPlayerCount(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Width:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The width of the map.")</tooltip>
+                <startValue>mapEdit.getMapWidth()</startValue>
+                <infinite>0</infinite>
+                <min>1</min>
+                <max>999</max>
+                <onEvent>mapEdit.setMapWidth(input)</onEvent>
+            </Spinbox>            
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Height:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The heigth of the map.")</tooltip>
+                <startValue>mapEdit.getMapHeight()</startValue>
+                <infinite>1</infinite>
+                <min>1</min>
+                <max>999</max>
+                <onEvent>mapEdit.setMapHeight(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Score Information")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Turn Limit:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of turns in which the map needs to be finished to get a maximum score.")</tooltip>
+                <startValue>mapEdit.getMapTurnLimit()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapEdit.setMapTurnLimit(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Deploy Limit:")</text>
+                <font>main24</font>
+            </Label>
+            <Spinbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <width>200</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","The amount of units allowed to be deploayed to get a maximum score.")</tooltip>
+                <startValue>mapEdit.getMapDeployLimit()</startValue>
+                <infinite>-1</infinite>
+                <min>0</min>
+                <max>999999</max>
+                <onEvent>mapEdit.setMapDeployLimit(input)</onEvent>
+            </Spinbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map Information")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Predeployed:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is predeoployed.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Predeployed)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Predeployed, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Map layout")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Mixed bases:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is a mixed bases map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_MixedBase)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_MixedBase, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Symetric:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is symetric.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Symetric)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Symetric, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","PvP:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is a player versus player map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_PvP)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_PvP, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","FTA:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map has a first turn advantage.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_FTA)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_FTA, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Versus AI:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed to be played against an ai.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_VsAi)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_VsAi, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Team Play:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed to be played teams versus teams.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_TeamPlay)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_TeamPlay, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Historical:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as historical map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Historical)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Historical, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Funds")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Low funds:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as low funds map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_LowFunds)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_LowFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","High funds:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as high funds map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_HighFunds)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_HighFunds, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>350</width>
+                <height>50</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Battle type")</text>
+                <font>main32</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Naval map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as naval map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Naval)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Naval, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Ground map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as ground map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Ground)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Ground, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Air map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as air map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Air)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Air, input);</onEvent>
+            </Checkbox>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>200</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","Scripted map:")</text>
+                <font>main24</font>
+            </Label>
+            <Checkbox>
+                <x>lastX + lastWidth + 10</x>
+                <y>lastY</y>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","If the map is designed as scripted map.")</tooltip>
+                <startValue>mapEdit.getMapFlag(GameEnums.MapFilterFlags_Scripted)</startValue>
+                <onEvent>mapEdit.setMapFlag(GameEnums.MapFilterFlags_Scripted, input);</onEvent>
+            </Checkbox>
+        </childs>
+    </Panel>
+    <Button>
+        <x>settings.getWidth() - 180</x>
+        <y>settings.getHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the map dialog")</tooltip>
+        <onEvent>mapEdit.finished();</onEvent>
+    </Button>
+    <Button>
+        <x>30</x>
+        <y>settings.getHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Cancel")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Cancel the map dialog")</tooltip>
+        <onEvent>mapEdit.finished();</onEvent>
+    </Button>
+</ui>
