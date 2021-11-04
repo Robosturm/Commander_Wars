@@ -10,13 +10,13 @@ namespace oxygine
     class ShaderProgram: public Object
     {
     public:
-        explicit ShaderProgram(QString vsShader, QString fsShader, const VertexDeclaration* decl);
+        explicit ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl);
         virtual ~ShaderProgram() = default;
         void bind();
         quint32 getID() const;
         qint32 getUniformLocation(const char* id) const;
     protected:
-        void compileShader(QOpenGLShader& shader, QString data);
+        void compileShader(QOpenGLShader& shader, const QString & data);
     private:
         QOpenGLShaderProgram m_program;
         QOpenGLShader m_vsShader;

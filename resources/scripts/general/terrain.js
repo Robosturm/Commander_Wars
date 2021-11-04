@@ -22,7 +22,8 @@ var TERRAIN =
     terrainGroupNameMapping = [qsTr("Sea"),
                                qsTr("Normal"),
                                qsTr("Desert"),
-                               qsTr("Snow")],
+                               qsTr("Snow"),
+                               qsTr("Waste")],
 
     getTerrainGroupName : function(item)
     {
@@ -58,7 +59,7 @@ var TERRAIN =
     loadBaseTerrain : function(terrain, currentTerrainID)
     {
     },
-    // called for loading the main sprite
+    
     loadBaseSprite : function(terrain)
     {
     },
@@ -143,7 +144,12 @@ var TERRAIN =
         {
             var upTerrain = map.getTerrain(x, y);
             id = upTerrain.getID();
-            if (upTerrain.getBuilding() !== null)
+            if (id === "ZWELD_E_W" ||
+                id === "ZWELD_N_S")
+            {
+                id = "PIPELINE";
+            }
+            else if (upTerrain.getBuilding() !== null)
             {
                 id = "BUILDING";
             }
@@ -158,7 +164,7 @@ var TERRAIN =
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
-    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",       ""]],
+    weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",        ""]],
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
                      ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
                      ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],
@@ -199,6 +205,28 @@ var TERRAIN =
         return speed;
     },
 
+    isPipeline : function(terrainId)
+    {
+        switch (terrainId)
+        {
+        case "DESERT_WELD":
+        case "SNOW_WELD":
+        case "WELD":
+        case "PIPELINE":
+        case "DESERT_PIPELINE":
+        case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
+            return true;
+        default:
+            return false;
+        }
+    },
+
     getTerrainBackgroundId : function(id, weatherModifier, pipe = false)
     {
         switch (id)
@@ -227,6 +255,12 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
             if (pipe)
             {
                 return "back_" + weatherModifier + "planes";
@@ -288,5 +322,15 @@ var TERRAIN =
                                   defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
+    },
+
+    // the tiles considered for flowing
+    getFlowTiles : function()
+    {
+        return [];
+    },
+    // gets called with a terrain pfs in order to create the flow sprites
+    updateFlowSprites : function(terrain, pPfs)
+    {
     },
 };

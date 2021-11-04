@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
 #include "3rd_party/oxygine-framework/oxygine/core/closure.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Object.h"
-#include <QVector>
+#include <vector>
 
 namespace oxygine
 {
@@ -67,21 +67,16 @@ namespace oxygine
         virtual void setEnabled(bool enabled);
 
     protected:
-
-        struct listenerbase
+        struct listener
         {
             EventCallback cb;
             qint32 id;
-        };
-
-        struct listener : public listenerbase
-        {
             eventType type;
         };
 
         qint32 m_lastID{0};
 
-        using listeners = QVector<listener>;
+        using listeners = std::vector<listener>;
         listeners m_listeners;
 
         bool m_enabled{true};

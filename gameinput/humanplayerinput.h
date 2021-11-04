@@ -82,7 +82,7 @@ public:
      * @brief createActionMenu creates the menu for selecting the next action
      * @param actionIDs
      */
-    void createActionMenu(QStringList actionIDs, qint32 x, qint32 y);
+    void createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y);
     /**
      * @brief attachActionMenu
      * @param x
@@ -162,15 +162,19 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
-    void menuItemSelected(QString itemID, qint32 cost);
+    void menuItemSelected(const QString & itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
     QStringList getViewplayerActionList();
     void autoEndTurn();
     void syncMarkedFields();
+    void nextTurn();
+    bool inputAllowed();
+    void gotoNext();
+    void gotoPrevious();
+    void performBasicAction(QString action);
 protected slots:
     void zoomChanged(float zoom);
-    void nextTurn();
 protected:
     void nextMarkedField();
     void previousMarkedField();

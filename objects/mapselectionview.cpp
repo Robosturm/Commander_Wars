@@ -145,8 +145,6 @@ MapSelectionView::MapSelectionView()
     m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, GameMap::getImageSize() * 1.2f + 32);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
-    m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     oxygine::TextStyle styleMain16 = oxygine::TextStyle(FontManager::getMainFont16());
     styleMain16.color = FontManager::getFontColor();
     styleMain16.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -367,15 +365,15 @@ void MapSelectionView::loadMapVictoryInfo()
                 pSprite = oxygine::spSprite::create();
                 if (!co1.isEmpty())
                 {
-                    pAnim = pCOSpriteManager->getResAnim(co1 + "+info");
+                    pAnim = pCOSpriteManager->getResAnim(co1 + "+info", oxygine::ep_ignore_error);
                 }
                 else
                 {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info", oxygine::ep_ignore_error);
                 }
                 if (pAnim == nullptr)
                 {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info", oxygine::ep_ignore_error);
                 }
                 if (pAnim != nullptr)
                 {
@@ -385,15 +383,15 @@ void MapSelectionView::loadMapVictoryInfo()
                     m_pVictoryInfo->addChild(pSprite);
                     if (!co2.isEmpty())
                     {
-                        pAnim = pCOSpriteManager->getResAnim(co2 + "+info");
+                        pAnim = pCOSpriteManager->getResAnim(co2 + "+info", oxygine::ep_ignore_error);
                     }
                     else
                     {
-                        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                        pAnim = pCOSpriteManager->getResAnim("no_co+info", oxygine::ep_ignore_error);
                     }
                     if (pAnim == nullptr)
                     {
-                        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                        pAnim = pCOSpriteManager->getResAnim("no_co+info", oxygine::ep_ignore_error);
                     }
                     pSprite = oxygine::spSprite::create();
                     if (pAnim != nullptr)

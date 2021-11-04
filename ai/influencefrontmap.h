@@ -80,7 +80,7 @@ private:
      * @param unitId
      * @param unitIdToIsland
      */
-    qint32 getIslandFromUnitId(QString unitId, QMap<QString, qint32> & unitIdToIsland);
+    qint32 getIslandFromUnitId(const QString & unitId, QMap<QString, qint32> & unitIdToIsland);
     /**
      * @brief findFrontLineTiles
      */

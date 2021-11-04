@@ -17,7 +17,6 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamerulemanager.h"
 
-#include "game/terrain.h"
 #include "game/unit.h"
 #include "game/player.h"
 #include "game/co.h"
@@ -25,6 +24,7 @@
 #include "game/gameanimation/gameanimationnextday.h"
 #include "game/building.h"
 #include "game/gamemap.h"
+#include "game/terrainfindingsystem.h"
 
 #include "gameinput/humanplayerinput.h"
 
@@ -54,7 +54,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    m_mapAuthor = Settings::getUsername();
+    m_headerInfo.m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
     m_loaded = true;
@@ -100,7 +100,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
 
 void GameMap::setMapNameFromFilename(QString filename)
 {
-    if (m_mapName.isEmpty())
+    if (m_headerInfo.m_mapName.isEmpty())
     {
         QStringList items = filename.split("/");
         if (items.size() > 0)
@@ -108,7 +108,7 @@ void GameMap::setMapNameFromFilename(QString filename)
             items = items[items.size() - 1].split(".");
             if (items.size() > 0)
             {
-                m_mapName = items[0];
+                m_headerInfo.m_mapName = items[0];
             }
         }
     }
@@ -125,6 +125,7 @@ void GameMap::loadMapData()
         setZoom(1);
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
+    connect(this, &GameMap::sigZoomChanged, this, &GameMap::zoomChanged, Qt::QueuedConnection);
 }
 
 void GameMap::setIsHumanMatch(bool newIsHumanMatch)
@@ -147,13 +148,13 @@ void GameMap::registerMapAtInterpreter()
 
 qint32 GameMap::getUniqueIdCounter()
 {
-    m_UniqueIdCounter++;
+    m_headerInfo.m_uniqueIdCounter++;
     // gurantee that the counter is never 0
-    if (m_UniqueIdCounter == 0)
+    if (m_headerInfo.m_uniqueIdCounter == 0)
     {
-        m_UniqueIdCounter++;
+        m_headerInfo.m_uniqueIdCounter++;
     }
-    return m_UniqueIdCounter;
+    return m_headerInfo.m_uniqueIdCounter;
 }
 
 bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction)
@@ -438,10 +439,26 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
+void GameMap::onWeatherChanged(Weather* pWeather)
+{
+    CONSOLE_PRINT("GameMap::onWeatherChanged()", Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            if (m_fields[y][x]->getBuilding() != nullptr)
+            {
+                m_fields[y][x]->getBuilding()->onWeatherChanged(pWeather);
+            }
+        }
+    }
+}
+
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
     CONSOLE_PRINT("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
-
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
@@ -453,6 +470,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     setWidth(width * GameMap::getImageSize());
     setHeight(heigth * GameMap::getImageSize());
 
+    QVector<QPoint> flowPoints;
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites
@@ -464,64 +482,97 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                m_fields[y][x]->loadSprites();
-                if (m_fields[y][x]->getUnit() != nullptr)
-                {
-                    m_fields[y][x]->getUnit()->updateSprites(editor);
-                }
-                if (m_fields[y][x]->getBuilding() != nullptr)
-                {
-                    m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
-                }
+                updateTileSprites(x, y, flowPoints, editor);
             }
         }
     }
     else
     {
         // more optimized for a single terrain :)
-        for (qint32 y = yInput -1; y <= yInput + 1; y++)
+        for (qint32 y = yInput -3; y <= yInput + 3; y++)
         {
-            for (qint32 x = xInput -1; x <= xInput + 1; x++)
+            for (qint32 x = xInput -3; x <= xInput + 3; x++)
             {
                 if (onMap(x, y))
                 {
-                    m_fields[y][x]->loadSprites();
-                    if (m_fields[y][x]->getUnit() != nullptr)
-                    {
-                        m_fields[y][x]->getUnit()->updateSprites(editor);
-                    }
-                    if (m_fields[y][x]->getBuilding() != nullptr)
-                    {
-                        m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
-                    }
-                }
-            }
-            for (qint32 x = xInput + 2; x < width; x++)
-            {
-                if (onMap(x, y))
-                {
-                    spTerrain pTerrain = m_fields[y][x];
-                    pTerrain->detach();
-                    addChild(pTerrain);
+                    updateTileSprites(x, y, flowPoints, editor);
                 }
             }
         }
     }
+    updateFlowTiles(flowPoints);
+    syncTerrainAnimations(showLoadingScreen);
+    finishUpdateSprites(showLoadingScreen);
+}
 
-    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
-    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
-    for (qint32 y = 0; y < heigth; y++)
+void GameMap::updateSpritesOfTiles(const QVector<QPoint> & points, bool editor, bool showLoadingScreen)
+{
+    QVector<QPoint> flowPoints;
+    for (const auto & point : points)
     {
-        if (showLoadingScreen)
+        for (qint32 y = point.y() -3; y <= point.y() + 3; y++)
         {
-            pLoadingScreen->setProgress(tr("Synchronizing Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 50 + 40 * y / heigth);
+            for (qint32 x = point.x() -3; x <= point.x() + 3; x++)
+            {
+                if (!points.contains(QPoint(x, y)))
+                {
+                    if (onMap(x, y))
+                    {
+                        updateTileSprites(x, y, flowPoints, editor);
+                    }
+                }
+            }
         }
-        for (qint32 x = 0; x < width; x++)
+        if (onMap(point.x(), point.y()))
         {
-            m_fields[y][x]->syncAnimation(timeMs);
+            updateTileSprites(point.x(), point.y(), flowPoints, editor);
         }
     }
-    
+    updateFlowTiles(flowPoints);
+    syncTerrainAnimations(showLoadingScreen);
+    finishUpdateSprites(showLoadingScreen);
+}
+
+void GameMap::updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor)
+{
+    if (m_fields[y][x]->getHasFlowDirection() &&
+        !m_fields[y][x]->getFixedSprite())
+    {
+        flowPoints.append(QPoint(x, y));
+    }
+    else
+    {
+        m_fields[y][x]->loadSprites();
+    }
+    if (m_fields[y][x]->getUnit() != nullptr)
+    {
+        m_fields[y][x]->getUnit()->updateSprites(editor);
+    }
+    if (m_fields[y][x]->getBuilding() != nullptr)
+    {
+        m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
+    }
+}
+
+void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
+{
+    while (flowPoints.size() > 0)
+    {
+        QPoint pos = flowPoints[0];
+        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
+        pPfs->explore();
+        m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
+        auto points = pPfs->getAllNodePoints();
+        for (const auto & point : qAsConst(points))
+        {
+            flowPoints.removeAll(point);
+        }
+    }
+}
+
+void GameMap::finishUpdateSprites(bool showLoadingScreen)
+{
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading weather for snowy times"), 95);
@@ -538,6 +589,26 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     if (showLoadingScreen)
     {
         pLoadingScreen->hide();
+    }
+}
+
+void GameMap::syncTerrainAnimations(bool showLoadingScreen)
+{
+    CONSOLE_PRINT("synchronizing animations", Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    auto timeMs = oxygine::Stage::getStage()->getClock()->getTime();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        if (showLoadingScreen)
+        {
+            pLoadingScreen->setProgress(tr("Synchronizing Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 50 + 40 * y / heigth);
+        }
+        for (qint32 x = 0; x < width; x++)
+        {
+            m_fields[y][x]->syncAnimation(timeMs);
+        }
     }
 }
 
@@ -633,7 +704,7 @@ void GameMap::removePlayer(qint32 index)
     m_players.removeAt(index);
 }
 
-Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
+Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range)
 {
     CONSOLE_PRINT("spawning Unit", Console::eDEBUG);
     if (owner != nullptr)
@@ -779,7 +850,7 @@ qint32 GameMap::getMapHeight() const
     return m_fields.size();
 }
 
-qint32 GameMap::getBuildingCount(QString buildingID)
+qint32 GameMap::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
     qint32 width = getMapWidth();
@@ -990,12 +1061,15 @@ void GameMap::setZoom(float zoom)
     {
         pMenu->updateSlidingActorSize();
     }
-
-    Interpreter::getInstance()->doFunction("onZoomLevelChanged");
     emit sigZoomChanged(curZoom);
 }
 
-void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
+void GameMap::zoomChanged()
+{
+    Interpreter::getInstance()->doFunction("onZoomLevelChanged");
+}
+
+void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
 {
     if (onMap(x, y))
     {
@@ -1006,7 +1080,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
             pTerrainOld->setUnit(spUnit());
 
-            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID());
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
@@ -1049,7 +1123,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
     }
 }
 
-void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
+void GameMap::replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool callUpdateSprites, bool checkPlacement)
 {
     replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
     if (checkPlacement)
@@ -1062,7 +1136,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
     }
 }
 
-void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
+void GameMap::replaceBuilding(const QString & buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
@@ -1097,7 +1171,7 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
-bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
+bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
@@ -1122,13 +1196,15 @@ void GameMap::serializeObject(QDataStream& pStream) const
     qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
-    pStream << m_mapName;
-    pStream << m_mapAuthor;
-    pStream << m_mapDescription;
+    pStream << m_headerInfo.m_mapName;
+    pStream << m_headerInfo.m_mapAuthor;
+    pStream << m_headerInfo.m_mapDescription;
     pStream << width;
     pStream << heigth;
-    pStream << m_UniqueIdCounter;
+    pStream << m_headerInfo.m_uniqueIdCounter;
     pStream << getPlayerCount();
+    updateMapFlags();
+    pStream << static_cast<quint64>(m_headerInfo.m_mapFlags);
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < m_players.size(); i++)
     {
@@ -1170,31 +1246,68 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << m_isHumanMatch;
 }
 
-void GameMap::readMapHeader(QDataStream& pStream,
-                            qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
-                            qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter)
+void GameMap::updateMapFlags() const
 {
-    pStream >> version;
-    if (version > 1)
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
     {
-        pStream >> mapName;
+        for (qint32 x = 0; x < width; x++)
+        {
+            QString id = m_fields[y][x]->getID();
+            if (id == "TELEPORTTILE")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Teleport);
+            }
+            else if (id == "FACTORY")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Bases);
+            }
+            else if (id == "AIRPORT")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Airport);
+            }
+            else if (id == "HARBOUR")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Harbour);
+            }
+            else if (id == "TOWER")
+            {
+                m_headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(m_headerInfo.m_mapFlags | GameEnums::MapFilterFlags_Tower);
+            }
+        }
     }
-    if (version > 4)
+}
+
+void GameMap::readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo)
+{
+    pStream >> headerInfo.m_Version;
+    if (headerInfo.m_Version > 1)
     {
-        pStream >> mapAuthor;
-        pStream >> mapDescription;
+        pStream >> headerInfo.m_mapName;
     }
-    pStream >> width;
-    pStream >> heigth;
-    if (version > 6)
+    if (headerInfo.m_Version > 4)
     {
-        pStream >> uniqueIdCounter;
+        pStream >> headerInfo.m_mapAuthor;
+        pStream >> headerInfo.m_mapDescription;
+    }
+    pStream >> headerInfo.m_width;
+    pStream >> headerInfo.m_heigth;
+    if (headerInfo.m_Version > 6)
+    {
+        pStream >> headerInfo.m_uniqueIdCounter;
     }
     else
     {
-        uniqueIdCounter = 0;
+        headerInfo.m_uniqueIdCounter = 0;
     }
-    pStream >> playerCount;
+    pStream >> headerInfo.m_playerCount;
+    if (headerInfo.m_Version > 11)
+    {
+        quint64 flags;
+        pStream >> flags;
+        headerInfo.m_mapFlags = static_cast<GameEnums::MapFilterFlags>(flags);
+    }
 }
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
@@ -1202,15 +1315,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     clearMap();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
-    qint32 version = 0;
-    qint32 heigth = 0;
-    qint32 width = 0;
-    qint32 playerCount = 0;
-    readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
-                  width, heigth, playerCount, m_UniqueIdCounter);
-    CONSOLE_PRINT("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
-    qint32 mapSize = width * heigth;
-    setSize(width * GameMap::getImageSize(), heigth * GameMap::getImageSize());
+    readMapHeader(pStream, m_headerInfo);
+
+    CONSOLE_PRINT("Loading map " + m_headerInfo.m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
+    qint32 mapSize = m_headerInfo.m_width * m_headerInfo.m_heigth;
+    setSize(m_headerInfo.m_width * GameMap::getImageSize(), m_headerInfo.m_heigth * GameMap::getImageSize());
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {
@@ -1220,8 +1329,8 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
-    CONSOLE_PRINT("Loading players count: " + QString::number(playerCount), Console::eDEBUG);
-    for (qint32 i = 0; i < playerCount; i++)
+    CONSOLE_PRINT("Loading players count: " + QString::number(m_headerInfo.m_playerCount), Console::eDEBUG);
+    for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
         // create player
         m_players.append(spPlayer::create());
@@ -1230,21 +1339,21 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
 
     qint32 currentPlayerIdx = 0;
-    if (version > 1)
+    if (m_headerInfo.m_Version > 1)
     {
         pStream >> currentPlayerIdx;
         pStream >> m_currentDay;
     }
 
     // restore map
-    for (qint32 y = 0; y < heigth; y++)
+    for (qint32 y = 0; y < m_headerInfo.m_heigth; y++)
     {
         if (showLoadingScreen)
         {
-            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
+            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(m_headerInfo.m_heigth), 5 + 75 * y / m_headerInfo.m_heigth);
         }
         m_fields.push_back(std::vector<spTerrain>());
-        for (qint32 x = 0; x < width; x++)
+        for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
             m_fields[y].push_back(pTerrain);
@@ -1270,7 +1379,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
     }
-    if (version > 2)
+    if (m_headerInfo.m_Version > 2)
     {
         m_Rules->deserializer(pStream, fast);
     }
@@ -1280,7 +1389,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Record"), 85);
         }
-        if (version > 3)
+        if (m_headerInfo.m_Version > 3)
         {
             m_Recorder->deserializeObject(pStream);
         }
@@ -1288,7 +1397,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading scripts"), 90);
         }
-        if (version > 5)
+        if (m_headerInfo.m_Version > 5)
         {
             m_GameScript->deserializeObject(pStream);
         }
@@ -1300,7 +1409,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
         }
-        if (version > 7)
+        if (m_headerInfo.m_Version > 7)
         {
             bool exists = false;
             pStream >> exists;
@@ -1310,17 +1419,17 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 m_Campaign->deserializeObject(pStream);
             }
         }
-        if (version > 8)
+        if (m_headerInfo.m_Version > 8)
         {
             pStream >> m_mapPath;
         }
-        if (version > 9)
+        if (m_headerInfo.m_Version > 9)
         {
             pStream >> m_mapMusic;
             pStream >> m_startLoopMs;
             pStream >> m_endLoopMs;
         }
-        if (version > 10)
+        if (m_headerInfo.m_Version > 10)
         {
             pStream >> m_isHumanMatch;
         }
@@ -1620,22 +1729,22 @@ GameRecorder* GameMap::getGameRecorder()
 
 QString GameMap::getMapDescription() const
 {
-    return m_mapDescription;
+    return m_headerInfo.m_mapDescription;
 }
 
 void GameMap::setMapDescription(const QString &value)
 {
-    m_mapDescription = value;
+    m_headerInfo.m_mapDescription = value;
 }
 
 QString GameMap::getMapAuthor() const
 {
-    return m_mapAuthor;
+    return m_headerInfo.m_mapAuthor;
 }
 
 void GameMap::setMapAuthor(const QString &value)
 {
-    m_mapAuthor = value;
+    m_headerInfo.m_mapAuthor = value;
 }
 
 qint32 GameMap::getCurrentDay() const
@@ -1930,7 +2039,7 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     return ret;
 }
 
-QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
+QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer, QString id)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1942,7 +2051,8 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
             spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr && pBuilding->getTerrain() == m_fields[y][x].get())
             {
-                if ((pBuilding->getOwner() == pPlayer))
+                if (pBuilding->getOwner() == pPlayer &&
+                    (id.isEmpty() || pBuilding->getBuildingID() == id))
                 {
                     ret->append(pBuilding.get());
                 }
@@ -1954,12 +2064,12 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
 
 QString GameMap::getMapName() const
 {
-    return m_mapName;
+    return m_headerInfo.m_mapName;
 }
 
 void GameMap::setMapName(const QString &value)
 {
-    m_mapName = value;
+    m_headerInfo.m_mapName = value;
 }
 
 void GameMap::nextTurnPlayerTimeout()
@@ -2192,9 +2302,9 @@ void GameMap::showGrid(bool show)
         for (qint32 x = 1; x < mapWidth; ++x)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-            pSprite->setSize(1, mapHeight * m_imagesize + 1);
+            pSprite->setSize(1, mapHeight * m_imagesize);
             pSprite->setColor(gridColor);
-            pSprite->setPosition(x * m_imagesize - 1, 1);
+            pSprite->setPosition(x * m_imagesize, 0);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
             addChild(pSprite);
             m_gridSprites.append(pSprite);
@@ -2202,8 +2312,8 @@ void GameMap::showGrid(bool show)
         for (qint32 y = 1; y < mapHeight; ++y)
         {
             oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-            pSprite->setSize(mapWidth * m_imagesize + 1, 1);
-            pSprite->setPosition(1, y * m_imagesize - 1);
+            pSprite->setSize(mapWidth * m_imagesize, 1);
+            pSprite->setPosition(0, y * m_imagesize);
             pSprite->setColor(gridColor);
             pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
             addChild(pSprite);
@@ -2225,20 +2335,30 @@ void GameMap::showMiddleCrossGrid(bool show)
         float mapHeight = getMapHeight();
         QColor gridColor = getGridColor();
         oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
-        pSprite->setSize(3, mapHeight * m_imagesize + 1);
+        pSprite->setSize(3, mapHeight * m_imagesize);
         pSprite->setColor(gridColor);
-        pSprite->setPosition(mapWidth / 2.0f * m_imagesize, 1);
+        pSprite->setPosition(mapWidth * 0.5f * m_imagesize - 1, 0);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
         pSprite = oxygine::spColorRectSprite::create();
-        pSprite->setSize(mapWidth * m_imagesize + 1, 3);
-        pSprite->setPosition(1, mapHeight / 2 * m_imagesize);
+        pSprite->setSize(mapWidth * m_imagesize, 3);
+        pSprite->setPosition(0, mapHeight * 0.5f * m_imagesize - 1);
         pSprite->setColor(gridColor);
         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::GridLayout));
         addChild(pSprite);
         m_middleCrossGridSprites.append(pSprite);
     }
+}
+
+GameEnums::MapFilterFlags GameMap::getMapFlags() const
+{
+    return m_headerInfo.m_mapFlags;
+}
+
+void GameMap::setMapFlags(GameEnums::MapFilterFlags flags)
+{
+    m_headerInfo.m_mapFlags = flags;
 }
 
 QColor GameMap::getGridColor()

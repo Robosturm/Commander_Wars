@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsPlains = terrain.getSurroundings("PLAINS,WASTELAND,SEA", true, false, GameEnums.Directions_Direct, false);
+        var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
         {
             terrain.loadOverlaySprite("plains+N");
@@ -47,7 +47,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Snowy terrain reduces rough to cross.");
+        return qsTr("Snowy terrain rough to cross.");
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

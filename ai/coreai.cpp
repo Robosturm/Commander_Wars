@@ -447,7 +447,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
             }
             else
             {
-                if (isAttackOnTerrainAllowed(pTerrain))
+                if (isAttackOnTerrainAllowed(pTerrain, damage.x()))
                 {
                     if (ret.size() == 0)
                     {
@@ -487,7 +487,8 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFinding
             QVector<QPoint> targets = pPfs->getAllNodePoints();
             for (qint32 i2 = 0; i2 < targets.size(); i2++)
             {
-                if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
+                Terrain* pTerrain = pMap->getTerrain(targets[i2].x(), targets[i2].y());
+                if (pTerrain->getUnit() == nullptr)
                 {
                     pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
                     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -531,7 +532,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
             }
             else
             {
-                if (isAttackOnTerrainAllowed(pTerrain))
+                if (isAttackOnTerrainAllowed(pTerrain, damage.x()))
                 {
                     ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue, damage.x()));
                     QPoint point = pAction->getActionTarget();
@@ -542,14 +543,17 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
     }
 }
 
-bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
+bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage)
 {
-    Building* pBuilding = pTerrain->getBuilding();
-    if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-        (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner() != m_pPlayer) ||
-        (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
+    if (damage >= m_minTerrainDamage)
     {
-        return true;
+        Building* pBuilding = pTerrain->getBuilding();
+        if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+            (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != nullptr && pBuilding->getOwner() != m_pPlayer) ||
+            (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
+        {
+            return true;
+        }
     }
     return false;
 }
@@ -1020,7 +1024,7 @@ bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUn
     return found;
 }
 
-void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
 {
     spQmlVectorPoint unitFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
     spGameMap pMap = GameMap::getInstance();
@@ -1071,7 +1075,7 @@ void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQml
     }
 }
 
-void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1303,7 +1307,8 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits
             {
                 // could we beat his ass? -> i mean can we attack him
                 // if so this is a great island
-                if (pLoadedUnit->isAttackable(pEnemy, true))
+                if (pLoadedUnit->isAttackable(pEnemy, true) ||
+                    pLoadedUnit->getLoadedUnitCount() > 0)
                 {
                     checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
                                             loadedUnitIslandIdx[i2], targetIsland, pUnloadArea.get(), targets);
@@ -1618,8 +1623,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
             for (qint32 y = 0; y < heigth; y++)
             {
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                if (isAttackOnTerrainAllowed(pTerrain) &&
-                    pUnit->isEnvironmentAttackable(pTerrain->getID()))
+                if (isAttackOnTerrainAllowed(pTerrain, pUnit->getEnvironmentDamage(pTerrain->getID())))
                 {
                     for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
                     {
@@ -1693,7 +1697,7 @@ bool CoreAI::isRefuelUnit(Unit* pUnit)
     return isRefuelUnit(list);
 }
 
-bool CoreAI::isRefuelUnit(QStringList & actionList)
+bool CoreAI::isRefuelUnit(const QStringList & actionList)
 {
     return actionList.contains(ACTION_SUPPORTALL_RATION) ||
            actionList.contains(ACTION_SUPPORTALL_RATION_MONEY) ||
@@ -1702,7 +1706,7 @@ bool CoreAI::isRefuelUnit(QStringList & actionList)
            actionList.contains(ACTION_SUPPORTSINGLE_SUPPLY);
 }
 
-void CoreAI::createIslandMap(QString movementType, QString unitID)
+void CoreAI::createIslandMap(const QString & movementType, const QString & unitID)
 {
     bool found = false;
 
@@ -1760,7 +1764,7 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding)
     return false;
 }
 
-bool CoreAI::onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
+bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -2124,6 +2128,13 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
         return true;
     }
     return false;
+}
+
+bool CoreAI::isMoveableTile(Building* pBuilding)
+{
+    return pBuilding == nullptr || pBuilding->getOwner() == nullptr ||
+            pBuilding->getOwner()->isEnemy(m_pPlayer) ||
+            !pBuilding->isProductionBuilding();
 }
 
 void CoreAI::serializeObject(QDataStream& stream) const

@@ -147,7 +147,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction
@@ -321,7 +321,7 @@ protected:
      * @param unitId
      * @return
      */
-    qint32 getUnitProductionIdx(qint32 index, QString unitId,
+    qint32 getUnitProductionIdx(qint32 index, const QString & unitId,
                                 spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
                                 spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                 QVector<QVector4D> & attackCount, QVector<float> & buildData);
@@ -429,6 +429,7 @@ private:
     float m_minAttackFunds{0.0f};
     float m_minSuicideDamage{0.75f};
     float m_spamingFunds{7500};
+    float m_ownProdctionMalus{5000.0f};
 
     float m_minUnitHealth{3};
     float m_maxUnitHealth{7};

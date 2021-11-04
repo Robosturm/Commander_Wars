@@ -44,7 +44,7 @@ private:
     /**
      * @brief getNameList
      */
-    QVector<QString> getNameList();
+    QStringList getNameList();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;

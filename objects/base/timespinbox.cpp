@@ -17,8 +17,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
     m_Textbox = oxygine::spBox9Sprite::create();
-    m_Textbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setResAnim(pAnim);
     m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -44,8 +42,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     addChild(m_Textbox);
 
     m_pSpinBox = oxygine::spBox9Sprite::create();
-    m_pSpinBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pSpinBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pSpinBox->setResAnim(pAnim);
     m_pSpinBox->setSize(width - m_Textbox->getWidth(), 40);
     m_pSpinBox->setX(m_Textbox->getWidth());

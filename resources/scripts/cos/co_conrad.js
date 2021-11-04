@@ -9,7 +9,7 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
+        
         return ["+alt"];
     };
 
@@ -25,7 +25,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
     };
-
+    this.bonusLuckDamage = 50;
     this.activateSuperpower = function(co, powerMode)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -75,7 +75,7 @@ var Constructor = function()
 
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
-        dmgModVar.writeDataFloat(50);
+        dmgModVar.writeDataFloat(CO_CONRAD.bonusLuckDamage);
     };
 
     this.loadCOMusic = function(co)
@@ -258,25 +258,25 @@ var Constructor = function()
     };
     this.getHits = function(co)
     {
-        return qsTr("Techno");
+        return qsTr("Precise Information");
     };
     this.getMiss = function(co)
     {
-        return qsTr("Blackouts");
+        return qsTr("Unknown Variables");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Units have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range but they have weak counters.");
+        return qsTr("Conrad is so focused on being precise that it leaves no room for lucky strikes and units have weaker counter strength. However, units are good at assisting one another with information.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nIntel truck\n") +
-               qsTr("\nGlobal Effect: \nUnits deal no luck damage. Units gain  firepower for own units in vision range. Counter attacks are weaker.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower for own units in vision range.");
+               qsTr("\nGlobal Effect: \nConrad's units gain firepower when attacking an enemy unit that is within vision range of Conrad's units, including enhanced vision from terrain. The more of Conrad's units that has sight on an enemy unit, the stronger the firepower. Counter attacks are slightly weaker and units are never lucky.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower for each unit within vision range.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Unit vision is extended. Firepower increases even more as more units are within vision range.");
+        return qsTr("Unit vision is extended and all units get firepower bonuses for enemy units in vision range.");
     };
     this.getPowerName = function(co)
     {
@@ -284,7 +284,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Conrad's first attack deals +50% luck damage. If Conrad would deal over 100%, the damage is rolled over to the next engagement.");
+        var text = qsTr("Conrad's very first attack of the turn deals +%0% luck damage. For the entire turn, all percent damage that exceeds the enemy's current health is carried over to the next engagement.");
+        text = replaceTextArgs(text, [CO_CONRAD.bonusLuckDamage]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -293,22 +295,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("You might be more experienced, but that doesn't mean I can't teach you a thing or two!"),
-                qsTr("I won't go down that easily! This battle isn't even close to finished!"),
-                qsTr("The chances of you pulling through are pretty slim. Believe me, I would know!"),
-                qsTr("My attack plan is perfect! Even I can't mess it up!"),
-                qsTr("Your strategy doesn't add up. Mine practically multiplies!"),
-                qsTr("Don't make me angry! ...It makes me screw up my numbers.")];
+                qsTr("I won't go down that easily! This battle isn't even close to being finished!"),
+                qsTr("You have a 0.001% chance of surviving this battle with me."),
+                qsTr("My attack plan is perfect! I don't need luck!"),
+                qsTr("Your strategy doesn't quite add up to par with mine!"),
+                qsTr("I have all the information I need to turn this battle around.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("Solid tactics get solid results!"),
-                qsTr("That was easier than I expected. Were my numbers off?"),
+                qsTr("That was as easy as I expected it to be. Numbers don't lie."),
                 qsTr("Either I'm getting better, or you guys are getting worse!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("What? I didn't see that."),
-                qsTr("How could you hide from me?")];
+        return [qsTr("I obviously have more to learn."),
+                qsTr("Dis I miscalculate?... Impossible!")];
     };
     this.getName = function()
     {

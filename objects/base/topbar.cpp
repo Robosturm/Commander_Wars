@@ -11,8 +11,6 @@ Topbar::Topbar(qint32 x, qint32 width)
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = oxygine::spBox9Sprite::create();
-    m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     addChild(m_pSpriteBox);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editorselection");
     m_pSpriteBox->setResAnim(pAnim);
@@ -45,8 +43,6 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pTooltip->setTooltipText(tooltip);
     pTooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-    pBox->setVerticalMode(oxygine::Box9Sprite::TILING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
     pBox->setResAnim(pAnim);
     oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     clipRect->setSize(280, 40);

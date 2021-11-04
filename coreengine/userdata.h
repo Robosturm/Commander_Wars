@@ -2,11 +2,9 @@
 #define USERDATA_H
 
 #include <QObject>
-
-#include <qimage.h>
-
-#include <qvector.h>
-#include <qmap.h>
+#include <QImage>
+#include <QVector>
+#include <QMap>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -247,7 +245,7 @@ public slots:
      * @param filename
      * @return
      */
-    ScriptVariableFile* getScriptVariableFile(QString filename);
+    ScriptVariableFile* getScriptVariableFile(const QString & filename);
 private:
     void showAchieved();
     void reset();

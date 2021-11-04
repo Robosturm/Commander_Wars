@@ -27,7 +27,7 @@ void GameManager::loadAll()
     RessourceManagement<GameManager>::loadAll(m_loadedHeavyAis);
 }
 
-QString GameManager::getActionIcon(QString actionID)
+QString GameManager::getActionIcon(const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
@@ -40,7 +40,7 @@ QString GameManager::getActionIcon(QString actionID)
     return "";
 }
 
-oxygine::spSprite GameManager::getIcon(QString icon)
+oxygine::spSprite GameManager::getIcon(const QString & icon)
 {
     oxygine::ResAnim* pAnim = getResAnim(icon, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -87,7 +87,7 @@ oxygine::spSprite GameManager::getIcon(QString icon)
     return oxygine::spSprite();
 }
 
-oxygine::spSprite GameManager::getIconSprite(QString icon)
+oxygine::spSprite GameManager::getIconSprite(const QString & icon)
 {
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     GameManager* pGameManager = GameManager::getInstance();

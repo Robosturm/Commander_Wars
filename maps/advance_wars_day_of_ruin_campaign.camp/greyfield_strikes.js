@@ -219,7 +219,7 @@ var Constructor = function() { // scriptStart
         if (map.getCampaign() !== null){
             var campaignVariables = map.getCampaign().getVariables();
         }
-        var unit = action.getTargetUnit();
+        var unit = action.getPerformingUnit();
         if (unit !== null && unit.getOwner().getPlayerID() === 0 &&
             unit.getUnitID() === unitId)
         {

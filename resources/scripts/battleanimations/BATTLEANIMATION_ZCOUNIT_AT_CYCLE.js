@@ -11,6 +11,7 @@ var Constructor = function()
         // get army name
         sprite.loadSpriteV2("at_cycle+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_AT_CYCLE.getMaxUnitCount(), Qt.point(-15, 5));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -28,6 +29,7 @@ var Constructor = function()
         {
             sprite.loadSound("baazoka_fire.wav", 1, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

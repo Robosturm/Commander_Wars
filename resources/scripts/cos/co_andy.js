@@ -3,8 +3,8 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
-        return ["+alt", "+alt2"];
+
+        return ["+alt", "+alt2", "+alt3"];
     };
 
     this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
@@ -231,8 +231,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tank\n") +
-                   qsTr("\nGlobal Effect: \nNo bonus.") +
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n") +
+                   qsTr("\nGlobal Effect: \nNone") +
                    qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
         return text;

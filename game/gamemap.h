@@ -23,13 +23,13 @@
 #include <vector>
 
 class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
 class GameMap;
-typedef oxygine::intrusive_ptr<GameMap> spGameMap;
+using spGameMap = oxygine::intrusive_ptr<GameMap>;
 
 class InGameMenue;
-typedef oxygine::intrusive_ptr<InGameMenue> spInGameMenue;
+using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
 
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -37,6 +37,22 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 public:
     static const qint32 frameTime;
     static constexpr qint32 defaultImageSize = 32;
+    /**
+     * @brief The MapHeaderInfo struct read from the filesystem
+     */
+    struct MapHeaderInfo
+    {
+        qint32 m_Version{0};
+        QString m_mapName;
+        QString m_mapAuthor;
+        QString m_mapDescription;
+        qint32 m_width{0};
+        qint32 m_heigth{0};
+        qint32 m_playerCount{0};
+        qint32 m_uniqueIdCounter{0};
+        mutable GameEnums::MapFilterFlags m_mapFlags{GameEnums::MapFilterFlags_None};
+    };
+
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width
@@ -64,7 +80,7 @@ public:
      * @param heigth
      * @param playerCount
      */
-    void newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain = "PLAINS");
+    void newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString & baseTerrain = "PLAINS");
     /**
      * @brief changeMap
      * @param width
@@ -140,9 +156,7 @@ public:
      */
     void deserializer(QDataStream& pStream, bool fast);
 
-    static void readMapHeader(QDataStream& pStream,
-                              qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
-                              qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter);
+    static void readMapHeader(QDataStream& pStream, MapHeaderInfo & headerInfo);
     /**
      * @brief readMapName
      * @param pStream
@@ -155,7 +169,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 11;
+        return 12;
     }
     /**
      * @brief clearMap
@@ -429,7 +443,7 @@ public slots:
      * @param buildingID
      * @return
      */
-    qint32 getBuildingCount(QString buildingID);
+    qint32 getBuildingCount(const QString & buildingID);
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -449,7 +463,7 @@ public slots:
      * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
      * @return the spawned unit
      */
-    Unit* spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range = 0);
+    Unit* spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* owner, qint32 range = 0);
     /**
      * @brief refillAll refills all units ammo and fuel
      */
@@ -465,6 +479,36 @@ public slots:
      * @param yInput around given coordinates -1 whole map
      */
     void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false);
+    /**
+     * @brief updateSpritesOfTiles
+     * @param points
+     * @param editor
+     * @param showLoadingScreen
+     */
+    void updateSpritesOfTiles(const QVector<QPoint> & points, bool editor = false, bool showLoadingScreen = false);
+    /**
+     * @brief updateTileSprites
+     * @param x
+     * @param y
+     * @param flowPoints
+     * @param editor
+     */
+    void updateTileSprites(qint32 x, qint32 y, QVector<QPoint> & flowPoints, bool editor = false);
+    /**
+     * @brief updateFlowTiles
+     * @param flowPoints
+     */
+    void updateFlowTiles(QVector<QPoint> & flowPoints);
+    /**
+     * @brief syncTerrainAnimations
+     * @param showLoadingScreen
+     */
+    void syncTerrainAnimations(bool showLoadingScreen = false);
+    /**
+     * @brief finishUpdateSprites
+     * @param showLoadingScreen
+     */
+    void finishUpdateSprites(bool showLoadingScreen);
     /**
      * @brief syncUnitsAndBuildings
      */
@@ -519,7 +563,7 @@ public slots:
      * @param y position
      * @return true if this terrain can be placed
      */
-    bool canBePlaced(QString terrainID, qint32 x, qint32 y);
+    bool canBePlaced(const QString & terrainID, qint32 x, qint32 y);
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
@@ -532,7 +576,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
+    void replaceTerrain(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool callUpdateSprites = false, bool checkPlacement = true);
     /**
      * @brief replaceTerrainOnly
      * @param terrainID
@@ -540,14 +584,14 @@ public slots:
      * @param y
      * @param useTerrainAsBaseTerrain
      */
-    void replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
+    void replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool removeUnit = true);
     /**
      * @brief replaceBuilding
      * @param buildingID
      * @param x
      * @param y
      */
-    void replaceBuilding(QString buildingID, qint32 x, qint32 y);
+    void replaceBuilding(const QString & buildingID, qint32 x, qint32 y);
     /**
      * @brief getPlayerCount
      * @return number of players on the map
@@ -639,7 +683,7 @@ public slots:
      * @param pPlayer
      * @return
      */
-    QmlVectorBuilding* getBuildings(Player* pPlayer);
+    QmlVectorBuilding* getBuildings(Player* pPlayer, QString id = "");
     /**
      * @brief importTxtMap imports a map in old CoW text-format
      */
@@ -713,15 +757,30 @@ public slots:
      * @brief showMiddleCrossGrid
      */
     void showMiddleCrossGrid(bool show);
+    /**
+     * @brief getMapFlags
+     * @return
+     */
+    GameEnums::MapFilterFlags getMapFlags() const;
+    /**
+     * @brief setMapFlags
+     * @param flags
+     */
+    void setMapFlags(GameEnums::MapFilterFlags flags);
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged(Weather* pWeather);
+private slots:
+    void zoomChanged();
 private:
     void loadMapData();
     QColor getGridColor();
+    void updateMapFlags() const;
 private:
     static spGameMap m_pInstance;
-    QString m_mapName;
-    QString m_mapAuthor;
-    QString m_mapDescription;
     QString m_mapPath;
+    MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
     QVector<spPlayer> m_players;
     QVector<oxygine::spColorRectSprite> m_gridSprites;
@@ -735,7 +794,6 @@ private:
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     bool m_loaded{false};
-    qint32 m_UniqueIdCounter{0};
     QString m_mapMusic;
     QString m_loadedMapMusic;
     qint32 m_startLoopMs{-1};

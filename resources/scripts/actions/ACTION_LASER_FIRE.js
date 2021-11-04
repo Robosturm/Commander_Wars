@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+    
     this.canBePerformed = function(action)
     {
         var building = action.getTargetBuilding();
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "fire";
+        return "icon_fire";
     };
     this.isFinalStep = function(action)
     {

@@ -10,6 +10,7 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("hoellium+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(-30, 10),
                                   Qt.point(0, 0), 0, false, -1);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
 };

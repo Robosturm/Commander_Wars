@@ -16,6 +16,9 @@ CO_CASSIDY.getSuperPowerName = function()
     return CO_CASSIDY.getPowerName();
 };
 CO_CASSIDY.coZoneBonus = 0;
+CO_CASSIDY.defaultPowerBonus = 20;
+CO_CASSIDY.powerBonus = 50;
+CO_CASSIDY.superPowerBonus = 50;
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                         defender, defPosX, defPosY, isDefender, action)
 {
@@ -30,13 +33,13 @@ CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             case GameEnums.PowerMode_Power:
                 if (attacker.getHp() >= defender.getHp())
                 {
-                    return 50;
+                    return CO_CASSIDY.powerBonus;
                 }
-                return 20;
+                return CO_CASSIDY.defaultPowerBonus;
             default:
                 if (attacker.getHp() >= defender.getHp())
                 {
-                    return 20;
+                    return CO_CASSIDY.defaultPowerBonus;
                 }
             }
         }

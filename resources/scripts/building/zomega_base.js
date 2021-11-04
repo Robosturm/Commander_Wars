@@ -5,7 +5,7 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)
@@ -17,6 +17,10 @@ var Constructor = function()
         {
             building.loadSprite("omega+base+neutral", false);
         }
+    };
+    this.getDefense = function(building)
+    {
+        return 0;
     };
     this.getBaseIncome = function()
     {
@@ -47,6 +51,11 @@ var Constructor = function()
     this.getDescription = function()
     {
         return qsTr("Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.");
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_missile+0";
     };
 }
 

@@ -5,12 +5,16 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
          building.loadSpriteV2("talon+gun+destroyed", GameEnums.Recoloring_Matrix);
     };
     this.getBaseIncome = function()
+    {
+        return 0;
+    };
+    this.getDefense = function(building)
     {
         return 0;
     };

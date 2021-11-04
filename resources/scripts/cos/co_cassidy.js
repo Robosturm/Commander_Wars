@@ -9,7 +9,7 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
+        
         return ["+alt"];
     };
 
@@ -155,6 +155,9 @@ var Constructor = function()
         return "TI";
     };
     this.coZoneBonus = 40;
+    this.defaultPowerBonus = 30;
+    this.powerBonus = 60;
+    this.superPowerBonus = 80;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
     {
@@ -166,15 +169,15 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getHp() >= defender.getHp())
                 {
-                    return 80;
+                    return CO_CASSIDY.superPowerBonus;
                 }
-                return 30;
+                return CO_CASSIDY.defaultPowerBonus;
             case GameEnums.PowerMode_Power:
                 if (attacker.getHp() >= defender.getHp())
                 {
-                    return 60;
+                    return CO_CASSIDY.powerBonus;
                 }
-                return 30;
+                return CO_CASSIDY.defaultPowerBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
@@ -221,11 +224,11 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Cassidy's units show no mercy. Increased firepower when attacking a unit with equal or less health.");
+        return qsTr("Cassidy's ruthlessness rubs off on her troops. Units show no mercy to enemy units equal to or below their own strength.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
+        var text = qsTr("\nGlobal Effect: \nNone.") +
                 qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking units with equal or less health.");
         text = replaceTextArgs(text, [CO_CASSIDY.coZoneBonus]);
         return text;
@@ -233,7 +236,9 @@ var Constructor = function()
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Firepower is increased even further when attacking a unit with equal or less health.");
+        var text = qsTr("All of Cassidy's units now gain %0% firepower for attacking units with equal or less health.");
+        text = replaceTextArgs(text, [CO_CASSIDY.powerBonus]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -241,7 +246,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All enemies suffer one HP of damage. Firepower is greatly increased when attacking a unit with equal or less health.");
+        var text = qsTr("All enemies suffer one HP of damage. Firepower is greatly increased by %0% when attacking a unit with equal or less health.");
+        text = replaceTextArgs(text, [CO_CASSIDY.superPowerBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -250,7 +257,7 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("Take no prisoners!"),
-                qsTr("Ahahaha… I'll destroy you all!"),
+                qsTr("Ahahaha! I'll destroy you all!"),
                 qsTr("You won't like me when I am angry!"),
                 qsTr("I swear to make you rue this day!"),
                 qsTr("Burn everything! I don't want to see anything left untouched!"),

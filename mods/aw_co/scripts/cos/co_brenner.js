@@ -1,3 +1,5 @@
+CO_BRENNER.powerBonus = 20;
+CO_BRENNER.superPowerBonus = 20;
 CO_BRENNER.init = function(co)
 {
     co.setPowerStars(0);
@@ -26,7 +28,7 @@ CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
         case GameEnums.PowerMode_Power:
-            return 20;
+            return CO_BRENNER.powerBonus;
         default:
             return 0;
         }

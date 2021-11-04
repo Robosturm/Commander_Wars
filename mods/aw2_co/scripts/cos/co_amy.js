@@ -1,4 +1,6 @@
-CO_AMY.hoverCraftBoost = 0;
+CO_AMY.powerHoverCraftBoost = 30;
+CO_AMY.hoverCraftBoost = 20;
+CO_AMY.superPowerDeffensiveBonus = 110;
 CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                     defender, defPosX, defPosY, isDefender, action)
 {
@@ -11,13 +13,13 @@ CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return 30;
+                return CO_AMY.powerHoverCraftBoost;
             }
             return 0;
         default:
             if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return 20;
+                return CO_AMY.hoverCraftBoost;
             }
             break;
         }
@@ -37,7 +39,7 @@ CO_AMY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 99999;
             }
-            return 100;
+            return CO_AMY.superPowerDeffensiveBonus;
         case GameEnums.PowerMode_Power:
             return 10;
         default:
@@ -68,7 +70,7 @@ CO_AMY.getCostModifier = function(co, id, baseCost)
         {
             if (Global[id].getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return -baseCost * 0.3;
+                return -baseCost * CO_AMY.powerCostReduction;
             }
         }
     }

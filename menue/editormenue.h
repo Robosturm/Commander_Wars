@@ -6,6 +6,7 @@
 
 #include "menue/ingamemenue.h"
 
+#include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/editorselection.h"
 #include "objects/base/topbar.h"
 #include "objects/base/label.h"
@@ -198,24 +199,14 @@ public slots:
     void importAWByWeb(QString filename);
     /**
      * @brief newMap
-     * @param mapName
-     * @param mapWidth
-     * @param mapHeigth
-     * @param playerCount
+     * @param info
      */
-    void newMap(QString mapName, QString author, QString description, QString scriptFile,
-                qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                qint32 turnLimit, quint32 buildLimit);
+    void newMap(MapEditDialog::MapEditInfo info);
     /**
      * @brief changeMap
-     * @param mapName
-     * @param mapWidth
-     * @param mapHeigth
-     * @param playerCount
+     * @param info
      */
-    void changeMap(QString mapName, QString author, QString description, QString scriptFile,
-                   qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
-                   qint32 turnLimit, quint32 buildLimit);
+    void changeMap(MapEditDialog::MapEditInfo info);
     /**
      * @brief playersChanged
      */

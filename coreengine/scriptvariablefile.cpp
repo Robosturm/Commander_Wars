@@ -2,7 +2,9 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-ScriptVariableFile::ScriptVariableFile(QString filename)
+#include <QFile>
+
+ScriptVariableFile::ScriptVariableFile(const QString & filename)
     : QObject(),
       m_filename(filename)
 {

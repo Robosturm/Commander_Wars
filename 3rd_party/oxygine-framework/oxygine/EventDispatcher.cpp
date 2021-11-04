@@ -1,19 +1,25 @@
 #include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include "3rd_party/oxygine-framework/oxygine/Event.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {
     qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
+        if (!oxygine::GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "trying to add listener outside worker thread");
+            return -1;
+        }
         m_lastID++;
         listener ls;
         ls.type = et;
         ls.cb = cb;
         ls.id = m_lastID;
         bool added = false;
-        for (qint32 i = 0; i < m_listeners.size(); ++i)
+        for (auto i = m_listeners.begin(); i != m_listeners.end(); ++i)
         {
-            if (et < m_listeners[i].type)
+            if (et < i->type)
             {
                 m_listeners.insert(i, ls);
                 added = true;
@@ -29,12 +35,17 @@ namespace oxygine
 
     void EventDispatcher::removeEventListener(qint32 id)
     {
-
+        if (!oxygine::GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "removeEventListener trying to remove listener outside worker thread");
+            return;
+        }
         for (size_t size = m_listeners.size(), i = 0; i != size; ++i)
         {
             const listener& ls = m_listeners.at(i);
             if (ls.id == id)
             {
+
                 m_listeners.erase(m_listeners.cbegin() + i);
                 break;
             }
@@ -43,6 +54,11 @@ namespace oxygine
 
     void EventDispatcher::removeEventListeners(IClosureOwner* CallbackThis)
     {
+        if (!oxygine::GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "removeEventListeners trying to remove listener outside worker thread");
+            return;
+        }
         for (qint32 i = 0; i < m_listeners.size(); ++i)
         {
             const listener& ls = m_listeners.at(i);
@@ -56,6 +72,11 @@ namespace oxygine
 
     void EventDispatcher::removeEventListenersByType(eventType et)
     {
+        if (!oxygine::GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "removeEventListenersByType trying to remove listener outside worker thread");
+            return;
+        }
         for (qint32 i = 0; i < m_listeners.size(); ++i)
         {
             const listener& ls = m_listeners.at(i);
@@ -65,11 +86,15 @@ namespace oxygine
                 --i;
             }
         }
-
     }
 
     void EventDispatcher::removeAllEventListeners()
     {
+        if (!oxygine::GameWindow::getWindow()->isWorker())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "removeAllEventListeners trying to remove listener outside worker thread");
+            return;
+        }
         m_listeners.clear();
     }
 
@@ -79,15 +104,14 @@ namespace oxygine
         {
             event->target = this;
         }
-
         if (!m_enabled)
         {
             return;
         }
-        // make sure listeners can be added/removed while processing the current event to this dispatcher
-        auto currentListener = m_listeners;
-        for (auto & listener : currentListener)
+        qint32 i = 0;
+        while (i < m_listeners.size())
         {
+            auto & listener = m_listeners[i];
             if (listener.type == event->type)
             {
                 event->currentTarget = this;
@@ -98,6 +122,7 @@ namespace oxygine
                     break;
                 }
             }
+            ++i;
         }
     }
 

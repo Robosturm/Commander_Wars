@@ -5,12 +5,11 @@
 #include <QPoint>
 
 #include "game/GameEnums.h"
-
+#include "game/ui/customcoboostinfo.h"
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-
 #include "coreengine/scriptvariables.h"
 
 class Unit;
@@ -84,7 +83,7 @@ public:
      * @param ep
      * @return
      */
-    oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const;
+    oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_show_error) const;
 
 
 signals:
@@ -115,7 +114,7 @@ public slots:
      * @param unitID
      * @return
      */
-    float getUnitBuildValue(QString unitID);
+    float getUnitBuildValue(const QString & unitID);
     /**
      * @brief getCOName
      * @return
@@ -385,7 +384,7 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(QString id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost);
     /**
      * @brief getCOArmy
      */
@@ -559,17 +558,17 @@ public slots:
      * @brief setPerkList
      * @param perks
      */
-    void setPerkList(QStringList perks);
+    void setPerkList(const QStringList & perks);
     /**
      * @brief addPerk
      * @param perk
      */
-    void addPerk(QString perk);
+    void addPerk(const QString & perk);
     /**
      * @brief addPerk
      * @param perk
      */
-    void removePerk(QString perk);
+    void removePerk(const QString & perk);
     /**
      * @brief getBio
      * @return
@@ -644,6 +643,40 @@ public slots:
      * @param coid
      */
     QString getActiveCoStyle();
+    /**
+     * @brief showDefaultUnitGlobalBoost
+     * @return
+     */
+    bool showDefaultUnitGlobalBoost();
+    /**
+     * @brief getCustomUnitGlobalBoostCount
+     * @return
+     */
+    qint32 getCustomUnitGlobalBoostCount();
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info);
+
+    /**
+     * @brief showDefaultUnitZoneBoost
+     * @return
+     */
+    bool showDefaultUnitZoneBoost();
+    /**
+     * @brief getCustomUnitZoneBoostCount
+     * @return
+     */
+    qint32 getCustomUnitZoneBoostCount();
+    /**
+     * @brief getCustomUnitGlobalBoost
+     * @param index
+     * @param info
+     */
+    void getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info);
+
 protected:
     void limitPowerbar(float previousValue);
 

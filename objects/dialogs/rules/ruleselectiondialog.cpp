@@ -19,8 +19,6 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -74,7 +72,7 @@ void RuleSelectionDialog::ruleSelectionSizeChanged()
 
 void RuleSelectionDialog::showLoadRules()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);
@@ -84,7 +82,7 @@ void RuleSelectionDialog::showLoadRules()
 
 void RuleSelectionDialog::showSaveRules()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.grl");
     QString path = Settings::getUserPath() + "data/gamerules";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

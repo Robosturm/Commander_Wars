@@ -72,6 +72,5 @@ var WEATHER =
     deactivate : function(weather)
     {
         // called when the weather ends
-    },
-
+    },    
 };

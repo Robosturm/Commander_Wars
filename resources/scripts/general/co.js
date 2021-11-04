@@ -327,67 +327,90 @@ var CO =
     },
 
     // CO - Intel
-    getBio : function()
+    getBio : function(co)
     {
         return "";
     },
-    getLongBio : function()
+    getLongBio : function(co)
     {
         return "";
     },
-    getHits : function()
+    getHits : function(co)
     {
         return "";
     },
-    getMiss : function()
+    getMiss : function(co)
     {
         return "";
     },
-    getCODescription : function()
+    getCODescription : function(co)
     {
         return "";
     },
-    getLongCODescription : function()
+    getLongCODescription : function(co)
     {
         return "";
     },
-    getPowerDescription : function()
+    getPowerDescription : function(co)
     {
         return "";
     },
-    getPowerName : function()
+    getPowerName : function(co)
     {
         return "";
     },
-    getSuperPowerDescription : function()
+    getSuperPowerDescription : function(co)
     {
         return "";
     },
-    getSuperPowerName : function()
+    getSuperPowerName : function(co)
     {
         return "";
     },
-    getPowerSentences : function()
+    getPowerSentences : function(co)
     {
         return [];
     },
-    getVictorySentences : function()
+    getVictorySentences : function(co)
     {
         return [];
     },
-    getDefeatSentences : function()
+    getDefeatSentences : function(co)
     {
         return [];
     },
-    getName : function()
+    getName : function(co)
     {
         return "";
+    },
+
+    showDefaultUnitGlobalBoost : function(co)
+    {
+        return true;
+    },
+    getCustomUnitGlobalBoostCount : function(co)
+    {
+        return 0;
+    },
+    getCustomUnitGlobalBoost : function(co, index, info)
+    {
+    },
+    showDefaultUnitZoneBoost : function(co)
+    {
+        return true;
+    },
+    getCustomUnitZoneBoostCount : function(co)
+    {
+        return 0;
+    },
+    getCustomUnitZoneBoost : function(co, index, info)
+    {
     },
 
     getCOStyles : function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
+        
         return [];
     },
 
@@ -488,8 +511,7 @@ var CO =
 
     getAddtionalCoFaces : function()
     {
-        return ["co_davis",
-                "co_fanatic",
+        return ["co_fanatic",
                 "co_cyrus",
                 "co_dr_morris",
                 "co_major",

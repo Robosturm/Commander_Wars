@@ -30,7 +30,7 @@ namespace oxygine
         void unload();
 
         /**Returns any attribute from xml resource definition. You could use it for defining for example per animation constants like duration, specific offsets, delays.*/
-        QString getAttribute(QString attr) const;
+        QString getAttribute(const QString & attr) const;
         QDomElement getNode() const
         {
             return m_node;
@@ -44,16 +44,8 @@ namespace oxygine
             m_parent = p;
         }
         /**returns id from xml node. Function is helper*/
-        static QString extractID(const QDomElement& node, QString file, QString def);
-        static QString extractID(QString file);
-
-        virtual void setLinearFilter(quint32)
-        {
-        }
-        virtual quint32 getLinearFilter() const
-        {
-            return 0;
-        }
+        static QString extractID(const QDomElement& node, const QString & file, const QString & def);
+        static QString extractID(const QString & file);
         /**
          * @brief getName
          * @return
@@ -63,7 +55,7 @@ namespace oxygine
          * @brief setName
          * @param name
          */
-        void setName(QString name);
+        void setName(const QString & name);
     protected:
         static void setNode(spResource res, const QDomElement& node)
         {

@@ -69,7 +69,7 @@ var Constructor = function()
     };
     this.getBuildingCount = function(rule, player)
     {
-        var count = player.getBuildingCount();
+        var count = player.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
         var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1);
         if (teamVictory === 1)
         {
@@ -81,7 +81,7 @@ var Constructor = function()
                     !ally.getIsDefeated() &&
                     (player.getTeam() === ally.getTeam()))
                 {
-                    count += ally.getBuildingCount();
+                    count += ally.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
                 }
             }
         }

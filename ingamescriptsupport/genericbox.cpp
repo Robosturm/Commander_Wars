@@ -16,8 +16,6 @@ GenericBox::GenericBox(bool cancel)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

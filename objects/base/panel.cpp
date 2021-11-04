@@ -27,8 +27,6 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize, QString resAnim)
     {
         m_Panelbox = oxygine::spBox9Sprite::create();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim(resAnim);
-        m_Panelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        m_Panelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         m_Panelbox->setResAnim(pAnim);
         m_Panelbox->setSize(size.width() - m_HScrollbar->getWidth(),
                             size.height() - m_VScrollbar->getHeight());

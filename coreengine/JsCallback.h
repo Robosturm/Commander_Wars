@@ -10,7 +10,7 @@ template<class TClass>
 class JsCallback : public oxygine::ref_counter
 {
 public:
-    JsCallback(TClass* pOwner, QString objectID, QString callback)
+    JsCallback(TClass* pOwner, const QString & objectID, const QString & callback)
         : m_pOwner(pOwner),
           m_objectID(objectID),
           m_callback(callback)

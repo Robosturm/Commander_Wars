@@ -19,6 +19,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLARE.armyData);
         sprite.loadSpriteV2("flare+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

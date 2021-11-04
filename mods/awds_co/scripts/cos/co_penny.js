@@ -9,10 +9,6 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                    {
-                        return 45;
-                    }
                     return 30;
                 case GameEnums.PowerMode_Power:
                     return 10;
@@ -46,7 +42,7 @@ CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY)
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
-                return 3;
+                return 2;
             }
         }
     }

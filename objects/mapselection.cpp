@@ -59,8 +59,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     pAnim = pObjectManager->getResAnim("mapSelectionTop");
     oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
-    pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBackground->setResAnim(pAnim);
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);
@@ -72,8 +70,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
 
     pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
     m_SelectedItem = oxygine::spBox9Sprite::create();
-    m_SelectedItem->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_SelectedItem->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_SelectedItem->setResAnim(pAnim);
     m_SelectedItem->setSize(width - 12, m_itemHeigth);
     m_SelectedItem->setPosition(5, y);
@@ -96,8 +92,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     {
         pAnim = pObjectManager->getResAnim("mapSelectionItem");
         pBackground = oxygine::spBox9Sprite::create();
-        pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBackground->setResAnim(pAnim);
         pBackground->setSize(width, m_itemHeigth);
         pBackground->setPosition(0, y - m_ItemContainer->getY());
@@ -125,28 +119,32 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         {
             if (pItem->getText() != "")
             {
-                pSelectedItem->setY(y - pItemContainer->getY());
-                m_currentItem = m_Files[m_currentStartIndex + i];
-                m_currentIdx = m_currentStartIndex + i;
-                emit sigStartItemChangeTimer();
+                if (m_mapMapping.size() > 0 && m_mapMapping[i] >= 0)
+                {
+                    pSelectedItem->setY(y - pItemContainer->getY());
+                    m_currentItem = m_Files[m_mapMapping[i]];
+                    m_currentIdx = i;
+                    emit sigStartItemChangeTimer();
+                }
             }
         });
         pBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
             if (pItem->getText() != "")
             {
-                pSelectedItem->setY(y - pItemContainer->getY());
-                m_currentItem = m_Files[m_currentStartIndex + i];
-                m_currentIdx = m_currentStartIndex + i;
-                emit sigStartItemChangeTimer();
+                if (m_mapMapping.size() > 0 && m_mapMapping[i] >= 0)
+                {
+                    pSelectedItem->setY(y - pItemContainer->getY());
+                    m_currentItem = m_Files[m_mapMapping[i]];
+                    m_currentIdx = i;
+                    emit sigStartItemChangeTimer();
+                }
             }
         });
         y += m_itemHeigth;
     }
     pAnim = pObjectManager->getResAnim("mapSelectionBottom");
     pBackground = oxygine::spBox9Sprite::create();
-    pBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBackground->setResAnim(pAnim);
     pBackground->setSize(width, pAnim->getHeight());
     pBackground->setPosition(0, y);
@@ -248,8 +246,11 @@ void MapSelection::setSelection(QString folder, QStringList files)
     updateSelection(0);
     if (m_Files.size() > 0)
     {
-        m_currentItem = m_Files[0];
-        emit sigStartItemChangeTimer();
+        if (m_mapMapping.size() > 0 && m_mapMapping[0] >= 0)
+        {
+            m_currentItem = m_Files[m_mapMapping[0]];
+            emit sigStartItemChangeTimer();
+        }
     }    
 }
 
@@ -312,13 +313,15 @@ void MapSelection::changeFolder(QString folder)
         }
         m_currentFolder = newFolder;
         updateSelection(0);
-        if (m_currentIdx < m_Files.size())
+        if (m_mapMapping[m_currentIdx] < m_Files.size())
         {
-            m_currentItem = m_Files[m_currentIdx];
-            emit sigStartItemChangeTimer();
+            if (m_mapMapping.size() > 0 && m_mapMapping[m_currentIdx] >= 0)
+            {
+                m_currentItem = m_Files[m_mapMapping[m_currentIdx]];
+                emit sigStartItemChangeTimer();
+            }
         }
     }
-    
 }
 
 void MapSelection::update(const oxygine::UpdateState& us)
@@ -348,18 +351,22 @@ void MapSelection::updateSelection(qint32 startIndex)
             m_currentStartIndex = 0;
         }
     }
-    for (qint32 i = 0; i < m_itemCount; i++)
+    m_mapMapping.clear();
+    qint32 i = 0;
+    while (m_mapMapping.size() < m_itemCount)
     {
         if (m_currentStartIndex + i >= m_Files.size())
         {
-            m_Items[i]->setHtmlText("");
+            m_Items[m_mapMapping.size()]->setHtmlText("");
+            m_mapMapping.append(-1);
         }
         else
         {
             QDir dir(m_Files[m_currentStartIndex + i]);
             if (m_Files[m_currentStartIndex + i] == "..")
             {
-                m_Items[i]->setHtmlText(m_Files[m_currentStartIndex + i]);
+                m_Items[m_mapMapping.size()]->setHtmlText(m_Files[m_currentStartIndex + i]);
+                m_mapMapping.append(m_currentStartIndex + i);
             }
             else if (dir.exists())
             {
@@ -375,7 +382,8 @@ void MapSelection::updateSelection(qint32 startIndex)
                     }
                     item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                 }
-                m_Items[i]->setHtmlText(item);
+                m_Items[m_mapMapping.size()]->setHtmlText(item);
+                m_mapMapping.append(m_currentStartIndex + i);
             }
             else
             {
@@ -385,43 +393,42 @@ void MapSelection::updateSelection(qint32 startIndex)
                 QFile file(fullFilename);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);
-                QString name;
-                qint32 version = 0;
-                QString mapAuthor;
-                QString mapDescription;
-                qint32 width = 0;
-                qint32 heigth = 0;
-                qint32 playerCount = 0;
-                qint32 uniqueIdCounter = 0;
+                GameMap::MapHeaderInfo headerInfo;
                 QString mapNameEnding = "";
+                bool matches = true;
                 if (m_Files[m_currentStartIndex + i].endsWith(".map"))
                 {
-                    GameMap::readMapHeader(pStream, version, name, mapAuthor, mapDescription,
-                                           width, heigth, playerCount, uniqueIdCounter);
-                    mapNameEnding = " (" + QString::number(playerCount) + ")";
+                    GameMap::readMapHeader(pStream, headerInfo);
+                    matches = m_mapFilter.matches(headerInfo);
+                    mapNameEnding = " (" + QString::number(headerInfo.m_playerCount) + ")";
                 }
-                if (name.isEmpty())
+                if (matches)
                 {
-                    QStringList data = m_Files[m_currentStartIndex + i].split("/");
-                    QStringList data2 = data[data.size() - 1].split(".");
-                    QStringList data3 = data2[0].split("_");
-                    QString item;
-                    for (qint32 i2 = 0; i2 < data3.size(); i2++)
+                    if (headerInfo.m_mapName.isEmpty())
                     {
-                        if (i2 > 0)
+                        QStringList data = m_Files[m_currentStartIndex + i].split("/");
+                        QStringList data2 = data[data.size() - 1].split(".");
+                        QStringList data3 = data2[0].split("_");
+                        QString item;
+                        for (qint32 i2 = 0; i2 < data3.size(); i2++)
                         {
-                            item += " ";
+                            if (i2 > 0)
+                            {
+                                item += " ";
+                            }
+                            item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                         }
-                        item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
+                        m_Items[m_mapMapping.size()]->setHtmlText(item + mapNameEnding);
                     }
-                    m_Items[i]->setHtmlText(item + mapNameEnding);
-                }
-                else
-                {
-                    m_Items[i]->setHtmlText(name + mapNameEnding);
+                    else
+                    {
+                        m_Items[m_mapMapping.size()]->setHtmlText(headerInfo.m_mapName + mapNameEnding);
+                    }
+                    m_mapMapping.append(m_currentStartIndex + i);
                 }
             }
         }
+        ++i;
     }
     if (m_currentIdx + m_currentStartIndex< m_Files.size())
     {
@@ -448,4 +455,9 @@ void MapSelection::itemChangeTimerExpired()
 void MapSelection::startItemChangeTimer()
 {
     m_itemChangedTimer.start();
+}
+
+void MapSelection::filterChanged()
+{
+    updateSelection(m_currentStartIndex);
 }

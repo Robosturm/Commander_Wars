@@ -28,6 +28,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MOTORBIKE.armyData);
         sprite.loadSpriteV2("motorbike+" + armyName + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

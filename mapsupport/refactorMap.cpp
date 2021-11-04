@@ -5,7 +5,7 @@
 #include "game/player.h"
 #include "game/co.h"
 
-void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain)
+void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, const QString & baseTerrain)
 {
     Mainapp::getInstance()->pauseRendering();
     clearMap();

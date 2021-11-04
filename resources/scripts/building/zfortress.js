@@ -5,7 +5,7 @@ var Constructor = function()
         building.setHp(-1);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)
@@ -17,6 +17,10 @@ var Constructor = function()
         {
             building.loadSprite("fortress+neutral", false);
         }
+    };
+    this.getDefense = function(building)
+    {
+        return 0;
     };
     this.getBaseIncome = function()
     {

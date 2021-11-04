@@ -185,7 +185,7 @@ void TerrainFlowData::print()
     }
 }
 
-QVector<QPoint> TerrainFlowData::getOverlayTiles(QStringList terrains)
+QVector<QPoint> TerrainFlowData::getOverlayTiles(const QStringList & terrains)
 {
     QVector<QPoint> ret;
     spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));

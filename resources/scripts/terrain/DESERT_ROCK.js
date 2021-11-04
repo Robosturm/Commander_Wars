@@ -20,7 +20,22 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        terrain.loadBaseTerrain("DESERT");
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -38,8 +53,7 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit)
     {
-        var infantry = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-        if (infantry.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             return 3;
         }

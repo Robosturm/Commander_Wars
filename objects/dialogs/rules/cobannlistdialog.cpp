@@ -29,8 +29,6 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -285,7 +283,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
                            "CO_RATTIGAN", "CO_ROBOANDY", "CO_ROBOSTURM", "CO_SABAKI", "CO_SAMI",
                            "CO_SANJURO", "CO_SASHA", "CO_SENSEI", "CO_SMITAN", "CO_SONJA", "CO_SOPHIE",
                            "CO_STURM", "CO_TABITHA", "CO_TASHA", "CO_VARLOT", "CO_VON_BOLT",
-                           "CO_WAYLON", "CO_WILL", "CO_XAVIER", "CO_ZANDRA"});
+                           "CO_WAYLON", "CO_WILL", "CO_XAVIER", "CO_ZANDRA", "CO_DAVIS", "CO_CAIRN"});
     }
     else if (item == 1) // advance wars dc
     {
@@ -299,7 +297,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
                            "CO_FLAK", "CO_GRIMM", "CO_GRIT", "CO_HACHI", "CO_HAWKE",
                            "CO_JAKE", "CO_JAVIER", "CO_JESS", "CO_JUGGER", "CO_KANBEI", "CO_KINDLE",
                            "CO_KOAL", "CO_LASH", "CO_MAX", "CO_NELL", "CO_OLAF", "CO_RACHEL",
-                           "CO_SAMI", "CO_SASHA", "CO_SENSEI", "CO_SONJA",  "CO_VON_BOLT", "CO_XAVIER"});
+                           "CO_SAMI", "CO_SASHA", "CO_SENSEI", "CO_SONJA",  "CO_VON_BOLT"});
     }
     else if (item == 3) // advance wars 2
     {
@@ -344,9 +342,9 @@ void COBannListDialog::showSaveBannlist()
     
 }
 
-QVector<QString> COBannListDialog::getNameList()
+QStringList COBannListDialog::getNameList()
 {
-    QVector<QString> items = {tr("Commander Wars"),
+    QStringList items = {tr("Commander Wars"),
                               tr("Advance Wars DoR"),
                               tr("Advance Wars DS"),
                               tr("Advance Wars 2"),

@@ -22,6 +22,23 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
     return 0;
 }
 
+QString TerrainManager::getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const
+{
+    QString ret;
+    const auto & keys = m_resourcesMap.keys();
+    const auto spriteIdStartLower = spriteIdStart.toLower();
+    const auto spriteIdEndLower = spriteIdEnd.toLower();
+    for (const auto & key : qAsConst(keys))
+    {
+        if (key.startsWith(spriteIdStartLower) &&
+            key.endsWith(spriteIdEndLower))
+        {
+            ret = key;
+            break;
+        }
+    }
+    return ret;
+}
 
 qint32 TerrainManager::getTerrainGroup(QString id)
 {

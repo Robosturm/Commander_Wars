@@ -19,14 +19,15 @@
 #include "coreengine/fileserializable.h"
 
 class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
+
 class GameAction : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 
 public:
     explicit GameAction();
-    explicit GameAction(QString actionID);
+    explicit GameAction(const QString & actionID);
     virtual ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
@@ -39,13 +40,13 @@ public:
      * @param actionID
      * @return
      */
-    static QString getActionText(QString actionID);
+    static QString getActionText(const QString & actionID);
     /**
      * @brief getActionIcon the icon shown for this menue item
      * @param actionID
      * @return
      */
-    static QString getActionIcon(QString actionID);
+    static QString getActionIcon(const QString & actionID);
 
     void setTargetUnit(Unit *pTargetUnit);
     /**
@@ -159,7 +160,7 @@ public slots:
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(QString actionID, bool emptyField = false);
+    bool canBePerformed(const QString & actionID, bool emptyField = false);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action
@@ -170,7 +171,7 @@ public slots:
      * @param actionID id of the action we want to perform
      * @return true if we have all data to perform this action
      */
-    bool isFinalStep(QString actionID);
+    bool isFinalStep(const QString & actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
@@ -185,7 +186,7 @@ public slots:
      * @brief setMovepath sets the movepath for this unit
      * @param points
      */
-    void setMovepath(QVector<QPoint> points, qint32 fuelCost);
+    void setMovepath(const QVector<QPoint> & points, qint32 fuelCost);
     /**
      * @brief getActionTarget the target action
      * @return
@@ -246,7 +247,7 @@ public slots:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(QString data)
+    void writeDataString(const QString & data)
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
@@ -331,6 +332,14 @@ public slots:
      * @brief reset
      */
     void reset();
+    /**
+     * @brief getPerformingUnit returns the unit performing unit mainly useful in case of post actions where the unit already moved or got loaded etc.
+     * @return
+     */
+    Unit* getPerformingUnit()
+    {
+        return m_perfomingUnit.get();
+    }
 protected:
     void printAction();
 private:
@@ -362,15 +371,11 @@ private:
       * needed for ai simulations
       */
     Unit* m_pTargetUnit{nullptr};
-
+    spUnit m_perfomingUnit;
     QVector<QPoint> m_MultiTurnPath;
-
     bool m_isLocal{false};
-
     qint64 m_syncCounter{0};
-
     qint64 m_roundTimerTime{0};
-
     qint32 m_player{-1};
 };
 

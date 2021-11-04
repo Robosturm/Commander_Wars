@@ -114,7 +114,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
     }
 }
 
-void SpriteCreator::applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor)
+void SpriteCreator::applyImageTable(QString file, const QImage & inTableImg, const QImage & outTableImg, QColor eraseColor)
 {
     QString orgFile = file;
     QString maskFile = file;
@@ -214,7 +214,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
 }
 
-void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskTable)
+void SpriteCreator::createSprites(QString file, QImage& colorTable, const QImage & maskTable)
 {
     QString orgFile = file;
     QString maskFile = file;
@@ -295,7 +295,7 @@ oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableIm
     return oxygine::spResAnim();
 }
 
-QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save)
+QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, const QImage & maskTableImg, bool useColorBox, bool save)
 {
     QImage orgImg(input);
     QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
@@ -699,13 +699,13 @@ void SpriteCreator::addFrameBorders(QImage & image, qint32 columns, qint32 rows,
                     for (qint32 y = 0; y < frameHeigth; ++y)
                     {
 
-                        newImg.setPixel(posX, row * frameHeigth + y + row, Qt::transparent);
+                        newImg.setPixelColor(posX, row * frameHeigth + y + row, Qt::transparent);
                     }
                     // bottom border
                     qint32 posY = (row + 1) * frameHeigth + row;
                     for (qint32 x = 0; x <= frameWidth; ++x)
                     {
-                        newImg.setPixel(column * frameWidth + x + column, posY, Qt::transparent);
+                        newImg.setPixelColor(column * frameWidth + x + column, posY, Qt::transparent);
                     }
                 }
                 else
@@ -715,7 +715,7 @@ void SpriteCreator::addFrameBorders(QImage & image, qint32 columns, qint32 rows,
                     for (qint32 y = 0; y < frameHeigth; ++y)
                     {
                         newImg.setPixel(posX, row * frameHeigth + y + row * 2, image.pixel((column + 1) * frameWidth - 1, y + row * frameHeigth));
-                        newImg.setPixel(posX + 1, row * frameHeigth + y + row * 2, Qt::transparent);
+                        newImg.setPixelColor(posX + 1, row * frameHeigth + y + row * 2, Qt::transparent);
                     }
                     // bottom border
                     qint32 posY = (row + 1) * frameHeigth + row * 2;
@@ -723,15 +723,15 @@ void SpriteCreator::addFrameBorders(QImage & image, qint32 columns, qint32 rows,
                     {
                         if (frameWidth == x)
                         {
-                            newImg.setPixel(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
-                            newImg.setPixel(column * frameWidth + x + column * 2 + 1, posY, Qt::transparent);
-                            newImg.setPixel(column * frameWidth + x + column * 2 + 1, posY + 1, Qt::transparent);
+                            newImg.setPixelColor(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
+                            newImg.setPixelColor(column * frameWidth + x + column * 2 + 1, posY, Qt::transparent);
+                            newImg.setPixelColor(column * frameWidth + x + column * 2 + 1, posY + 1, Qt::transparent);
                             newImg.setPixel(column * frameWidth + x + column * 2, posY, image.pixel((column + 1) * frameWidth - 1, (row + 1) * frameHeigth - 1));
                         }
                         else
                         {
                             newImg.setPixel(column * frameWidth + x + column * 2, posY, image.pixel(x + column * frameWidth, (row + 1) * frameHeigth - 1));
-                            newImg.setPixel(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
+                            newImg.setPixelColor(column * frameWidth + x + column * 2, posY + 1, Qt::transparent);
                         }
                     }
                 }
@@ -801,4 +801,26 @@ void SpriteCreator::preProcessMask(QImage & mask, const QImage & overlay, qint32
         }
     }
     mask = newPicture;
+}
+
+void SpriteCreator::convertToRgba(QImage & input)
+{
+    QImage output(input.size(), QImage::Format_RGBA8888);
+    for (qint32 x = 0; x < input.width(); ++x)
+    {
+        for (qint32 y = 0; y < input.height(); ++y)
+        {
+            QColor pixel = input.pixelColor(x, y);
+            quint8 alpha = pixel.alpha();
+            if (alpha == 0)
+            {
+                output.setPixelColor(x, y, Qt::transparent);
+            }
+            else
+            {
+                output.setPixelColor(x, y, pixel);
+            }
+        }
+    }
+    input = output;
 }

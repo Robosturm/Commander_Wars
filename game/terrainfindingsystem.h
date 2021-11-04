@@ -3,14 +3,26 @@
 
 #include "coreengine/pathfindingsystem.h"
 
+#include "game/jsData/terrainflowdata.h"
+
 class TerrainFindingSystem;
 using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
 class TerrainFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
+    struct PositionFlowData
+    {
+        QPoint current;
+        QPoint next;
+        qint32 cost{0};
+        qint32 flowListSource{-1};
+        GameEnums::FlowDirections flowDirection;
+        bool flowDown{true};
+    };
 public:
     explicit TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);
+    explicit TerrainFindingSystem(QStringList terrainIDs, qint32 startX, qint32 startY);
     virtual ~TerrainFindingSystem() = default;
     /**
      * @brief getRemainingCost
@@ -38,8 +50,32 @@ public slots:
      * @brief killTerrainFindingSystem
      */
     void killTerrainFindingSystem();
+    /**
+     * @brief getFlowData
+     * @return
+     */
+    TerrainFlowData* getFlowData();
+    /**
+     * @brief getDirection
+     * @param cur
+     * @param next
+     * @return
+     */
+    GameEnums::FlowDirections getDirection(QPoint cur, QPoint next) const;
+    /**
+     * @brief TerrainFindingSystem::getDirection
+     * @param cur
+     * @param next
+     * @param previous
+     * @return
+     */
+    GameEnums::FlowDirections getDirection(QPoint cur, QPoint next, GameEnums::FlowDirections previous, bool flowDown) const;
 private:
-    QString m_terrainID;
+    void addStartFlows(const spQmlVectorPoint & circle, const qint32 size,
+                       QVector<PositionFlowData> & flowList);
+private:
+    QStringList m_terrainIDs;
+    TerrainFlowData m_data;
 };
 
 #endif // TERRAINFINDINGSYSTEM_H

@@ -23,7 +23,7 @@ var Constructor = function()
         unit.setVision(1);
     };
     this.actionList = ["ACTION_SUPPORTSINGLE_IRON_SHIELD", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("iron_shield_generator+mask", GameEnums.Recoloring_Matrix);

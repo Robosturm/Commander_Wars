@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QVector>
 #include <QObject>
+#include <vector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -47,7 +48,7 @@ public:
      * SIZE
      * ACTIVATION (LINEAR=0, SIGMOID=1, RELU=2)
      */
-    void addLayer(QMap<QString, double> parameters);
+    void addLayer(QMap<QString, double> & parameters);
     /**
      * @brief extend
      * @param count
@@ -101,13 +102,13 @@ public:
         return m_configuration[0][Layer::LAYER_PARAMETER_SIZE];
     }
 private:
-    void setInput(QVector<double> in);
+    void setInput(const QVector<double> & in);
     void trigger();
     void clean();
     void connectComplete();
     void randomizeAllWeights();
 private:
-    QVector<spLayer> m_layers;
+    std::vector<spLayer> m_layers;
     double m_fitness;
     QVector<QMap<QString, double>> m_configuration;
     double m_maxWeight = 1;

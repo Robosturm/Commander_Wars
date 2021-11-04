@@ -149,6 +149,8 @@ var Constructor = function()
         return "AC";
     };
     this.coZoneBonus = 30;
+    this.powerBonus = 30;
+    this.superPowerBonus = 50;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isAttacker, action)
     {
@@ -156,13 +158,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 50;
+                return CO_BRENNER.superPowerBonus;
             case GameEnums.PowerMode_Power:
-                return 30;
+                return CO_BRENNER.powerBonus;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 30;
+                    return CO_BRENNER.coZoneBonus;
                 }
                 break;
         }
@@ -207,22 +209,22 @@ var Constructor = function()
     };
     this.getMiss = function(co)
     {
-        return qsTr("Dishonor");
+        return qsTr("Abandoning Others");
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His units have a higher defence than normal units.");
+        return qsTr("He specializes in defensive bonuses for his units.");
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nSpecial Unit:\nRepair Tank\n\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional %0% defense.");
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNone") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %0% defense.");
         text = replaceTextArgs(text, [CO_BRENNER.coZoneBonus]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Heals 3 hp of his units and increases his defence.");
+        return qsTr("Heals 3 hp to all of his units and increases their defence.");
     };
     this.getPowerName = function(co)
     {
@@ -230,7 +232,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Heals 5 hp of his units and increases his defence greatly.");
+        var text = qsTr("Heals 5 hp to all of his units and increases their defence by %0%.");
+        text = replaceTextArgs(text, [CO_BRENNER.superPowerBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -238,20 +242,20 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("I want everyone to get out here alive."),
-                qsTr("Prepare the troops. It's time to go on the offensive."),
-                qsTr("Don't give up. We will survive that."),
-                qsTr("You battled brave out there. It's time to get out there.")];
+        return [qsTr("I want everyone to get out here alive! Move!"),
+                qsTr("It's time to go on the offensive!"),
+                qsTr("Never give up!"),
+                qsTr("Where there is life, there is hope!")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("The world ends - and yet war goes on..."),
-                qsTr("The priority is attending to the casualties...")];
+        return [qsTr("When will this senseless war end?"),
+                qsTr("Let's tend to the injured first.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Where there's life, there's hope."),
-                qsTr("At least my troops got out...")];
+        return [qsTr("We barely escaped, but at least we are alive."),
+                qsTr("At least we can recover from this...")];
     };
     this.getName = function()
     {

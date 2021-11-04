@@ -9,6 +9,7 @@ var Constructor = function()
     {
         sprite.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(-35, 0));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

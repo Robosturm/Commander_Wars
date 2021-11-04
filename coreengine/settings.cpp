@@ -108,6 +108,7 @@ quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::m_walkAnimationSpeed = 20;
 quint32 Settings::m_dialogAnimationSpeed = 20;
 quint32 Settings::m_captureAnimationSpeed = 1;
+bool Settings::m_useCoMinis = true;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
@@ -118,7 +119,6 @@ qint32 Settings::m_MenuItemCount = 13;
 qint32 Settings::m_MenuItemRowCount = 2;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
-quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
 GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
 bool Settings::m_autoScrolling = true;
 bool Settings::m_autoCamera = true;
@@ -159,6 +159,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getUseCoMinis()
+{
+    return m_useCoMinis;
+}
+
+void Settings::setUseCoMinis(bool newUseCoMinis)
+{
+    m_useCoMinis = newUseCoMinis;
 }
 
 bool Settings::getOverworldAnimations()
@@ -700,16 +710,6 @@ float Settings::getWalkAnimationSpeed()
         return 100.0f / (101.0f - m_walkAnimationSpeed);
     }
     return 100;
-}
-
-quint32 Settings::getSpriteFilter()
-{
-    return m_spriteFilter;
-}
-
-void Settings::setSpriteFilter(quint32 spriteFilter)
-{
-    m_spriteFilter = spriteFilter;
 }
 
 qint32 Settings::getShowCoCount()
@@ -1387,14 +1387,7 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_MenuItemRowCount = 1;
     }
-    m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
-    m_spriteFilter = settings.value("SpriteFilter", GL_LINEAR_MIPMAP_LINEAR).toInt(&ok);
-    if(!ok || m_spriteFilter < GL_NEAREST)
-    {
-        QString error = "Error in the Ini File: [Game] Setting: SpriteFilter";
-        CONSOLE_PRINT(error, Console::eERROR);
-        m_showCoCount = 0;
-    }
+    m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();    
     if (Settings::getSmallScreenDevice())
     {
         m_showCoCount = settings.value("ShowCoCount", 1).toInt(&ok);
@@ -1419,6 +1412,7 @@ void Settings::loadSettings()
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
     m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
+    m_useCoMinis = settings.value("UseCoMinis", true).toBool();
     if (Settings::hasSmallScreen())
     {
         m_autoScrolling = false;
@@ -1595,8 +1589,9 @@ void Settings::saveSettings()
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(m_walkAnimationSpeed));
         settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(m_dialogAnimationSpeed));
-        settings.setValue("CaptureAnimationSpeed",          static_cast<qint32>(m_captureAnimationSpeed));
+        settings.setValue("CaptureAnimationSpeed",          static_cast<qint32>(m_captureAnimationSpeed));        
         settings.setValue("AnimationSpeed",                 m_animationSpeed);
+        settings.setValue("UseCoMinis",                     m_useCoMinis);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
         settings.setValue("Username",                       m_Username);
@@ -1606,7 +1601,6 @@ void Settings::saveSettings()
         settings.setValue("MenuItemRowCount",               m_MenuItemRowCount);
         settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
         settings.setValue("ShowCoCount",                    m_showCoCount);
-        settings.setValue("SpriteFilter",                   m_spriteFilter);
         settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
         settings.setValue("AutoScrolling",                  m_autoScrolling);
         settings.setValue("AutoCamera",                     m_autoCamera);

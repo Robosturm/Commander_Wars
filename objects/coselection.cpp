@@ -90,8 +90,6 @@ COSelection::COSelection(QPoint position, QSize maxSize, QStringList coids)
 
     oxygine::spBox9Sprite pPanelbox = oxygine::spBox9Sprite::create();
     pAnim = pObjectManager->getResAnim("panel");
-    pPanelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pPanelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pPanelbox->setResAnim(pAnim);
     pPanelbox->setX(m_CoDescription->getX() + m_CoDescription->getScaledWidth());
     pPanelbox->setY(startY);
@@ -414,7 +412,7 @@ void COSelection::hoveredCOChanged(QString coid)
         oxygine::ResAnim* pAnim = nullptr;
         if (!coid.isEmpty())
         {
-            pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
+            pAnim = pCOSpriteManager->getResAnim(coid + "+nrm", oxygine::ep_ignore_error);
         }
         m_pCurrentCO->setResAnim(pAnim);
     }

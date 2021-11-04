@@ -9,7 +9,8 @@ var Constructor = function()
     {
         if (terrainId === "MOUNTAIN" ||
             terrainId === "SNOW_MOUNTAIN" ||
-            terrainId === "DESERT_ROCK")
+            terrainId === "DESERT_ROCK" ||
+            terrainId === "WASTE_MOUNTAIN")
         {
             return true
         }
@@ -32,6 +33,7 @@ var Constructor = function()
         var offset = Qt.point(-10, 5);
         sprite.loadSpriteV2("commando+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_COMMANDO.getMaxUnitCount(), offset, count);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)

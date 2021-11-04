@@ -62,7 +62,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 21;
+        return 22;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -84,10 +84,19 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
-
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getHpDefenseReduction
+     * @return
+     */
+    bool getHpDefenseReduction() const;
+    /**
+     * @brief setHpDefenseReduction
+     * @param newHpDefenseReduction
+     */
+    void setHpDefenseReduction(bool newHpDefenseReduction);
     /**
      * @brief getPowerUsageReduction
      * @return
@@ -349,19 +358,19 @@ public slots:
      */
     void checkVictory();
     qint32 getVictoryTeam();
-    void addVictoryRule(QString rule);
-    void removeVictoryRule(QString rule);
-    VictoryRule* getVictoryRule(QString rule);
+    void addVictoryRule(const QString & rule);
+    void removeVictoryRule(const QString & rule);
+    VictoryRule* getVictoryRule(const QString & rule);
 
-    void addGameRule(QString rule);
-    GameRule* getGameRule(QString rule);
-    void removeGameRule(QString rule);
+    void addGameRule(const QString & rule);
+    GameRule* getGameRule(const QString & rule);
+    void removeGameRule(const QString & rule);
     /**
      * @brief addWeather
      * @param weatherId
      * @param weatherChance
      */
-    void addWeather(QString weatherId, qint32 weatherChance);
+    void addWeather(const QString & weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param weatherId
@@ -408,13 +417,13 @@ public slots:
      * @brief getCurrentWeather
      * @return
      */
-    Weather* getWeather(QString weatherId);
+    Weather* getWeather(const QString & weatherId);
     /**
      * @brief getWeatherChance
      * @param index
      * @return
      */
-    qint32 getWeatherChance(QString weatherId);
+    qint32 getWeatherChance(const QString & weatherId);
     /**
      * @brief getWeatherCount
      * @return
@@ -432,7 +441,7 @@ public slots:
      * @param weatherId
      * @param duration
      */
-    void changeWeather(QString weatherId, qint32 duration, qint32 startDay = 0);
+    void changeWeather(const QString & weatherId, qint32 duration, qint32 startDay = 0);
     /**
      * @brief changeWeather changes the weather for n-days
      * @param weatherId
@@ -444,6 +453,10 @@ public slots:
      * @param weatherId
      */
     void setCurrentWeather(qint32 weatherId);
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged();
 
     bool getRankingSystem() const;
     void setRankingSystem(bool RankingSystem);
@@ -483,7 +496,7 @@ public slots:
      * @param y
      * @param pPlayer
      */
-    void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfWarColor = QColor(70, 70, 70, 100));
+    void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QColor fogOfMistColor = QColor(180, 180, 180, 100), QColor fogOfWarColor = QColor(70, 70, 70, 100));
     /**
      * @brief createFieldFogMist
      * @param x
@@ -602,6 +615,7 @@ private:
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
     quint8 m_terrainDefense{10};
+    bool m_hpDefenseReduction{true};
     bool m_victory{false};
     float m_resellValue{0.5f};
     bool m_transporterRefresh{true};

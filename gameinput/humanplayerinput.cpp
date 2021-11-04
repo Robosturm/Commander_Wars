@@ -161,7 +161,14 @@ void HumanPlayerInput::showVisionFields(qint32 x, qint32 y)
         {
             if (!m_FieldPoints.contains(QVector3D(point.x(), point.y(), 1)))
             {
-                createMarkedField(point.toPoint(), QColor(255, 127, 39), Terrain::DrawPriority::MarkedFieldMap);
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QColor viewColor = QColor(255, 127, 39, 255);
+                QJSValue ret = pInterpreter->doFunction("Global", "getVisionFieldColor");
+                if (ret.isString())
+                {
+                    viewColor = QColor(ret.toString());
+                }
+                createMarkedField(point.toPoint(), viewColor, Terrain::DrawPriority::MarkedFieldMap);
             }
         }
     }
@@ -602,7 +609,7 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
     
 }
 
-void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
+void HumanPlayerInput::menuItemSelected(const QString & itemID, qint32 cost)
 {
     CONSOLE_PRINT("HumanPlayerInput::menuItemSelected", Console::eDEBUG);
     if (m_pGameAction.get() != nullptr)
@@ -736,7 +743,7 @@ void HumanPlayerInput::finishAction()
     cleanUpInput();
 }
 
-void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
+void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x, qint32 y)
 {
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
@@ -864,20 +871,19 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         pSprite->setResAnim(pAnim);
     }
     pSprite->setColor(color);
-    // pSprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
-        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));        
         pMap->addChild(pSprite);
     }
     else
     {
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
         pSprite->setPriority(static_cast<qint16>(drawPriority));
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+        pSprite->setPosition(0, 0);
         pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
     }
     return pSprite;
@@ -1080,18 +1086,32 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     zoomChanged(pMap->getZoom());
 }
 
-void HumanPlayerInput::nextTurn()
+bool HumanPlayerInput::inputAllowed()
 {
-    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr &&
-        GameAnimationFactory::getAnimationCount() == 0)
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        pMenu->getFocused())
     {
         spGameMap pMap = GameMap::getInstance();
         if (pMap->getCurrentPlayer() == m_pPlayer &&
             m_pGameAction.get() == nullptr)
         {
-            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+            return true;
+        }
+    }
+    return false;
+}
+
+void HumanPlayerInput::nextTurn()
+{
+    CONSOLE_PRINT("HumanPlayerInput::nextTurn()", Console::eDEBUG);
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (inputAllowed())
+    {
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+        if (pAction->canBePerformed())
+        {
             emit performAction(pAction);
         }
     }
@@ -1117,8 +1137,6 @@ void HumanPlayerInput::createComplexZInformation(qint32 x, qint32 y, const Marke
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     constexpr qint32 baseWidth = 90;
     constexpr qint32 textWidth = 60;
@@ -1391,51 +1409,74 @@ void HumanPlayerInput::deleteArrow()
     m_Arrows.clear();
 }
 
+void HumanPlayerInput::gotoNext()
+{
+    if (inputAllowed())
+    {
+        if (m_FieldPoints.size() > 0)
+        {
+            nextMarkedField();
+        }
+        else
+        {
+            nextSelectOption();
+        }
+    }
+}
+
+void HumanPlayerInput::performBasicAction(QString action)
+{
+    if (inputAllowed())
+    {
+        spGameAction pAction = spGameAction::create(action);
+        if (pAction->canBePerformed())
+        {
+            emit performAction(pAction);
+        }
+    }
+}
+
+void HumanPlayerInput::gotoPrevious()
+{
+    if (inputAllowed())
+    {
+        if (m_FieldPoints.size() > 0)
+        {
+            previousMarkedField();
+        }
+        else
+        {
+            previousSelectOption();
+        }
+    }
+}
+
 void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 {
     spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr &&
-        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
-        pMenu->getFocused())
+    if (inputAllowed())
     {
-        if (GameAnimationFactory::getAnimationCount() == 0)
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getKey_next() ||
+            cur == Settings::getKey_next2())
         {
-            // for debugging
-            Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_next() ||
-                cur == Settings::getKey_next2())
-            {
-                if (m_FieldPoints.size() > 0)
-                {
-                    nextMarkedField();
-                }
-                else
-                {
-                    nextSelectOption();
-                }
-            }
-            else if (cur == Settings::getKey_previous() ||
-                     cur == Settings::getKey_previous2())
-            {
-                if (m_FieldPoints.size() > 0)
-                {
-                    previousMarkedField();
-                }
-                else
-                {
-                    previousSelectOption();
-                }
-            }
-            else if (cur == Settings::getKey_ShowAttackFields() ||
-                     cur == Settings::getKey_ShowAttackFields2())
-            {
-                showSelectedUnitAttackableFields(true);
-            }
-            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                     cur == Settings::getKey_ShowIndirectAttackFields2())
-            {
-                showSelectedUnitAttackableFields(false);
-            }
+            gotoNext();
+        }
+        else if (cur == Settings::getKey_previous() ||
+                 cur == Settings::getKey_previous2())
+        {
+            gotoPrevious();
+        }
+        else if (cur == Settings::getKey_ShowAttackFields() ||
+                 cur == Settings::getKey_ShowAttackFields2())
+        {
+            showSelectedUnitAttackableFields(true);
+        }
+        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                 cur == Settings::getKey_ShowIndirectAttackFields2())
+        {
+            showSelectedUnitAttackableFields(false);
         }
     }
 }

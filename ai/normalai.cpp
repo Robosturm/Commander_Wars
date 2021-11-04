@@ -55,6 +55,8 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   // Moving
                   {"LockedUnitHp", "Moving", &m_lockedUnitHp, 4.0f, 1.0f, 4.0f},
                   {"NoMoveAttackHp", "Moving", &m_noMoveAttackHp, 3.5f, 1.0f, 4.0f},
+                  {"MinTerrainDamage", "Moving", &m_minTerrainDamage, 20.0f, 20.0f, 20.0f},
+
                   // Attacking
                   {"OwnIndirectAttackValue", "Attacking", &m_ownIndirectAttackValue, 2.0f, 0.1f, 10.0f},
                   {"EnemyKillBonus", "Attacking", &m_enemyKillBonus, 2.0f, 0.1f, 10.0f},
@@ -66,6 +68,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"EnemyCounterDamageMultiplier", "Attacking", &m_enemyCounterDamageMultiplier, 10.0f, 0.1f, 40.0f},
                   {"WatermineDamage", "Attacking", &m_watermineDamage, 4.0f, 4.0f, 4.0f},
                   {"EnemyUnitCountDamageReductionMultiplier", "Attacking", &m_enemyUnitCountDamageReductionMultiplier, 0.5f, 0.0f, 10.0f},
+                  {"OwnProdctionMalus", "Attacking", &m_ownProdctionMalus, 5000.0f, 5000.0f, 5000.0f},
                   // Production
                   {"FundsPerBuildingFactorA", "Production", &m_fundsPerBuildingFactorA, 1.85f, 1.0f, 10.0f},
                   {"FundsPerBuildingFactorB", "Production", &m_fundsPerBuildingFactorB, 2.0f, 1.0f, 10.0f},
@@ -693,7 +696,7 @@ bool NormalAi::getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefill
     return ret;
 }
 
-void NormalAi::appendRefillTargets(QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
+void NormalAi::appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
 {
     if (isRefuelUnit(actions))
     {
@@ -786,9 +789,7 @@ bool NormalAi::loadUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (!pUnit->getHasMoved() &&
-            // we don't support multi transporting for the ai for now this will break the system trust me
-            pUnit->getLoadingPlace() <= 0)
+        if (!pUnit->getHasMoved())
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;
@@ -1333,14 +1334,19 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, spQmlVectorUnit pUnits, UnitPat
         // empty or own field
         qint32 x = movePath[i].x();
         qint32 y = movePath[i].y();
-        if ((pMap->getTerrain(x, y)->getUnit() == nullptr ||
-             pMap->getTerrain(x, y)->getUnit() == pUnit) &&
+        Terrain* pTerrain = pMap->getTerrain(x, y);
+        Building* pBuilding = pTerrain->getBuilding();
+        if ((pTerrain->getUnit() == nullptr ||
+             pTerrain->getUnit() == pUnit) &&
             turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
         {
-            float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
-            if (counterDamage < pUnit->getUnitValue() * m_minMovementDamage)
+            if (isMoveableTile(pBuilding))
             {
-                return i;
+                float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
+                if (counterDamage < pUnit->getUnitValue() * m_minMovementDamage)
+                {
+                    return i;
+                }
             }
         }
     }
@@ -1381,7 +1387,10 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit pUnits, QVecto
             {
                 fundsDamage *= m_enemyIndirectBonus;
             }
-
+            if (!isMoveableTile(pMap->getTerrain(moveTarget.x(), moveTarget.y())->getBuilding()))
+            {
+                fundsDamage -= m_ownProdctionMalus;
+            }
         }
         else
         {
@@ -1393,7 +1402,8 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit pUnits, QVecto
             counterDamage = 0;
         }
         fundsDamage -= counterDamage;
-        qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
+        Terrain* pTerrain = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()));
+        qint32 targetDefense = pTerrain->getDefense(pUnit);
         if (fundsDamage >= minFundsDamage)
         {
             if (fundsDamage > currentDamage)
@@ -2050,7 +2060,7 @@ qint32 NormalAi::getIndexInProductionData(Building* pBuilding)
     return ret;
 }
 
-qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
+qint32 NormalAi::getUnitProductionIdx(qint32 index, const QString & unitId,
                                       spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                       QVector<QVector4D> & attackCount, QVector<float> & buildData)

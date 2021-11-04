@@ -121,6 +121,10 @@ namespace oxygine
          */
         void setGamma(float gamma);
         virtual void initializeGL() override;
+        bool isMainThread() const
+        {
+            return QThread::currentThreadId() == m_mainHandle;
+        }
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void loadRessources(){}
@@ -158,6 +162,7 @@ namespace oxygine
 
         void handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints);
         bool sameTouchpoint(QPointF pos1, QPointF pos2) const;
+
     protected:
         bool m_renderEnabled = true;
 

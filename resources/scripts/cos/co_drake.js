@@ -3,8 +3,8 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
-        return ["+alt", "+alt2", "+alt3"];
+        
+        return ["+alt", "+alt2", "+alt3", "+alt4"];
     };
 
     this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
@@ -269,12 +269,12 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are weaker and Sea units stronger") +
+        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point and have increased firepower. Air units suffer from reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nNaval units have ncreased firepower.");
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units.");
+        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units and halves their fuel.");
     };
     this.getPowerName = function(co)
     {
@@ -282,7 +282,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and weather changes to rain.");
+        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and halves their fuel and weather changes to rain.");
     };
     this.getSuperPowerName = function(co)
     {
@@ -298,10 +298,10 @@ var Constructor = function()
                 qsTr("Drake is taking the helm!")];
     };
     this.getVictorySentences = function(co)
-    {
-        return [qsTr("I'm just glad I survived that..."),
-                qsTr("That was some rough sailing! Blow me down... we finally won.")];
-    };
+        {
+            return [qsTr("I'm just glad I survived that..."),
+                    qsTr("That was some rough sailing!")];
+        };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("A job well done! You've beaten me."),

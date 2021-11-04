@@ -15,7 +15,7 @@ namespace oxygine
     Actor::Actor()
         : m_rdelegate(RenderDelegate::instance.get()),
           m_stage(nullptr),
-          m_flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
+          m_flags(flag_visible | flag_fastTransform),
           m_alpha(255),
           m_extendedIsOn(0),
           m_parent(nullptr),
@@ -227,8 +227,6 @@ namespace oxygine
                     click = *te;
                     click.type = TouchEvent::CLICK;
                     click.bubbles = true;
-                    //will be dispatched later after UP
-
                     setNotPressed(te->mouseButton);
                 }
             }
@@ -296,21 +294,18 @@ namespace oxygine
         }
 
         event->phase = Event::phase_capturing;
-        if (!touchEvent || (m_flags & flag_touchChildrenEnabled))
+        auto iter = m_children.end();
+        while (iter != m_children.begin())
         {
-            auto iter = m_children.end();
-            while (iter != m_children.begin())
-            {
-                iter--;
-                iter->get()->handleEvent(event);
-            }
+            iter--;
+            iter->get()->handleEvent(event);
         }
         if (touchEvent)
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
             if (!event->target)
             {
-                if ((m_flags & flag_touchEnabled) && isOn(me->localPosition, me->__localScale))
+                if (isOn(me->localPosition, me->__localScale))
                 {
                     event->phase = Event::phase_target;
                     event->target = this;
@@ -646,7 +641,7 @@ namespace oxygine
 
         if (r.pointIn(localPosition))
         {
-            return true;
+             return true;
         }
         return false;
     }
@@ -933,8 +928,8 @@ namespace oxygine
         {
             return false;
         }
-        rs.transform.x = floorf(rs.transform.x);
-        rs.transform.y = floorf(rs.transform.y);
+        rs.transform.x = static_cast<qint32>(rs.transform.x);
+        rs.transform.y = static_cast<qint32>(rs.transform.y);
         m_onScreen = onScreen(rs);
         if (m_onScreen)
         {
@@ -960,19 +955,9 @@ namespace oxygine
         m_rdelegate->render(this, parentRS);
     }
 
-    oxygine::RectF Actor::getDestRecModifier() const
-    {
-        return m_DestRecModifier;
-    }
-
-    void Actor::setDestRecModifier(const oxygine::RectF &DestRecModifier)
-    {
-        m_DestRecModifier = DestRecModifier;
-    }
-
     RectF Actor::getDestRect() const
     {
-        return RectF(m_DestRecModifier.pos, getSize() + m_DestRecModifier.size);
+        return RectF(Point(0.0f, 0.0f), getSize());
     }
 
     spTween Actor::__addTween(spTween tween, bool)

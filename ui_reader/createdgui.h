@@ -11,11 +11,13 @@ class CreatedGui : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit CreatedGui();
+    explicit CreatedGui() = default;
     virtual ~CreatedGui();
     void addFactoryUiItem(oxygine::spActor pItem);
 signals:
     void sigOnUpdate();
+public slots:
+    virtual void setEnabled(bool value) override;
 protected:
     QVector<oxygine::spActor> m_factoryUiItem;
 };

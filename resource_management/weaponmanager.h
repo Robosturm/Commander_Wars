@@ -15,14 +15,14 @@ public:
      * @param pDefender
      * @return
      */
-    float getBaseDamage(QString weaponID, Unit* pDefender);
+    float getBaseDamage(const QString & weaponID, Unit* pDefender);
     /**
      * @brief getEnviromentDamage
      * @param weaponID
      * @param terrainID
      * @return
      */
-    float getEnviromentDamage(QString weaponID, QString terrainID);
+    float getEnviromentDamage(const QString & weaponID, const QString & terrainID);
     /**
      * @brief loadAll loads all weapons data
      */

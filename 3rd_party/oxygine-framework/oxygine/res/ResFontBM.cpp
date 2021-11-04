@@ -2,7 +2,6 @@
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 #include "3rd_party/oxygine-framework/oxygine/Font.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 #include <qfile.h>
@@ -12,6 +11,8 @@
 
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+
+#include "spritingsupport/spritecreator.h"
 
 namespace oxygine
 {
@@ -42,7 +43,7 @@ namespace oxygine
         return m_font.get();
     }
 
-    void ResFontBM::init(QString path, bool premultipliedAlpha)
+    void ResFontBM::init(const QString & path, bool premultipliedAlpha)
     {
         m_premultipliedAlpha = premultipliedAlpha;
         m_file = path;
@@ -62,7 +63,6 @@ namespace oxygine
 
     void ResFontBM::_loadPage(const page& p)
     {
-        spImage mt = spImage::create();
         QImage img;
         if (QFile::exists(Settings::getUserPath() + p.file))
         {
@@ -72,8 +72,13 @@ namespace oxygine
         {
            img = QImage(RCC_PREFIX_PATH + p.file);
         }
-        mt->init(img, !m_premultipliedAlpha);
-        p.texture->init(mt->lock());
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "Unable to locate font image: " + p.file);
+            return;
+        }
+        SpriteCreator::convertToRgba(img);
+        p.texture->init(img);
         p.texture->setLinearFilter(m_linearFilter);
         p.texture->setClamp2Edge(m_clamp2edge);
     }
@@ -83,9 +88,6 @@ namespace oxygine
         if (m_pages.empty())
         {
             oxygine::handleErrorPolicy(oxygine::ep_show_error, "ResFontBM::_load loading empty pages");
-        }
-        if (m_pages.empty())
-        {
             return;
         }
 
@@ -96,7 +98,7 @@ namespace oxygine
         }
     }
 
-    void ResFontBM::addPage(qint32 tw, qint32 th, QString head, QString textureFile)
+    void ResFontBM::addPage(const QString & head, const QString & textureFile)
     {
         page p;
         if (!head.isEmpty())
@@ -106,12 +108,6 @@ namespace oxygine
         }
         p.file += textureFile;
         p.texture = VideoDriver::instance->createTexture();
-
-        if (tw)
-        {
-            p.texture->init(0, tw, th, ImageData::TF_UNDEFINED);
-        }
-
         m_pages.push_back(p);
     }
 
@@ -124,7 +120,7 @@ namespace oxygine
         {
             if (value.toBool())
             {
-                m_linearFilter = GL_LINEAR;
+                m_linearFilter = GL_LINEAR_MIPMAP_LINEAR;
             }
             else
             {
@@ -133,7 +129,7 @@ namespace oxygine
         }
         else
         {
-            m_linearFilter = GL_LINEAR;
+            m_linearFilter = GL_LINEAR_MIPMAP_LINEAR;
         }
         value = QVariant(node.attribute("clamp2edge"));
         if (value.typeId() == QMetaType::QString &&
@@ -155,17 +151,14 @@ namespace oxygine
         {
             return;
         }
-
         g = m_font->getGlyph(' ');
         if (!g)
         {
             return;
         }
-
         glyph p = *g;
         p.ch = 0xA0;
         m_font->addGlyph(p);
-
     }
 
     void ResFontBM::_createFont(CreateResourceContext* context)
@@ -224,25 +217,15 @@ namespace oxygine
 
         QDomElement common = root.firstChildElement("common");
         qint32 base = common.attribute("base").toInt() / downsample;
-        qint32 tw = common.attribute("scaleW").toInt();
-        qint32 th = common.attribute("scaleH").toInt();
-
         QDomElement pages = root.firstChildElement("pages");
-        tw /= downsample;
-        th /= downsample;
         loadBase(pages);
-
         QDir dir = QFileInfo(path).dir();
         for (QDomElement page_node = pages.firstChildElement("page"); !page_node.isNull(); page_node = page_node.nextSiblingElement("page"))
         {
             QString textureFile = page_node.attribute("file");
-            addPage(tw, th, dir.path().toStdString().c_str(), textureFile);
+            addPage(dir.path().toStdString().c_str(), textureFile);
         }
-
-        if (!tw)
-        {
-            load();
-        }
+        load();
 
         fontSize = qAbs(fontSize);
         spFont font = spFont::create();
@@ -352,7 +335,7 @@ namespace oxygine
         }
     }
 
-    const Font* ResFontBM::getFont(QString, int) const
+    const Font* ResFontBM::getFont(const QString &, int) const
     {
         return m_font.get();
     }

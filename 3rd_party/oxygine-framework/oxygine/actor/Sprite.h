@@ -24,9 +24,9 @@ namespace oxygine
             return m_frame;
         }
         RectF getDestRect() const override;
-        const Diffuse& getDiffuse() const
+        const spTexture& getTexture() const
         {
-            return m_frame.getDiffuse();
+            return m_frame.getTexture();
         }
         bool getManageResAnim() const
         {

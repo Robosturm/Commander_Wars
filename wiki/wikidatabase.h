@@ -73,12 +73,12 @@ public:
      * @param searchTerm
      * @return
      */
-    bool tagMatches(QStringList tags, QString searchTerm);
+    bool tagMatches(const QStringList & tags, const QString & searchTerm);
     /**
      * @brief getTags
      * @return
      */
-    QVector<QString> getTags();
+    QStringList getTags();
     /**
      * @brief getIcon
      * @param file

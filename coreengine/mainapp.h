@@ -149,7 +149,6 @@ public slots:
     void changeScreenSize(qint32 width, qint32 heigth);
     void changePosition(QPoint pos, bool invert);
     qint32 getScreenMode();
-    void applyFilter(quint32 filter);
     /**
      * @brief getGameVersion
      * @return
@@ -162,7 +161,7 @@ public slots:
      * @brief showCrashReport
      * @param log
      */
-    static void showCrashReport(QString log);
+    static void showCrashReport(const QString & log);
     /**
      * @brief loadArgs
      * @param args
@@ -194,11 +193,6 @@ signals:
      * @param log
      */
     void sigShowCrashReport(QString log);
-    /**
-     * @brief sigApplyFilter
-     * @param filter
-     */
-    void sigApplyFilter(quint32 filter);
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();

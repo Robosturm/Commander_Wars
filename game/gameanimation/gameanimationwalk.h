@@ -20,7 +20,7 @@ class GameAnimationWalk : public GameAnimation
 {
     Q_OBJECT
 public:
-    explicit GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath);
+    explicit GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath);
     virtual ~GameAnimationWalk() = default;
 signals:
 
@@ -31,14 +31,14 @@ public slots:
      * @param addPlayerColor if the sprite should add some color
      * @param scaling scaling factor for the animation
      */
-    void loadSprite(QString spriteID, bool addPlayerColor, float scaling);
+    void loadSprite(const QString & spriteID, bool addPlayerColor, float scaling);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      * @param scaling
      */
-    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, float scaling);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, float scaling);
     /**
      * @brief onFinished called when the animation has finished
      */

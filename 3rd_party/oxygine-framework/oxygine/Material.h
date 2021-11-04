@@ -24,7 +24,6 @@ namespace oxygine
             : m_hash(other->m_hash),
               m_base(other->m_base),
               m_table(other->m_table),
-              m_alpha(other->m_alpha),
               m_blend(other->m_blend),
               m_uberShader(other->m_uberShader),
               m_addColor(other->m_addColor),
@@ -56,7 +55,6 @@ namespace oxygine
         size_t m_hash{0};
         spTexture    m_base;
         spTexture    m_table;
-        spTexture    m_alpha;
         VideoDriver::blend_mode m_blend;
         UberShaderProgram* m_uberShader;
         QColor             m_addColor;

@@ -5,13 +5,17 @@ var Constructor = function()
         building.setHp(100);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
         building.loadSprite("minicannon+W", false);
         building.loadSpriteV2("minicannon+W+mask", GameEnums.Recoloring_Matrix);
     };
     this.getBaseIncome = function()
+    {
+        return 0;
+    };
+    this.getDefense = function(building)
     {
         return 0;
     };

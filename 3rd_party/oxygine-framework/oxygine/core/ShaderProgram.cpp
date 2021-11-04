@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    ShaderProgram::ShaderProgram(QString vsShader, QString fsShader, const VertexDeclaration* decl)
+    ShaderProgram::ShaderProgram(const QString & vsShader, const QString & fsShader, const VertexDeclaration* decl)
         : m_program(oxygine::GameWindow::getWindow()),
           m_vsShader(QOpenGLShader::Vertex, oxygine::GameWindow::getWindow()),
           m_fsShader(QOpenGLShader::Fragment, oxygine::GameWindow::getWindow())
@@ -45,7 +45,7 @@ namespace oxygine
         return m_program.uniformLocation(id);
     }
 
-    void ShaderProgram::compileShader(QOpenGLShader& shader, QString data)
+    void ShaderProgram::compileShader(QOpenGLShader& shader, const QString & data)
     {
         bool success = shader.compileSourceCode(data);
         QString log = shader.log();

@@ -23,7 +23,7 @@ var Constructor = function()
         unit.setVision(2);
         unit.showCustomRange("cursor+border", 1, unit.getOwner().getColor());
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("royal_guard+mask", GameEnums.Recoloring_Matrix);

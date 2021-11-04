@@ -50,29 +50,51 @@ endif()
 ###################################################################################
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
-    add_definitions(
-        -DGAMEDEBUG                 # adds additional js checks and asserts
-        -DDEBUG_LEVEL=0             # default console log level
-        #-DHEAVY_AI                 # experimental heavy ai unfinished
-        #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-        #-DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
-        -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
-        )
-
     if("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        add_definitions(
+            -DGAMEDEBUG                 # adds additional js checks and asserts
+            -DDEBUG_LEVEL=0             # default console log level
+            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            #-DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
+            -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
+            )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         set(DEPLOY_RESOURCES_AS_FOLDER 1)
+        add_definitions(
+            -DGAMEDEBUG                 # adds additional js checks and asserts
+            -DDEBUG_LEVEL=0             # default console log level
+            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            #-DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
+            -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
+            )
     else()
         set(DEPLOY_RESOURCES_AS_FOLDER 0)
+        add_definitions(
+            -DGAMEDEBUG                 # adds additional js checks and asserts
+            -DDEBUG_LEVEL=0             # default console log level
+            #-DHEAVY_AI                 # experimental heavy ai unfinished
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
+            -DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
+            -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
+            )
     endif()
 else("Release")
     message("Compiling as Release")
-    add_definitions(
-        -DDEBUG_LEVEL=1             # default console log level
-        #-DAUDIOSUPPORT
+    set(DEPLOY_RESOURCES_AS_FOLDER 0)
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        add_definitions(
+            -DDEBUG_LEVEL=1             # default console log level
+            #-DAUDIOSUPPORT
         )
-    set(DEPLOY_RESOURCES_AS_FOLDER 1)
+    else()
+        add_definitions(
+            -DDEBUG_LEVEL=1             # default console log level
+            -DAUDIOSUPPORT
+        )
+    endif()
 endif()
 
 ###################################################################################
@@ -81,7 +103,7 @@ endif()
 add_definitions(
     -DMAJOR=0
     -DMINOR=20
-    -DREVISION=3
+    -DREVISION=4
     )
 
 ###################################################################################
@@ -135,7 +157,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/Draggable.cpp
     3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp
     3rd_party/oxygine-framework/oxygine/Font.cpp
-    3rd_party/oxygine-framework/oxygine/Image.cpp
     3rd_party/oxygine-framework/oxygine/Input.cpp
     3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp
     3rd_party/oxygine-framework/oxygine/Material.cpp
@@ -147,8 +168,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/RenderState.h
     3rd_party/oxygine-framework/oxygine/oxygine-forwards.h
     #core
-    3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
-    3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
     3rd_party/oxygine-framework/oxygine/core/Object.cpp
     3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
     3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
@@ -164,7 +183,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/actor/Button.cpp
     3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp
-    3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
     3rd_party/oxygine-framework/oxygine/actor/SlidingActorNoClipRect.cpp
     3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp
@@ -185,7 +203,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp
     3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp
-    3rd_party/oxygine-framework/oxygine/res/ResBuffer.cpp
     3rd_party/oxygine-framework/oxygine/res/ResFont.cpp
     3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp
     3rd_party/oxygine-framework/oxygine/res/Resource.cpp
@@ -195,8 +212,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     3rd_party/oxygine-framework/oxygine/text_utils/Aligner.cpp
     3rd_party/oxygine-framework/oxygine/text_utils/Node.cpp
     3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
-    # text utils
-    3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.cpp
     # closure
     3rd_party/oxygine-framework/oxygine/core/closure.h
     # math
@@ -286,6 +301,8 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/ingame/dialogattacklog.cpp
     objects/dialogs/ingame/dialogunitinfo.cpp
     objects/dialogs/ingame/victoryrulepopup.cpp
+    # objects dialogs map selection
+    objects/dialogs/mapSelection/mapselectionfilterdialog.cpp
 
     #modding
     modding/csvtableimporter.cpp
@@ -342,6 +359,7 @@ set(${PROJECT_NAME}_SRCS
     coreengine/filesupport.cpp
     coreengine/globalutils.cpp
     coreengine/scriptvariablefile.cpp
+    coreengine/metatyperegister.cpp
 
     # network engine
     network/tcpclient.cpp
@@ -394,10 +412,15 @@ set(${PROJECT_NAME}_SRCS
     # replay/observer
     game/viewplayer.cpp
 
+    # terrain flow data
+    game/jsData/terrainflowdata.cpp
+
     #ui
     game/ui/playerinfo.cpp
     game/ui/ingameinfobar.cpp
     game/ui/copowermeter.cpp
+    game/ui/customcoboostinfo.cpp
+    game/ui/humanquickbuttons.cpp
 
     # game input
     gameinput/basegameinputif.cpp
@@ -416,6 +439,7 @@ set(${PROJECT_NAME}_SRCS
     mapsupport/importexport_awds.cpp
     mapsupport/importexport_awdc.cpp
     mapsupport/importawbyweb_text.cpp
+    mapsupport/mapfilter.cpp
 
     # ai
     ai/leaf.cpp
@@ -508,7 +532,8 @@ set(${PROJECT_NAME}_SRCS
 
     # ui
     ui_reader/uifactory.cpp
-    )
+    ui_reader/createdgui.h ui_reader/createdgui.cpp
+)
 
 ##############################################################################
 # OS Specific files #

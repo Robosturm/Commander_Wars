@@ -10,7 +10,7 @@ namespace oxygine
     VStyleActor::VStyleActor()
     {
         Material mat;
-        mat.m_blend = VideoDriver::blend_premultiplied_alpha;
+        mat.m_blend = VideoDriver::blend_alpha;
         mat.m_base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
         m_mat = MaterialCache::mc().cache(mat);

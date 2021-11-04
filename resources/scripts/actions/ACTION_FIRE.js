@@ -1,6 +1,5 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
     this.canBePerformed = function(action)
     {
         var unit = action.getTargetUnit();
@@ -74,7 +73,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "fire";
+        return "icon_fire";
     };
     this.getStepInputType = function(action)
     {

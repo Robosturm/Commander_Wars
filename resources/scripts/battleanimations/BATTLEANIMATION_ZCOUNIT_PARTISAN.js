@@ -9,7 +9,8 @@ var Constructor = function()
     {
         if (terrainId === "MOUNTAIN" ||
             terrainId === "SNOW_MOUNTAIN" ||
-            terrainId === "DESERT_ROCK")
+            terrainId === "DESERT_ROCK" ||
+            terrainId === "WASTE_MOUNTAIN")
         {
             return true
         }
@@ -30,6 +31,7 @@ var Constructor = function()
             sprite.loadSpriteV2("partisan+mask", GameEnums.Recoloring_Matrix,
                                 BATTLEANIMATION_ZCOUNIT_PARTISAN.getMaxUnitCount(), offset, count);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)

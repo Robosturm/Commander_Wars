@@ -8,7 +8,7 @@ namespace oxygine
     class KeyEvent
     {
         public:
-            KeyEvent(qint32 k, QString text, Qt::KeyboardModifiers modifiers)
+            KeyEvent(qint32 k, const QString & text, Qt::KeyboardModifiers modifiers)
                 : m_key(static_cast<Qt::Key>(k)),
                   m_text(text),
                   m_modifiers(modifiers)
@@ -40,7 +40,7 @@ namespace oxygine
             {
                 return m_key;
             }
-            inline QString getText()
+            inline const QString & getText()
             {
                 return m_text;
             }

@@ -1,4 +1,3 @@
-// called for loading the main sprite
 ACTION_ACTIVATE_SUPERPOWER_CO_0.canBePerformed = function(action)
 {
     var co = map.getCurrentPlayer().getCO(0);

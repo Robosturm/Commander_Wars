@@ -142,9 +142,9 @@ bool WikiDatabase::hasEntry(QString file1)
     return false;
 }
 
-QVector<QString> WikiDatabase::getTags()
+QStringList WikiDatabase::getTags()
 {
-    QVector<QString> ret;
+    QStringList ret;
     for (qint32 i = 0; i < m_Entries.size(); i++)
     {
         QStringList tags = m_Entries[i].m_tags;
@@ -188,7 +188,7 @@ WikiDatabase::PageData WikiDatabase::getEntry(QString id)
     return PageData("", id, QStringList());
 }
 
-bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
+bool WikiDatabase::tagMatches(const QStringList & tags, const QString & searchTerm)
 {
     for (qint32 i = 0; i < tags.size(); i++)
     {
@@ -318,7 +318,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         }
         else if (pTerrainManager->exists(file))
         {
-            spTerrain pTerrain = Terrain::createTerrain(file, -1, -1, "");
+            spTerrain pTerrain = Terrain::createTerrain(file, -10, -10, "");
             pTerrain->loadSprites();
             return pTerrain;
         }

@@ -18,13 +18,22 @@ class Player;
 class Unit;
 class Terrain;
 class GameAction;
+class Weather;
 
 class Building;
-typedef oxygine::intrusive_ptr<Building> spBuilding;
+using spBuilding = oxygine::intrusive_ptr<Building>;
 
 class Building : public Tooltip, public FileSerializable
 {
     Q_OBJECT
+    enum class DrawPriority
+    {
+        Mask = 0,
+        NoneMask,
+        Overlay,
+        OverlayNoneMask,
+    };
+
 public:
     static const float animationSpeed;
 
@@ -185,13 +194,13 @@ public slots:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(QString sprite, bool addPlayerColor);
+    void loadSprite(const QString & sprite, bool addPlayerColor);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode);
     /**
      * @brief updatePlayerColor
      * @param visible
@@ -411,8 +420,19 @@ public slots:
      * @return
      */
     GameEnums::BuildingTarget getBuildingTargets();
+    /**
+     * @brief onWeatherChanged
+     */
+    void onWeatherChanged(Weather* pWeather);
+    /**
+     * @brief loadWeatherOverlaySpriteV2
+     * @param spriteID
+     * @param mode
+     */
+    void loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
+    QVector<oxygine::spSprite> m_pWeatherOverlaySprites;
 
     QVector<GameEnums::Recoloring> m_addPlayerColor;
     /**

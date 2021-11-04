@@ -18,8 +18,9 @@
 #include "game/gamemap.h"
 #include "game/building.h"
 
+
 class MapSelectionView;
-typedef oxygine::intrusive_ptr<MapSelectionView> spMapSelectionView;
+using spMapSelectionView = oxygine::intrusive_ptr<MapSelectionView>;
 
 class MapSelectionView : public QObject, public oxygine::Actor
 {
@@ -61,8 +62,6 @@ public:
         m_CurrentSetCampaign = pCampaign;
     }
     spMapSelection getMapSelection() const;
-
-signals:
 
 public slots:
     void loadMap(QFileInfo info, bool fast = true);

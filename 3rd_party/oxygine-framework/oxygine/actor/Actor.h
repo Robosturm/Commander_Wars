@@ -194,15 +194,7 @@ namespace oxygine
         /**returns touch id if actor is pressed down*/
         pointer_index getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
-        pointer_index getOvered() const;
-        bool getTouchEnabled() const
-        {
-            return (m_flags & flag_touchEnabled) != 0;
-        }
-        bool getTouchChildrenEnabled() const
-        {
-            return (m_flags & flag_touchChildrenEnabled) != 0;
-        }
+        pointer_index getOvered() const;        
         RenderDelegate* getRenderDelegate()
         {
             return m_rdelegate;
@@ -287,31 +279,7 @@ namespace oxygine
             {
                 m_flags |= flag_clickableWithZeroAlpha;
             }
-        }
-        /**Enables/Disables Touch events for Actor.*/
-        void setTouchEnabled(bool enabled)
-        {
-            m_flags &= ~flag_touchEnabled;
-            if (enabled)
-            {
-                m_flags |= flag_touchEnabled;
-            }
-        }
-        /**Enables/Disables Touch events for children of Actor.*/
-        void setTouchChildrenEnabled(bool enabled)
-        {
-            m_flags &= ~flag_touchChildrenEnabled;
-            if (enabled)
-            {
-                m_flags |= flag_touchChildrenEnabled;
-            }
-        }
-        /**setTouchEnabled + setTouchChildrenEnabled*/
-        void setTouchEnabled(bool enabled, bool childrenEnabled)
-        {
-            setTouchEnabled(enabled);
-            setTouchChildrenEnabled(childrenEnabled);
-        }
+        }        
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
@@ -377,9 +345,6 @@ namespace oxygine
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
         virtual bool getBounds(RectF&) const;
-        oxygine::RectF getDestRecModifier() const;
-        void setDestRecModifier(const oxygine::RectF &DestRecModifier);
-
         static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
         static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
@@ -439,16 +404,14 @@ namespace oxygine
         {
             flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
-            flag_touchEnabled           = 1 << 2,
-            flag_transformDirty         = 1 << 3,
-            flag_transformInvertDirty   = 1 << 4,
-            flag_touchChildrenEnabled   = 1 << 5,
-            flag_cull                   = 1 << 6,
-            flag_fastTransform          = 1 << 7,
-            flag_boundsNoChildren       = 1 << 8,
-            flag_actorHasBounds         = 1 << 9,
-            flag_clickableWithZeroAlpha = 1 << 10,
-            flag_reserved               = 1 << 11,
+            flag_transformDirty         = 1 << 2,
+            flag_transformInvertDirty   = 1 << 3,
+            flag_cull                   = 1 << 4,
+            flag_fastTransform          = 1 << 5,
+            flag_boundsNoChildren       = 1 << 6,
+            flag_actorHasBounds         = 1 << 7,
+            flag_clickableWithZeroAlpha = 1 << 8,
+            flag_reserved               = 1 << 9,
             flag_last                   = flag_reserved
         };
         mutable quint32 m_flags;
@@ -458,10 +421,8 @@ namespace oxygine
         Actor* m_parent;
         tweens m_tweens;
         children m_children;
-        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f)};
         union
         {
-            //dont change order!!! or brake statements: if (_pressedOvered == _overred)
             struct
             {
                 pointer_index m_overred;

@@ -64,6 +64,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_pDefenderAnimation->setBackgroundSprite(pDefTerrainSprite);
     // load initial attacker state
     m_pAttackerSprite->addChild(m_pAttackerAnimation);
+    addWeatherOverlay(m_pAttackerSprite, pAtkTerrain);
     setSpriteFlipped(m_pAttackerAnimation, pAtkUnit, pDefUnit);
     m_pAttackerAnimation->clear();
     m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
@@ -79,6 +80,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pDefUnit, pAtkUnit, m_DefWeapon);
     setSpriteFlipped(m_pDefenderAnimation, pDefUnit, pAtkUnit);
     m_pDefenderSprite->addChild(m_pDefenderAnimation);
+    addWeatherOverlay(m_pDefenderSprite, pDefTerrain);
 
     // battleTimer
     m_battleTimer.setSingleShot(false);
@@ -535,24 +537,26 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
                 defenseX += pAnim->getWidth();
             }
         }
-    }
+    }    
+    return ret;
+}
 
-    Terrain* pTerrain = pUnit->getTerrain();
+void BattleAnimation::addWeatherOverlay(oxygine::spActor & actor, Terrain* pTerrain)
+{
+    GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnimWeather = pGameManager->getResAnim(pTerrain->getWeatherOverlayId(), oxygine::ep_ignore_error);
     if (pAnimWeather != nullptr)
     {
         oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
-        pWeatherOverlay->setResAnim(pAnimBase);
+        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
         QPoint speed = pTerrain->getWeatherOverlaySpeed();
         pWeatherOverlay->setSpeedX(speed.x());
         pWeatherOverlay->setSpeedY(speed.y());
-        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setPriority(100000);
         pWeatherOverlay->setLocked(true);
-        ret->addChild(pWeatherOverlay);
+        actor->addChild(pWeatherOverlay);
     }
-    return ret;
 }
 
 void BattleAnimation::setCOMood(CoFace & coFace, float hp1, float hp2)

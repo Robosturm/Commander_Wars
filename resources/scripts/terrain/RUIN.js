@@ -28,6 +28,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
@@ -68,8 +72,13 @@ var Constructor = function()
         var baseId = terrain.getBaseTerrainID();
         if (baseId === "DESERT")
         {
-            baseId = "desert";
+            weatherModifier = "desert";
         }
+        else
+        {
+            weatherModifier = TERRAIN.getWeatherModifier();
+        }
+
         return "back_" + weatherModifier + "ruin";
     };
 };

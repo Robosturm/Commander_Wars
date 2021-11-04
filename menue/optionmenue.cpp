@@ -368,7 +368,7 @@ void OptionMenue::showSettings()
             supportedSizes.removeAt(count);
         }
     }
-    QVector<QString> displaySizes;
+    QStringList displaySizes;
     qint32 currentDisplayMode = 0;
     for  (qint32 i = 0; i < supportedSizes.size(); i++)
     {
@@ -417,7 +417,7 @@ void OptionMenue::showSettings()
     pTextfield->setHtmlText(tr("Screen Mode: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
+    QStringList items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = spDropDownmenu::create(400, items);
     pScreenModes->setTooltipText(tr("Selects the screen mode for the game"));
     pScreenModes->setPosition(sliderOffset - 130, y);
@@ -506,31 +506,6 @@ void OptionMenue::showSettings()
     touchPointSensitivity->setPosition(sliderOffset - 130, y);
     connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
     m_pOptions->addItem(touchPointSensitivity);
-    y += 40;
-
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Sprite Aliasing: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("If checked ingame sprites will be aliased smoother."));
-    pCheckbox->setChecked(Settings::getSpriteFilter() != GL_NEAREST);
-    pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
-    {
-        if (value)
-        {
-            Settings::setSpriteFilter(GL_LINEAR_MIPMAP_LINEAR);
-            pApp->applyFilter(GL_LINEAR_MIPMAP_LINEAR );
-        }
-        else
-        {
-            Settings::setSpriteFilter(GL_NEAREST);
-            pApp->applyFilter(GL_NEAREST);
-        }
-    });
-    m_pOptions->addItem(pCheckbox);
     y += 40;
 
     showSoundOptions(m_pOptions, sliderOffset, y, this);
@@ -754,7 +729,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pTextfield);
     auto currentDevice = Settings::getAudioOutput().value<QAudioDevice>();
     const auto deviceInfos = QMediaDevices::audioOutputs();
-    QVector<QString> items;
+    QStringList items;
     qint32 currentItem = 0;
 
     for (qint32 i = 0; i < deviceInfos.size(); ++i)
@@ -866,7 +841,7 @@ void OptionMenue::showMods()
     pLabel->setHtmlText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
     qint32 y = 0;
-    QVector<QString> versions = {tr("Unkown"),
+    QStringList versions = {tr("Unkown"),
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
                                  tr("Advance Wars DC")};
@@ -883,7 +858,7 @@ void OptionMenue::showMods()
     pLabel->setHtmlText(tr("Tag Filter:"));
     pLabel->setY(y);
     m_ModSelector->addChild(pLabel);
-    QVector<QString> tags;
+    QStringList tags;
     QStringList currentMods = Settings::getMods();
     qint32 width = 0;
     qint32 mods = 0;
@@ -913,8 +888,6 @@ void OptionMenue::showMods()
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setResAnim(pAnim);
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
 
         spCheckbox modCheck = spCheckbox::create();
         m_ModCheckboxes.append(modCheck);

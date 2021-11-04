@@ -19,7 +19,7 @@ var Constructor = function()
 		
 		unit.setHidden(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("watermine+mask", GameEnums.Recoloring_Matrix);

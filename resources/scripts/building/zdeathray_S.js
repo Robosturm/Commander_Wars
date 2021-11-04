@@ -5,11 +5,15 @@ var Constructor = function()
         building.setHp(100);
         building.setAlwaysVisble(true);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
         building.loadSprite("deathray+S", false);
         building.loadSpriteV2("deathray+S+mask", GameEnums.Recoloring_Matrix);
+    };
+    this.getDefense = function(building)
+    {
+        return 0;
     };
     this.getBaseIncome = function()
     {

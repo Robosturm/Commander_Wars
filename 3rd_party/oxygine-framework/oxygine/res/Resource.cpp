@@ -16,7 +16,7 @@ namespace oxygine
         _unload();
     }
 
-    QString Resource::extractID(const QDomElement& node, QString file, QString def)
+    QString Resource::extractID(const QDomElement& node, const QString & file, const QString & def)
     {
         QString id = node.attribute("id");
         if (id.isEmpty())
@@ -31,14 +31,14 @@ namespace oxygine
         return id.toLower();
     }
 
-    QString Resource::extractID(QString file)
+    QString Resource::extractID(const QString & file)
     {
         QFileInfo info(file);
         return info.baseName().toLower();
     }
 
 
-    QString Resource::getAttribute(QString attr) const
+    QString Resource::getAttribute(const QString & attr) const
     {
         return m_node.attribute(attr);
     }
@@ -48,7 +48,7 @@ namespace oxygine
         return m_name;
     }
 
-    void Resource::setName(QString name)
+    void Resource::setName(const QString & name)
     {
         m_name = name;
     }

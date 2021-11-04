@@ -26,6 +26,7 @@ var Constructor = function()
         {
             sprite.loadSound("neotank_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -49,6 +50,7 @@ var Constructor = function()
         var offset = Qt.point(data[0] + data[1].x, 5);
         sprite.loadSpriteV2("neotank+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

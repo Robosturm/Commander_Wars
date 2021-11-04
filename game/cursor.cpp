@@ -21,7 +21,7 @@ Cursor::Cursor()
     connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
 }
 
-void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, float scale)
+void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffset, float scale)
 {
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -32,7 +32,6 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);
     m_CurrentCursor = oxygine::spSprite::create();
-    m_CurrentCursor->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
     if (pAnim != nullptr)
     {
         if (pAnim->getTotalFrames() > 1)

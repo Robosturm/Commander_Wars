@@ -149,6 +149,8 @@ var Constructor = function()
         return "DM";
     };
     this.coZoneBonus = 60;
+    this.superPowerBonus = 60;
+    this.powerBonus = 40;
     this.coGlobalBonus = 15;
     this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -158,9 +160,9 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 60;
+            return CO_CAULDER.superPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 40;
+            return CO_CAULDER.powerBonus;
         default:
             if (co.inCORange(Qt.point(defPosX, defPosY), defender))
             {
@@ -180,9 +182,9 @@ var Constructor = function()
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 60;
+            return CO_CAULDER.superPowerBonus;
         case GameEnums.PowerMode_Power:
-            return 40;
+            return CO_CAULDER.powerBonus;
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
@@ -289,19 +291,22 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 HP each turn inside his CO-Zone.");
+        return qsTr("Caulder can reinforce his army while he is on the field.");
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nCrystal Tanks\n") +
-                   qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by %0%.") +
-                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
+                   qsTr("\nGlobal Effect: \nUnits lose firepower and defense by %0% outside of his CO zone.") +
+                   qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and defense. They also heal %2HP each turn.");
         text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("All his units gain five Hp and get a offense and defense buff.");
+        var text = qsTr("All of his units gain 5 HP and have %0% increased firepower and defense.");
+        text = replaceTextArgs(text, [CO_CAULDER.powerBonus]);
+        return text;
+
     };
     this.getPowerName = function(co)
     {
@@ -309,7 +314,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("All his units heal to full and gain a massive offense and defense buff.");
+        var text = qsTr("All his units heal to full while gaining %0% firepower and defense.");
+        text = replaceTextArgs(text, [CO_CAULDER.superPowerBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -317,21 +324,21 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Ahhh watch this experiment. I wonder what it does..."),
-                qsTr("March my clones, march and kill them all."),
-                qsTr("You and your ethnics make you weak. Watch the power of science..."),
-                qsTr("I am simply curious.")];
+        return [qsTr("Your silly moral values have no place on the battlefield."),
+                qsTr("You are a worthy specimen for further research."),
+                qsTr("Your ethics make you weak. Allow me to demonstrate."),
+                qsTr("I am curious to see if you can survive this.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Interesting. Very interesting"),
+        return [qsTr("Interesting. Very interesting."),
                 qsTr("Quite satisfactory."),
-                qsTr("I am simply curious.")];
+                qsTr("Fascinating...")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Only a failed experiment nothing to worry about!"),
-                qsTr("Argh I'm useless as well? Impossible!")];
+        return [qsTr("I may have to use the Great Owl after all."),
+                qsTr("What useless clones. I will have to produce better ones.")];
     };
     this.getName = function()
     {

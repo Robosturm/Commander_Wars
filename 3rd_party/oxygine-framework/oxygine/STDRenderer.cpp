@@ -1,9 +1,7 @@
 #include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 #include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
-#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
 #include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
@@ -21,7 +19,6 @@ namespace oxygine
     spSTDRenderer STDRenderer::instance;
     spSTDRenderer STDRenderer::current;
     spTexture STDRenderer::white;
-    spTexture STDRenderer::invisible;
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
@@ -195,12 +192,6 @@ namespace oxygine
             white->release();
         }
         white = nullptr;
-
-        if (invisible)
-        {
-            invisible->release();
-        }
-        invisible = nullptr;
         instance = nullptr;
         current = nullptr;
     }
@@ -212,14 +203,7 @@ namespace oxygine
         {
             white->release();
         }
-        white = 0;
-
-        if (invisible)
-        {
-            invisible->release();
-        }
-        invisible = 0;
-
+        white = nullptr;
         uberShader.release();
     }
 
@@ -230,25 +214,12 @@ namespace oxygine
 
     void STDRenderer::restore()
     {
-        Image memwhite;
-        memwhite.init(4, 4, ImageData::TF_R8G8B8A8);
-
-        oxygine::operations::op_fill fill;
-        ImageData im = memwhite.lock();
-        oxygine::operations::applyOperation(fill, im);
-
+        QImage imgWhite(32, 32, QImage::Format_RGBA8888);
+        imgWhite.fill(Qt::white);
         white = VideoDriver::instance->createTexture();
-        white->init(im);
-        white->setLinearFilter(GL_LINEAR);
+        white->init(imgWhite);
+        white->setLinearFilter(GL_NEAREST);
         white->setClamp2Edge(false);
-
-
-        memwhite.fillZero();
-        invisible = VideoDriver::instance->createTexture();
-        invisible->init(im);
-        invisible->setLinearFilter(GL_LINEAR);
-        invisible->setClamp2Edge(false);
-
         m_restored = true;
     }
 
@@ -332,7 +303,7 @@ namespace oxygine
         m_vdecl = decl;
     }
 
-    void STDRenderer::addVertices(std::vector<VertexPCT2> & data)
+    void STDRenderer::addVertices(const std::vector<VertexPCT2> & data)
     {
         m_verticesData.insert(m_verticesData.end(), data.begin(), data.end());
         checkDrawBatch();

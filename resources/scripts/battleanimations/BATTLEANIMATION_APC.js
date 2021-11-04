@@ -25,6 +25,7 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_APC.armyData);
         sprite.loadSpriteV2("apc+" + armyName + "+mask", GameEnums.Recoloring_Matrix, BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
         sprite.loadSpriteV2("apc+" + armyName,  GameEnums.Recoloring_NOne, BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 };
 

@@ -18,7 +18,7 @@ class Cursor : public QObject, public oxygine::Actor
 public:
     explicit Cursor();
     virtual ~Cursor() = default;
-    void changeCursor(QString spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
+    void changeCursor(const QString & spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
      * @brief addCursorRangeOutline
      * @param range

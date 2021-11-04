@@ -134,7 +134,7 @@ public slots:
      * @brief readDataListString
      * @return reads a QList<QString> from the action data
      */
-    QList<QString> readDataListString()
+    QStringList readDataListString()
     {
         return readList<QString>();
     }
@@ -142,7 +142,7 @@ public slots:
      * @brief writeDataListString
      * @param data writes a QList<QString> to the action data
      */
-    void writeDataListString(QList<QString> data)
+    void writeDataListString(const QStringList & data)
     {
         writeList(data);
     }
@@ -150,7 +150,7 @@ public slots:
      * @brief writeDataString adds a string to the action data
      * @param data
      */
-    void writeDataString(QString data)
+    void writeDataString(const QString & data)
     {
         m_buffer.seek(0);
         m_actionData << data;

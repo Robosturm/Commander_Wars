@@ -91,7 +91,7 @@ namespace oxygine
             xupdateMaterial(mat);
         }
 
-        TextNode::TextNode(QString v)
+        TextNode::TextNode(const QString & v)
         {
             for (qint32 i = 0; i < v.size(); i++)
             {

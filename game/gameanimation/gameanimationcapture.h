@@ -21,14 +21,14 @@ public slots:
      * @brief addBackgroundSprite adds a background sprite with no functionality. Besides looking pretty.
      * @param spriteID string id of the sprite in the res file
      */
-    void addBackgroundSprite(QString spriteID);
+    void addBackgroundSprite(const QString & spriteID);
     /**
      * @brief addSoldierSprite adds a soldier animation to this capture animation that does some cool jumping and moving down and up
      * @param spriteID string id of the sprite in the res file
      * @param color color we want to add to the sprite only applied if addColor is true
      * @param addColor true if we want to repaint the sprite with the unit color
      */
-    void addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode);
+    void addSoldierSprite(const QString & spriteID, Player*  pPlayer, GameEnums::Recoloring mode);
     /**
      * @brief addBuildingSprite adds the cool building sprite that's getting streched in and out.
      * @param spriteID string id of the sprite in the res file
@@ -36,7 +36,7 @@ public slots:
      * @param capturedColor color of the capturing player
      * @param addColor true if we want to repaint the sprite with the unit color
      */
-    void addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode);
+    void addBuildingSprite(const QString & spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode);
 private:
     void createBuildingAnimation(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer);
     void getRecoloredImage(Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode,

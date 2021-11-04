@@ -42,7 +42,6 @@ namespace oxygine
 
         /**White 4x4 Texture*/
         static spTexture white;
-        static spTexture invisible;
         static UberShaderProgram uberShader;
         static QString fracShaderBody;
         static QString fracTableShaderBody;
@@ -84,7 +83,7 @@ namespace oxygine
 
         /**Draws existing batch immediately.*/
         void flush();
-        void addVertices(std::vector<VertexPCT2> & data);
+        void addVertices(const std::vector<VertexPCT2> & data);
 
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();

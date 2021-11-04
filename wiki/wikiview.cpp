@@ -84,8 +84,6 @@ void WikiView::search(bool onlyTag)
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
         oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
         pBox->setSize(m_MainPanel->getWidth() - 70, 40);
         oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());

@@ -15,8 +15,6 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
     m_Box = oxygine::spBox9Sprite::create();
     m_Box->setResAnim(pAnim);
-    m_Box->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_Box->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Box->setSize(width, 40);
     m_pClipActor = oxygine::spClipRectActor::create();
     m_Box->addChild(m_pClipActor);
@@ -158,8 +156,6 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     pBox->setResAnim(pAnim);
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->addChild(item);
     pBox->setSize(getWidth() - 33, 40);
     pBox->setPosition(0, 40 * m_Items.size());

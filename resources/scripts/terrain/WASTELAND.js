@@ -17,6 +17,25 @@ var Constructor = function()
     {
         return 2;
     };
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    {
+        if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+    };
     this.loadBaseSprite = function(terrain)
     {
         var random = globals.randInt(0, 3);

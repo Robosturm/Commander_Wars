@@ -24,6 +24,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
@@ -69,10 +73,6 @@ var Constructor = function()
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
         return "fore_walltop";
-    };
-    this.getDefense = function()
-    {
-        return 4;
     };
 };
 Constructor.prototype = TERRAIN;

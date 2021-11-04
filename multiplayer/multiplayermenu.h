@@ -57,8 +57,8 @@ signals:
 public slots:
 
     // general slots
-    virtual void slotButtonBack() override;
-    virtual void slotButtonNext() override;
+    virtual void buttonBack() override;
+    virtual void buttonNext() override;
     virtual void startGame() override;
 
     // network slots

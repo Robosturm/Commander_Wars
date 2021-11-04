@@ -38,7 +38,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static bool getUseCoMinis();
+    static void setUseCoMinis(bool newUseCoMinis);
+
     static bool getOverworldAnimations();
     static void setOverworldAnimations(bool newOverworldAnimations);
 
@@ -188,9 +192,6 @@ public slots:
     static quint32 getWalkAnimationSpeedValue();
     static void setWalkAnimationSpeed(const quint32 &value);
     static float getWalkAnimationSpeed();
-
-    static quint32 getSpriteFilter();
-    static void setSpriteFilter(quint32 spriteFilter);
 
     static qint32 getShowCoCount();
     static void setShowCoCount(const qint32 &showCoCount);
@@ -531,6 +532,7 @@ private:
     static quint32 battleAnimationSpeed;
     static quint32 m_dialogAnimationSpeed;
     static quint32 m_captureAnimationSpeed;
+    static bool m_useCoMinis;
     static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
@@ -542,7 +544,6 @@ private:
     static float m_mouseSensitivity;
     static bool m_record;
     static qint32 m_showCoCount;
-    static quint32 m_spriteFilter;
     static bool m_showIngameCoordinates;
     static GameEnums::COInfoPosition coInfoPosition;
     static bool m_autoScrolling;

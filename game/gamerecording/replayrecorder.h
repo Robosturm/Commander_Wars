@@ -30,7 +30,7 @@ public:
      * @brief loadRecord
      * @param filename
      */
-    bool loadRecord(QString filename);
+    bool loadRecord(const QString & filename);
     /**
      * @brief nextAction
      */

@@ -277,7 +277,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
 
 void ScriptEventAnimation::showLoadDialog()
 {
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "resources/images/animations/";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, sprite, true);

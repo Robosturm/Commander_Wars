@@ -19,8 +19,8 @@ class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
-                                  QVector<qint32> costList = QVector<qint32>(), QVector<bool> enabledList = QVector<bool>());
+    explicit HumanPlayerInputMenu(const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+                                  const QVector<qint32> & costList = QVector<qint32>(), const QVector<bool> & enabledList = QVector<bool>());
     virtual ~HumanPlayerInputMenu() = default;
     /**
      * @brief setMenuPosition changes the position of this menu
@@ -38,7 +38,7 @@ private:
     qint32 createTopSprite(qint32 x, qint32 width, Player* pPlayer);
     qint32 createBottomSprite(qint32 x, qint32 y, qint32 width, Player* pPlayer);
     oxygine::spBox9Sprite createMenuItem(bool enabled, qint32& x, qint32& y, qint32 width, oxygine::TextStyle style,
-                                         QString text, QString action, qint32 costs, oxygine::spActor icon, qint32 item,
+                                         const QString & text, const QString & action, qint32 costs, oxygine::spActor icon, qint32 item,
                                          Player* pPlayer);
     void updateItemPositionAndVisibility();
     void scroll(qint32 count);

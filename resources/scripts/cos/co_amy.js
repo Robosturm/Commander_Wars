@@ -9,7 +9,7 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
+        
         return ["+alt"];
     };
 
@@ -139,6 +139,9 @@ var Constructor = function()
         return "PF";
     };
     this.hoverCraftBoost = 80;
+    this.powerHoverCraftBoost = 80;
+    this.superPowerDeffensiveBonus = 110;
+    this.powerCostReduction = 0.3;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
     {
@@ -149,7 +152,7 @@ var Constructor = function()
         case GameEnums.PowerMode_Power:
             if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return 80;
+                return CO_AMY.powerHoverCraftBoost;
             }
             return 10;
         default:
@@ -176,7 +179,7 @@ var Constructor = function()
             {
                 return 99999;
             }
-            return 110;
+            return CO_AMY.superPowerDeffensiveBonus;
         case GameEnums.PowerMode_Power:
             return 10;
         default:
@@ -198,14 +201,14 @@ var Constructor = function()
             }
         }
         return 0;
-    };
+    };    
     this.getCostModifier = function(co, id, baseCost)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
             if (Global[id].getMovementType() === "MOVE_HOVERCRAFT")
             {
-                return -baseCost * 0.3;
+                return -baseCost * CO_AMY.powerCostReduction;
             }
         }
         return 0;
@@ -233,7 +236,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("The Commander in Chief of Pink Frontier. A former physicist who was thrust into war emerging as a hardened naval commander.");
+        return qsTr("The Commander-in-Chief of Pink Frontier. A former physicist who was thrust into war. She is now a hardened naval commander.");
     };
     this.getHits = function(co)
     {
@@ -249,14 +252,16 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
-                qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower boost.");
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units.") +
+                qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower.");
         text = replaceTextArgs(text, [CO_AMY.hoverCraftBoost]);
         return text;
     };
     this.getPowerDescription = function(co)
     {
-        return qsTr("Hovercraft units are strengthened, they gain one extra movement and get cheaper.");
+        var text = qsTr("All hovercraft units gain %0% firepower along with one extra movement. Hovercrafts also receive a %0% reduction in deployment costs.");
+        text = replaceTextArgs(text, [CO_AMY.powerHoverCraftBoost, CO_AMY.powerCostReduction * 100]);
+        return text;
     };
     this.getPowerName = function(co)
     {
@@ -264,7 +269,9 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Her defence raises extremly. Her troops get nearly invincible when attacking.");
+        var text = qsTr("Her defense rises to an astonishing %0%. Additionally, she takes no counter-attack damage when attacking an enemy.");
+        text = replaceTextArgs(text, [CO_AMY.superPowerDeffensiveBonus]);
+        return text;
     };
     this.getSuperPowerName = function(co)
     {
@@ -272,23 +279,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("EMP? Why, it stands for Electromagnetic Pulse? You'll soon understand."),
-                qsTr("Quantum... you probably don't even know what it means."),
-                qsTr("Do you know how much energy splitting of the atom produces? Let's see."),
-                qsTr("Allow me demonstrate how flimsy hovercrafts are not."),
-                qsTr("For your sake, I hope your machines are magnetically shielded."),
-                qsTr("Without science we wouldn't be doing what we are now.")];
+        return [qsTr("Try all you might, my magnetic shields will prove to be impenetrable!"),
+                qsTr("Quantum physics... allow me to show you its true potential."),
+                qsTr("I will show you exactly what splitting an atom feels like."),
+                qsTr("Allow me to demonstrate the power of my hovercraft!"),
+                qsTr("Perhaps if you valued science more, you would not be in this predicament!"),
+                qsTr("Science has gotten me this far, let's see just how far it will take me.")];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("That one was for you Lara."),
-                qsTr("Theoretically speaking, it appears you lost."),
-                qsTr("For lack of a better word, I feel fully ionised!")];
+        return [qsTr("That one was for you, Lara."),
+                qsTr("Theoretically speaking, you never stood a chance."),
+                qsTr("For lack of a better word, you were fully atomized!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("My theory didn't work in practice!"),
-                qsTr("Ok, I'll need to put more effort to put my theory into practice.")];
+        return [qsTr("How can this be?! All of my calculations were flawless!"),
+                qsTr("It seems I need to do more experimentations.")];
     };
     this.getName = function()
     {

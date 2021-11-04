@@ -22,7 +22,7 @@ qint32 UnitSpriteManager::getUnitType(qint32 i)
     return static_cast<qint32>(GameEnums::UnitType_Ground);
 }
 
-QString UnitSpriteManager::getMovementType(QString id)
+QString UnitSpriteManager::getMovementType(const QString & id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementType";
@@ -34,7 +34,7 @@ QString UnitSpriteManager::getMovementType(QString id)
     return "";
 }
 
-qint32 UnitSpriteManager::getUnitType(QString id)
+qint32 UnitSpriteManager::getUnitType(const QString & id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";

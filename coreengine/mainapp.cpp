@@ -66,7 +66,6 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
-    connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
     connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
     connect(this, &Mainapp::sigCreateLineEdit, this, &Mainapp::createLineEdit, Qt::BlockingQueuedConnection);
 }
@@ -123,10 +122,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
-    if (Settings::getSmallScreenDevice())
-    {
-        m_timerCycle = 33;
-    }
+    // if (Settings::getSmallScreenDevice())
+    // {
+    //     m_timerCycle = 33;
+    // }
     switch (step)
     {
         case StartupPhase::General:
@@ -301,7 +300,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::LoadingScripts:
         {
-            applyFilter(Settings::getSpriteFilter());
             // start after ressource loading
             m_Networkthread.setObjectName("NetworkThread");
             m_Workerthread.setObjectName("WorkerThread");
@@ -338,21 +336,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         emit sigNextStartUpStep(static_cast<StartupPhase>(static_cast<qint8>(step) + 1));
     }
-}
-
-void Mainapp::applyFilter(quint32 filter)
-{
-    // load ressources by creating the singletons
-    BuildingSpriteManager::getInstance()->setLinearFilter(filter);
-    COSpriteManager::getInstance()->setLinearFilter(filter);
-    GameAnimationManager::getInstance()->setLinearFilter(filter);
-    GameManager::getInstance()->setLinearFilter(filter);
-    GameRuleManager::getInstance()->setLinearFilter(filter);
-    TerrainManager::getInstance()->setLinearFilter(filter);
-    UnitSpriteManager::getInstance()->setLinearFilter(filter);
-    BattleAnimationManager::getInstance()->setLinearFilter(filter);
-    COPerkManager::getInstance()->setLinearFilter(filter);
-    WikiDatabase::getInstance()->setLinearFilter(filter);
 }
 
 void Mainapp::doScreenshot()
@@ -555,7 +538,7 @@ void Mainapp::setSlave(bool slave)
     m_slave = slave;
 }
 
-void Mainapp::showCrashReport(QString log)
+void Mainapp::showCrashReport(const QString & log)
 {
     static qint32 counter = 0;
     if (QGuiApplication::instance()->thread() == QThread::currentThread())

@@ -5,35 +5,39 @@ var PLAYER =
 
     getDefaultPlayerColors : function()
     {
-        return PLAYER.defaultColors.length;
+        return PLAYER.defaultColors.length - 1;
     },
-    defaultColors : [   "#f00008", // os
-                        "#0098f8", // bm
-                        "#00c010", // ge
-                        "#d08000", // yc
-                        "#6038a0", // bh
-                        "#5c5663", // bg
-                        "#797b78", // ma
-                        "#e88613", // ac
-                        "#bc8248", // bd
-                        "#bf901c", // gs
-                        "#ff33cc", // pf
-                        "#17a195", // ti
-                        "#800080", // dm
-                        "#01cbff",
-                        "#006400",
-                        "#ff0000",
-                        "#c4443d",
-                        "#a29db9",
-                        "#617c0e",
-                        "#2342ba",
-                        "#85927b",],
+    // mapping table for table color to display color
+    defaultColors : [["#f00008", "#f05038"], // os
+                     ["#0098f8", "#6058f0"], // bm
+                     ["#00c010", "#60e058"], // ge
+                     ["#d08000", "#d8d008"], // yc
+                     ["#6038a0", "#978e97"], // bh
+                     ["#5c5663", "#b552c6"], // bg
+                     ["#797b78", "#4a424a"], // ma
+                     ["#e88613", "#e88613"], // ac
+                     ["#bc8248", "#8f541a"], // bd
+                     ["#bf901c", "#a58c31"], // gs
+                     ["#ff33cc", "#ff33cc"], // pf
+                     ["#17a195", "#17a195"], // ti
+                     ["#800080", "#474370"], // dm
+                     ["#01cbff", "#01cbff"], // cyan
+                     ["#006400", "#006400"], // dark_green
+                     ["#ff0000", "#ff0000"], // red
+                     ["#c4443d", "#943142"], // red_fire
+                     ["#a29db9", "#7d798e"], // light_grey
+                     ["#617c0e", "#617c0e"], // olive
+                     ["#2342ba", "#2342ba"], // cobalt_ice
+                     ["#85927b", "#85927b"], // silver
+                     ["#908890", "#908890"], // neutral
+                    ],
+
     getDefaultColor : function(index)
     {
         var color = "#000000";
-        if (index < PLAYER.defaultColors.length)
+        if (index < PLAYER.defaultColors.length - 1)
         {
-            color = PLAYER.defaultColors[index];
+            color = PLAYER.defaultColors[index][0];
         }
         else
         {
@@ -57,6 +61,16 @@ var PLAYER =
         }
         return color;
     },
+    getDisplayColor : function(index)
+    {
+        var color = "";
+        if (index < PLAYER.defaultColors.length)
+        {
+            color = PLAYER.defaultColors[index][1];
+        }
+        return color;
+    },
+
     colorTables : [ "orange_star",
                     "blue_moon",
                     "green_earth",
@@ -77,7 +91,8 @@ var PLAYER =
                     "light_grey",
                     "olive",
                     "cobalt_ice",
-                    "silver",],
+                    "silver",
+                    "neutral"],
     getColorTable : function(index)
     {
         if (index < PLAYER.colorTables.length)
@@ -383,7 +398,7 @@ var PLAYER =
 
     getArmyCOsBD : function()
     {
-        return ["CO_EMPTY_BD", "CO_GAGE", "CO_TASHA", "CO_ADAM", "CO_FORSYTHE",
+        return ["CO_EMPTY_BD", "CO_GAGE", "CO_TASHA", "CO_FORSYTHE", "CO_ADAM", "CO_CAIRN",
                 "CO_ZANDRA", "CO_RANDOM"];
     },
 
@@ -401,8 +416,8 @@ var PLAYER =
 
     getArmyCOsTI : function()
     {
-        return ["CO_EMPTY_TI", "CO_CONRAD", "CO_CASSIDY", "CO_WAYLON",
-                "CO_GREYFIELD", "CO_JOEY", "CO_WALTER", "CO_RANDOM"];
+        return ["CO_EMPTY_TI", "CO_DAVIS", "CO_WAYLON", "CO_GREYFIELD",
+                "CO_CONRAD", "CO_CASSIDY", "CO_JOEY", "CO_WALTER", "CO_RANDOM"];
     },
 
     getArmyCOsDM : function()

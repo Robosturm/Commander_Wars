@@ -67,7 +67,12 @@ QStringList Building::getBaseTerrain()
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function, args);
-    return ret.toVariant().toStringList();
+    QStringList retList = ret.toVariant().toStringList();
+    if (retList.size() == 0)
+    {
+        retList.append("PLAINS");
+    }
+    return retList;
 }
 
 void Building::scaleAndShowOnSingleTile()
@@ -171,7 +176,7 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(QString spriteID, bool addPlayerColor)
+void Building::loadSprite(const QString & spriteID, bool addPlayerColor)
 {
     if (addPlayerColor)
     {
@@ -183,7 +188,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
     }
 }
 
-void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -201,6 +206,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         }
         // repaint the building?
         bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+        pSprite->setPriority(static_cast<qint16>(DrawPriority::Mask));
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
@@ -220,7 +226,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         }
         else
         {
-            pSprite->setPriority(1);
+            pSprite->setPriority(static_cast<qint16>(DrawPriority::NoneMask));
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
@@ -240,13 +246,102 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eERROR);
+    }
+}
+
+/**
+ * @brief onWeatherChanged
+ */
+void Building::onWeatherChanged(Weather* pWeather)
+{
+    for (auto & weatherOverlay : m_pWeatherOverlaySprites)
+    {
+        weatherOverlay->detach();
+    }
+    m_pWeatherOverlaySprites.clear();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onWeatherChanged";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pWeather);
+    args1 << obj2;
+    pInterpreter->doFunction(m_BuildingID, function1, args1);
+}
+
+void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
+{
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
+    if (pAnim != nullptr)
+    {
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        if (pAnim->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        // repaint the building?
+        bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+        pSprite->setPriority(static_cast<qint16>(DrawPriority::Overlay));
+        if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
+        {
+            QColor color = m_pOwner->getColor();
+            pSprite->setColor(color);
+        }
+        else if (mode == GameEnums::Recoloring_Mask)
+        {
+            pSprite->setColor(QColor(150, 150, 150, 255));
+        }
+        else if ((mode == GameEnums::Recoloring_Table || matrixMode) && m_pOwner != nullptr)
+        {
+            pSprite->setColorTable(m_pOwner->getColorTableAnim(), matrixMode);
+        }
+        else if (mode == GameEnums::Recoloring_Table || matrixMode)
+        {
+            pSprite->setColorTable(Player::getNeutralTableAnim(), matrixMode);
+        }
+        else
+        {
+            pSprite->setPriority(static_cast<qint16>(DrawPriority::OverlayNoneMask));
+        }
+        qint32 width = getBuildingWidth();
+        qint32 heigth = getBuildingHeigth();
+        if (width == 1 && heigth == 1)
+        {
+            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+        }
+        else
+        {
+            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
+        }
+        addChild(pSprite);
+        m_pWeatherOverlaySprites.append(pSprite);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eERROR);
     }
 }
 
 void Building::syncAnimation(oxygine::timeMS syncTime)
 {
     for (auto & sprite : m_pBuildingSprites)
+    {
+        auto & tweens = sprite->getTweens();
+        for (auto & pTween : tweens)
+        {
+            pTween->setElapsed(syncTime);
+        }
+    }
+    for (auto & sprite : m_pWeatherOverlaySprites)
     {
         auto & tweens = sprite->getTweens();
         for (auto & pTween : tweens)
@@ -330,6 +425,11 @@ void Building::updateBuildingSprites(bool neutral)
     args1 << neutral;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
     m_neutralLoaded = neutral;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        onWeatherChanged(pMap->getGameRules()->getCurrentWeather());
+    }
 }
 
 bool Building::canBuildingBePlaced(Terrain* pTerrain)

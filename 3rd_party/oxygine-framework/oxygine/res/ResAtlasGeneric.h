@@ -14,11 +14,8 @@ namespace oxygine
     public:
         explicit ResAtlasGeneric() = default;
         virtual ~ResAtlasGeneric() = default;
-
-        void nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad);
-        void applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge);
         void loadAtlas(CreateResourceContext& context);
-        void loadAtlas2(CreateResourceContext& context);
+    protected:
         virtual void _load() override;
         virtual void _unload() override;
 

@@ -22,7 +22,7 @@ var Constructor = function()
     {
         return 5500;
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("hot_tank+mask", GameEnums.Recoloring_Matrix);

@@ -48,7 +48,7 @@ bool CO::isValid()
     return COSpriteManager::getInstance()->exists(m_coID);
 }
 
-float CO::getUnitBuildValue(QString unitID)
+float CO::getUnitBuildValue(const QString & unitID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitBuildValue";
@@ -680,7 +680,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(QString id, qint32 baseCost)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -1440,7 +1440,7 @@ QStringList CO::getPerkList()
     return ret;
 }
 
-void CO::setPerkList(QStringList perks)
+void CO::setPerkList(const QStringList & perks)
 {
     m_perkList.clear();
     m_perkList.append(m_coID);
@@ -1448,7 +1448,7 @@ void CO::setPerkList(QStringList perks)
     m_perkList.append(perks);
 }
 
-void CO::addPerk(QString perk)
+void CO::addPerk(const QString & perk)
 {
     if (!m_perkList.contains(perk))
     {
@@ -1456,7 +1456,7 @@ void CO::addPerk(QString perk)
     }
 }
 
-void CO::removePerk(QString perk)
+void CO::removePerk(const QString & perk)
 {
     m_perkList.removeAll(perk);
 }
@@ -1716,6 +1716,93 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     }
 }
 
+
+bool CO::showDefaultUnitGlobalBoost()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool ret = true;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitGlobalBoost", args);
+    if (value.isBool())
+    {
+        ret = value.toBool();
+    }
+    return ret;
+}
+
+qint32 CO::getCustomUnitGlobalBoostCount()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoostCount", args);
+    if (value.isNumber())
+    {
+        ret = value.toNumber();
+    }
+    return ret;
+}
+
+void CO::getCustomUnitGlobalBoost(qint32 index, CustomCoBoostInfo& info)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    args << index;
+    QJSValue obj1 = pInterpreter->newQObject(&info);
+    args << obj1;
+    pInterpreter->doFunction(m_coID, "getCustomUnitGlobalBoost", args);
+}
+
+bool CO::showDefaultUnitZoneBoost()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    bool ret = true;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "showDefaultUnitZoneBoost", args);
+    if (value.isBool())
+    {
+        ret = value.toBool();
+    }
+    return ret;
+}
+
+qint32 CO::getCustomUnitZoneBoostCount()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoostCount", args);
+    if (value.isNumber())
+    {
+        ret = value.toNumber();
+    }
+    return ret;
+}
+
+void CO::getCustomUnitZoneBoost(qint32 index, CustomCoBoostInfo& info)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 ret = 0;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    args << index;
+    QJSValue obj1 = pInterpreter->newQObject(&info);
+    args << obj1;
+    pInterpreter->doFunction(m_coID, "getCustomUnitZoneBoost", args);
+}
+
 void CO::serializeObject(QDataStream& pStream) const
 {
     CONSOLE_PRINT("storing co", Console::eDEBUG);
@@ -1860,7 +1947,6 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
     }
 }
 
-
 void CO::setCoStyleFromUserdata()
 {
     m_customCOStyles.clear();
@@ -1970,7 +2056,7 @@ void CO::setCoRangeEnabled(bool coRangeEnabled)
     m_coRangeEnabled = coRangeEnabled;
 }
 
-oxygine::ResAnim* CO::getResAnim(QString id, oxygine::error_policy ep) const
+oxygine::ResAnim* CO::getResAnim(const QString & id, oxygine::error_policy ep) const
 {
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {

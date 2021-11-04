@@ -19,8 +19,6 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(bannerWidth, 60);
     setSize(bannerWidth, 60);

@@ -17,7 +17,7 @@ var Constructor = function()
         unit.setMaxRange(1);
         unit.setVision(2);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("heavy_tank+mask", GameEnums.Recoloring_Matrix);

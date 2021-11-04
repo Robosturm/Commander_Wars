@@ -10,7 +10,6 @@
 
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
-#include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
@@ -63,7 +62,6 @@ namespace oxygine
         Input::instance.cleanup();
         Stage::instance = nullptr;
         Resources::unregisterResourceType("atlas");
-        Resources::unregisterResourceType("buffer");
         Resources::unregisterResourceType("font");;
         m_window = nullptr;
     }
@@ -179,7 +177,6 @@ namespace oxygine
     void GameWindow::registerResourceTypes()
     {
         Resources::registerResourceType(ResAtlas::create, "atlas");
-        Resources::registerResourceType(ResBuffer::create, "buffer");
         Resources::registerResourceType(ResFontBM::create, "font");
     }
 
@@ -229,7 +226,7 @@ namespace oxygine
     {
         if (!m_shuttingDown)
         {
-            if (QThread::currentThreadId() == m_mainHandle)
+            if (isMainThread())
             {
                 loadSingleResAnim(pAnim, image, columns, rows, scaleFactor, addTransparentBorder);
             }

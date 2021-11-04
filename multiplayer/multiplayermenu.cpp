@@ -90,11 +90,11 @@ void Multiplayermenu::initClientAndWaitForConnection()
     // quit on host connection lost
     connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
     connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-    connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+    connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Connecting"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
-    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 }
 
@@ -152,7 +152,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
 {
     
     // dummy impl for loading
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.msav");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog saveDialog = spFileDialog::create(path, wildcards);
@@ -175,7 +175,7 @@ void Multiplayermenu::loadSaveGame(QString filename)
             m_saveGame = true;
             m_pPlayerSelection->setSaveGame(m_saveGame);
             m_MapSelectionStep = MapSelectionStep::selectRules;
-            slotButtonNext();
+            buttonNext();
         }
     }
     
@@ -459,7 +459,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         {
             CONSOLE_PRINT("Incorrect Password found.", Console::eDEBUG);
             // quit game with wrong version
-            slotButtonBack();
+            buttonBack();
         }
         else
         {
@@ -598,7 +598,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
             }
 
-            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::buttonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
             
         }
@@ -793,7 +793,7 @@ void Multiplayermenu::sendSlaveReady()
 
 void Multiplayermenu::slotCancelHostConnection()
 {
-    slotButtonBack();
+    buttonBack();
 }
 
 void Multiplayermenu::slotHostGameLaunched()
@@ -801,7 +801,7 @@ void Multiplayermenu::slotHostGameLaunched()
     // we're hosting a game so we get the same rights as a local host
     m_NetworkInterface->setIsServer(true);
     createChat();
-    MapSelectionMapsMenue::slotButtonNext();
+    MapSelectionMapsMenue::buttonNext();
 }
 
 spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -1017,7 +1017,7 @@ void Multiplayermenu::disconnected(quint64)
     }
 }
 
-void Multiplayermenu::slotButtonBack()
+void Multiplayermenu::buttonBack()
 {
     if (!m_Host ||
         m_MapSelectionStep == MapSelectionStep::selectMap ||
@@ -1037,17 +1037,17 @@ void Multiplayermenu::slotButtonBack()
             m_Chat = nullptr;
         }
         disconnectNetwork();
-        MapSelectionMapsMenue::slotButtonBack();
+        MapSelectionMapsMenue::buttonBack();
         if (m_saveGame)
         {
-            MapSelectionMapsMenue::slotButtonBack();
+            MapSelectionMapsMenue::buttonBack();
             m_saveGame = false;
             m_pPlayerSelection->setSaveGame(m_saveGame);
         }
     }
 }
 
-void Multiplayermenu::slotButtonNext()
+void Multiplayermenu::buttonNext()
 {
     if (m_Host && m_MapSelectionStep == MapSelectionStep::selectRules)
     {
@@ -1061,7 +1061,7 @@ void Multiplayermenu::slotButtonNext()
             createChat();
             emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
             connectNetworkSlots();
-            MapSelectionMapsMenue::slotButtonNext();
+            MapSelectionMapsMenue::buttonNext();
         }
         else
         {
@@ -1072,7 +1072,7 @@ void Multiplayermenu::slotButtonNext()
     }
     else
     {
-        MapSelectionMapsMenue::slotButtonNext();
+        MapSelectionMapsMenue::buttonNext();
     }
 }
 

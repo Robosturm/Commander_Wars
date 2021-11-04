@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+    
     this.loadSprites = function(building)
     {
         // neutral player
@@ -27,6 +27,11 @@ var Constructor = function()
     this.getDescription = function()
     {
         return qsTr("Empty missile silo which provides some defence.");
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_missile+1";
     };
 }
 

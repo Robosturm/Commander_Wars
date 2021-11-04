@@ -22,7 +22,7 @@ var Constructor = function()
         unit.setMaxRange(7);
         unit.setVision(1);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("siege_cannon+mask", GameEnums.Recoloring_Matrix);

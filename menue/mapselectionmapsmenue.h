@@ -46,10 +46,11 @@ public:
     void showPlayerSelection();
 
 signals:
-    void buttonBack();
-    void buttonNext();
-    void buttonStartGame();
-    void randomMap();
+    void sigButtonBack();
+    void sigButtonNext();
+    void sigButtonStartGame();
+    void sigRandomMap();
+    void sigMapFilter();
     void sigShowLoadRules();
     void sigShowSaveRules();
     void sigShowSaveMap();
@@ -57,10 +58,9 @@ public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
-
     // general slots
-    virtual void slotButtonBack();
-    virtual void slotButtonNext();
+    virtual void buttonBack();
+    virtual void buttonNext();
     /**
      * @brief startGame starts a game for a single player mode
      */
@@ -97,12 +97,14 @@ public slots:
     void saveMap(QString filename);
     void selectMap(QString folder, QString filename);
     PlayerSelection* getPlayerSelection() const;
+    void showMapFilter();
 protected slots:
     virtual void onEnter() override;
     void ruleSelectionSizeChanged();
 protected:
 
     // buttons
+    oxygine::spButton m_pMapFilter;
     oxygine::spButton m_pRandomMap;
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;

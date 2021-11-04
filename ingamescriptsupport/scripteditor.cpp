@@ -23,8 +23,6 @@ ScriptEditor::ScriptEditor()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -47,7 +45,7 @@ ScriptEditor::ScriptEditor()
     m_ConditionPanel = spPanel::create(true, size, size);
     m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
-    QVector<QString> items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
+    QStringList items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
                               tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
                               tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
@@ -188,7 +186,7 @@ void ScriptEditor::exitEditor()
 
 void ScriptEditor::showSaveScript()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
@@ -198,7 +196,7 @@ void ScriptEditor::showSaveScript()
 
 void ScriptEditor::showLoadScript()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.js");
     QString path = Settings::getUserPath() + "maps";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
@@ -285,8 +283,6 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
     oxygine::spBox9Sprite pSpritebox = oxygine::spBox9Sprite::create();
-    pSpritebox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pSpritebox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pSpritebox->setResAnim(pAnim);
     pSpritebox->setSize(x + 140 * 3 + 10, 50);
     pSpritebox->setPosition(5, y);

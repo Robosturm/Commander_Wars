@@ -33,6 +33,7 @@ var Constructor = function()
                             BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(64, 10 + 32),
                             1, 1, 0, 0,
                             false, false, 200, endFrame, startFrame);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

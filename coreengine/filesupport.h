@@ -25,7 +25,7 @@ public:
      * @param folders
      * @return
      */
-    static QByteArray getHash(QStringList filter, const QStringList & folders);
+    static QByteArray getHash(const QStringList & filter, const QStringList & folders);
     /**
      * @brief writeByteArray
      * @param stream
@@ -75,20 +75,20 @@ public:
      * @param items
      * @param folder
      */
-    static void storeList(QString file, const QStringList  &items, QString folder);
+    static void storeList(const QString & file, const QStringList  &items, const QString & folder);
     /**
      * @brief readList
      * @param file
      * @return
      */
-    static StringList readList(QString file);
+    static StringList readList(const QString & file);
     /**
      * @brief readList
      * @param file
      * @param folder
      * @return
      */
-    static StringList readList(QString file, QString folder);
+    static StringList readList(const QString & file, const QString & folder);
     /**
      *
      */

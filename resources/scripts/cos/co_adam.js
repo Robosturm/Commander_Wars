@@ -9,7 +9,7 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
+        
         return ["+alt"];
     };
 
@@ -328,9 +328,9 @@ var Constructor = function()
 
     // CO - Intel
     this.getBio = function(co)
-    {
-        return qsTr("A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.");
-    };
+     {
+         return qsTr("Previously a researcher, he was recruited as a commander for his high intelligence. Although a reclusive geek, he is slowly finding his place among the other commanders.");
+     };
     this.getHits = function(co)
     {
         return qsTr("Vectors");
@@ -341,12 +341,12 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("Adam's units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam's units lose firepower as they lose HP.");
+        return qsTr("Adam can take advantage of max luck rolls, but only if the enemy unit could be killed by one. However, his units lose more firepower than normal the more damaged they are.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have increased firepower but lose additional firepower for lost HP.") +
-                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a defense boost for one turn.");
+        return qsTr("\nGlobal Effect: \nUnits lose more firepower than other CO's when they are damaged.") +
+                qsTr("\n\nCO Zone Effect: \nAn attacking unit instantly kills an enemy unit if a max luck roll would kill them. A unit gains a 1 turn defense boost by killing an enemy unit.");
     };
     this.getPowerDescription = function(co)
     {
@@ -358,7 +358,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        return qsTr("Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit he didn't used yet gets an powerup.");
+        return qsTr("Each time Adam destroys an enemy unit, the attacking unit can move again; however, each kill drastically reduces that units firepower. Conversely, after killing a unit, using a unit that has not been used for that turn will give it additional firepower.");
     };
     this.getSuperPowerName = function(co)
     {
@@ -366,9 +366,9 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Get a hobby? This is my hobby!"),
+        return [qsTr("Get a hobby? This IS my hobby!"),
                 qsTr("Woo! Watch out for shrapnel!"),
-                qsTr("Precision pays off!"),
+                qsTr("Research pays off!"),
                 qsTr("As my troops approach their limit...you become insignificant!"),
                 qsTr("Prepare to have your strategy debunked!"),
                 qsTr("I'll blind you with science!")];
@@ -377,12 +377,12 @@ var Constructor = function()
     {
         return [qsTr("Call it bad luck, if you must."),
                 qsTr("Who said math had no applications in real life?"),
-                qsTr("Ha! The revenge of the nerds!")];
+                qsTr("Ha! And you thought nerds were weak!")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
-                qsTr("It's the blasted weather! That was the problem! Hssss!")];
+        return [qsTr("How were my calculations so off?"),
+                qsTr("Your stupidity rubbed off on me! Ugh!!")];
     };
     this.getName = function()
     {

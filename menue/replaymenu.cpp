@@ -179,8 +179,6 @@ void ReplayMenu::loadUIButtons()
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     qint32 width = Settings::getWidth();
     if (!Settings::getSmallScreenDevice())
@@ -261,8 +259,6 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->addChild(m_progressBar);
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -304,8 +300,6 @@ void ReplayMenu::loadSeekUi()
     style.multiline = false;
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pDayBox = oxygine::spBox9Sprite::create();
-    pDayBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pDayBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pDayBox->setResAnim(pAnim);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -497,7 +491,7 @@ void ReplayMenu::showConfig()
     qint32 width = 450;
     qint32 y = 10;
     QVector<qint32> teams;
-    QVector<QString> teamNames;
+    QStringList teamNames;
     spGameMap pMap = GameMap::getInstance();
     teamNames.append(tr("Current Team"));
     teamNames.append(tr("All Teams"));
@@ -563,7 +557,7 @@ void ReplayMenu::showConfig()
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
-    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
+    QStringList items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
     spDropDownmenu pAnimationMode = spDropDownmenu::create(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimationMode()));
     pAnimationMode->setPosition(width - 130, y);

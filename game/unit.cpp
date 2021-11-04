@@ -30,7 +30,7 @@ Unit::Unit()
     setWidth(GameMap::getImageSize());
 }
 
-Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
+Unit::Unit(const QString & unitID, Player* pOwner, bool aquireId)
     : m_UnitID(unitID),
       m_pOwner(pOwner)
 {
@@ -214,7 +214,7 @@ void Unit::removeShineTween()
     m_ShineTweens.clear();
 }
 
-void Unit::loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite)
+void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite)
 {
     if (addPlayerColor)
     {
@@ -226,7 +226,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite)
     }
 }
 
-void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipSprite)
+void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -867,6 +867,27 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
+
+float Unit::getEnvironmentDamage(QString terrainID)
+{
+    float damage = 0;
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    if (hasAmmo1() && !m_weapon1ID.isEmpty())
+    {
+        damage = pWeaponManager->getEnviromentDamage(m_weapon1ID, terrainID);
+    }
+    if (hasAmmo2() && !m_weapon2ID.isEmpty())
+    {
+        float damage2 = pWeaponManager->getEnviromentDamage(m_weapon2ID, terrainID);
+        if (damage2 > damage)
+        {
+            damage = damage2;
+        }
+    }
+    return damage;
+}
+
+
 bool Unit::isAttackableFromPosition(Unit* pDefender, QPoint unitPos)
 {
     return isAttackable(pDefender, false, unitPos);
@@ -1074,7 +1095,7 @@ void Unit::loadUnit(Unit* pUnit)
     }
 }
 
-void Unit::loadSpawnedUnit(QString unitId)
+void Unit::loadSpawnedUnit(const QString & unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
     spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
@@ -1084,7 +1105,7 @@ void Unit::loadSpawnedUnit(QString unitId)
     }
 }
 
-Unit* Unit::spawnUnit(QString unitID)
+Unit* Unit::spawnUnit(const QString & unitID)
 {
     CONSOLE_PRINT("Unit::spawnUnit " + unitID, Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
@@ -1537,7 +1558,12 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
     }
     if (useTerrainDefense())
     {
-        bonus += getTerrainDefense(position.x(), position.y()) * pMap->getGameRules()->getTerrainDefense();
+        float hpReductionMalus = 1.0f;
+        if ( pMap->getGameRules()->getHpDefenseReduction())
+        {
+            hpReductionMalus = static_cast<float>(getHpRounded()) / MAX_UNIT_HP;
+        }
+        bonus += getTerrainDefense(position.x(), position.y()) * pMap->getGameRules()->getTerrainDefense() * hpReductionMalus;
     }
     if (m_pTerrain != nullptr)
     {
@@ -2255,7 +2281,7 @@ QString Unit::getUnitDamageID()
     return m_UnitID;
 }
 
-float Unit::getUnitDamage(QString weaponID)
+float Unit::getUnitDamage(const QString & weaponID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
@@ -2367,6 +2393,22 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker, bool isDefender)
             return true;
         }
     }
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getFirstStrike";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj2 = pInterpreter->newQObject(pAttacker);
+    args1 << obj2;
+    args1 << isDefender;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    if (erg.isBool() && erg.toBool() == true)
+    {
+        return true;
+    }
     return false;
 }
 
@@ -2440,7 +2482,7 @@ QStringList Unit::getActionList()
     return actionList;
 }
 
-bool Unit::hasAction(QString action)
+bool Unit::hasAction(const QString & action)
 {
     return getActionList().contains(action);
 }
@@ -2490,12 +2532,12 @@ void Unit::moveUnitAction(GameAction* pAction)
         value = 0;
     }
     setFuel(value);
-    moveUnit(pAction->getMovePath());
+    auto path = pAction->getMovePath();
+    moveUnit(path);
 }
 
-void Unit::moveUnit(QVector<QPoint> movePath)
-{
-    
+void Unit::moveUnit(QVector<QPoint> & movePath)
+{    
     if (movePath.size() < 1)
     {
         movePath.append(QPoint(Unit::getX(), Unit::getY()));
@@ -2670,7 +2712,7 @@ qint32 Unit::getCaptureRate(QPoint position)
     return getHpRounded() + modifier;
 }
 
-void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
+void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
     if (duration >= 0 && player >= 0)
     {
@@ -2718,7 +2760,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 
     
 }
 
-void Unit::unloadIcon(QString iconID)
+void Unit::unloadIcon(const QString & iconID)
 {
     
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -3626,7 +3668,7 @@ void Unit::showRanges()
     updateCustomRangeActors();
 }
 
-void Unit::showCustomRange(QString id, qint32 range, QColor color)
+void Unit::showCustomRange(const QString & id, qint32 range, QColor color)
 {
     bool found = false;
     for (auto & customRangeInfo : m_customRangeInfo)
@@ -3657,7 +3699,7 @@ void Unit::showCustomRange(QString id, qint32 range, QColor color)
     }
 }
 
-void Unit::removeCustomRange(QString id)
+void Unit::removeCustomRange(const QString & id)
 {
     for (qint32 i = 0; i < m_customRangeInfo.size(); ++i)
     {
@@ -3688,7 +3730,7 @@ void Unit::updateCustomRangeActors()
     }
 }
 
-void Unit::transformUnit(QString unitID)
+void Unit::transformUnit(const QString & unitID)
 {
     for (auto & sprite : m_pUnitWaitSprites)
     {

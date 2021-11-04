@@ -4,7 +4,7 @@ const QString Layer::LAYER_PARAMETER_SIZE = "SIZE";
 const QString Layer::LAYER_PARAMETER_TYPE = "TYPE";
 const QString Layer::LAYER_PARAMETER_ACTIVATION = "ACTIVATION";
 
-Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> parameters)
+Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> & parameters)
 {
     m_id_layer = id_layer;
     m_net = net;
@@ -21,7 +21,7 @@ void Layer::extend(quint32 count, bool randomize)
     {
         for (qint32 i_neuron = 0; i_neuron < count; ++i_neuron)
         {
-            m_neurons.push_front(spNeuron::create(size + i_neuron, this, m_activation, false));
+            m_neurons.insert(m_neurons.cbegin(), spNeuron::create(size + i_neuron, this, m_activation, false));
         }
     }
     if (m_previousLayer != nullptr)
@@ -53,10 +53,10 @@ void Layer::initLayer()
     if (m_type == LayerType::STANDARD || m_type == LayerType::INPUT)
 	{
         m_parameters[LAYER_PARAMETER_SIZE] += 1; // bias for the next layer
-        m_neurons = QVector<spNeuron>(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
+        m_neurons = std::vector<spNeuron>(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
         for (qint32 i_neuron = 0; i_neuron < m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
-            bool isBias = i_neuron == (m_neurons.length() - 1);
+            bool isBias = i_neuron == (m_neurons.size() - 1);
             m_neurons[i_neuron] = spNeuron::create(i_neuron, this, m_activation, isBias);
         }
 	}
@@ -211,7 +211,7 @@ void Layer::deserializeObject(QDataStream& pStream)
     {
         spNeuron pNeuron = spNeuron::create(i, this, m_activation, false);
         pNeuron->deserializeObject(pStream);
-        m_neurons.append(pNeuron);
+        m_neurons.push_back(pNeuron);
     }
 }
 

@@ -253,7 +253,7 @@ QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
     return ret;
 }
 
-QVector<QPoint> PathFindingSystem::getTargetPath()
+QVector<QPoint> PathFindingSystem::getTargetPath() const
 {
     if (m_FinishNode >= 0)
     {
@@ -262,7 +262,7 @@ QVector<QPoint> PathFindingSystem::getTargetPath()
     return QVector<QPoint>();
 }
 
-QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
+QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
 {
     QVector<QPoint> points;
     qint32 startCost = getTargetCosts(x, y);
@@ -307,12 +307,12 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
     return points;
 }
 
-qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y)
+qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y) const
 {
     if (x >= 0 && x < m_width &&
         y >= 0 && y < m_heigth)
     {
-        qint32 cost = m_costs[getIndex(x, y)];
+        const qint32 cost = m_costs[getIndex(x, y)];
         if (cost < infinite)
         {
             return cost;
@@ -321,7 +321,7 @@ qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y)
     return -1;
 }
 
-bool PathFindingSystem::isReachable(qint32 x, qint32 y)
+bool PathFindingSystem::isReachable(qint32 x, qint32 y) const
 {
     return getTargetCosts(x, y) >= 0;
 }

@@ -104,7 +104,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Unit ID: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    QVector<QString> items;
+    QStringList items;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     qint32 currentItem = sortedUnits.indexOf(unitID);

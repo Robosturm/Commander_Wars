@@ -31,8 +31,6 @@ IngameInfoBar::IngameInfoBar()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pMiniMapBox = oxygine::spBox9Sprite::create();
-    pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pMiniMapBox->setResAnim(pAnim);
 
     pMiniMapBox->setSize(width, Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth);
@@ -59,8 +57,6 @@ IngameInfoBar::IngameInfoBar()
     addChild(pMiniMapBox);
 
     m_pGameInfoBox = oxygine::spBox9Sprite::create();
-    m_pGameInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pGameInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pGameInfoBox->setResAnim(pAnim);
     m_pGameInfoBox->setPosition(0, pMiniMapBox->getHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
@@ -69,17 +65,12 @@ IngameInfoBar::IngameInfoBar()
 
 
     m_pCursorInfoBox = oxygine::spBox9Sprite::create();
-
-    m_pCursorInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pCursorInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pCursorInfoBox->setResAnim(pAnim);
     m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     m_pDetailedViewBox = oxygine::spBox9Sprite::create();
-    m_pDetailedViewBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pDetailedViewBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pAnim = pObjectManager->getResAnim("panel_transparent+mask");
     m_pDetailedViewBox->setResAnim(pAnim);
     if (getScaleX() < 0.75f)
@@ -90,7 +81,7 @@ IngameInfoBar::IngameInfoBar()
     {
         m_pDetailedViewBox->setScale(1 / getScaleX());
     }
-    m_pDetailedViewBox->setSize(131, 200);
+    m_pDetailedViewBox->setSize(130, 199);
     m_pDetailedViewBox->setPosition(-m_pDetailedViewBox->getScaledWidth(), m_pCursorInfoBox->getHeight() - m_pDetailedViewBox->getScaledHeight());
 
     setX(Settings::getWidth() - getScaledWidth());
@@ -148,7 +139,7 @@ void IngameInfoBar::updatePlayerInfo()
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
-                    pSprite->setPosition(205, 12);
+                    pSprite->setPosition(202, 12);
                     pSprite->setScale(85 / pAnim->getWidth());
                 }
                 m_pGameInfoBox->addChild(pSprite);
@@ -157,29 +148,23 @@ void IngameInfoBar::updatePlayerInfo()
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(95, 95);
-                pBox->setPosition(104, 8);
+                pBox->setSize(91, 95);
+                pBox->setPosition(101, 8);
                 m_pGameInfoBox->addChild(pBox);
                 pBox = oxygine::spBox9Sprite::create();
-                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(95, 95);
-                pBox->setPosition(7, 8);
+                pBox->setSize(91, 95);
+                pBox->setPosition(10, 8);
                 m_pGameInfoBox->addChild(pBox);
                 // weather box
                 pBox = oxygine::spBox9Sprite::create();
-                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 pBox->setResAnim(pAnim);
                 pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                pBox->setSize(95, 95);
-                pBox->setPosition(199, 8);
+                pBox->setSize(91, 95);
+                pBox->setPosition(198, 8);
                 m_pGameInfoBox->addChild(pBox);
 
                 if (pMap->getGameRules()->getWeatherPrediction())
@@ -192,19 +177,17 @@ void IngameInfoBar::updatePlayerInfo()
                         if (pAnim != nullptr)
                         {
                             pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(206, 108);
+                            pSprite->setPosition(202, 108);
                             pSprite->setScale(37 / pAnim->getWidth());
                         }
                     }
                     m_pGameInfoBox->addChild(pSprite);
                     pBox = oxygine::spBox9Sprite::create();
-                    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                     pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
                     pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                    pBox->setSize(47, 47);
-                    pBox->setPosition(200, 104);
+                    pBox->setSize(45, 47);
+                    pBox->setPosition(198, 104);
                     m_pGameInfoBox->addChild(pBox);
 
                     pSprite = oxygine::spSprite::create();
@@ -215,19 +198,17 @@ void IngameInfoBar::updatePlayerInfo()
                         if (pAnim != nullptr)
                         {
                             pSprite->setResAnim(pAnim);
-                            pSprite->setPosition(253, 108);
+                            pSprite->setPosition(247, 108);
                             pSprite->setScale(37 / pAnim->getWidth());
                         }
                     }
                     m_pGameInfoBox->addChild(pSprite);
                     pBox = oxygine::spBox9Sprite::create();
-                    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                     pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
                     pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
-                    pBox->setSize(47, 47);
-                    pBox->setPosition(247, 104);
+                    pBox->setSize(45, 47);
+                    pBox->setPosition(243, 104);
                     m_pGameInfoBox->addChild(pBox);
                 }
 
@@ -464,12 +445,11 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     {
         oxygine::spSlidingSprite pWeatherOverlay = oxygine::spSlidingSprite::create();
         pWeatherOverlay->setPosition(xOffset, yOffset);
-        pWeatherOverlay->setResAnim(pAnimBase);
+        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setSize(spriteWidth, spriteHeigth);
         QPoint speed = pTerrain->getWeatherOverlaySpeed();
         pWeatherOverlay->setSpeedX(speed.x());
         pWeatherOverlay->setSpeedY(speed.y());
-        pWeatherOverlay->setResAnim(pAnimWeather);
         pWeatherOverlay->setPriority(100000);
         pWeatherOverlay->setLocked(true);
         m_pDetailedViewBox->addChild(pWeatherOverlay);
@@ -736,8 +716,6 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             for (qint32 i = 0; i < loadingPlace; ++i)
             {
                 oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
-                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 pBox->setResAnim(pAnim);
                 pBox->setSize(GameMap::defaultImageSize + 11, GameMap::defaultImageSize + 12);

@@ -14,7 +14,7 @@ class IslandMap : public QObject, public oxygine::ref_counter
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;
 public:
-    explicit IslandMap(QString unitID, Player* pOwner);
+    explicit IslandMap(const QString & unitID, Player* pOwner);
     virtual ~IslandMap() = default;
 
 

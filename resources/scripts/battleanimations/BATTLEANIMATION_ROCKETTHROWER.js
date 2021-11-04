@@ -43,7 +43,7 @@ var Constructor = function()
         var offset = data[0];
         sprite.loadSpriteV2("rocketthrower+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset, 1, 1, 0, 0, false, false, 100, -1, startFrame);
-        BATTLEANIMATION.loadSpotter(sprite, unit);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, true);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

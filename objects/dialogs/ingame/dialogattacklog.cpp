@@ -30,8 +30,6 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -138,7 +136,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         if (log->attackerKilled)
         {
             oxygine::spSprite pSprite = oxygine::spSprite::create();
-            oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
             pSprite->setResAnim(pAnim);
             pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
             pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
@@ -196,7 +194,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         if (log->defenderKilled)
         {
             oxygine::spSprite pSprite = oxygine::spSprite::create();
-            oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
             pSprite->setResAnim(pAnim);
             pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
             pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);

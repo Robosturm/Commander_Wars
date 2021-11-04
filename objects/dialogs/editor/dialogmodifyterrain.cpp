@@ -24,8 +24,6 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -173,7 +171,7 @@ void DialogModifyTerrain::terrainClicked(QString id)
 void DialogModifyTerrain::showLoadDialog()
 {
     
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "customTerrainImages";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName(), true);

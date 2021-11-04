@@ -11,18 +11,16 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/GameEnums.h"
-#include "game/gameaction.h"
 
 #include "objects/base/tooltip.h"
-
-class GameAction;
-class GameAnimation;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class Player;
 class Terrain;
 class Unit;
-typedef oxygine::intrusive_ptr<Unit> spUnit;
+class GameAction;
+class GameAnimation;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
+using spUnit = oxygine::intrusive_ptr<Unit>;
 
 class Unit : public Tooltip, public FileSerializable
 {
@@ -63,7 +61,7 @@ public:
      */
     explicit Unit();
 
-    explicit Unit(QString unitID, Player* pOwner, bool aquireId);
+    explicit Unit(const QString & unitID, Player* pOwner, bool aquireId);
 
     virtual ~Unit();
     /**
@@ -112,7 +110,7 @@ public:
      * @param action
      * @return
      */
-    bool hasAction(QString action);
+    bool hasAction(const QString & action);
     /**
      * @brief updateIcons updates icons that can be modified by the co.
      * E.g Transport sign and health point sign
@@ -161,7 +159,7 @@ public slots:
      * @brief transformUnit
      * @param unitID
      */
-    void transformUnit(QString unitID);
+    void transformUnit(const QString & unitID);
     /**
      * @brief getCursorInfoRange
      * @return
@@ -258,7 +256,7 @@ public slots:
      * @param unitID
      * @return
      */
-    Unit* spawnUnit(QString unitID);
+    Unit* spawnUnit(const QString & unitID);
     /**
      * @brief getAiMode
      * @return
@@ -457,13 +455,13 @@ public slots:
      * @brief loadSprites loads the given sprite
      * @param spriteID
      */
-    void loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite = true);
+    void loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite = true);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipSprite = true);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite = true);
     /**
      * @brief addShineTween
      */
@@ -512,7 +510,7 @@ public slots:
      * @param weaponID
      * @return
      */
-    float getUnitDamage(QString weaponID);
+    float getUnitDamage(const QString & weaponID);
     /**
      * @brief getX
      * @return  x coordinates of this unit
@@ -570,7 +568,7 @@ public slots:
      * @brief moveUnit moves the unit to the target path
      * @param movePath
      */
-    void moveUnit(QVector<QPoint> movePath);
+    void moveUnit(QVector<QPoint> & movePath);
     /**
      * @brief moveUnitToField
      * @param x
@@ -613,12 +611,12 @@ public slots:
      * @param duration number of days the icon will be shown on the unit
      * @param player the player on which the duration gets decreased
      */
-    void loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
+    void loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
     /**
      * @brief unloadIcon removes the given icon from this unit
      * @param iconID
      */
-    void unloadIcon(QString iconID);
+    void unloadIcon(const QString & iconID);
     /**
      * @brief startOfTurn
      */
@@ -651,7 +649,7 @@ public slots:
      * @brief loadUnit adds a unit to the transport list
      * @param pUnit
      */
-    void loadSpawnedUnit(QString unitId);
+    void loadSpawnedUnit(const QString & unitId);
     /**
      * @brief getLoadedUnit
      * @param index
@@ -814,12 +812,12 @@ public slots:
      * @param range
      * @param color
      */
-    void showCustomRange(QString id, qint32 range, QColor color = Qt::white);
+    void showCustomRange(const QString & id, qint32 range, QColor color = Qt::white);
     /**
      * @brief removeCustomRange
      * @param id
      */
-    void removeCustomRange(QString id);
+    void removeCustomRange(const QString & id);
     /**
      * @brief updateSprites reloads all sprites
      */
@@ -898,6 +896,12 @@ public slots:
      * @return
      */
     bool isEnvironmentAttackable(QString terrainID);
+    /**
+     * @brief Unit::getEnvironmentDamage
+     * @param terrainID
+     * @return
+     */
+    float getEnvironmentDamage(QString terrainID);
     /**
      * @brief canMoveOver
      * @param x

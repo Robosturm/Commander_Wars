@@ -61,6 +61,7 @@ var Constructor = function()
         }
         sprite.loadMovingSpriteV2("light_tank+" + armyName + weaponId + ending + "+mask", GameEnums.Recoloring_Matrix,
                                   BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), startPos, movement, moveTime, false, loops);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)

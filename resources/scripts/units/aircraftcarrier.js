@@ -13,11 +13,11 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-        unit.setMinRange(3);
-        unit.setMaxRange(8);
+        unit.setMinRange(2);
+        unit.setMaxRange(6);
 		unit.setVision(4);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("aircraftcarrier+mask", GameEnums.Recoloring_Matrix);
@@ -31,7 +31,10 @@ var Constructor = function()
     {
         return 20000;
     };
-
+    this.canMoveAndFire = function()
+    {
+        return true;
+    };
     this.getName = function()
     {
         return qsTr("Aircraft Carrier");
@@ -55,9 +58,14 @@ var Constructor = function()
             {
                 fuelCosts = 0;
             }
-            unit.setFuel(unit.getFuel() - fuelCosts);
+            unit.setFuel(unit.getFuel() - fuelCosts);            
         }
         UNIT.transporterRefilling(unit);
+        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        {
+            var transportUnit = unit.getLoadedUnit(i);
+            UNIT.repairUnit(transportUnit, 2);
+        }
     };
     this.createExplosionAnimation = function(x, y, unit)
     {

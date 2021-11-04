@@ -7,6 +7,7 @@
 #include <QElapsedTimer>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "mapsupport/mapfilter.h"
 
 class MapSelection;
 typedef oxygine::intrusive_ptr<MapSelection> spMapSelection;
@@ -38,6 +39,15 @@ public:
      * @param item
      */
     void setCurrentItem(QString item);
+    /**
+     * @brief getMapFilter
+     * @return
+     */
+    MapFilter* getMapFilter()
+    {
+        return &m_mapFilter;
+    }
+
 signals:    
     void itemChanged(QString item);
     void changeSelection(qint32 index);
@@ -49,6 +59,7 @@ public slots:
     void updateSelection(qint32 startIndex);
     void itemChangeTimerExpired();
     void createItemContainer(qint32 y, qint32 width, qint32 height);
+    void filterChanged();
 private:
     QString m_currentFolder;
     QString m_currentItem;
@@ -68,7 +79,8 @@ private:
     bool m_moveScrolling{false};
     bool m_wasMoveScrolling{false};
     oxygine::Vector2 m_lastScrollPoint;
-
+    MapFilter m_mapFilter;
+    QVector<qint32> m_mapMapping;
 };
 
 #endif // MAPSELECTION_H

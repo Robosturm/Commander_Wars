@@ -670,7 +670,7 @@ void HeavyAi::scoreActions(UnitData & unit)
     }
 }
 
-bool HeavyAi::isScoringAllowed(QString action, QStringList actions)
+bool HeavyAi::isScoringAllowed(const QString & action, const QStringList & actions)
 {
     bool ret = false;
     if (m_aiStep >= AISteps::moveTransporters)
@@ -868,7 +868,7 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, QVector<do
     return ret;
 }
 
-void HeavyAi::getFunctionType(QString action, FunctionType & type, qint32 & index)
+void HeavyAi::getFunctionType(const QString & action, FunctionType & type, qint32 & index)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     index = -1;
@@ -1111,7 +1111,7 @@ float HeavyAi::scoreFire(spGameAction action, UnitData & unitData, QVector<doubl
                 }
             }
         }
-        else if (m_enableNeutralTerrainAttack)
+        else if (isAttackOnTerrainAllowed(pTerrain, data.x()))
         {
             Building* pBuilding = pTerrain->getBuilding();
             double atkDamage = data.x();
@@ -1447,9 +1447,7 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                          pBuilding->getHp() > 0 &&
                          m_pPlayer->isEnemy(pBuilding->getOwner()) &&
                          pUnit->isEnvironmentAttackable(pBuilding->getBuildingID())) ||
-                        (m_enableNeutralTerrainAttack &&
-                         isAttackOnTerrainAllowed(pTerrain) &&
-                         pUnit->isEnvironmentAttackable(pTerrain->getID())))
+                        (isAttackOnTerrainAllowed(pTerrain, pUnit->getEnvironmentDamage(pTerrain->getID()))))
                     {
                         Unit* pTargetUnit = pTerrain->getUnit();
                         float alliedmultiplier = 1.0f;

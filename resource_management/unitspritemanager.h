@@ -20,13 +20,13 @@ public:
      * @param id
      * @return
      */
-    qint32 getUnitType(QString id);
+    qint32 getUnitType(const QString & id);
     /**
      * @brief getMovementType
      * @param id
      * @return
      */
-    QString getMovementType(QString id);
+    QString getMovementType(const QString & id);
     /**
      * @brief getUnitsSorted
      * @return

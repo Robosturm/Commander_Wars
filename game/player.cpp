@@ -57,7 +57,7 @@ BaseGameInputIF* Player::getBaseGameInput()
     return m_pBaseGameInput.get();
 }
 
-float Player::getUnitBuildValue(QString unitID)
+float Player::getUnitBuildValue(const QString & unitID)
 {
     float modifier = 0.0f;
     if (m_playerCOs[0].get() != nullptr)
@@ -188,7 +188,7 @@ bool Player::loadTable(qint32 table)
     return found;
 }
 
-bool Player::loadTableFromFile(QString tablename)
+bool Player::loadTableFromFile(const QString & tablename)
 {
     CONSOLE_PRINT("Player::loadTableFromFile " + tablename, Console::eDEBUG);
     bool found = false;
@@ -642,7 +642,7 @@ qint32 Player::getFunds() const
     return m_funds;
 }
 
-qint32 Player::getBuildingCount(QString buildingID)
+qint32 Player::getBuildingCount(const QString & buildingID)
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -672,7 +672,7 @@ qint32 Player::getBuildingCount(QString buildingID)
     return ret;
 }
 
-qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
+qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -705,7 +705,7 @@ qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
     return ret;
 }
 
-qint32 Player::getUnitCount(QString unitID)
+qint32 Player::getUnitCount(const QString & unitID)
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -730,7 +730,7 @@ qint32 Player::getUnitCount(QString unitID)
     return ret;
 }
 
-qint32 Player::getUnitCount(Unit* pUnit, QString unitID)
+qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID)
 {
     qint32 ret = 0;
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
@@ -902,7 +902,7 @@ void Player::earnMoney(float modifier)
     setFunds(m_funds + calcIncome(modifier));
 }
 
-qint32 Player::getCostModifier(QString id, qint32 baseCost)
+qint32 Player::getCostModifier(const QString & id, qint32 baseCost)
 {
     qint32 costModifier = 0;
     if (m_playerCOs[0].get() != nullptr)
@@ -974,13 +974,13 @@ QStringList Player::getCOUnits(Building* pBuilding)
     return ret;
 }
 
-void Player::setBuildList(const QStringList BuildList)
+void Player::setBuildList(const QStringList & BuildList)
 {
     m_BuildList = BuildList;
     m_BuildlistChanged = true;
 }
 
-void Player::changeBuildlist(const QString unitID, bool remove)
+void Player::changeBuildlist(const QString& unitID, bool remove)
 {
     if (remove)
     {
@@ -1294,7 +1294,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
     }
 }
 
-qint32 Player::getCosts(QString id)
+qint32 Player::getCosts(const QString & id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
@@ -1500,9 +1500,9 @@ QmlVectorBuilding* Player::getEnemyBuildings()
     return ret;
 }
 
-QmlVectorBuilding* Player::getBuildings()
+QmlVectorBuilding* Player::getBuildings(const QString & id)
 {
-    return GameMap::getInstance()->getBuildings(this);
+    return GameMap::getInstance()->getBuildings(this, id);
 }
 
 void Player::updateVisualCORange()

@@ -108,7 +108,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     return m_movecosts[index][direction];
 }
 
-qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
+qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
 {
     qint32 totalCosts = 0;
     for (qint32 i = path.size() - 2; i >= 0; i--)

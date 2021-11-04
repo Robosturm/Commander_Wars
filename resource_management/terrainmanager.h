@@ -25,13 +25,28 @@ public:
      * @return
      */
     QString getTerrainGroupName(qint32 group);
+public slots:
+    void removeRessource(QString id);
     /**
      * @brief getTerrainsSorted
      * @return
      */
     QStringList getTerrainsSorted();
-public slots:
-    void removeRessource(QString id);
+    /**
+     * @brief getCount
+     * @return
+     */
+    qint32 getTerrainCount()
+    {
+        return m_loadedRessources.size();
+    }
+    /**
+     * @brief getFittingResAnim
+     * @param spriteIdStart
+     * @param spriteIdEnd
+     * @return
+     */
+    QString getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const;
 protected:
     friend RessourceManagement<TerrainManager>;
     TerrainManager();

@@ -22,7 +22,7 @@ var Constructor = function()
     {
         return 20000;
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("transportplane+mask", GameEnums.Recoloring_Matrix);

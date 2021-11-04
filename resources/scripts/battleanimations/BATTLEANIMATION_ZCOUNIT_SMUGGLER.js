@@ -21,6 +21,7 @@ var Constructor = function()
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -32,7 +33,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ZCOUNIT_SMUGGLER.loadSprite(sprite, unit, defender, 1);
+        BATTLEANIMATION_ZCOUNIT_SMUGGLER.loadSprite(sprite, unit, defender, 1);        
     };
 
     this.loadSprite = function(sprite, unit, defender, count)
@@ -40,6 +41,7 @@ var Constructor = function()
         var offset = Qt.point(-15, 5);
         sprite.loadSpriteV2("smuggler+mask" + BATTLEANIMATION_ZCOUNIT_SMUGGLER.getUniqueId(unit), GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_SMUGGLER.getMaxUnitCount(), offset, count);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
 

@@ -58,7 +58,7 @@ void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
             {
-                CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
+                // CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
                 m_lineEdit->event(event.get());
                 break;
             }

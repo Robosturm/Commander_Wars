@@ -553,8 +553,6 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSprite = oxygine::spBox9Sprite::create();
-    pSprite->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pSprite->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     addChild(pSprite);
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     pSprite->setResAnim(pAnim);

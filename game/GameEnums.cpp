@@ -140,6 +140,32 @@ void GameEnums::registerEnums()
     value.setProperty("CounterAttackMode_Impossible", CounterAttackMode_Impossible);
     value.setProperty("CounterAttackMode_Possible", CounterAttackMode_Possible);
 
+    value.setProperty("MapFilterFlags_None", MapFilterFlags_None);
+    value.setProperty("MapFilterFlags_Bases", MapFilterFlags_Bases);
+    value.setProperty("MapFilterFlags_Airport", MapFilterFlags_Airport);
+    value.setProperty("MapFilterFlags_Harbour", MapFilterFlags_Harbour);
+    value.setProperty("MapFilterFlags_Tower", MapFilterFlags_Tower);
+    value.setProperty("MapFilterFlags_Teleport", MapFilterFlags_Teleport);
+    value.setProperty("MapFilterFlags_MixedBase", MapFilterFlags_MixedBase);
+    value.setProperty("MapFilterFlags_Predeployed", MapFilterFlags_Predeployed);
+    value.setProperty("MapFilterFlags_Symetric", MapFilterFlags_Symetric);
+    value.setProperty("MapFilterFlags_PvP", MapFilterFlags_PvP);
+    value.setProperty("MapFilterFlags_FTA", MapFilterFlags_FTA);
+    value.setProperty("MapFilterFlags_VsAi", MapFilterFlags_VsAi);
+    value.setProperty("MapFilterFlags_TeamPlay", MapFilterFlags_TeamPlay);
+    value.setProperty("MapFilterFlags_Historical", MapFilterFlags_Historical);
+    value.setProperty("MapFilterFlags_LowFunds", MapFilterFlags_LowFunds);
+    value.setProperty("MapFilterFlags_HighFunds", MapFilterFlags_HighFunds);
+    value.setProperty("MapFilterFlags_Naval", MapFilterFlags_Naval);
+    value.setProperty("MapFilterFlags_Ground", MapFilterFlags_Ground);
+    value.setProperty("MapFilterFlags_Air", MapFilterFlags_Air);
+    value.setProperty("MapFilterFlags_Scripted", MapFilterFlags_Scripted);
+
+    value.setProperty("FlowDirections_North", FlowDirections_North);
+    value.setProperty("FlowDirections_South", FlowDirections_South);
+    value.setProperty("FlowDirections_East",  FlowDirections_East);
+    value.setProperty("FlowDirections_West",  FlowDirections_West);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

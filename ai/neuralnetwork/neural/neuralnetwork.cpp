@@ -22,7 +22,7 @@ void NeuralNetwork::autogenerate(bool randomize)
     }	
 }
 
-void NeuralNetwork::addLayer(QMap<QString, double> parameters)
+void NeuralNetwork::addLayer(QMap<QString, double> & parameters)
 {
     m_configuration.append(parameters);
     m_layers.push_back(spLayer::create(m_layers.size(), this, parameters));
@@ -45,7 +45,7 @@ void NeuralNetwork::clean()
     }
 }
 
-void NeuralNetwork::setInput(QVector<double> in)
+void NeuralNetwork::setInput(const QVector<double> & in)
 {
 	clean();
     for(qint32 i = 0; i < in.size(); ++i)
@@ -154,6 +154,6 @@ void NeuralNetwork::deserializeObject(QDataStream& pStream)
             layer->setPreviousLayer(m_layers[i - 1].get());
         }
         layer->deserializeObject(pStream);
-        m_layers.append(layer);
+        m_layers.push_back(layer);
     }
 }

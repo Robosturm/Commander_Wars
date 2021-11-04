@@ -47,7 +47,7 @@ void MovementTableManager::loadAll()
     }
     m_loadedRessources.sort();
 }
-qint32 MovementTableManager::getBaseMovementPoints(QString movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit, bool trapChecking)
+qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit, bool trapChecking)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpoints";

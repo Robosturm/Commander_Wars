@@ -57,6 +57,16 @@ public:
     };
     Q_ENUM(Directions)
 
+    enum FlowDirections
+    {
+        FlowDirections_None     = 0,
+        FlowDirections_North    = 0x1,
+        FlowDirections_East     = 0x2,
+        FlowDirections_South    = 0x4,
+        FlowDirections_West     = 0x8,
+    };
+    Q_ENUM(FlowDirections)
+
     enum AIQuestionType
     {
         AIQuestionType_Equal,
@@ -266,6 +276,35 @@ public:
         CounterAttackMode_Possible,
     };
     Q_ENUM(CounterAttackMode)
+
+    enum MapFilterFlags
+    {
+        MapFilterFlags_None        = 0x00000,
+        // buildings
+        MapFilterFlags_Bases       = 0x00001,
+        MapFilterFlags_Airport     = 0x00002,
+        MapFilterFlags_Harbour     = 0x00004,
+        MapFilterFlags_Tower       = 0x00008,
+        MapFilterFlags_Teleport    = 0x00010,
+        MapFilterFlags_MixedBase   = 0x00020,
+        MapFilterFlags_Predeployed = 0x00040,
+        // map layout
+        MapFilterFlags_Symetric    = 0x00080,
+        MapFilterFlags_PvP         = 0x00100,
+        MapFilterFlags_FTA         = 0x00200,
+        MapFilterFlags_VsAi        = 0x00400,
+        MapFilterFlags_TeamPlay    = 0x00800,
+        MapFilterFlags_Historical  = 0x01000,
+        // funds
+        MapFilterFlags_LowFunds    = 0x02000,
+        MapFilterFlags_HighFunds   = 0x04000,
+        // battle type
+        MapFilterFlags_Naval       = 0x08000,
+        MapFilterFlags_Ground      = 0x10000,
+        MapFilterFlags_Air         = 0x20000,
+        MapFilterFlags_Scripted    = 0x40000,
+    };
+    Q_ENUM(MapFilterFlags)
 
     static void registerEnums();
 private:

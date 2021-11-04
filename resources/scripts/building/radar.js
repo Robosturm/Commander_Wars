@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+    
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)
@@ -44,6 +44,19 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_radar";
+    };
+	this.onWeatherChanged = function(building, weather)
+	{	
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("radar+snow", false);
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

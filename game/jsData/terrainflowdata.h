@@ -32,7 +32,7 @@ public slots:
      * @param terrains
      * @return
      */
-    QVector<QPoint> getOverlayTiles(QStringList terrains);
+    QVector<QPoint> getOverlayTiles(const QStringList & terrains);
     /**
      * @brief getOverlayTileMapping
      * @return

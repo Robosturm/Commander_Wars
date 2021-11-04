@@ -20,9 +20,9 @@ void COSpriteManager::release()
     m_Ressources.clear();
 }
 
-QVector<QString> COSpriteManager::getSpriteCOIDs()
+QStringList COSpriteManager::getSpriteCOIDs()
 {
-    QVector<QString> ret;
+    QStringList ret;
     for (auto iter = m_resourcesMap.begin(); iter != m_resourcesMap.end(); ++iter)
     {
         QString id(iter.key());
@@ -38,7 +38,7 @@ QVector<QString> COSpriteManager::getSpriteCOIDs()
     return ret;
 }
 
-QStringList COSpriteManager::getCOStyles(QString id)
+QStringList COSpriteManager::getCOStyles(const QString & id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
@@ -61,7 +61,7 @@ QStringList COSpriteManager::getCOStyles(qint32 position)
     return QStringList();
 }
 
-void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
+void COSpriteManager::loadResAnim(const QString & coid, const QString & file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);
@@ -69,6 +69,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
     bool nrmFound = false;
     bool faceFound = false;
     bool infoFound = false;
+    bool miniFound = false;
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
     oxygine::spResAnim pCOAnim;
@@ -97,6 +98,16 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
             pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
             m_Ressources[i] = CoSprite(coidLower + "+info", pCOAnim);
             infoFound = true;
+        }
+        else if (coidLower + "+mini" == m_Ressources[i].m_spriteId)
+        {
+            pAnim = oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error);
+            if (pAnim.get() != nullptr)
+            {
+                pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+                m_Ressources[i] = CoSprite(coidLower + "+mini", pCOAnim);
+                infoFound = true;
+            }
         }
     }
     pAnim = nullptr;
@@ -141,9 +152,23 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable,
             }
         }
     }
+    pAnim = nullptr;
+    pCOAnim = nullptr;
+    if (!miniFound)
+    {
+        oxygine::spResAnim pAnim = oxygine::spResAnim(oxygine::Resources::getResAnim(filename + "+mini", oxygine::error_policy::ep_ignore_error));
+        if (pAnim.get() != nullptr)
+        {
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+mini.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor(), false);
+            if (pCOAnim.get() != nullptr)
+            {
+                m_Ressources.append(CoSprite(coidLower + "+mini", pCOAnim));
+            }
+        }
+    }
 }
 
-oxygine::ResAnim* COSpriteManager::getResAnim(QString id, oxygine::error_policy ep) const
+oxygine::ResAnim* COSpriteManager::getResAnim(const QString & id, oxygine::error_policy ep) const
 {
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {
@@ -155,7 +180,7 @@ oxygine::ResAnim* COSpriteManager::getResAnim(QString id, oxygine::error_policy 
     return oxygine::Resources::getResAnim(id, ep);
 }
 
-void COSpriteManager::removeRessource(QString id)
+void COSpriteManager::removeRessource(const QString & id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); ++i)
     {

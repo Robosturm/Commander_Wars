@@ -5,6 +5,7 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
 #include <qstring.h>
 #include <QDomElement>
+#include <vector>
 
 namespace oxygine
 {
@@ -16,7 +17,7 @@ namespace oxygine
 
     namespace text
     {
-        using text_data = QVector<Symbol>;
+        using text_data = std::vector<Symbol>;
         class Node;
         using spNode = oxygine::intrusive_ptr<Node>;
         class DivNode;
@@ -65,7 +66,7 @@ namespace oxygine
         {
         public:
             static qint32 m_defMissingGlyph;
-            explicit TextNode(QString v);
+            explicit TextNode(const QString & v);
             virtual ~TextNode() = default;
             virtual void xresize(Aligner& rd) override;
             virtual void xfinalPass(Aligner& rd) override;

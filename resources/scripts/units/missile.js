@@ -21,7 +21,7 @@ var Constructor = function()
     {
         return 12000;
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("missile+mask", GameEnums.Recoloring_Matrix);

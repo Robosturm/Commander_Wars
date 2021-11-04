@@ -18,11 +18,11 @@ namespace oxygine
         virtual ~ResFontBM();
 
         /**loads "fnt" font from file, supported XML */
-        void init(QString fntPath, bool premultipliedAlpha = false);
+        void init(const QString & fntPath, bool premultipliedAlpha = false);
 
         void cleanup();
 
-        const Font* getFont(QString name = "", qint32 size = 0) const override;
+        const Font* getFont(const QString & name = "", qint32 size = 0) const override;
         const Font* getClosestFont(float worldScale, qint32 styleFontSize, float& resScale) const override;
     private:
         void loadBase(QDomElement node);
@@ -32,7 +32,7 @@ namespace oxygine
             QString file;
             spTexture texture;
         };
-        void addPage(qint32 tw, qint32 th, QString head, QString file);
+        void addPage(const QString & head, const QString & file);
         void _loadPage(const page& p);
         virtual void _load() override;
         virtual void _unload() override;

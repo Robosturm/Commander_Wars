@@ -1,19 +1,13 @@
 #include "coinfoactor.h"
 
-#include "resource_management/cospritemanager.h"
-
 #include "coreengine/mainapp.h"
 
-#include "resource_management/objectmanager.h"
-
-#include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
-
+#include "resource_management/objectmanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/coperkmanager.h"
 
 #include "game/gamemap.h"
@@ -49,15 +43,21 @@ COInfoActor::COInfoActor(qint32 width)
     m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
     addChild(m_pCurrentCO);
 
+    m_pCurrentCoFaction = oxygine::spSprite::create();
+    m_pCurrentCoFaction->setPosition(Settings::getWidth() * 0.25f, 100);
+    m_pCurrentCoFaction->setScale(2.0f);
+    addChild(m_pCurrentCoFaction);
+
     m_COName = oxygine::spTextField::create();
     m_COName->setStyle(headerStyle);
+    m_COName->setY(m_pCurrentCoFaction->getY() + 40);
     addChild(m_COName);
 
     style.multiline = true;
     m_COBio = oxygine::spTextField::create();
     m_COBio->setStyle(style);
     m_COBio->setWidth(m_pCurrentCO->getX() - 50);
-    m_COBio->setPosition(10, m_COBio->getY() + 120);
+    m_COBio->setPosition(10, m_COName->getY() + 60);
     addChild(m_COBio);
 
     m_HitSprite = oxygine::spBox9Sprite::create();
@@ -178,7 +178,7 @@ COInfoActor::COInfoActor(qint32 width)
 
 void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 {
-    
+    GameManager* pGameManager = GameManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     QString coid = "";
@@ -217,9 +217,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         {
             coName = value.toString();
         }
+        auto* pResAnim = pGameManager->getResAnim("icon_" + pCO->getCOArmy().toLower(), oxygine::ep_ignore_error);
+        m_pCurrentCoFaction->setResAnim(pResAnim);
     }
     m_COName->setHtmlText(coName);
-    m_COName->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
+    m_COName->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth());
     if (pCO.get() != nullptr)
     {
         coBio = pCO->getBio();
@@ -349,28 +351,54 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     m_GlobalBoosts->setPosition(10, y);
-    y += 40;
-    for (qint32 i = 0; i < sortedUnits.size(); i++)
+    constexpr qint32 textAdvance = 25;
+    y += GameMap::getImageSize() * 2 + textAdvance;
+    qint32 customCount = pCO->getCustomUnitGlobalBoostCount();
+    if (customCount > 0)
     {
-        QString unitID = sortedUnits[i];
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-        pUnit->setVirtuellX(-2);
-        pUnit->setVirtuellY(-2);
-        showCOBoost(pUnit, pCO, x, y);
+        for (qint32 i = 0; i < customCount; i++)
+        {
+            showCustomCOBoost(pCO, x, y, i, true);
+        }
+        x = 10;
+        y += GameMap::getImageSize() * 2 + textAdvance;
     }
-    x = 10;
-    y += 40;
-    m_CoBoost->setPosition(10, y);
-    y += 40;
-    for (qint32 i = 0; i < sortedUnits.size(); i++)
+    if (pCO->showDefaultUnitGlobalBoost())
     {
-        QString unitID = sortedUnits[i];
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-        showCOBoost(pUnit, pCO, x, y);
+        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        {
+            QString unitID = sortedUnits[i];
+            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+            pUnit->setVirtuellX(-2);
+            pUnit->setVirtuellY(-2);
+            showCOBoost(pUnit, pCO, x, y);
+        }
+        x = 10;
+        y += GameMap::getImageSize() * 2 + textAdvance;
+    }
+    m_CoBoost->setPosition(10, y);
+    y += GameMap::getImageSize() * 2 + textAdvance;
+    customCount = pCO->getCustomUnitZoneBoostCount();
+    if (customCount > 0)
+    {
+        for (qint32 i = 0; i < customCount; i++)
+        {
+            showCustomCOBoost(pCO, x, y, i, false);
+        }
+        x = 10;
+        y += GameMap::getImageSize() * 2 + textAdvance;
+    }
+    if (pCO->showDefaultUnitZoneBoost())
+    {
+        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        {
+            QString unitID = sortedUnits[i];
+            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+            showCOBoost(pUnit, pCO, x, y);
+        }
     }
     setHeight(y + 100);
-    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
-    
+    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);    
 }
 
 void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
@@ -443,7 +471,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
-        pSprite->setPosition(25 +  GameMap::getImageSize(), 5 +  GameMap::getImageSize());
+        pSprite->setPosition(20 +  GameMap::getImageSize(), 5 + GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
         oxygine::spTextField pText = oxygine::spTextField::create();
@@ -466,7 +494,82 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     if (x + 120 > m_pCurrentCO->getX() - 50)
     {
         x = 10;
-        y += 60;
+        y += GameMap::getImageSize() * 2 + 25;
+    }
+    else
+    {
+        x += 100;
+    }
+}
+
+void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 index, bool global)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    m_UnitDataActors.append(oxygine::spActor::create());
+    qint32 i = m_UnitDataActors.size() - 1;
+    m_UnitDataActors[i]->setPosition(x, y);
+
+    CustomCoBoostInfo info;
+    if (global)
+    {
+        pCO->getCustomUnitGlobalBoost(index, info);
+    }
+    else
+    {
+        pCO->getCustomUnitZoneBoost(index, info);
+    }
+    WikiDatabase* pDatabase = WikiDatabase::getInstance();
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(info.getIconId(), GameMap::defaultImageSize * 2));
+    QString wikiLink = info.getLink();
+    m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowLink(wikiLink);
+    });
+    addChild(m_UnitDataActors[i]);
+    // gather basic co information
+    qint32 offBonus = 0;
+    qint32 defBonus = 0;
+    createStrengthBar(m_UnitDataActors[i], info.getOffensiveBoost(), 0);
+    createStrengthBar(m_UnitDataActors[i], info.getDefensiveBoost(), GameMap::getImageSize() / 2);
+
+    auto icons = info.getBonusIcons();
+    auto bonus = info.getIconBonus();
+    for (qint32 i2 = 0; i2 < icons.size(); ++i2)
+    {
+        if (i2 < 2)
+        {
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            pSprite->setResAnim(pCOSpriteManager->getResAnim(icons[i2]));
+            pSprite->setY(5 +  GameMap::getImageSize());
+            if (i2 > 0)
+            {
+                pSprite->setX(20 +  GameMap::getImageSize());
+            }
+            pSprite->setScale(2.0f);
+            m_UnitDataActors[i]->addChild(pSprite);
+            oxygine::spTextField pText = oxygine::spTextField::create();
+            pText->setStyle(style);
+            pText->setHtmlText(bonus[i2]);
+            pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
+            pText->setScale(0.75f);
+            m_UnitDataActors[i]->addChild(pText);
+        }
+        else
+        {
+            oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Unable to show bonus icon " + icons[i] + " because it exceeds the maximum of 2");
+        }
+    }
+    if (x + 120 > m_pCurrentCO->getX() - 50)
+    {
+        x = 10;
+        y += GameMap::getImageSize() * 2 + 25;
     }
     else
     {
@@ -566,16 +669,12 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     }
     oxygine::spBox9Sprite pStartBox = oxygine::spBox9Sprite::create();
     pStartBox->setResAnim(pStartAnim);
-    pStartBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pStartBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pStartBox->setSize(static_cast<qint32>(width * divider) + 1, 8);
     pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
     pActor->addChild(pStartBox);
 
     oxygine::spBox9Sprite pEndBox = oxygine::spBox9Sprite::create();
     pEndBox->setResAnim(pEndAnim);
-    pEndBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pEndBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pEndBox->setSize(static_cast<qint32>(width * (1.0f - divider)) + 2, 8);
     pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getWidth(), y);
     pActor->addChild(pEndBox);

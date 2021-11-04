@@ -26,7 +26,7 @@ public:
      * @param colorTable
      * @param maskTable
      */
-    static void createSprites(QString file, QImage& colorTable, QImage maskTable);
+    static void createSprites(QString file, QImage& colorTable, const QImage & maskTable);
     /**
      * @brief createColorTableSprites
      * @param folder
@@ -73,7 +73,7 @@ public:
      * @param maskTableImg
      * @param useColorBox
      */
-    static QImage createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save);
+    static QImage createSprite(QString input, QImage& colorTableImg, const QImage & maskTableImg, bool useColorBox, bool save);
     /**
      * @brief recolorImageWithTable
      * @param image
@@ -133,7 +133,7 @@ public:
      * @param outTableImg
      * @param eraseColor
      */
-    static void applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor);
+    static void applyImageTable(QString file, const QImage & inTableImg, const QImage & outTableImg, QColor eraseColor);
     /**
      * @brief inversImagesFrames
      * @param folder
@@ -173,6 +173,11 @@ public:
      * @param rows
      */
     static void preProcessMask(QImage & mask, const QImage & overlay, qint32 columns, qint32 rows);
+    /**
+     * @brief convertToRgba
+     * @param input
+     */
+    static void convertToRgba(QImage & input);
 };
 
 #endif // SPRITECREATOR_H

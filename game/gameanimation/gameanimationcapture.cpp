@@ -27,7 +27,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
     m_frameTime = GameMap::frameTime / Settings::getCaptureAnimationSpeed();
 }
 
-void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
+void GameAnimationCapture::addBuildingSprite(const QString & spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
@@ -42,7 +42,6 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         if (m_buildingSprites.get() == nullptr)
         {
             m_buildingSprites = oxygine::spSprite::create();
-            m_buildingSprites->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.0f, 0.0f));
             addChild(m_buildingSprites);
             createBuildingAnimation(pAnim, startPlayer, capturedPlayer);
             m_buildingResAnim = oxygine::spSingleResAnim::create();
@@ -53,13 +52,20 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         {
             path = oxygine::Resource::RCC_PREFIX_PATH + pAnim->getResPath();
         }
-        QImage preCaptureImage(path);
-        QImage captureImage(path);
-        getRecoloredImage(startPlayer, capturedPlayer, mode,
-                          preCaptureImage, captureImage);
-        pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
-        pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
-        m_buildingSprites->setResAnim(m_buildingResAnim.get());
+        if (QFile::exists(path))
+        {
+            QImage preCaptureImage(path);
+            QImage captureImage(path);
+            getRecoloredImage(startPlayer, capturedPlayer, mode,
+                              preCaptureImage, captureImage);
+            pApp->loadResAnim(m_buildingResAnim, m_buildingImage, 1, 1, 1.0f, false);
+            pApp->loadResAnim(m_captureBuildingResAnim, m_captureBuildingImage, 1, 1, 1.0f, false);
+            m_buildingSprites->setResAnim(m_buildingResAnim.get());
+        }
+        else
+        {
+            CONSOLE_PRINT("Unable to locate file: " + path, Console::eDEBUG);
+        }
     }
     else
     {
@@ -162,7 +168,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
     }
 }
 
-void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
+void GameAnimationCapture::addSoldierSprite(const QString & spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -256,7 +262,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
     }
 }
 
-void GameAnimationCapture::addBackgroundSprite(QString spriteID)
+void GameAnimationCapture::addBackgroundSprite(const QString & spriteID)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);

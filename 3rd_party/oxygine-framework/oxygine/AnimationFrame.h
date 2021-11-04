@@ -5,36 +5,13 @@
 
 namespace oxygine
 {
-    class Diffuse
-    {
-    public:
-        explicit Diffuse() = default;
-        spTexture base;
-        spTexture alpha;
-        qint32 flags{0};
-    };
-
-    class HitTestData
-    {
-    public:
-        explicit HitTestData() = default;
-        virtual ~HitTestData() = default;
-        const unsigned char* data{nullptr};
-        short w{0};
-        short h{0};
-        unsigned char pitch{0};
-    };
-
     class AnimationFrame
     {
     public:
         explicit AnimationFrame() = default;
         explicit AnimationFrame(spTexture t);
         virtual ~AnimationFrame() = default;
-
-        void init(ResAnim* rs, const Diffuse& df,
-                  const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);
-        void init2(ResAnim* rs, short column, short row, const Diffuse& df,
+        void init(ResAnim* rs, short column, short row, const spTexture& texture,
                    const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);
         /**ResAnim should be valid!*/
         AnimationFrame getClipped(const RectF& rect) const;
@@ -73,14 +50,18 @@ namespace oxygine
         {
             return m_destRect;
         }
-        const Diffuse& getDiffuse() const
+        const spTexture& getTexture() const
         {
-            return m_diffuse;
+            return m_texture;
         }
-        const HitTestData& getHitTestData()const
-        {
-            return m_hittest;
-        }
+        /**
+         * @brief getHits
+         * @param x
+         * @param y
+         * @return
+         */
+        bool getHits(Point pos) const;
+
         void setSrcRect(const RectF& r)
         {
             m_srcRect = r;
@@ -93,9 +74,9 @@ namespace oxygine
         {
             m_resAnim = rs;
         }
-        void setDiffuse(const Diffuse& d)
+        void setTexture(const spTexture& tex)
         {
-            m_diffuse = d;
+            m_texture = tex;
         }
         void setSize(const Vector2& size)
         {
@@ -104,10 +85,6 @@ namespace oxygine
         void setSize(float w, float h)
         {
             setSize(Vector2(w, h));
-        }
-        void setHitTestData(const HitTestData& ad)
-        {
-            m_hittest = ad;
         }
         void setRow(qint32 v)
         {
@@ -120,19 +97,19 @@ namespace oxygine
         void flipX();
         void flipY();
     private:
-        enum flags
-        {
-            clipped = 0x01,
-        };
-
-        Diffuse         m_diffuse;
-        RectF           m_srcRect{0, 0, 1, 1};
-        RectF           m_destRect{0, 0, 1, 1};
-        Vector2         m_frameSize;//real size without clipping
-        ResAnim*        m_resAnim{nullptr};
-        short           m_row{0};
-        short           m_column{0};
-        HitTestData     m_hittest;
+        void updateHittestdata();
+    private:
+        spTexture m_texture;
+        RectF m_srcRect{0, 0, 1, 1};
+        RectF m_destRect{0, 0, 1, 1};
+        Vector2 m_frameSize;
+        ResAnim*  m_resAnim{nullptr};
+        short m_row{0};
+        short m_column{0};
+        std::vector<quint8> m_data;
+        short m_width{0};
+        short m_height{0};
     };
+
 }
 

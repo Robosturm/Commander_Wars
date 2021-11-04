@@ -15,7 +15,7 @@ namespace oxygine
 {
     Resources::registeredResources Resources::m_registeredResources;
 
-    void Resources::registerResourceType(Resources::createResourceCallback creationCallback, QString resTypeID)
+    void Resources::registerResourceType(Resources::createResourceCallback creationCallback, const QString & resTypeID)
     {
         registeredResource r;
         r.cb = creationCallback;
@@ -33,7 +33,7 @@ namespace oxygine
         m_registeredResources.insert(it, r);
     }
 
-    void Resources::unregisterResourceType(QString resTypeID)
+    void Resources::unregisterResourceType(const QString & resTypeID)
     {
         auto it = std::lower_bound(m_registeredResources.cbegin(), m_registeredResources.cend(), resTypeID, registeredResource::comparePred2);
         if (it != m_registeredResources.cend())
@@ -52,12 +52,12 @@ namespace oxygine
         free();
     }
 
-    ResAnim* Resources::getResAnim(QString id, error_policy ep) const
+    ResAnim* Resources::getResAnim(const QString & id, error_policy ep) const
     {
         return getT<ResAnim>(id, ep);
     }
 
-    ResFont* Resources::getResFont(QString id, error_policy ep) const
+    ResFont* Resources::getResFont(const QString & id, error_policy ep) const
     {
         return getT<ResFont>(id, ep);
     }
@@ -102,13 +102,13 @@ namespace oxygine
         return m_docs.empty();
     }
 
-    void Resources::updateName(QString filename)
+    void Resources::updateName(const QString & filename)
     {
         QFile file(filename);
         setName(file.fileName());
     }
 
-    bool Resources::loadXML(const QString xmlFile, bool addTransparentBorder)
+    bool Resources::loadXML(const QString & xmlFile, bool addTransparentBorder)
     {
         m_name = xmlFile;
         QFile file(xmlFile);
@@ -131,7 +131,7 @@ namespace oxygine
         {
             QDomElement resources = doc.documentElement();
             CONSOLE_PRINT("loading xml resources", Console::eDEBUG);
-            XmlWalker walker("", 1.0f, true, resources);
+            XmlWalker walker("", 1.0f, resources);
             while (true)
             {
                 CreateResourceContext context;
@@ -179,16 +179,6 @@ namespace oxygine
         return true;
     }
 
-    void Resources::collect(resources& r)
-    {
-        for (resourcesMap::const_iterator i = m_resourcesMap.cbegin(); i != m_resourcesMap.cend(); ++i)
-        {
-            spResource res = i.value();
-            r.push_back(res);
-        }
-
-    }
-
     void Resources::add(spResource r)
     {
         if (r.get() == nullptr)
@@ -197,6 +187,10 @@ namespace oxygine
             return;
         }
         QString name = r->getName().toLower();
+        if (name.isEmpty())
+        {
+            oxygine::handleErrorPolicy(oxygine::ep_show_error, "adding resource with no name");
+        }
         r->setName(name);
         m_resourcesMap[name] = r;
     }
@@ -211,7 +205,7 @@ namespace oxygine
         return m_resourcesMap;
     }
 
-    Resource* Resources::get(QString id_, error_policy ep) const
+    Resource* Resources::get(const QString & id_, error_policy ep) const
     {
         QString id = id_.toLower();
         resourcesMap::const_iterator it = m_resourcesMap.find(id);
@@ -223,21 +217,5 @@ namespace oxygine
         return nullptr;
     }
 
-    void Resources::setLinearFilter(quint32 linearFilter)
-    {
-        for (auto & res : m_resources)
-        {
-            res->setLinearFilter(linearFilter);
-        }
-    }
-
-    quint32 Resources::getLinearFilter() const
-    {
-        if (m_resources.size() > 0)
-        {
-            return m_resources[0]->getLinearFilter();
-        }
-        return 0;
-    }
 }
 

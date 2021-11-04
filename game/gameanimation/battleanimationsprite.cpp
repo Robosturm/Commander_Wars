@@ -7,6 +7,7 @@
 #include "coreengine/settings.h"
 
 #include "resource_management/battleanimationmanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include "game/player.h"
 #include "game/co.h"
@@ -431,7 +432,7 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
 QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCount)
 {
     QPoint ret = QPoint((unitCount * 70) % 100,
-                        20 * (maxUnitCount - unitCount));
+                        15 * (maxUnitCount - unitCount) + 8);
     return ret;
 }
 
@@ -604,122 +605,151 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        if (pAnim->getTotalFrames() > 1)
+        loadSpriteInternal(pAnim, mode, offset, movement, moveTime, deleteAfter,
+                           loops, scale, priority, showDelay, _invertFlipX, frameTime, frames, startFrame, rotation, alpha);
+    }
+    else
+    {
+        CONSOLE_PRINT("Unable to load battle sprite: " + spriteID, Console::eDEBUG);
+    }
+}
+
+void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnums::Recoloring mode, QPoint offset,
+                                               QPoint movement, qint32 moveTime, bool deleteAfter,
+                                               qint32 loops, float scale, short priority, qint32 showDelay,
+                                               bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
+                                               float rotation, quint8 alpha)
+{
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    if (pAnim->getTotalFrames() > 1)
+    {
+        if (frames < 0)
         {
-            if (frames < 0)
+            frames = pAnim->getColumns() - 1;
+        }
+        if (frames > pAnim->getColumns() - 1)
+        {
+            frames = pAnim->getColumns() - 1;
+        }
+        if (startFrame < 0)
+        {
+            startFrame = 0;
+        }
+        if (startFrame > pAnim->getColumns() - 1)
+        {
+            startFrame = pAnim->getColumns() - 1;
+        }
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+        pSprite->addTween(tween);
+        if (deleteAfter && moveTime <= 0)
+        {
+            tween->addDoneCallback([=](oxygine::Event * pEvent)
             {
-                frames = pAnim->getColumns() - 1;
-            }
-            if (frames > pAnim->getColumns() - 1)
-            {
-                frames = pAnim->getColumns() - 1;
-            }
-            if (startFrame < 0)
-            {
-                startFrame = 0;
-            }
-            if (startFrame > pAnim->getColumns() - 1)
-            {
-                startFrame = pAnim->getColumns() - 1;
-            }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-            pSprite->addTween(tween);
-            if (deleteAfter && moveTime <= 0)
-            {
-                tween->addDoneCallback([=](oxygine::Event * pEvent)
+                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                if (pTarget.get() != nullptr)
                 {
-                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
-                    if (pTarget.get() != nullptr)
-                    {
-                        emit sigDetachChild(pTarget);
-                    }
-                });
-            }
+                    emit sigDetachChild(pTarget);
+                }
+            });
         }
-        else
-        {
-            pSprite->setResAnim(pAnim);
-        }
-        constexpr qint32 multiplier = 2;
-        qint32 finalPriority = priority * multiplier;
-        // repaint the unit?
-        if (mode == GameEnums::Recoloring_Mask)
-        {
-            QColor color = m_pUnit->getOwner()->getColor();
-            pSprite->setColor(color);
-        }
-        else if (mode == GameEnums::Recoloring_Table ||
-                 mode == GameEnums::Recoloring_Matrix)
-        {
-            bool matrixMode = mode == GameEnums::Recoloring_Matrix;
-            pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim(), matrixMode);
-        }
-        else
-        {
-            finalPriority += 1;
-        }
-        pSprite->setPriority(finalPriority);
-        pSprite->setScale(scale);
-        pSprite->setSize(pAnim->getSize());
-        pSprite->setInvertFlipX(_invertFlipX);
-        pSprite->setAlpha(alpha);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    constexpr qint32 multiplier = 2;
+    qint32 finalPriority = priority * multiplier;
+    // repaint the unit?
+    if (mode == GameEnums::Recoloring_Mask)
+    {
+        QColor color = m_pUnit->getOwner()->getColor();
+        pSprite->setColor(color);
+    }
+    else if (mode == GameEnums::Recoloring_Table ||
+             mode == GameEnums::Recoloring_Matrix)
+    {
+        bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+        pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim(), matrixMode);
+    }
+    else
+    {
+        finalPriority += 1;
+    }
+    pSprite->setPriority(finalPriority);
+    pSprite->setScale(scale);
+    pSprite->setSize(pAnim->getSize());
+    pSprite->setInvertFlipX(_invertFlipX);
+    pSprite->setAlpha(alpha);
 
-        pSprite->setAnchor(0.5f, 0.5f);
-        offset.setY(offset.y() - pAnim->getHeight() * 0.5f);
+    pSprite->setAnchor(0.5f, 0.5f);
+    offset.setY(offset.y() - pAnim->getHeight() * 0.5f);
 
-        qint32 xPos = 0;
+    qint32 xPos = 0;
+    if (isFlippedX())
+    {
+        offset.setX(offset.x() - pAnim->getWidth() * 0.5f);
+        xPos = offset.x();
+        qint32 width = pAnim->getWidth() * scale;
+        xPos = 127 - xPos - width;
+    }
+    else
+    {
+        offset.setX(offset.x() + pAnim->getWidth() * 0.5f);
+        xPos = offset.x();
+    }
+    qint32 yPos = 192 - offset.y() - pAnim->getHeight() * scale;
+    pSprite->setPosition(xPos , yPos);
+    if (moveTime > 0)
+    {
+        qint32 endX = xPos + movement.x();
         if (isFlippedX())
         {
-            offset.setX(offset.x() - pAnim->getWidth() * 0.5f);
-            xPos = offset.x();
-            qint32 width = pAnim->getWidth() * scale;
-            xPos = 127 - xPos - width;
+            endX = xPos - movement.x();
         }
-        else
+        oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+        if (deleteAfter)
         {
-            offset.setX(offset.x() + pAnim->getWidth() * 0.5f);
-            xPos = offset.x();
+            moveTween->addDoneCallback([=](oxygine::Event * pEvent)
+            {
+                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                if (pTarget.get() != nullptr)
+                {
+                    emit sigDetachChild(pTarget);
+                }
+            });
         }
-        qint32 yPos = 192 - offset.y() - pAnim->getHeight() * scale;
-        pSprite->setPosition(xPos , yPos);
-        if (moveTime > 0)
+        pSprite->addTween(moveTween);
+        if (rotation != 0)
         {
-            qint32 endX = xPos + movement.x();
             if (isFlippedX())
             {
-                endX = xPos - movement.x();
+                rotation = -rotation;
             }
-            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-            if (deleteAfter)
-            {
-                moveTween->addDoneCallback([=](oxygine::Event * pEvent)
-                {
-                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
-                    if (pTarget.get() != nullptr)
-                    {
-                        emit sigDetachChild(pTarget);
-                    }
-                });
-            }
-            pSprite->addTween(moveTween);
-            if (rotation != 0)
-            {
-                if (isFlippedX())
-                {
-                    rotation = -rotation;
-                }
-                oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-                pSprite->addTween(rotationTween);
-            }
+            oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            pSprite->addTween(rotationTween);
         }
-        if (showDelay > 0)
-        {
-            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())), 1);
-            pSprite->addTween(visibileTween);
-        }
-        m_Actor->addChild(pSprite);
-        m_lastLoadedSprite = pSprite;
+    }
+    if (showDelay > 0)
+    {
+        oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())), 1);
+        pSprite->addTween(visibileTween);
+    }
+    m_Actor->addChild(pSprite);
+    m_lastLoadedSprite = pSprite;
+}
+
+void BattleAnimationSprite::loadCoMini(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
+                                       QPoint movement, qint32 moveTime, bool deleteAfter,
+                                       qint32 loops, float scale, short priority, qint32 showDelay,
+                                       bool _invertFlipX, qint32 frameTime, qint32 frames, qint32 startFrame,
+                                       float rotation, quint8 alpha)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
+    if (pAnim != nullptr)
+    {
+        loadSpriteInternal(pAnim, mode, offset, movement, moveTime, deleteAfter,
+                           loops, scale, priority, showDelay, _invertFlipX, frameTime, frames, startFrame, rotation, alpha);
     }
     else
     {
@@ -753,7 +783,13 @@ bool BattleAnimationSprite::existResAnim(QString spriteID)
 {
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID, oxygine::ep_ignore_error);
-    return (pAnim != nullptr);
+    if (pAnim == nullptr)
+    {
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
+        return (pAnim != nullptr);
+    }
+    return true;
 }
 
 void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs, qint32 loops, bool scaleWithAnimationSpeed)

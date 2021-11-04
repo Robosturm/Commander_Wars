@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());

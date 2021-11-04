@@ -1,7 +1,6 @@
 // this is the base class for terrain
 var BUILDING =
 {
-
     // loader for stuff which needs C++ Support
     init : function (building)
     {
@@ -44,13 +43,12 @@ var BUILDING =
         // one field heigth default for most buildings
         return 1;
     },
-    // called for loading the main sprites
     loadSprites : function(building, neutral)
     {
     },
     // the terrain on which a building can be placed
     // if the current terrain isn't in the list. it'll be replaced by the first :)
-    baseTerrains : ["PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"],
+    baseTerrains : ["PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH", "WASTE"],
     getBaseTerrain : function(building)
     {
         return Global[building.getBuildingID()].baseTerrains;
@@ -238,10 +236,16 @@ var BUILDING =
     },
 
 
-    armyData = [["os", "os"],
+    armyData = [["ac", "yc"],
+                ["os", "os"],
                 ["bm", "bm"],
                 ["ge", "ge"],
-                ["yc", "yc"],],
+                ["yc", "yc"],
+                ["gs", "yc"],
+                ["ti", "ge"],
+                ["dm", "ge"],
+                ["pf", "os"],
+                ["bd", "bm"],],
 
     getTerrainAnimationBackground : function(unit, terrain)
     {
@@ -260,6 +264,11 @@ var BUILDING =
         {
             return "back_deserttown";
         }
+        else if (baseId === "WASTE")
+        {
+            return "back_wastetown";
+        }
+
         return "back_" + weatherModifier + "town+" + army + "+" + rand.toString();
     },
 
@@ -281,5 +290,11 @@ var BUILDING =
 
     onCaptured : function(building)
     {
+    },
+
+    onWeatherChanged : function(building, weather)
+    {
+        // called when the weather changes
+        // call loadWeatherOverlaySpriteV2 to load an sprite overlay
     },
 };

@@ -180,7 +180,7 @@ void CampaignMenu::slotButtonNext()
 
 void CampaignMenu::showSaveCampaign()
 {    
-    QVector<QString> wildcards;
+    QStringList wildcards;
     wildcards.append("*.camp");
     QString path = Settings::getUserPath() + "savegames";
     spFileDialog fileDialog = spFileDialog::create(path, wildcards);

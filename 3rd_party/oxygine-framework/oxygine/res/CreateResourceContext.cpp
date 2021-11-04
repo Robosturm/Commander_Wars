@@ -1,21 +1,19 @@
 #include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
-#include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/core/texture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <qvariant.h>
 
 namespace oxygine
 {
-    XmlWalker::XmlWalker(QString path, float scaleFactor, bool alpha, QDomElement xml)
+    XmlWalker::XmlWalker(const QString & path, float scaleFactor, const QDomElement & xml)
         : m_path(path),
           m_root(xml),
           m_notStarted(true),
-          m_scaleFactor(scaleFactor),
-          m_alphaHitTest(alpha)
+          m_scaleFactor(scaleFactor)
     {
     }
 
-    QString XmlWalker::getPath(QString attrName) const
+    QString XmlWalker::getPath(const QString & attrName) const
     {
         QString str = m_root.attribute(attrName);
         return m_path + str;
@@ -53,10 +51,10 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(m_path, m_scaleFactor, m_alphaHitTest, m_last);
+        return XmlWalker(m_path, m_scaleFactor, m_last);
     }
 
-    void XmlWalker::_checkSetAttributes(QDomElement node)
+    void XmlWalker::_checkSetAttributes(const QDomElement & node)
     {
         auto attr = node.attributes();
         for (qint32 i = 0; i < attr.size(); i++)
@@ -79,10 +77,6 @@ namespace oxygine
                     handleErrorPolicy(error_policy::ep_show_error, "invalid scale factor found in xml");
                     m_scaleFactor = 1.0f;
                 }
-            }
-            else if (node.nodeName() ==  "hit_test")
-            {
-                m_alphaHitTest = QVariant(node.nodeValue()).toBool();
             }
         }
     }

@@ -22,7 +22,7 @@ var Constructor = function()
         unit.setMaxRange(3);
         unit.setVision(2);
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("chaperon+mask", GameEnums.Recoloring_Matrix);

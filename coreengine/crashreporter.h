@@ -10,7 +10,7 @@ class CrashReporter
 public:
     /// Function signature for a callback after the log is written.
     /// @param log
-    using logWrittenCallback = void (*)(QString log);
+    using logWrittenCallback = void (*)(const QString & log);
     ///! Set a signal handler to capture stack trace to a log file.
     ///
     /// @param inCrashReportDirPath Path to directory to write our crash report to.

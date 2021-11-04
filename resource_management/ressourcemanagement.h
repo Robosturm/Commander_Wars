@@ -37,7 +37,7 @@ public:
      * @param id
      * @return
      */
-    qint32 getIndex(QString id);
+    qint32 getIndex(const QString & id);
     /**
      * @brief getCount
      * @return
@@ -67,7 +67,7 @@ public:
      * @param id
      * @return
      */
-    QString getName(QString id);
+    QString getName(const QString & id);
     /**
      * @brief getLoadedRessources
      * @return
@@ -152,7 +152,7 @@ QString RessourceManagement<TClass>::getID(qint32 position)
 }
 
 template<class TClass>
-qint32 RessourceManagement<TClass>::getIndex(QString id)
+qint32 RessourceManagement<TClass>::getIndex(const QString & id)
 {
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
@@ -271,7 +271,7 @@ QString RessourceManagement<TClass>::getName(qint32 position)
 }
 
 template<class TClass>
-QString RessourceManagement<TClass>::getName(QString id)
+QString RessourceManagement<TClass>::getName(const QString & id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction(id, "getName");

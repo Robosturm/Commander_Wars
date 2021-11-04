@@ -18,7 +18,7 @@ var Constructor = function()
         unit.setVision(2);
 
     };
-    // called for loading the main sprite
+    
     this.loadSprites = function(unit)
     {
         unit.loadSpriteV2("antitankcannon+mask", GameEnums.Recoloring_Matrix);

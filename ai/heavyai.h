@@ -78,6 +78,7 @@ class HeavyAi : public CoreAI
         TerrainDefense,         // 10
         ProductionOwner,        // 11
         FrontTile,              // 12
+        // add is co unit
         BasicFieldInfoMaxSize,
     };
 
@@ -390,7 +391,7 @@ private:
      * @param type
      * @param index
      */
-    void getFunctionType(QString action, FunctionType & type, qint32 & index);
+    void getFunctionType(const QString & action, FunctionType & type, qint32 & index);
     /**
      * @brief getProductionInputVector
      * @param pBuilding
@@ -505,7 +506,7 @@ private:
      * @param actions
      * @return
      */
-    bool isScoringAllowed(QString action, QStringList actions);
+    bool isScoringAllowed(const QString & action, const QStringList & actions);
     /**
      * @brief getNumberOfTargetsOnIsland
      * @param ignoreList

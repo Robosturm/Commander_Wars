@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+    
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
-        wikipage.loadImage("fire", 2);
+        wikipage.loadImage("icon_fire", 2);
         wikipage.loadText(qsTr("Destroys the current unit in a large explosion. The explosion will deal damage to all units around it."));
     };
 

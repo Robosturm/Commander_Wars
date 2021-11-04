@@ -49,6 +49,7 @@ var Constructor = function()
         {
             sprite.loadSound("recon_move.wav", 5, i * BATTLEANIMATION.defaultFrameDelay);
         }
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -72,6 +73,7 @@ var Constructor = function()
         var offset = data[0];
         sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
+        BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
     };
 
 

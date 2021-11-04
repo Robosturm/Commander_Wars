@@ -85,7 +85,7 @@ void InfluenceFrontMap::addBuildingInfluence()
     }
 }
 
-qint32 InfluenceFrontMap::getIslandFromUnitId(QString unitId, QMap<QString, qint32> & unitIdToIsland)
+qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, QMap<QString, qint32> & unitIdToIsland)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 island = -1;

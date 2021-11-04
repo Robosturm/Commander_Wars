@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    // called for loading the main sprite
+    
     this.loadSprites = function(building, neutral)
     {
         if (building.getOwnerID() >= 0 && !neutral)
@@ -43,6 +43,14 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Ground, GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Infantry];
     };
+	this.onWeatherChanged = function(building, weather)
+	{	
+		var weatherId = weather.getWeatherId();
+		if (weatherId === "WEATHER_SNOW")
+		{
+			building.loadWeatherOverlaySpriteV2("town+snow", false);
+		};
+	};
 }
 
 Constructor.prototype = BUILDING;

@@ -24,6 +24,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
         else if (currentTerrainID === "SEA")
         {
             terrain.loadBaseTerrain("SEA");

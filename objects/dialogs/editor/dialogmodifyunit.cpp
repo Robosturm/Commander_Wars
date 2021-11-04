@@ -34,8 +34,6 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -207,7 +205,7 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("Player: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    QVector<QString> items;
+    QStringList items;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -313,7 +311,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     pLabel->setHtmlText((tr("Loaded Unit ") + QString::number(index + 1) + ": "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    QVector<QString> items = {"-"};
+    QStringList items = {"-"};
     QStringList units = m_pUnit->getTransportUnits();
     for (qint32 i = 0; i < units.size(); i++)
     {

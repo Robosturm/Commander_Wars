@@ -61,9 +61,19 @@ protected:
      * @param y
      */
     void showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y);
+    /**
+     * @brief showCustomCOBoost
+     * @param pCO
+     * @param x
+     * @param y
+     * @param index
+     * @param type
+     */
+    void showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 index, bool global);
 protected:
     spCoPowermeter m_pCoPowermeter{nullptr};
 
+    oxygine::spSprite m_pCurrentCoFaction;
     oxygine::spSprite m_pCurrentCO;
 
     oxygine::spTextField m_COName;

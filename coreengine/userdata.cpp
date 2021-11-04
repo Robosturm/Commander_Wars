@@ -426,7 +426,7 @@ void Userdata::unlockAllShopItems(bool bought)
     storeUser();
 }
 
-ScriptVariableFile* Userdata::getScriptVariableFile(QString filename)
+ScriptVariableFile* Userdata::getScriptVariableFile(const QString & filename)
 {
     for (const auto & variableFile : m_scriptVariableFiles)
     {

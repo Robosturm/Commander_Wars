@@ -8,6 +8,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(RIVER.getName());
+        terrain.setHasFlowDirection(true);
     };
     this.getName = function()
     {
@@ -23,46 +24,18 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTE")
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
         }
     };
     this.loadBaseSprite = function(terrain)
-    {
-        var surroundings = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, false, GameEnums.Directions_Direct);
-        var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All);
-        //
-        if (!(surroundingsSea.includes("+N+NE") && surroundingsSea.includes("+NW")))
-        {
-            var surroundingsN = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_North);
-            if (surroundingsN === "+N")
-            {
-                surroundings = surroundings.replace("+N", "");
-            }
-        }
-
-        if (!(surroundingsSea.includes("SE+S+SW")))
-        {
-            var surroundingsS = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_South);
-            if (surroundingsS === "+S")
-            {
-                surroundings = surroundings.replace("+S", "");
-            }
-        }
-
-        if ((surroundingsSea.includes("+E") ))
-        {
-            if (!(surroundingsSea.includes("NE+E+SE")))
-            {
-                surroundings = surroundings.replace("+E", "");
-            }
-        }
-        if ((surroundingsSea.includes("+W") && !(surroundingsSea.includes("SW+W+NW"))))
-        {
-            surroundings = surroundings.replace("+W", "");
-        }
-        terrain.loadBaseSprite("river" + surroundings);
+    {        
+        terrain.loadBaseSprite("river+0+land+N+E+S+W");
     };
     this.getMiniMapIcon = function()
     {
@@ -76,22 +49,81 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return ["river",
+        return ["river+0+land+N+E+S+W",
+                "river+1+land+N+E+S+W",
+                "river+0+land+E+S+W",
+                "river+1+land+E+S+W",
+                "river+0+land+N+E+S",
+                "river+1+land+N+E+S",
+                "river+0+land+N+E+W",
+                "river+1+land+N+E+W",
+                "river+0+land+N+S+W",
+                "river+1+land+N+S+W",
+                "river+S+W+land+N+W",
+                "river+S+W+land+N+W+SE",
+                "river+E+S+land+N+E",
+                "river+E+S+land+N+E+SW",
+                "river+N+E+land+N+W",
+                "river+N+E+land+N+W+SE",
+                "river+E+S+land+S+W",
+                "river+E+S+land+S+W+NE",
+                "river+N+E+land+E+S",
+                "river+N+E+land+E+S+NW",
+                "river+N+W+land+S+W",
+                "river+N+W+land+S+W+NE",
+                "river+N+W+land+N+E",
+                "river+N+W+land+N+E+SW",
+                "river+S+W+land+E+S",
+                "river+S+W+land+E+S+NW",
+                "river+S+land+E+W",
+                "river+N+land+E+W",
+                "river+E+land+N+S",
+                "river+W+land+N+S",
+                "river+S+land+E+W+bridge",
+                "river+E+land+N+SE",
+                "river+E+land+S+NE",
+                "river+E+land+S+NE+NW",
+                "river+W+land+S+NW",
+                "river+W+land+N+SW",
+                "river+E+land+S",
+                "river+E+land+N",
                 "river+E",
-                "river+E+S",
-                "river+E+S+W",
-                "river+E+W",
+                "river+W",
                 "river+N",
-                "river+N+E",
-                "river+N+E+S",
-                "river+N+E+S+W",
-                "river+N+E+W",
-                "river+N+S",
-                "river+N+S+W",
-                "river+N+W",
                 "river+S",
-                "river+S+W",
-                "river+W"];
+                "river+N+land+W+NE+SE",
+                "river+E+S+land+N+SE+SW",
+                "river+E+S+land+N+SW",
+                "river+E+S+land+W+NE",
+                "river+E+S+land+W+NE+SE",
+                "river+E+W+land+S+NE+NW",
+                "river+N+E+land+S+NE+NW",
+                "river+N+E+land+S+NW",
+                "river+N+E+land+W+NE+SE",
+                "river+N+E+land+W+SE",
+                "river+N+land+E",
+                "river+N+land+E+NW",
+                "river+N+land+E+SW+NW",
+                "river+N+land+W+NE",
+                "river+N+W+land+E+SW",
+                "river+N+W+land+E+SW+NW",
+                "river+N+W+land+S+NE",
+                "river+N+W+land+S+NE+NW",
+                "river+S+land+E",
+                "river+S+land+E+SW",
+                "river+S+land+E+SW+NW",
+                "river+S+land+N+SE+SW",
+                "river+S+land+NE+SE+SW+NW",
+                "river+S+land+W",
+                "river+S+land+W+NE+SE",
+                "river+S+land+W+SE",
+                "river+S+W+land+E+NW",
+                "river+S+W+land+E+SW+NW",
+                "river+S+W+land+N+SE",
+                "river+S+W+land+N+SE+SW",
+                "river+W+land+N",
+                "river+W+land+S",
+                "river+W+land+S+NE+NW",];
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
@@ -103,6 +135,242 @@ var Constructor = function()
         var weatherModifier = TERRAIN.getWeatherModifier();
         var baseId = terrain.getBaseTerrainID();        
         return "back_" + weatherModifier + "river+" + rand.toString();
+    };
+    this.getFlowTiles = function()
+    {
+        return ["RIVER", "BRIDGE"];
+    };
+    this.updateFlowSprites = function(terrain, pPfs)
+    {
+        var flowData = pPfs.getFlowData();        
+        var length = flowData.size()
+        for (var i  = 0; i < length; ++i)
+        {
+            var pos = flowData.getPosition(i);
+            var currentTerrain = map.getTerrain(pos.x, pos.y);
+            if (currentTerrain.getID() === "RIVER")
+            {
+                currentTerrain.unloadSprites();
+                currentTerrain.loadBaseTerrainSprites();
+                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+            }
+        }
+        RIVER.loadSeaOverlays(pPfs, flowData);
+    };
+    this.loadSpriteFromFlowData = function(terrain, pos, flowData, index)
+    {
+        var flow = flowData.getFlowString(index);
+        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
+        if (surroundingsDirect === "+N+E+S+W" ||
+            surroundingsDirect === "+E+S+W" ||
+            surroundingsDirect === "+N+S+W" ||
+            surroundingsDirect === "+N+E+W" ||
+            surroundingsDirect === "+N+E+S")
+        {
+            var random = globals.randInt(0, 1);
+            terrain.loadBaseSprite("river+" + random.toString() + "+land" + surroundingsDirect);
+        }
+        else
+        {
+            var surroundingsDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
+            if (surroundingsDirect.includes("+N"))
+            {
+                surroundingsDiagonal = surroundingsDiagonal.replace("+NE", "").replace("+NW", "");
+            }
+            if (surroundingsDirect.includes("+S"))
+            {
+                surroundingsDiagonal = surroundingsDiagonal.replace("+SE", "").replace("+SW", "");
+            }
+            if (surroundingsDirect.includes("+E"))
+            {
+                surroundingsDiagonal = surroundingsDiagonal.replace("+SE", "").replace("+NE", "");
+            }
+            if (surroundingsDirect.includes("+W"))
+            {
+                surroundingsDiagonal = surroundingsDiagonal.replace("+SW", "").replace("+NW", "");
+            }
+            var landEnding = "";
+            if (surroundingsDirect !== "" ||
+                surroundingsDiagonal !== "")
+            {
+                landEnding = "+land" + surroundingsDirect + surroundingsDiagonal;
+            }
+            var animName = "river" + flow + landEnding;
+            if (terrain.existsResAnim(animName))
+            {
+                terrain.loadBaseSprite(animName);
+            }
+            else
+            {
+                var flowDirection = flowData.getFlowDirection(index);
+                var altFlows = flowData.getAlternateFlowString(flowDirection);
+                var length = altFlows.length;
+                var loaded = false;
+                for (var i = 0; i < length; ++i)
+                {
+                    var flowString = altFlows[i];
+                    animName = "river" + flowString + landEnding;
+                    if (terrain.existsResAnim(animName))
+                    {
+                        terrain.loadBaseSprite(animName);
+                        loaded = true;
+                        break;
+                    }
+                }
+                if (!loaded)
+                {
+                    animName = "river+S" + landEnding;
+                    if (terrain.existsResAnim(animName))
+                    {
+                        terrain.loadBaseSprite(animName);
+                    }
+                    else
+                    {
+                        var fallbackAnim = terrain.getFittingResAnim("river+", landEnding);
+                        if (fallbackAnim !== "")
+                        {
+                            terrain.loadBaseSprite(fallbackAnim);
+                        }
+                        else
+                        {
+                            // fallback so at least a river is shown
+                            terrain.loadBaseSprite("river+S+land+NE+SE+SW+NW");
+                        }
+                    }
+                }
+            }
+        }
+    };
+    this.loadSeaOverlays = function(pPfs, flowData)
+    {
+        var overlayTiles = flowData.getOverlayTiles(["SEA", "REAF"]);
+        var tileMapping = flowData.getOverlayTileMapping();
+        var length = overlayTiles.length
+        for (var i  = 0; i < length; ++i)
+        {
+            var pos = overlayTiles[i];
+            var riverTile = flowData.getPosition(tileMapping[i]);
+            var terrain = map.getTerrain(pos.x, pos.y);
+            var flowString = flowData.getFlowDirectionString(pPfs.getDirection(riverTile, pos));
+            var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
+            var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
+            if (flowString === "+S")
+            {
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
+            }
+            if (flowString === "+W")
+            {
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
+            }
+            if (flowString === "+N")
+            {
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
+            }
+            if (flowString === "+E")
+            {
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
+                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
+            }
+            var south = surroundingsLandDirect.includes("+S");
+            var east = surroundingsLandDirect.includes("+E");
+            var north = surroundingsLandDirect.includes("+N");
+            var west = surroundingsLandDirect.includes("+W");
+            for (var i2 = 1; i2 <= 4; ++i2)
+            {
+                var landname = "";
+                switch (i2)
+                {
+                case 1:
+                {
+                    if (north && west)
+                    {
+                        landname = "+land+N+W";
+                    }
+                    else if (north)
+                    {
+                        landname = "+land+N";
+                    }
+                    else if (west)
+                    {
+                        landname = "+land+W";
+                    }
+                    else if (surroundingsLandDiagonal.includes("+NW"))
+                    {
+                        landname = "+land+NW";
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (north && east)
+                    {
+                        landname = "+land+N+E";
+                    }
+                    else if (north)
+                    {
+                        landname = "+land+N";
+                    }
+                    else if (east)
+                    {
+                        landname = "+land+E";
+                    }
+                    else if (surroundingsLandDiagonal.includes("+NE"))
+                    {
+                        landname = "+land+NE";
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (south && east)
+                    {
+                        landname = "+land+E+S";
+                    }
+                    else if (south)
+                    {
+                        landname = "+land+S";
+                    }
+                    else if (east)
+                    {
+                        landname = "+land+E";
+                    }
+                    else if (surroundingsLandDiagonal.includes("+SE"))
+                    {
+                        landname = "+land+SE";
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (south && west)
+                    {
+                        landname = "+land+S+W";
+                    }
+                    else if (south)
+                    {
+                        landname = "+land+S";
+                    }
+                    else if (west)
+                    {
+                        landname = "+land+W";
+                    }
+                    else if (surroundingsLandDiagonal.includes("+SW"))
+                    {
+                        landname = "+land+SW";
+                    }
+                    break;
+                }
+                }
+                var animName = "riverend" + flowString + "+" + i2.toString() + landname;
+                if (terrain.existsResAnim(animName))
+                {
+                    terrain.loadBaseSprite(animName);
+                }
+            }
+        }
     };
 };
 Constructor.prototype = TERRAIN;

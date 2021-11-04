@@ -319,4 +319,9 @@ var UNIT =
             unit.removeUnit();
         }
     },
+
+    getFirstStrike : function(unit, posX, posY, attacker, isDefender)
+    {
+        return false;
+    },
 };

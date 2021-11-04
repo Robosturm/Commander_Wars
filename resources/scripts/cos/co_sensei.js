@@ -3,8 +3,8 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-        // e.g. co_adder has ["+alt"]
-        return ["+alt"];
+        
+        return ["+alt", "+alt2"];
     };
 
     this.init = function(co)
@@ -70,7 +70,7 @@ var Constructor = function()
                     animation.writeDataString(unitID);
                     animation.writeDataInt32(co.getOwner().getPlayerID());
                     animation.writeDataInt32(hp);
-                    animation.setEndOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
+                    animation.setStartOfAnimationCall("ANIMATION", "postAnimationSpawnUnit");
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {

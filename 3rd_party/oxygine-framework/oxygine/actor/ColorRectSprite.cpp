@@ -23,4 +23,9 @@ namespace oxygine
     {
         Actor::sizeChanged(size);
     }
+
+    bool ColorRectSprite::isOn(const Vector2& localPosition, float localScale)
+    {
+        return Actor::isOn(localPosition, localScale);
+    }
 }

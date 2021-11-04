@@ -40,7 +40,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsPlains = terrain.getSurroundings("PLAINS,WASTELAND,SEA", true, false, GameEnums.Directions_Direct, false);
+        var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
         {
             terrain.loadOverlaySprite("plains+N");
@@ -128,6 +128,12 @@ var Constructor = function()
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "ZWELD_N_S":
+        case "ZWELD_E_W":
+        case "ZSNOWWELD_N_S":
+        case "ZSNOWWELD_E_W":
+        case "ZDESERTWELD_N_S":
+        case "ZDESERTWELD_E_W":
             return "back_desertplanes+pipe";
         default:
             return "back_desertplanes";

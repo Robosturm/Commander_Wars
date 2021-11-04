@@ -42,8 +42,6 @@ Shopmenu::Shopmenu()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(Settings::getWidth(), 60);
     pButtonBox->setY(Settings::getHeight() - 60);

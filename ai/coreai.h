@@ -6,6 +6,7 @@
 #include <QRectF>
 
 #include "gameinput/basegameinputif.h"
+#include "game/gameaction.h"
 
 #include "ai/decisionquestion.h"
 #include "ai/islandmap.h"
@@ -14,8 +15,6 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
-class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class Unit;
 class CO;
 class UnitPathFindingSystem;
@@ -328,7 +327,7 @@ protected:
      * @param pTerrain
      * @return
      */
-    bool isAttackOnTerrainAllowed(Terrain* pTerrain);
+    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage);
     /**
      * @brief processPredefinedAi
      * @return
@@ -341,8 +340,8 @@ protected:
     bool processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem & pfs);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
-    void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
-    void appendCaptureTargets(QStringList actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings,  QVector<QVector3D>& targets);
+    void appendSupportTargets(const QStringList & actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
+    void appendCaptureTargets(const QStringList & actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings,  QVector<QVector3D>& targets);
     void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
     void appendRepairTargets(Unit* pUnit, spQmlVectorBuilding pBuildings, QVector<QVector3D>& targets);
     void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
@@ -463,7 +462,7 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -491,7 +490,7 @@ protected:
      * @param movementType
      * @param unitID
      */
-    void createIslandMap(QString movementType, QString unitID);
+    void createIslandMap(const QString & movementType, const QString & unitID);
     /**
      * @brief needsRefuel
      * @param pUnit
@@ -509,7 +508,7 @@ protected:
      * @param actionList
      * @return
      */
-    bool isRefuelUnit(QStringList & actionList);
+    bool isRefuelUnit(const QStringList & actionList);
     /**
      * @brief hasMissileTarget
      * @return
@@ -549,7 +548,12 @@ protected:
      * @return
      */
     bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
-
+    /**
+     * @brief isMoveableBuilding
+     * @param pBuilding
+     * @return
+     */
+    bool isMoveableTile(Building* pBuilding);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
@@ -569,6 +573,7 @@ protected:
     float m_minCoUnitCount{5};
     float m_minSameIslandDistance{2.5};
     float m_slowUnitSpeed{4};
+    float m_minTerrainDamage{20.0f};
 private:
     bool finish{false};
     struct FlareInfo
