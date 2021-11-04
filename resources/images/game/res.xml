@@ -198,10 +198,19 @@
         <image file="battlesprites/background/back_deserthq+bm.png" />
         <image file="battlesprites/background/back_deserthq+ge.png" />
         <image file="battlesprites/background/back_deserthq+os.png" />
-        <image file="battlesprites/background/back_deserthq+yc.png" />
+        <image file="battlesprites/background/back_deserthq+yc.png" />        
+        <image file="battlesprites/background/back_wastehq+.png" />
+        <image file="battlesprites/background/back_wastehq+ac.png" />
+        <image file="battlesprites/background/back_wastehq+bh.png" />
+        <image file="battlesprites/background/back_wastehq+bm.png" />
+        <image file="battlesprites/background/back_wastehq+ge.png" />
+        <image file="battlesprites/background/back_wastehq+os.png" />
+        <image file="battlesprites/background/back_wastehq+yc.png" />
         <!-- ruin -->
         <image file="battlesprites/background/back_ruin.png" />
         <image file="battlesprites/background/back_desertruin.png" />
+        <image file="battlesprites/background/back_snowruin.png" />
+        <image file="battlesprites/background/back_rainruin.png" />
         <!-- sea -->
         <image file="battlesprites/background/back_sea.png" />
         <image file="battlesprites/background/back_rainsea.png" />
@@ -238,6 +247,13 @@
         <image file="battlesprites/background/back_raintown+yc+0.png" />
         <image file="battlesprites/background/back_raintown+yc+1.png" />
         <image file="battlesprites/background/back_deserttown.png" />
+        <!-- tower -->
+        <image file="battlesprites/background/back_tower.png" />
+        <!-- tower -->
+        <image file="battlesprites/background/back_radar.png" />
+        <!-- missile -->
+        <image file="battlesprites/background/back_missile+0.png" />
+        <image file="battlesprites/background/back_missile+1.png" />
         <!-- temporary stuff -->
         <image file="battlesprites/background/back_tempairport.png" />
         <image file="battlesprites/background/back_tempharbour.png" />
@@ -292,7 +308,7 @@
         <image file="menu+bottom+mask.png" guideX1="3" guideX2="57" guideY1="1" guideY2="3"/>
         <!-- Human Player menu icons -->
         <image file="wait.png" />
-        <image file="fire.png" />
+        <image file="icon_fire.png" />
         <image file="capture.png" />
         <image file="next_player.png" />
         <image file="join.png" />
@@ -325,7 +341,7 @@
         <image file="nickname.png" />
         <image file="music.png" />
         <image file="wiki.png" />
-        <image file="statistics.png" />        
+        <image file="statistics.png" />   
         
         <!-- z information label -->
         <image file="z_information_label.png" cols = "8" />
@@ -361,10 +377,17 @@
         <image file="minimap/minimap_desert_rock.png" />
         <image file="minimap/minimap_desert_try_river.png" />
         <image file="minimap/minimap_desert_wasteland.png" />
+        <image file="minimap/minimap_desert_ruin.png" />        
         <image file="minimap/minimap_snow.png" />
         <image file="minimap/minimap_snow_forest.png" />
         <image file="minimap/minimap_snow_mountain.png" />
         <image file="minimap/minimap_snow_wasteland.png" />
+        <image file="minimap/minimap_snow_ruin.png" />
+        <image file="minimap/minimap_waste.png" />
+        <image file="minimap/minimap_waste_forest.png" />
+        <image file="minimap/minimap_waste_mountain.png" />
+        <image file="minimap/minimap_waste_wasteland.png" />
+        <image file="minimap/minimap_waste_ruin.png" />        
         <image file="minimap/minimap_teleport.png" />
         <image file="minimap/minimap_volcan.png" />
         

@@ -9,9 +9,7 @@ var Init =
     turnLimit       = 40,
     // ai's and names that will be used for training
     topAis          = 3,
-    trainingAis     =  [["normal.ini",    2],
-                        ["normal0.ini",   2],
-                        ["normal1.ini",   2],
+    trainingAis     =  [["normal1.ini",   2],
                         ["normal2.ini",   2],
                         ["normal3.ini",   2],
                         ["normal4.ini",   2],
@@ -21,6 +19,8 @@ var Init =
                         ["normal8.ini",   2],
                         ["normal9.ini",   2],
                         ["normal10.ini",  2],
+                        ["normal11.ini",  2],
+                        ["normal12.ini",  2],
     ],
     // internal data
     startAi = 0,
@@ -49,8 +49,8 @@ var Init =
     {
         GameConsole.print("Preparing next match", Init.logLevel);
         menu.selectMap(Init.trainingFolder, Init.trainingMap);
-        menu.slotButtonNext();
-        menu.slotButtonNext();
+        menu.buttonNext();
+        menu.buttonNext();
         var gameRules = map.getGameRules();
         gameRules.addVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
         var victoryRule = gameRules.getVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
@@ -169,6 +169,7 @@ var Init =
             aiNames.push(bestAis[i][0][0]);
             GameConsole.print(aiNames[i] + " with " + bestAis[i][1] + " won matches", Init.logLevel);
         }
+        var mutateCount = 0;
         for (i = 0; i < Init.trainingAis.length; ++i)
         {
             var mutate = true;
@@ -182,11 +183,12 @@ var Init =
             }
             if (mutate)
             {
-                GameConsole.print("Mutating ai: " + Init.trainingAis[i][0], Init.logLevel);
+                var ai = mutateCount % Init.topAis;
+                GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
                 var dummyAi = map.getPlayer(0).getBaseGameInput();
-                var ai = globals.randInt(0, aiNames.length - 1);
                 dummyAi.readIni(aiNames[ai]);
                 dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationRate);
+                ++mutateCount;
             }
         }
         Init.runCount = Init.runCount + 1;

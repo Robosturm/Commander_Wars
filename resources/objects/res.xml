@@ -4,7 +4,7 @@
     <atlas linearFilter="false">
         <!-- button -->
         <image file="button.png" cols = "3"         guideX1="9" guideX2="319" guideY1="6" guideY2="34"/>
-        <image file="button_square.png" cols = "3"  guideX1="2" guideX2="24"  guideY1="2" guideY2="28"/>
+        <image file="button_square.png" cols = "3"  guideX1="2" guideX2="28"  guideY1="2" guideY2="20"/>
         <image file="checkbox.png" cols = "4" />
         <!-- button icons -->
         <image file="settings.png" />
@@ -14,6 +14,8 @@
         <image file="one_step.png" />
         <image file="perk.png" />
         <image file="next_player.png" />
+        <image file="previous_unit.png" />
+        <image file="next_unit.png" />  
         <!-- editor selection -->
         <image file="arrow+right.png" cols = "3"/>
         <image file="editorselection.png"           guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
@@ -31,11 +33,11 @@
         <image file="colordialogcursor_1.png"/>
         <image file="colordialogcursor_2.png"/>
         <!-- editorselection -->
-        <image file="topbar+dropdown.png"       guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="topbar+dropdown.png"       guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <!-- textbox -->
-        <image file="textbox.png"               guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="textbox.png"               guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <!-- scrollbars -->
-        <image file="scrollbar.png"             guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="scrollbar.png"             guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <image file="h_scrollbar.png"           guideX1="2" guideX2="13"  guideY1="4" guideY2="6"/>
         <image file="h_scrollbar_active.png"    guideX1="2" guideX2="13"  guideY1="4" guideY2="6"/>
         <image file="h_scrollbar_pressed.png"   guideX1="2" guideX2="13"  guideY1="4" guideY2="6"/>
@@ -46,15 +48,15 @@
         <image file="small_arrow+right.png" cols = "3" />
         <!-- panel -->
         <image file="panel.png"                     guideX1="9" guideX2="120" guideY1="5" guideY2="125"/>
-        <image file="panel_transparent+mask.png"    guideX1="7" guideX2="125" guideY1="5" guideY2="126"/>
+        <image file="panel_transparent+mask.png"    guideX1="5" guideX2="117" guideY1="5" guideY2="124"/>
         <!-- dropdownmenu -->
-        <image file="dropdownmenu.png"      guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+        <image file="dropdownmenu.png"      guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <image file="arrow+down.png"        cols = "3" />
         <!-- dropdownmenu -->
-        <image file="filedialog.png"                guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>
+        <image file="filedialog.png"                guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <image file="codialog.png"                  guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>
         <image file="semidialog.png"                guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>
-        <image file="filedialogitems.png"           guideX1="9" guideX2="124" guideY1="5"  guideY2="125"/>
+        <image file="filedialogitems.png"           guideX1="4" guideX2="118" guideY1="4" guideY2="118"/>
         <!-- map selection -->
         <image file="mapSelectionTop.png"           guideX1="4" guideX2="295" guideY1="6"  guideY2="9"/>
         <image file="mapSelectionItem.png"          guideX1="4" guideX2="290" guideY1="1"  guideY2="18"/>
