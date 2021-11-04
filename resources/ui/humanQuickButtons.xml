@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ui>
+    <Box>
+        <x>settings.getWidth() / 2 - 136 / 2</x>
+        <y>-45</y>
+        <width>136</width>
+        <height>46</height>
+        <sprite>"panel"</sprite>
+        <childs>
+            <MoveInButton>
+                <moveInSize>42</moveInSize>
+                <y>10</y>
+                <direction>1</direction>
+                <scale>1</scale>
+                <useY>true</useY>
+            </MoveInButton>
+            <IconButton>
+                <x>10</x>
+                <y>5</y>
+                <sprite>"previous_unit"</sprite>
+                <onEvent>
+                    var input = map.getCurrentPlayer().getBaseGameInput();
+                    if (input.getAiType() === GameEnums.AiTypes_Human)
+                    {
+                        input.gotoPrevious();
+                    }
+                </onEvent>
+            </IconButton>
+            <IconButton>
+                <x>lastX + 40</x>
+                <y>5</y>
+                <sprite>"next_player"</sprite>
+                <onEvent>
+                    var input = map.getCurrentPlayer().getBaseGameInput();
+                    if (input.getAiType() === GameEnums.AiTypes_Human)
+                    {
+                        input.nextTurn();
+                    }
+                </onEvent>
+            </IconButton>
+            <IconButton>
+                <x>lastX + 40</x>
+                <y>5</y>
+                <sprite>"next_unit"</sprite>
+                <onEvent>
+                    var input = map.getCurrentPlayer().getBaseGameInput();
+                    if (input.getAiType() === GameEnums.AiTypes_Human)
+                    {
+                        input.gotoNext();
+                    }
+                </onEvent>
+            </IconButton>
+        </childs>
+    </Box>
+</ui>
