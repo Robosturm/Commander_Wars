@@ -563,7 +563,7 @@
         <image file="ti/co_carrie+face.png" cols = "3" />
         <image file="ti/co_officier_ti+face.png" cols = "3" />        
         <image file="ti/co_officier_ti+info.png" />  
-        <image file="ti/co_davis+nrm.png" />
+        <image file="ti/co_davis+nrm.png" scale_factor = "1.8" />
         <image file="ti/co_davis+face.png" cols = "3" />
         <image file="ti/co_davis+info.png" />  
         
