@@ -121,7 +121,6 @@ var TERRAIN =
             rand = variable.readDataInt32();
         }
         var foreground = TERRAIN.getFactoryForeground(terrain);
-        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
         if (foreground !== "")
         {
             return foreground;
@@ -157,6 +156,7 @@ var TERRAIN =
                 return "fore_factory+" + rand.toString();
             }
         }
+        return "";
     },
 
     getTerrainAnimationId : function(terrain)
@@ -190,8 +190,8 @@ var TERRAIN =
 
     weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",        ""]],
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
-                     ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
-                     ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],
+                     ["weather_rain",         [Qt.point(-2, 6),   "rain",    "over_rain"]],
+                     ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],],
 
     getWeatherModifier : function()
     {
