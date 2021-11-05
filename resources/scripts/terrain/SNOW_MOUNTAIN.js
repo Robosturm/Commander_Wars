@@ -39,9 +39,28 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("snow_mountain" + surroundings);
+        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
+        var x = terrain.getX();
+        var y = terrain.getY();     
+        if (typeof map !== 'undefined')
+        {
+            if (map.onMap(x, y - 1))
+            {
+                var building = map.getTerrain(x, y - 1).getBuilding();
+				if (building !== null)
+				{
+					surroundings = "";
+				}
+            }
+        }
+        if (surroundings === "")
+        {
+            terrain.loadBaseSprite("snow_mountain+short");
+        }
+        else
+        {
+            terrain.loadBaseSprite("snow_mountain");
+        }
     };
     this.getMiniMapIcon = function()
     {
@@ -67,9 +86,7 @@ var Constructor = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return ["snow_mountain.png",
-                "snow_mountain+E",
-                "snow_mountain+E+W",
-                "snow_mountain+W"];
+                "snow_mountain+short"];
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

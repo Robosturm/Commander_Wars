@@ -39,9 +39,28 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("DESERT_ROCK", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("DESERT_ROCK", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("desert_rock" + surroundings);
+        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
+        var x = terrain.getX();
+        var y = terrain.getY();     
+        if (typeof map !== 'undefined')
+        {
+            if (map.onMap(x, y - 1))
+            {
+                var building = map.getTerrain(x, y - 1).getBuilding();
+				if (building !== null)
+				{
+					surroundings = "";
+				}
+            }
+        }
+        if (surroundings === "")
+        {
+            terrain.loadBaseSprite("desert_rock+short");
+        }
+        else
+        {
+            terrain.loadBaseSprite("desert_rock");
+        }
     };
     this.getFirerangeModifier = function(terrain, unit)
     {
@@ -82,15 +101,12 @@ var Constructor = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return ["desert_rock.png",
-                "desert_rock+E",
-                "desert_rock+E+W",
-                "desert_rock+W"];
+                "desert_rock+short"];
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {
         return "";
     };
-
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         return "back_desertmountain";
