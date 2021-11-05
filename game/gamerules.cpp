@@ -29,17 +29,10 @@ GameRules::GameRules()
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
     {
-        qint32 weatherChance = 30 / (pGameRuleManager->getWeatherCount() - 1);
         for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
         {
-            if (i == 0)
-            {
-                addWeather(pGameRuleManager->getWeatherID(i), 70);
-            }
-            else
-            {
-                addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
-            }
+            QString id = pGameRuleManager->getWeatherID(i);
+            addWeather(id, pGameRuleManager->getDefaultWeatherChance(id));
         }
     }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();

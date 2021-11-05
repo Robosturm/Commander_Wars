@@ -27,3 +27,18 @@ void GameRuleManager::loadAll()
     m_loadedGameRules.sort();
 }
 
+qint32 GameRuleManager::getDefaultWeatherChance(QString weatherId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getDefaultWeatherChance";
+    QJSValueList args1;
+    QJSValue erg = pInterpreter->doFunction(weatherId, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}

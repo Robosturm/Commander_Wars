@@ -56,6 +56,11 @@ var Constructor = function()
         var mode = variable.readDataInt32();
         map.getGameRules().setFogMode(mode);
     };
+
+    this.getDefaultWeatherChance = function()
+    {
+        return 10;
+    };
 }
 
 Constructor.prototype = WEATHER;

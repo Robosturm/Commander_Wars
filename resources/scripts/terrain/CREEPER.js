@@ -35,31 +35,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_Direct, false, true);
-        var random = 0;
-        var itemCount = surroundings.split("+").length - 1;
-        if (surroundings === "")
-        {
-            random = globals.randInt(0, 1);
-        }
-        else if (itemCount === 2)
-        {
-            random = globals.randInt(0, 2);
-        }
-        else if (itemCount === 3)
-        {
-            random = globals.randInt(0, 5);
-        }
-        else if (itemCount === 4)
-        {
-            random = globals.randInt(0, 14);
-        }
-        else
-        {
-            surroundings = "";
-        }
-        random = 2;
-        terrain.loadBaseSprite("creeper+" + random.toString() + surroundings);
+        var random = globals.randInt(0, 1);
+        terrain.loadBaseSprite("creeper+" + random.toString());
     };
     this.startOfTurn = function(terrain)
     {
@@ -85,7 +62,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
+        return qsTr("A virus infested tile which deals 1HP of damage to each unit standing on it at the beginning of each day.");
     };
 
     this.getTerrainSprites = function()
