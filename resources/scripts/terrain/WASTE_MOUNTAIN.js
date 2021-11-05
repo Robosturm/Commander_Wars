@@ -20,21 +20,27 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        if (currentTerrainID === "PLAINS")
+        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
+        var x = terrain.getX();
+        var y = terrain.getY();     
+        if (typeof map !== 'undefined')
         {
-            terrain.loadBaseTerrain("PLAINS");
+            if (map.onMap(x, y - 1))
+            {
+                var building = map.getTerrain(x, y - 1).getBuilding();
+				if (building !== null)
+				{
+					surroundings = "";
+				}
+            }
         }
-        else if (currentTerrainID === "DESERT")
+		if (surroundings === "")
         {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else if (currentTerrainID === "SNOW")
-        {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseSprite("waste_rock+short");
         }
         else
         {
-            terrain.loadBaseTerrain("WASTE");
+            terrain.loadBaseSprite("waste_rock");
         }
     };
     this.loadBaseSprite = function(terrain)
@@ -67,9 +73,7 @@ var Constructor = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return ["waste_rock.png",
-                "waste_rock+E",
-                "waste_rock+E+W",
-                "waste_rock+W"];
+                "waste_rock+short"];
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

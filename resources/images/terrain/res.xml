@@ -168,12 +168,7 @@
         <image file="reaf+S+W.png" cols = "8" />
         
         <image file="mountain.png" />
-        <image file="mountain+E.png" />
-        <image file="mountain+E+W.png" />
-        <image file="mountain+W.png" />
-        <image file="mountain+N.png" />
-        <image file="mountain+N+S.png" />
-        <image file="mountain+S.png" />
+        <image file="mountain+short.png" />
         
         <image file="fog+0.png" />
         <image file="fog+1.png" />
@@ -564,10 +559,9 @@
         <image file="snow_forest+NW.png" />
 
         <image file="snow_wasteland.png" />
+		
         <image file="snow_mountain.png" />
-        <image file="snow_mountain+E.png" />
-        <image file="snow_mountain+E+W.png" />
-        <image file="snow_mountain+W.png" />
+        <image file="snow_mountain+short.png" />
         
         <image file="snow_destroyedweld+E+W.png" />
         <image file="snow_destroyedweld+N+S.png" />
@@ -621,9 +615,7 @@
         <image file="desert_wasteland.png" />
         
         <image file="desert_rock.png" />
-        <image file="desert_rock+E.png" />
-        <image file="desert_rock+E+W.png" />
-        <image file="desert_rock+W.png" />
+        <image file="desert_rock+short.png" />
 
         <image file="desert_destroyedweld+E+W.png" />
         <image file="desert_destroyedweld+N+S.png" />
@@ -714,9 +706,7 @@
         <image file="waste_wasteland+3.png" />
         
         <image file="waste_rock.png" />
-        <image file="waste_rock+E.png" />
-        <image file="waste_rock+E+W.png" />
-        <image file="waste_rock+W.png" />
+        <image file="waste_rock+short.png" />
         
         <image file="waste_ruin+0.png" />
         <image file="waste_ruin+1.png" />

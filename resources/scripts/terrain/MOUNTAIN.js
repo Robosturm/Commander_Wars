@@ -39,17 +39,27 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_North, false);
-        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_South, false);
-        if (surroundings !== "")
+        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
+        var x = terrain.getX();
+        var y = terrain.getY();     
+        if (typeof map !== 'undefined')
         {
-            terrain.loadBaseSprite("mountain" + surroundings);
+            if (map.onMap(x, y - 1))
+            {
+                var building = map.getTerrain(x, y - 1).getBuilding();
+				if (building !== null)
+				{
+					surroundings = "";
+				}
+            }
+        }
+		if (surroundings === "")
+        {
+            terrain.loadBaseSprite("mountain+short");
         }
         else
         {
-            surroundings = terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_East, false);
-            surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_West, false);
-            terrain.loadBaseSprite("mountain" + surroundings);
+            terrain.loadBaseSprite("mountain");
         }
     };
     this.getMiniMapIcon = function()
@@ -85,9 +95,7 @@ var Constructor = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return ["mountain.png",
-                "mountain+E",
-                "mountain+E+W",
-                "mountain+W"];
+                "mountain+short"];
     };
 };
 Constructor.prototype = TERRAIN;
