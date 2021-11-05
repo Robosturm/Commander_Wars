@@ -32,9 +32,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("DESERT");
         }
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -103,7 +104,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.");
+        return qsTr("Ground units move easily on this terrain, but it reduces the firepower of units by 20%");
     };
     this.getTerrainSprites = function()
     {

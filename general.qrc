@@ -629,9 +629,6 @@
         <file>resources/images/terrain/desert_pipeline+S+W.png</file>
         <file>resources/images/terrain/desert_pipeline+W.png</file>
         <file>resources/images/terrain/desert_rock.png</file>
-        <file>resources/images/terrain/desert_rock+E.png</file>
-        <file>resources/images/terrain/desert_rock+E+W.png</file>
-        <file>resources/images/terrain/desert_rock+W.png</file>
         <file>resources/images/terrain/desert_try_river.png</file>
         <file>resources/images/terrain/desert_try_river+E.png</file>
         <file>resources/images/terrain/desert_try_river+E+S.png</file>
@@ -673,9 +670,6 @@
         <file>resources/images/terrain/meteor+S+W.png</file>
         <file>resources/images/terrain/meteor+W.png</file>
         <file>resources/images/terrain/mountain.png</file>
-        <file>resources/images/terrain/mountain+E.png</file>
-        <file>resources/images/terrain/mountain+E+W.png</file>
-        <file>resources/images/terrain/mountain+W.png</file>
         <file>resources/images/terrain/pipeline+E.png</file>
         <file>resources/images/terrain/pipeline+E+S.png</file>
         <file>resources/images/terrain/pipeline+E+S+W.png</file>
@@ -791,9 +785,6 @@
         <file>resources/images/terrain/snow_forest+E+W.png</file>
         <file>resources/images/terrain/snow_forest+W.png</file>
         <file>resources/images/terrain/snow_mountain.png</file>
-        <file>resources/images/terrain/snow_mountain+E.png</file>
-        <file>resources/images/terrain/snow_mountain+E+W.png</file>
-        <file>resources/images/terrain/snow_mountain+W.png</file>
         <file>resources/images/terrain/snow_Pipeline+E.png</file>
         <file>resources/images/terrain/snow_Pipeline+E+S.png</file>
         <file>resources/images/terrain/snow_Pipeline+E+S+W.png</file>
@@ -5169,9 +5160,6 @@
         <file>resources/images/terrain/desert_ruin+0.png</file>
         <file>resources/images/terrain/desert_ruin+1.png</file>
         <file>resources/images/terrain/desert_ruin+2.png</file>
-        <file>resources/images/terrain/mountain+N+S.png</file>
-        <file>resources/images/terrain/mountain+N.png</file>
-        <file>resources/images/terrain/mountain+S.png</file>
         <file>resources/images/terrain/snow_ruin+0.png</file>
         <file>resources/images/terrain/snow_ruin+1.png</file>
         <file>resources/images/terrain/snow_ruin+2.png</file>
@@ -5191,9 +5179,6 @@
         <file>resources/images/terrain/waste_forest+E.png</file>
         <file>resources/images/terrain/waste_forest+W.png</file>
         <file>resources/images/terrain/waste_forest.png</file>
-        <file>resources/images/terrain/waste_rock+E+W.png</file>
-        <file>resources/images/terrain/waste_rock+E.png</file>
-        <file>resources/images/terrain/waste_rock+W.png</file>
         <file>resources/images/terrain/waste_rock.png</file>
         <file>resources/images/terrain/waste_ruin+0.png</file>
         <file>resources/images/terrain/waste_ruin+1.png</file>
@@ -5912,7 +5897,7 @@
         <file>resources/images/terrain/creeper+11+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+12+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+13+N+E+S+W.png</file>
-        <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>        
+        <file>resources/images/terrain/creeper+14+N+E+S+W.png</file>
         <file>resources/images/terrain/forest_style0+E+W.png</file>
         <file>resources/images/terrain/forest_style0+E.png</file>
         <file>resources/images/terrain/forest_style0+NE.png</file>
@@ -5957,5 +5942,9 @@
         <file>resources/scripts/terrain/FOREST1.js</file>
         <file>resources/scripts/terrain/FOREST2.js</file>
         <file>resources/scripts/terrain/FOREST3.js</file>
+        <file>resources/images/terrain/desert_rock+short.png</file>
+        <file>resources/images/terrain/mountain+short.png</file>
+        <file>resources/images/terrain/snow_mountain+short.png</file>
+        <file>resources/images/terrain/waste_rock+short.png</file>
     </qresource>
 </RCC>

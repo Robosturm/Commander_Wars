@@ -32,9 +32,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -56,7 +57,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Once a river. Now an empty Riverbed that can be crossed by most units doesn't provide cover. It reduces the firerange of indirect units by 1.");
+        return qsTr("Once a river. Now an empty Riverbed that can be crossed by most units doesn't provide cover. It reduces the firepower of units by 20%.");
     };
 
     this.getTerrainSprites = function()

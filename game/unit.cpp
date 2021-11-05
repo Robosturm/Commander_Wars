@@ -1611,6 +1611,21 @@ bool Unit::useTerrainDefense()
     return false;
 }
 
+bool Unit::useTerrainHide()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "useVisionHide";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (erg.isBool() && erg.toBool())
+    {
+        return true;
+    }
+    return false;
+}
+
 qint32 Unit::getAttackHpBonus(QPoint position)
 {
     qint32 bonus = 0;
@@ -2599,7 +2614,7 @@ QVector<QVector3D> Unit::getVisionFields(QPoint position)
                 bool visionHide = pTerrain->getVisionHide(m_pOwner);
                 if ((!visionHide) ||
                     ((pUnit != nullptr) && visionHide &&
-                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                     !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                 {
                     visionFields.append(QVector3D(field.x(), field.y(), false));
                 }
@@ -3164,7 +3179,7 @@ bool Unit::hasTerrainHide(Player* pPlayer)
     qint32 y = Unit::getY();
     bool visibleField = pPlayer->getFieldVisible(x, y);
     spGameMap pMap = GameMap::getInstance();
-    return (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
+    return (m_pTerrain->getVisionHide(pPlayer) && useTerrainHide() && !visibleField &&
             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off);
 }
 

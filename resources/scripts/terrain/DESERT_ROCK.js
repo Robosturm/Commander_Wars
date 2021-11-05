@@ -62,9 +62,10 @@ var Constructor = function()
             terrain.loadBaseSprite("desert_rock");
         }
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.getMiniMapIcon = function()
     {
@@ -94,7 +95,7 @@ var Constructor = function()
     {
         return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
                 "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-                "<r>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</r>";
+                "<r>" + qsTr(" It reduces the firepower of units by 20%.") + "</r>";
     };
 
     this.getTerrainSprites = function()

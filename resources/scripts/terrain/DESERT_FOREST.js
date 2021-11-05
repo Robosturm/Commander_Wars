@@ -91,10 +91,11 @@ var Constructor = function()
     this.getVisionHide = function()
     {
         return true;
-    };
-    this.getFirerangeModifier = function(terrain, unit)
+    };    
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
@@ -113,7 +114,7 @@ var Constructor = function()
     this.getDescription = function()
     {
         return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
-                "<div c='#00ff00'>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</div>";
+                "<div c='#00ff00'>" + qsTr(" It reduces the firepower of units by 20%") + "</div>";
     };
 
     this.getTerrainSprites = function()

@@ -58,7 +58,10 @@ var Constructor = function()
     {
         return false;
     };
-
+    this.useTerrainHide = function()
+    {
+        return false;
+    };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         var weatherModifier = TERRAIN.getWeatherModifier();

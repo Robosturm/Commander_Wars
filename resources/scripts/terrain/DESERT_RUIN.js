@@ -18,9 +18,10 @@ var Constructor = function()
     {
         return 1;
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
@@ -56,7 +57,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("<r>In Fog of War conditions, the ruins provide ground unit </r><div c='#00ff00'>hiding places.</div><r> It reduces the firerange of indirect units by 1.</r>");
+        return qsTr("<r>In Fog of War conditions, the ruins provide ground unit </r><div c='#00ff00'>hiding places.</div><r> It reduces the firepower of units by 20%.</r>");
     };
 
     this.getTerrainSprites = function()

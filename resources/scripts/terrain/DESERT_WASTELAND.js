@@ -17,9 +17,10 @@ var Constructor = function()
     {
         return 2;
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
@@ -50,7 +51,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firerange of indirect units by 1.");
+        return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firepower of units by 20%.");
     };
     this.getTerrainAnimationForeground = function(unit, terrain, defender)
     {

@@ -765,6 +765,11 @@ public slots:
      */
     bool useTerrainDefense();
     /**
+     * @brief useVisionHide
+     * @return
+     */
+    bool useTerrainHide();
+    /**
      * @brief getAttackHpBonus
      * @param position
      * @return

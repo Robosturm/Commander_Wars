@@ -20,21 +20,40 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
+        if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("WASTE");
+        }
+    };
+    this.loadBaseSprite = function(terrain)
+    {
         var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
         var x = terrain.getX();
-        var y = terrain.getY();     
+        var y = terrain.getY();
         if (typeof map !== 'undefined')
         {
             if (map.onMap(x, y - 1))
             {
                 var building = map.getTerrain(x, y - 1).getBuilding();
-				if (building !== null)
-				{
-					surroundings = "";
-				}
+                if (building !== null)
+                {
+                    surroundings = "";
+                }
             }
         }
-		if (surroundings === "")
+        if (surroundings === "")
         {
             terrain.loadBaseSprite("waste_rock+short");
         }
@@ -42,12 +61,6 @@ var Constructor = function()
         {
             terrain.loadBaseSprite("waste_rock");
         }
-    };
-    this.loadBaseSprite = function(terrain)
-    {
-        var surroundings = terrain.getSurroundings("WASTE_MOUNTAIN", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("WASTE_MOUNTAIN", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("waste_rock" + surroundings);
     };
     this.getMiniMapIcon = function()
     {
