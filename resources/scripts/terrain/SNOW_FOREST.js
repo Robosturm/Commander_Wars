@@ -116,7 +116,19 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 2);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         return "back_snowforest+" + rand.toString();
     };
 };

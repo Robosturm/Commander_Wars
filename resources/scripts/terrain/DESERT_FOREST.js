@@ -97,20 +97,6 @@ var Constructor = function()
     {
         return -20;
     };
-    this.getTerrainAnimationBase = function(unit, terrain)
-    {
-        return "base_desertforest";
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var rand = globals.randInt(0, 2);
-        return "back_desertforest+" + rand.toString();
-    };
-
     this.getDescription = function()
     {
         return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
@@ -137,7 +123,19 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 2);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 2);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         return "back_desertforest+" + rand.toString();
     };
 };

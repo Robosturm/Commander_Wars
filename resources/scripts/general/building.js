@@ -249,11 +249,30 @@ var BUILDING =
 
     getTerrainAnimationBackground : function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var armyVariable = variables.getVariable("ARMYBACKGROUND_ID");
+        var rand = 0;
+        var randArmy = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 1);
+            variable = variables.createVariable("BACKGROUND_ID");
+            armyVariable = variables.createVariable("ARMYBACKGROUND_ID");
+            variable.writeDataInt32(rand);
+            randArmy = globals.randInt(0, BUILDING.armyData.length - 1);
+            armyVariable.writeDataInt32(randArmy);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+            randArmy = armyVariable.readDataInt32();
+        }
         var baseId = terrain.getBaseTerrainID();
         var building = terrain.getBuilding();
-        var player = building.getOwner();        
-        var army = BUILDING.armyData[globals.randInt(0, BUILDING.armyData.length - 1)][1];
+        var player = building.getOwner();
+
+        var army = BUILDING.armyData[randArmy][1];
         if (player !== null)
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
