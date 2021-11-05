@@ -5859,8 +5859,6 @@
         <file>resources/images/terrain/creeper+1+N+E+W.png</file>
         <file>resources/images/terrain/creeper+1+N+S+W.png</file>
         <file>resources/images/terrain/creeper+1+N+W.png</file>
-        <file>resources/images/terrain/creeper+1+S+E.png</file>
-        <file>resources/images/terrain/creeper+1+S+E+W.png</file>
         <file>resources/images/terrain/creeper+1+S+W.png</file>
         <file>resources/images/terrain/creeper+2+E+S+W.png</file>
         <file>resources/images/terrain/creeper+2+N+E.png</file>
@@ -5868,28 +5866,22 @@
         <file>resources/images/terrain/creeper+2+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+2+N+E+W.png</file>
         <file>resources/images/terrain/creeper+2+N+S+W.png</file>
-        <file>resources/images/terrain/creeper+2+S+E.png</file>
         <file>resources/images/terrain/creeper+2+S+W.png</file>
         <file>resources/images/terrain/creeper+3+E+S+W.png</file>
         <file>resources/images/terrain/creeper+3+N+E+S.png</file>
         <file>resources/images/terrain/creeper+3+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+3+N+E+W.png</file>
         <file>resources/images/terrain/creeper+3+N+S+W.png</file>
-        <file>resources/images/terrain/creeper+3+N+W.png</file>
-        <file>resources/images/terrain/creeper+3+S+E.png</file>
         <file>resources/images/terrain/creeper+4+E+S+W.png</file>
         <file>resources/images/terrain/creeper+4+N+E+S.png</file>
         <file>resources/images/terrain/creeper+4+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+4+N+E+W.png</file>
         <file>resources/images/terrain/creeper+4+N+S+W.png</file>
-        <file>resources/images/terrain/creeper+4+N+W.png</file>
         <file>resources/images/terrain/creeper+5+E+S+W.png</file>
         <file>resources/images/terrain/creeper+5+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+5+N+E+W.png</file>
         <file>resources/images/terrain/creeper+5+N+S+W.png</file>
-        <file>resources/images/terrain/creeper+5+N+W.png</file>
         <file>resources/images/terrain/creeper+6+N+E+S+W.png</file>
-        <file>resources/images/terrain/creeper+6+N+E+W.png</file>
         <file>resources/images/terrain/creeper+7+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+8+N+E+S+W.png</file>
         <file>resources/images/terrain/creeper+9+N+E+S+W.png</file>
@@ -5946,5 +5938,11 @@
         <file>resources/images/terrain/mountain+short.png</file>
         <file>resources/images/terrain/snow_mountain+short.png</file>
         <file>resources/images/terrain/waste_rock+short.png</file>
+        <file>resources/images/terrain/creeper+1+E+S+W.png</file>
+        <file>resources/images/terrain/creeper+1+E+S.png</file>
+        <file>resources/images/terrain/creeper+2+E+S.png</file>
+        <file>resources/images/terrain/creeper+2+N+W.png</file>
+        <file>resources/images/terrain/creeper+5+N+E+S.png</file>
+        <file>resources/scripts/terrain/CREEPER.js</file>
     </qresource>
 </RCC>

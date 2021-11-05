@@ -27,6 +27,7 @@ var Init =
     rotationStartAi = 0,
     rotationCount = 0,
     currentMatch = [],
+    currentBattleData = [],
     matchData   = [],
     runCount    = 0,
     logLevel    = 1,
@@ -58,6 +59,13 @@ var Init =
         var selection = menu.getPlayerSelection();
         var playerCount = map.getPlayerCount();
         Init.currentMatch = [];
+        if (Init.currentBattleData.length === 0)
+        {
+            for (var i = 0; i < Init.trainingAis.length; ++i)
+            {
+                Init.currentBattleData.push(0);
+            }
+        }
         if (Init.matchData.length === 0)
         {
             for (var i = 0; i < Init.trainingAis.length; ++i)
@@ -108,16 +116,40 @@ var Init =
         {
             var winnerAi = Init.currentMatch[team];
             GameConsole.print("Winning Ai is " + Init.trainingAis[winnerAi][0], Init.logLevel);
-            Init.matchData[winnerAi] += 1;
+            Init.currentBattleData[winnerAi] += 1;
         }
         Init.rotationCount += 1;
         if (Init.rotationCount === playerCount)
         {
             Init.rotationCount = 0;
             Init.rotationStartAi += 1;
+            for (var i = 0; i < Init.currentBattleData.length; ++i)
+            {
+                if (Init.currentBattleData[i] > 0)
+                {
+                    var wonBattles = Init.currentBattleData[i];
+                    var possibleBattles = Init.currentMatch.length
+                    var score = 0;
+                    if (wonBattles === 1)
+                    {
+                        score = 1;
+                    }
+                    else if (wonBattles > wonBattles / 2)
+                    {
+                        score = (wonBattles - 1) * 3;
+                    }
+                    else
+                    {
+                        score = (wonBattles - 1) * 2;
+                    }
+                    GameConsole.print("Won " + wonBattles + " of " + possibleBattles + " possible Battles. Score=" + score, Init.logLevel);
+                    Init.matchData[i] += score;
+                }
+            }
+            Init.currentBattleData = [];
             if (Init.rotationStartAi > Init.trainingAis.length - playerCount)
             {
-                GameConsole.print("Going for next match up", Init.logLevel);
+                GameConsole.print("Going for next match up", Init.logLevel);                
                 Init.startAi += 1;
                 Init.rotationStartAi = Init.startAi;
                 if (Init.startAi > Init.trainingAis.length - playerCount)
@@ -220,4 +252,3 @@ var Init =
         Init.cos[1] = cos[index2];
     }
 }
-

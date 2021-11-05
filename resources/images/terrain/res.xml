@@ -318,6 +318,64 @@
         <image file="street+S+W.png" />
         <image file="street+W.png" />
         
+        <!-- creeper -->
+        <image file="creeper+0.png" />
+        <image file="creeper+1.png" />
+        
+        <image file="creeper+0+E+S.png" />
+        <image file="creeper+1+E+S.png" />
+        <image file="creeper+2+E+S.png" />
+        <image file="creeper+0+N+E.png" />
+        <image file="creeper+1+N+E.png" />
+        <image file="creeper+2+N+E.png" />
+        <image file="creeper+0+N+W.png" />
+        <image file="creeper+1+N+W.png" />
+        <image file="creeper+2+N+W.png" />
+        <image file="creeper+0+S+W.png" />
+        <image file="creeper+1+S+W.png" />
+        <image file="creeper+2+S+W.png" />
+        
+        <image file="creeper+0+E+S+W.png" />
+        <image file="creeper+1+E+S+W.png" />
+        <image file="creeper+2+E+S+W.png" />
+        <image file="creeper+3+E+S+W.png" />
+        <image file="creeper+4+E+S+W.png" />
+        <image file="creeper+5+E+S+W.png" />
+        <image file="creeper+0+N+E+S.png" />
+        <image file="creeper+1+N+E+S.png" />
+        <image file="creeper+2+N+E+S.png" />
+        <image file="creeper+3+N+E+S.png" />
+        <image file="creeper+4+N+E+S.png" />
+        <image file="creeper+5+N+E+S.png" />
+        <image file="creeper+0+N+E+W.png" />
+        <image file="creeper+1+N+E+W.png" />
+        <image file="creeper+2+N+E+W.png" />
+        <image file="creeper+3+N+E+W.png" />
+        <image file="creeper+4+N+E+W.png" />
+        <image file="creeper+5+N+E+W.png" />
+        <image file="creeper+0+N+S+W.png" />
+        <image file="creeper+1+N+S+W.png" />
+        <image file="creeper+2+N+S+W.png" />
+        <image file="creeper+3+N+S+W.png" />
+        <image file="creeper+4+N+S+W.png" />
+        <image file="creeper+5+N+S+W.png" />
+        
+        <image file="creeper+0+N+E+S+W.png" />
+        <image file="creeper+1+N+E+S+W.png" />
+        <image file="creeper+2+N+E+S+W.png" />
+        <image file="creeper+3+N+E+S+W.png" />
+        <image file="creeper+4+N+E+S+W.png" />
+        <image file="creeper+5+N+E+S+W.png" />
+        <image file="creeper+6+N+E+S+W.png" />
+        <image file="creeper+7+N+E+S+W.png" />
+        <image file="creeper+8+N+E+S+W.png" />
+        <image file="creeper+9+N+E+S+W.png" />
+        <image file="creeper+10+N+E+S+W.png" />
+        <image file="creeper+11+N+E+S+W.png" />
+        <image file="creeper+12+N+E+S+W.png" />
+        <image file="creeper+13+N+E+S+W.png" />
+        <image file="creeper+14+N+E+S+W.png" />
+        
         <!-- river endings -->
         <image file="river+0+land+N+E+S+W.png" cols = "8" />
         <image file="river+1+land+N+E+S+W.png" cols = "8" />
