@@ -110,6 +110,11 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getAutoSelectPlayerColors
+     * @return
+     */
+    bool getAutoSelectPlayerColors(GameMap* pMap);
 private:
     QString m_script;
     QString m_scriptFile;

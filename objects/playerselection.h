@@ -248,6 +248,10 @@ protected:
      * @return
      */
     QColor displayColorToTableColor(QColor displayColor);
+    /**
+     * @brief autoSelectPlayerColors
+     */
+    void autoSelectPlayerColors();
 private:
     // player selection
     spPanel m_pPlayerSelection;

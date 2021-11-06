@@ -594,6 +594,10 @@ var Constructor = function()
             map.getPlayer(player).setColor(PLAYER.getDefaultColor(3));
         }
     };
+    this.getAutoSelectPlayerColors = function(campaign, map)
+    {
+        return true;
+    };
 };
 
 Constructor.prototype = BASECAMPAIGN;

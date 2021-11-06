@@ -3447,154 +3447,154 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="100"/>
-        <location filename="../objects/playerselection.cpp" line="504"/>
+        <location filename="../objects/playerselection.cpp" line="502"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
-        <location filename="../objects/playerselection.cpp" line="490"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
+        <location filename="../objects/playerselection.cpp" line="488"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="342"/>
-        <location filename="../objects/playerselection.cpp" line="472"/>
-        <location filename="../objects/playerselection.cpp" line="833"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
+        <location filename="../objects/playerselection.cpp" line="470"/>
+        <location filename="../objects/playerselection.cpp" line="831"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="345"/>
+        <location filename="../objects/playerselection.cpp" line="343"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="377"/>
+        <location filename="../objects/playerselection.cpp" line="375"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="382"/>
+        <location filename="../objects/playerselection.cpp" line="380"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="390"/>
+        <location filename="../objects/playerselection.cpp" line="388"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="399"/>
+        <location filename="../objects/playerselection.cpp" line="397"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="424"/>
+        <location filename="../objects/playerselection.cpp" line="422"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="439"/>
+        <location filename="../objects/playerselection.cpp" line="437"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="454"/>
+        <location filename="../objects/playerselection.cpp" line="452"/>
         <source>Automatically changes the teams of all players so the teams are equally distributed, according to the team count.Teams are assigned in a way that the first turn advantage is the least relevant.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="492"/>
-        <location filename="../objects/playerselection.cpp" line="509"/>
-        <location filename="../objects/playerselection.cpp" line="523"/>
+        <location filename="../objects/playerselection.cpp" line="490"/>
+        <location filename="../objects/playerselection.cpp" line="507"/>
+        <location filename="../objects/playerselection.cpp" line="521"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="492"/>
+        <location filename="../objects/playerselection.cpp" line="490"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="492"/>
+        <location filename="../objects/playerselection.cpp" line="490"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="492"/>
+        <location filename="../objects/playerselection.cpp" line="490"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="492"/>
+        <location filename="../objects/playerselection.cpp" line="490"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="512"/>
-        <location filename="../objects/playerselection.cpp" line="519"/>
-        <location filename="../objects/playerselection.cpp" line="523"/>
+        <location filename="../objects/playerselection.cpp" line="510"/>
+        <location filename="../objects/playerselection.cpp" line="517"/>
+        <location filename="../objects/playerselection.cpp" line="521"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="672"/>
+        <location filename="../objects/playerselection.cpp" line="670"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="691"/>
+        <location filename="../objects/playerselection.cpp" line="689"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="778"/>
+        <location filename="../objects/playerselection.cpp" line="776"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="797"/>
+        <location filename="../objects/playerselection.cpp" line="795"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="816"/>
+        <location filename="../objects/playerselection.cpp" line="814"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="852"/>
+        <location filename="../objects/playerselection.cpp" line="850"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="890"/>
+        <location filename="../objects/playerselection.cpp" line="888"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>

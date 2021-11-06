@@ -211,6 +211,22 @@ QString Campaign::getDescription()
     }
     return "";
 }
+bool Campaign::getAutoSelectPlayerColors(GameMap* pMap)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pMap);
+    args << obj1;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAutoSelectPlayerColors", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    return false;
+}
+
 void Campaign::serializeObject(QDataStream& pStream) const
 {
     CONSOLE_PRINT("storing campaign", Console::eDEBUG);
