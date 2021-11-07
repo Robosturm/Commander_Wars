@@ -77,6 +77,7 @@ void GameScript::init()
         }
         else
         {
+            CONSOLE_PRINT("Unable to load map script " + file.fileName(), Console::eWARNING);
             m_scriptFile = "";
             m_script = "";
             m_loaded = false;

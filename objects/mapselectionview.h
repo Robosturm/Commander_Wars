@@ -63,6 +63,12 @@ public:
     }
     spMapSelection getMapSelection() const;
 
+    const QFileInfo &getCurrentMapFile() const;
+
+    spPanel getMinimapPanel() const;
+    oxygine::spActor getVictoryInfo() const;
+    oxygine::spSlidingActor getContentSlider() const;
+
 public slots:
     void loadMap(QFileInfo info, bool fast = true);
     void loadCurrentMap();

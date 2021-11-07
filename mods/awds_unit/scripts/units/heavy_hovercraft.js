@@ -17,5 +17,5 @@ HEAVY_HOVERCRAFT.init = function(unit)
 };
 HEAVY_HOVERCRAFT.getBaseCost = function()
 {
-    return 17000;
+    return 16000;
 };

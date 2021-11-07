@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 8500;
+        return 7000;
     };
     this.doWalkingAnimation = function(action)
     {

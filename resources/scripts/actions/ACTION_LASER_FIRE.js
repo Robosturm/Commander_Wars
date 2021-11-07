@@ -42,6 +42,7 @@ var Constructor = function()
 
         var animation2 = GameAnimationFactory.createAnimation(x, y);
         animation2.addSprite("laserray+center", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 2);
+        animation2.addSound("laserFire.wav");
         animation.queueAnimation(animation2);
         animation2.setEndOfAnimationCall("ACTION_LASER_FIRE", "performPostAnimation");
         var size = fields.size();

@@ -487,17 +487,17 @@
 <context>
     <name>CampaignMenu</name>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="50"/>
+        <location filename="../menue/campaignmenu.cpp" line="51"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="60"/>
+        <location filename="../menue/campaignmenu.cpp" line="61"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="69"/>
+        <location filename="../menue/campaignmenu.cpp" line="70"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1878,7 +1878,7 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameScript</name>
     <message>
-        <location filename="../game/gamescript.cpp" line="99"/>
+        <location filename="../game/gamescript.cpp" line="100"/>
         <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>

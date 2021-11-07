@@ -301,6 +301,11 @@ void AudioThread::SlotClearPlayList()
         QApplication::processEvents();
         QThread::msleep(1);
     }
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     m_player->m_nextMedia = -1;
     m_player->m_player.stop();
     while (m_player->m_player.playbackState() == QMediaPlayer::PlayingState)
@@ -308,7 +313,17 @@ void AudioThread::SlotClearPlayList()
         QApplication::processEvents();
         QThread::msleep(1);
     }
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     m_player->m_player.setSource(QUrl());
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     CONSOLE_PRINT("AudioThread::SlotClearPlayList() playlist cleared", Console::eDEBUG);
 #endif
 }

@@ -409,6 +409,26 @@ void MapSelectionView::loadMapVictoryInfo()
     }
 }
 
+oxygine::spSlidingActor MapSelectionView::getContentSlider() const
+{
+    return m_contentSlider;
+}
+
+oxygine::spActor MapSelectionView::getVictoryInfo() const
+{
+    return m_pVictoryInfo;
+}
+
+spPanel MapSelectionView::getMinimapPanel() const
+{
+    return m_MinimapPanel;
+}
+
+const QFileInfo &MapSelectionView::getCurrentMapFile() const
+{
+    return m_currentMapFile;
+}
+
 spMapSelection MapSelectionView::getMapSelection() const
 {
     return m_pMapSelection;

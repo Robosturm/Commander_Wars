@@ -17,5 +17,5 @@ HOVERCRAFT.init = function(unit)
 };
 HOVERCRAFT.getBaseCost = function()
 {
-    return 8000;
+    return 7000;
 };

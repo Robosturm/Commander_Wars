@@ -72,7 +72,7 @@ var Constructor = function()
         if (currentGroup === 0)
         {
             var valid = false;
-            var fields = globals.getCircle(1, 3);
+            var fields = globals.getCircle(1, 2);
             // check all fields we can attack
             for (var i = 0; i < fields.size(); i++)
             {

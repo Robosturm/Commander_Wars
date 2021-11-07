@@ -17,5 +17,5 @@ FLAK.init = function(unit)
 };
 FLAK.getBaseCost = function()
 {
-    return 8000;
+    return 7000;
 };

@@ -5893,5 +5893,13 @@
         <file>resources/images/terrain/snow_mountain+short.png</file>
         <file>resources/images/terrain/waste_rock+short.png</file>
         <file>resources/scripts/terrain/CREEPER.js</file>
+        <file>resources/images/game/campaignFlag.png</file>
+        <file>resources/images/game/campaignFlagAppear.png</file>
+        <file>resources/images/game/campaignFlagDone.png</file>
+        <file>resources/images/game/campaignMapDone.png</file>
+        <file>maps/commander_wars.camp/alphaLand.png</file>
+        <file>maps/commander_wars.camp/oilInTheDesert.js</file>
+        <file>maps/commander_wars.camp/oilInTheDesert.map</file>
+        <file>maps/commander_wars.jsm</file>
     </qresource>
 </RCC>

@@ -62,4 +62,12 @@ var BASECAMPAIGN =
         // if true the player colors get adjusted whenever the first co gets changed
         return false;
     },
+
+    getUsesCampaignMap : function(campaign)
+    {
+        return false;
+    },
+    getCampaignMapData : function(campaign, data)
+    {
+    }
 };

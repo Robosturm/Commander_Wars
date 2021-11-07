@@ -428,7 +428,11 @@ void Building::updateBuildingSprites(bool neutral)
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        onWeatherChanged(pMap->getGameRules()->getCurrentWeather());
+        auto* pWeather = pMap->getGameRules()->getCurrentWeather();
+        if (pWeather != nullptr)
+        {
+            onWeatherChanged(pWeather);
+        }
     }
 }
 

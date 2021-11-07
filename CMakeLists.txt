@@ -414,6 +414,7 @@ set(${PROJECT_NAME}_SRCS
 
     # terrain flow data
     game/jsData/terrainflowdata.cpp
+    game/jsData/campaignmapdata.cpp
 
     #ui
     game/ui/playerinfo.cpp
