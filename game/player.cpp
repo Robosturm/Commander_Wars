@@ -892,7 +892,7 @@ qint32 Player::calcArmyValue()
     qint32 armyValue = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        armyValue += pUnits->at(i)->getUnitValue();
+        armyValue += pUnits->at(i)->getCoUnitValue();
     }
     return armyValue;
 }
@@ -1781,7 +1781,7 @@ qint32 Player::calculatePlayerStrength()
             if (pUnit != nullptr &&
                 pUnit->getOwner() == this)
             {
-                ret += pUnit->getUnitValue();
+                ret += pUnit->getCoUnitValue();
             }
         }
     }

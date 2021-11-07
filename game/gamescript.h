@@ -59,7 +59,7 @@ public:
     /**
      * @brief actionDone call function after an action has been finished
      */
-    void actionDone(spGameAction pAction);
+    void actionDone(spGameAction & pAction);
     /**
      * @brief turnStart called on the start of each player
      * @param turn current day

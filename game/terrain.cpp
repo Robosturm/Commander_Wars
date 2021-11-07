@@ -795,7 +795,8 @@ void Terrain::setBuilding(spBuilding pBuilding)
         }
     }
     // remove current unit to avoid strange impact :)
-    setUnit(spUnit());
+    spUnit pUnit;
+    setUnit(pUnit);
 }
 
 void Terrain::removeBuilding()
@@ -849,7 +850,8 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         }
     }
     // remove current unit to avoid strange impact :)
-    setUnit(spUnit());
+    spUnit pUnit;
+    setUnit(pUnit);
 }
 
 void Terrain::loadBuilding(const QString & buildingID)
@@ -866,7 +868,7 @@ void Terrain::loadBuilding(const QString & buildingID)
     createBuildingDownStream();
 }
 
-void Terrain::setUnit(spUnit pUnit)
+void Terrain::setUnit(spUnit & pUnit)
 {
     // remove current unit on this field
     if (m_Unit.get() != nullptr)
@@ -883,7 +885,8 @@ void Terrain::setUnit(spUnit pUnit)
         Terrain* pTerrain = m_Unit->getTerrain();
         if (pTerrain != nullptr)
         {
-            pTerrain->setUnit(spUnit());
+            spUnit pUnit;
+            pTerrain->setUnit(pUnit);
         }
         // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y) + 2);

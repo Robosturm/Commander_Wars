@@ -143,7 +143,7 @@ void GameScript::gameStart()
     }
 }
 
-void GameScript::actionDone(spGameAction pAction)
+void GameScript::actionDone(spGameAction & pAction)
 {
     if (m_loaded)
     {

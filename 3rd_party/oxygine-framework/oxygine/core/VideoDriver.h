@@ -128,9 +128,9 @@ namespace oxygine
         void setScissorRect(const Rect*);
         void setDefaultSettings();
         void setViewport(const Rect& viewport);
-        void setRenderTarget(spTexture);
+        void setRenderTarget(spTexture &);
         void setShaderProgram(ShaderProgram*);
-        void setTexture(qint32 sampler, spTexture);
+        void setTexture(qint32 sampler, spTexture &);
         void setState(STATE, quint32 value);
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
         void setUniform(const char* id, const Uniform4f* v, qint32 num);

@@ -92,7 +92,7 @@ else("Release")
     else()
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
-            -DAUDIOSUPPORT
+            #-DAUDIOSUPPORT
         )
     endif()
 endif()

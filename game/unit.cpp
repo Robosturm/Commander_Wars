@@ -785,6 +785,16 @@ bool Unit::canMoveOver(qint32 x, qint32 y)
     return  false;
 }
 
+qint32 Unit::getCoUnitValue()
+{
+    qint32 value = getUnitValue();
+    if (m_UnitRank < 0)
+    {
+        value *= 1.5f;
+    }
+    return value;
+}
+
 qint32 Unit::getUnitValue()
 {
     return static_cast<qint32>(getCosts() * m_hp / Unit::MAX_UNIT_HP);
@@ -1218,7 +1228,7 @@ bool Unit::isTransporter()
     return false;
 }
 
-void Unit::postAction(spGameAction pAction)
+void Unit::postAction(spGameAction & pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postAction";
@@ -2670,7 +2680,8 @@ void Unit::removeUnit(bool killed)
     createCORange(-1);
     if (m_pTerrain != nullptr)
     {
-        m_pTerrain->setUnit(spUnit());
+        spUnit pUnit;
+        m_pTerrain->setUnit(pUnit);
     }
 }
 

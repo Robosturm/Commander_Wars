@@ -88,7 +88,7 @@ namespace oxygine
         }
     }
 
-    void UberShaderProgram::apply(VideoDriver* driver, spTexture base)
+    void UberShaderProgram::apply(VideoDriver* driver, spTexture & base)
     {
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
     }

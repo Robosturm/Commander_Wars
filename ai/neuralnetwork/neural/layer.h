@@ -49,7 +49,7 @@ public:
     QVector<double> output();
 
     void randomizeAllWeights(double abs_value);
-    void mutateAllWeights(double mutationChance, double maxWeight);
+    void mutateAllWeights(double mutationChance, double maxWeight, double mutationRate = 0.1f);
     void setAccumulated(qint32 neuron, double value);
     QString toString();
 

@@ -3,7 +3,8 @@ var Init =
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Amber Valley.map",           // map that will be used for training
-    mutationRate    = 0.1,                          // chance for a weight to mutate at random
+    mutationChance  = 0.1,                          // chance for a weight to mutate at random
+    mutationRate    = 0.2,                          // chance for a weight to mutate at random
     fogOfWar        = GameEnums.Fog_Off,            // fog of war rule for training
     maxRuns         = 4000,                         // maximum amount of iterations
     turnLimit       = 40,
@@ -219,7 +220,7 @@ var Init =
                 GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
                 var dummyAi = map.getPlayer(0).getBaseGameInput();
                 dummyAi.readIni(aiNames[ai]);
-                dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationRate);
+                dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
                 ++mutateCount;
             }
         }

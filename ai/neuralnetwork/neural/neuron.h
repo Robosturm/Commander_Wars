@@ -34,15 +34,15 @@ public:
     double output();
     void clean();
     void addAccumulated(double v);
-    void addNext(spNeuron n, bool random = true);
-    void addNext(spEdge e);
-    void addPrevious(spEdge e);
+    void addNext(spNeuron & n, bool random = true);
+    void addNext(spEdge & e);
+    void addPrevious(spEdge & e);
     qint32 getNeuronId() const;
 
     void setAccumulated(double v);
 
     void randomizeAllWeights(double abs_value);
-    void mutateAllWeights(double mutationChance, double maxWeight);
+    void mutateAllWeights(double mutationChance, double maxWeight, double mutationRate = 0.1f);
 
     QString toString();
 

@@ -92,7 +92,8 @@ namespace oxygine
         oxygine::spActor pClient = oxygine::spActor(getClient());
         if (pClient.get() != nullptr)
         {
-            pClient->removeTween(spTween(this));
+            spTween pTween(this);
+            pClient->removeTween(pTween);
         }
     }
 

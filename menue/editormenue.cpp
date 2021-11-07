@@ -1376,9 +1376,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
-
-            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(spUnit());
-
+            spUnit pUnit;
+            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
@@ -1970,7 +1969,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
+                                        spUnit pUnit;
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());

@@ -177,8 +177,8 @@ void VeryEasyAI::process()
     }
 }
 
-bool VeryEasyAI::performActionSteps(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits,
-                                    spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
+bool VeryEasyAI::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
+                                    spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings)
 {
     if (m_aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
@@ -219,7 +219,7 @@ void VeryEasyAI::finishTurn()
     CoreAI::finishTurn();
 }
 
-bool VeryEasyAI::captureBuildings(spQmlVectorUnit pUnits)
+bool VeryEasyAI::captureBuildings(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::captureBuildings()", Console::eDEBUG);
     qint32 cost = 0;
@@ -299,7 +299,7 @@ bool VeryEasyAI::captureBuildings(spQmlVectorUnit pUnits)
     return false;
 }
 
-bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit pUnits)
+bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::fireWithIndirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -318,7 +318,7 @@ bool VeryEasyAI::fireWithIndirectUnits(spQmlVectorUnit pUnits)
     return false;
 }
 
-bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit pUnits)
+bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::fireWithDirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -350,7 +350,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
         QVector<QVector3D> ret;
         QVector<QVector3D> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-        float minDamage = -pUnit->getUnitValue() / m_ownUnitDamageDivider;
+        float minDamage = -pUnit->getCoUnitValue() / m_ownUnitDamageDivider;
         if (minDamage > m_minDamage)
         {
             minDamage = m_minDamage;
@@ -388,8 +388,8 @@ bool VeryEasyAI::attack(Unit* pUnit)
     return false;
 }
 
-bool VeryEasyAI::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
-                           spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+bool VeryEasyAI::moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings,
+                           spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                            bool supportUnits )
 {
     CONSOLE_PRINT("VeryEasyAI::moveUnits()", Console::eDEBUG);
@@ -450,7 +450,7 @@ bool VeryEasyAI::moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
 }
 
 
-bool VeryEasyAI::moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
+bool VeryEasyAI::moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     CONSOLE_PRINT("VeryEasyAI::moveTransporters()", Console::eDEBUG);
     m_aiStep = AISteps::moveTransporters;
@@ -513,7 +513,7 @@ bool VeryEasyAI::moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemy
 }
 
 
-bool VeryEasyAI::loadUnits(spQmlVectorUnit pUnits)
+bool VeryEasyAI::loadUnits(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::loadUnits()", Console::eDEBUG);
     m_aiStep = AISteps::loadUnits;
@@ -544,7 +544,7 @@ bool VeryEasyAI::loadUnits(spQmlVectorUnit pUnits)
     return false;
 }
 
-bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& actions,
+bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& actions,
                           QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
 {
     CONSOLE_PRINT("VeryEasyAI::moveUnit()", Console::eDEBUG);
@@ -669,7 +669,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
     return false;
 }
 
-bool VeryEasyAI::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits)
+bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();

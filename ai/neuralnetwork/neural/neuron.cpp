@@ -103,7 +103,7 @@ void Neuron::addAccumulated(double v)
     m_accumulated += v;
 }
 
-void Neuron::addNext(spNeuron n, bool random)
+void Neuron::addNext(spNeuron & n, bool random)
 {
     if (random)
     {
@@ -116,12 +116,12 @@ void Neuron::addNext(spNeuron n, bool random)
     n->addPrevious(m_next.back());
 }
 
-void Neuron::addNext(spEdge e)
+void Neuron::addNext(spEdge & e)
 {
    m_next.push_back(e);
 }
 
-void Neuron::addPrevious(spEdge e)
+void Neuron::addPrevious(spEdge & e)
 {
     m_previous.push_back(e);
 }
@@ -145,13 +145,41 @@ void Neuron::randomizeAllWeights(double abs_value)
     }
 }
 
-void Neuron::mutateAllWeights(double mutationChance, double maxWeight)
+void Neuron::mutateAllWeights(double mutationChance, double maxWeight, double mutationRate)
 {
     for(spEdge & e : m_next)
     {
         if (GlobalUtils::randDouble(0, 1) < mutationChance)
         {
-            e->alterWeight(GlobalUtils::randDouble(-maxWeight, maxWeight));
+            float value = e->weight();
+            if (qAbs(value) <= 0.005f)
+            {
+                qint32 rand = GlobalUtils::randInt(-1, 1);
+                if (rand == 0)
+                {
+                    e->alterWeight(0.0f);
+                }
+                else if (rand > 0)
+                {
+                    e->alterWeight(0.0075f);
+                }
+                else if (rand < 0)
+                {
+                    e->alterWeight(-0.0075f);
+                }
+            }
+            else
+            {
+                qint32 rand = GlobalUtils::randInt(0, 1);
+                if (rand == 0)
+                {
+                    e->alterWeight(value + value * mutationRate);
+                }
+                else
+                {
+                    e->alterWeight(value - value * mutationRate);
+                }
+            }
         }
     }
 }

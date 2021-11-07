@@ -17,11 +17,11 @@ QString HeavyAi::getNeuralNetworkName(qint32 network)
     return "";
 }
 
-void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance)
+void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate)
 {
     if (network >= 0 && network < m_neuralNetworks.size())
     {
-        m_neuralNetworks[network]->mutateAllWeights(mutationChance);
+        m_neuralNetworks[network]->mutateAllWeights(mutationChance, mutationRate);
     }
     else
     {

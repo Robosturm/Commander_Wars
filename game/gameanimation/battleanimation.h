@@ -158,8 +158,8 @@ private:
      * @param pCO1
      * @param enemyHp
      */
-    void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
-                             oxygine::spBox9Sprite pHealthbar, float endHp, qint32 weapon, float enemyHp);
+    void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, spBattleAnimationSprite & pAttackerSprite,
+                             oxygine::spBox9Sprite & pHealthbar, float endHp, qint32 weapon, float enemyHp);
     /**
      * @brief loadDyingAnimation
      * @param pUnit1
@@ -168,7 +168,7 @@ private:
      * @param endHp
      * @param weapon
      */
-    void loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon);
+    void loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, qint32 weapon);
     /**
      * @brief nextAnimatinStep
      */
@@ -177,7 +177,7 @@ private:
      * @brief loadDyingFadeoutAnimation
      * @param pSprite
      */
-    void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
+    void loadDyingFadeoutAnimation(spBattleAnimationSprite & pSprite);
     /**
      * @brief createBattleFrame
      * @param pAtkUnit

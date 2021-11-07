@@ -9,7 +9,7 @@ namespace oxygine
     {
     public:
         explicit AnimationFrame() = default;
-        explicit AnimationFrame(spTexture t);
+        explicit AnimationFrame(spTexture & t);
         virtual ~AnimationFrame() = default;
         void init(ResAnim* rs, short column, short row, const spTexture& texture,
                    const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);

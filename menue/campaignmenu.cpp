@@ -471,9 +471,9 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 
 void CampaignMenu::slotButtonNext()
 {
+    Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = GameMap::getInstance();
-    Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     if (pMap.get() != nullptr &&
         pMap->getGameScript()->immediateStart())
     {

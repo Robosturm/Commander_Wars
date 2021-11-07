@@ -21,7 +21,7 @@ namespace oxygine
         return Input::instance.getTouchByIndex(index);
     }
 
-    void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps)
+    void Input::sendPointerButtonEvent(spStage & stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps)
     {
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
         {
@@ -57,7 +57,7 @@ namespace oxygine
         }
     }
 
-    void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps)
+    void Input::sendPointerMotionEvent(spStage & stage, float x, float y, float pressure, PointerState* ps)
     {
 
         if (!m_multiTouch && ps->getIndex() != 1 && ps != &m_pointerMouse)
@@ -71,7 +71,7 @@ namespace oxygine
         stage->handleEvent(&me);
     }
 
-    void Input::sendPointerWheelEvent(spStage stage, const Vector2& dir, PointerState* ps)
+    void Input::sendPointerWheelEvent(spStage & stage, const Vector2& dir, PointerState* ps)
     {
         TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
         te.index = ps->getIndex();

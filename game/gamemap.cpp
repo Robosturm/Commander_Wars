@@ -648,7 +648,8 @@ void GameMap::killDeadUnits()
             if (pUnit != nullptr &&
                 pUnit->getHp() <= 0)
             {
-                m_fields[y][x]->setUnit(spUnit());
+                spUnit pUnit;
+                m_fields[y][x]->setUnit(pUnit);
             }
         }
     }
@@ -1078,7 +1079,8 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
         {
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
-            pTerrainOld->setUnit(spUnit());
+            spUnit pUnitEmpty;
+            pTerrainOld->setUnit(pUnitEmpty);
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID());
 
@@ -1575,7 +1577,8 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            m_fields[y][x]->setUnit(spUnit());
+            spUnit pUnit;
+            m_fields[y][x]->setUnit(pUnit);
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();

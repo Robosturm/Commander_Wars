@@ -690,7 +690,7 @@ public slots:
      * @brief postAction
      * @param pAction
      */
-    void postAction(spGameAction pAction);
+    void postAction(spGameAction & pAction);
     /**
      * @brief getBonusOffensive
      * @param position
@@ -919,6 +919,11 @@ public slots:
      * @return
      */
     qint32 getUnitValue();
+    /**
+     * @brief getCoUnitValue
+     * @return
+     */
+    qint32 getCoUnitValue();
     /**
      * @brief canBeRepaired
      * @return
