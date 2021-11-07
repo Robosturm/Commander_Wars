@@ -11,6 +11,9 @@ var Constructor = function()
 				{
 					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
                     var isForest = 	(terrainID === "FOREST") ||
+                                    (terrainID === "FOREST1") ||
+                                    (terrainID === "FOREST2") ||
+                                    (terrainID === "FOREST3") ||
 									(terrainID === "DESERT_FOREST") ||
 									(terrainID === "SNOW_FOREST");
                     if (isForest)

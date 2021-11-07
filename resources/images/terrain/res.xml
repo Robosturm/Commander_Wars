@@ -264,28 +264,42 @@
         <image file="ruin+1.png" />
         <image file="ruin+2.png" />
         
-        <image file="forest.png" />
-        <image file="forest+N.png" />
-        <image file="forest+S.png" />
-        <image file="forest+E.png" />
-        <image file="forest+W.png" />
-        <image file="forest+N+S.png" />
-        <image file="forest+E+W.png" />        
-        <image file="forest+E+SE+S.png" />
-        <image file="forest+E+SE+S+SW+W.png" />
-        <image file="forest+N+NE+E.png" />
-        <image file="forest+N+NE+E+SE+S.png" />
-        <image file="forest+N+NE+E+SE+S+SW+W+NW.png" />        
-        <image file="forest+N+NE+E+S+SW+W.png" />        
-        <image file="forest+N+NE+E+W+NW.png" />
-        <image file="forest+N+S+SW+W+NW.png" />
-        <image file="forest+S+SW+W.png" />
-        <image file="forest+N+W+NW.png" />
-        <image file="forest+N+E+SE+S+W+NW.png" />
-        <image file="forest+N+E+SE+S+SW+W+NW.png" />
-        <image file="forest+N+NE+E+SE+S+SW+W.png" />
-        <image file="forest+N+NE+E+S+SW+W+NW.png" />        
-        <image file="forest+N+NE+E+SE+S+W+NW.png" />
+        <!-- forest -->
+        <image file="forest_style0.png" />
+        <image file="forest_style0+E.png" />
+        <image file="forest_style0+E+W.png" />
+        <image file="forest_style0+W.png" />
+        <image file="forest_style0+NE.png" />
+        <image file="forest_style0+NW.png" />
+        <image file="forest_style0+SE.png" />
+        <image file="forest_style0+SW.png" />
+        
+        <image file="forest_style1.png" />
+        <image file="forest_style1+E.png" />
+        <image file="forest_style1+E+W.png" />
+        <image file="forest_style1+W.png" />
+        <image file="forest_style1+NE.png" />
+        <image file="forest_style1+NW.png" />
+        <image file="forest_style1+SE.png" />
+        <image file="forest_style1+SW.png" />
+        
+        <image file="forest_style2.png" />
+        <image file="forest_style2+E.png" />
+        <image file="forest_style2+E+W.png" />
+        <image file="forest_style2+W.png" />
+        <image file="forest_style2+NE.png" />
+        <image file="forest_style2+NW.png" />
+        <image file="forest_style2+SE.png" />
+        <image file="forest_style2+SW.png" />
+        
+        <image file="forest_style3.png" />
+        <image file="forest_style3+E.png" />
+        <image file="forest_style3+E+W.png" />
+        <image file="forest_style3+W.png" />
+        <image file="forest_style3+NE.png" />
+        <image file="forest_style3+NW.png" />
+        <image file="forest_style3+SE.png" />
+        <image file="forest_style3+SW.png" />
         
         <image file="wasteland+0.png" />
         <image file="wasteland+1.png" />

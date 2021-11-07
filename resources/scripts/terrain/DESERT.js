@@ -111,6 +111,9 @@ var Constructor = function()
         case "ROUGH_SEA":
             return "back_desertplanes+sea";
         case "FOREST":
+        case "FOREST1":
+        case "FOREST2":
+        case "FOREST3":
         case "DESERT_FOREST":
         case "SNOW_FOREST":
             return "back_desertplanes+forest";

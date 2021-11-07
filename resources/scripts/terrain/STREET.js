@@ -111,6 +111,9 @@ var Constructor = function()
         case "ZDESERTWELD_E_W":
             return "back_" + weatherModifier + "street+pipe";
         case "FOREST":
+        case "FOREST1":
+        case "FOREST2":
+        case "FOREST3":
         case "DESERT_FOREST":
         case "SNOW_FOREST":
             return "back_" + weatherModifier + "street+forest";
