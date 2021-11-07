@@ -140,5 +140,7 @@
     <sound file="laserFire.wav"                 cachesize = "10"/>
     <sound file="meteorFall.wav"                cachesize = "2"/>
     <sound file="meteorImpact.wav"              cachesize = "2"/>
+    <sound file="minimapOpen.wav"               cachesize = "2"/>
+    <sound file="moveOut.wav"               cachesize = "2"/>
 </sounds>
 

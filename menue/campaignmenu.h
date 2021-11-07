@@ -29,6 +29,8 @@ signals:
     void sigMapSelected(qint32 index, qint32 x, qint32 y);
     void sigFlagAppeared(oxygine::Sprite* pPtrSprite, qint32 map);
     void sigEventPlayed(qint32 event);
+    void sigHideMinimap();
+    void sigShowMinimap();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -44,6 +46,8 @@ protected slots:
     void mapSelected(qint32 index, qint32 x, qint32 y);
     void flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map);
     void playNextEvent(qint32 event);
+    void hideMinimap();
+    void showMinimap();
 private:
     void autosave();
     void createMapSelection(spCampaign & campaign);
@@ -55,6 +59,7 @@ private:
     oxygine::spSingleResAnim m_campaignBackground;
     oxygine::spSprite m_pMapBackground;
     oxygine::spSlidingActor m_pSlidingActor;
+    QPoint m_currentMapFlagPosition;
     // buttons
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonSave;

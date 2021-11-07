@@ -93,7 +93,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         if (m_boxUpdating)
         {
             pEvent->stopPropagation();
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr &&
                 m_trigger.elapsed() >= 50)
             {
@@ -111,7 +111,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         {
             m_boxUpdating = false;
             pEvent->stopPropagation();
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 qint32 red = pTouchEvent->localPosition.x / (pixelSize);
@@ -173,7 +173,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         if (m_barUpdating)
         {
             pEvent->stopPropagation();
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr &&
                 m_trigger.elapsed() >= 50)
             {
@@ -190,7 +190,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         {
             m_barUpdating = false;
             pEvent->stopPropagation();
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 qint32 blue = pTouchEvent->localPosition.y / (pixelSize);

@@ -2990,22 +2990,22 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="90"/>
+        <location filename="../objects/mapselectionview.cpp" line="93"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="101"/>
+        <location filename="../objects/mapselectionview.cpp" line="104"/>
         <source>Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="112"/>
+        <location filename="../objects/mapselectionview.cpp" line="115"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="123"/>
+        <location filename="../objects/mapselectionview.cpp" line="126"/>
         <source>Description </source>
         <translation type="unfinished"></translation>
     </message>

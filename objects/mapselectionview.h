@@ -26,7 +26,7 @@ class MapSelectionView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MapSelectionView();
+    explicit MapSelectionView(qint32 mapInfoHeight = -1);
     virtual ~MapSelectionView() = default;
 
     inline MapSelection* getMapSelection()
@@ -66,8 +66,8 @@ public:
     const QFileInfo &getCurrentMapFile() const;
 
     spPanel getMinimapPanel() const;
-    oxygine::spActor getVictoryInfo() const;
-    oxygine::spSlidingActor getContentSlider() const;
+    oxygine::spBox9Sprite getBuildingBackground() const;    
+    spPanel getMapInfo() const;
 
 public slots:
     void loadMap(QFileInfo info, bool fast = true);

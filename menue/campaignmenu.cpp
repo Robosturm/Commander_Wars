@@ -98,7 +98,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create();
+    m_pMapSelectionView = spMapSelectionView::create(Settings::getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -118,7 +118,15 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     m_pMapBackground->setResAnim(m_campaignBackground.get());
     m_pMapBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* event)
     {
-        emit sigMapSelected(-1, -1, -1);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
+        if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+        {
+            emit sigMapSelected(-1, -1, -1);
+        }
+        else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+        {
+            emit sigHideMinimap();
+        }
     });
     if (m_campaignData.getMapHeight() < Settings::getHeight())
     {
@@ -201,6 +209,8 @@ void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
     connect(this, &CampaignMenu::sigMapSelected, this, &CampaignMenu::mapSelected, Qt::QueuedConnection);
     connect(this, &CampaignMenu::sigFlagAppeared, this, &CampaignMenu::flagAppeared, Qt::QueuedConnection);
     connect(this, &CampaignMenu::sigEventPlayed, this, &CampaignMenu::playNextEvent, Qt::QueuedConnection);
+    connect(this, &CampaignMenu::sigHideMinimap, this, &CampaignMenu::hideMinimap, Qt::QueuedConnection);
+    connect(this, &CampaignMenu::sigShowMinimap, this, &CampaignMenu::showMinimap, Qt::QueuedConnection);
 }
 
 void CampaignMenu::playNextEvent(qint32 event)
@@ -255,9 +265,19 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
     }
     pPtrSprite->addClickListener([=](oxygine::Event* event)
     {
-        event->stopImmediatePropagation();
-        event->stopPropagation();
-        emit sigMapSelected(map, pPtrSprite->getX(), pPtrSprite->getY());
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(event);
+        if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+        {
+            pTouchEvent->stopImmediatePropagation();
+            pTouchEvent->stopPropagation();
+            emit sigMapSelected(map, pPtrSprite->getX(), pPtrSprite->getY());
+        }
+        else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+        {
+            pTouchEvent->stopImmediatePropagation();
+            pTouchEvent->stopPropagation();
+            emit sigShowMinimap();
+        }
     });
     if (pPtrSprite->getParent() == nullptr)
     {
@@ -265,8 +285,50 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
     }
 }
 
+void CampaignMenu::showMinimap()
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        qint32 x = m_currentMapFlagPosition.x();
+        qint32 y = m_currentMapFlagPosition.y();
+        GameManager* pGameManager = GameManager::getInstance();
+        auto pMiniMapPanel = m_pMapSelectionView->getMinimapPanel();
+        if (y - pMiniMapPanel->getHeight() / 2 + m_pMapBackground->getY() > 0)
+        {
+            pMiniMapPanel->setY(y - pMiniMapPanel->getHeight() / 2);
+        }
+        else
+        {
+            pMiniMapPanel->setY(y + pGameManager->getResAnim("campaignFlag")->getHeight() + pMiniMapPanel->getHeight() / 2);
+        }
+        qint32 xPos = x - pMiniMapPanel->getScaledWidth() * 0.5f;
+        if (xPos + m_pMapBackground->getX() < 0)
+        {
+            xPos = -m_pMapBackground->getX();
+        }
+        else if (xPos + pMiniMapPanel->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+        {
+            xPos = Settings::getWidth() - pMiniMapPanel->getScaledWidth() - m_pMapBackground->getX();
+        }
+        pMiniMapPanel->setX(xPos);
+        m_pMapBackground->addChild(pMiniMapPanel);
+    }
+}
+
+void CampaignMenu::hideMinimap()
+{
+    if (m_pMapSelectionView->getMinimapPanel()->getParent() == m_pMapBackground.get())
+    {
+        Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
+        m_pMapSelectionView->getMinimapPanel()->detach();
+    }
+}
+
 void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 {
+    m_currentMapFlagPosition = QPoint(x, y);
     spGameMap pMap = GameMap::getInstance();
     QString folder = m_campaignData.getFolder();
     auto files = m_campaignData.getMapFilenames();
@@ -280,29 +342,66 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
         {
             dir = oxygine::Resource::RCC_PREFIX_PATH + folder;
         }
-    }
-    QFileInfo info(dir, file);
-    if (info != m_pMapSelectionView->getCurrentMapFile())
-    {
-        GameManager* pGameManager = GameManager::getInstance();
-        m_pMapSelectionView->loadMap(info);
-        // todo show map info
-        auto content = m_pMapSelectionView->getContentSlider();
-        qint32 contentHeight = content->getScaledHeight();
-        if (y - contentHeight > 0)
+        QFileInfo info(dir, file);
+        if (info != m_pMapSelectionView->getCurrentMapFile())
         {
-            content->setY(y - contentHeight);
+            GameManager* pGameManager = GameManager::getInstance();
+            m_pMapSelectionView->loadMap(info);
+            // todo show map info
+            auto pBuildingBackground = m_pMapSelectionView->getBuildingBackground();
+            qint32 contentHeight = pBuildingBackground->getScaledHeight();
+            if (y - contentHeight + m_pMapBackground->getY() > 0)
+            {
+                pBuildingBackground->setY(y - contentHeight);
+            }
+            else
+            {
+                pBuildingBackground->setY(y + pGameManager->getResAnim("campaignFlag")->getHeight());
+            }
+            qint32 xPos = x - pBuildingBackground->getScaledWidth() * 0.5f;
+            if (xPos + m_pMapBackground->getX() < 0)
+            {
+                xPos = -m_pMapBackground->getX();
+            }
+            else if (xPos + pBuildingBackground->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+            {
+                xPos = Settings::getWidth() - pBuildingBackground->getScaledWidth() - m_pMapBackground->getX();
+            }
+            pBuildingBackground->setX(xPos);
+            m_pMapBackground->addChild(pBuildingBackground);
+            auto pMapInfo = m_pMapSelectionView->getMapInfo();
+            if (y - contentHeight - pMapInfo->getHeight() + m_pMapBackground->getY() > 0)
+            {
+                pMapInfo->setY(y - contentHeight - pMapInfo->getHeight());
+            }
+            else
+            {
+                pMapInfo->setY(y + pGameManager->getResAnim("campaignFlag")->getHeight() + contentHeight);
+            }
+            xPos = x - pMapInfo->getScaledWidth() * 0.5f;
+            if (xPos + m_pMapBackground->getX() < 0)
+            {
+                xPos = -m_pMapBackground->getX();
+            }
+            else if (xPos + pMapInfo->getScaledWidth() + m_pMapBackground->getX() > Settings::getWidth())
+            {
+                xPos = Settings::getWidth() - pMapInfo->getScaledWidth() - m_pMapBackground->getX();
+            }
+            pMapInfo->setX(xPos);
+            m_pMapBackground->addChild(pMapInfo);
         }
         else
         {
-            content->setY(y + pGameManager->getResAnim("campaignFlag")->getHeight());
+            slotButtonNext();
         }
-        addChild(content);
     }
     else
     {
-        m_pMapSelectionView->getContentSlider()->detach();
-        slotButtonNext();
+        QFileInfo info;
+        m_pMapSelectionView->loadMap(info);
+        m_pMapSelectionView->getBuildingBackground()->detach();
+        m_pMapSelectionView->getMinimapPanel()->detach();
+        m_pMapSelectionView->getMapInfo()->detach();
     }
 }
 
@@ -374,6 +473,7 @@ void CampaignMenu::slotButtonNext()
 {
     m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = GameMap::getInstance();
+    Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     if (pMap.get() != nullptr &&
         pMap->getGameScript()->immediateStart())
     {

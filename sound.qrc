@@ -141,5 +141,7 @@
         <file>resources/sounds/laserFire.wav</file>
         <file>resources/sounds/meteorFall.wav</file>
         <file>resources/sounds/meteorImpact.wav</file>
+        <file>resources/sounds/minimapOpen.wav</file>
+        <file>resources/sounds/moveOut.wav</file>
     </qresource>
 </RCC>

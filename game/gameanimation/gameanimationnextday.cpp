@@ -119,7 +119,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         m_endTimer.start();
         addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)

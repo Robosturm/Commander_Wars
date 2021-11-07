@@ -481,7 +481,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
     m_pGraphBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             emit sigFinishCurrentGraph();

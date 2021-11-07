@@ -17,7 +17,7 @@ Minimap::Minimap()
     moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             float x = pTouchEvent->localPosition.x / IMAGE_SIZE;
