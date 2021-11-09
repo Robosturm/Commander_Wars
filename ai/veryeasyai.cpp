@@ -36,7 +36,7 @@ void VeryEasyAI::readIni(QString name)
     if (QFile::exists(name))
     {
         QSettings settings(name, QSettings::IniFormat);
-        settings.beginGroup("general");
+        settings.beginGroup("General");
         bool ok = false;
         m_ownUnitValue = settings.value("OwnUnitValue", 1.0f).toFloat(&ok);
         if(!ok)
@@ -115,10 +115,10 @@ void VeryEasyAI::readIni(QString name)
         {
             m_minSameIslandDistance = 3.0f;
         }
-        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 3).toInt(&ok);
+        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 2).toInt(&ok);
         if(!ok)
         {
-            m_slowUnitSpeed = 3;
+            m_slowUnitSpeed = 2;
         }
         settings.endGroup();
     }

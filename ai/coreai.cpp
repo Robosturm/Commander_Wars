@@ -626,11 +626,16 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
+        Terrain* pTerrain =  pUnit->getTerrain();
+        Building* pBuilding = pTerrain->getBuilding();
         // can we use the unit and does it block a production center cause it has nothing to do this turn?
+        bool isOnProduction = pBuilding != nullptr &&
+                              !m_pPlayer->isEnemy(pBuilding->getOwner()) &&
+                              pBuilding->isProductionBuilding();
+        qint32 remainingSpace = pUnit->getLoadingPlace() - pUnit->getLoadedUnitCount();
         if (!pUnit->getHasMoved() &&
-            pUnit->getTerrain()->getBuilding() != nullptr &&
-            !m_pPlayer->isEnemy(pUnit->getTerrain()->getBuilding()->getOwner()) &&
-            pUnit->getTerrain()->getBuilding()->isProductionBuilding())
+           (isOnProduction ||
+           (pTerrain->isLoadingTile() && remainingSpace == 0)))
         {
             UnitPathFindingSystem turnPfs(pUnit);
             turnPfs.explore();
@@ -638,15 +643,16 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
             QPoint target(-1 , -1);
             for (qint32 i = 0; i < points.size(); i++)
             {
-                Terrain* pTerrain = pMap->getTerrain(points[i].x(), points[i].y());
-                if (pTerrain->getUnit() == nullptr)
+                Terrain* pNewTerrain = pMap->getTerrain(points[i].x(), points[i].y());
+                if (pNewTerrain->getUnit() == nullptr &&
+                    !pNewTerrain->isLoadingTile())
                 {
-                    if (pTerrain->getBuilding() == nullptr)
+                    if (pNewTerrain->getBuilding() == nullptr)
                     {
                         target = points[i];
                         break;
                     }
-                    else if (!pTerrain->getBuilding()->isProductionBuilding())
+                    else if (!pNewTerrain->getBuilding()->isProductionBuilding())
                     {
                         target = points[i];
                         break;
@@ -882,6 +888,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnit
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     QVector<Unit*> transportUnits;
+    qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pLoadingUnit = pUnits->at(i);
@@ -903,7 +910,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnit
                 }
                 else
                 {
-                    found = hasTargets(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                    found = hasTargets(transporterMovement, pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
                                        loadingIslandIdx, loadingIsland);
                 }
                 if (!found)
@@ -959,14 +966,14 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnit
     return transportUnits;
 }
 
-bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                         qint32 loadingIslandIdx, qint32 loadingIsland)
 {
     bool found = false;
     QPoint unitPos(pLoadingUnit->Unit::getX(), pLoadingUnit->Unit::getY());
     float movementPoints = pLoadingUnit->getMovementpoints(unitPos);
     qint32 minMovementDistance = movementPoints * m_minSameIslandDistance;
-    bool fastUnit = movementPoints > m_slowUnitSpeed;
+    bool fastUnit = movementPoints * m_slowUnitSpeed > transporterMovement;
     // check if we have anything to do here :)
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
@@ -1180,7 +1187,6 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit & pE
         }
     }
 }
-
 
 void CoreAI::appendRepairTargets(Unit* pUnit, spQmlVectorBuilding & pBuildings, QVector<QVector3D>& targets)
 {

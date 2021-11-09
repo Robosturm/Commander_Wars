@@ -37,7 +37,16 @@ public:
      * @param slaveRunning
      */
     void setSlaveRunning(bool slaveRunning);
-
+    /**
+     * @brief getId
+     * @return
+     */
+    const QString & getId() const;
+    /**
+     * @brief getId
+     * @param id
+     */
+    void setId(QString & id);
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -98,6 +107,7 @@ private:
     QTimer m_timer;
     bool m_slaveRunning{false};
     NetworkGameData m_data;
+    QString m_id;
 };
 
 #endif // NETWORKGAME_H

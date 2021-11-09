@@ -5,6 +5,7 @@
 #include "multiplayer/networkcommands.h"
 
 #include "coreengine/filesupport.h"
+#include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 
@@ -134,6 +135,16 @@ void NetworkGame::setSlaveRunning(bool slaveRunning)
     m_slaveRunning = slaveRunning;
 }
 
+const QString & NetworkGame::getId() const
+{
+    return m_id;
+}
+
+void NetworkGame::setId(QString & id)
+{
+    m_id = id;
+}
+
 bool NetworkGame::getSlaveRunning() const
 {
     return m_slaveRunning;
@@ -243,7 +254,7 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     }
 }
 
-void NetworkGame::processFinished(int, QProcess::ExitStatus)
+void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
     CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
@@ -251,4 +262,6 @@ void NetworkGame::processFinished(int, QProcess::ExitStatus)
         emit sigDisconnectSocket(m_Clients[i]->getSocketID());
     }
     emit sigClose(this);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    emit pInterpreter->sigNetworkGameFinished(value, m_id);
 }

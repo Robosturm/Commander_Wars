@@ -77,7 +77,7 @@ public:
      * @brief setUnit will place the units on this terrain ignoring all rules nullptr to remove it.
      * @param pUnit
      */
-    void setUnit(spUnit & pUnit);
+    void setUnit(spUnit pUnit);
 
     /**
      * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to remove it.
@@ -308,6 +308,11 @@ public slots:
      * @return
      */
     qint32 getBonusVision(Unit* pUnit);
+    /**
+     * @brief isLoadingTile
+     * @return
+     */
+    bool isLoadingTile();
     /**
      * @brief getUnit the unit on this terrain
      * @return

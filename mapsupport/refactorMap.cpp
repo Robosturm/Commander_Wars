@@ -139,8 +139,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    spUnit pUnit;
-                    m_fields[y][0]->setUnit(pUnit);
+                    m_fields[y][0]->setUnit(spUnit());
                     m_fields[y][0]->detach();                    
                     m_fields[y].erase(m_fields[y].begin());
                 }
@@ -167,8 +166,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    spUnit pUnit;
-                    m_fields[y].back()->setUnit(pUnit);
+                    m_fields[y].back()->setUnit(spUnit());
                     m_fields[y].back()->detach();
                     m_fields[y].pop_back();
                 }
@@ -197,8 +195,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    spUnit pUnit;
-                    m_fields[0][x]->setUnit(pUnit);
+                    m_fields[0][x]->setUnit(spUnit());
                     m_fields[0][x]->detach();
                 }
                 m_fields.erase(m_fields.begin());
@@ -226,8 +223,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
-                    spUnit pUnit;
-                    m_fields.back()[x]->setUnit(pUnit);
+                    m_fields.back()[x]->setUnit(spUnit());
                     m_fields.back()[x]->detach();
                 }
                 m_fields.pop_back();
@@ -278,8 +274,7 @@ void GameMap::flipX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            spUnit pUnit;
-            currentTerrain->setUnit(pUnit);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields.at(y)[currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -319,8 +314,7 @@ void GameMap::rotateX()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            spUnit pUnit;
-            currentTerrain->setUnit(pUnit);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -360,8 +354,7 @@ void GameMap::flipY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            spUnit pUnit;
-            currentTerrain->setUnit(pUnit);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][x];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);
@@ -401,8 +394,7 @@ void GameMap::rotateY()
         {
             spTerrain currentTerrain = m_fields[y][x];
             currentTerrain->detach();
-            spUnit pUnit;
-            currentTerrain->setUnit(pUnit);
+            currentTerrain->setUnit(spUnit());
             spTerrain flipTerrain = m_fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             addChild(pTerrain);

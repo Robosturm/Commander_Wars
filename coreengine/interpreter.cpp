@@ -24,6 +24,7 @@ Interpreter::Interpreter()
 {
     setObjectName("Interpreter");
     setCppOwnerShip(this);
+    connect(this, &Interpreter::sigNetworkGameFinished, this, &Interpreter::networkGameFinished, Qt::QueuedConnection);
 }
 
 void Interpreter::reloadInterpreter(const QString & runtime)
@@ -362,4 +363,17 @@ bool Interpreter::exists(const QString & object)
         return true;
     }
     return false;
+}
+
+void Interpreter::networkGameFinished(qint32 value, QString id)
+{
+    QString obj = "Init";
+    QString func = "onRemoteGameFinished";
+    if (exists(obj, func))
+    {
+        QJSValueList args;
+        args << value;
+        args << id;
+        doFunction(obj, func, args);
+    }
 }

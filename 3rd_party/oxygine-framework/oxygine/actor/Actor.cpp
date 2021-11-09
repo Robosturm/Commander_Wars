@@ -961,7 +961,7 @@ namespace oxygine
         return RectF(Point(0.0f, 0.0f), getSize());
     }
 
-    spTween Actor::__addTween(spTween & tween, bool)
+    spTween Actor::__addTween(spTween tween, bool)
     {
         if (tween.get() == nullptr)
         {

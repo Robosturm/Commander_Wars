@@ -8,6 +8,8 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
+#include "game/gamemap.h"
+
 #include "multiplayer/networkcommands.h"
 
 spMainServer MainServer::m_pInstance;
@@ -36,9 +38,15 @@ MainServer::MainServer()
     m_updateTimer.start(5000);
     moveToThread(Mainapp::getGameServerThread());
     m_pGameServer = spTCPServer::create();
+
+    QString javascriptName = "mainServer";
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->setGlobal(javascriptName, pInterpreter->newQObject(this));
+
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     connect(this, &MainServer::sigRemoveGame, this, &MainServer::removeGame, Qt::QueuedConnection);
+    connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::startRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
 }
@@ -102,7 +110,21 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     }
 }
 
-void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data)
+void MainServer::startRemoteGame(const QString & initScript, const QString & id)
+{
+    emit sigStartRemoteGame(initScript, id);
+}
+
+void MainServer::slotStartRemoteGame(QString initScript, QString id)
+{
+    QByteArray sendData;
+    QDataStream stream(&sendData, QIODevice::WriteOnly);
+    Filesupport::writeVectorList(stream, Settings::getMods());
+    QDataStream readStream(&sendData, QIODevice::ReadOnly);
+    spawnSlaveGame(readStream, 0, sendData, initScript);
+}
+
+void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString initScript, QString id)
 {
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
@@ -119,9 +141,11 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         args << "-slave";
         args << "-slaveServer";
         args << slaveName;
-        args << "-noui"; // comment out for debugging
+        // args << "-noui"; // comment out for debugging
         args << "-mods";
         args << Settings::getModConfigString(mods);
+        args << "-initScript";
+        args << initScript;
         QString markername = "temp/" + slaveName + ".marker";
         if (QFile::exists(markername))
         {
@@ -137,6 +161,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         connect(&m_games[pos]->game, &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
         m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
         m_games[pos]->process->start(program, args);
+        m_games[pos]->game.setId(id);
     }
     else
     {

@@ -122,7 +122,16 @@ void WorkerThread::start()
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
 
-    if (QFile::exists("init.js"))
+    if (pApp->getSlave())
+    {
+        QString script = pApp->getInitScript();
+        if (!script.isEmpty())
+        {
+            CONSOLE_PRINT("Config script is present and will be loaded", Console::eDEBUG);
+            pInterpreter->evaluate(script, "config");
+        }
+    }
+    else if (QFile::exists("init.js"))
     {
         CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
         pInterpreter->openScript("init.js", true);

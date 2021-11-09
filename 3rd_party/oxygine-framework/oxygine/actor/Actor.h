@@ -381,7 +381,7 @@ namespace oxygine
         }
         void __setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
-        spTween __addTween(spTween & tween, bool rel);
+        spTween __addTween(spTween tween, bool rel);
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         bool onScreen(RenderState& rs);
         void completeRender(const RenderState& rs);

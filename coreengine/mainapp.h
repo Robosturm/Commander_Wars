@@ -143,6 +143,11 @@ public:
     {
         return m_pLineEdit;
     }
+    /**
+     * @brief getInitScript
+     * @return
+     */
+    const QString &getInitScript() const;
 
 public slots:
     void changeScreenMode(qint32 mode);
@@ -218,6 +223,7 @@ private:
     static AudioThread* m_Audiothread;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
+    QString m_initScript;
 };
 
 #endif // MAINAPP_H

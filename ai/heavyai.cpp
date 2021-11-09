@@ -44,26 +44,26 @@ HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 
     m_iniData = { // General
-                  {"MinActionScore", "general", &m_minActionScore, 0.2f, 0.0f, 1.0f},
-                  {"ActionScoreVariant", "general", &m_actionScoreVariant, 0.05f, 0.01f, 0.5f},
-                  {"StealthDistanceMultiplier", "general", &m_stealthDistanceMultiplier, 2.0f, 1.0f, 10.0f},
-                  {"AlliedDistanceModifier", "general", &m_alliedDistanceModifier, 5.0f, 1.0f, 10.0f},
-                  {"MaxMovementpoints", "general", &m_maxMovementpoints, 20.0f, 20.0f, 20.0f},
-                  {"MaxProductionTurnRange", "general", &m_maxProductionTurnRange, 4.0f, 1.0f, 10.0f},
-                  {"MaxFirerange", "general", &m_maxFirerange, 10.0f, 10.0f, 10.0f},
-                  {"PrimaryEnemyMultiplier", "general", &m_primaryEnemyMultiplier, 1.2f, 1.0f, 10.0f},
-                  {"MaxLoadingPlace", "general", &m_maxLoadingPlace, 4.0f, 1.0f, 10.0f},
-                  {"NotAttackableDamage", "general", &m_notAttackableDamage, 30.0f, 1.0f, 45.0f},
-                  {"OwnUnitProtection", "general", &m_notAttackableDamage, 5.0f, 1.0f, 10.0f},
-                  {"EnemyUnitThread", "general", &m_notAttackableDamage, 5.0f, 1.0f, 10.0f},
-                  {"MaxVision", "general", &m_notAttackableDamage, 10.0f, 10.0f, 10.0f},
-                  {"MaxUnitValue", "general", &m_maxUnitValue, 40000.0f, 40000.0f, 40000.0f},
-                  {"MaxScore", "general", &m_maxScore, 10.0f, 10.0f, 10.0f},
-                  {"MaxTerrainDefense", "general", &m_maxTerrainDefense, 15.0f, 15.0f, 15.0f},
-                  {"MaxCapturePoints", "general", &m_maxCapturePoints, 20.0f, 20.0f, 20.0f},
-                  {"MinSameIslandDistance", "general", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
-                  {"SlowUnitSpeed", "general", &m_slowUnitSpeed, 4.0f, 4.0f, 4.0f},
-                  {"UsedCapturePointIncrease", "general", &m_usedCapturePointIncrease, 1.5f, 1.5f, 1.5f},
+                  {"MinActionScore", "General", &m_minActionScore, 0.2f, 0.0f, 1.0f},
+                  {"ActionScoreVariant", "General", &m_actionScoreVariant, 0.05f, 0.01f, 0.5f},
+                  {"StealthDistanceMultiplier", "General", &m_stealthDistanceMultiplier, 2.0f, 1.0f, 10.0f},
+                  {"AlliedDistanceModifier", "General", &m_alliedDistanceModifier, 5.0f, 1.0f, 10.0f},
+                  {"MaxMovementpoints", "General", &m_maxMovementpoints, 20.0f, 20.0f, 20.0f},
+                  {"MaxProductionTurnRange", "General", &m_maxProductionTurnRange, 4.0f, 1.0f, 10.0f},
+                  {"MaxFirerange", "General", &m_maxFirerange, 10.0f, 10.0f, 10.0f},
+                  {"PrimaryEnemyMultiplier", "General", &m_primaryEnemyMultiplier, 1.2f, 1.0f, 10.0f},
+                  {"MaxLoadingPlace", "General", &m_maxLoadingPlace, 4.0f, 1.0f, 10.0f},
+                  {"NotAttackableDamage", "General", &m_notAttackableDamage, 30.0f, 1.0f, 45.0f},
+                  {"OwnUnitProtection", "General", &m_notAttackableDamage, 5.0f, 1.0f, 10.0f},
+                  {"EnemyUnitThread", "General", &m_notAttackableDamage, 5.0f, 1.0f, 10.0f},
+                  {"MaxVision", "General", &m_notAttackableDamage, 10.0f, 10.0f, 10.0f},
+                  {"MaxUnitValue", "General", &m_maxUnitValue, 40000.0f, 40000.0f, 40000.0f},
+                  {"MaxScore", "General", &m_maxScore, 10.0f, 10.0f, 10.0f},
+                  {"MaxTerrainDefense", "General", &m_maxTerrainDefense, 15.0f, 15.0f, 15.0f},
+                  {"MaxCapturePoints", "General", &m_maxCapturePoints, 20.0f, 20.0f, 20.0f},
+                  {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
+                  {"UsedCapturePointIncrease", "General", &m_usedCapturePointIncrease, 1.5f, 1.5f, 1.5f},
                 };
 
     loadIni("heavy/" + m_aiName.toLower() + ".ini");
@@ -158,7 +158,7 @@ void HeavyAi::readIni(QString name)
                 settings.beginGroup(entry.m_group);
                 lastGroup = entry.m_group;
             }
-            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toFloat(&ok);
+            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
             if (!ok)
             {
                 *entry.m_value = entry.m_defaultValue;

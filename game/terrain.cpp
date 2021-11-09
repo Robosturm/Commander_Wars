@@ -795,8 +795,7 @@ void Terrain::setBuilding(spBuilding pBuilding)
         }
     }
     // remove current unit to avoid strange impact :)
-    spUnit pUnit;
-    setUnit(pUnit);
+    setUnit(spUnit());
 }
 
 void Terrain::removeBuilding()
@@ -850,8 +849,7 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         }
     }
     // remove current unit to avoid strange impact :)
-    spUnit pUnit;
-    setUnit(pUnit);
+    setUnit(spUnit());
 }
 
 void Terrain::loadBuilding(const QString & buildingID)
@@ -868,7 +866,7 @@ void Terrain::loadBuilding(const QString & buildingID)
     createBuildingDownStream();
 }
 
-void Terrain::setUnit(spUnit & pUnit)
+void Terrain::setUnit(spUnit pUnit)
 {
     // remove current unit on this field
     if (m_Unit.get() != nullptr)
@@ -885,8 +883,7 @@ void Terrain::setUnit(spUnit & pUnit)
         Terrain* pTerrain = m_Unit->getTerrain();
         if (pTerrain != nullptr)
         {
-            spUnit pUnit;
-            pTerrain->setUnit(pUnit);
+            pTerrain->setUnit(spUnit());
         }
         // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y) + 2);
@@ -1131,6 +1128,24 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     else
     {
         return 0;
+    }
+}
+
+bool Terrain::isLoadingTile()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "isLoadingTile";
+    QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
     }
 }
 

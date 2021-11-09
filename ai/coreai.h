@@ -354,13 +354,14 @@ protected:
                                         bool all = false);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
+     * @param transporterMovement movement points of the transporting unit
      * @param pLoadingUnit
      * @param canCapture
      * @param pEnemyUnits
      * @param pEnemyBuildings
      * @return
      */
-    bool hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+    bool hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                     qint32 loadingIslandIdx, qint32 loadingIsland);
     /**
      * @brief hasCaptureTarget
@@ -572,7 +573,7 @@ protected:
     double m_coUnitScoreMultiplier{1.1f};
     double m_minCoUnitCount{5};
     double m_minSameIslandDistance{2.5};
-    double m_slowUnitSpeed{4};
+    double m_slowUnitSpeed{2};
     double m_minTerrainDamage{20.0f};
 private:
     bool finish{false};

@@ -193,6 +193,11 @@ var Constructor = function()
         return qsTr("Beachs over great landing places for landing ground troops.");
     };
 
+    this.isLoadingTile =  function(terrain)
+    {
+        return true;
+    };
+
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain

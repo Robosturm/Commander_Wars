@@ -140,7 +140,6 @@ bool GameMap::getIsHumanMatch() const
 
 void GameMap::registerMapAtInterpreter()
 {
-
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
@@ -648,8 +647,7 @@ void GameMap::killDeadUnits()
             if (pUnit != nullptr &&
                 pUnit->getHp() <= 0)
             {
-                spUnit pUnit;
-                m_fields[y][x]->setUnit(pUnit);
+                m_fields[y][x]->setUnit(spUnit());
             }
         }
     }
@@ -1079,8 +1077,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
         {
             pTerrainOld->removeBuilding();
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
-            spUnit pUnitEmpty;
-            pTerrainOld->setUnit(pUnitEmpty);
+            pTerrainOld->setUnit(spUnit());
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID());
 
@@ -1577,8 +1574,7 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            spUnit pUnit;
-            m_fields[y][x]->setUnit(pUnit);
+            m_fields[y][x]->setUnit(spUnit());
             m_fields[y][x]->detach();
         }
         m_fields[y].clear();

@@ -360,4 +360,9 @@ var TERRAIN =
     updateFlowSprites : function(terrain, pPfs)
     {
     },
+    isLoadingTile :  function(terrain)
+    {
+        // hint for the ai to try to move away if it can't do anything with a unit
+        return false;
+    },
 };

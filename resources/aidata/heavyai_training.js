@@ -89,6 +89,7 @@ var Init =
             selection.selectPlayerAi(playerIdx, Init.trainingAis[aiIdx][1]);
             GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
             Init.currentMatch.push(aiIdx);
+
             selection.playerCO1Changed(Init.cos[0], i);
             selection.playerCO2Changed(Init.cos[1], i);
         }

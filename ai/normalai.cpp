@@ -28,19 +28,19 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     m_iniData = { // General
-                  {"MinMovementDamage", "general", &m_minMovementDamage, 0.3f, 0.0f, 1.0f},
-                  {"MinAttackFunds", "general", &m_minAttackFunds, 0.0f, -1.0f, 1.0f},
-                  {"MinSuicideDamage", "general", &m_minSuicideDamage, 0.75f, -1.0f, 1.0f},
-                  {"SpamingFunds", "general", &m_spamingFunds, 7500.0f, 5000.0f, 10000.0f},
-                  {"OwnUnitValue", "general", &m_ownUnitValue, 2.0f, -10.0f, 10.0f},
-                  {"BuildingValue", "general", &m_buildingValue, 1.0f, 1.0f, 1.0f},
-                  {"NotAttackableDamage", "general", &m_notAttackableDamage, 25.0f, 0.0f, 40.0f},
-                  {"MidDamage", "general", &m_midDamage, 55.0f, 40.0f, 60.0f},
-                  {"HighDamage", "general", &m_highDamage, 75.0f, 60.0f, 100.0f},
-                  {"DirectIndirectRatio", "general", &m_directIndirectRatio, 5.0f, 0.2f, 10.0f},
-                  {"MinSiloDamage", "general", &m_minSiloDamage, 7000.0f, 7000.0f, 7000.0f},
-                  {"MinSameIslandDistance", "general", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
-                  {"SlowUnitSpeed", "general", &m_slowUnitSpeed, 3.0f, 3.0f, 3.0f},
+                  {"MinMovementDamage", "General", &m_minMovementDamage, 0.3f, 0.0f, 1.0f},
+                  {"MinAttackFunds", "General", &m_minAttackFunds, 0.0f, -1.0f, 1.0f},
+                  {"MinSuicideDamage", "General", &m_minSuicideDamage, 0.75f, -1.0f, 1.0f},
+                  {"SpamingFunds", "General", &m_spamingFunds, 7500.0f, 5000.0f, 10000.0f},
+                  {"OwnUnitValue", "General", &m_ownUnitValue, 2.0f, -10.0f, 10.0f},
+                  {"BuildingValue", "General", &m_buildingValue, 1.0f, 1.0f, 1.0f},
+                  {"NotAttackableDamage", "General", &m_notAttackableDamage, 25.0f, 0.0f, 40.0f},
+                  {"MidDamage", "General", &m_midDamage, 55.0f, 40.0f, 60.0f},
+                  {"HighDamage", "General", &m_highDamage, 75.0f, 60.0f, 100.0f},
+                  {"DirectIndirectRatio", "General", &m_directIndirectRatio, 5.0f, 0.2f, 10.0f},
+                  {"MinSiloDamage", "General", &m_minSiloDamage, 7000.0f, 7000.0f, 7000.0f},
+                  {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   // CO Unit
                   {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 10000.0f},
                   {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
@@ -133,8 +133,6 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"TargetPriceDifference", "Production", &m_targetPriceDifference, 0.35f, 0.0f, 1.0f},
                   {"HighDamageMultiplier", "Production", &m_highDamageMultiplier, 4.0f, 0.0f, 20.0f},};
     loadIni( "normal/" + configurationFile);
-    setUnitBuildValue("RECON",         0.6f);
-    setUnitBuildValue("FLARE",         0.6f);
 }
 
 void NormalAi::readIni(QString name)
@@ -156,7 +154,7 @@ void NormalAi::readIni(QString name)
                 settings.beginGroup(entry.m_group);
                 lastGroup = entry.m_group;
             }
-            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toFloat(&ok);
+            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
             if (!ok)
             {
                 *entry.m_value = entry.m_defaultValue;
@@ -1076,9 +1074,12 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
     if (targetFields.x() >= 0)
     {
+        spGameMap pMap = GameMap::getInstance();
+        Unit* pTargetUnit = pMap->getTerrain(targetFields.x(), targetFields.y())->getUnit();
         UnitPathFindingSystem turnPfs(pUnit);
         turnPfs.explore();
-        if (CoreAI::contains(transporterTargets, targetFields))
+        if (CoreAI::contains(transporterTargets, targetFields) &&
+            pTargetUnit->getHasMoved() == false)
         {
             QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
             pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -1176,6 +1177,18 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
             {
                 m_updatePoints.append(pUnit->getPosition());
                 m_updatePoints.append(pAction->getActionTarget());
+                if (actions.contains(ACTION_UNLOAD))
+                {
+                    pAction->setActionID(ACTION_UNLOAD);
+                    if (pAction->canBePerformed())
+                    {
+                        bool performed = unloadUnits(pAction, pUnit);
+                        if (performed)
+                        {
+                            return true;
+                        }
+                    }
+                }
                 for (const auto & action : actions)
                 {
                     if (action.startsWith(ACTION_SUPPORTALL))
@@ -1209,19 +1222,7 @@ bool NormalAi::moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & p
                             return true;
                         }
                     }
-                }
-                if (actions.contains(ACTION_UNLOAD))
-                {
-                    pAction->setActionID(ACTION_UNLOAD);
-                    if (pAction->canBePerformed())
-                    {
-                        bool performed = unloadUnits(pAction, pUnit);
-                        if (performed)
-                        {
-                            return true;
-                        }
-                    }
-                }
+                }                
                 for (const auto & action : actions)
                 {
                     if (action.startsWith(ACTION_PLACE))
@@ -1515,10 +1516,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
     QVector<qint32> baseCosts;
     for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
     {
-        if (pUnits->at(i3) != pUnit)
-        {
-            baseCosts.append(pUnits->at(i3)->getCoUnitValue());
-        }
+        baseCosts.append(pUnits->at(i3)->getCoUnitValue());
     }
     spGameMap pMap = GameMap::getInstance();
     float counterDamage = 0;
