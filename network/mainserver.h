@@ -24,16 +24,13 @@ class MainServer : public QObject, public oxygine::ref_counter
 public:
     static MainServer* getInstance();
     static bool exists();
+    void release();
     virtual ~MainServer();
 
     inline TCPServer* getGameServer()
     {
         return m_pGameServer.get();
     }
-    inline void stopGameServer()
-    {
-        m_pGameServer = nullptr;
-    }    
 signals:
     void sigRemoveGame(NetworkGame* pGame);
     void sigStartRemoteGame(QString initScript, QString id);

@@ -28,6 +28,11 @@ bool MainServer::exists()
     return m_pInstance.get() != nullptr;
 }
 
+void MainServer::release()
+{
+    m_pInstance = nullptr;
+}
+
 MainServer::MainServer()
     : QObject(),
       m_updateTimer(this),

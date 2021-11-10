@@ -714,7 +714,7 @@ void Mainapp::onQuit()
     {
         if (MainServer::exists())
         {
-            MainServer::getInstance()->deleteLater();
+            MainServer::getInstance()->release();
         }
         m_GameServerThread.quit();
         m_GameServerThread.wait();

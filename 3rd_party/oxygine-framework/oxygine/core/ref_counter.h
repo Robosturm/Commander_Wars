@@ -2,7 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 #include <atomic>
 #include <qmutex.h>
-#include <QVector>
+#include <vector>
 
 namespace oxygine
 {
@@ -55,7 +55,7 @@ namespace oxygine
         static std::atomic<qint32> m_jsInstanceCounter;
 #ifdef MEMORYTRACING
         static QMutex m_lock;
-        static QVector<ref_counter*> m_objects;
+        static std::vector<ref_counter*> m_objects;
 #endif
     };
 
