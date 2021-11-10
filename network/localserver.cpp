@@ -5,10 +5,10 @@
 
 #include "coreengine/mainapp.h"
 
-LocalServer::LocalServer()
+LocalServer::LocalServer(QObject* pParent)
+    : NetworkInterface(pParent)
 {
     setObjectName("LocalServer");
-    moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = true;
     isConnected = true;
 }
@@ -23,7 +23,6 @@ LocalServer::~LocalServer()
 void LocalServer::connectTCP(QString adress, quint16)
 {
     m_pTCPServer = new QLocalServer(this);
-    m_pTCPServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pTCPServer->listen(adress);
     connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
     connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
@@ -90,18 +89,15 @@ void LocalServer::onConnect()
     {
         QLocalSocket* nextSocket = m_pTCPServer->nextPendingConnection();
         m_pTCPSockets.append(nextSocket);
-        nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
         spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, true);
-        pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pRXTasks.append(pRXTask);
         connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, true);
-        pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pTXTasks.append(pTXTask);
         connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;

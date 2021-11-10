@@ -18,7 +18,7 @@ class NetworkGame : public QObject
 {
     Q_OBJECT
 public:
-    explicit NetworkGame();
+    explicit NetworkGame(QObject* pParent);
     virtual ~NetworkGame() = default;
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);

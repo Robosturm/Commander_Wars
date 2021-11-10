@@ -431,6 +431,7 @@ void CampaignMenu::onEnter()
     QString func = "campaignMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;

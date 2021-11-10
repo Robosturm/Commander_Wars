@@ -65,7 +65,7 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"AntiCaptureBonus", "Attacking", &m_antiCaptureBonus, 21.0f, 0.0f, 100.0f},
                   {"AntiCaptureBonusScoreReduction", "Attacking", &m_antiCaptureBonusScoreReduction, 6.0f, 0.0f, 20.0f},
                   {"AntiCaptureBonusScoreDivider", "Attacking", &m_antiCaptureBonusScoreDivider, 2.0f, 0.1f, 10.0f},
-                  {"EnemyCounterDamageMultiplier", "Attacking", &m_enemyCounterDamageMultiplier, 10.0f, 0.1f, 40.0f},
+                  {"EnemyCounterDamageMultiplier", "Attacking", &m_enemyCounterDamageMultiplier, 0.5f, 0.1f, 10.0f},
                   {"WatermineDamage", "Attacking", &m_watermineDamage, 4.0f, 4.0f, 4.0f},
                   {"EnemyUnitCountDamageReductionMultiplier", "Attacking", &m_enemyUnitCountDamageReductionMultiplier, 0.5f, 0.0f, 10.0f},
                   {"OwnProdctionMalus", "Attacking", &m_ownProdctionMalus, 5000.0f, 5000.0f, 5000.0f},
@@ -1560,11 +1560,11 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                 if (baseCost > baseCosts[i3])
                                 {
                                     // reduce damage the more units it can attack
-                                    damageData.setX(damageData.x() -  damageData.x() * baseCosts[i3] / baseCost / 2);
+                                    damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
                                 }
                                 else
                                 {
-                                    damageData.setX(damageData.x() -  damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                    damageData.moveLeft( damageData.x() *  baseCost / baseCosts[i3] / 2);
                                 }
                             }
                         }
@@ -1575,34 +1575,42 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
                         distance = GlobalUtils::getDistance(newPosition, targets[i2]);
+                        Unit* pTerrainUnit = pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit();
                         if (distance >= minFireRange && distance <= maxFireRange &&
-                            (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
-                             (targets[i2].x() == pNextEnemy->Unit::getX() && targets[i2].y() == pNextEnemy->Unit::getY())))
+                            (pTerrainUnit == nullptr ||
+                             pTerrainUnit == pNextEnemy ||
+                             pTerrainUnit == pUnit))
                         {
                             damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, targets[i2], pUnit, 0, newPosition, ignoreOutOfVisionRange);
                             break;
                         }
                     }
+                    QVector<Unit*> usedUnits;
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
                         for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                         {
-                            distance = GlobalUtils::getDistance(QPoint(pUnits->at(i3)->Unit::getX(), pUnits->at(i3)->Unit::getY()), targets[i2]);
-                            if (distance >= minFireRange && distance <= maxFireRange &&
-                                (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
-                                 pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
-                                pNextEnemy->isAttackable(pUnits->at(i3), true))
+                            Unit* pUnit = pUnits->at(i3);
+                            if (!usedUnits.contains(pUnit))
                             {
-                                if (baseCosts[i3] > 0 && baseCost > 0)
+                                distance = GlobalUtils::getDistance(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()), targets[i2]);
+                                if (distance >= minFireRange && distance <= maxFireRange &&
+                                    (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
+                                     pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
+                                    pNextEnemy->isAttackable(pUnit, true))
                                 {
-                                    if (baseCost > baseCosts[i3])
+                                    usedUnits.append(pUnit);
+                                    if (baseCosts[i3] > 0 && baseCost > 0)
                                     {
-                                        // reduce damage the more units it can attack
-                                        damageData.setX(damageData.x() -  damageData.x() * baseCosts[i3] / baseCost / 2);
-                                    }
-                                    else
-                                    {
-                                        damageData.setX(damageData.x() -  damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                        if (baseCost > baseCosts[i3])
+                                        {
+                                            // reduce damage the more units it can attack
+                                            damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
+                                        }
+                                        else
+                                        {
+                                            damageData.moveLeft(damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                        }
                                     }
                                 }
                             }
@@ -1612,7 +1620,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
 
                 if (damageData.x() < 0)
                 {
-                    damageData.setX(0);
+                    damageData.moveLeft(damageData.x());
                 }
                 if (damageData.x() > 0)
                 {
@@ -1677,6 +1685,7 @@ void NormalAi::updateEnemyData(spQmlVectorUnit & pUnits)
         for (qint32 i = 0; i < m_EnemyUnits.size(); i++)
         {
             m_EnemyPfs.append(spUnitPathFindingSystem::create(m_EnemyUnits[i].get()));
+            m_EnemyPfs[i]->setIgnoreEnemies(true);
             m_EnemyPfs[i]->explore();
             m_VirtualEnemyData.append(QPointF(0, 0));
         }
@@ -2274,7 +2283,7 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
     return minDistance;
 }
 
-std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor, float myMovepoints)
+std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 notAttackableCount = 0;

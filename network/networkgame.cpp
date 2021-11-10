@@ -9,8 +9,9 @@
 
 #include "game/gamemap.h"
 
-NetworkGame::NetworkGame()
-    : QObject(),
+NetworkGame::NetworkGame(QObject* pParent)
+    : QObject(pParent),
+      m_gameConnection(pParent),
       m_timer(this)
 {
     connect(&m_gameConnection, &LocalClient::sigConnected, this, &NetworkGame::onConnectToLocalServer, Qt::QueuedConnection);
@@ -20,16 +21,19 @@ NetworkGame::NetworkGame()
 
 void NetworkGame::addClient(spTCPClient pClient)
 {
-    m_Clients.append(pClient);
-    pClient->getRXTask()->swapNetworkInterface(pClient.get());
-    disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
-    disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
-    connect(pClient.get(), &TCPClient::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
-    connect(pClient.get(), &TCPClient::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
-    connect(pClient.get(), &TCPClient::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
-    if (m_slaveRunning)
+    if (pClient.get() != nullptr)
     {
-        sendPlayerJoined(m_Clients.size() - 1);
+        m_Clients.append(pClient);
+        pClient->getRXTask()->swapNetworkInterface(pClient.get());
+        disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
+        disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
+        connect(pClient.get(), &TCPClient::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
+        connect(pClient.get(), &TCPClient::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
+        connect(pClient.get(), &TCPClient::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
+        if (m_slaveRunning)
+        {
+            sendPlayerJoined(m_Clients.size() - 1);
+        }
     }
 }
 

@@ -555,11 +555,13 @@ void Mainwindow::quitGame()
 
 void Mainwindow::onEnter()
 {
+     CONSOLE_PRINT("Dummy", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "main";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;

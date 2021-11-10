@@ -56,14 +56,11 @@ var Init =
         victoryRule.setRuleValue(Init.turnLimit, 0);
         var selection = menu.getPlayerSelection();
         var playerCount = map.getPlayerCount();
+
+        gameRules.setFogMode(Init.fogOfWar);
+        gameRules.setRandomWeather(false);
+
         Init.currentMatch = [];
-        if (Init.matchData.length === 0)
-        {
-            for (var i = 0; i < Init.trainingAis.length; ++i)
-            {
-                Init.matchData.push(0);
-            }
-        }
         if (Init.currentBattleData.length === 0)
         {
             for (var i = 0; i < Init.trainingAis.length; ++i)
@@ -71,8 +68,6 @@ var Init =
                 Init.currentBattleData.push(0);
             }
         }
-        gameRules.setFogMode(Init.fogOfWar);
-        gameRules.setRandomWeather(false);
         for (var i = 0; i < playerCount; ++i)
         {
             var playerIdx = Init.rotationCount + i;

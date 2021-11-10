@@ -157,7 +157,7 @@ void CoreAI::nextAction()
     }
 }
 
-bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
+bool CoreAI::contains(QVector<QVector3D>& points, const QPoint & point)
 {
     for (qint32 i = 0; i < points.size(); i++)
     {
@@ -170,7 +170,7 @@ bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
     return false;
 }
 
-qint32 CoreAI::index(QVector<QVector3D>& points, QPoint point)
+qint32 CoreAI::index(QVector<QVector3D>& points, const QPoint & point)
 {
     for (qint32 i = 0; i < points.size(); i++)
     {
@@ -289,7 +289,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
     return false;
 }
 
-float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding)
+float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding)
 {
     float counterDamage = 0.0f;
     GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
@@ -558,7 +558,7 @@ bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage)
     return false;
 }
 
-QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
+QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef)
 {
     float atkDamage = static_cast<float>(damage.x()) / Unit::MAX_UNIT_HP;
     if (atkDamage > pDef->getHp())
@@ -578,7 +578,7 @@ QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
     return QPointF(atkDamage, fundsDamage);
 }
 
-QRectF CoreAI::calcUnitDamage(spGameAction pAction, QPoint target)
+QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
@@ -592,8 +592,8 @@ QRectF CoreAI::calcUnitDamage(spGameAction pAction, QPoint target)
     return erg.toVariant().toRectF();
 }
 
-QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, QPoint atkPos,
-                                     Unit* pDefender, float defenderTakenDamage, QPoint defPos,
+QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
+                                     Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
                                      bool ignoreOutOfVisionRange)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -859,7 +859,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
     }
 }
 
-void CoreAI::addMenuItemData(spGameAction & pGameAction, QString itemID, qint32 cost)
+void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost)
 {
     CONSOLE_PRINT("CoreAI::addMenuItemData()", Console::eDEBUG);
     pGameAction->writeDataString(itemID);
@@ -868,7 +868,7 @@ void CoreAI::addMenuItemData(spGameAction & pGameAction, QString itemID, qint32 
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }
 
-void CoreAI::addSelectedFieldData(spGameAction & pGameAction, QPoint point)
+void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & point)
 {
     CONSOLE_PRINT("CoreAI::addSelectedFieldData()", Console::eDEBUG);
     pGameAction->writeDataInt32(point.x());

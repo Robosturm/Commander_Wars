@@ -379,7 +379,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor, float myMovepoints);
+    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX

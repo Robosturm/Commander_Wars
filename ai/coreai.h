@@ -119,14 +119,14 @@ public:
      * @param point
      * @return
      */
-    static bool contains(QVector<QVector3D>& points, QPoint point);
+    static bool contains(QVector<QVector3D>& points, const QPoint & point);
     /**
      * @brief index
      * @param points
      * @param point
      * @return
      */
-    static qint32 index(QVector<QVector3D>& points, QPoint point);
+    static qint32 index(QVector<QVector3D>& points, const QPoint & point);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -179,7 +179,7 @@ public slots:
      * @param pBuilding
      * @return
      */
-    float calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding);
+    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding);
     /**
      * @brief createMovementMap
      */
@@ -232,7 +232,7 @@ public slots:
      * @param target
      * @return x = unit damage and y = counter damage
      */
-    QRectF calcUnitDamage(spGameAction pAction, QPoint target);
+    QRectF calcUnitDamage(spGameAction & pAction, const QPoint & target);
     /**
      * @brief CoreAI::calcVirtuelUnitDamage
      * @param pAttacker
@@ -243,8 +243,8 @@ public slots:
      * @param defenderTakenDamage
      * @return
      */
-    QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, QPoint atkPos,
-                                 Unit* pDefender, float defenderTakenDamage, QPoint defPos,
+    QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
+                                 Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
                                  bool ignoreOutOfVisionRange = false);
     /**
      * @brief getBestTarget
@@ -291,7 +291,7 @@ public slots:
      * @param pDef
      * @return
      */
-    QPointF calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef);
+    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef);
     /**
      * @brief appendAttackTargets
      * @param pUnit
@@ -320,8 +320,8 @@ public slots:
                                  QVector<spDecisionQuestion>& readQuestions,
                                  QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
-    void addMenuItemData(spGameAction & pGameAction, QString itemID, qint32 cost);
-    void addSelectedFieldData(spGameAction & pGameAction, QPoint point);
+    void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
+    void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
     /**
      * @brief isAttackOnTerrainAllowed
      * @param pTerrain

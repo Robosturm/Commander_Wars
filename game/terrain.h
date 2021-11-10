@@ -142,6 +142,9 @@ public:
     bool isValid();
 
 
+    QPoint getTest() const;
+    void setTest(QPoint newTest);
+
 public slots:
     /**
      * @brief getHasFlowDirection
@@ -549,6 +552,8 @@ private:
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
+
+    QPoint m_test;
 };
 
 #endif // TERRAIN_H

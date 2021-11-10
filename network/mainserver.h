@@ -72,7 +72,7 @@ private:
     void sendGameDataToClient(qint64 socketId);
     void joinSlaveGame(quint64 socketID, QDataStream & stream);
     void closeGame(NetworkGame* pGame);
-
+    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
 private:
     class InternNetworkGame;
     typedef oxygine::intrusive_ptr<InternNetworkGame> spInternNetworkGame;
@@ -80,7 +80,7 @@ private:
     {
     public:
         QProcess* process{nullptr};
-        NetworkGame game;
+        NetworkGame game{nullptr};
         QThread m_runner;
     };
     explicit MainServer();

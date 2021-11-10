@@ -26,7 +26,6 @@ class Unit : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:
-    static const float animationSpeed;
     static constexpr float MAX_UNIT_HP = 10.0f;
     static constexpr float DAMAGE_100 = 100.0f;
 
@@ -455,13 +454,13 @@ public slots:
      * @brief loadSprites loads the given sprite
      * @param spriteID
      */
-    void loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite = true);
+    void loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite = true);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite = true, qint32 frameTime = 150);
     /**
      * @brief addShineTween
      */

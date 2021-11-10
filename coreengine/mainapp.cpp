@@ -709,6 +709,17 @@ void Mainapp::onQuit()
         m_Networkthread.wait();
     }
     QApplication::processEvents();
+    CONSOLE_PRINT("Shutting down game server", Console::eDEBUG);
+    if (m_GameServerThread.isRunning())
+    {
+        if (MainServer::exists())
+        {
+            MainServer::getInstance()->deleteLater();
+        }
+        m_GameServerThread.quit();
+        m_GameServerThread.wait();
+    }
+    QApplication::processEvents();
 }
 
 const QString &Mainapp::getInitScript() const

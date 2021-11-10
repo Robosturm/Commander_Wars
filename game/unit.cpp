@@ -18,8 +18,6 @@
 
 #include "menue/editormenue.h"
 
-const float Unit::animationSpeed = 1.5f;
-
 Unit::Unit()
 {
     setObjectName("Unit");
@@ -214,19 +212,19 @@ void Unit::removeShineTween()
     m_ShineTweens.clear();
 }
 
-void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite)
+void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
 {
     if (addPlayerColor)
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, flipSprite);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, flipSprite, frameTime);
     }
     else
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_None, flipSprite);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, flipSprite, frameTime);
     }
 }
 
-void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite)
+void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -236,10 +234,10 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
         oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pSprite->addTween(tween);
 
-            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pWaitSprite->addTween(tweenWait);
         }
         else

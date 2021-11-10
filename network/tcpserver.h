@@ -18,7 +18,7 @@ class TCPServer : public NetworkInterface
 {
     Q_OBJECT
 public:
-    TCPServer();
+    TCPServer(QObject* pParent);
     virtual ~TCPServer();
 
     spTCPClient getClient(quint64 socketID);

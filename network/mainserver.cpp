@@ -30,14 +30,14 @@ bool MainServer::exists()
 
 MainServer::MainServer()
     : QObject(),
-      m_updateTimer(this)
+      m_updateTimer(this),
+      m_pGameServer(spTCPServer::create(this))
 {
     CONSOLE_PRINT("Game server launched", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_updateTimer.setSingleShot(true);
     m_updateTimer.start(5000);
     moveToThread(Mainapp::getGameServerThread());
-    m_pGameServer = spTCPServer::create();
 
     QString javascriptName = "mainServer";
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -46,7 +46,7 @@ MainServer::MainServer()
     connect(m_pGameServer.get(), &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     connect(m_pGameServer.get(), &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
     connect(this, &MainServer::sigRemoveGame, this, &MainServer::removeGame, Qt::QueuedConnection);
-    connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::startRemoteGame, Qt::QueuedConnection);
+    connect(this, &MainServer::sigStartRemoteGame, this, &MainServer::slotStartRemoteGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
 }
@@ -118,10 +118,7 @@ void MainServer::startRemoteGame(const QString & initScript, const QString & id)
 void MainServer::slotStartRemoteGame(QString initScript, QString id)
 {
     QByteArray sendData;
-    QDataStream stream(&sendData, QIODevice::WriteOnly);
-    Filesupport::writeVectorList(stream, Settings::getMods());
-    QDataStream readStream(&sendData, QIODevice::ReadOnly);
-    spawnSlaveGame(readStream, 0, sendData, initScript);
+    spawnSlave(initScript, Settings::getMods(), id, 0, sendData);
 }
 
 void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString initScript, QString id)
@@ -130,44 +127,49 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     mods = Filesupport::readVectorList<QString, QList>(stream);
     if (validHostRequest(mods))
     {
-        m_slaveGameIterator++;
-        QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
-        m_games.append(spInternNetworkGame::create());
-        qint32 pos = m_games.size() - 1;
-        QString program = "Commander_Wars.exe";
-        m_games[pos]->process = new QProcess();
-        m_games[pos]->process->setObjectName("Slaveprocess");
-        QStringList args;
-        args << "-slave";
-        args << "-slaveServer";
-        args << slaveName;
-        // args << "-noui"; // comment out for debugging
-        args << "-mods";
-        args << Settings::getModConfigString(mods);
-        args << "-initScript";
-        args << initScript;
-        QString markername = "temp/" + slaveName + ".marker";
-        if (QFile::exists(markername))
-        {
-            QFile::remove(markername);
-        }
-        m_games[pos]->game.setDataBuffer(data);
-        m_games[pos]->game.setServerName(slaveName);
-        m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
-        m_games[pos]->m_runner.start();
-        connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
-        connect(m_games[pos]->process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &m_games[pos]->game, &NetworkGame::processFinished, Qt::QueuedConnection);
-        connect(&m_games[pos]->game, &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
-        connect(&m_games[pos]->game, &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
-        m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
-        m_games[pos]->process->start(program, args);
-        m_games[pos]->game.setId(id);
+        spawnSlave(initScript, mods, id, socketID, data);
     }
     else
     {
         CONSOLE_PRINT("Requested invalid mod configuration.", Console::eDEBUG);
         // todo send request denial
     }
+}
+
+void MainServer::spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data)
+{
+    m_slaveGameIterator++;
+    QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
+    m_games.append(spInternNetworkGame::create());
+    qint32 pos = m_games.size() - 1;
+    QString program = "Commander_Wars.exe";
+    m_games[pos]->process = new QProcess();
+    m_games[pos]->process->setObjectName("Slaveprocess");
+    QStringList args;
+    args << "-slave";
+    args << "-slaveServer";
+    args << slaveName;
+    args << "-noui"; // comment out for debugging
+    args << "-mods";
+    args << Settings::getModConfigString(mods);
+    args << "-initScript";
+    args << initScript;
+    QString markername = "temp/" + slaveName + ".marker";
+    if (QFile::exists(markername))
+    {
+        QFile::remove(markername);
+    }
+    m_games[pos]->game.setDataBuffer(data);
+    m_games[pos]->game.setServerName(slaveName);
+    m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
+    m_games[pos]->m_runner.start();
+    connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
+    connect(m_games[pos]->process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &m_games[pos]->game, &NetworkGame::processFinished, Qt::QueuedConnection);
+    connect(&m_games[pos]->game, &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
+    connect(&m_games[pos]->game, &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
+    m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
+    m_games[pos]->process->start(program, args);
+    m_games[pos]->game.setId(id);
 }
 
 bool MainServer::validHostRequest(QStringList mods)

@@ -45,7 +45,10 @@ AudioThread::AudioThread()
 AudioThread::~AudioThread()
 {
 #ifdef AUDIOSUPPORT
-    m_player->m_player.stop();
+    if (m_player != nullptr)
+    {
+        m_player->m_player.stop();
+    }
     for (auto & cache : m_soundCaches)
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
