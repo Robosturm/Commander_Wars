@@ -29,6 +29,7 @@ Interpreter::Interpreter()
 
 void Interpreter::reloadInterpreter(const QString & runtime)
 {
+    CONSOLE_PRINT("Reloading interpreter", Console::eDEBUG);
     m_pInstance = nullptr;
     m_pInstance = spInterpreter::create();
     m_pInstance->init();

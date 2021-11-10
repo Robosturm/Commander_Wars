@@ -555,7 +555,6 @@ void Mainwindow::quitGame()
 
 void Mainwindow::onEnter()
 {
-     CONSOLE_PRINT("Dummy", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString object = "Init";
     QString func = "main";

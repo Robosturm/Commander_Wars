@@ -29,7 +29,7 @@ var Init =
                         ["normal15.ini",  2],
                         ["normal16.ini",  2],
     ],    
-    cores = 10, // amount of games started at the same time
+    cores = 5, // amount of games started at the same time
     // internal data
     startAi = 0,
     rotationStartAi = 0,
@@ -89,25 +89,24 @@ var Init =
         Init.coreData[coreIndex][1] = false;
         Init.coreData[coreIndex][2] = [];
         var map = Init.trainingFolder + Init.trainingMap;
-        var script = "var Init =" +
-                "{" +
-                "main = function(menu)" +
-                "{" +
-                "if (Init.runCount < Init.maxRuns)" +
-                "{" +
-                "menu.enterSingleplayer();" +
-                "}" +
-                "}," +
-                "mapsSelection = function(menu)" +
-                "{" +
-                "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");" +
-                "menu.buttonNext();" +
-                "menu.buttonNext();" +
-                "var gameRules = map.getGameRules();" +
-                "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");" +
-                "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");" +
-                "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");" +
-                "gameRules.setRandomWeather(false);";
+        var script = "var Init =\n" +
+                "{\n" +
+                "main = function(menu)\n" +
+                "{\n" +
+                "menu.enterSingleplayer();\n" +
+                "},\n" +
+                "mapsSelection = function(menu)\n" +
+                "{\n" +
+                "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");\n" +
+                "menu.buttonNext();\n" +
+                "menu.buttonNext();\n" +
+                "var gameRules = map.getGameRules();\n" +
+                "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
+                "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
+                "gameRules.setRandomWeather(false);\n" +
+                "var selection = menu.getPlayerSelection();\n";
         for (var i = 0; i < Init.playerCount; ++i)
         {
             var playerIdx = Init.rotationCount + i;
@@ -122,13 +121,13 @@ var Init =
             }
             GameConsole.print("Using ai at index " + aiIdx + " for player " + playerIdx, Init.logLevel);
             GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
-            script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");";
+            script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
             Init.coreData[coreIndex][2].push(aiIdx);
-            script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");";
-            script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");";
+            script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
+            script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
         }
-        script += "menu.startGame();" +
-                "}," +
+        script += "menu.startGame();\n" +
+                "},\n" +
                 "}";
 
         mainServer.startRemoteGame(script, Init.coreData[coreIndex][0]);
