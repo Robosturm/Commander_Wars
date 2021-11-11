@@ -35,8 +35,50 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 1);
-        terrain.loadBaseSprite("creeper+" + random.toString());
+        var surroundings = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("creeper" + surroundings);
+    };
+    this.loadOverlaySprite = function(terrain)
+    {
+        // Check every side.
+        var surroundings = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_Direct, false);
+        // Load overlay south east, strict.
+        if (surroundings.includes("+S") && surroundings.includes("+E"))
+        {
+            var surroundingsSE = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_SouthEast, false);
+            if (surroundingsSE !== "")
+            {
+                terrain.loadOverlaySprite("creeper+SE");
+            }
+        }
+        // Load overlay north east, strict.
+        if (surroundings.includes("+N") && surroundings.includes("+E"))
+        {
+            var surroundingsNE = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_NorthEast, false);
+            if (surroundingsNE !== "")
+            {
+                terrain.loadOverlaySprite("creeper+NE");
+            }
+        }
+        // Load overlay south west, strict.
+        if (surroundings.includes("+S") && surroundings.includes("+W"))
+        {
+            var surroundingsSW = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_SouthWest, false);
+            if (surroundingsSW !== "")
+            {
+                terrain.loadOverlaySprite("creeper+SW");
+            }
+        }
+        // Load overlay northwest, strict.
+        if (surroundings.includes("+N") && surroundings.includes("+W"))
+        {
+            var surroundingsNW = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_NorthWest, false);
+            if (surroundingsNW !== "")
+            {
+                terrain.loadOverlaySprite("creeper+NW");
+            }
+        }
     };
     this.startOfTurn = function(terrain)
     {
@@ -68,7 +110,10 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         // array of sprites that can be selected as fix sprites for this terrain
-        return [];
+        return ["creeper.png",
+                "creeper+E",
+                "creeper+E+W",
+                "creeper+W"];
     };
 
 };

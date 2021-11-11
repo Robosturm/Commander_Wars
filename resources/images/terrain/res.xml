@@ -300,6 +300,8 @@
         <image file="wasteland+1.png" />
         <image file="wasteland+2.png" />
         <image file="wasteland+3.png" />
+        <image file="wasteland+4.png" />
+        <image file="wasteland+5.png" />
         
         <image file="street.png" />
         <image file="street+E.png" />
@@ -319,8 +321,14 @@
         <image file="street+W.png" />
         
         <!-- creeper -->
-        <image file="creeper+0.png" />
-        <image file="creeper+1.png" />
+        <image file="creeper.png" />
+        <image file="creeper+E.png" />
+        <image file="creeper+E+W.png" />
+        <image file="creeper+W.png" />
+        <image file="creeper+SE.png" />
+        <image file="creeper+NE.png" />
+        <image file="creeper+SW.png" />
+        <image file="creeper+NW.png" />
         
         <!-- river endings -->
         <image file="river+0+land+N+E+S+W.png" cols = "8" />
@@ -562,7 +570,12 @@
         <image file="snow_forest+SW.png" />
         <image file="snow_forest+NW.png" />
 
-        <image file="snow_wasteland.png" />
+        <image file="snow_wasteland+0.png" />
+        <image file="snow_wasteland+1.png" />
+        <image file="snow_wasteland+2.png" />
+        <image file="snow_wasteland+3.png" />
+        <image file="snow_wasteland+4.png" />
+        <image file="snow_wasteland+5.png" />
 		
         <image file="snow_mountain.png" />
         <image file="snow_mountain+short.png" />
@@ -616,7 +629,12 @@
         <image file="desert_forest+SW.png" />
         <image file="desert_forest+NW.png" />
         
-        <image file="desert_wasteland.png" />
+        <image file="desert_wasteland+0.png" />
+        <image file="desert_wasteland+1.png" />
+        <image file="desert_wasteland+2.png" />
+        <image file="desert_wasteland+3.png" />
+        <image file="desert_wasteland+4.png" />
+        <image file="desert_wasteland+5.png" />
         
         <image file="desert_rock.png" />
         <image file="desert_rock+short.png" />
@@ -708,6 +726,8 @@
         <image file="waste_wasteland+1.png" />
         <image file="waste_wasteland+2.png" />
         <image file="waste_wasteland+3.png" />
+        <image file="waste_wasteland+4.png" />
+        <image file="waste_wasteland+5.png" />
         
         <image file="waste_rock.png" />
         <image file="waste_rock+short.png" />

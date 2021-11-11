@@ -39,7 +39,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("snow_wasteland");
+        var random = globals.randInt(0, 5);
+        terrain.loadBaseSprite("snow_wasteland+" + random.toString());
     };
     this.getMiniMapIcon = function()
     {

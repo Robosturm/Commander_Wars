@@ -43,7 +43,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("desert_wasteland");
+        var random = globals.randInt(0, 5);
+        terrain.loadBaseSprite("desert_wasteland+" + random.toString());
     };
     this.getMiniMapIcon = function()
     {
