@@ -2,7 +2,7 @@
 
 namespace oxygine
 {
-    spTween TweenQueue::add(spTween & t)
+    spTween TweenQueue::add(spTween t)
     {
         if (!t)
         {

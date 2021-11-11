@@ -122,10 +122,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
-    // if (Settings::getSmallScreenDevice())
-    // {
-    //     m_timerCycle = 33;
-    // }
     switch (step)
     {
         case StartupPhase::General:

@@ -297,8 +297,7 @@ namespace oxygine
         template<class TProperty>
         spTween addTween(const TProperty& property, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
         {
-            spTween pTween = createTween(property, duration, loops, twoSides, delay, ease);
-            return addTween(pTween);
+            return addTween(createTween(property, duration, loops, twoSides, delay, ease));
         }
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
         qint32 addClickListener(const EventCallback& cb)
@@ -316,7 +315,7 @@ namespace oxygine
             return addEventListener(TouchEvent::TOUCH_UP, cb);
         }
 
-        void removeTween(spTween &);
+        void removeTween(spTween);
         /**remove all tweens and call Tween::complete to them if callComplete == true*/
         void removeTweens(bool callComplete = false);
 
