@@ -38,7 +38,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 3);
+        var random = globals.randInt(0, 5);
         terrain.loadBaseSprite("wasteland+" + random.toString());
     };
     this.getMiniMapIcon = function()
