@@ -622,6 +622,10 @@ void Mainapp::loadArgs(const QStringList & args)
     {
         m_initScript = args[args.indexOf("-initScript") + 1];
     }
+    if (args.contains("-createSlaveLogs"))
+    {
+        m_createSlaveLogs = true;
+    }
 }
 
 void Mainapp::onActiveChanged()
@@ -725,4 +729,14 @@ void Mainapp::onQuit()
 const QString &Mainapp::getInitScript() const
 {
     return m_initScript;
+}
+
+bool Mainapp::getCreateSlaveLogs() const
+{
+    return m_createSlaveLogs;
+}
+
+void Mainapp::setCreateSlaveLogs(bool create)
+{
+    m_createSlaveLogs = create;
 }

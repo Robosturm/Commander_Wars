@@ -166,6 +166,13 @@ var Constructor = function()
                 currentTerrain.loadBaseTerrainSprites();
                 RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
             }
+            else
+            {
+                currentTerrain = currentTerrain.getBaseTerrain("RIVER");
+                currentTerrain.unloadSprites();
+                currentTerrain.loadBaseTerrainSprites();
+                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+            }
         }
         RIVER.loadSeaOverlays(pPfs, flowData);
     };

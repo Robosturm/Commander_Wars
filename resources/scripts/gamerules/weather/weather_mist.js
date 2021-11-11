@@ -3,30 +3,12 @@ var Constructor = function()
     this.getWeatherName = function()
     {
 
-        return qsTr("Sandstorm");
-    };
-
-    this.getWeatherTerrainSprite = function()
-    {
-
-        return "weather_sandstorm";
+        return qsTr("Mist");
     };
 
     this.getWeatherSymbol = function()
     {
-        return "weather_symbol_sandstorm_alt";
-    };
-
-    this.getOffensiveModifier = function()
-    {
-
-        return -15;
-    };
-
-    this.getFirerangeModifier = function()
-    {
-
-        return -1;
+        return "weather_symbol_mist";
     };
 
     this.activate = function(weather)
@@ -40,19 +22,34 @@ var Constructor = function()
         var animation = GameAnimationFactory.createAnimation(0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        animation.setSound("sandstorm.wav");
         animation.setStartOfAnimationCall("ANIMATION", "preOnAnimationChangedAnimation");
+        animation.setSound("rain.wav");
+        var variable = weather.getVariables().createVariable("FOGMODE");
+        var fogMode = map.getGameRules().getFogMode();
+        variable.writeDataInt32(fogMode);
+        // only apply fog of war if the fog rules are softer
+        if (fogMode === GameEnums.Fog_Off)
+        {
+            map.getGameRules().setFogMode(GameEnums.Fog_OfMist);
+        }
         if (queueAnimation !== null)
         {
             queueAnimation.queueAnimation(animation);
         }
     };
 
+    this.deactivate = function(weather)
+    {
+        var variable = weather.getVariables().getVariable("FOGMODE");
+        var mode = variable.readDataInt32();
+        map.getGameRules().setFogMode(mode);
+    };
+
     this.getDefaultWeatherChance = function()
     {
-        return 10;
+        return 0;
     };
 }
 
 Constructor.prototype = WEATHER;
-var WEATHER_SANDSTORM = new Constructor();
+var WEATHER_MIST= new Constructor();

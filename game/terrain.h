@@ -388,6 +388,25 @@ public slots:
             return m_terrainID;
         }
     }
+    Terrain* getBaseTerrain(QString terrainId)
+    {
+        if (m_pBaseTerrain.get() != nullptr)
+        {
+
+            if (m_pBaseTerrain->m_terrainID == terrainId)
+            {
+                return m_pBaseTerrain.get();
+            }
+            else
+            {
+                return m_pBaseTerrain->getBaseTerrain(terrainId);
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
     /**
      * @brief getID the overall id of this terrain either terrain id or building id
      * @return

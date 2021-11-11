@@ -62,9 +62,10 @@ MainServer::~MainServer()
     // clean up server and client games.
     for (qint32 i = 0; i < m_games.size(); i++)
     {
-        m_games[i]->game.disconnect();
+        m_games[i]->game = nullptr;
         m_games[i]->process->kill();
-        m_games[i]->m_runner.terminate();
+        m_games[i]->m_runner.quit();
+        m_games[i]->m_runner.wait();
         delete m_games[i]->process;
     }
 }
@@ -96,13 +97,13 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     CONSOLE_PRINT("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
     for (const auto & game : qAsConst(m_games))
     {
-        if (game->game.getServerName() == slave)
+        if (game->game->getServerName() == slave)
         {
-            if (game->game.getSlaveRunning() &&
-                 !game->game.getData().getLaunched())
+            if (game->game->getSlaveRunning() &&
+                 !game->game->getData().getLaunched())
             {
-                game->game.addClient(m_pGameServer->getClient(socketID));
-                connect(&(game->game), &NetworkGame::sigDisconnectSocket, m_pGameServer.get(), &TCPServer::disconnectClient, Qt::QueuedConnection);
+                game->game->addClient(m_pGameServer->getClient(socketID));
+                connect(game->game.get(), &NetworkGame::sigDisconnectSocket, m_pGameServer.get(), &TCPServer::disconnectClient, Qt::QueuedConnection);
             }
             found = true;
             break;
@@ -149,7 +150,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     qint32 pos = m_games.size() - 1;
     QString program = "Commander_Wars.exe";
     m_games[pos]->process = new QProcess();
-    m_games[pos]->process->setObjectName("Slaveprocess");
+    m_games[pos]->process->setObjectName(slaveName + "Slaveprocess");
     QStringList args;
     args << "-slave";
     args << "-slaveServer";
@@ -159,22 +160,30 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     args << Settings::getModConfigString(mods);
     args << "-initScript";
     args << initScript;
+    args << "-initScript";
+    args << initScript;
+    if (Mainapp::getInstance()->getCreateSlaveLogs())
+    {
+        // args << "-createSlaveLogs";
+    }
     QString markername = "temp/" + slaveName + ".marker";
     if (QFile::exists(markername))
     {
         QFile::remove(markername);
     }
-    m_games[pos]->game.setDataBuffer(data);
-    m_games[pos]->game.setServerName(slaveName);
-    m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
+    m_games[pos]->game = spNetworkGame::create(nullptr);
+    m_games[pos]->game->setDataBuffer(data);
+    m_games[pos]->game->setServerName(slaveName + "Game");
+    m_games[pos]->game->moveToThread(&m_games[pos]->m_runner);
+    m_games[pos]->m_runner.setObjectName(slaveName + "Runner");
     m_games[pos]->m_runner.start();
-    connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
-    connect(m_games[pos]->process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &m_games[pos]->game, &NetworkGame::processFinished, Qt::QueuedConnection);
-    connect(&m_games[pos]->game, &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
-    connect(&m_games[pos]->game, &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
-    m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
+    connect(m_games[pos]->process, &QProcess::started, m_games[pos]->game.get(), &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
+    connect(m_games[pos]->process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), m_games[pos]->game.get(), &NetworkGame::processFinished, Qt::QueuedConnection);
+    connect(m_games[pos]->game.get(), &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
+    connect(m_games[pos]->game.get(), &NetworkGame::sigClose, this, &MainServer::closeGame, Qt::QueuedConnection);
+    m_games[pos]->game->addClient(m_pGameServer->getClient(socketID));
     m_games[pos]->process->start(program, args);
-    m_games[pos]->game.setId(id);
+    m_games[pos]->game->setId(id);
 }
 
 bool MainServer::validHostRequest(QStringList mods)
@@ -224,11 +233,11 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     qint32 count = 0;
     for (const auto & game : qAsConst(m_games))
     {
-        if (!game->game.getData().getLaunched() &&
-            game->game.getSlaveRunning())
+        if (!game->game->getData().getLaunched() &&
+            game->game->getSlaveRunning())
         {
             count++;
-            game->game.getData().serializeObject(out);
+            game->game->getData().serializeObject(out);
         }
     }
     buffer.seek(sizePos);
@@ -242,15 +251,16 @@ void MainServer::closeGame(NetworkGame* pGame)
     CONSOLE_PRINT("Despawning game: " + pGame->getServerName(), Console::eDEBUG);
     for (qint32 i = 0; i < m_games.size(); i++)
     {
-        if (&m_games[i]->game == pGame)
+        if (m_games[i]->game.get() == pGame)
         {
-            m_games[i]->game.setSlaveRunning(false);
+            m_games[i]->game->setSlaveRunning(false);
             m_games[i]->process->kill();
             delete m_games[i]->process;
             connect(&m_games[i]->m_runner, &QThread::finished, [=]()
             {
                 emit sigRemoveGame(pGame);
             });
+            m_games[i]->game = nullptr;
             m_games[i]->m_runner.quit();
             m_updateGameData = true;
             break;
@@ -263,7 +273,7 @@ void MainServer::removeGame(NetworkGame* pGame)
 
     for (qint32 i2 = 0; i2 < m_games.size(); i2++)
     {
-        if (&m_games[i2]->game == pGame)
+        if (m_games[i2]->game.get() == pGame)
         {
             while (m_games[i2]->m_runner.isRunning())
             {

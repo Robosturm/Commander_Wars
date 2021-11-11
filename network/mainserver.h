@@ -77,7 +77,7 @@ private:
     {
     public:
         QProcess* process{nullptr};
-        NetworkGame game{nullptr};
+        spNetworkGame game;
         QThread m_runner;
     };
     explicit MainServer();

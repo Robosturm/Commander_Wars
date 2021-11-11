@@ -5901,5 +5901,39 @@
         <file>maps/commander_wars.camp/oilInTheDesert.js</file>
         <file>maps/commander_wars.camp/oilInTheDesert.map</file>
         <file>maps/commander_wars.jsm</file>
+        <file>resources/images/terrain/creeper.png</file>
+        <file>resources/images/terrain/creeper+E.png</file>
+        <file>resources/images/terrain/creeper+E+W.png</file>
+        <file>resources/images/terrain/creeper+NE.png</file>
+        <file>resources/images/terrain/creeper+NW.png</file>
+        <file>resources/images/terrain/creeper+SE.png</file>
+        <file>resources/images/terrain/creeper+SW.png</file>
+        <file>resources/images/terrain/creeper+W.png</file>
+        <file>resources/images/terrain/desert_wasteland+0.png</file>
+        <file>resources/images/terrain/desert_wasteland+1.png</file>
+        <file>resources/images/terrain/desert_wasteland+2.png</file>
+        <file>resources/images/terrain/desert_wasteland+3.png</file>
+        <file>resources/images/terrain/desert_wasteland+4.png</file>
+        <file>resources/images/terrain/desert_wasteland+5.png</file>
+        <file>resources/images/terrain/snow_wasteland+0.png</file>
+        <file>resources/images/terrain/snow_wasteland+1.png</file>
+        <file>resources/images/terrain/snow_wasteland+2.png</file>
+        <file>resources/images/terrain/snow_wasteland+3.png</file>
+        <file>resources/images/terrain/snow_wasteland+4.png</file>
+        <file>resources/images/terrain/snow_wasteland+5.png</file>
+        <file>resources/images/terrain/waste_wasteland+4.png</file>
+        <file>resources/images/terrain/waste_wasteland+5.png</file>
+        <file>resources/images/terrain/wasteland+4.png</file>
+        <file>resources/images/terrain/wasteland+5.png</file>
+        <file>resources/images/game/weather/weather_symbol_blizzard.png</file>
+        <file>resources/images/game/weather/weather_symbol_cloudy.png</file>
+        <file>resources/images/game/weather/weather_symbol_mist.png</file>
+        <file>resources/images/game/weather/weather_symbol_mist_alt.png</file>
+        <file>resources/images/game/weather/weather_symbol_partlycloudy.png</file>
+        <file>resources/images/game/weather/weather_symbol_rain_alt.png</file>
+        <file>resources/images/game/weather/weather_symbol_sandstorm_alt.png</file>
+        <file>resources/images/game/weather/weather_symbol_snow_alt.png</file>
+        <file>resources/images/game/weather/weather_symbol_thunderstorm.png</file>
+        <file>resources/scripts/gamerules/weather/weather_mist.js</file>
     </qresource>
 </RCC>

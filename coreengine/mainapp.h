@@ -148,7 +148,16 @@ public:
      * @return
      */
     const QString &getInitScript() const;
-
+    /**
+     * @brief getCreateSlaveLogs
+     * @return
+     */
+    bool getCreateSlaveLogs() const;
+    /**
+     * @brief setCreateSlaveLogs
+     * @param create
+     */
+    void setCreateSlaveLogs(bool create);
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -224,6 +233,7 @@ private:
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
     QString m_initScript;
+    bool m_createSlaveLogs{false};
 };
 
 #endif // MAINAPP_H

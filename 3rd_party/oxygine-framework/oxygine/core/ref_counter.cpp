@@ -31,19 +31,6 @@ namespace oxygine
             }
             else
             {
-                if (GameWindow::getWindow() != nullptr &&
-                    !GameWindow::getWindow()->getShuttingDown())
-                {
-                    if (dynamic_cast<oxygine::Texture*>(this) == nullptr &&
-                        dynamic_cast<SingleResAnim*>(this) == nullptr &&
-                        dynamic_cast<MapMover*>(this) == nullptr &&
-                        dynamic_cast<RxTask*>(this) == nullptr &&
-                        dynamic_cast<TxTask*>(this) == nullptr &&
-                        dynamic_cast<NetworkInterface*>(this) == nullptr)
-                    {
-                        handleErrorPolicy(oxygine::ep_show_error, "deleting object from different thread");
-                    }
-                }
                 pObj->deleteLater();
             }
         }

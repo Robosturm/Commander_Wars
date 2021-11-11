@@ -20,7 +20,7 @@ getFogOfWarColor = function()
 getFogOfMistColor = function()
 {
     // the color used for the fog of war overlay
-    return "#64B4B4B4";
+    return "#64DCDCDC";
 }
 
 getGridColor = function()

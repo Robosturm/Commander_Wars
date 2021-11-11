@@ -13,7 +13,7 @@ var Constructor = function()
 
     this.getWeatherSymbol = function()
     {
-        return "weather_symbol_snow";
+        return "weather_symbol_snow_alt";
     };
 
     this.activate = function(weather)

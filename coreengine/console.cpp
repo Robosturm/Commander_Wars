@@ -1511,13 +1511,16 @@ bool Console::onEditFinished()
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+
     static QMutex messageOutputMutex;
     QMutexLocker lock(&messageOutputMutex);
     static QFile file(Settings::getUserPath() + "console.log");
     if (!file.isOpen())
     {
         QStringList args = QCoreApplication::arguments();
-        if (args.contains("-slave"))
+        bool slave = args.contains("-slave");
+        if (slave &&
+            args.contains("-createSlaveLogs"))
         {
             QString slaveName = "slave";
             if (args.contains("-slaveServer"))
@@ -1525,8 +1528,12 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
                 slaveName = args[args.indexOf("-slaveServer") + 1];
             }
             file.setFileName(Settings::getUserPath() + slaveName + ".log");
+            file.open(QIODevice::WriteOnly);
         }
-        file.open(QIODevice::WriteOnly);
+        else if (!slave)
+        {
+            file.open(QIODevice::WriteOnly);
+        }
     }
     static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();
