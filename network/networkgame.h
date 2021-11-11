@@ -104,12 +104,15 @@ protected slots:
     void checkServerRunning();
     void sendPlayerJoined(qint32 player);
 private:
+    void closeGame();
+private:
     QVector<spTCPClient> m_Clients;
     LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
     QString m_serverName;
     QTimer m_timer;
     bool m_slaveRunning{false};
+    bool m_closing{false};
     NetworkGameData m_data;
     QString m_id;
 };

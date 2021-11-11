@@ -118,7 +118,7 @@ void NetworkGame::slaveRunning(QDataStream &stream)
     }
     else
     {
-        emit sigClose(this);
+        closeGame();
     }
 }
 
@@ -254,7 +254,7 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     if (isHost || m_Clients.size() == 0)
     {
         CONSOLE_PRINT("Networkgame Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);
-        emit sigClose(this);
+        closeGame();
     }
 }
 
@@ -265,7 +265,16 @@ void NetworkGame::processFinished(int value, QProcess::ExitStatus)
     {
         emit sigDisconnectSocket(m_Clients[i]->getSocketID());
     }
-    emit sigClose(this);
+    closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
     emit pInterpreter->sigNetworkGameFinished(value, m_id);
+}
+
+void NetworkGame::closeGame()
+{
+    if (!m_closing)
+    {
+        m_closing = true;
+        emit sigClose(this);
+    }
 }

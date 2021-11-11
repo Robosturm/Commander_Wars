@@ -1,5 +1,6 @@
 #include <QBuffer>
 #include <QFile>
+#include <QApplication>
 
 #include "network/mainserver.h"
 
@@ -97,14 +98,13 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     CONSOLE_PRINT("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
     for (const auto & game : qAsConst(m_games))
     {
-        if (game->game->getServerName() == slave)
+        if (game->game.get() != nullptr &&
+            game->game->getServerName() == slave &&
+            game->game->getSlaveRunning() &&
+            !game->game->getData().getLaunched())
         {
-            if (game->game->getSlaveRunning() &&
-                 !game->game->getData().getLaunched())
-            {
-                game->game->addClient(m_pGameServer->getClient(socketID));
-                connect(game->game.get(), &NetworkGame::sigDisconnectSocket, m_pGameServer.get(), &TCPServer::disconnectClient, Qt::QueuedConnection);
-            }
+            game->game->addClient(m_pGameServer->getClient(socketID));
+            connect(game->game.get(), &NetworkGame::sigDisconnectSocket, m_pGameServer.get(), &TCPServer::disconnectClient, Qt::QueuedConnection);
             found = true;
             break;
         }
@@ -233,7 +233,8 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     qint32 count = 0;
     for (const auto & game : qAsConst(m_games))
     {
-        if (!game->game->getData().getLaunched() &&
+        if (game->game.get() != nullptr &&
+            !game->game->getData().getLaunched() &&
             game->game->getSlaveRunning())
         {
             count++;
@@ -248,7 +249,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
 
 void MainServer::closeGame(NetworkGame* pGame)
 {
-    CONSOLE_PRINT("Despawning game: " + pGame->getServerName(), Console::eDEBUG);
+    CONSOLE_PRINT("Despawning games", Console::eDEBUG);
     for (qint32 i = 0; i < m_games.size(); i++)
     {
         if (m_games[i]->game.get() == pGame)
@@ -256,11 +257,11 @@ void MainServer::closeGame(NetworkGame* pGame)
             m_games[i]->game->setSlaveRunning(false);
             m_games[i]->process->kill();
             delete m_games[i]->process;
+            m_games[i]->game = nullptr;
             connect(&m_games[i]->m_runner, &QThread::finished, [=]()
             {
                 emit sigRemoveGame(pGame);
             });
-            m_games[i]->game = nullptr;
             m_games[i]->m_runner.quit();
             m_updateGameData = true;
             break;
@@ -270,14 +271,14 @@ void MainServer::closeGame(NetworkGame* pGame)
 
 void MainServer::removeGame(NetworkGame* pGame)
 {
-
     for (qint32 i2 = 0; i2 < m_games.size(); i2++)
     {
-        if (m_games[i2]->game.get() == pGame)
+        if (m_games[i2]->game.get() == nullptr)
         {
             while (m_games[i2]->m_runner.isRunning())
             {
-                QThread::msleep(1);
+                QApplication::processEvents();
+                m_games[i2]->m_runner.wait(1);
             }
             CONSOLE_PRINT("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
             m_games.removeAt(i2);
