@@ -320,6 +320,10 @@
         <image file="street+S+W.png" />
         <image file="street+W.png" />
         
+        <!-- creeper -->
+        <image file="creeper+0.png" />
+        <image file="creeper+1.png" />
+        
         <!-- river endings -->
         <image file="river+0+land+N+E+S+W.png" cols = "8" />
         <image file="river+1+land+N+E+S+W.png" cols = "8" />

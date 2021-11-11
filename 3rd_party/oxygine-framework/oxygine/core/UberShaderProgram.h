@@ -33,7 +33,7 @@ namespace oxygine
         explicit UberShaderProgram() = default;
         virtual ~UberShaderProgram();
         ShaderProgram* getShaderProgram(qint32 flags);
-        void apply(VideoDriver* driver, spTexture base);
+        void apply(VideoDriver* driver, spTexture & base);
         void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader, const QString& fracMatrixShader);
         void release();
     protected:

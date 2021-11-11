@@ -172,7 +172,7 @@ namespace oxygine
             return m_textures[sampler];
         }
 
-        void setTexture(qint32 sampler, const spTexture& t);
+        void setTexture(qint32 sampler, spTexture& t);
         void setBlendMode(VideoDriver::blend_mode blend);
         bool setShader(ShaderProgram* prog);
 

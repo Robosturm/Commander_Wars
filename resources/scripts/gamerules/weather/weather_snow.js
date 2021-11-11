@@ -49,6 +49,11 @@ var Constructor = function()
         }
         return 0;
     };
+
+    this.getDefaultWeatherChance = function()
+    {
+        return 10;
+    };
 }
 
 Constructor.prototype = WEATHER;

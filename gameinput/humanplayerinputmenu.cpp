@@ -135,7 +135,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStr
                 pItemBox->setWidth(width);
                 pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
                 {
-                    oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+                    oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
                     if (pTouchEvent != nullptr)
                     {
                         pTouchEvent->stopPropagation();
@@ -173,7 +173,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStr
         auto* pScrollbar = m_scrollbar.get();
         addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
@@ -327,7 +327,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     {
         pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 pEvent->stopPropagation();
@@ -347,7 +347,7 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     {
         pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 pEvent->stopPropagation();

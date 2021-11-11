@@ -39,32 +39,21 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
-        var x = terrain.getX();
-        var y = terrain.getY();     
-        if (typeof map !== 'undefined')
-        {
-            if (map.onMap(x, y - 1))
-            {
-                var building = map.getTerrain(x, y - 1).getBuilding();
-				if (building !== null)
-				{
-					surroundings = "";
-				}
-            }
-        }
-        if (surroundings === "")
-        {
-            terrain.loadBaseSprite("desert_rock+short");
-        }
-        else
+        var surroundings = terrain.getSurroundings("MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN", false, false, GameEnums.Directions_Direct, false);
+        var itemCount = surroundings.split("+").length - 1;
+        if (itemCount === 4)
         {
             terrain.loadBaseSprite("desert_rock");
         }
+        else
+        {
+            terrain.loadBaseSprite("desert_rock+short");
+        }
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.getMiniMapIcon = function()
     {
@@ -94,7 +83,7 @@ var Constructor = function()
     {
         return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
                 "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-                "<r>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</r>";
+                "<r>" + qsTr(" It reduces the firepower of units by 20%.") + "</r>";
     };
 
     this.getTerrainSprites = function()
@@ -109,7 +98,20 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_desertmountain";
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 1);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
+        return "back_desertmountain+" + rand.toString();
     };
 };
 Constructor.prototype = TERRAIN;

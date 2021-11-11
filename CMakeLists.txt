@@ -92,7 +92,7 @@ else("Release")
     else()
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
-            -DAUDIOSUPPORT
+            #-DAUDIOSUPPORT
         )
     endif()
 endif()
@@ -414,6 +414,7 @@ set(${PROJECT_NAME}_SRCS
 
     # terrain flow data
     game/jsData/terrainflowdata.cpp
+    game/jsData/campaignmapdata.cpp
 
     #ui
     game/ui/playerinfo.cpp

@@ -46,6 +46,7 @@ var Constructor = function()
                                 ["WASTE_FOREST", 3],
                                 ["WASTE_WASTELAND", 3],
                                 ["WASTE_RUIN", 1],
+                                ["CREEPER", 1],
                                 ["TELEPORTTILE", 0]];
 
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)

@@ -91,29 +91,16 @@ var Constructor = function()
     this.getVisionHide = function()
     {
         return true;
-    };
-    this.getFirerangeModifier = function(terrain, unit)
+    };    
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
-    this.getTerrainAnimationBase = function(unit, terrain)
-    {
-        return "base_desertforest";
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var rand = globals.randInt(0, 2);
-        return "back_desertforest+" + rand.toString();
-    };
-
     this.getDescription = function()
     {
         return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
-                "<div c='#00ff00'>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</div>";
+                "<div c='#00ff00'>" + qsTr(" It reduces the firepower of units by 20%") + "</div>";
     };
 
     this.getTerrainSprites = function()
@@ -136,7 +123,19 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 2);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 2);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         return "back_desertforest+" + rand.toString();
     };
 };

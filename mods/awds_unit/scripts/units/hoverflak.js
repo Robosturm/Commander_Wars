@@ -17,5 +17,5 @@ HOVERFLAK.init = function(unit)
 };
 HOVERFLAK.getBaseCost = function()
 {
-    return 9000;
+    return 8000;
 };

@@ -96,7 +96,7 @@ public:
      * @brief mutateNeuralNetwork
      * @param mutationChance
      */
-    void mutateAllWeights(double mutationChance);
+    void mutateAllWeights(double mutationChance, double mutationRate = 0.1f);
     qint32 getInputSize()
     {
         return m_configuration[0][Layer::LAYER_PARAMETER_SIZE];

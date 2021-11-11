@@ -112,7 +112,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     });
     m_BoxPlacementSelection->addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
            emit sigChangeScrollValue(pTouchEvent->wheelDirection.y);

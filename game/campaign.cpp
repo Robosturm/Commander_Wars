@@ -5,6 +5,7 @@
 
 #include "game/campaign.h"
 #include "game/gamemap.h"
+#include "game/jsData/campaignmapdata.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -211,6 +212,47 @@ QString Campaign::getDescription()
     }
     return "";
 }
+bool Campaign::getAutoSelectPlayerColors(GameMap* pMap)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pMap);
+    args << obj1;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAutoSelectPlayerColors", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    return false;
+}
+
+bool Campaign::getUsesCampaignMap()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getUsesCampaignMap", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    return false;
+}
+
+void Campaign::getCampaignMapData(CampaignMapData & pCampaignMapData)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(&pCampaignMapData);
+    args << obj1;
+    pInterpreter->doFunction(Campaign::scriptName, "getCampaignMapData", args);
+}
+
 void Campaign::serializeObject(QDataStream& pStream) const
 {
     CONSOLE_PRINT("storing campaign", Console::eDEBUG);

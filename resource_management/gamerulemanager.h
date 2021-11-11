@@ -50,6 +50,12 @@ public:
         return "";
     }
     /**
+     * @brief getDefaultWeatherChance
+     * @param weatherId
+     * @return
+     */
+    qint32 getDefaultWeatherChance(QString weatherId);
+    /**
      * @brief getWeatherCount
      * @return the amount of weathers loaded at the current time
      */

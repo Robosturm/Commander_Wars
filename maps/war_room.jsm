@@ -46,12 +46,14 @@ var Constructor = function()
 
     this.getCampaignFinished = function(campaign)
     {
-        // you can't win this campaign :P
         return false;
     };
     this.getAllowArmyCustomization = function(campaign, map)
     {
-        // if true you can change the army style and color for each player
+        return true;
+    };
+    this.getAutoSelectPlayerColors = function(campaign, map)
+    {
         return true;
     };
 };

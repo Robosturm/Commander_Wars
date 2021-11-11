@@ -140,7 +140,6 @@ bool GameMap::getIsHumanMatch() const
 
 void GameMap::registerMapAtInterpreter()
 {
-
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));

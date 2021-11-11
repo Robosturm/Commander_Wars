@@ -16,7 +16,7 @@ namespace oxygine
     std::atomic<qint32> ref_counter::m_jsInstanceCounter = 0;
 #ifdef MEMORYTRACING
     QMutex ref_counter::m_lock;
-    QVector<ref_counter*> ref_counter::m_objects;
+    std::vector<ref_counter*> ref_counter::m_objects;
 #endif
     void ref_counter::releaseRef()
     {
@@ -58,7 +58,19 @@ namespace oxygine
         --m_instanceCounter;
 #ifdef MEMORYTRACING
         m_lock.lock();
-        m_objects.removeOne(this);
+        auto cIter = m_objects.cbegin();
+        while (cIter != m_objects.cend())
+        {
+            if (*cIter == this)
+            {
+                m_objects.erase(cIter);
+                break;
+            }
+            else
+            {
+                ++cIter;
+            }
+        }
         m_lock.unlock();
 #endif
     }
@@ -68,7 +80,7 @@ namespace oxygine
         ++m_instanceCounter;
 #ifdef MEMORYTRACING
         m_lock.lock();
-        m_objects.append(pObj);
+        m_objects.push_back(pObj);
         m_lock.unlock();
 #endif
     }

@@ -481,7 +481,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
     m_pGraphBackground->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             emit sigFinishCurrentGraph();
@@ -494,7 +494,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     {
         // despawn slave process on finish
         CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
-        QCoreApplication::exit(0);
+        QCoreApplication::exit(pMap->getWinnerTeam());
     }
     else
     {
@@ -1058,6 +1058,7 @@ void VictoryMenue::onEnter()
     QString func = "onVictory";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;

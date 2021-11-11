@@ -892,7 +892,7 @@ qint32 Player::calcArmyValue()
     qint32 armyValue = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        armyValue += pUnits->at(i)->getUnitValue();
+        armyValue += pUnits->at(i)->getCoUnitValue();
     }
     return armyValue;
 }
@@ -1117,7 +1117,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                                 !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                             {
                                 m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                             }
@@ -1153,7 +1153,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 bool visionHide = visionField->getVisionHide(this);
                                 if ((!visionHide) ||
                                     ((pUnit != nullptr) && visionHide &&
-                                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                                     !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                                 {
                                     m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                                 }
@@ -1193,7 +1193,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                                 !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                             {
                                 m_FogVisionFields[point.x() + x][point.y() + y].m_visionType = GameEnums::VisionType_Clear;
                             }
@@ -1781,7 +1781,7 @@ qint32 Player::calculatePlayerStrength()
             if (pUnit != nullptr &&
                 pUnit->getOwner() == this)
             {
-                ret += pUnit->getUnitValue();
+                ret += pUnit->getCoUnitValue();
             }
         }
     }

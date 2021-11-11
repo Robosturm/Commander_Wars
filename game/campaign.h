@@ -6,13 +6,13 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
-
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class GameMap;
+class CampaignMapData;
 
 class Campaign;
-typedef oxygine::intrusive_ptr<Campaign> spCampaign;
+using spCampaign = oxygine::intrusive_ptr<Campaign>;
 
 class Campaign : public QObject, public FileSerializable, public oxygine::ref_counter
 {
@@ -110,6 +110,21 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getAutoSelectPlayerColors
+     * @return
+     */
+    bool getAutoSelectPlayerColors(GameMap* pMap);
+    /**
+     * @brief getUsesCampaignMap
+     * @return
+     */
+    bool getUsesCampaignMap();
+    /**
+     * @brief getCampaignMapData
+     * @param pCampaignMapData
+     */
+    void getCampaignMapData(CampaignMapData & pCampaignMapData);
 private:
     QString m_script;
     QString m_scriptFile;

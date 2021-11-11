@@ -96,6 +96,10 @@ var UNIT =
     {
         return true;
     },
+    useTerrainHide : function(unit)
+    {
+        return true;
+    },
     transportList : [],
     getTransportUnits : function(unit)
     {

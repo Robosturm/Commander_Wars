@@ -45,7 +45,10 @@ AudioThread::AudioThread()
 AudioThread::~AudioThread()
 {
 #ifdef AUDIOSUPPORT
-    m_player->m_player.stop();
+    if (m_player != nullptr)
+    {
+        m_player->m_player.stop();
+    }
     for (auto & cache : m_soundCaches)
     {
         for (qint32 i = 0; i < SoundData::MAX_SAME_SOUNDS; ++i)
@@ -301,6 +304,11 @@ void AudioThread::SlotClearPlayList()
         QApplication::processEvents();
         QThread::msleep(1);
     }
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     m_player->m_nextMedia = -1;
     m_player->m_player.stop();
     while (m_player->m_player.playbackState() == QMediaPlayer::PlayingState)
@@ -308,7 +316,17 @@ void AudioThread::SlotClearPlayList()
         QApplication::processEvents();
         QThread::msleep(1);
     }
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     m_player->m_player.setSource(QUrl());
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        QApplication::processEvents();
+        QThread::msleep(1);
+    }
     CONSOLE_PRINT("AudioThread::SlotClearPlayList() playlist cleared", Console::eDEBUG);
 #endif
 }

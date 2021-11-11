@@ -34,9 +34,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.getFirerangeModifier = function(terrain, unit)
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        return -1;
+        return -20;
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -113,7 +114,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.");
+        return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firepower of units by 20%.");
     };
     this.getTerrainSprites = function()
     {

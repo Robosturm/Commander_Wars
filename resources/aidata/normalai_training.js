@@ -3,12 +3,15 @@ var Init =
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Amber Valley.map",           // map that will be used for training
-    mutationRate    = 0.1,                          // chance for a weight to mutate at random
+    playerCount     = 2,
+    mutationChance  = 0.1,                          // chance for a weight to mutate at random
+    mutationRate    = 0.2,                          // chance for a weight to mutate at random
     fogOfWar        = GameEnums.Fog_Off,            // fog of war rule for training
     maxRuns         = 4000,                         // maximum amount of iterations
     turnLimit       = 40,
+    logLevel        = 1,
     // ai's and names that will be used for training
-    topAis          = 3,
+    topAis          = 4,
     trainingAis     =  [["normal1.ini",   2],
                         ["normal2.ini",   2],
                         ["normal3.ini",   2],
@@ -21,17 +24,25 @@ var Init =
                         ["normal10.ini",  2],
                         ["normal11.ini",  2],
                         ["normal12.ini",  2],
-    ],
+                        ["normal13.ini",  2],
+                        ["normal14.ini",  2],
+                        ["normal15.ini",  2],
+                        ["normal16.ini",  2],
+    ],    
+    cores = 5, // amount of games started at the same time
     // internal data
     startAi = 0,
     rotationStartAi = 0,
     rotationCount = 0,
-    currentMatch = [],
-    matchData   = [],
+    matchData   = [],   // array with final score results
+    battleData = [],    // matrix containing data about all matches
     runCount    = 0,
-    logLevel    = 1,
     cos = ["CO_ANDY", "CO_JESS"],
     start = false,
+    coreData = [],
+    runNextBattle = 0,
+    sleep = 1,
+    nextRun = 2,
     main = function(menu)
     {
         if (Init.start === false)
@@ -39,25 +50,14 @@ var Init =
             Init.selectCos();
             Init.start = true;
         }
-        if (Init.runCount < Init.maxRuns)
-        {
-            menu.enterSingleplayer();
-        }
+        Init.startAllCores();
     },
 
-    mapsSelection = function(menu)
+    startAllCores = function()
     {
-        GameConsole.print("Preparing next match", Init.logLevel);
-        menu.selectMap(Init.trainingFolder, Init.trainingMap);
-        menu.buttonNext();
-        menu.buttonNext();
-        var gameRules = map.getGameRules();
-        gameRules.addVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
-        var victoryRule = gameRules.getVictoryRule("VICTORYRULE_TURNLIMIT_CAPTURE_RACE");
-        victoryRule.setRuleValue(Init.turnLimit, 0);
-        var selection = menu.getPlayerSelection();
-        var playerCount = map.getPlayerCount();
-        Init.currentMatch = [];
+        // reset all cores
+        Init.coreData = [];
+        // reload match data after reset or initial run
         if (Init.matchData.length === 0)
         {
             for (var i = 0; i < Init.trainingAis.length; ++i)
@@ -65,14 +65,54 @@ var Init =
                 Init.matchData.push(0);
             }
         }
-        gameRules.setFogMode(Init.fogOfWar);
-        gameRules.setRandomWeather(false);
-        for (var i = 0; i < playerCount; ++i)
+        if (Init.battleData.length === 0)
+        {
+            for (var ai = 0; ai < Init.trainingAis.length; ++ai)
+            {
+                Init.battleData.push([]);
+                for (var ai2 = 0; ai2 < Init.trainingAis.length; ++ai2)
+                {
+                    Init.battleData[ai].push(0);
+                }
+            }
+        }
+        for (var i = 0; i < Init.cores; ++i)
+        {
+            Init.coreData.push(["Core" + i.toString(), false, []]);
+            Init.startRemoteGame(i);
+        }
+    },
+
+    startRemoteGame = function(coreIndex)
+    {
+        GameConsole.print("Preparing next match", Init.logLevel);
+        Init.coreData[coreIndex][1] = false;
+        Init.coreData[coreIndex][2] = [];
+        var map = Init.trainingFolder + Init.trainingMap;
+        var script = "var Init =\n" +
+                "{\n" +
+                "main = function(menu)\n" +
+                "{\n" +
+                "menu.enterSingleplayer();\n" +
+                "},\n" +
+                "mapsSelection = function(menu)\n" +
+                "{\n" +
+                "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");\n" +
+                "menu.buttonNext();\n" +
+                "menu.buttonNext();\n" +
+                "var gameRules = map.getGameRules();\n" +
+                "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
+                "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
+                "gameRules.setRandomWeather(false);\n" +
+                "var selection = menu.getPlayerSelection();\n";
+        for (var i = 0; i < Init.playerCount; ++i)
         {
             var playerIdx = Init.rotationCount + i;
-            if (playerIdx >= playerCount)
+            if (playerIdx >= Init.playerCount)
             {
-                playerIdx -= playerCount;
+                playerIdx -= Init.playerCount;
             }
             var aiIdx = Init.rotationStartAi + i;
             if (i == 0)
@@ -80,49 +120,114 @@ var Init =
                 aiIdx = Init.startAi;
             }
             GameConsole.print("Using ai at index " + aiIdx + " for player " + playerIdx, Init.logLevel);
-            selection.selectPlayerAi(playerIdx, Init.trainingAis[aiIdx][1]);
             GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
-            Init.currentMatch.push(aiIdx);
-            selection.playerCO1Changed(Init.cos[0], i);
-            selection.playerCO2Changed(Init.cos[1], i);
-            map.getPlayer(playerIdx).getBaseGameInput().readIni(Init.trainingAis[aiIdx][0]);
+            script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
+            Init.coreData[coreIndex][2].push(aiIdx);
+            script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
+            script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
         }
-        menu.startGame();
+        script += "menu.startGame();\n" +
+                "},\n" +
+                "}";
+
+        mainServer.startRemoteGame(script, Init.coreData[coreIndex][0]);
     },
 
-    onVictory = function(menu)
+    onRemoteGameFinished = function(winner, core)
     {
-        if (Init.evaluateMatch())
+        var coreIndex = 0;
+        for (var i = 0; i < Init.cores; ++i)
+        {
+            if (Init.coreData[0][0] === core)
+            {
+                coreIndex = i;
+                break;
+            }
+        }
+        Init.coreData[coreIndex][1] = true;
+        var state = Init.evaluateMatch(winner, coreIndex);
+        if (state === Init.nextRun)
         {
             Init.prepareNextRun();
+            Init.startAllCores();
         }
-        menu.exitMenue();
+        else if (state === Init.runNextBattle)
+        {
+            Init.startRemoteGame(coreIndex);
+        }
     },
 
-    evaluateMatch = function()
+    evaluateMatch = function(team, coreIndex)
     {
-        var playerCount = map.getPlayerCount();
-        var team = map.getGameRules().getVictoryTeam();
-        var nextRound = false;
+        var playerCount = Init.playerCount;
+        var nextRound = Init.runNextBattle;
         if (team >= 0)
         {
-            var winnerAi = Init.currentMatch[team];
+            var winnerAi = Init.coreData[coreIndex][2][team];
             GameConsole.print("Winning Ai is " + Init.trainingAis[winnerAi][0], Init.logLevel);
-            Init.matchData[winnerAi] += 1;
+            for (var i = 0; i < Init.coreData[coreIndex][2]; i)
+            {
+                var ai = Init.coreData[coreIndex][2][i];
+                if (ai !== winnerAi)
+                {
+                    Init.battleData[winnerAi][ai] += 1;
+                }
+            }
         }
         Init.rotationCount += 1;
         if (Init.rotationCount === playerCount)
         {
             Init.rotationCount = 0;
             Init.rotationStartAi += 1;
+
             if (Init.rotationStartAi > Init.trainingAis.length - playerCount)
             {
-                GameConsole.print("Going for next match up", Init.logLevel);
+                GameConsole.print("Going for next match up", Init.logLevel);                
                 Init.startAi += 1;
                 Init.rotationStartAi = Init.startAi;
                 if (Init.startAi > Init.trainingAis.length - playerCount)
                 {
-                    nextRound = true;
+                    nextRound = Init.nextRun;
+                    for (var i = 0; i < Init.cores; ++i)
+                    {
+                        if (Init.coreData[0][1] === false)
+                        {
+                            // not all cores are idle waiting for all games to be finished
+                            nextRound = Init.sleep;
+                            break;
+                        }
+                    }                    
+                }
+            }
+        }
+        if (nextRound === Init.nextRun)
+        {
+            for (var ai = 0; ai < Init.trainingAis.length; ++ai)
+            {
+                for (var ai2 = 0; ai2 < Init.trainingAis.length; ++ai2)
+                {
+                    if (ai !== ai2)
+                    {
+                        var wonBattles = Init.battleData[ai][ai2];
+                        if (wonBattles > 0)
+                        {
+                            var possibleBattles = Init.playerCount;
+                            var score = 0;
+                            if (wonBattles === 1)
+                            {
+                                score = 1;
+                            }
+                            else if (wonBattles > wonBattles / 2)
+                            {
+                                score = (wonBattles - 1) * 3;
+                            }
+                            else
+                            {
+                                score = (wonBattles - 1) * 2;
+                            }
+                            Init.matchData[ai] += score;
+                        }
+                    }
                 }
             }
         }
@@ -183,12 +288,7 @@ var Init =
             }
             if (mutate)
             {
-                var ai = mutateCount % Init.topAis;
-                GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
-                var dummyAi = map.getPlayer(0).getBaseGameInput();
-                dummyAi.readIni(aiNames[ai]);
-                dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationRate);
-                ++mutateCount;
+                mutateCount = Init.mutate(mutateCount);
             }
         }
         Init.runCount = Init.runCount + 1;
@@ -197,9 +297,20 @@ var Init =
         Init.startAi = 0;
         Init.rotationStartAi = 0;
         Init.rotationCount = 0;
-        Init.currentMatch = [];
         Init.matchData = [];
+        Init.battleData = [];
         Init.selectCos();
+    },
+
+    mutate = function(mutateCount)
+    {
+        var ai = mutateCount % Init.topAis;
+        GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
+        var dummyAi = map.getPlayer(0).getBaseGameInput();
+        dummyAi.readIni(aiNames[ai]);
+        dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
+        ++mutateCount;
+        return mutateCount;
     },
 
     selectCos = function()
@@ -220,4 +331,3 @@ var Init =
         Init.cos[1] = cos[index2];
     }
 }
-

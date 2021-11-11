@@ -891,7 +891,7 @@ void Settings::loadSettings()
     m_mouseSensitivity           = settings.value("MouseSensitivity", -0.75f).toFloat(&ok);
     if(!ok)
     {
-        QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
+        QString error = "Error in the Ini File: [%General] Setting: MouseSensitivity";
         CONSOLE_PRINT(error, Console::eERROR);
         m_mouseSensitivity = -0.75f;
     }

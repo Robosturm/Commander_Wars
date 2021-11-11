@@ -158,7 +158,7 @@ EditorMenue::EditorMenue()
     Cursor* pCursor = m_Cursor.get();
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             static qint32 lastX = -1;
@@ -216,6 +216,7 @@ void EditorMenue::onEnter()
     QString func = "mapEditorMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
@@ -1376,9 +1377,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
-
-            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(spUnit());
-
+            spUnit pUnit;
+            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
@@ -1970,7 +1970,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
+                                        spUnit pUnit;
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());

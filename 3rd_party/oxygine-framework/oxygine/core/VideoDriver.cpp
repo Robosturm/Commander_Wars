@@ -149,7 +149,7 @@ namespace oxygine
         return scrTest ? true : false;
     }
 
-    void VideoDriver::setRenderTarget(spTexture rt)
+    void VideoDriver::setRenderTarget(spTexture & rt)
     {
         m_rt = rt;
     }
@@ -264,7 +264,7 @@ namespace oxygine
         m_pShaderProgram = prog_;
     }
 
-    void VideoDriver::setTexture(qint32 sampler, spTexture t)
+    void VideoDriver::setTexture(qint32 sampler, spTexture & t)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE0 + sampler);

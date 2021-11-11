@@ -142,6 +142,9 @@ public:
     bool isValid();
 
 
+    QPoint getTest() const;
+    void setTest(QPoint newTest);
+
 public slots:
     /**
      * @brief getHasFlowDirection
@@ -308,6 +311,11 @@ public slots:
      * @return
      */
     qint32 getBonusVision(Unit* pUnit);
+    /**
+     * @brief isLoadingTile
+     * @return
+     */
+    bool isLoadingTile();
     /**
      * @brief getUnit the unit on this terrain
      * @return
@@ -544,6 +552,8 @@ private:
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
+
+    QPoint m_test;
 };
 
 #endif // TERRAIN_H

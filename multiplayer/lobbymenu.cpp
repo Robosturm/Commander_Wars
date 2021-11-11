@@ -30,7 +30,8 @@ LobbyMenu::LobbyMenu()
 
     if (!Settings::getServer())
     {
-        m_pTCPClient = spTCPClient::create();
+        m_pTCPClient = spTCPClient::create(nullptr);
+        m_pTCPClient->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
     }

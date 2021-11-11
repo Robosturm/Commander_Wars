@@ -120,14 +120,22 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
         pEvent->stopPropagation();
         setSliding(false);
     });
+    m_slider->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
+    {
+        if (m_enabled)
+        {
+            pEvent->stopPropagation();
+        }
+    });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
         scroll(pEvent);
     });
+
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
            emit sigChangeScrollValue(-pTouchEvent->wheelDirection.y / m_ContentHeigth);
@@ -142,7 +150,7 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
     if (m_sliding)
     {
         pEvent->stopPropagation();
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             qint32 y = pTouchEvent->localPosition.y - m_slider->getHeight() / 2;

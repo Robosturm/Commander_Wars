@@ -107,15 +107,26 @@ var TERRAIN =
 
     getTerrainAnimationForeground : function(unit, terrain, defender)
     {
-        var rand = globals.randInt(0, 3);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("FOREGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 3);
+            variable = variables.createVariable("FOREGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         var foreground = TERRAIN.getFactoryForeground(terrain);
-        var weather = map.getGameRules().getCurrentWeather().getWeatherId();
         if (foreground !== "")
         {
             return foreground;
         }
         var weatherModifier = TERRAIN.getWeatherModifier();
-        return "fore_" + weatherModifier +"plains+" + rand.toString();
+        return "fore_" + weatherModifier + "plains+" + rand.toString();
     },
 
     getFactoryForeground : function(terrain)
@@ -129,10 +140,23 @@ var TERRAIN =
             if (upBuilding !== null &&
                 upBuilding.getBuildingID() === "ZBLACKHOLE_FACTORY")
             {
-                rand = globals.randInt(0, 1);
+                var variables = terrain.getVariables();
+                var variable = variables.getVariable("FOREGROUND_ID");
+                var rand = 0;
+                if (variable === null)
+                {
+                    rand = globals.randInt(0, 1);
+                    variable = variables.createVariable("FOREGROUND_ID");
+                    variable.writeDataInt32(rand);
+                }
+                else
+                {
+                    rand = variable.readDataInt32();
+                }
                 return "fore_factory+" + rand.toString();
             }
         }
+        return "";
     },
 
     getTerrainAnimationId : function(terrain)
@@ -166,8 +190,8 @@ var TERRAIN =
 
     weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",        ""]],
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
-                     ["weather_rain",         [Qt.point(-1, 3),   "rain",    "over_rain"]],
-                     ["weather_sandstorm",    [Qt.point(6, 2),    "desert",  "over_sandstorm"]],],
+                     ["weather_rain",         [Qt.point(-2, 6),   "rain",    "over_rain"]],
+                     ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],],
 
     getWeatherModifier : function()
     {
@@ -335,5 +359,10 @@ var TERRAIN =
     // gets called with a terrain pfs in order to create the flow sprites
     updateFlowSprites : function(terrain, pPfs)
     {
+    },
+    isLoadingTile :  function(terrain)
+    {
+        // hint for the ai to try to move away if it can't do anything with a unit
+        return false;
     },
 };

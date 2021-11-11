@@ -77,6 +77,7 @@ void GameScript::init()
         }
         else
         {
+            CONSOLE_PRINT("Unable to load map script " + file.fileName(), Console::eWARNING);
             m_scriptFile = "";
             m_script = "";
             m_loaded = false;
@@ -142,7 +143,7 @@ void GameScript::gameStart()
     }
 }
 
-void GameScript::actionDone(spGameAction pAction)
+void GameScript::actionDone(spGameAction & pAction)
 {
     if (m_loaded)
     {

@@ -51,7 +51,7 @@ public:
     static void reloadInterpreter(const QString & runtime);
 
 signals:
-
+    void sigNetworkGameFinished(qint32 value, QString id);
 public slots:
     void openScript(const QString & script, bool setup);
     void loadScript(const QString & content, const QString & script);
@@ -92,7 +92,8 @@ public slots:
      * @return
      */
     bool exists(const QString & object, const QString & function);
-
+private slots:
+    void networkGameFinished(qint32 value, QString id);
 private:
     friend class oxygine::intrusive_ptr<Interpreter>;
     explicit Interpreter();    

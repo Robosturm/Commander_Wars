@@ -844,8 +844,8 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
     startBattleTimer(firedDuration);
 }
 
-void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
-                                          oxygine::spBox9Sprite pHealthbar, float endHp, qint32 weapon, float enemyHp)
+void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, spBattleAnimationSprite & pAttackerSprite,
+                                          oxygine::spBox9Sprite & pHealthbar, float endHp, qint32 weapon, float enemyHp)
 {    
     if (endHp < 0.0f)
     {
@@ -906,14 +906,14 @@ qint32 BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit
     }
 }
 
-void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)
+void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite & pSprite, qint32 weapon)
 {
     pSprite->loadAnimation(BattleAnimationSprite::dyingAnimation, pUnit1, pUnit2, weapon);
     setSpriteFlipped(pSprite, pUnit1, pUnit2);
     startBattleTimer(pSprite->getDyingDurationMS(pUnit1, pUnit2, weapon));
 }
 
-void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
+void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite & pSprite)
 {
     constexpr qint32 fadeoutTime = 1000;
     qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 100);

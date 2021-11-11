@@ -19,7 +19,7 @@ namespace oxygine
         virtual void _load() = 0;
         virtual void _unload() = 0;
         spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
-        static void init_resAnim(spResAnim rs, const QString & file, const QDomElement & node);
+        static void init_resAnim(spResAnim & rs, const QString & file, const QDomElement & node);
         void loadBase(QDomElement node);
     protected:
         //settings from xml

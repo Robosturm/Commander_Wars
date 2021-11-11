@@ -1131,6 +1131,24 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     }
 }
 
+bool Terrain::isLoadingTile()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "isLoadingTile";
+    QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void Terrain::startOfTurn()
 {
     if (m_hasStartOfTurn)

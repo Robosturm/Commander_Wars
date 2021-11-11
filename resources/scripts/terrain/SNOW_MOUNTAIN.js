@@ -39,27 +39,15 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PLAINS,DESERT,SNOW,WASTE,MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN,", false, false, GameEnums.Directions_North, false);
-        var x = terrain.getX();
-        var y = terrain.getY();     
-        if (typeof map !== 'undefined')
+        var surroundings = terrain.getSurroundings("MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN", false, false, GameEnums.Directions_Direct, false);
+        var itemCount = surroundings.split("+").length - 1;
+        if (itemCount === 4)
         {
-            if (map.onMap(x, y - 1))
-            {
-                var building = map.getTerrain(x, y - 1).getBuilding();
-				if (building !== null)
-				{
-					surroundings = "";
-				}
-            }
-        }
-        if (surroundings === "")
-        {
-            terrain.loadBaseSprite("snow_mountain+short");
+            terrain.loadBaseSprite("snow_mountain");
         }
         else
         {
-            terrain.loadBaseSprite("snow_mountain");
+            terrain.loadBaseSprite("snow_mountain+short");
         }
     };
     this.getMiniMapIcon = function()
@@ -94,7 +82,19 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 1);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("BACKGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 1);
+            variable = variables.createVariable("BACKGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         return "back_snowmountain+" + rand.toString();
     };
 };

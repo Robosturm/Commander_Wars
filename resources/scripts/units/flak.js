@@ -37,7 +37,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 8000;
+        return 7000;
     };
     this.getName = function()
     {

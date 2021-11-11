@@ -122,7 +122,17 @@ void WorkerThread::start()
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
 
-    if (QFile::exists("init.js"))
+    if (pApp->getSlave())
+    {
+        QString script = pApp->getInitScript();
+        if (!script.isEmpty())
+        {
+            CONSOLE_PRINT("Remote script is present and will be loaded", Console::eDEBUG);
+            CONSOLE_PRINT("Remote Script=" + script, Console::eDEBUG);
+            pInterpreter->evaluate(script, "remoteInit.js");
+        }
+    }
+    else if (QFile::exists("init.js"))
     {
         CONSOLE_PRINT("Init script is present and will be loaded", Console::eDEBUG);
         pInterpreter->openScript("init.js", true);
@@ -212,7 +222,8 @@ void WorkerThread::startSlaveGame()
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->hide();
-    spLocalServer pServer = spLocalServer::create();
+    spLocalServer pServer = spLocalServer::create(nullptr);
+    pServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
     spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);
     pMenu->connectNetworkSlots();
     oxygine::Stage::getStage()->addChild(pMenu);

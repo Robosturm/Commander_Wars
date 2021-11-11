@@ -47,6 +47,11 @@ var Constructor = function()
             queueAnimation.queueAnimation(animation);
         }
     };
+
+    this.getDefaultWeatherChance = function()
+    {
+        return 10;
+    };
 }
 
 Constructor.prototype = WEATHER;

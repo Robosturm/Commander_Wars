@@ -447,6 +447,12 @@
         <image file="icon_dm.png"/>
         <image file="icon_co_army.png"/>
         
+        <!-- campaign stuff -->
+        <image file="campaignFlag.png" cols = "4" scale_factor = "2" />
+        <image file="campaignFlagDone.png" cols = "4" scale_factor = "2" />
+        <image file="campaignFlagAppear.png" cols = "12" scale_factor = "2" />
+        <image file="campaignMapDone.png" cols = "22" scale_factor = "2" />
+        
     </atlas>
 </resources>
 

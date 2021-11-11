@@ -119,7 +119,7 @@ namespace oxygine
         m_destRect.pos.y = m_frameSize.y - m_destRect.getBottom();
     }
 
-    AnimationFrame::AnimationFrame(spTexture t)
+    AnimationFrame::AnimationFrame(spTexture & t)
     {
         m_row = m_column = 0;
         m_resAnim = 0;

@@ -11,7 +11,7 @@ class LocalClient : public NetworkInterface
 {
     Q_OBJECT
 public:
-    LocalClient();
+    LocalClient(QObject* pParent);
     virtual ~LocalClient();
 public slots:
     virtual void connectTCP(QString adress, quint16) override;

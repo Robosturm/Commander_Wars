@@ -185,6 +185,7 @@ void OptionMenue::onEnter()
     QString func = "optionMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;

@@ -375,6 +375,10 @@ var Constructor = function()
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(player).setBuildList(list);
     };
+    this.getAutoSelectPlayerColors = function(campaign, map)
+    {
+        return true;
+    };
 };
 
 Constructor.prototype = BASECAMPAIGN;

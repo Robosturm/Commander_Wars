@@ -536,7 +536,7 @@ namespace oxygine
         setSize(Vector2(m_size.x, h));
     }
 
-    void Actor::setClock(spClock clock)
+    void Actor::setClock(spClock & clock)
     {
         m_clock = clock;
     }
@@ -677,7 +677,7 @@ namespace oxygine
         }
     }
 
-    void Actor::insertActor(spActor actor)
+    void Actor::insertActor(spActor & actor)
     {
         qint32 z = actor->getPriority();
         auto iter = m_children.cend();
@@ -717,7 +717,7 @@ namespace oxygine
         setParent(actor.get(), this);
     }
 
-    void Actor::removeChild(spActor actor)
+    void Actor::removeChild(spActor & actor)
     {
         QMutexLocker lock(&m_Locked);
         QMutexLocker lockActor(&(actor->m_Locked));
@@ -767,7 +767,8 @@ namespace oxygine
         Actor* parent = getParent();
         if (parent)
         {
-            parent->removeChild(spActor(this));
+            spActor pActor(this);
+            parent->removeChild(pActor);
         }
         return parent;
     }
@@ -985,7 +986,7 @@ namespace oxygine
         return __addTween(tween, false);
     }
 
-    void Actor::removeTween(spTween pTween)
+    void Actor::removeTween(spTween & pTween)
     {
         QMutexLocker lock(&m_Locked);
         if (pTween.get() == nullptr)
@@ -1031,7 +1032,7 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 Actor::convert_global2local(spActor child, spActor parent, const Vector2& pos)
+    Vector2 Actor::convert_global2local(spActor & child, spActor & parent, const Vector2& pos)
     {
         return convert_global2local_(child.get(), parent.get(), pos);
     }
@@ -1052,7 +1053,7 @@ namespace oxygine
         return convert_local2global_(child.get(), parent.get(), pos);
     }
 
-    Vector2 Actor::convert_local2stage(spActor actor, const Vector2& pos, spActor root)
+    Vector2 Actor::convert_local2stage(spActor & actor, const Vector2& pos, spActor root)
     {
         if (!root)
         {
@@ -1070,7 +1071,7 @@ namespace oxygine
         return convert_local2global_(actor, root, pos);
     }
 
-    Vector2 Actor::convert_stage2local(spActor actor, const Vector2& pos, spActor root)
+    Vector2 Actor::convert_stage2local(spActor & actor, const Vector2& pos, spActor root)
     {
         if (!root)
         {

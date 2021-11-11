@@ -165,10 +165,18 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             emit sigFocusedLost();
         }
     });
+    m_slider->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event* pEvent)
+    {
+        if (m_enabled)
+        {
+            pEvent->stopPropagation();
+        }
+    });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
             scroll(pEvent);
         }
     });
@@ -191,7 +199,7 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
     if (m_sliding)
     {
         pEvent->stopPropagation();
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             qint32 x = pTouchEvent->localPosition.x - m_slider->getWidth() / 2;

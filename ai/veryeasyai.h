@@ -40,26 +40,26 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool performActionSteps(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits,
-                            spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
+                            spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief captureBuildings
      * @param pUnits
      * @return
      */
-    bool captureBuildings(spQmlVectorUnit pUnits);
+    bool captureBuildings(spQmlVectorUnit & pUnits);
     /**
      * @brief fireWithIndirectUnits
      * @param pUnits
      * @return
      */
-    bool fireWithIndirectUnits(spQmlVectorUnit pUnits);
+    bool fireWithIndirectUnits(spQmlVectorUnit & pUnits);
     /**
      * @brief fireWithDirectUnits
      * @param pUnits
      * @return
      */
-    bool fireWithDirectUnits(spQmlVectorUnit pUnits);
+    bool fireWithDirectUnits(spQmlVectorUnit & pUnits);
     /**
      * @brief attack
      * @param pUnit
@@ -74,17 +74,17 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
-                    spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings, bool supportUnits = false);
+    bool moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings,
+                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings, bool supportUnits = false);
 
-    bool moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+    bool moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
 
     /**
      * @brief loadUnits
      * @param pUnits
      * @return
      */
-    bool loadUnits(spQmlVectorUnit pUnits);
+    bool loadUnits(spQmlVectorUnit & pUnits);
     /**
      * @brief VeryEasyAI::moveUnit
      * @param pAction
@@ -94,7 +94,7 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(spGameAction pAction, Unit* pUnit, QStringList& actions,
+    bool moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload = false);
     /**
      * @brief buildUnits
@@ -102,7 +102,7 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits);
+    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits);
     /**
      * @brief finishTurn
      */

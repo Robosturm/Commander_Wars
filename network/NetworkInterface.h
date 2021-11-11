@@ -44,9 +44,11 @@ public:
         Max,
     };
 
-    explicit NetworkInterface()
-        : isServer(false),
+    explicit NetworkInterface(QObject* pParent)
+        : QObject(pParent),
+          isServer(false),
           isConnected(false)
+
     {
         connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);

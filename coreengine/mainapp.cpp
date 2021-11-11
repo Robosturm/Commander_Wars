@@ -321,13 +321,13 @@ void Mainapp::nextStartUpStep(StartupPhase step)
                 MainServer::getInstance();
                 m_GameServerThread.start(QThread::Priority::NormalPriority);
             }
-            if (!m_slave)
+            if (m_slave && m_initScript.isEmpty())
             {
-                emit m_Worker->sigShowMainwindow();
+                emit m_Worker->sigStartSlaveGame();
             }
             else
             {
-                emit m_Worker->sigStartSlaveGame();
+                emit m_Worker->sigShowMainwindow();
             }
             break;
         }
@@ -618,6 +618,10 @@ void Mainapp::loadArgs(const QStringList & args)
     {
         Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
     }
+    if (args.contains("-initScript"))
+    {
+        m_initScript = args[args.indexOf("-initScript") + 1];
+    }
 }
 
 void Mainapp::onActiveChanged()
@@ -705,4 +709,20 @@ void Mainapp::onQuit()
         m_Networkthread.wait();
     }
     QApplication::processEvents();
+    CONSOLE_PRINT("Shutting down game server", Console::eDEBUG);
+    if (m_GameServerThread.isRunning())
+    {
+        if (MainServer::exists())
+        {
+            MainServer::getInstance()->release();
+        }
+        m_GameServerThread.quit();
+        m_GameServerThread.wait();
+    }
+    QApplication::processEvents();
+}
+
+const QString &Mainapp::getInitScript() const
+{
+    return m_initScript;
 }

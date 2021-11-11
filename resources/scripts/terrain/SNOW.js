@@ -51,7 +51,19 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        var rand = globals.randInt(0, 3);
+        var variables = terrain.getVariables();
+        var variable = variables.getVariable("FOREGROUND_ID");
+        var rand = 0;
+        if (variable === null)
+        {
+            rand = globals.randInt(0, 3);
+            variable = variables.createVariable("FOREGROUND_ID");
+            variable.writeDataInt32(rand);
+        }
+        else
+        {
+            rand = variable.readDataInt32();
+        }
         return "fore_snowplains+" + rand.toString();
     };
     this.getTerrainAnimationBackground = function(unit, terrain)

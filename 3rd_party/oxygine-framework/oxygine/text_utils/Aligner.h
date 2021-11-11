@@ -32,7 +32,7 @@ namespace oxygine
         {
         public:
             using line = QVector<Symbol*>;
-            explicit Aligner(const TextStyle& style, spMaterial mat, const Font* font, float gscale, const Vector2& size);
+            explicit Aligner(const TextStyle& style, spMaterial & mat, const Font* font, float gscale, const Vector2& size);
             virtual ~Aligner() = default;
             const TextStyle& getStyle() const
             {
@@ -59,7 +59,7 @@ namespace oxygine
             {
                 return m_mat;
             }
-            void setMat(spMaterial newMat)
+            void setMat(spMaterial & newMat)
             {
                 m_mat = newMat;
             }

@@ -182,7 +182,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
            emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y / 100) + m_currentStartIndex);

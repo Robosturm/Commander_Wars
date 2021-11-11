@@ -56,4 +56,18 @@ var BASECAMPAIGN =
         // if true you can change the army style and color for each player
         return false;
     },
+
+    getAutoSelectPlayerColors : function(campaign, map)
+    {
+        // if true the player colors get adjusted whenever the first co gets changed
+        return false;
+    },
+
+    getUsesCampaignMap : function(campaign)
+    {
+        return false;
+    },
+    getCampaignMapData : function(campaign, data)
+    {
+    }
 };
