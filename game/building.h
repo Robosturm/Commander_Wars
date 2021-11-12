@@ -193,13 +193,13 @@ public slots:
      * @param sprite the sprite id
      * @param addPlayerColor true for adding player color to the sprite
      */
-    void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 500);
+    void loadSprite(const QString & sprite, bool addPlayerColor, qint32 frameTime = 400);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 500);
+    void loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime = 400);
     /**
      * @brief updatePlayerColor
      * @param visible

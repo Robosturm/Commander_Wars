@@ -267,7 +267,7 @@ void NetworkGame::processFinished(int value, QProcess::ExitStatus)
     }
     closeGame();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    emit pInterpreter->sigNetworkGameFinished(value, m_id);
+    emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);
 }
 
 void NetworkGame::closeGame()

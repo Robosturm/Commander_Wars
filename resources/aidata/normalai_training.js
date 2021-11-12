@@ -45,16 +45,40 @@ var Init =
     nextRun = 2,
     main = function(menu)
     {
+        menu.enterSingleplayer();
+    },
+
+    mapsSelection = function(menu)
+    {
+        menu.selectMap(Init.trainingFolder, Init.trainingMap);
+        menu.buttonNext();
+        menu.buttonNext();
+        var selection = menu.getPlayerSelection();
+        for (var i = 0; i < Init.playerCount; ++i)
+        {
+            selection.selectPlayerAi(0, Init.trainingAis[0][1]);
+        }
+        menu.startGame();
+    },
+
+    gameMenu = function(menu)
+    {
+        menu.exitGame();
+    },
+
+    onVictory = function(menu)
+    {
+        Init.startAllCores();
+    },
+
+
+    startAllCores = function()
+    {
         if (Init.start === false)
         {
             Init.selectCos();
             Init.start = true;
         }
-        Init.startAllCores();
-    },
-
-    startAllCores = function()
-    {
         // reset all cores
         Init.coreData = [];
         // reload match data after reset or initial run
@@ -85,52 +109,68 @@ var Init =
 
     startRemoteGame = function(coreIndex)
     {
-        GameConsole.print("Preparing next match", Init.logLevel);
-        Init.coreData[coreIndex][1] = false;
-        Init.coreData[coreIndex][2] = [];
-        var map = Init.trainingFolder + Init.trainingMap;
-        var script = "var Init =\n" +
-                "{\n" +
-                "main = function(menu)\n" +
-                "{\n" +
-                "menu.enterSingleplayer();\n" +
-                "},\n" +
-                "mapsSelection = function(menu)\n" +
-                "{\n" +
-                "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");\n" +
-                "menu.buttonNext();\n" +
-                "menu.buttonNext();\n" +
-                "var gameRules = map.getGameRules();\n" +
-                "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
-                "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
-                "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
-                "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
-                "gameRules.setRandomWeather(false);\n" +
-                "var selection = menu.getPlayerSelection();\n";
-        for (var i = 0; i < Init.playerCount; ++i)
+        if (Init.startAi <= Init.trainingAis.length - Init.playerCount)
         {
-            var playerIdx = Init.rotationCount + i;
-            if (playerIdx >= Init.playerCount)
+            GameConsole.print("Preparing next match on core " + Init.coreData[coreIndex][0], Init.logLevel);
+            Init.coreData[coreIndex][1] = false;
+            Init.coreData[coreIndex][2] = [];
+            var map = Init.trainingFolder + Init.trainingMap;
+            var script = "var Init =\n" +
+                    "{\n" +
+                    "main = function(menu)\n" +
+                    "{\n" +
+                    "menu.enterSingleplayer();\n" +
+                    "},\n" +
+                    "mapsSelection = function(menu)\n" +
+                    "{\n" +
+                    "menu.selectMap(\"" + Init.trainingFolder + "\", \"" + Init.trainingMap + "\");\n" +
+                    "menu.buttonNext();\n" +
+                    "menu.buttonNext();\n" +
+                    "var gameRules = map.getGameRules();\n" +
+                    "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                    "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                    "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
+                    "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
+                    "gameRules.setRandomWeather(false);\n" +
+                    "var selection = menu.getPlayerSelection();\n";
+            for (var i = 0; i < Init.playerCount; ++i)
             {
-                playerIdx -= Init.playerCount;
+                var playerIdx = Init.rotationCount + i;
+                if (playerIdx >= Init.playerCount)
+                {
+                    playerIdx -= Init.playerCount;
+                }
+                var aiIdx = Init.rotationStartAi + i;
+                if (i == 0)
+                {
+                    aiIdx = Init.startAi;
+                }
+                GameConsole.print("Using ai at index " + aiIdx + " for player " + playerIdx, Init.logLevel);
+                GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
+                script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
+                Init.coreData[coreIndex][2].push(aiIdx);
+                script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
+                script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
             }
-            var aiIdx = Init.rotationStartAi + i;
-            if (i == 0)
-            {
-                aiIdx = Init.startAi;
-            }
-            GameConsole.print("Using ai at index " + aiIdx + " for player " + playerIdx, Init.logLevel);
-            GameConsole.print("Using ai-setting " + Init.trainingAis[aiIdx][0] + " for player " + playerIdx, Init.logLevel);
-            script += "selection.selectPlayerAi(" + playerIdx.toString() + ", " + Init.trainingAis[aiIdx][1].toString() + ");\n";
-            Init.coreData[coreIndex][2].push(aiIdx);
-            script += "selection.playerCO1Changed(\"" + Init.cos[0] + "\", " + i.toString() + ");\n";
-            script += "selection.playerCO2Changed(\"" + Init.cos[1] + "\", " + i.toString() + ");\n";
-        }
-        script += "menu.startGame();\n" +
-                "},\n" +
-                "}";
+            script += "menu.startGame();\n" +
+                    "},\n" +
+                    "}";
 
-        mainServer.startRemoteGame(script, Init.coreData[coreIndex][0]);
+            mainServer.startRemoteGame(script, Init.coreData[coreIndex][0]);
+
+            Init.rotationCount += 1;
+            if (Init.rotationCount === Init.playerCount)
+            {
+                Init.rotationCount = 0;
+                Init.rotationStartAi += 1;
+                if (Init.rotationStartAi > Init.trainingAis.length - Init.playerCount)
+                {
+                    GameConsole.print("Going for next match up", Init.logLevel);
+                    Init.startAi += 1;
+                    Init.rotationStartAi = Init.startAi;
+                }
+            }
+        }
     },
 
     onRemoteGameFinished = function(winner, core)
@@ -138,12 +178,13 @@ var Init =
         var coreIndex = 0;
         for (var i = 0; i < Init.cores; ++i)
         {
-            if (Init.coreData[0][0] === core)
+            if (Init.coreData[i][0] === core)
             {
                 coreIndex = i;
                 break;
             }
         }
+        GameConsole.print("Core " + core + " finished", Init.logLevel);
         Init.coreData[coreIndex][1] = true;
         var state = Init.evaluateMatch(winner, coreIndex);
         if (state === Init.nextRun)
@@ -165,7 +206,7 @@ var Init =
         {
             var winnerAi = Init.coreData[coreIndex][2][team];
             GameConsole.print("Winning Ai is " + Init.trainingAis[winnerAi][0], Init.logLevel);
-            for (var i = 0; i < Init.coreData[coreIndex][2]; i)
+            for (var i = 0; i < Init.coreData[coreIndex][2].length; ++i)
             {
                 var ai = Init.coreData[coreIndex][2][i];
                 if (ai !== winnerAi)
@@ -174,29 +215,17 @@ var Init =
                 }
             }
         }
-        Init.rotationCount += 1;
-        if (Init.rotationCount === playerCount)
-        {
-            Init.rotationCount = 0;
-            Init.rotationStartAi += 1;
 
-            if (Init.rotationStartAi > Init.trainingAis.length - playerCount)
+        if (Init.startAi > Init.trainingAis.length - playerCount)
+        {
+            nextRound = Init.nextRun;
+            for (var i = 0; i < Init.cores; ++i)
             {
-                GameConsole.print("Going for next match up", Init.logLevel);                
-                Init.startAi += 1;
-                Init.rotationStartAi = Init.startAi;
-                if (Init.startAi > Init.trainingAis.length - playerCount)
+                if (Init.coreData[i][1] === false)
                 {
-                    nextRound = Init.nextRun;
-                    for (var i = 0; i < Init.cores; ++i)
-                    {
-                        if (Init.coreData[0][1] === false)
-                        {
-                            // not all cores are idle waiting for all games to be finished
-                            nextRound = Init.sleep;
-                            break;
-                        }
-                    }                    
+                    // not all cores are idle waiting for all games to be finished
+                    nextRound = Init.sleep;
+                    break;
                 }
             }
         }
@@ -239,11 +268,11 @@ var Init =
 
     prepareNextRun = function()
     {
-        GameConsole.print("Preparing next run", Init.logLevel);
+        GameConsole.print("Evaluating current run: " + Init.runCount, Init.logLevel);
         var bestAis = [];
         for (var i = 0; i < Init.matchData.length; ++i)
         {
-            GameConsole.print("AI " + i + " won " + Init.matchData[i] + " games", Init.logLevel);
+            GameConsole.print("AI " + i + " got a score of " + Init.matchData[i] + " points", Init.logLevel);
             var aiScore = Init.matchData[i];
             if (bestAis.length < Init.topAis)
             {
@@ -272,7 +301,7 @@ var Init =
         for (i = 0; i < bestAis.length; ++i)
         {
             aiNames.push(bestAis[i][0][0]);
-            GameConsole.print(aiNames[i] + " with " + bestAis[i][1] + " won matches", Init.logLevel);
+            GameConsole.print(aiNames[i] + " with a score of " + bestAis[i][1] + " points", Init.logLevel);
         }
         var mutateCount = 0;
         for (i = 0; i < Init.trainingAis.length; ++i)
@@ -288,7 +317,7 @@ var Init =
             }
             if (mutate)
             {
-                mutateCount = Init.mutate(mutateCount);
+                mutateCount = Init.mutate(mutateCount, i, aiNames);
             }
         }
         Init.runCount = Init.runCount + 1;
@@ -302,7 +331,7 @@ var Init =
         Init.selectCos();
     },
 
-    mutate = function(mutateCount)
+    mutate = function(mutateCount, i, aiNames)
     {
         var ai = mutateCount % Init.topAis;
         GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
@@ -315,6 +344,7 @@ var Init =
 
     selectCos = function()
     {
+        GameConsole.print("Selecting new co's at random", Init.logLevel);
         var cos = coSpriteManager.getCoIds();
         var index = globals.randInt(0, cos.length - 1);
         while (cos[index] === "CO_RANDOM")
