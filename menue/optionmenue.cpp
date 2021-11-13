@@ -29,6 +29,7 @@
 #include "objects/base/timespinbox.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/gamepadinfo.h"
 
 QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 {
@@ -520,6 +521,17 @@ void OptionMenue::showSettings()
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
     m_pOptions->addItem(pCheckbox);
+
+
+    // gamepad button
+    oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
+    pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
+    m_pOptions->addItem(pButtonGamepad);
+    pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowGamepadInfo();
+    });
+    connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
     y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -528,7 +540,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
-    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad creating a faster cursor."));
+    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
     gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
     gamepadSensitivity->setPosition(sliderOffset - 130, y);
     connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
@@ -1218,3 +1230,10 @@ void OptionMenue::updateModFilter(QString tag)
     }
     m_pMods->setContentHeigth(50 + visibleCounter * 50);
 }
+
+void OptionMenue::showGamepadInfo()
+{
+    spGamepadInfo pGamepadInfo = spGamepadInfo::create();
+    addChild(pGamepadInfo);
+}
+

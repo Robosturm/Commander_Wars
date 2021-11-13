@@ -81,7 +81,12 @@ var Constructor = function()
         if (surroundingsDesert !== "")
         {
             terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
-        }        
+        }
+        var surroundingsRiver = terrain.getSurroundings("RIVER,BRIDGE", false, false, GameEnums.Directions_Direct, true, false, -1, true);
+        if (surroundingsRiver !== "")
+        {
+            RIVER.loadTerrainSeaOverlay(terrain, surroundingsRiver);
+        }
     };
     this.getMiniMapIcon = function()
     {

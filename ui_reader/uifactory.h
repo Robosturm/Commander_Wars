@@ -122,6 +122,12 @@ private:
      * optional: enabled, direction, scale, useY, startOffset
      */
     bool createMoveInButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
+    /**
+     * Nodename: Sprite
+     * supported attributes are:
+     * mandatory: x, y, sprite, scale
+     */
+    bool createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*);
 signals:
     void sigDoEvent(QString command);
 private slots:

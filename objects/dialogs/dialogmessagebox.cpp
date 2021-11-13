@@ -1,9 +1,8 @@
-#include "dialogmessagebox.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 DialogMessageBox::DialogMessageBox(QString text, bool withCancel)

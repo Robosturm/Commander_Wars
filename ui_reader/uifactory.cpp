@@ -28,6 +28,7 @@ static const char* const itemButton = "Button";
 static const char* const itemIconButton = "IconButton";
 static const char* const itemSlider = "Slider";
 static const char* const itemMoveInButton = "MoveInButton";
+static const char* const itemSprite = "Sprite";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -77,6 +78,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemIconButton), std::bind(&UiFactory::createIconButton, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemSlider), std::bind(&UiFactory::createSlider, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemMoveInButton), std::bind(&UiFactory::createMoveInButton, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemSprite), std::bind(&UiFactory::createSprite, this, _1, _2, _3, _4)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -297,6 +299,34 @@ bool UiFactory::createMoveInButton(oxygine::spActor parent, QDomElement element,
         pMoveButton->setEnabled(enabled);
         parent->addChild(pMoveButton);
         item = pMoveButton;
+    }
+    return success;
+}
+
+/**
+ * Nodename: Sprite
+ * supported attributes are:
+ * mandatory: x, y, sprite, scale
+ */
+bool UiFactory::createSprite(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui*)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrSprite, attrScale});
+    if (success)
+    {
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        QString spriteId = getStringValue(getAttribute(childs, attrSprite));
+        float scale = getFloatValue(getAttribute(childs, attrScale));
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
+        pSprite->setResAnim(pAnim);
+        pSprite->setScale(scale);
+        pSprite->setPosition(x, y);
+        parent->addChild(pSprite);
+        item = pSprite;
+        m_lastCoordinates = QRect(x, y, 40, 40);
     }
     return success;
 }

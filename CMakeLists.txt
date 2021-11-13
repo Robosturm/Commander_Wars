@@ -93,7 +93,7 @@ else("Release")
     else()
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
-            #-DAUDIOSUPPORT
+            -DAUDIOSUPPORT
         )
     endif()
 endif()
@@ -282,6 +282,7 @@ set(${PROJECT_NAME}_SRCS
     objects/dialogs/dialogtextinput.cpp
     objects/dialogs/folderdialog.cpp
     objects/dialogs/dialogvaluecounter.cpp
+    objects/dialogs/gamepadinfo.cpp
     # objects dialogs editor
     objects/dialogs/editor/dialogmodifyunit.cpp
     objects/dialogs/editor/dialogmodifybuilding.cpp

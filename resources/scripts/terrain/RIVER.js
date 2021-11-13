@@ -260,48 +260,39 @@ var Constructor = function()
             }
         }
     };
-    this.loadSeaOverlays = function(pPfs, flowData)
+    this.loadTerrainSeaOverlay = function(terrain, flowString)
     {
-        var overlayTiles = flowData.getOverlayTiles(["SEA", "REAF"]);
-        var tileMapping = flowData.getOverlayTileMapping();
-        var length = overlayTiles.length
-        for (var i  = 0; i < length; ++i)
+        var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
+        var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
+        if (flowString === "+S")
         {
-            var pos = overlayTiles[i];
-            var riverTile = flowData.getPosition(tileMapping[i]);
-            var terrain = map.getTerrain(pos.x, pos.y);
-            var flowString = flowData.getFlowDirectionString(pPfs.getDirection(riverTile, pos));
-            var surroundingsLandDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
-            var surroundingsLandDiagonal = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Diagnonal);
-            if (flowString === "+S")
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
+        }
+        if (flowString === "+W")
+        {
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
+        }
+        if (flowString === "+N")
+        {
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
+        }
+        if (flowString === "+E")
+        {
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
+            surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
+        }
+        var south = surroundingsLandDirect.includes("+S");
+        var east = surroundingsLandDirect.includes("+E");
+        var north = surroundingsLandDirect.includes("+N");
+        var west = surroundingsLandDirect.includes("+W");
+        for (var i2 = 1; i2 <= 4; ++i2)
+        {
+            var landname = "";
+            switch (i2)
             {
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
-            }
-            if (flowString === "+W")
-            {
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NE", "");
-            }
-            if (flowString === "+N")
-            {
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SE", "");
-            }
-            if (flowString === "+E")
-            {
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+NW", "");
-                surroundingsLandDiagonal = surroundingsLandDiagonal.replace("+SW", "");
-            }
-            var south = surroundingsLandDirect.includes("+S");
-            var east = surroundingsLandDirect.includes("+E");
-            var north = surroundingsLandDirect.includes("+N");
-            var west = surroundingsLandDirect.includes("+W");
-            for (var i2 = 1; i2 <= 4; ++i2)
-            {
-                var landname = "";
-                switch (i2)
-                {
                 case 1:
                 {
                     if (north && west)
@@ -382,12 +373,11 @@ var Constructor = function()
                     }
                     break;
                 }
-                }
-                var animName = "riverend" + flowString + "+" + i2.toString() + landname;
-                if (terrain.existsResAnim(animName))
-                {
-                    terrain.loadBaseSprite(animName);
-                }
+            }
+            var animName = "riverend" + flowString + "+" + i2.toString() + landname;
+            if (terrain.existsResAnim(animName))
+            {
+                terrain.loadBaseSprite(animName);
             }
         }
     };

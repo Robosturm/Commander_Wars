@@ -463,8 +463,7 @@ QString Terrain::getFittingResAnim(const QString & spriteIdStart, const QString 
     return ret;
 }
 
-
-QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)
+QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount, bool inverted)
 {
     QStringList searchList = list.split(",");
     QString ret = "";
@@ -534,35 +533,91 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         // check for compare value to find string
         if (compareValue == GameEnums::Directions_North)
         {
-            addString = "+N";
+            if (inverted)
+            {
+                addString = "+S";
+            }
+            else
+            {
+                addString = "+N";
+            }
         }
         else if (compareValue == GameEnums::Directions_East)
         {
-            addString = "+E";
+            if (inverted)
+            {
+                addString = "+W";
+            }
+            else
+            {
+                addString = "+E";
+            }
         }
         else if (compareValue == GameEnums::Directions_South)
         {
-            addString = "+S";
+            if (inverted)
+            {
+                addString = "+N";
+            }
+            else
+            {
+                addString = "+S";
+            }
         }
         else if (compareValue == GameEnums::Directions_West)
         {
-            addString = "+W";
+            if (inverted)
+            {
+                addString = "+E";
+            }
+            else
+            {
+                addString = "+W";
+            }
         }
         else if (compareValue == GameEnums::Directions_NorthEast)
         {
-            addString = "+NE";
+            if (inverted)
+            {
+                addString = "+SW";
+            }
+            else
+            {
+                addString = "+NE";
+            }
         }
         else if (compareValue == GameEnums::Directions_SouthEast)
         {
-            addString = "+SE";
+            if (inverted)
+            {
+                addString = "+NW";
+            }
+            else
+            {
+                addString = "+SE";
+            }
         }
         else if (compareValue == GameEnums::Directions_SouthWest)
         {
-            addString = "+SW";
+            if (inverted)
+            {
+                addString = "+NE";
+            }
+            else
+            {
+                addString = "+SW";
+            }
         }
         else if (compareValue == GameEnums::Directions_NorthWest)
         {
-            addString = "+NW";
+            if (inverted)
+            {
+                addString = "+SE";
+            }
+            else
+            {
+                addString = "+NW";
+            }
         }
         else
         {

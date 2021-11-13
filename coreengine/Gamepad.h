@@ -44,6 +44,8 @@ public:
     virtual ~Gamepad() = default;
 
     void init();
+    DeviceState getDeviceState() const;
+
 protected slots:
     void update();
 protected:

@@ -5419,10 +5419,6 @@
         <file>resources/images/terrain/riverend+S+2.png</file>
         <file>resources/images/terrain/riverend+S+3.png</file>
         <file>resources/images/terrain/riverend+S+4.png</file>
-        <file>resources/images/terrain/riverend+sea+E+S+W.png</file>
-        <file>resources/images/terrain/riverend+sea+N+E+S.png</file>
-        <file>resources/images/terrain/riverend+sea+N+E+W.png</file>
-        <file>resources/images/terrain/riverend+sea+N+S+W.png</file>
         <file>resources/images/terrain/riverend+W+1+land+N.png</file>
         <file>resources/images/terrain/riverend+W+1+land+N+W.png</file>
         <file>resources/images/terrain/riverend+W+1+land+NW.png</file>
@@ -5935,5 +5931,7 @@
         <file>resources/images/game/weather/weather_symbol_snow_alt.png</file>
         <file>resources/images/game/weather/weather_symbol_thunderstorm.png</file>
         <file>resources/scripts/gamerules/weather/weather_mist.js</file>
+        <file>resources/objects/gamepad.png</file>
+        <file>resources/ui/gamepadInfoDialog.xml</file>
     </qresource>
 </RCC>

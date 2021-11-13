@@ -348,9 +348,10 @@ public slots:
      * @param useMapBorder if true the terrain is treated as searched terrain
      * @param useBuildingID if building ID's are used or only terrain id's
      * @param recursionCount how deep the game searches for base terrain id's -1 for infinite
+     * @param inverted for flow direction
      * @return
      */
-    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
+    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID

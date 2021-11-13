@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<ui>
+    <Sprite>
+        <x>380</x>
+        <y>10</y>
+        <scale>
+            var scaleX = (settings.getWidth() - 400) / 1780;
+            var scaleY = (settings.getHeight() - 80) / 972;
+            var erg = scaleY;
+            if (scaleX &lt; scaleY){erg = scaleX}
+            erg
+        </scale>
+        <sprite>"gamepad"</sprite>
+    </Sprite>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>360</width>
+        <height>settings.getHeight() - 80</height>
+        <childs>
+            <Label>
+                <x>10</x>
+                <y>10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","1) Previous unit")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","2) Left mouse button")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","3) Move map cursor")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","4) Left mouse button")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","5) Scroll and Zoom")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","6) Show info")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","7) Show info")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","8) Next unit")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","9) Right mouse button")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","10) Show info")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","11) Show info")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","12) Cancel")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","13) Accept")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","14) Move mouse")</text>
+                <font>main24</font>
+            </Label>
+            <Label>
+                <x>10</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>300</width>
+                <height>30</height>
+                <text>QT_TRANSLATE_NOOP("GAME","15) Right mouse button")</text>
+                <font>main24</font>
+            </Label>
+        </childs>
+    </Panel>
+
+    <Button>
+        <x>settings.getWidth() / 2 - 75</x>
+        <y>settings.getHeight() - 60</y>
+        <width>150</width>
+        <text>QT_TRANSLATE_NOOP("GAME","Ok")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Closes the gamepad dialog")</tooltip>
+        <onEvent>gamepadInfo.remove();</onEvent>
+    </Button>
+</ui>

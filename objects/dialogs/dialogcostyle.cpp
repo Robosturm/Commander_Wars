@@ -1,3 +1,5 @@
+#include <QFile>
+
 #include "objects/dialogs/dialogcostyle.h"
 
 #include "coreengine/mainapp.h"
@@ -10,8 +12,6 @@
 #include "resource_management/cospritemanager.h"
 
 #include "spritingsupport/spritecreator.h"
-
-#include <QFile>
 
 DialogCOStyle::DialogCOStyle(QString coid)
     : QObject(),

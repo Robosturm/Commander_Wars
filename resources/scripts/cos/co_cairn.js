@@ -238,6 +238,28 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    {
+        if (CO_CAIRN.isWildernessTile(posX, posY))
+        {
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                break;
+            case GameEnums.PowerMode_Power:
+
+                if (unit.getBaseMaxRange() > 1)
+                {
+                    return 1;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        return 0;
+    };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
         if (CO_CAIRN.isWildernessTile(posX, posY))
@@ -303,7 +325,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     if (CO_CAIRN.isWildernessTile(posX, posY))
                     {
-                        return -999;
+                        return -1;
                     }
                     break;
                 default:

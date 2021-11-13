@@ -129,7 +129,31 @@ CO_CAIRN.getMovementcostModifier = function(co, unit, posX, posY)
             case GameEnums.PowerMode_Power:
                 if (CO_CAIRN.isWildernessTile(posX, posY))
                 {
-                    return -999;
+                    return -1;
+                }
+                break;
+            default:
+            }
+        }
+    }
+    return 0;
+};
+
+CO_CAIRN.getVisionrangeModifier = function(co, unit, posX, posY)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (unit.getOwner() === co.getOwner())
+        {
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                break;
+            case GameEnums.PowerMode_Power:
+                if (CO_CAIRN.isWildernessTile(posX, posY))
+                {
+                    return -1;
                 }
                 break;
             default:

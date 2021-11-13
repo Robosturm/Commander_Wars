@@ -56,3 +56,8 @@ void Gamepad::update()
     handleButtonPress(m_keys[Buttons::L2], xstate.Gamepad.bLeftTrigger != 0);
     handleButtonPress(m_keys[Buttons::R2], xstate.Gamepad.bRightTrigger != 0);
 }
+
+Gamepad::DeviceState Gamepad::getDeviceState() const
+{
+    return m_deviceState;
+}
