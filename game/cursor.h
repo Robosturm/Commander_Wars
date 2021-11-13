@@ -47,7 +47,6 @@ public:
     void setMapPoint(qint32 x, qint32 y);
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
-    void sigUpdatePosition(qint32 x, qint32 y);
 public slots:
     /**
      * @brief updatePosition calculates the cursor point based on the mouse x and y coordinates

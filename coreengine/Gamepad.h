@@ -55,6 +55,8 @@ protected:
     void handleMouseCursorStick(float xValue, float yValue);
     void handleWheelEvent(qint32 x, qint32 y);
     void handleThumbStickPress(bool left, bool right);
+    void nextMoveSpeed(float & currentValue);
+    void nextMapMoveSpeed(float & currentValue);
 private:
     QTimer m_timer;
     qint32 m_gamepadId{0};
@@ -67,5 +69,7 @@ private:
     bool m_rightMouseSend{false};
     qint64 m_lastWheelEvent{0};
     qint64 m_lastMouseMapMoveEvent{0};
+    float m_mouseMapMoveSpeed{1};
     qint64 m_lastMouseMoveEvent{0};
+    float m_mouseMoveSpeed{1};
 };

@@ -66,13 +66,14 @@ void Gamepad::handleKeyCursorStick(float xValue, float yValue)
         yValue < -MinCursorTilt)
     {
         qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-        if (currentTimestamp - m_lastMouseMoveEvent >= mouseIntervall * Settings::getGamepadSensitivity())
+        if (currentTimestamp - m_lastMouseMoveEvent >= mouseIntervall * Settings::getGamepadSensitivity() * m_mouseMoveSpeed)
         {
             Mainapp* pApp = Mainapp::getInstance();
             QPoint pos = pApp->cursor().pos();
             pos += QPoint(xValue * cursorSpeed, -yValue * cursorSpeed);
             pApp->cursor().setPos(pos);
             m_lastMouseMoveEvent = currentTimestamp;
+            nextMoveSpeed(m_mouseMoveSpeed);
         }
     }
 }
@@ -80,20 +81,21 @@ void Gamepad::handleKeyCursorStick(float xValue, float yValue)
 void Gamepad::handleMouseCursorStick(float xValue, float yValue)
 {
     qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-    bool timeGone = (currentTimestamp - m_lastMouseMapMoveEvent >= mouseKeyIntervall * Settings::getGamepadSensitivity());
+    bool timeGone = (currentTimestamp - m_lastMouseMapMoveEvent >= mouseKeyIntervall * Settings::getGamepadSensitivity() * m_mouseMapMoveSpeed);
+    bool moved = false;
     if (xValue > MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_right(), m_xCursorMoveAcitve > 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_xCursorMoveAcitve = 1;
-        m_lastMouseMapMoveEvent = currentTimestamp;
+        moved = true;
     }
     else if (xValue < -MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_left(), m_xCursorMoveAcitve < 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_xCursorMoveAcitve = -1;
-        m_lastMouseMapMoveEvent = currentTimestamp;
+        moved = true;
     }
     else if (m_xCursorMoveAcitve > 0)
     {
@@ -101,6 +103,7 @@ void Gamepad::handleMouseCursorStick(float xValue, float yValue)
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_xCursorMoveAcitve = 0;
         m_lastMouseMapMoveEvent = currentTimestamp;
+        m_mouseMapMoveSpeed = 1;
     }
     else if (m_xCursorMoveAcitve < 0)
     {
@@ -108,21 +111,22 @@ void Gamepad::handleMouseCursorStick(float xValue, float yValue)
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_xCursorMoveAcitve = 0;
         m_lastMouseMapMoveEvent = currentTimestamp;
+        m_mouseMapMoveSpeed = 1;
     }
 
     if (yValue > MinCursorTilt && timeGone)
     {
-        oxygine::KeyEvent event(Settings::getKey_up(), m_yCursorMoveAcitve >0);
+        oxygine::KeyEvent event(Settings::getKey_up(), m_yCursorMoveAcitve > 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_yCursorMoveAcitve = 1;
-        m_lastMouseMapMoveEvent = currentTimestamp;
+        moved = true;
     }
     else if (yValue < -MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_down(), m_yCursorMoveAcitve < 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_yCursorMoveAcitve = -1;
-        m_lastMouseMapMoveEvent = currentTimestamp;
+        moved = true;
     }
     else if (m_yCursorMoveAcitve > 0)
     {
@@ -130,12 +134,19 @@ void Gamepad::handleMouseCursorStick(float xValue, float yValue)
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_yCursorMoveAcitve = 0;
         m_lastMouseMapMoveEvent = currentTimestamp;
+        m_mouseMapMoveSpeed = 1;
     }
     else if (m_yCursorMoveAcitve < 0)
     {
         oxygine::KeyEvent event(Settings::getKey_down(), false);
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_yCursorMoveAcitve = 0;
+        m_lastMouseMapMoveEvent = currentTimestamp;
+        m_mouseMapMoveSpeed = 1;
+    }
+    if (moved)
+    {
+        nextMoveSpeed(m_mouseMapMoveSpeed);
         m_lastMouseMapMoveEvent = currentTimestamp;
     }
 }
@@ -176,5 +187,23 @@ void Gamepad::handleThumbStickPress(bool left, bool right)
     {
         emit pApp->sigMouseReleaseEvent(oxygine::MouseButton_Right, cursor.x(), cursor.y());
         m_rightMouseSend = false;
+    }
+}
+
+void Gamepad::nextMoveSpeed(float & currentValue)
+{
+    currentValue *= 0.8f;
+    if (currentValue < 0.5f)
+    {
+        currentValue = 0.5f;
+    }
+}
+
+void Gamepad::nextMapMoveSpeed(float & currentValue)
+{
+    currentValue *= 0.6f;
+    if (currentValue < 0.25f)
+    {
+        currentValue = 0.25f;
     }
 }

@@ -18,12 +18,10 @@ Cursor::Cursor()
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
     m_cursorRangeOutline = oxygine::spActor::create();
     addChild(m_cursorRangeOutline);
-    connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
 }
 
 void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffset, float scale)
-{
-    
+{    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (m_CurrentCursor.get() != nullptr)
     {
@@ -46,8 +44,7 @@ void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffs
     }
     m_CurrentCursor->setScale(scale * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
     m_CurrentCursor->setPosition(xOffset, yOffset);
-    addChild(m_CurrentCursor);
-    
+    addChild(m_CurrentCursor);    
 }
 
 void Cursor::setMapPoint(qint32 x, qint32 y)
@@ -92,8 +89,6 @@ void Cursor::addCursorRangeOutline(qint32 range, QColor color)
 }
 
 void Cursor::resetCursorRangeOutline()
-{
-    
-    m_cursorRangeOutline->removeChildren();
-    
+{    
+    m_cursorRangeOutline->removeChildren();    
 }

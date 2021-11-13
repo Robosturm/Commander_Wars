@@ -124,7 +124,7 @@ void InGameMenue::connectMapCursor()
             {
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
                 qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
-                emit pCursor->sigUpdatePosition(curX, curY);
+                pCursor->updatePosition(curX, curY);
             }
             else
             {
@@ -373,7 +373,7 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
             QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
             pApp->cursor().setPos(curPos);
         }
-        emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
+        m_Cursor->updatePosition(MousePosX, MousePosY);
     }
 }
 

@@ -1441,7 +1441,7 @@ void Settings::loadSettings()
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
     m_autoCamera = settings.value("AutoCamera", true).toBool();    
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
-    m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
+    m_centerOnMarkedField = settings.value("CenterOnSelection", true).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
     m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
     m_useCoMinis = settings.value("UseCoMinis", true).toBool();
@@ -1641,7 +1641,7 @@ void Settings::saveSettings()
         settings.setValue("ShowIngameCoordinates",          m_showIngameCoordinates);
         settings.setValue("AutoFocusing",                   m_autoFocusing);
         settings.setValue("DialogAnimation",                m_dialogAnimation);
-        settings.setValue("CenterOnMarkedField",            m_centerOnMarkedField);
+        settings.setValue("CenterOnSelection",              m_centerOnMarkedField);
         settings.setValue("SyncAnimations",                 m_syncAnimations);
         settings.setValue("SimpleDeselect",                 m_simpleDeselect);
         settings.setValue("ShowDetailedBattleForcast",      m_showDetailedBattleForcast);
