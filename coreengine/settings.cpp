@@ -32,6 +32,7 @@ float Settings::m_gamma             = 1.0f;
 bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
 bool Settings::m_gamepadEnabled = false;
+float Settings::m_gamepadSensitivity = 1.0f;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
@@ -160,6 +161,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getGamepadSensitivity()
+{
+    return m_gamepadSensitivity;
+}
+
+void Settings::setGamepadSensitivity(float newGamepadSensitivity)
+{
+    m_gamepadSensitivity = newGamepadSensitivity;
 }
 
 bool Settings::getGamepadEnabled()
@@ -936,6 +947,11 @@ void Settings::loadSettings()
         m_touchPointSensitivity = 15;
     }
     m_gamepadEnabled = settings.value("GamepadEnabled", false).toBool();
+    m_gamepadSensitivity = settings.value("GamepadSensitivity", 1).toFloat(&ok);
+    if (!ok || m_gamepadSensitivity < 0.1)
+    {
+        m_gamepadSensitivity = 1.0f;
+    }
 
     settings.endGroup();
     CONSOLE_PRINT("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
@@ -1523,6 +1539,7 @@ void Settings::saveSettings()
         settings.setValue("TouchScreen",                m_touchScreen);
         settings.setValue("TouchPointSensitivity",      m_touchPointSensitivity);
         settings.setValue("GamepadEnabled",             m_gamepadEnabled);
+        settings.setValue("GamepadSensitivity",         m_gamepadSensitivity);
         settings.endGroup();
 
         settings.beginGroup("Resolution");

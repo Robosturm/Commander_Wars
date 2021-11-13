@@ -1453,30 +1453,33 @@ void HumanPlayerInput::gotoPrevious()
 
 void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 {
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (inputAllowed())
+    if (!event.getContinousPress())
     {
-        // for debugging
-        Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_next() ||
-            cur == Settings::getKey_next2())
+        spGameMenue pMenu = GameMenue::getInstance();
+        if (inputAllowed())
         {
-            gotoNext();
-        }
-        else if (cur == Settings::getKey_previous() ||
-                 cur == Settings::getKey_previous2())
-        {
-            gotoPrevious();
-        }
-        else if (cur == Settings::getKey_ShowAttackFields() ||
-                 cur == Settings::getKey_ShowAttackFields2())
-        {
-            showSelectedUnitAttackableFields(true);
-        }
-        else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
-                 cur == Settings::getKey_ShowIndirectAttackFields2())
-        {
-            showSelectedUnitAttackableFields(false);
+            // for debugging
+            Qt::Key cur = event.getKey();
+            if (cur == Settings::getKey_next() ||
+                cur == Settings::getKey_next2())
+            {
+                gotoNext();
+            }
+            else if (cur == Settings::getKey_previous() ||
+                     cur == Settings::getKey_previous2())
+            {
+                gotoPrevious();
+            }
+            else if (cur == Settings::getKey_ShowAttackFields() ||
+                     cur == Settings::getKey_ShowAttackFields2())
+            {
+                showSelectedUnitAttackableFields(true);
+            }
+            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                     cur == Settings::getKey_ShowIndirectAttackFields2())
+            {
+                showSelectedUnitAttackableFields(false);
+            }
         }
     }
 }

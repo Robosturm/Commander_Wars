@@ -511,19 +511,22 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_confirm() ||
                      cur == Settings::getKey_confirm2())
             {
-                if (m_ActionIDs.size() > 0)
+                if (!event.getContinousPress())
                 {
-                    if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
-                        (m_EnabledList.size() == 0))
+                    if (m_ActionIDs.size() > 0)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
-                        if (m_CostList.size() == m_ActionIDs.size())
+                        if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
+                            (m_EnabledList.size() == 0))
                         {
-                            emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
-                        }
-                        else
-                        {
-                            emit sigItemSelected(m_ActionIDs[m_currentAction], 0);
+                            Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                            if (m_CostList.size() == m_ActionIDs.size())
+                            {
+                                emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
+                            }
+                            else
+                            {
+                                emit sigItemSelected(m_ActionIDs[m_currentAction], 0);
+                            }
                         }
                     }
                 }
@@ -531,37 +534,43 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_cancel() ||
                      cur == Settings::getKey_cancel2())
             {
-                emit sigCanceled(0, 0);
+                if (!event.getContinousPress())
+                {
+                    emit sigCanceled(0, 0);
+                }
             }
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                QString id = m_ActionIDs[m_currentAction];
-                UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-                if (pUnitSpriteManager->exists(id))
+                if (!event.getContinousPress())
                 {
-                    spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
-                    spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
-                    pMenu->addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                    QString id = m_ActionIDs[m_currentAction];
+                    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+                    if (pUnitSpriteManager->exists(id))
                     {
-                        m_Focused = true;
-                    });
-                    m_Focused = false;
-                }
-                else
-                {
-                    WikiDatabase* pDatabase = WikiDatabase::getInstance();
-                    WikiDatabase::PageData data = pDatabase->getEntry(id);
-                    if (data.m_id != "")
-                    {
-                        spWikipage page = pDatabase->getPage(data);
-                        pMenu->addChild(page);
-                        connect(page.get(), &FieldInfo::sigFinished, this, [=]
+                        spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
+                        spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
+                        pMenu->addChild(fieldinfo);
+                        connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                         {
                             m_Focused = true;
                         });
                         m_Focused = false;
+                    }
+                    else
+                    {
+                        WikiDatabase* pDatabase = WikiDatabase::getInstance();
+                        WikiDatabase::PageData data = pDatabase->getEntry(id);
+                        if (data.m_id != "")
+                        {
+                            spWikipage page = pDatabase->getPage(data);
+                            pMenu->addChild(page);
+                            connect(page.get(), &FieldInfo::sigFinished, this, [=]
+                            {
+                                m_Focused = true;
+                            });
+                            m_Focused = false;
+                        }
                     }
                 }
             }

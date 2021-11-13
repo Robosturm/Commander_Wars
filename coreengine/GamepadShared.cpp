@@ -20,6 +20,8 @@ void Gamepad::init()
         }
         m_keys[Buttons::A].m_key = Settings::getKey_confirm();
         m_keys[Buttons::B].m_key = Settings::getKey_cancel();
+        m_keys[Buttons::L2].m_key = Settings::getKey_previous();
+        m_keys[Buttons::R2].m_key = Settings::getKey_next();
         connect(&m_timer, &QTimer::timeout, this, &Gamepad::update);
         m_timer.setSingleShot(false);
         m_timer.start(1);
@@ -60,11 +62,11 @@ void Gamepad::handleKeyCursorStick(float xValue, float yValue)
 {
     if (xValue > MinCursorTilt ||
         yValue > MinCursorTilt ||
-        xValue < MinCursorTilt ||
-        yValue < MinCursorTilt)
+        xValue < -MinCursorTilt ||
+        yValue < -MinCursorTilt)
     {
         qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-        if (currentTimestamp - m_lastMouseMoveEvent >= mouseIntervall)
+        if (currentTimestamp - m_lastMouseMoveEvent >= mouseIntervall * Settings::getGamepadSensitivity())
         {
             Mainapp* pApp = Mainapp::getInstance();
             QPoint pos = pApp->cursor().pos();
@@ -77,54 +79,64 @@ void Gamepad::handleKeyCursorStick(float xValue, float yValue)
 
 void Gamepad::handleMouseCursorStick(float xValue, float yValue)
 {
-    if (xValue > MinCursorTilt)
+    qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
+    bool timeGone = (currentTimestamp - m_lastMouseMapMoveEvent >= mouseKeyIntervall * Settings::getGamepadSensitivity());
+    if (xValue > MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_right(), m_xCursorMoveAcitve > 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_xCursorMoveAcitve = 1;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
-    else if (xValue < -MinCursorTilt)
+    else if (xValue < -MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_left(), m_xCursorMoveAcitve < 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_xCursorMoveAcitve = -1;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
     else if (m_xCursorMoveAcitve > 0)
     {
         oxygine::KeyEvent event(Settings::getKey_right(), false);
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_xCursorMoveAcitve = 0;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
     else if (m_xCursorMoveAcitve < 0)
     {
         oxygine::KeyEvent event(Settings::getKey_left(), false);
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_xCursorMoveAcitve = 0;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
 
-    if (yValue > MinCursorTilt)
+    if (yValue > MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_up(), m_yCursorMoveAcitve >0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_yCursorMoveAcitve = 1;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
-    else if (yValue < -MinCursorTilt)
+    else if (yValue < -MinCursorTilt && timeGone)
     {
         oxygine::KeyEvent event(Settings::getKey_down(), m_yCursorMoveAcitve < 0);
         emit Mainapp::getInstance()->sigKeyDown(event);
         m_yCursorMoveAcitve = -1;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
     else if (m_yCursorMoveAcitve > 0)
     {
         oxygine::KeyEvent event(Settings::getKey_up(), false);
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_yCursorMoveAcitve = 0;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
     else if (m_yCursorMoveAcitve < 0)
     {
         oxygine::KeyEvent event(Settings::getKey_down(), false);
         emit Mainapp::getInstance()->sigKeyUp(event);
         m_yCursorMoveAcitve = 0;
+        m_lastMouseMapMoveEvent = currentTimestamp;
     }
 }
 
@@ -133,7 +145,7 @@ void Gamepad::handleWheelEvent(qint32 x, qint32 y)
     if (x != 0 || y != 0)
     {
         qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-        if (currentTimestamp - m_lastWheelEvent >= mouseIntervall)
+        if (currentTimestamp - m_lastWheelEvent >= mouseIntervall * Settings::getGamepadSensitivity())
         {
             m_lastWheelEvent = currentTimestamp;
             emit Mainapp::getInstance()->sigWheelEvent(x, y);

@@ -498,6 +498,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Touch Sensitivity: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
+    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long press events."));
+    touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
+    touchPointSensitivity->setPosition(sliderOffset - 130, y);
+    connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
+    m_pOptions->addItem(touchPointSensitivity);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Gamepad: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -511,15 +524,15 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Touch Sensitivity: "));
+    pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spSpinBox touchPointSensitivity = spSpinBox::create(200, 0, std::numeric_limits<quint16>::max());
-    touchPointSensitivity->setTooltipText(tr("Selects how long a touch is treated as the same point. Used for detecting long press events."));
-    touchPointSensitivity->setCurrentValue(Settings::getTouchPointSensitivity());
-    touchPointSensitivity->setPosition(sliderOffset - 130, y);
-    connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
-    m_pOptions->addItem(touchPointSensitivity);
+    spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
+    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad creating a faster cursor."));
+    gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
+    gamepadSensitivity->setPosition(sliderOffset - 130, y);
+    connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
+    m_pOptions->addItem(gamepadSensitivity);
     y += 40;
 
     showSoundOptions(m_pOptions, sliderOffset, y, this);

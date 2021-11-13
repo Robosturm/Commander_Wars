@@ -100,14 +100,17 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
 void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 {
-    if (!m_stopped && m_writePosition > 0)
+    if (!event.getContinousPress())
     {
-        // for debugging
-        Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm() ||
-            cur == Settings::getKey_confirm2())
+        if (!m_stopped && m_writePosition > 0)
         {
-            nextDialogStep();
+            // for debugging
+            Qt::Key cur = event.getKey();
+            if (cur == Settings::getKey_confirm() ||
+                cur == Settings::getKey_confirm2())
+            {
+                nextDialogStep();
+            }
         }
     }
 }

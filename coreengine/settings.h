@@ -42,6 +42,9 @@ public:
     static bool getGamepadEnabled();
     static void setGamepadEnabled(bool newGamepadEnabled);
 
+    static float getGamepadSensitivity();
+    static void setGamepadSensitivity(float newGamepadSensitivity);
+
 public slots:
     static bool getUseCoMinis();
     static void setUseCoMinis(bool newUseCoMinis);
@@ -453,6 +456,7 @@ private:
     static bool m_touchScreen;
     static qint32 m_touchPointSensitivity;
     static bool m_gamepadEnabled;
+    static float m_gamepadSensitivity;
 
     static bool m_borderless;
     static bool m_fullscreen;

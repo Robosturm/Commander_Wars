@@ -56,7 +56,7 @@ void SelectKey::focused()
 
 void SelectKey::keyInput(oxygine::KeyEvent event)
 {
-    if (m_active)
+    if (m_active && !event.getContinousPress())
     {
         restartTooltiptimer();
         Qt::Key cur = event.getKey();

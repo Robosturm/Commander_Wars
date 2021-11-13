@@ -10,10 +10,11 @@ class Gamepad : public QObject
 public:
     static constexpr float MaxAxisValue = 32767.0f;
     static constexpr float MaxNegativeAxisValue = 32768.0f;
-    static constexpr float MinCursorTilt = 0.6f;
-    static constexpr qint32 wheelSpeed = 15;
-    static constexpr qint32 cursorSpeed = 20;
-    static constexpr qint64 mouseIntervall = 150;
+    static constexpr float MinCursorTilt = 0.3f;
+    static constexpr qint32 wheelSpeed = 7;
+    static constexpr qint32 cursorSpeed = 25;
+    static constexpr qint64 mouseIntervall = 50;
+    static constexpr qint64 mouseKeyIntervall = 200;
 
     enum class DeviceState
     {
@@ -63,5 +64,6 @@ private:
     bool m_leftMouseSend{false};
     bool m_rightMouseSend{false};
     qint64 m_lastWheelEvent{0};
+    qint64 m_lastMouseMapMoveEvent{0};
     qint64 m_lastMouseMoveEvent{0};
 };
