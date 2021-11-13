@@ -41,6 +41,7 @@ get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
 get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
 get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
+
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 endif()
@@ -360,6 +361,8 @@ set(${PROJECT_NAME}_SRCS
     coreengine/globalutils.cpp
     coreengine/scriptvariablefile.cpp
     coreengine/metatyperegister.cpp
+    coreengine/Gamepad.h
+    coreengine/GamepadShared.cpp
 
     # network engine
     network/tcpclient.cpp
@@ -542,14 +545,17 @@ set(${PROJECT_NAME}_SRCS
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/windows/crashreporter_os.cpp
+        coreengine/windows/Gamepad.cpp
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/android/crashreporter_os.cpp
+        coreengine/android/Gamepad.cpp
     )
 else()  # this branch works at least for linux
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
+        coreengine/android/Gamepad.cpp
     )
 endif()
 
@@ -635,6 +641,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_LIBRARIES}
         # special linking of libs for windows
         Dbghelp
+        Xinput
         )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     target_link_libraries(${PROJECT_NAME} PUBLIC

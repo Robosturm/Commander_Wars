@@ -67,68 +67,84 @@ void MapMover::keyInput(oxygine::KeyEvent event)
         {
             constexpr qint64 scrollspeed = 75;
             qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-            if (currentTimestamp - m_lastUpdateTimestamp >= scrollspeed)
+            // for debugging
+            Qt::Key cur = event.getKey();
+            Cursor* pCursor = m_pOwner->getCursor();
+            if ((cur == Settings::getKey_up() ||
+                 cur == Settings::getKey_up2()) &&
+                currentTimestamp - m_lastUpdateTimestamp[Keys::Up] >= scrollspeed)
             {
-                m_lastUpdateTimestamp = currentTimestamp;
-                // for debugging
-                Qt::Key cur = event.getKey();
-                Cursor* pCursor = m_pOwner->getCursor();
-                if (cur == Settings::getKey_up() ||
-                    cur == Settings::getKey_up2())
-                {
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
-                }
-                else if (cur == Settings::getKey_down() ||
-                         cur == Settings::getKey_down2())
-                {
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
-                }
-                else if (cur == Settings::getKey_left() ||
-                         cur == Settings::getKey_left2())
-                {
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
-                }
-                else if (cur == Settings::getKey_right() ||
-                         cur == Settings::getKey_right2())
-                {
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
-                }
-                else if (cur == Settings::getKey_moveMapUp() ||
-                         cur == Settings::getKey_moveMapUp2())
-                {
-                    pMap->moveMap(0, -GameMap::getImageSize());
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
-                }
-                else if (cur == Settings::getKey_moveMapDown() ||
-                         cur == Settings::getKey_moveMapDown2())
-                {
-                    pMap->moveMap(0, GameMap::getImageSize());
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
-                }
-                else if (cur == Settings::getKey_moveMapRight() ||
-                         cur == Settings::getKey_moveMapRight2())
-                {
-                    pMap->moveMap(GameMap::getImageSize(), 0);
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
-                }
-                else if (cur == Settings::getKey_moveMapLeft() ||
-                         cur == Settings::getKey_moveMapLeft2())
-                {
-                    pMap->moveMap(-GameMap::getImageSize(), 0);
-                    m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
-                }
-                else if (cur == Settings::getKey_MapZoomIn() ||
-                         cur == Settings::getKey_MapZoomIn2())
-                {
-                    pMap->setZoom(1);
-                    m_pOwner->centerMapOnCursor();
-                }
-                else if (cur == Settings::getKey_MapZoomOut() ||
-                         cur == Settings::getKey_MapZoomOut2())
-                {
-                    pMap->setZoom(-1);
-                    m_pOwner->centerMapOnCursor();
-                }
+                m_lastUpdateTimestamp[Keys::Up] = currentTimestamp;
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
+            }
+            else if ((cur == Settings::getKey_down() ||
+                      cur == Settings::getKey_down2()) &&
+                      currentTimestamp - m_lastUpdateTimestamp[Keys::Down] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::Down] = currentTimestamp;
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
+            }
+            else if ((cur == Settings::getKey_left() ||
+                     cur == Settings::getKey_left2()) &&
+                     currentTimestamp - m_lastUpdateTimestamp[Keys::Left] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::Left] = currentTimestamp;
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
+            }
+            else if ((cur == Settings::getKey_right() ||
+                      cur == Settings::getKey_right2()) &&
+                      currentTimestamp - m_lastUpdateTimestamp[Keys::Right] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::Right] = currentTimestamp;
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
+            }
+            else if ((cur == Settings::getKey_moveMapUp() ||
+                     cur == Settings::getKey_moveMapUp2()) &&
+                currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapUp] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::MoveMapUp] = currentTimestamp;
+                pMap->moveMap(0, -GameMap::getImageSize());
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
+            }
+            else if ((cur == Settings::getKey_moveMapDown() ||
+                     cur == Settings::getKey_moveMapDown2()) &&
+                    currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapDown] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::MoveMapDown] = currentTimestamp;
+                pMap->moveMap(0, GameMap::getImageSize());
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
+            }
+            else if ((cur == Settings::getKey_moveMapRight() ||
+                      cur == Settings::getKey_moveMapRight2()) &&
+                     currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapRight] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::MoveMapRight] = currentTimestamp;
+                pMap->moveMap(GameMap::getImageSize(), 0);
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
+            }
+            else if ((cur == Settings::getKey_moveMapLeft() ||
+                     cur == Settings::getKey_moveMapLeft2()) &&
+                     currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapLeft] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::MoveMapLeft] = currentTimestamp;
+                pMap->moveMap(-GameMap::getImageSize(), 0);
+                m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
+            }
+            else if ((cur == Settings::getKey_MapZoomIn() ||
+                     cur == Settings::getKey_MapZoomIn2()) &&
+                     currentTimestamp - m_lastUpdateTimestamp[Keys::ZoomIn] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::ZoomIn] = currentTimestamp;
+                pMap->setZoom(1);
+                m_pOwner->centerMapOnCursor();
+            }
+            else if ((cur == Settings::getKey_MapZoomOut() ||
+                     cur == Settings::getKey_MapZoomOut2()) &&
+                     currentTimestamp - m_lastUpdateTimestamp[Keys::ZoomOut] >= scrollspeed)
+            {
+                m_lastUpdateTimestamp[Keys::ZoomOut] = currentTimestamp;
+                pMap->setZoom(-1);
+                m_pOwner->centerMapOnCursor();
             }
         }
     }

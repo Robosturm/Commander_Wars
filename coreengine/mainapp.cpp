@@ -311,6 +311,10 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Finalizing:
         {
+            if (!m_slave)
+            {
+                m_gamepad.init();
+            }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)
             {
@@ -477,6 +481,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     }
     else
     {
+        CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
         emit sigKeyDown(oxygine::KeyEvent(event));
     }
 }
@@ -506,7 +511,6 @@ bool Mainapp::event(QEvent *event)
     }
     return handled;
 }
-
 
 bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
 {

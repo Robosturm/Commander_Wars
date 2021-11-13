@@ -11,6 +11,7 @@
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/Gamepad.h"
 
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
@@ -128,6 +129,14 @@ public:
      */
     static QString qsTr(const char* const text);
     /**
+     * @brief getWorker
+     * @return
+     */
+    static WorkerThread* getWorker()
+    {
+        return m_Worker;
+    }
+    /**
      * @brief qsTr
      * @param text
      * @return
@@ -158,6 +167,11 @@ public:
      * @param create
      */
     void setCreateSlaveLogs(bool create);
+
+    Gamepad& getGamepad()
+    {
+        return m_gamepad;
+    }
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -234,6 +248,7 @@ private:
     static bool m_slave;
     QString m_initScript;
     bool m_createSlaveLogs{false};
+    Gamepad m_gamepad{0};
 };
 
 #endif // MAINAPP_H

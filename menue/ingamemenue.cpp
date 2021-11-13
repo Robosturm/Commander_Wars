@@ -276,7 +276,8 @@ Cursor* InGameMenue::getCursor()
 
 void InGameMenue::keyInput(oxygine::KeyEvent event)
 {
-    if (m_Focused && !event.getContinousPress())
+    QPoint mapPoint = m_Cursor->getMapPoint();
+    if (m_Focused && (!event.getContinousPress() || m_lastMapPoint != mapPoint))
     {
         // for debugging
         Qt::Key cur = event.getKey();
@@ -284,11 +285,17 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
             cur == Settings::getKey_confirm2())
         {
             emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            m_lastMapPoint = mapPoint;
         }
         else if (cur == Settings::getKey_cancel() ||
                  cur == Settings::getKey_cancel2())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            m_lastMapPoint = mapPoint;
+        }
+        else
+        {
+            m_lastMapPoint = QPoint(-1, -1);
         }
     }
 }
@@ -402,6 +409,7 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
     m_mapSliding->setSize(width, height);
     m_mapSliding->setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
     updateSlidingActorSize();
+    setFocused(true);
 }
 
 void InGameMenue::updateSlidingActorSize()

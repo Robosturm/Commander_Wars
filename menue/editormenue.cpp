@@ -188,7 +188,7 @@ EditorMenue::EditorMenue()
     connect(this, &EditorMenue::sigLeftClickUp, this, &EditorMenue::onMapClickedLeftUp, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::keyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
@@ -843,12 +843,10 @@ void EditorMenue::optimizePlayers()
     
 }
 
-void EditorMenue::KeyInput(oxygine::KeyEvent event)
-{    
+void EditorMenue::keyInput(oxygine::KeyEvent event)
+{
     if (!event.getContinousPress())
     {
-        InGameMenue::keyInput(event);
-        // for debugging
         Qt::Key cur = event.getKey();
         if (m_Focused)
         {
@@ -926,7 +924,6 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     });
                     setFocused(false);
                 }
-                
             }
             else if (cur == Settings::getKey_cancel() ||
                      cur == Settings::getKey_cancel2())
@@ -940,10 +937,9 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
-            m_EditorSelection->KeyInput(cur);
         }
     }
-    
+    InGameMenue::keyInput(event);
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)

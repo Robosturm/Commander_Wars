@@ -40,6 +40,10 @@ public:
     {
         return m_MapPointY;
     }
+    QPoint getMapPoint()
+    {
+        return QPoint(m_MapPointX, m_MapPointY);
+    }
     void setMapPoint(qint32 x, qint32 y);
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
@@ -61,8 +65,8 @@ private:
     oxygine::spActor m_cursorRangeOutline;
     bool m_onMap{false};
 
-    qint32 m_MapPointX{-1};
-    qint32 m_MapPointY{-1};
+    qint32 m_MapPointX{0};
+    qint32 m_MapPointY{0};
 };
 
 #endif // CURSOR_H

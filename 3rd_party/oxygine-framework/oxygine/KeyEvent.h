@@ -8,10 +8,9 @@ namespace oxygine
     class KeyEvent
     {
         public:
-            KeyEvent(qint32 k, const QString & text, Qt::KeyboardModifiers modifiers)
+            KeyEvent(qint32 k, bool continousPress)
                 : m_key(static_cast<Qt::Key>(k)),
-                  m_text(text),
-                  m_modifiers(modifiers)
+                  m_continousPress(continousPress)
             {
             }
 

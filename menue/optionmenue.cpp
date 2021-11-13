@@ -498,6 +498,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Gamepad: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android and linux."));
+    pCheckbox->setChecked(Settings::getGamepadEnabled());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Touch Sensitivity: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

@@ -51,6 +51,16 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     addChild(m_pPlayerSelection);
 }
 
+PlayerSelection::~PlayerSelection()
+{
+    for (auto & playerColors : m_playerColors)
+    {
+        playerColors->detach();
+    }
+    m_playerColors.clear();
+}
+
+
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)
 {
     m_pNetworkInterface = pNetworkInterface;

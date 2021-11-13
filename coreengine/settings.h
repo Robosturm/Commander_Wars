@@ -39,6 +39,9 @@ public:
     static void setUsername(const QString &Username);
 
 
+    static bool getGamepadEnabled();
+    static void setGamepadEnabled(bool newGamepadEnabled);
+
 public slots:
     static bool getUseCoMinis();
     static void setUseCoMinis(bool newUseCoMinis);
@@ -449,6 +452,7 @@ private:
     static bool m_smallScreenDevice;
     static bool m_touchScreen;
     static qint32 m_touchPointSensitivity;
+    static bool m_gamepadEnabled;
 
     static bool m_borderless;
     static bool m_fullscreen;
