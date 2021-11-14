@@ -339,14 +339,14 @@ var TERRAIN =
     },
 
     // additional offensive bonus for a unit on this field
-    getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, luckMode)
+    getOffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
     },
     //  additional deffensive bonus for a unit on this field
-    getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, luckMode)
+    getDeffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return 0;
     },

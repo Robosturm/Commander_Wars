@@ -136,7 +136,7 @@ TerrainFlowData* TerrainFindingSystem::getFlowData()
         {
             QPoint pos = current.next + circle->at((i + offset) % size);
             qint32 cost = getTargetCosts(pos.x(), pos.y());
-            if (cost > current.cost)
+            if (cost > current.cost )
             {
                 PositionFlowData nextData;
                 nextData.current = current.next;

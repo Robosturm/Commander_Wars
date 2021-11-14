@@ -162,9 +162,12 @@ var Constructor = function()
             var currentTerrain = map.getTerrain(pos.x, pos.y);
             if (currentTerrain.getID() === "RIVER")
             {
-                currentTerrain.unloadSprites();
-                currentTerrain.loadBaseTerrainSprites();
-                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+                if (!currentTerrain.getFixedSprite())
+                {
+                    currentTerrain.unloadSprites();
+                    currentTerrain.loadBaseTerrainSprites();
+                    RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+                }
             }
             else
             {
@@ -179,7 +182,7 @@ var Constructor = function()
     this.loadSpriteFromFlowData = function(terrain, pos, flowData, index)
     {
         var flow = flowData.getFlowString(index);
-        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct);
+        var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);
         if (surroundingsDirect === "+N+E+S+W" ||
             surroundingsDirect === "+E+S+W" ||
             surroundingsDirect === "+N+S+W" ||

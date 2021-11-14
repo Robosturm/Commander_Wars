@@ -15,7 +15,7 @@ var Constructor = function()
             building.loadSprite("oilrig+neutral", false);
         }
     };
-    this.baseTerrain = ["SEA", "PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
+    this.baseTerrain = ["SEA", "PLAINS", "STREET", "SNOW", "WASTE", "DESERT", "DESERT_PATH"];
     this.getBaseTerrain = function(building)
     {
         return OILRIG.baseTerrain;
