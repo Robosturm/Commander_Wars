@@ -305,7 +305,6 @@ var TAGPOWER =
 
     getPerfectVision : function(co)
     {
-        // return true if forest and reafs etc are disabled in fog of war see sonja
         return false;
     },
 

@@ -209,7 +209,6 @@ var Constructor = function()
 
     this.getPerfectVision = function(co)
     {
-        // return true if forest and reafs etc are disabled in fog of war see sonja
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
