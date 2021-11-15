@@ -53,6 +53,7 @@
         <image file="battlesprites/background/back_snowairport.png" />
         <image file="battlesprites/background/back_rainairport.png" />        
         <image file="battlesprites/background/back_desertairport.png" />
+        <image file="battlesprites/background/back_wasteairport.png" />
         <!-- beach -->
         <image file="battlesprites/background/back_beach.png" />        
         <image file="battlesprites/background/back_beach+sea.png" />
@@ -88,6 +89,7 @@
         <image file="battlesprites/background/back_desertforest+0.png" />
         <image file="battlesprites/background/back_desertforest+1.png" />
         <image file="battlesprites/background/back_desertforest+2.png" />
+        <image file="battlesprites/background/back_wasteforest.png" />
         <!-- mountain -->
         <image file="battlesprites/background/back_desertmountain+0.png" />
         <image file="battlesprites/background/back_desertmountain+1.png" />
@@ -97,6 +99,7 @@
         <image file="battlesprites/background/back_mountain+1.png" />
         <image file="battlesprites/background/back_rainmountain+0.png" />
         <image file="battlesprites/background/back_rainmountain+1.png" />
+        <image file="battlesprites/background/back_wastemountain.png" />
         <!-- plains -->
         <image file="battlesprites/background/back_planes.png" />
         <image file="battlesprites/background/back_planes+forest.png" />
@@ -126,16 +129,21 @@
         <image file="battlesprites/background/back_desertplanes+street.png" />
         <image file="battlesprites/background/back_desertplanes+forest.png" />
         <image file="battlesprites/background/back_desertplanes+town.png" />
+        <image file="battlesprites/background/back_wasteplains.png" />
+        <image file="battlesprites/background/back_wasteplains+pipe.png" />
+
         <!-- factory -->
         <image file="battlesprites/background/back_factory.png" />
         <image file="battlesprites/background/back_snowfactory.png" />
         <image file="battlesprites/background/back_rainfactory.png" />
         <image file="battlesprites/background/back_desertfactory.png" />
+        <image file="battlesprites/background/back_wastefactory.png" />
         <!-- harbour -->
         <image file="battlesprites/background/back_harbour.png" />
         <image file="battlesprites/background/back_snowharbour.png" />
         <image file="battlesprites/background/back_rainharbour.png" />
         <image file="battlesprites/background/back_desertharbour.png" />
+        <image file="battlesprites/background/back_wasteharbour.png" />
         <!-- river -->
         <image file="battlesprites/background/back_river+0.png" />
         <image file="battlesprites/background/back_river+1.png" />
@@ -211,6 +219,7 @@
         <image file="battlesprites/background/back_desertruin.png" />
         <image file="battlesprites/background/back_snowruin.png" />
         <image file="battlesprites/background/back_rainruin.png" />
+        <image file="battlesprites/background/back_wasteruin.png" />
         <!-- sea -->
         <image file="battlesprites/background/back_sea.png" />
         <image file="battlesprites/background/back_rainsea.png" />
@@ -221,6 +230,7 @@
         <image file="battlesprites/background/back_rainwasteland.png" />
         <image file="battlesprites/background/back_snowwasteland.png" />
         <image file="battlesprites/background/back_desertwasteland.png" />
+        <image file="battlesprites/background/back_wastewasteland.png" />
         <!-- towns -->
         <image file="battlesprites/background/back_town+ge+0.png" />
         <image file="battlesprites/background/back_town+ge+1.png" />
@@ -247,6 +257,7 @@
         <image file="battlesprites/background/back_raintown+yc+0.png" />
         <image file="battlesprites/background/back_raintown+yc+1.png" />
         <image file="battlesprites/background/back_deserttown.png" />
+        <image file="battlesprites/background/back_wastetown.png" />
         <!-- tower -->
         <image file="battlesprites/background/back_tower.png" />
         <!-- tower -->
@@ -263,6 +274,8 @@
         <image file="battlesprites/background/back_snowtempharbour.png" />
         <image file="battlesprites/background/back_deserttempairport.png" />
         <image file="battlesprites/background/back_deserttempharbour.png" />
+        <image file="battlesprites/background/back_wastetempairport.png" />
+        <image file="battlesprites/background/back_wastetempharbour.png" />
         <!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
         <image file="battlesprites/fullscreen_battlebackground.png" />        
         -->        

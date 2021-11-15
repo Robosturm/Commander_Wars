@@ -4,20 +4,20 @@ var Constructor = function()
     {
         return 2;
     };
-    // loader for stuff which needs C++ Support
-    this.init = function (terrain)
+    this.loadBaseSprite = function(terrain)
     {
-        terrain.setVisionHigh(1);
-        terrain.setTerrainName(DESERT_FOREST.getName());
+        __BASEFOREST.loadBase(terrain, "DESERT_FOREST", "desert_forest+style1")
     };
-    this.getName = function()
+    this.loadOverlaySprite = function(terrain)
     {
-        return qsTr("Desert Forest");
+        __BASEFOREST.loadOverlay(terrain, "DESERT_FOREST", "desert_forest+style1");
     };
-    this.getDefense = function()
+
+    this.getTerrainSprites = function()
     {
-        return 2;
+        return __BASEFOREST.getSprites("desert_forest+style1")
     };
+
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
         if (currentTerrainID === "SNOW")
@@ -37,107 +37,6 @@ var Constructor = function()
             terrain.loadBaseTerrain("DESERT");
         }
     };
-    this.loadBaseSprite = function(terrain)
-    {
-        var surroundings = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("desert_forest" + surroundings);
-    };
-    this.loadOverlaySprite = function(terrain)
-    {
-        // Check every side.
-        var surroundings = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_Direct, false);
-        // Load overlay south east, strict.
-        if (surroundings.includes("+S") && surroundings.includes("+E"))
-        {
-            var surroundingsSE = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_SouthEast, false);
-            if (surroundingsSE !== "")
-            {
-                terrain.loadOverlaySprite("desert_forest+SE");
-            }
-        }
-        // Load overlay north east, strict.
-        if (surroundings.includes("+N") && surroundings.includes("+E"))
-        {
-            var surroundingsNE = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_NorthEast, false);
-            if (surroundingsNE !== "")
-            {
-                terrain.loadOverlaySprite("desert_forest+NE");
-            }
-        }
-        // Load overlay south west, strict.
-        if (surroundings.includes("+S") && surroundings.includes("+W"))
-        {
-            var surroundingsSW = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_SouthWest, false);
-            if (surroundingsSW !== "")
-            {
-                terrain.loadOverlaySprite("desert_forest+SW");
-            }
-        }
-        // Load overlay northwest, strict.
-        if (surroundings.includes("+N") && surroundings.includes("+W"))
-        {
-            var surroundingsNW = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_NorthWest, false);
-            if (surroundingsNW !== "")
-            {
-                terrain.loadOverlaySprite("desert_forest+NW");
-            }
-        }
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_desert_forest";
-    };
-    this.getVisionHide = function()
-    {
-        return true;
-    };    
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender, action, luckMode)
-    {
-        return -20;
-    };
-    this.getDescription = function()
-    {
-        return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
-                "<div c='#00ff00'>" + qsTr(" It reduces the firepower of units by 20%") + "</div>";
-    };
-
-    this.getTerrainSprites = function()
-    {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return ["desert_forest.png",
-                "desert_forest+E",
-                "desert_forest+E+W",
-                "desert_forest+W"];
-    };
-    this.getTerrainAnimationBase = function(unit, terrain)
-    {
-        return "base_desertforest";
-    };
-
-    this.getTerrainAnimationForeground = function(unit, terrain, defender)
-    {
-        return TERRAIN.getFactoryForeground(terrain);
-    };
-
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var variables = terrain.getVariables();
-        var variable = variables.getVariable("BACKGROUND_ID");
-        var rand = 0;
-        if (variable === null)
-        {
-            rand = globals.randInt(0, 2);
-            variable = variables.createVariable("BACKGROUND_ID");
-            variable.writeDataInt32(rand);
-        }
-        else
-        {
-            rand = variable.readDataInt32();
-        }
-        return "back_desertforest+" + rand.toString();
-    };
 };
-Constructor.prototype = TERRAIN;
+Constructor.prototype = __BASEFOREST;
 var DESERT_FOREST = new Constructor();

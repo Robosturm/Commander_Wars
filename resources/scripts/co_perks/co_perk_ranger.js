@@ -15,7 +15,10 @@ var Constructor = function()
                                     (terrainID === "FOREST2") ||
                                     (terrainID === "FOREST3") ||
 									(terrainID === "DESERT_FOREST") ||
-									(terrainID === "SNOW_FOREST");
+                                    (terrainID === "DESERT_FOREST1") ||
+                                    (terrainID === "SNOW_FOREST") ||
+                                    (terrainID === "SNOW_FOREST1") ||
+                                    (terrainID === "SNOW_FOREST2");
                     if (isForest)
                     {
                         return 10;

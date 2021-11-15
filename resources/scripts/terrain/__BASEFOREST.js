@@ -1,22 +1,76 @@
 var Constructor = function()
 {
-    this.getTerrainGroup = function()
-    {
-        return 1;
-    };
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
-        terrain.setTerrainName(FOREST.getName());
+        terrain.setTerrainName(__BASEFOREST.getName(terrain));
     };
-    this.getName = function()
+    this.getName = function(terrain)
     {
-        return qsTr("Forest");
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return qsTr("Waste Forest");
+        }
+        else if (baseTerrainId === "SNOW")
+        {
+            return qsTr("Snowy Forest");
+        }
+        else if (baseTerrainId === "DESERT")
+        {
+            return qsTr("Desert Forest");
+        }
+        else
+        {
+            return qsTr("Forest");
+        }
     };
-    this.getDefense = function()
+    this.getDefense = function(terrain)
     {
-        return 2;
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    };
+    this.getBonusVision = function(unit)
+    {
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return 1;
+        }
+        return 0;
+    };
+    this.getMovementcostModifier = function(terrain, unit, x, y, curX, curY)
+    {
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "SNOW")
+        {
+            var movementType = unit.getMovementType()
+            if (movementType !== "MOVE_AIR" &&
+                movementType !== "MOVE_MECH" &&
+                movementType !== "MOVE_HOELLIUM")
+            {
+                return 1;
+            }
+        }
+        return 0;
+    };
+    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender, action, luckMode)
+    {
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "DESERT")
+        {
+            return -20;
+        }
+        return 0;
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
@@ -85,18 +139,51 @@ var Constructor = function()
             }
         }
     };
-    this.getMiniMapIcon = function()
+    this.getMiniMapIcon = function(terrain)
     {
-        return "minimap_forest";
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return "minimap_waste_forest";
+        }
+        else if (baseTerrainId === "SNOW")
+        {
+            return "minimap_snow_forest";
+        }
+        else if (baseTerrainId === "DESERT")
+        {
+            return "minimap_desert_forest";
+        }
+        else
+        {
+            return "minimap_forest";
+        }
     };
     this.getVisionHide = function()
     {
         return true;
     };
 
-    this.getDescription = function()
+    this.getDescription = function(terrain)
     {
-        return qsTr("<r>In Fog of War conditions, the woods provide ground unit</r><div c='#00ff00'>hiding places.</div>");
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return qsTr("<r>In Fog of War conditions, the snowy woods provide ground unit </r><div c='#00ff00'>hiding places.</div><r> Waste terrain with reduced defense but clear view. In Fog of War, unit's gain </r><div c='#00ff00'>vision +1.</div>");
+        }
+        else if (baseTerrainId === "SNOW")
+        {
+            return qsTr("<r>In Fog of War conditions, the snowy woods provide ground unit </r><div c='#00ff00'>hiding places.</div><r> It's hard for ground units to cross this terrain.</r>");
+        }
+        else if (baseTerrainId === "DESERT")
+        {
+            return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
+                    "<div c='#00ff00'>" + qsTr(" It reduces the firepower of units by 20%") + "</div>";
+        }
+        else
+        {
+            return qsTr("<r>In Fog of War conditions, the woods provide ground unit</r><div c='#00ff00'>hiding places.</div>");
+        }
     };
     this.getSprites = function(spriteId)
     {
@@ -109,8 +196,24 @@ var Constructor = function()
 
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
-        return "base_" + weatherModifier + "forest";
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return "base_wasteforest";
+        }
+        else if (baseTerrainId === "SNOW")
+        {
+            return "base_snowforest";
+        }
+        else if (baseTerrainId === "DESERT")
+        {
+            return "base_desertforest";
+        }
+        else
+        {
+            var weatherModifier = TERRAIN.getWeatherModifier();
+            return "base_" + weatherModifier + "forest";
+        }
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
@@ -131,8 +234,24 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
-        return "back_" + weatherModifier + "forest+" + rand.toString();
+        var baseTerrainId = terrain.getBaseTerrainID();
+        if (baseTerrainId === "WASTE")
+        {
+            return "back_wasteforest";
+        }
+        else if (baseTerrainId === "SNOW")
+        {
+            return "back_snowforest+" + rand.toString();
+        }
+        else if (baseTerrainId === "DESERT")
+        {
+            return "back_desertforest+" + rand.toString();
+        }
+        else
+        {
+            var weatherModifier = TERRAIN.getWeatherModifier();
+            return "back_" + weatherModifier + "forest+" + rand.toString();
+        }
     };
 };
 Constructor.prototype = TERRAIN;

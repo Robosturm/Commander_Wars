@@ -4,29 +4,29 @@ var Constructor = function()
     {
         return 3;
     };
-    // loader for stuff which needs C++ Support
-    this.init = function (terrain)
+    this.loadBaseSprite = function(terrain)
     {
-        terrain.setVisionHigh(1);
-        terrain.setTerrainName(SNOW_FOREST.getName());
+        __BASEFOREST.loadBase(terrain, "SNOW_FOREST", "snow_forest+style1")
     };
-    this.getName = function()
+    this.loadOverlaySprite = function(terrain)
     {
-        return qsTr("Snowy Forest");
+        __BASEFOREST.loadOverlay(terrain, "SNOW_FOREST", "snow_forest+style1");
     };
-    this.getDefense = function()
+
+    this.getTerrainSprites = function()
     {
-        return 2;
+        return __BASEFOREST.getSprites("snow_forest+style1")
     };
+
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        if (currentTerrainID === "PLAINS")
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-        else if (currentTerrainID === "DESERT")
+        if (currentTerrainID === "DESERT")
         {
             terrain.loadBaseTerrain("DESERT");
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
         }
         else if (currentTerrainID === "WASTE")
         {
@@ -37,100 +37,6 @@ var Constructor = function()
             terrain.loadBaseTerrain("SNOW");
         }
     };
-    this.loadBaseSprite = function(terrain)
-    {
-        var surroundings = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("snow_forest" + surroundings);
-    };
-    this.loadOverlaySprite = function(terrain)
-    {
-        // Check every side.
-        var surroundings = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_Direct, false);
-        // Load overlay south east, strict.
-        if (surroundings.includes("+S") && surroundings.includes("+E"))
-        {
-            var surroundingsSE = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_SouthEast, false);
-            if (surroundingsSE !== "")
-            {
-                terrain.loadOverlaySprite("snow_forest+SE");
-            }
-        }
-        // Load overlay north east, strict.
-        if (surroundings.includes("+N") && surroundings.includes("+E"))
-        {
-            var surroundingsNE = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_NorthEast, false);
-            if (surroundingsNE !== "")
-            {
-                terrain.loadOverlaySprite("snow_forest+NE");
-            }
-        }
-        // Load overlay south west, strict.
-        if (surroundings.includes("+S") && surroundings.includes("+W"))
-        {
-            var surroundingsSW = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_SouthWest, false);
-            if (surroundingsSW !== "")
-            {
-                terrain.loadOverlaySprite("snow_forest+SW");
-            }
-        }
-        // Load overlay northwest, strict.
-        if (surroundings.includes("+N") && surroundings.includes("+W"))
-        {
-            var surroundingsNW = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_NorthWest, false);
-            if (surroundingsNW !== "")
-            {
-                terrain.loadOverlaySprite("snow_forest+NW");
-            }
-        }
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_snow_forest";
-    };
-    this.getVisionHide = function()
-    {
-        return true;
-    };
-
-    this.getDescription = function()
-    {
-        return qsTr("<r>In Fog of War conditions, the snowy woods provide ground unit </r><div c='#00ff00'>hiding places.</div><r> It's hard for ground units to cross this terrain.</r>");
-    };
-
-    this.getTerrainSprites = function()
-    {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return ["snow_forest.png",
-                "snow_forest+E",
-                "snow_forest+E+W",
-                "snow_forest+W"];
-    };
-    this.getTerrainAnimationBase = function(unit, terrain)
-    {
-        return "base_snowforest";
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var variables = terrain.getVariables();
-        var variable = variables.getVariable("BACKGROUND_ID");
-        var rand = 0;
-        if (variable === null)
-        {
-            rand = globals.randInt(0, 2);
-            variable = variables.createVariable("BACKGROUND_ID");
-            variable.writeDataInt32(rand);
-        }
-        else
-        {
-            rand = variable.readDataInt32();
-        }
-        return "back_snowforest+" + rand.toString();
-    };
 };
-Constructor.prototype = TERRAIN;
+Constructor.prototype = __BASEFOREST;
 var SNOW_FOREST = new Constructor();

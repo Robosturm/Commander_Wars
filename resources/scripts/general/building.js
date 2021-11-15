@@ -48,7 +48,7 @@ var BUILDING =
     },
     // the terrain on which a building can be placed
     // if the current terrain isn't in the list. it'll be replaced by the first :)
-    baseTerrains : ["PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH", "WASTE"],
+    baseTerrains : ["PLAINS", "STREET", "STREET1", "SNOW", "SNOW_STREET", "DESERT", "DESERT_PATH", "DESERT_PATH1", "WASTE", "WASTE_PATH1"],
     getBaseTerrain : function(building)
     {
         return Global[building.getBuildingID()].baseTerrains;

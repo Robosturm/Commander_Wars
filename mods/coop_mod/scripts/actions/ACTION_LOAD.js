@@ -7,7 +7,7 @@ ACTION_LOAD.canBePerformed = function (action)
     var transportTerrain = action.getMovementTerrain();
 
     if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+        (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
     {
         return false;
     }
@@ -15,15 +15,18 @@ ACTION_LOAD.canBePerformed = function (action)
             (targetUnit !== null))
     {
         if ((targetUnit.getOwner().isAlly(unit.getOwner())) &&
-                (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
-                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
+            (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
+            (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
 
             var unitID = targetUnit.getUnitID();
+            var terrainId = transportTerrain.getID();
             if (unitID === "TRANSPORTPLANE")
             {
-                if ((transportTerrain.getID() === "AIRPORT") ||
-                        (transportTerrain.getID() === "TEMPORARY_AIRPORT") ||
-                        (transportTerrain.getID() === "STREET"))
+                if ((terrainId === "AIRPORT") ||
+                    (terrainId === "TEMPORARY_AIRPORT") ||
+                    (terrainId === "SNOW_STREET") ||
+                    (terrainId === "STREET") ||
+                    (terrainId === "STREET1"))
                 {
                     return true;
                 }
@@ -36,7 +39,8 @@ ACTION_LOAD.canBePerformed = function (action)
                      unitID === "BLACK_BOAT" ||
                      unitID === "CANNONBOAT")
             {
-                if ((transportTerrain.getID() === "BRIDGE"))
+                if ((terrainId === "BRIDGE") ||
+                    (terrainId === "BRIDGE1"))
                 {
                     return false;
                 }

@@ -191,7 +191,8 @@ var TERRAIN =
     weatherData :   [["weather_1sun",         [Qt.point(0, 0),    "",        ""]],
                      ["weather_snow",         [Qt.point(-1, 1),   "snow",    "over_snow"]],
                      ["weather_rain",         [Qt.point(-2, 6),   "rain",    "over_rain"]],
-                     ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],],
+                     ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],
+                     ["weather_mist",         [Qt.point(0, 0),    "",        ""]],],
 
     getWeatherModifier : function()
     {
@@ -239,6 +240,7 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "WASTE_PIPELINE":
         case "ZWELD_N_S":
         case "ZWELD_E_W":
         case "ZSNOWWELD_N_S":
@@ -266,7 +268,10 @@ var TERRAIN =
         case "FOREST2":
         case "FOREST3":
         case "DESERT_FOREST":
+        case "DESERT_FOREST1":
         case "SNOW_FOREST":
+        case "SNOW_FOREST1":
+        case "SNOW_FOREST2":
             return "back_" + weatherModifier + "planes+forest";
         case "SNOW_MOUNTAIN":
         case "DESERT_ROCK":
@@ -274,7 +279,12 @@ var TERRAIN =
             return "back_" + weatherModifier + "planes+mountain";
         case "BUILDING":
             return "back_" + weatherModifier + "planes+town";
+        case "SNOW_STREET":
         case "STREET":
+        case "STREET1":
+        case "WASTE_PATH":
+        case "DESERT_PATH":
+        case "DESERT_PATH1":
             return "back_" + weatherModifier + "planes+street";
         case "DESERT_WELD":
         case "SNOW_WELD":
@@ -282,6 +292,7 @@ var TERRAIN =
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "WASTE_PIPELINE":
         case "ZWELD_N_S":
         case "ZWELD_E_W":
         case "ZSNOWWELD_N_S":
@@ -302,6 +313,11 @@ var TERRAIN =
     },
 
     getTerrainAnimationMoveSpeed : function(terrain)
+    {
+        return 0;
+    },
+
+    getMovementcostModifier : function(terrain, x, y, curX, curY)
     {
         return 0;
     },

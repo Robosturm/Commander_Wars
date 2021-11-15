@@ -4,23 +4,24 @@ var Constructor = function()
     {
         return 2;
     };
+
     this.loadBaseSprite = function(terrain)
     {
-        __BASEPIPELINE.loadBase(terrain, "desert_pipeline")
+        __BASESTREET.loadBase(terrain, "desert_path+style0")
     };
     this.getTerrainSprites = function()
     {
-        return __BASEPIPELINE.getSprites("desert_pipeline")
+        return __BASESTREET.getSprites("desert_path+style0")
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        if (currentTerrainID === "PLAINS")
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-        else if (currentTerrainID === "SNOW")
+        if (currentTerrainID === "SNOW")
         {
             terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "PLAINS")
+        {
+            terrain.loadBaseTerrain("PLAINS");
         }
         else if (currentTerrainID === "WASTE")
         {
@@ -32,5 +33,5 @@ var Constructor = function()
         }
     };
 };
-Constructor.prototype = __BASEPIPELINE;
-var DESERT_PIPELINE = new Constructor();
+Constructor.prototype = __BASESTREET;
+var DESERT_PATH1 = new Constructor();

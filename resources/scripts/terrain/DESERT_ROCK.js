@@ -4,20 +4,6 @@ var Constructor = function()
     {
         return 2;
     };
-    // loader for stuff which needs C++ Support
-    this.init = function (terrain)
-    {
-        terrain.setVisionHigh(2);
-        terrain.setTerrainName(DESERT_ROCK.getName());
-    };
-    this.getName = function()
-    {
-        return qsTr("Rock");
-    };
-    this.getDefense = function()
-    {
-        return 4;
-    };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
         if (currentTerrainID === "SNOW")
@@ -39,80 +25,13 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("MOUNTAIN,DESERT_ROCK,SNOW_MOUNTAIN,WASTE_MOUNTAIN", false, false, GameEnums.Directions_Direct, false);
-        var itemCount = surroundings.split("+").length - 1;
-        if (itemCount === 4)
-        {
-            terrain.loadBaseSprite("desert_rock");
-        }
-        else
-        {
-            terrain.loadBaseSprite("desert_rock+short");
-        }
-    };
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender, action, luckMode)
-    {
-        return -20;
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_desert_rock";
-    };
-    this.getBonusVision = function(unit)
-    {
-        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
-        {
-            return 3;
-        }
-        else
-        {
-            return 0;
-        }
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_mountain";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        return "back_mountain";
-    };
-
-    this.getDescription = function()
-    {
-        return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
-                "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-                "<r>" + qsTr(" It reduces the firepower of units by 20%.") + "</r>";
+        __BASEMOUNTAIN.loadBase(terrain, "desert_rock")
     };
 
     this.getTerrainSprites = function()
     {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return ["desert_rock.png",
-                "desert_rock+short"];
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain, defender)
-    {
-        return "";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var variables = terrain.getVariables();
-        var variable = variables.getVariable("BACKGROUND_ID");
-        var rand = 0;
-        if (variable === null)
-        {
-            rand = globals.randInt(0, 1);
-            variable = variables.createVariable("BACKGROUND_ID");
-            variable.writeDataInt32(rand);
-        }
-        else
-        {
-            rand = variable.readDataInt32();
-        }
-        return "back_desertmountain+" + rand.toString();
+        return __BASEMOUNTAIN.getSprites("desert_rock");
     };
 };
-Constructor.prototype = TERRAIN;
+Constructor.prototype = __BASEMOUNTAIN;
 var DESERT_ROCK = new Constructor();

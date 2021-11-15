@@ -575,44 +575,8 @@
         <file>resources/images/terrain/beach+W+land+N+E+S.png</file>
         <file>resources/images/terrain/beach+W+land+N+S.png</file>
         <file>resources/images/terrain/beach+W+land+S.png</file>
-        <file>resources/images/terrain/bridge.png</file>
-        <file>resources/images/terrain/bridge+E.png</file>
-        <file>resources/images/terrain/bridge+E+S.png</file>
-        <file>resources/images/terrain/bridge+E+S+W.png</file>
-        <file>resources/images/terrain/bridge+E+W.png</file>
-        <file>resources/images/terrain/bridge+N.png</file>
-        <file>resources/images/terrain/bridge+N+E.png</file>
-        <file>resources/images/terrain/bridge+N+E+S.png</file>
-        <file>resources/images/terrain/bridge+N+E+S+W.png</file>
-        <file>resources/images/terrain/bridge+N+E+W.png</file>
-        <file>resources/images/terrain/bridge+N+S.png</file>
-        <file>resources/images/terrain/bridge+N+S+W.png</file>
-        <file>resources/images/terrain/bridge+N+W.png</file>
-        <file>resources/images/terrain/bridge+S.png</file>
-        <file>resources/images/terrain/bridge+S+W.png</file>
-        <file>resources/images/terrain/bridge+W.png</file>
         <file>resources/images/terrain/desert_destroyedweld+E+W.png</file>
         <file>resources/images/terrain/desert_destroyedweld+N+S.png</file>
-        <file>resources/images/terrain/desert_forest.png</file>
-        <file>resources/images/terrain/desert_forest+E.png</file>
-        <file>resources/images/terrain/desert_forest+E+W.png</file>
-        <file>resources/images/terrain/desert_forest+W.png</file>
-        <file>resources/images/terrain/desert_path.png</file>
-        <file>resources/images/terrain/desert_path+E.png</file>
-        <file>resources/images/terrain/desert_path+E+S.png</file>
-        <file>resources/images/terrain/desert_path+E+S+W.png</file>
-        <file>resources/images/terrain/desert_path+E+W.png</file>
-        <file>resources/images/terrain/desert_path+N.png</file>
-        <file>resources/images/terrain/desert_path+N+E.png</file>
-        <file>resources/images/terrain/desert_path+N+E+S.png</file>
-        <file>resources/images/terrain/desert_path+N+E+S+W.png</file>
-        <file>resources/images/terrain/desert_path+N+E+W.png</file>
-        <file>resources/images/terrain/desert_path+N+S.png</file>
-        <file>resources/images/terrain/desert_path+N+S+W.png</file>
-        <file>resources/images/terrain/desert_path+N+W.png</file>
-        <file>resources/images/terrain/desert_path+S.png</file>
-        <file>resources/images/terrain/desert_path+S+W.png</file>
-        <file>resources/images/terrain/desert_path+W.png</file>
         <file>resources/images/terrain/desert_pipeline+E.png</file>
         <file>resources/images/terrain/desert_pipeline+E+S.png</file>
         <file>resources/images/terrain/desert_pipeline+E+S+W.png</file>
@@ -780,10 +744,6 @@
         <file>resources/images/terrain/snow.png</file>
         <file>resources/images/terrain/snow_destroyedweld+E+W.png</file>
         <file>resources/images/terrain/snow_destroyedweld+N+S.png</file>
-        <file>resources/images/terrain/snow_forest.png</file>
-        <file>resources/images/terrain/snow_forest+E.png</file>
-        <file>resources/images/terrain/snow_forest+E+W.png</file>
-        <file>resources/images/terrain/snow_forest+W.png</file>
         <file>resources/images/terrain/snow_mountain.png</file>
         <file>resources/images/terrain/snow_Pipeline+E.png</file>
         <file>resources/images/terrain/snow_Pipeline+E+S.png</file>
@@ -807,22 +767,6 @@
         <file>resources/images/terrain/snow+N.png</file>
         <file>resources/images/terrain/snow+S.png</file>
         <file>resources/images/terrain/snow+W.png</file>
-        <file>resources/images/terrain/street.png</file>
-        <file>resources/images/terrain/street+E.png</file>
-        <file>resources/images/terrain/street+E+S.png</file>
-        <file>resources/images/terrain/street+E+S+W.png</file>
-        <file>resources/images/terrain/street+E+W.png</file>
-        <file>resources/images/terrain/street+N.png</file>
-        <file>resources/images/terrain/street+N+E.png</file>
-        <file>resources/images/terrain/street+N+E+S.png</file>
-        <file>resources/images/terrain/street+N+E+S+W.png</file>
-        <file>resources/images/terrain/street+N+E+W.png</file>
-        <file>resources/images/terrain/street+N+S.png</file>
-        <file>resources/images/terrain/street+N+S+W.png</file>
-        <file>resources/images/terrain/street+N+W.png</file>
-        <file>resources/images/terrain/street+S.png</file>
-        <file>resources/images/terrain/street+S+W.png</file>
-        <file>resources/images/terrain/street+W.png</file>
         <file>resources/images/terrain/teleporttile.png</file>
         <file>resources/images/terrain/teleporttile+E.png</file>
         <file>resources/images/terrain/teleporttile+E+S.png</file>
@@ -5175,10 +5119,6 @@
         <file>resources/images/terrain/waste+N.png</file>
         <file>resources/images/terrain/waste+S.png</file>
         <file>resources/images/terrain/waste+W.png</file>
-        <file>resources/images/terrain/waste_forest+E+W.png</file>
-        <file>resources/images/terrain/waste_forest+E.png</file>
-        <file>resources/images/terrain/waste_forest+W.png</file>
-        <file>resources/images/terrain/waste_forest.png</file>
         <file>resources/images/terrain/waste_rock.png</file>
         <file>resources/images/terrain/waste_ruin+0.png</file>
         <file>resources/images/terrain/waste_ruin+1.png</file>
@@ -5338,14 +5278,6 @@
         <file>resources/images/terrain/sea+overlay+NW.png</file>
         <file>resources/images/terrain/sea+overlay+SE.png</file>
         <file>resources/images/terrain/sea+overlay+SW.png</file>
-        <file>resources/images/terrain/desert_forest+NE.png</file>
-        <file>resources/images/terrain/desert_forest+NW.png</file>
-        <file>resources/images/terrain/desert_forest+SE.png</file>
-        <file>resources/images/terrain/desert_forest+SW.png</file>
-        <file>resources/images/terrain/snow_forest+NE.png</file>
-        <file>resources/images/terrain/snow_forest+NW.png</file>
-        <file>resources/images/terrain/snow_forest+SE.png</file>
-        <file>resources/images/terrain/snow_forest+SW.png</file>
         <file>resources/images/game/icon_fire.png</file>
         <file>resources/images/terrain/river+0+land+E+S+W.png</file>
         <file>resources/images/terrain/river+0+land+N+E+S.png</file>
@@ -5752,12 +5684,7 @@
         <file>resources/images/co/yc/co_sonja+alt6+info.png</file>
         <file>resources/images/terrain/riverend+e+2+land+NE.png</file>
         <file>resources/images/terrain/riverend+e+3+land+S.png</file>
-        <file>resources/images/terrain/riverend+e+3+land+S+E.png</file>
         <file>resources/images/terrain/riverend+e+3+land+SE.png</file>
-        <file>resources/images/terrain/waste_forest+NE.png</file>
-        <file>resources/images/terrain/waste_forest+NW.png</file>
-        <file>resources/images/terrain/waste_forest+SE.png</file>
-        <file>resources/images/terrain/waste_forest+SW.png</file>
         <file>resources/images/building/airport+snow.png</file>
         <file>resources/images/building/factory+snow.png</file>
         <file>resources/images/building/harbour+snow.png</file>
@@ -5838,8 +5765,6 @@
         <file>resources/images/co/yc/co_sonja+alt5+table.png</file>
         <file>resources/images/co/yc/co_sonja+alt6+mini.png</file>
         <file>resources/images/co/yc/co_sonja+alt6+table.png</file>
-        <file>resources/images/terrain/creeper+0.png</file>
-        <file>resources/images/terrain/creeper+1.png</file>
         <file>resources/images/terrain/forest_style0+E+W.png</file>
         <file>resources/images/terrain/forest_style0+E.png</file>
         <file>resources/images/terrain/forest_style0+NE.png</file>
@@ -5933,5 +5858,221 @@
         <file>resources/scripts/gamerules/weather/weather_mist.js</file>
         <file>resources/objects/gamepad.png</file>
         <file>resources/ui/gamepadInfoDialog.xml</file>
+        <file>resources/images/terrain/bridge_river+E+W.png</file>
+        <file>resources/images/terrain/bridge_river+N+S.png</file>
+        <file>resources/images/terrain/bridge+style0.png</file>
+        <file>resources/images/terrain/bridge+style0+E.png</file>
+        <file>resources/images/terrain/bridge+style0+E+S.png</file>
+        <file>resources/images/terrain/bridge+style0+E+S+W.png</file>
+        <file>resources/images/terrain/bridge+style0+E+W.png</file>
+        <file>resources/images/terrain/bridge+style0+N.png</file>
+        <file>resources/images/terrain/bridge+style0+N+E.png</file>
+        <file>resources/images/terrain/bridge+style0+N+E+S.png</file>
+        <file>resources/images/terrain/bridge+style0+N+E+S+W.png</file>
+        <file>resources/images/terrain/bridge+style0+N+E+W.png</file>
+        <file>resources/images/terrain/bridge+style0+N+S.png</file>
+        <file>resources/images/terrain/bridge+style0+N+S+W.png</file>
+        <file>resources/images/terrain/bridge+style0+N+W.png</file>
+        <file>resources/images/terrain/bridge+style0+S.png</file>
+        <file>resources/images/terrain/bridge+style0+S+W.png</file>
+        <file>resources/images/terrain/bridge+style0+W.png</file>
+        <file>resources/images/terrain/bridge+style1.png</file>
+        <file>resources/images/terrain/bridge+style1+E.png</file>
+        <file>resources/images/terrain/bridge+style1+E+S.png</file>
+        <file>resources/images/terrain/bridge+style1+E+S+W.png</file>
+        <file>resources/images/terrain/bridge+style1+E+W.png</file>
+        <file>resources/images/terrain/bridge+style1+N.png</file>
+        <file>resources/images/terrain/bridge+style1+N+E.png</file>
+        <file>resources/images/terrain/bridge+style1+N+E+S.png</file>
+        <file>resources/images/terrain/bridge+style1+N+E+S+W.png</file>
+        <file>resources/images/terrain/bridge+style1+N+E+W.png</file>
+        <file>resources/images/terrain/bridge+style1+N+S.png</file>
+        <file>resources/images/terrain/bridge+style1+N+S+W.png</file>
+        <file>resources/images/terrain/bridge+style1+N+W.png</file>
+        <file>resources/images/terrain/bridge+style1+S.png</file>
+        <file>resources/images/terrain/bridge+style1+S+W.png</file>
+        <file>resources/images/terrain/bridge+style1+W.png</file>
+        <file>resources/images/terrain/creeper+style1+E.png</file>
+        <file>resources/images/terrain/creeper+style1+E+W.png</file>
+        <file>resources/images/terrain/creeper+style1+NE.png</file>
+        <file>resources/images/terrain/creeper+style1+NW.png</file>
+        <file>resources/images/terrain/creeper+style1+SE.png</file>
+        <file>resources/images/terrain/creeper+style1+SW.png</file>
+        <file>resources/images/terrain/creeper+style1+W.png</file>
+        <file>resources/images/terrain/desert_forest+style0.png</file>
+        <file>resources/images/terrain/desert_forest+style0+E.png</file>
+        <file>resources/images/terrain/desert_forest+style0+E+W.png</file>
+        <file>resources/images/terrain/desert_forest+style0+NE.png</file>
+        <file>resources/images/terrain/desert_forest+style0+NW.png</file>
+        <file>resources/images/terrain/desert_forest+style0+SE.png</file>
+        <file>resources/images/terrain/desert_forest+style0+SW.png</file>
+        <file>resources/images/terrain/desert_forest+style0+W.png</file>
+        <file>resources/images/terrain/desert_forest+style1.png</file>
+        <file>resources/images/terrain/desert_forest+style1+E.png</file>
+        <file>resources/images/terrain/desert_forest+style1+E+W.png</file>
+        <file>resources/images/terrain/desert_forest+style1+NE.png</file>
+        <file>resources/images/terrain/desert_forest+style1+NW.png</file>
+        <file>resources/images/terrain/desert_forest+style1+SE.png</file>
+        <file>resources/images/terrain/desert_forest+style1+SW.png</file>
+        <file>resources/images/terrain/desert_forest+style1+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+E.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+S.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+E+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+N.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+S.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+E+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+S.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+N+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+S.png</file>
+        <file>resources/images/terrain/desert_path+style0+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style0+style0.png</file>
+        <file>resources/images/terrain/desert_path+style0+W.png</file>
+        <file>resources/images/terrain/desert_path+style1.png</file>
+        <file>resources/images/terrain/desert_path+style1+E.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+S.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+E+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+N.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+S.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+E+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+S.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+N+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+S.png</file>
+        <file>resources/images/terrain/desert_path+style1+S+W.png</file>
+        <file>resources/images/terrain/desert_path+style1+W.png</file>
+        <file>resources/images/terrain/snow_forest+style0.png</file>
+        <file>resources/images/terrain/snow_forest+style0+E.png</file>
+        <file>resources/images/terrain/snow_forest+style0+E+W.png</file>
+        <file>resources/images/terrain/snow_forest+style0+NE.png</file>
+        <file>resources/images/terrain/snow_forest+style0+NW.png</file>
+        <file>resources/images/terrain/snow_forest+style0+SE.png</file>
+        <file>resources/images/terrain/snow_forest+style0+SW.png</file>
+        <file>resources/images/terrain/snow_forest+style0+W.png</file>
+        <file>resources/images/terrain/snow_forest+style1.png</file>
+        <file>resources/images/terrain/snow_forest+style1+E.png</file>
+        <file>resources/images/terrain/snow_forest+style1+E+W.png</file>
+        <file>resources/images/terrain/snow_forest+style1+NE.png</file>
+        <file>resources/images/terrain/snow_forest+style1+NW.png</file>
+        <file>resources/images/terrain/snow_forest+style1+SE.png</file>
+        <file>resources/images/terrain/snow_forest+style1+SW.png</file>
+        <file>resources/images/terrain/snow_forest+style1+W.png</file>
+        <file>resources/images/terrain/snow_forest+style2.png</file>
+        <file>resources/images/terrain/snow_forest+style2+E.png</file>
+        <file>resources/images/terrain/snow_forest+style2+E+W.png</file>
+        <file>resources/images/terrain/snow_forest+style2+NE.png</file>
+        <file>resources/images/terrain/snow_forest+style2+NW.png</file>
+        <file>resources/images/terrain/snow_forest+style2+SE.png</file>
+        <file>resources/images/terrain/snow_forest+style2+SW.png</file>
+        <file>resources/images/terrain/snow_forest+style2+W.png</file>
+        <file>resources/images/terrain/snow_street+style0.png</file>
+        <file>resources/images/terrain/snow_street+style0+E.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+S+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+E+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+N.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+S+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+E+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+S+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+N+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+S.png</file>
+        <file>resources/images/terrain/snow_street+style0+S+W.png</file>
+        <file>resources/images/terrain/snow_street+style0+W.png</file>
+        <file>resources/images/terrain/street+style0.png</file>
+        <file>resources/images/terrain/street+style0+E.png</file>
+        <file>resources/images/terrain/street+style0+E+S.png</file>
+        <file>resources/images/terrain/street+style0+E+S+W.png</file>
+        <file>resources/images/terrain/street+style0+E+W.png</file>
+        <file>resources/images/terrain/street+style0+N.png</file>
+        <file>resources/images/terrain/street+style0+N+E.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S.png</file>
+        <file>resources/images/terrain/street+style0+N+E+S+W.png</file>
+        <file>resources/images/terrain/street+style0+N+E+W.png</file>
+        <file>resources/images/terrain/street+style0+N+S.png</file>
+        <file>resources/images/terrain/street+style0+N+S+W.png</file>
+        <file>resources/images/terrain/street+style0+N+W.png</file>
+        <file>resources/images/terrain/street+style0+S.png</file>
+        <file>resources/images/terrain/street+style0+S+W.png</file>
+        <file>resources/images/terrain/street+style0+W.png</file>
+        <file>resources/images/terrain/street+style1.png</file>
+        <file>resources/images/terrain/street+style1+E.png</file>
+        <file>resources/images/terrain/street+style1+E+S.png</file>
+        <file>resources/images/terrain/street+style1+E+S+W.png</file>
+        <file>resources/images/terrain/street+style1+E+W.png</file>
+        <file>resources/images/terrain/street+style1+N.png</file>
+        <file>resources/images/terrain/street+style1+N+E.png</file>
+        <file>resources/images/terrain/street+style1+N+E+S.png</file>
+        <file>resources/images/terrain/street+style1+N+E+S+W.png</file>
+        <file>resources/images/terrain/street+style1+N+E+W.png</file>
+        <file>resources/images/terrain/street+style1+N+S.png</file>
+        <file>resources/images/terrain/street+style1+N+S+W.png</file>
+        <file>resources/images/terrain/street+style1+N+W.png</file>
+        <file>resources/images/terrain/street+style1+S.png</file>
+        <file>resources/images/terrain/street+style1+S+W.png</file>
+        <file>resources/images/terrain/street+style1+W.png</file>
+        <file>resources/images/terrain/waste_forest+style0.png</file>
+        <file>resources/images/terrain/waste_forest+style0+E.png</file>
+        <file>resources/images/terrain/waste_forest+style0+E+W.png</file>
+        <file>resources/images/terrain/waste_forest+style0+NE.png</file>
+        <file>resources/images/terrain/waste_forest+style0+NW.png</file>
+        <file>resources/images/terrain/waste_forest+style0+SE.png</file>
+        <file>resources/images/terrain/waste_forest+style0+SW.png</file>
+        <file>resources/images/terrain/waste_forest+style0+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+E.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+S.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+S+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+E+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+N.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+S.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+S+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+E+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+S.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+S+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+N+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+S.png</file>
+        <file>resources/images/terrain/waste_path+style0+S+W.png</file>
+        <file>resources/images/terrain/waste_path+style0+style0.png</file>
+        <file>resources/images/terrain/waste_path+style0+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+E.png</file>
+        <file>resources/images/terrain/waste_Pipeline+E+S.png</file>
+        <file>resources/images/terrain/waste_Pipeline+E+S+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+E+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+E.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+E+S.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+E+S+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+E+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+S.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+S+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+N+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+S.png</file>
+        <file>resources/images/terrain/waste_Pipeline+S+W.png</file>
+        <file>resources/images/terrain/waste_Pipeline+W.png</file>
+        <file>resources/images/terrain/waste_weld+E+W.png</file>
+        <file>resources/images/terrain/waste_weld+N+S.png</file>
+        <file>resources/scripts/terrain/__BASEBRIDGE.js</file>
+        <file>resources/scripts/terrain/BRIDGE1.js</file>
+        <file>resources/scripts/terrain/__BASESTREET.js</file>
+        <file>resources/scripts/terrain/STREET1.js</file>
+        <file>resources/scripts/terrain/DESERT_PATH1.js</file>
+        <file>resources/scripts/terrain/SNOW_FOREST1.js</file>
+        <file>resources/scripts/terrain/SNOW_FOREST2.js</file>
+        <file>resources/scripts/terrain/DESERT_FOREST1.js</file>
+        <file>resources/images/terrain/desert_path+style0.png</file>
+        <file>resources/scripts/terrain/WASTE_PATH.js</file>
+        <file>resources/scripts/terrain/SNOW_STREET.js</file>
+        <file>resources/scripts/terrain/__BASEPIPELINE.js</file>
+        <file>resources/scripts/terrain/WASTE_PIPELINE.js</file>
+        <file>resources/scripts/terrain/__BASEMOUNTAIN.js</file>
     </qresource>
 </RCC>

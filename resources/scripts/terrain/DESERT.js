@@ -116,7 +116,10 @@ var Constructor = function()
         case "FOREST2":
         case "FOREST3":
         case "DESERT_FOREST":
+        case "DESERT_FOREST1":
         case "SNOW_FOREST":
+        case "SNOW_FOREST1":
+        case "SNOW_FOREST2":
             return "back_desertplanes+forest";
         case "SNOW_MOUNTAIN":
         case "DESERT_ROCK":
@@ -124,7 +127,12 @@ var Constructor = function()
             return "back_desertplanes+mountain";
         case "BUILDING":
             return "back_desertplanes+town";
+        case "SNOW_STREET":
         case "STREET":
+        case "STREET1":
+        case "WASTE_PATH":
+        case "DESERT_PATH":
+        case "DESERT_PATH1":
             return "back_desertplanes+street";
         case "DESERT_WELD":
         case "SNOW_WELD":
@@ -132,6 +140,7 @@ var Constructor = function()
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "WASTE_PIPELINE":
         case "ZWELD_N_S":
         case "ZWELD_E_W":
         case "ZSNOWWELD_N_S":

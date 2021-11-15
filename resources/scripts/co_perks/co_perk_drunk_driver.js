@@ -10,9 +10,14 @@ var Constructor = function()
 				if (map.onMap(atkPosX, atkPosY))
 				{
 					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-					var isStreet = 	(terrainID === "STREET") ||
-									(terrainID === "BRIDGE") ||
-									(terrainID === "DESERT_PATH");
+                    var isStreet = (terrainID === "STREET") ||
+                                   (terrainID === "STREET1") ||
+                                   (terrainID === "SNOW_STREET") ||
+                                   (terrainID === "BRIDGE") ||
+                                   (terrainID === "BRIDGE1") ||
+                                   (terrainID === "WASTE_PATH") ||
+                                   (terrainID === "DESERT_PATH") ||
+                                   (terrainID === "DESERT_PATH1");
 					if (isStreet)
                     {
                         return -10;

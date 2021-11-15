@@ -40,9 +40,14 @@ var Constructor = function()
         var id = terrain.getID();
         if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
             (id !== "STREET" &&
+             id !== "STREET1" &&
+             id !== "SNOW_STREET" &&
              id !== "BRIDGE" &&
-            id !== "DESERT_PATH" &&
-            id !== "TELEPORTTILE" &&
+             id !== "BRIDGE1" &&
+             id !== "WASTE_PATH" &&
+             id !== "DESERT_PATH" &&
+             id !== "DESERT_PATH1" &&
+             id !== "TELEPORTTILE" &&
             terrain.getBuilding() === null))
         {
             return 1;

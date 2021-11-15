@@ -625,13 +625,15 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         }
         if (pGameMap.get() != nullptr && pGameMap->onMap(curX, curY))
         {
+            QString terrainID = "";
             QString neighbourID = "";
             Terrain* pTerrain = pGameMap->getTerrain(curX, curY);
+            terrainID = pTerrain->getTerrainID();
             if (useBuildingID && pTerrain->getBuilding() != nullptr)
             {
-                neighbourID = pTerrain->getID();
+                terrainID = pTerrain->getID();
             }
-            else if (useBaseTerrainID)
+            if (useBaseTerrainID)
             {
                 if (recursionCount > 0)
                 {
@@ -642,20 +644,18 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
                     neighbourID = pTerrain->getBaseTerrainID();
                 }
             }
-            else
-            {
-                neighbourID = pTerrain->getTerrainID();
-            }
             if (blacklist)
             {
-                if (!searchList.contains(neighbourID))
+                if (!searchList.contains(terrainID) &&
+                    !searchList.contains(neighbourID))
                 {
                     found = true;
                 }
             }
             else
             {
-                if (searchList.contains(neighbourID))
+                if (searchList.contains(terrainID) ||
+                    searchList.contains(neighbourID))
                 {
                     found = true;
                 }
@@ -749,6 +749,30 @@ QString Terrain::getMinimapIcon()
     else
     {
         return "";
+    }
+}
+
+qint32 Terrain::getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMovementcostModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    args1 << x;
+    args1 << y;
+    args1 << curX;
+    args1 << curY;
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
     }
 }
 

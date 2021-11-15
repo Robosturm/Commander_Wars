@@ -495,6 +495,15 @@ public slots:
      * @return
      */
     QStringList getFlowTiles();
+    /**
+     * @brief getMovementcostModifier
+     * @param x
+     * @param y
+     * @param curX
+     * @param curY
+     * @return
+     */
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
 protected:
     /**
      * @brief createBuildingDownStream

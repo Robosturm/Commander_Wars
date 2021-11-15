@@ -136,6 +136,7 @@ var Constructor = function()
     this.defaultModifier = 10;
     this.globalRules = false;
     this.wilderness = ["DESERT_FOREST",
+                       "DESERT_FOREST1",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
                        "DESERT_WASTELAND",
@@ -147,6 +148,8 @@ var Constructor = function()
                        "MOUNTAIN",
                        "WASTELAND",
                        "SNOW_FOREST",
+                       "SNOW_FOREST1",
+                       "SNOW_FOREST2",
                        "SNOW_MOUNTAIN",
                        "SNOW_WASTELAND",
                        "WASTE_FOREST",

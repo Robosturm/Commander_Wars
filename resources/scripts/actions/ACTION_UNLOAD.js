@@ -32,11 +32,14 @@ var Constructor = function()
     this.isUnloadTerrain = function(unit, transportTerrain)
     {
         var unitID = unit.getUnitID();
+        var terrainId = transportTerrain.getID();
         if (unitID === "TRANSPORTPLANE")
         {
-            if ((transportTerrain.getID() !== "AIRPORT") &&
-                (transportTerrain.getID() !== "TEMPORARY_AIRPORT") &&
-                (transportTerrain.getID() !== "STREET"))
+            if ((terrainId !== "AIRPORT") &&
+                (terrainId !== "TEMPORARY_AIRPORT") &&
+                (terrainId !== "SNOW_STREET") &&
+                (terrainId !== "STREET") &&
+                (terrainId !== "STREET1"))
             {
                 return false;
             }
@@ -46,7 +49,8 @@ var Constructor = function()
                  unitID === "CANNONBOAT")
         {
             if ((transportTerrain !== null &&
-                 transportTerrain.getID() === "BRIDGE"))
+                 (terrainId === "BRIDGE" ||
+                  terrainId === "BRIDGE1")))
             {
                 return false;
             }

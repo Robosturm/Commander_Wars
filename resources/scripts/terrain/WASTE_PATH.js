@@ -2,19 +2,25 @@ var Constructor = function()
 {
     this.getTerrainGroup = function()
     {
-        return 3;
+        return 4;
     };
+
     this.loadBaseSprite = function(terrain)
     {
-        __BASEPIPELINE.loadBase(terrain, "snow_pipeline")
+        __BASESTREET.loadBase(terrain, "waste_path+style0")
     };
     this.getTerrainSprites = function()
     {
-        return __BASEPIPELINE.getSprites("snow_pipeline")
+        return __BASESTREET.getSprites("waste_path+style0")
     };
+
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        if (currentTerrainID === "PLAINS")
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "PLAINS")
         {
             terrain.loadBaseTerrain("PLAINS");
         }
@@ -22,15 +28,11 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
-        else if (currentTerrainID === "WASTE")
+        else
         {
             terrain.loadBaseTerrain("WASTE");
         }
-        else
-        {
-            terrain.loadBaseTerrain("SNOW");
-        }
     };
 };
-Constructor.prototype = __BASEPIPELINE;
-var SNOW_PIPELINE = new Constructor();
+Constructor.prototype = __BASESTREET;
+var WASTE_PATH = new Constructor();

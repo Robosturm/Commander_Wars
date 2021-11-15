@@ -2,20 +2,20 @@ var Constructor = function()
 {
     this.getTerrainGroup = function()
     {
-        return 4;
+        return 3;
     };
     this.loadBaseSprite = function(terrain)
     {
-        __BASEFOREST.loadBase(terrain, "WASTE_FOREST", "waste_forest+style0")
+        __BASEFOREST.loadBase(terrain, "SNOW_FOREST1", "snow_forest+style0")
     };
     this.loadOverlaySprite = function(terrain)
     {
-        __BASEFOREST.loadOverlay(terrain, "WASTE_FOREST", "waste_forest+style0");
+        __BASEFOREST.loadOverlay(terrain, "SNOW_FOREST1", "snow_forest+style0");
     };
 
     this.getTerrainSprites = function()
     {
-        return __BASEFOREST.getSprites("waste_forest+style0")
+        return __BASEFOREST.getSprites("snow_forest+style0")
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
@@ -27,15 +27,15 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("PLAINS");
         }
-        else if (currentTerrainID === "SNOW")
+        else if (currentTerrainID === "WASTE")
         {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseTerrain("WASTE");
         }
         else
         {
-            terrain.loadBaseTerrain("WASTE");
+            terrain.loadBaseTerrain("SNOW");
         }
     };
 };
 Constructor.prototype = __BASEFOREST;
-var WASTE_FOREST = new Constructor();
+var SNOW_FOREST1 = new Constructor();

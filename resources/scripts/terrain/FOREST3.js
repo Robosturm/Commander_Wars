@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getTerrainGroup = function()
+    {
+        return 1;
+    };
     this.loadBaseSprite = function(terrain)
     {
         __BASEFOREST.loadBase(terrain, "FOREST3", "forest_style3")
@@ -11,7 +15,6 @@ var Constructor = function()
 
     this.getTerrainSprites = function()
     {
-        // array of sprites that can be selected as fix sprites for this terrain
         return __BASEFOREST.getSprites("forest_style3")
     };
 };

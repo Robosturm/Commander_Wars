@@ -39,7 +39,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE,SNOW_PIPELINE,DESERT_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,SNOW_PIPELINE,DESERT_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
         if (typeof map !== 'undefined')
@@ -129,6 +129,7 @@ var Constructor = function()
         case "PIPELINE":
         case "DESERT_PIPELINE":
         case "SNOW_PIPELINE":
+        case "WASTE_PIPELINE":
         case "ZWELD_N_S":
         case "ZWELD_E_W":
         case "ZSNOWWELD_N_S":

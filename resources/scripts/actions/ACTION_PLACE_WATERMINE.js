@@ -42,6 +42,7 @@ var Constructor = function()
                 // can the transported unit move over the terrain?
                 var terrainId = terrain.getID();
                 if (terrainId !== "BRIDGE" &&
+                    terrainId !== "BRIDGE1" &&
                     terrainId !== "BEACH")
                 {
                     if ((Global[unit.getMovementType()].getMovementpoints(terrain, unit, terrain, false) > 0) &&

@@ -303,22 +303,39 @@
         <image file="wasteland+4.png" />
         <image file="wasteland+5.png" />
         
-        <image file="street.png" />
-        <image file="street+E.png" />
-        <image file="street+E+S.png" />
-        <image file="street+E+S+W.png" />
-        <image file="street+E+W.png" />
-        <image file="street+N.png" />
-        <image file="street+N+E.png" />
-        <image file="street+N+E+S.png" />
-        <image file="street+N+E+S+W.png" />
-        <image file="street+N+E+W.png" />
-        <image file="street+N+S.png" />
-        <image file="street+N+S+W.png" />
-        <image file="street+N+W.png" />
-        <image file="street+S.png" />
-        <image file="street+S+W.png" />
-        <image file="street+W.png" />
+        <image file="street+style0.png" />
+        <image file="street+style0+E.png" />
+        <image file="street+style0+E+S.png" />
+        <image file="street+style0+E+S+W.png" />
+        <image file="street+style0+E+W.png" />
+        <image file="street+style0+N.png" />
+        <image file="street+style0+N+E.png" />
+        <image file="street+style0+N+E+S.png" />
+        <image file="street+style0+N+E+S+W.png" />
+        <image file="street+style0+N+E+W.png" />
+        <image file="street+style0+N+S.png" />
+        <image file="street+style0+N+S+W.png" />
+        <image file="street+style0+N+W.png" />
+        <image file="street+style0+S.png" />
+        <image file="street+style0+S+W.png" />
+        <image file="street+style0+W.png" />
+
+        <image file="street+style1.png" />
+        <image file="street+style1+E.png" />
+        <image file="street+style1+E+S.png" />
+        <image file="street+style1+E+S+W.png" />
+        <image file="street+style1+E+W.png" />
+        <image file="street+style1+N.png" />
+        <image file="street+style1+N+E.png" />
+        <image file="street+style1+N+E+S.png" />
+        <image file="street+style1+N+E+S+W.png" />
+        <image file="street+style1+N+E+W.png" />
+        <image file="street+style1+N+S.png" />
+        <image file="street+style1+N+S+W.png" />
+        <image file="street+style1+N+W.png" />
+        <image file="street+style1+S.png" />
+        <image file="street+style1+S+W.png" />
+        <image file="street+style1+W.png" />
         
         <!-- creeper -->
         <image file="creeper.png" />
@@ -531,22 +548,39 @@
         <image file="weak_wall+E+W.png" />
         <image file="weak_wall+N+S.png" />
         
-        <image file="bridge.png" />
-        <image file="bridge+E.png" />
-        <image file="bridge+E+S.png" />
-        <image file="bridge+E+S+W.png" />
-        <image file="bridge+E+W.png" />
-        <image file="bridge+N.png" />
-        <image file="bridge+N+E.png" />
-        <image file="bridge+N+E+S.png" />
-        <image file="bridge+N+E+S+W.png" />
-        <image file="bridge+N+E+W.png" />
-        <image file="bridge+N+S.png" />
-        <image file="bridge+N+S+W.png" />
-        <image file="bridge+N+W.png" />
-        <image file="bridge+S.png" />
-        <image file="bridge+S+W.png" />
-        <image file="bridge+W.png" />
+        <image file="bridge+style0.png" />
+        <image file="bridge+style0+E.png" />
+        <image file="bridge+style0+E+S.png" />
+        <image file="bridge+style0+E+S+W.png" />
+        <image file="bridge+style0+E+W.png" />
+        <image file="bridge+style0+N.png" />
+        <image file="bridge+style0+N+E.png" />
+        <image file="bridge+style0+N+E+S.png" />
+        <image file="bridge+style0+N+E+S+W.png" />
+        <image file="bridge+style0+N+E+W.png" />
+        <image file="bridge+style0+N+S.png" />
+        <image file="bridge+style0+N+S+W.png" />
+        <image file="bridge+style0+N+W.png" />
+        <image file="bridge+style0+S.png" />
+        <image file="bridge+style0+S+W.png" />
+        <image file="bridge+style0+W.png" />
+
+        <image file="bridge+style1.png" />
+        <image file="bridge+style1+E.png" />
+        <image file="bridge+style1+E+S.png" />
+        <image file="bridge+style1+E+S+W.png" />
+        <image file="bridge+style1+E+W.png" />
+        <image file="bridge+style1+N.png" />
+        <image file="bridge+style1+N+E.png" />
+        <image file="bridge+style1+N+E+S.png" />
+        <image file="bridge+style1+N+E+S+W.png" />
+        <image file="bridge+style1+N+E+W.png" />
+        <image file="bridge+style1+N+S.png" />
+        <image file="bridge+style1+N+S+W.png" />
+        <image file="bridge+style1+N+W.png" />
+        <image file="bridge+style1+S.png" />
+        <image file="bridge+style1+S+W.png" />
+        <image file="bridge+style1+W.png" />
         
         <image file="weld+E+W.png" />
         <image file="weld+N+S.png" />
@@ -561,14 +595,33 @@
         <image file="snow+E.png" />
         <image file="snow+N.png" />
 
-        <image file="snow_forest.png" />
-        <image file="snow_forest+E.png" />
-        <image file="snow_forest+E+W.png" />
-        <image file="snow_forest+W.png" />
-        <image file="snow_forest+SE.png" />
-        <image file="snow_forest+NE.png" />
-        <image file="snow_forest+SW.png" />
-        <image file="snow_forest+NW.png" />
+        <image file="snow_forest+style0.png" />
+        <image file="snow_forest+style0+E.png" />
+        <image file="snow_forest+style0+E+W.png" />
+        <image file="snow_forest+style0+W.png" />
+        <image file="snow_forest+style0+SE.png" />
+        <image file="snow_forest+style0+NE.png" />
+        <image file="snow_forest+style0+SW.png" />
+        <image file="snow_forest+style0+NW.png" />
+
+        <image file="snow_forest+style1.png" />
+        <image file="snow_forest+style1+E.png" />
+        <image file="snow_forest+style1+E+W.png" />
+        <image file="snow_forest+style1+W.png" />
+        <image file="snow_forest+style1+SE.png" />
+        <image file="snow_forest+style1+NE.png" />
+        <image file="snow_forest+style1+SW.png" />
+        <image file="snow_forest+style1+NW.png" />
+
+        <image file="snow_forest+style2.png" />
+        <image file="snow_forest+style2+E.png" />
+        <image file="snow_forest+style2+E+W.png" />
+        <image file="snow_forest+style2+W.png" />
+        <image file="snow_forest+style2+SE.png" />
+        <image file="snow_forest+style2+NE.png" />
+        <image file="snow_forest+style2+SW.png" />
+        <image file="snow_forest+style2+NW.png" />
+
 
         <image file="snow_wasteland+0.png" />
         <image file="snow_wasteland+1.png" />
@@ -605,7 +658,24 @@
         <image file="snow_ruin+0.png" />
         <image file="snow_ruin+1.png" />
         <image file="snow_ruin+2.png" />
-        
+
+        <image file="snow_street+style0.png" />
+        <image file="snow_street+style0+E.png" />
+        <image file="snow_street+style0+E+S.png" />
+        <image file="snow_street+style0+E+S+W.png" />
+        <image file="snow_street+style0+E+W.png" />
+        <image file="snow_street+style0+N.png" />
+        <image file="snow_street+style0+N+E.png" />
+        <image file="snow_street+style0+N+E+S.png" />
+        <image file="snow_street+style0+N+E+S+W.png" />
+        <image file="snow_street+style0+N+E+W.png" />
+        <image file="snow_street+style0+N+S.png" />
+        <image file="snow_street+style0+N+S+W.png" />
+        <image file="snow_street+style0+N+W.png" />
+        <image file="snow_street+style0+S.png" />
+        <image file="snow_street+style0+S+W.png" />
+        <image file="snow_street+style0+W.png" />
+
         <!-- desert stuff here comes zandra -->
         <image file="desert+0.png" />
         <image file="desert+1.png" />
@@ -620,14 +690,23 @@
         <image file="desert+E.png" />
         <image file="desert+N.png" />
 
-        <image file="desert_forest.png" />
-        <image file="desert_forest+E.png" />
-        <image file="desert_forest+E+W.png" />
-        <image file="desert_forest+W.png" />
-        <image file="desert_forest+SE.png" />
-        <image file="desert_forest+NE.png" />
-        <image file="desert_forest+SW.png" />
-        <image file="desert_forest+NW.png" />
+        <image file="desert_forest+style0.png" />
+        <image file="desert_forest+style0+E.png" />
+        <image file="desert_forest+style0+E+W.png" />
+        <image file="desert_forest+style0+W.png" />
+        <image file="desert_forest+style0+SE.png" />
+        <image file="desert_forest+style0+NE.png" />
+        <image file="desert_forest+style0+SW.png" />
+        <image file="desert_forest+style0+NW.png" />
+
+        <image file="desert_forest+style1.png" />
+        <image file="desert_forest+style1+E.png" />
+        <image file="desert_forest+style1+E+W.png" />
+        <image file="desert_forest+style1+W.png" />
+        <image file="desert_forest+style1+SE.png" />
+        <image file="desert_forest+style1+NE.png" />
+        <image file="desert_forest+style1+SW.png" />
+        <image file="desert_forest+style1+NW.png" />
         
         <image file="desert_wasteland+0.png" />
         <image file="desert_wasteland+1.png" />
@@ -678,22 +757,39 @@
         <image file="desert_try_river+S+W.png" />
         <image file="desert_try_river+W.png" />
         
-        <image file="desert_path.png" />
-        <image file="desert_path+E.png" />
-        <image file="desert_path+E+S.png" />
-        <image file="desert_path+E+S+W.png" />
-        <image file="desert_path+E+W.png" />
-        <image file="desert_path+N.png" />
-        <image file="desert_path+N+E.png" />
-        <image file="desert_path+N+E+S.png" />
-        <image file="desert_path+N+E+S+W.png" />
-        <image file="desert_path+N+E+W.png" />
-        <image file="desert_path+N+S.png" />
-        <image file="desert_path+N+S+W.png" />
-        <image file="desert_path+N+W.png" />
-        <image file="desert_path+S.png" />
-        <image file="desert_path+S+W.png" />
-        <image file="desert_path+W.png" />
+        <image file="desert_path+style0.png" />
+        <image file="desert_path+style0+E.png" />
+        <image file="desert_path+style0+E+S.png" />
+        <image file="desert_path+style0+E+S+W.png" />
+        <image file="desert_path+style0+E+W.png" />
+        <image file="desert_path+style0+N.png" />
+        <image file="desert_path+style0+N+E.png" />
+        <image file="desert_path+style0+N+E+S.png" />
+        <image file="desert_path+style0+N+E+S+W.png" />
+        <image file="desert_path+style0+N+E+W.png" />
+        <image file="desert_path+style0+N+S.png" />
+        <image file="desert_path+style0+N+S+W.png" />
+        <image file="desert_path+style0+N+W.png" />
+        <image file="desert_path+style0+S.png" />
+        <image file="desert_path+style0+S+W.png" />
+        <image file="desert_path+style0+W.png" />
+
+        <image file="desert_path+style1.png" />
+        <image file="desert_path+style1+E.png" />
+        <image file="desert_path+style1+E+S.png" />
+        <image file="desert_path+style1+E+S+W.png" />
+        <image file="desert_path+style1+E+W.png" />
+        <image file="desert_path+style1+N.png" />
+        <image file="desert_path+style1+N+E.png" />
+        <image file="desert_path+style1+N+E+S.png" />
+        <image file="desert_path+style1+N+E+S+W.png" />
+        <image file="desert_path+style1+N+E+W.png" />
+        <image file="desert_path+style1+N+S.png" />
+        <image file="desert_path+style1+N+S+W.png" />
+        <image file="desert_path+style1+N+W.png" />
+        <image file="desert_path+style1+S.png" />
+        <image file="desert_path+style1+S+W.png" />
+        <image file="desert_path+style1+W.png" />
         
         <image file="desert_ruin+0.png" />
         <image file="desert_ruin+1.png" />
@@ -713,14 +809,14 @@
         <image file="waste+E.png" />
         <image file="waste+N.png" />
         
-        <image file="waste_forest.png" />
-        <image file="waste_forest+E.png" />
-        <image file="waste_forest+E+W.png" />
-        <image file="waste_forest+W.png" />
-        <image file="waste_forest+SE.png" />
-        <image file="waste_forest+NE.png" />
-        <image file="waste_forest+SW.png" />
-        <image file="waste_forest+NW.png" />
+        <image file="waste_forest+style0.png" />
+        <image file="waste_forest+style0+E.png" />
+        <image file="waste_forest+style0+E+W.png" />
+        <image file="waste_forest+style0+W.png" />
+        <image file="waste_forest+style0+SE.png" />
+        <image file="waste_forest+style0+NE.png" />
+        <image file="waste_forest+style0+SW.png" />
+        <image file="waste_forest+style0+NW.png" />
         
         <image file="waste_wasteland+0.png" />
         <image file="waste_wasteland+1.png" />
@@ -735,7 +831,40 @@
         <image file="waste_ruin+0.png" />
         <image file="waste_ruin+1.png" />
         <image file="waste_ruin+2.png" />
-        
+
+        <image file="waste_path+style0.png" />
+        <image file="waste_path+style0+E.png" />
+        <image file="waste_path+style0+E+S.png" />
+        <image file="waste_path+style0+E+S+W.png" />
+        <image file="waste_path+style0+E+W.png" />
+        <image file="waste_path+style0+N.png" />
+        <image file="waste_path+style0+N+E.png" />
+        <image file="waste_path+style0+N+E+S.png" />
+        <image file="waste_path+style0+N+E+S+W.png" />
+        <image file="waste_path+style0+N+E+W.png" />
+        <image file="waste_path+style0+N+S.png" />
+        <image file="waste_path+style0+N+S+W.png" />
+        <image file="waste_path+style0+N+W.png" />
+        <image file="waste_path+style0+S.png" />
+        <image file="waste_path+style0+S+W.png" />
+        <image file="waste_path+style0+W.png" />
+
+        <image file="waste_Pipeline+E.png" />
+        <image file="waste_Pipeline+E+S.png" />
+        <image file="waste_Pipeline+E+S+W.png" />
+        <image file="waste_Pipeline+E+W.png" />
+        <image file="waste_Pipeline+N.png" />
+        <image file="waste_Pipeline+N+E.png" />
+        <image file="waste_Pipeline+N+E+S.png" />
+        <image file="waste_Pipeline+N+E+S+W.png" />
+        <image file="waste_Pipeline+N+E+W.png" />
+        <image file="waste_Pipeline+N+S.png" />
+        <image file="waste_Pipeline+N+S+W.png" />
+        <image file="waste_Pipeline+N+W.png" />
+        <image file="waste_Pipeline+S.png" />
+        <image file="waste_Pipeline+S+W.png" />
+        <image file="waste_Pipeline+W.png" />
+
         <!-- teleport tile -->
         <image file="teleporttile.png" />
         <image file="teleporttile+E.png" />
