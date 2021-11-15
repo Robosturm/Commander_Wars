@@ -394,7 +394,7 @@ namespace oxygine
         static Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos);
         static Vector2 convert_global2local(spActor & child, spActor & parent, const Vector2& pos);
         static Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos);
-        static Vector2 convert_local2global(spActor child, spActor parent, const Vector2& pos);
+        static Vector2 convert_local2global(spActor & child, spActor & parent, const Vector2& pos);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;

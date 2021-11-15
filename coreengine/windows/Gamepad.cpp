@@ -1,5 +1,6 @@
 #include "coreengine/Gamepad.h"
 #include <xinput.h>
+#include <dinput.h>
 #include "coreengine/mainapp.h"
 
 void Gamepad::update()

@@ -238,7 +238,7 @@ void GlobalUtils::setImageSize(qint32 value)
     GameMap::setImagesize(value);
 }
 
-qint32 GlobalUtils::getDistance(QPoint p1, QPoint p2)
+qint32 GlobalUtils::getDistance(const QPoint & p1, const QPoint & p2)
 {
     return qAbs(p1.x() - p2.x()) + qAbs(p1.y() - p2.y());
 }

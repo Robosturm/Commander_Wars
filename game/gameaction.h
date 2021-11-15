@@ -251,6 +251,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
+        ++m_variableCount;
     }
     /**
      * @brief readDataString
@@ -270,6 +271,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
+        ++m_variableCount;
     }
     /**
      * @brief readDataInt32
@@ -289,6 +291,7 @@ public slots:
     {
         m_buffer.seek(m_buffer.size());
         m_actionData << data;
+        ++m_variableCount;
     }
     /**
      * @brief readDataFloat
@@ -340,6 +343,10 @@ public slots:
     {
         return m_perfomingUnit.get();
     }
+    qint32 getVariableCount() const
+    {
+        return m_variableCount;
+    }
 protected:
     void printAction();
 private:
@@ -377,6 +384,7 @@ private:
     qint64 m_syncCounter{0};
     qint64 m_roundTimerTime{0};
     qint32 m_player{-1};
+    qint32 m_variableCount{0};
 };
 
 #endif // GAMEACTION_H

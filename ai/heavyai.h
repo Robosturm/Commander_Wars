@@ -108,6 +108,14 @@ class HeavyAi : public CoreAI
         CaptureInfoMaxSize,
     };
 
+    enum UnloadingInfo
+    {
+        UnloadingInfoStart = BasicFieldInfoMaxSize,
+        UnloadingInfoUnloadingPercent = UnloadingInfoStart,
+        UnloadingInfoMovementPercent,
+        UnloadingInfoMaxSize,
+    };
+
     enum WaitTargetTypes
     {
         WaitTargetTypes_Capture,
@@ -123,9 +131,6 @@ class HeavyAi : public CoreAI
     // flare?
     // place watermine
     // support repair and ration actions
-
-    // load
-    // unload always
     // wait / stealth / unstealth
 
     enum NeuralNetworks
@@ -133,6 +138,7 @@ class HeavyAi : public CoreAI
         Production,
         ActionFire,
         ActionCapture,
+        ActionUnloading,
         WaitDistanceMultiplier,
         NeuralNetworksMax,
     };
@@ -353,6 +359,13 @@ private:
      */
     void scoreLoad(ScoreData & data, UnitData & unitData, QVector<double> baseData);
     /**
+     * @brief scoreUnload
+     * @param data
+     * @param unitData
+     * @param baseData
+     */
+    void scoreUnload(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    /**
      * @brief getMoveTargets
      * @param unit
      * @param targets
@@ -364,6 +377,13 @@ private:
      * @return
      */
     void scoreWait(ScoreData & data, UnitData & unitData, QVector<double> baseData);
+    /**
+     * @brief scoreWaitGeneric
+     * @param data
+     * @param unitData
+     * @param baseData
+     */
+    void scoreWaitGeneric(ScoreData & data, UnitData & unitData, QVector<double> baseData);
     /**
      * @brief addCaptureTargets
      * @param pUnit
@@ -395,6 +415,15 @@ private:
      * @param data
      */
     void getBasicFieldInputVector(spGameAction & action, QVector<double> & data);
+    /**
+     * @brief getBasicFieldInputVector
+     * @param pMoveUnit
+     * @param moveTarget
+     * @param moveCosts
+     * @param movepoints
+     * @param data
+     */
+    void getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movepoints, QVector<double> & data);
     /**
      * @brief getFunctionType
      * @param action
@@ -523,6 +552,12 @@ private:
      * @return
      */
     qint32 getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList);
+    /**
+     * @brief getDistanceToMovepath
+     * @param targetPath
+     * @param target
+     */
+    qint32 getDistanceToMovepath(const QVector<QPoint> & targetPath, const QPoint & target) const;
 private:
     // function for scoring a function
     using scoreFunction = std::function<void (ScoreData & data, UnitData & unitData, QVector<double> baseData)>;

@@ -1048,7 +1048,7 @@ namespace oxygine
         return pos;
     }
 
-    Vector2 Actor::convert_local2global(spActor child, spActor parent, const Vector2& pos)
+    Vector2 Actor::convert_local2global(spActor & child, spActor & parent, const Vector2& pos)
     {
         return convert_local2global_(child.get(), parent.get(), pos);
     }
