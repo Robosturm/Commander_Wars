@@ -4,6 +4,7 @@ var Constructor = function()
     {
         return 3;
     };
+    this.baseTerrainId = "SNOW";
     this.loadBaseSprite = function(terrain)
     {
         __BASEFOREST.loadBase(terrain, "SNOW_FOREST2", "snow_forest+style2")
@@ -16,25 +17,6 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         return __BASEFOREST.getSprites("snow_forest+style2")
-    };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
-    {
-        if (currentTerrainID === "DESERT")
-        {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else if (currentTerrainID === "PLAINS")
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-        else if (currentTerrainID === "WASTE")
-        {
-            terrain.loadBaseTerrain("WASTE");
-        }
-        else
-        {
-            terrain.loadBaseTerrain("SNOW");
-        }
     };
 };
 Constructor.prototype = __BASEFOREST;

@@ -14,53 +14,6 @@ var Constructor = function()
     {
         return qsTr("Creeper");
     };
-    this.getDefense = function(terrain)
-    {
-        var baseTerrainId = terrain.getBaseTerrainID();
-        if (baseTerrainId === "WASTE")
-        {
-            return 1;
-        }
-        else
-        {
-            return 2;
-        }
-    };
-    this.getBonusVision = function(unit)
-    {
-        var baseTerrainId = terrain.getBaseTerrainID();
-        if (baseTerrainId === "WASTE")
-        {
-            return 1;
-        }
-        return 0;
-    };
-    this.getMovementcostModifier = function(terrain, unit, x, y, curX, curY)
-    {
-        var baseTerrainId = terrain.getBaseTerrainID();
-        if (baseTerrainId === "SNOW")
-        {
-            var movementType = unit.getMovementType()
-            if (movementType !== "MOVE_AIR" &&
-                movementType !== "MOVE_MECH" &&
-                movementType !== "MOVE_HOELLIUM")
-            {
-                return 1;
-            }
-        }
-        return 0;
-    };
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender, action, luckMode)
-    {
-        var baseTerrainId = terrain.getBaseTerrainID();
-        if (baseTerrainId === "DESERT")
-        {
-            return -20;
-        }
-        return 0;
-    };
-
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
         if (currentTerrainID === "SNOW")

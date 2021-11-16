@@ -7,12 +7,12 @@ var Constructor = function()
     this.baseTerrainId = "WASTE";
     this.loadBaseSprite = function(terrain)
     {
-        __BASESTREET.loadBase(terrain, "waste_path+style0")
+        __BASEDESTROYED_WELD.loadBase(terrain, "waste_destroyedweld")
     };
     this.getTerrainSprites = function()
     {
-        return __BASESTREET.getSprites("waste_path+style0")
+        return __BASEDESTROYED_WELD.getSprites("waste_destroyedweld");
     };
 };
-Constructor.prototype = __BASESTREET;
-var WASTE_PATH = new Constructor();
+Constructor.prototype = __BASEDESTROYED_WELD;
+var WASTE_DESTROYEDWELD = new Constructor();

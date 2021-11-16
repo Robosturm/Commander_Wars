@@ -2,21 +2,21 @@ var Constructor = function()
 {
     this.getTerrainGroup = function()
     {
-        return 1;
+        return 3;
     };
-    this.baseTerrainId = "PLAINS";
+    this.baseTerrainId = "WASTE";
     this.loadBaseSprite = function(terrain)
     {
-        __BASEWELD.loadBase(terrain, "weld")
+        __BASEWELD.loadBase(terrain, "waste_weld")
     };
     this.getTerrainSprites = function()
     {
-        return __BASEWELD.getSprites("weld")
+        return __BASEWELD.getSprites("waste_weld")
     };
     this.onDestroyed = function(terrain)
     {
-        __BASEWELD.onBaseDestroyed(terrain, "DESTROYEDWELD");
+        __BASEWELD.onBaseDestroyed(terrain, "WASTE_DESTROYEDWELD");
     };
 };
 Constructor.prototype = __BASEWELD;
-var WELD = new Constructor();
+var WASTE_WELD = new Constructor();

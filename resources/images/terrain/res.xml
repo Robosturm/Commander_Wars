@@ -865,6 +865,12 @@
         <image file="waste_Pipeline+S+W.png" />
         <image file="waste_Pipeline+W.png" />
 
+        <image file="waste_weld+E+W.png" />
+        <image file="waste_weld+N+S.png" />
+
+        <image file="waste_destroyedweld+E+W.png" />
+        <image file="waste_destroyedweld+N+S.png" />
+
         <!-- teleport tile -->
         <image file="teleporttile.png" />
         <image file="teleporttile+E.png" />

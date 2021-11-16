@@ -30,7 +30,7 @@ var Constructor = function()
             terrain.loadBaseSprite("desert+" + random.toString());
         }
     };
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+    this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
         return -20;

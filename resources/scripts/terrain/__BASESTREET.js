@@ -5,9 +5,10 @@ var Constructor = function()
     {
         terrain.setTerrainName(__BASESTREET.getName(terrain));
     };
+    this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Street");
@@ -25,19 +26,19 @@ var Constructor = function()
             return qsTr("Street");
         }
     };
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+    this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "DESERT")
         {
             return -20;
         }
         return 0;
     };
-    this.getBonusVision = function(unit)
+    this.getBonusVision = function(unit, terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return 1;
@@ -59,9 +60,14 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("WASTE");
         }
-        else
+        else if (currentTerrainID === "PLAINS")
         {
             terrain.loadBaseTerrain("PLAINS");
+        }
+        else
+        {
+            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            terrain.loadBaseTerrain(baseTerrainId);
         }
     };
 
@@ -73,7 +79,7 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return "minimap_street";
@@ -93,7 +99,7 @@ var Constructor = function()
     };
     this.getDescription = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
@@ -146,7 +152,7 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return "fore_street+" + rand.toString();
@@ -180,7 +186,7 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         var id = TERRAIN.getTerrainAnimationId(terrain);
         if (baseTerrainId === "WASTE")
         {

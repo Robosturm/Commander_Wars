@@ -13,6 +13,7 @@ var Constructor = function()
                                 ["SNOW_WELD", 2],
                                 ["SNOW_PIPELINE", 2],
                                 ["WASTE_PIPELINE", 1],
+                                ["WASTE_WELD", 1],
                                 ["ZWELD_N_S", 1],
                                 ["ZWELD_E_W", 1],
                                 ["ZSNOWWELD_N_S", 2],

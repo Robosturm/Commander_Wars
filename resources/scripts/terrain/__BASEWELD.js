@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
         terrain.setVisionHigh(2);
-        terrain.setTerrainName(__BASEPIPELINE.getName(terrain));
+        terrain.setTerrainName(__BASEWELD.getName(terrain));
+        terrain.setHp(100);
     };
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
@@ -12,19 +12,19 @@ var Constructor = function()
         var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
-            return qsTr("Waste Pipeline");
+            return qsTr("Waste Weld");
         }
         else if (baseTerrainId === "SNOW")
         {
-            return qsTr("Snowy Pipeline");
+            return qsTr("Snowy Weld");
         }
         else if (baseTerrainId === "DESERT")
         {
-            return qsTr("Desert Pipeline");
+            return qsTr("Desert Weld");
         }
         else
         {
-            return qsTr("Pipeline");
+            return qsTr("Weld");
         }
     };
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
@@ -72,12 +72,7 @@ var Constructor = function()
     };
     this.loadBase = function(terrain, spriteId)
     {
-        var welds = "PIPELINE,WELD,DESTROYEDWELD,PIPESTATION," +
-                    "SNOW_PIPELINE,SNOW_DESTROYEDWELD,SNOW_WELD," +
-                    "DESERT_PIPELINE,DESERT_DESTROYEDWELD,DESERT_WELD," +
-                    "WASTE_PIPELINE,WASTE_DESTROYEDWELD,WASTE_WELD,"+
-                    "ZWELD_E_W,ZWELD_N_S,ZSNOWWELD_N_S,ZSNOWWELD_E_W,ZDESERTWELD_N_S,ZDESERTWELD_E_W";
-        var surroundings = terrain.getSurroundings(welds, false, false, GameEnums.Directions_Direct, true, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
         if (typeof map !== 'undefined')
@@ -100,19 +95,52 @@ var Constructor = function()
                 }
             }
         }
+        if ((surroundings === ""))
+        {
+            terrain.loadBaseSprite(spriteId + "+E+W");
+        }
+        else if ((surroundings === "+N+S"))
+        {
 
-        if (surroundings === "")
+            terrain.loadBaseSprite(spriteId + "+N+S");
+        }
+        else if ((surroundings === "+E+W"))
         {
             terrain.loadBaseSprite(spriteId + "+E+W");
         }
         else
         {
-            terrain.loadBaseSprite(spriteId + surroundings);
+            terrain.loadBaseSprite(spriteId + "+E+W");
         }
+    };
+    this.canBePlaced = function(x, y)
+    {
+        var terrain = map.getTerrain(x, y);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        if ((surroundings === "+E+W") || (surroundings === "+N+S"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+    this.onBaseDestroyed = function(terrain, spriteId)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+        var x = terrain.getX();
+        var y = terrain.getY();
+        map.replaceTerrainOnly(spriteId, x, y);
+        map.getTerrain(x, y).loadSprites();
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+        animation.addScreenshake(30, 0.95, 1000, 200);
+        animation.setSound("pipe_destroyed.wav");
     };
     this.getMiniMapIcon = function()
     {
-        return "minimap_pipeline";
+        return "minimap_weld";
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
@@ -147,41 +175,27 @@ var Constructor = function()
         var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
-            return qsTr("Black Hole Pipeline which can't be crossed by most units.");
+            return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
         }
         else if (baseTerrainId === "SNOW")
         {
-            return qsTr("Black Hole Pipeline which can't be crossed by most units and is also hard to cross for those who can.");
+            return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
         }
         else if (baseTerrainId === "DESERT")
         {
-            return qsTr("Black Hole Pipeline which can't be crossed by most units. It reduces the firepower of units by 20%.");
+            return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firepower of units by 20%.");
         }
         else
         {
-            return qsTr("Black Hole Pipeline which can't be crossed by most units.");
+            return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
         }
     };
 
     this.getSprites = function(spriteId)
     {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return [spriteId + "+E",
-                spriteId + "+E+S",
-                spriteId + "+E+S+W",
-                spriteId + "+E+W",
-                spriteId + "+N",
-                spriteId + "+N+E",
-                spriteId + "+N+E+S",
-                spriteId + "+N+E+S+W",
-                spriteId + "+N+E+W",
-                spriteId + "+N+S",
-                spriteId + "+N+S+W",
-                spriteId + "+N+W",
-                spriteId + "+S",
-                spriteId + "+S+W",
-                spriteId + "+W"];
+        return [spriteId + "+E+W",
+                spriteId + "+N+S"];
     };
 };
 Constructor.prototype = TERRAIN;
-var __BASEPIPELINE = new Constructor();
+var __BASEWELD = new Constructor();

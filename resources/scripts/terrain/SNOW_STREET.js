@@ -4,7 +4,7 @@ var Constructor = function()
     {
         return 3;
     };
-
+    this.baseTerrainId = "SNOW";
     this.loadBaseSprite = function(terrain)
     {
         __BASESTREET.loadBase(terrain, "snow_street+style0")

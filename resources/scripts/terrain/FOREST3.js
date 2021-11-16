@@ -4,6 +4,7 @@ var Constructor = function()
     {
         return 1;
     };
+    this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain)
     {
         __BASEFOREST.loadBase(terrain, "FOREST3", "forest_style3")

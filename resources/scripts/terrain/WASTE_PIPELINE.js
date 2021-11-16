@@ -4,6 +4,7 @@ var Constructor = function()
     {
         return 4;
     };
+    this.baseTerrainId = "WASTE";
     this.loadBaseSprite = function(terrain)
     {
         __BASEPIPELINE.loadBase(terrain, "waste_pipeline")
@@ -11,25 +12,6 @@ var Constructor = function()
     this.getTerrainSprites = function()
     {
         return __BASEPIPELINE.getSprites("waste_pipeline")
-    };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
-    {
-        if (currentTerrainID === "PLAINS")
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-        else if (currentTerrainID === "DESERT")
-        {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else if (currentTerrainID === "SNOW")
-        {
-            terrain.loadBaseTerrain("SNOW");
-        }
-        else
-        {
-            terrain.loadBaseTerrain("WASTE");
-        }
     };
 };
 Constructor.prototype = __BASEPIPELINE;

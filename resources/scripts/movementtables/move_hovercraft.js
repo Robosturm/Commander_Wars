@@ -46,9 +46,9 @@ var Constructor = function()
                                 ["DESERT_FOREST", 3],
                                 ["DESERT_FOREST1", 3],
                                 ["DESERT_WASTELAND", 1],
-                                ["SNOW_FOREST", 2],
-                                ["SNOW_FOREST1", 2],
-                                ["SNOW_FOREST2", 2],
+                                ["SNOW_FOREST", 3],
+                                ["SNOW_FOREST1", 3],
+                                ["SNOW_FOREST2", 3],
                                 ["SNOW_WASTELAND", 1],
                                 ["SNOW_RUIN", 1],
                                 ["SEA", 2],
@@ -60,6 +60,7 @@ var Constructor = function()
                                 ["WASTE_FOREST", 1],
                                 ["WASTE_WASTELAND", 1],
                                 ["WASTE_RUIN", 1],
+                                ["WASTE_DESTROYEDWELD", 1],
                                 ["CREEPER", 1],
                                 ["TELEPORTTILE", 0]];
 

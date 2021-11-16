@@ -6,9 +6,10 @@ var Constructor = function()
         terrain.setVisionHigh(1);
         terrain.setTerrainName(__BASEFOREST.getName(terrain));
     };
+    this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Forest");
@@ -28,7 +29,7 @@ var Constructor = function()
     };
     this.getDefense = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return 1;
@@ -38,34 +39,19 @@ var Constructor = function()
             return 2;
         }
     };
-    this.getBonusVision = function(unit)
+    this.getBonusVision = function(unit, terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return 1;
         }
         return 0;
     };
-    this.getMovementcostModifier = function(terrain, unit, x, y, curX, curY)
-    {
-        var baseTerrainId = terrain.getBaseTerrainID();
-        if (baseTerrainId === "SNOW")
-        {
-            var movementType = unit.getMovementType()
-            if (movementType !== "MOVE_AIR" &&
-                movementType !== "MOVE_MECH" &&
-                movementType !== "MOVE_HOELLIUM")
-            {
-                return 1;
-            }
-        }
-        return 0;
-    };
-    this.getOffensiveFieldBonus = function(co, attacker, atkPosX, atkPosY,
+    this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "DESERT")
         {
             return -20;
@@ -86,9 +72,14 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("WASTE");
         }
-        else
+        else if (currentTerrainID === "PLAINS")
         {
             terrain.loadBaseTerrain("PLAINS");
+        }
+        else
+        {
+            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            terrain.loadBaseTerrain(baseTerrainId);
         }
     };
 
@@ -141,7 +132,7 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function(terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return "minimap_waste_forest";
@@ -196,7 +187,7 @@ var Constructor = function()
 
     this.getTerrainAnimationBase = function(unit, terrain)
     {
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return "base_wasteforest";
@@ -234,7 +225,7 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = terrain.getBaseTerrainID();
+        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
         if (baseTerrainId === "WASTE")
         {
             return "back_wasteforest";
