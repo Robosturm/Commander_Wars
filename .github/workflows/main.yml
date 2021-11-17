@@ -14,21 +14,17 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash
         
     steps:
     - uses: actions/checkout@v2
-    
-    - uses: msys2/setup-msys2@v2
-      with:
-          install: mingw-w64-x86_64-toolchain
-          msystem: mingw64
-    
+        
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
-      with:
-          version: ${{env.QT_Version}}
+      with:      
+          host: "windows"
           target: 'desktop'
+          version: ${{env.QT_Version}}
           arch: ${{env.COMPILER_VERSION}}
           modules: 'qtmultimedia'
           dir: '${{ github.workspace }}/qt/'
@@ -37,7 +33,7 @@ jobs:
     - name: Configure CMake
       env:
           CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}          
-      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}    
+      run: cmake -G "CodeBlocks - MinGW Makefiles" -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}    
     
     - name: Build
       working-directory: ${{github.workspace}}/build
