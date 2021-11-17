@@ -13,8 +13,14 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
+        
     steps:
     - uses: actions/checkout@v2
+    
+    - uses: msys2/setup-msys2@v2
+        #with:
+        #  install: mingw-w64-x86_64-toolchain
+        #  msystem: mingw64
     
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
@@ -22,6 +28,7 @@ jobs:
           version: ${{env.QT_Version}}
           target: 'desktop'
           arch: ${{env.COMPILER_VERSION}}
+          modules: 'qtmultimedia'
           dir: '${{ github.workspace }}/qt/'
           install-deps: "true"
           
