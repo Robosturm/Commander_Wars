@@ -26,7 +26,7 @@ jobs:
           target: 'desktop'
           version: ${{env.QT_Version}}
           arch: ${{env.COMPILER_VERSION}}
-          modules: 'qtmultimedia'
+          modules: 'multimedia'
           dir: '${{ github.workspace }}/qt/'
           install-deps: "true"
           
