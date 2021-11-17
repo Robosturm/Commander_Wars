@@ -1,33 +1,34 @@
 name: CMake
 on: [push]
 env:
-  BUILD_TYPE: RelWithDebInfo
+  BUILD_TYPE: Release
   compiler: gcc
-  QT_Version: '5.15.2'
+  QT_Version: '6.2.1'
   COMPILER_VERSION: 'win64_msvc2019_64'
 jobs:
   install:
     name: All
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
-    - uses: jurplel/install-qt-action@v2
+    - uses: actions/checkout@v2
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2    
       with:
           version: ${{env.QT_Version}}
           target: 'desktop'
           arch: ${{env.COMPILER_VERSION}}
           dir: '${{ github.workspace }}/qt/'
-    - uses: actions/checkout@v2
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{github.workspace}}/build
+          install-deps: "true"
+          
     - name: Configure CMake
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DQt5_DIR=$Qt5_Dir -DCMAKE_MODULE_PATH=$Qt5_Dir -DCMAKE_PREFIX_PATH=$Qt5_Dir -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DQT_QMAKE_EXECUTABLE=$Qt5_Dir/bin/qmake.exe
-    - name: Translate
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target Commander_Wars_translations
+      env:
+          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}          
+      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}    
+    
     - name: Build
       working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target install
+      run: cmake --build '${{github.workspace}}'/build --config $BUILD_TYPE --target install

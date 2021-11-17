@@ -46,7 +46,7 @@ var Constructor = function()
                                 ["DESERT_TRY_RIVER", 1],
 								["DESERT_ROCK", 2],
                                 ["DESERT_FOREST", 1],
-                                ["DESERT_FOREST", 1],
+                                ["DESERT_FOREST1", 1],
                                 ["DESERT_WASTELAND", 1],
                                 ["DESERT_RUIN", 1],
                                 ["SNOW", 2],
