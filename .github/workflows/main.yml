@@ -5,6 +5,7 @@ env:
   compiler: gcc
   QT_Version: '6.2.1'
   COMPILER_VERSION: 'win64_msvc2019_64'
+  
 jobs:
   install:
     name: All
