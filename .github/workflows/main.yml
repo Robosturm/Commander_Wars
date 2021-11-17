@@ -3,8 +3,10 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.1'
-  COMPILER_VERSION: 'mingw-w64-x86_64'
+  COMPILER_VERSION: 'win64_mingw81'
+  # compiler options
   # 'win64_msvc2019_64'
+  # 'android_armv7'
   
 jobs:
   install:
