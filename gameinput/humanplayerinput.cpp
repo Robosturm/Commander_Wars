@@ -860,31 +860,34 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
-    if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
+    if (pAnim != nullptr)
     {
-        float initFrame = 0;
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
-        pSprite->addTween(tween);
-    }
-    else
-    {
-        pSprite->setResAnim(pAnim);
-    }
-    pSprite->setColor(color);
+        if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
+        {
+            float initFrame = 0;
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        pSprite->setColor(color);
 
-    if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
-    {
-        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
-        pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
-        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));        
-        pMap->addChild(pSprite);
-    }
-    else
-    {
-        pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
-        pSprite->setPriority(static_cast<qint16>(drawPriority));
-        pSprite->setPosition(0, 0);
-        pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+        if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
+        {
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
+            pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
+            pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
+            pMap->addChild(pSprite);
+        }
+        else
+        {
+            pSprite->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(pAnim->getWidth()));
+            pSprite->setPriority(static_cast<qint16>(drawPriority));
+            pSprite->setPosition(0, 0);
+            pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+        }
     }
     return pSprite;
 }
@@ -1026,64 +1029,67 @@ void HumanPlayerInput::createSimpleZInformation(qint32 x, qint32 y, const Marked
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("z_information_label");
-    if (pAnim->getTotalFrames() > 1)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-        pSprite->addTween(tween);
-    }
-    else
-    {
-        pSprite->setResAnim(pAnim);
-    }
-    oxygine::spSprite pSprite2 = oxygine::spSprite::create();
-    oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
+        if (pAnim->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        oxygine::spSprite pSprite2 = oxygine::spSprite::create();
+        oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
 
-    if (pAnim2->getTotalFrames() > 1)
-    {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
-        pSprite2->addTween(tween);
-    }
-    else
-    {
-        pSprite2->setResAnim(pAnim2);
-    }
-    QColor color = m_pMarkedFieldData->getZLabelColor();
-    pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
-    constexpr float baseScale = 4.0f;
-    pSprite->setScale(baseScale);
-    pSprite2->setScale(baseScale);
-    m_ZInformationLabel->setSize(pAnim->getSize() * baseScale);
-    m_ZInformationLabel->addChild(pSprite2);
-    m_ZInformationLabel->addChild(pSprite);
-    // add text to the label
-    oxygine::spClipRectActor clipRec = oxygine::spClipRectActor::create();
-    clipRec->setX(4);
-    clipRec->setY(0);
-    clipRec->setSize(28 * 4, 40);
-    oxygine::spTextField textField = oxygine::spTextField::create();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72());
-    style.color = FontManager::getFontColor();
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    textField->setStyle(style);
-    textField->setScale(32.0f / 72.0f);
-    textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
-    textField->setSize(clipRec->getSize());
-    clipRec->addChild(textField);
-    m_ZInformationLabel->addChild(clipRec);
+        if (pAnim2->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
+            pSprite2->addTween(tween);
+        }
+        else
+        {
+            pSprite2->setResAnim(pAnim2);
+        }
+        QColor color = m_pMarkedFieldData->getZLabelColor();
+        pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
+        constexpr float baseScale = 4.0f;
+        pSprite->setScale(baseScale);
+        pSprite2->setScale(baseScale);
+        m_ZInformationLabel->setSize(pAnim->getSize() * baseScale);
+        m_ZInformationLabel->addChild(pSprite2);
+        m_ZInformationLabel->addChild(pSprite);
+        // add text to the label
+        oxygine::spClipRectActor clipRec = oxygine::spClipRectActor::create();
+        clipRec->setX(4);
+        clipRec->setY(0);
+        clipRec->setSize(28 * 4, 40);
+        oxygine::spTextField textField = oxygine::spTextField::create();
+        oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72());
+        style.color = FontManager::getFontColor();
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+        textField->setStyle(style);
+        textField->setScale(32.0f / 72.0f);
+        textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
+        textField->setSize(clipRec->getSize());
+        clipRec->addChild(textField);
+        m_ZInformationLabel->addChild(clipRec);
 
-    oxygine::spTextField textField2 = oxygine::spTextField::create();
-    textField2->setStyle(style);
-    textField2->setY(44);
-    textField2->setX(10);
-    textField2->setSize(clipRec->getSize());
-    textField2->setScale(32.0f / 72.0f);
-    textField2->setHtmlText(labelText);
-    m_ZInformationLabel->addChild(textField2);
+        oxygine::spTextField textField2 = oxygine::spTextField::create();
+        textField2->setStyle(style);
+        textField2->setY(44);
+        textField2->setX(10);
+        textField2->setSize(clipRec->getSize());
+        textField2->setScale(32.0f / 72.0f);
+        textField2->setHtmlText(labelText);
+        m_ZInformationLabel->addChild(textField2);
 
-    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
-    pMap->addChild(m_ZInformationLabel);
-    zoomChanged(pMap->getZoom());
+        m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
+        pMap->addChild(m_ZInformationLabel);
+        zoomChanged(pMap->getZoom());
+    }
 }
 
 bool HumanPlayerInput::inputAllowed()
@@ -1335,65 +1341,68 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
-        pSprite->setResAnim(pAnim);
-        pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
-        pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
-        pMap->addChild(pSprite);
-        m_Arrows.append(pSprite);
+        if (pAnim != nullptr)
+        {
+            pSprite->setResAnim(pAnim);
+            pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
+            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
+            pMap->addChild(pSprite);
+            m_Arrows.append(pSprite);
 
-        if (i > 0)
-        {
-            // select arrow
-            if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
-                ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
+            if (i > 0)
             {
-                pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
+                // select arrow
+                if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
+                    ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
+                }
+                else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                         ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
+                }
+                else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                         ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
+                }
             }
-            else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
-                     ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
+            else
             {
-                pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
-            }
-            else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                     ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
-            }
-            else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                     ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
-            }
-            else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                     ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
-            }
-            else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                     ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
-            }
-        }
-        else
-        {
-            // final arrow
-            if (points[i].x() < points[i + 1].x())
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::Right));
-            }
-            else if (points[i].x() > points[i + 1].x())
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::Left));
-            }
-            else if (points[i].y() < points[i + 1].y())
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::Down));
-            }
-            else if (points[i].y() > points[i + 1].y())
-            {
-                pSprite->setColumn(static_cast<qint32>(Arrows::Up));
+                // final arrow
+                if (points[i].x() < points[i + 1].x())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Right));
+                }
+                else if (points[i].x() > points[i + 1].x())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Left));
+                }
+                else if (points[i].y() < points[i + 1].y())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Down));
+                }
+                else if (points[i].y() > points[i + 1].y())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Up));
+                }
             }
         }
     }

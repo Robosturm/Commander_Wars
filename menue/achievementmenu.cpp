@@ -32,12 +32,14 @@ Achievementmenu::Achievementmenu()
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("achievementmenu");
-    sprite->setResAnim(pBackground);
-    // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
-
+    if (pBackground != nullptr)
+    {
+        sprite->setResAnim(pBackground);
+        // background should be last to draw
+        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/credits_options");
     pApp->getAudioThread()->playRandom();

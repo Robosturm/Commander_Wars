@@ -29,6 +29,7 @@ var PLAYER =
                      ["#617c0e", "#617c0e", ""], // olive
                      ["#2342ba", "#2342ba", ""], // cobalt_ice
                      ["#85927b", "#85927b", ""], // silver
+                     ["#6b01db", "#6b01db", ""], // purple
                      ["#908890", "#908890", ""], // neutral
                     ],
 
@@ -104,6 +105,7 @@ var PLAYER =
                     "olive",
                     "cobalt_ice",
                     "silver",
+                    "purple",
                     "neutral"],
     getColorTable : function(index)
     {

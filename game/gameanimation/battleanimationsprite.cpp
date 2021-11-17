@@ -621,118 +621,121 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
                                                float rotation, quint8 alpha)
 {
     oxygine::spSprite pSprite = oxygine::spSprite::create();
-    if (pAnim->getTotalFrames() > 1)
+    if (pAnim != nullptr)
     {
-        if (frames < 0)
+        if (pAnim->getTotalFrames() > 1)
         {
-            frames = pAnim->getColumns() - 1;
-        }
-        if (frames > pAnim->getColumns() - 1)
-        {
-            frames = pAnim->getColumns() - 1;
-        }
-        if (startFrame < 0)
-        {
-            startFrame = 0;
-        }
-        if (startFrame > pAnim->getColumns() - 1)
-        {
-            startFrame = pAnim->getColumns() - 1;
-        }
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-        pSprite->addTween(tween);
-        if (deleteAfter && moveTime <= 0)
-        {
-            tween->addDoneCallback([=](oxygine::Event * pEvent)
+            if (frames < 0)
             {
-                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
-                if (pTarget.get() != nullptr)
+                frames = pAnim->getColumns() - 1;
+            }
+            if (frames > pAnim->getColumns() - 1)
+            {
+                frames = pAnim->getColumns() - 1;
+            }
+            if (startFrame < 0)
+            {
+                startFrame = 0;
+            }
+            if (startFrame > pAnim->getColumns() - 1)
+            {
+                startFrame = pAnim->getColumns() - 1;
+            }
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            pSprite->addTween(tween);
+            if (deleteAfter && moveTime <= 0)
+            {
+                tween->addDoneCallback([=](oxygine::Event * pEvent)
                 {
-                    emit sigDetachChild(pTarget);
-                }
-            });
+                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                    if (pTarget.get() != nullptr)
+                    {
+                        emit sigDetachChild(pTarget);
+                    }
+                });
+            }
         }
-    }
-    else
-    {
-        pSprite->setResAnim(pAnim);
-    }
-    constexpr qint32 multiplier = 2;
-    qint32 finalPriority = priority * multiplier;
-    // repaint the unit?
-    if (mode == GameEnums::Recoloring_Mask)
-    {
-        QColor color = m_pUnit->getOwner()->getColor();
-        pSprite->setColor(color);
-    }
-    else if (mode == GameEnums::Recoloring_Table ||
-             mode == GameEnums::Recoloring_Matrix)
-    {
-        bool matrixMode = mode == GameEnums::Recoloring_Matrix;
-        pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim(), matrixMode);
-    }
-    else
-    {
-        finalPriority += 1;
-    }
-    pSprite->setPriority(finalPriority);
-    pSprite->setScale(scale);
-    pSprite->setSize(pAnim->getSize());
-    pSprite->setInvertFlipX(_invertFlipX);
-    pSprite->setAlpha(alpha);
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        constexpr qint32 multiplier = 2;
+        qint32 finalPriority = priority * multiplier;
+        // repaint the unit?
+        if (mode == GameEnums::Recoloring_Mask)
+        {
+            QColor color = m_pUnit->getOwner()->getColor();
+            pSprite->setColor(color);
+        }
+        else if (mode == GameEnums::Recoloring_Table ||
+                 mode == GameEnums::Recoloring_Matrix)
+        {
+            bool matrixMode = mode == GameEnums::Recoloring_Matrix;
+            pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim(), matrixMode);
+        }
+        else
+        {
+            finalPriority += 1;
+        }
+        pSprite->setPriority(finalPriority);
+        pSprite->setScale(scale);
+        pSprite->setSize(pAnim->getSize());
+        pSprite->setInvertFlipX(_invertFlipX);
+        pSprite->setAlpha(alpha);
 
-    pSprite->setAnchor(0.5f, 0.5f);
-    offset.setY(offset.y() - pAnim->getHeight() * 0.5f);
+        pSprite->setAnchor(0.5f, 0.5f);
+        offset.setY(offset.y() - pAnim->getHeight() * 0.5f);
 
-    qint32 xPos = 0;
-    if (isFlippedX())
-    {
-        offset.setX(offset.x() - pAnim->getWidth() * 0.5f);
-        xPos = offset.x();
-        qint32 width = pAnim->getWidth() * scale;
-        xPos = 127 - xPos - width;
-    }
-    else
-    {
-        offset.setX(offset.x() + pAnim->getWidth() * 0.5f);
-        xPos = offset.x();
-    }
-    qint32 yPos = 192 - offset.y() - pAnim->getHeight() * scale;
-    pSprite->setPosition(xPos , yPos);
-    if (moveTime > 0)
-    {
-        qint32 endX = xPos + movement.x();
+        qint32 xPos = 0;
         if (isFlippedX())
         {
-            endX = xPos - movement.x();
+            offset.setX(offset.x() - pAnim->getWidth() * 0.5f);
+            xPos = offset.x();
+            qint32 width = pAnim->getWidth() * scale;
+            xPos = 127 - xPos - width;
         }
-        oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-        if (deleteAfter)
+        else
         {
-            moveTween->addDoneCallback([=](oxygine::Event * pEvent)
-            {
-                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
-                if (pTarget.get() != nullptr)
-                {
-                    emit sigDetachChild(pTarget);
-                }
-            });
+            offset.setX(offset.x() + pAnim->getWidth() * 0.5f);
+            xPos = offset.x();
         }
-        pSprite->addTween(moveTween);
-        if (rotation != 0)
+        qint32 yPos = 192 - offset.y() - pAnim->getHeight() * scale;
+        pSprite->setPosition(xPos , yPos);
+        if (moveTime > 0)
         {
+            qint32 endX = xPos + movement.x();
             if (isFlippedX())
             {
-                rotation = -rotation;
+                endX = xPos - movement.x();
             }
-            oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-            pSprite->addTween(rotationTween);
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            if (deleteAfter)
+            {
+                moveTween->addDoneCallback([=](oxygine::Event * pEvent)
+                {
+                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                    if (pTarget.get() != nullptr)
+                    {
+                        emit sigDetachChild(pTarget);
+                    }
+                });
+            }
+            pSprite->addTween(moveTween);
+            if (rotation != 0)
+            {
+                if (isFlippedX())
+                {
+                    rotation = -rotation;
+                }
+                oxygine::spTween rotationTween = oxygine::createTween(oxygine::Actor::TweenRotation(rotation / 360.0f * 2.0f * M_PI), oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+                pSprite->addTween(rotationTween);
+            }
         }
-    }
-    if (showDelay > 0)
-    {
-        oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())), 1);
-        pSprite->addTween(visibileTween);
+        if (showDelay > 0)
+        {
+            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.96f, 1.0f), oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())), 1);
+            pSprite->addTween(visibileTween);
+        }
     }
     m_Actor->addChild(pSprite);
     m_lastLoadedSprite = pSprite;

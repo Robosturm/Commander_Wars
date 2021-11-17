@@ -508,36 +508,39 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit, Unit* pDefende
     pSprite->setSpeedX(speed);
     qint32 terrainDefense = pUnit->getTerrainDefense();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("defenseStar");
-    float defenseY = 5;
-    float startDefenseX = 5;
-    float defenseX = startDefenseX;
-    for (qint32 i = 1; i <= terrainDefense; i++)
+    if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
-        if (getIsLeft(pUnit, pDefender))
+        float defenseY = 5;
+        float startDefenseX = 5;
+        float defenseX = startDefenseX;
+        for (qint32 i = 1; i <= terrainDefense; i++)
         {
-            pSprite->setPosition(defenseX, defenseY);
-        }
-        else
-        {
-            pSprite->setPosition(127 - defenseX - pAnim->getWidth(), defenseY);
-        }
-        pSprite->setResAnim(pAnim);
-        pSprite->setPriority(10);
-        ret->addChild(pSprite);
-        if (pAnim != nullptr)
-        {
-            if (i % 4 == 0)
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            if (getIsLeft(pUnit, pDefender))
             {
-                defenseY += pAnim->getHeight() + 2;
-                defenseX = startDefenseX;
+                pSprite->setPosition(defenseX, defenseY);
             }
             else
             {
-                defenseX += pAnim->getWidth();
+                pSprite->setPosition(127 - defenseX - pAnim->getWidth(), defenseY);
+            }
+            pSprite->setResAnim(pAnim);
+            pSprite->setPriority(10);
+            ret->addChild(pSprite);
+            if (pAnim != nullptr)
+            {
+                if (i % 4 == 0)
+                {
+                    defenseY += pAnim->getHeight() + 2;
+                    defenseX = startDefenseX;
+                }
+                else
+                {
+                    defenseX += pAnim->getWidth();
+                }
             }
         }
-    }    
+    }
     return ret;
 }
 

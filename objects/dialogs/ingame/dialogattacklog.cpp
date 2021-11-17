@@ -135,12 +135,15 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
-            pSprite->setResAnim(pAnim);
-            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
-            pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
-            pActor->addChild(pSprite);
+            if (pAnim != nullptr)
+            {
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                pSprite->setResAnim(pAnim);
+                pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
+                pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
+                pActor->addChild(pSprite);
+            }
         }
         pPanel->addItem(pActor);
 
@@ -193,12 +196,15 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pActor->addChild(spUnit::create(log->defenderID, pMap->getPlayer(log->defenderOwnerID), false));
         if (log->defenderKilled)
         {
-            oxygine::spSprite pSprite = oxygine::spSprite::create();
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
-            pSprite->setResAnim(pAnim);
-            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
-            pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
-            pActor->addChild(pSprite);
+            if (pAnim != nullptr)
+            {
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                pSprite->setResAnim(pAnim);
+                pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
+                pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
+                pActor->addChild(pSprite);
+            }
         }
         pActor->setPosition(500, y + 8);
         pPanel->addItem(pActor);

@@ -105,7 +105,8 @@ void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* captur
 void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer)
 {
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    if (pMap.get() != nullptr &&
+        pAnim != nullptr)
     {
         float endPoints = m_endPoints;
         if (m_endPoints == 0)

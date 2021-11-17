@@ -425,7 +425,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -697,7 +697,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eDEBUG);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));

@@ -33,6 +33,7 @@ namespace oxygine
     void SingleResAnim::init(QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder,
                              bool clamp2Edge, quint32 linearFilter)
     {
+
         SpriteCreator::convertToRgba(image);
         m_scaleFactor = scaleFactor;
         m_frames.clear();

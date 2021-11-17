@@ -28,7 +28,7 @@ var Init =
                         ["normal14.ini",  2],
                         ["normal15.ini",  2],
                         ["normal16.ini",  2],
-    ],    
+    ],
     cores = 5, // amount of games started at the same time
     // internal data
     startAi = 0,
@@ -331,17 +331,6 @@ var Init =
         Init.selectCos();
     },
 
-    mutate = function(mutateCount, i, aiNames)
-    {
-        var ai = mutateCount % Init.topAis;
-        GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
-        var dummyAi = map.getPlayer(0).getBaseGameInput();
-        dummyAi.readIni(aiNames[ai]);
-        dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
-        ++mutateCount;
-        return mutateCount;
-    },
-
     selectCos = function()
     {
         GameConsole.print("Selecting new co's at random", Init.logLevel);
@@ -359,5 +348,16 @@ var Init =
             index2 = globals.randInt(0, cos.length - 1);
         }
         Init.cos[1] = cos[index2];
-    }
+    },
+
+    mutate = function(mutateCount, i, aiNames)
+    {
+        var ai = mutateCount % Init.topAis;
+        GameConsole.print("Mutating ai: " + Init.trainingAis[i][0] + " using ai: " + aiNames[ai], Init.logLevel);
+        var dummyAi = map.getPlayer(0).getBaseGameInput();
+        dummyAi.readIni(aiNames[ai]);
+        dummyAi.randomizeIni(Init.trainingAis[i][0], Init.mutationChance, Init.mutationRate);
+        ++mutateCount;
+        return mutateCount;
+    },
 }

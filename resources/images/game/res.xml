@@ -75,7 +75,9 @@
         <image file="battlesprites/background/back_desertbridge+sea.png" />
         <image file="battlesprites/background/back_snowbridge+0.png" />
         <image file="battlesprites/background/back_snowbridge+1.png" />
-        <image file="battlesprites/background/back_snowbridge+sea.png" />
+        <image file="battlesprites/background/back_wastebridge+0.png" />
+        <image file="battlesprites/background/back_wastebridge+1.png" />
+        <image file="battlesprites/background/back_snowbridge+sea.png" />        
         <!-- forest -->
         <image file="battlesprites/background/back_forest+0.png" />
         <image file="battlesprites/background/back_forest+1.png" />

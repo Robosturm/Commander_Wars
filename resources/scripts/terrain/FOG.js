@@ -4,7 +4,6 @@ var Constructor = function()
     {
         return 0;
     };
-    // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
         terrain.setVisionHigh(1);
@@ -98,7 +97,6 @@ var Constructor = function()
 
     this.getTerrainSprites = function()
     {
-        // array of sprites that can be selected as fix sprites for this terrain
         return ["fog.png",
                 "fog+E",
                 "fog+E+W",

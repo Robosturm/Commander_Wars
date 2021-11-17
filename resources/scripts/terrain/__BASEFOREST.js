@@ -178,7 +178,6 @@ var Constructor = function()
     };
     this.getSprites = function(spriteId)
     {
-        // array of sprites that can be selected as fix sprites for this terrain
         return [spriteId,
                 spriteId + "+E",
                 spriteId + "+E+W",

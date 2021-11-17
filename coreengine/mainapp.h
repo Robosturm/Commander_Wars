@@ -6,7 +6,7 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <QLineEdit>
-#include "QMutex"
+#include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "coreengine/settings.h"

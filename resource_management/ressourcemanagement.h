@@ -11,6 +11,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
+#include "coreengine/mainapp.h"
 
 
 template<class TClass>
@@ -117,7 +118,7 @@ RessourceManagement<TClass>::RessourceManagement(QString resPath, QString script
 template<class TClass>
 void RessourceManagement<TClass>::loadRessources(QString resPath, bool addTransparentBorder)
 {
-    if (!resPath.isEmpty())
+    if (!resPath.isEmpty() && !Mainapp::getInstance()->getNoUi())
     {
         if (QFile::exists(QString(RCC_PREFIX_PATH) + "resources/" + resPath))
         {

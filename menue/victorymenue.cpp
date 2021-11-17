@@ -54,11 +54,14 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("victorymenu");
-    sprite->setResAnim(pBackground);
-    // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    if (pBackground != nullptr)
+    {
+        sprite->setResAnim(pBackground);
+        // background should be last to draw
+        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/victorymenue");
@@ -67,31 +70,34 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     GameManager* pGameManager = GameManager::getInstance();
     m_pGraphBackground = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("graph");
-    m_pGraphBackground->setResAnim(pAnim);
-    qint32 widthCount = 0;
-    if (Settings::getSmallScreenDevice())
+    if (pAnim != nullptr)
     {
-        widthCount = (Settings::getWidth() - 110) / static_cast<qint32>(pAnim->getWidth());
-    }
-    else
-    {
-        widthCount = (Settings::getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
-    }
-    qint32 heigthCount = 0;
-    if (Settings::getSmallScreenDevice())
-    {
-        heigthCount = (Settings::getHeight() - 50) / static_cast<qint32>(pAnim->getHeight());
-    }
-    else
-    {
-        heigthCount = (Settings::getHeight() - 225) / static_cast<qint32>(pAnim->getHeight());
-    }
+        m_pGraphBackground->setResAnim(pAnim);
+        qint32 widthCount = 0;
+        if (Settings::getSmallScreenDevice())
+        {
+            widthCount = (Settings::getWidth() - 110) / static_cast<qint32>(pAnim->getWidth());
+        }
+        else
+        {
+            widthCount = (Settings::getWidth() - 310) / static_cast<qint32>(pAnim->getWidth());
+        }
+        qint32 heigthCount = 0;
+        if (Settings::getSmallScreenDevice())
+        {
+            heigthCount = (Settings::getHeight() - 50) / static_cast<qint32>(pAnim->getHeight());
+        }
+        else
+        {
+            heigthCount = (Settings::getHeight() - 225) / static_cast<qint32>(pAnim->getHeight());
+        }
 
-    m_pGraphBackground->setSize(widthCount * pAnim->getWidth(), heigthCount * pAnim->getHeight());
-    m_pGraphBackground->setVerticalMode(oxygine::Box9Sprite::TILING);
-    m_pGraphBackground->setHorizontalMode(oxygine::Box9Sprite::TILING);
-    m_pGraphBackground->setColor(255, 255, 255, 200);
-    m_pGraphBackground->setGuides(0, pAnim->getWidth(), 0, pAnim->getHeight());
+        m_pGraphBackground->setSize(widthCount * pAnim->getWidth(), heigthCount * pAnim->getHeight());
+        m_pGraphBackground->setVerticalMode(oxygine::Box9Sprite::TILING);
+        m_pGraphBackground->setHorizontalMode(oxygine::Box9Sprite::TILING);
+        m_pGraphBackground->setColor(255, 255, 255, 200);
+        m_pGraphBackground->setGuides(0, pAnim->getWidth(), 0, pAnim->getHeight());
+    }
     if (Settings::getSmallScreenDevice())
     {
         m_pGraphBackground->setPosition(Settings::getWidth() - 10 - m_pGraphBackground->getWidth(), 10);
@@ -392,23 +398,28 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                 {
                     qint32 sentenceWidth = startX - 10;
                     pAnim = pGameManager->getResAnim("dialogfield+mask");
-                    oxygine::spSprite  pTextMask = oxygine::spSprite::create();
-                    pTextMask->setWidth(sentenceWidth);
-                    pTextMask->setScaleX(pTextMask->getWidth() / pAnim->getWidth());
-                    pTextMask->setResAnim(pAnim);
-                    pTextMask->setPosition(5, 5 + y);
-                    QColor color = pPlayer->getColor();
-                    pTextMask->setColor(color);
-                    m_VictoryPanel->addItem(pTextMask);
+                    if (pAnim != nullptr)
+                    {
+                        oxygine::spSprite  pTextMask = oxygine::spSprite::create();
+                        pTextMask->setWidth(sentenceWidth);
+                        pTextMask->setScaleX(pTextMask->getWidth() / pAnim->getWidth());
+                        pTextMask->setResAnim(pAnim);
+                        pTextMask->setPosition(5, 5 + y);
+                        QColor color = pPlayer->getColor();
+                        pTextMask->setColor(color);
+                        m_VictoryPanel->addItem(pTextMask);
+                    }
 
                     oxygine::spSprite pWinLooseSprite = oxygine::spSprite::create();
                     pAnim = pGameManager->getResAnim("dialogfield");
-                    pWinLooseSprite->setWidth(sentenceWidth);
-                    pWinLooseSprite->setScaleX(pWinLooseSprite->getWidth() / pAnim->getWidth());
-                    pWinLooseSprite->setResAnim(pAnim);
-                    pWinLooseSprite->setPosition(5, 5 + y);
-                    m_VictoryPanel->addItem(pWinLooseSprite);
-
+                    if (pAnim != nullptr)
+                    {
+                        pWinLooseSprite->setWidth(sentenceWidth);
+                        pWinLooseSprite->setScaleX(pWinLooseSprite->getWidth() / pAnim->getWidth());
+                        pWinLooseSprite->setResAnim(pAnim);
+                        pWinLooseSprite->setPosition(5, 5 + y);
+                        m_VictoryPanel->addItem(pWinLooseSprite);
+                    }
                     oxygine::spSprite pCOSprite = oxygine::spSprite::create();
                     pCOSprite->setScale(scale);
                     pCOSprite->setPosition(5, 11 + y);
@@ -973,20 +984,23 @@ void VictoryMenue::drawPlayerEvents(DayToDayRecord* pStartRecord, qint32 player,
                 }
             }
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(2.0f);
-            if (startPoint.y() < 0)
+            if (pAnim != nullptr)
             {
-                if (progress >= 0)
+                pSprite->setScale(2.0f);
+                if (startPoint.y() < 0)
                 {
-                    oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->getLastChild();
-                    if (pActor.get() != nullptr)
+                    if (progress >= 0)
                     {
-                        startPoint.setY(pActor->getY());
+                        oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->getLastChild();
+                        if (pActor.get() != nullptr)
+                        {
+                            startPoint.setY(pActor->getY());
+                        }
                     }
                 }
+                pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
+                m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->addChild(pSprite);
             }
-            pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
-            m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][player]->addChild(pSprite);
         }
     }
 }

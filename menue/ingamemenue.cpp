@@ -76,11 +76,14 @@ void InGameMenue::changeBackground(QString background)
 {
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
-    m_backgroundSprite->setResAnim(pBackground);
-    // background should be last to draw
-    m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    if (pBackground != nullptr)
+    {
+        m_backgroundSprite->setResAnim(pBackground);
+        // background should be last to draw
+        m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
 }
 
 void InGameMenue::loadHandling()

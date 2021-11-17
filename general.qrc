@@ -618,9 +618,6 @@
         <file>resources/images/terrain/destroyedweld+E+W.png</file>
         <file>resources/images/terrain/destroyedweld+N+S.png</file>
         <file>resources/images/terrain/fire.png</file>
-        <file>resources/images/terrain/fog+0.png</file>
-        <file>resources/images/terrain/fog+1.png</file>
-        <file>resources/images/terrain/fog+2.png</file>
         <file>resources/images/terrain/fog+E.png</file>
         <file>resources/images/terrain/fog+E+W.png</file>
         <file>resources/images/terrain/fog+W.png</file>
@@ -6083,5 +6080,22 @@
         <file>resources/scripts/terrain/WASTE_WELD.js</file>
         <file>resources/images/terrain/waste_destroyedweld+E+W.png</file>
         <file>resources/images/terrain/waste_destroyedweld+N+S.png</file>
+        <file>resources/images/colortables/purple.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastebridge+1.png</file>
+        <file>resources/images/terrain/fog.png</file>
+        <file>resources/images/terrain/fog+NE.png</file>
+        <file>resources/images/terrain/fog+NW.png</file>
+        <file>resources/images/terrain/fog+SE.png</file>
+        <file>resources/images/terrain/fog+SW.png</file>
+        <file>resources/images/units/motorbike+bh+mask.png</file>
+        <file>resources/images/units/motorbike+bh+walk+mask.png</file>
+        <file>resources/images/units/motorbike+bm+mask.png</file>
+        <file>resources/images/units/motorbike+bm+walk+mask.png</file>
+        <file>resources/images/units/motorbike+ge+mask.png</file>
+        <file>resources/images/units/motorbike+ge+walk+mask.png</file>
+        <file>resources/images/units/motorbike+os+mask.png</file>
+        <file>resources/images/units/motorbike+os+walk+mask.png</file>
+        <file>resources/images/units/motorbike+yc+mask.png</file>
+        <file>resources/images/units/motorbike+yc+walk+mask.png</file>
     </qresource>
 </RCC>

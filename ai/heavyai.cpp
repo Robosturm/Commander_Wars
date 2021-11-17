@@ -1210,6 +1210,10 @@ void HeavyAi::scoreUnload(ScoreData & data, UnitData & unitData, QVector<double>
         double movementPercent = movePathSize / static_cast<double>(unitData.m_movepoints);
         double distance = getDistanceToMovepath(targetPath, target);
         double score = 0;
+        double maxBonusScore = m_maxScore * 0.5 / loadingCount;
+
+
+
         for (qint32 i = 0; i < unloadingCount; ++i)
         {
             // todo add unloading score per unit

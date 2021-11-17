@@ -13,48 +13,51 @@ Checkbox::Checkbox()
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
-    setResAnim(pAnim);
-    addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
+    if (pAnim != nullptr)
     {
-        addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
-        if (m_Checked)
+        setResAnim(pAnim);
+        addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)
         {
-            setAnimFrame(pAnim, 2);
-        }
-        else
-        {
-            setAnimFrame(pAnim, 1);
-        }
-    });
+            addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+            if (m_Checked)
+            {
+                setAnimFrame(pAnim, 2);
+            }
+            else
+            {
+                setAnimFrame(pAnim, 1);
+            }
+        });
 
-    addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
-    {
-        addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
-        if (m_Checked)
+        addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event*)
         {
-            setAnimFrame(pAnim, 3);
-        }
-        else
-        {
-            setAnimFrame(pAnim, 0);
-        }
-    });
+            addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+            if (m_Checked)
+            {
+                setAnimFrame(pAnim, 3);
+            }
+            else
+            {
+                setAnimFrame(pAnim, 0);
+            }
+        });
 
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-    {
-        m_Checked = !m_Checked;
-        if (m_Checked)
+        addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
-            setAnimFrame(pAnim, 2);
-        }
-        else
-        {
-            setAnimFrame(pAnim, 1);
-        }
-        Mainapp::getInstance()->getAudioThread()->playSound("checkbox.wav");
-        emit checkChanged(m_Checked);
-    });
-    setSize(pAnim->getWidth(), pAnim->getHeight());
+            m_Checked = !m_Checked;
+            if (m_Checked)
+            {
+                setAnimFrame(pAnim, 2);
+            }
+            else
+            {
+                setAnimFrame(pAnim, 1);
+            }
+            Mainapp::getInstance()->getAudioThread()->playSound("checkbox.wav");
+            emit checkChanged(m_Checked);
+        });
+        setSize(pAnim->getWidth(), pAnim->getHeight());
+    }
 }
 
 bool Checkbox::getChecked() const
