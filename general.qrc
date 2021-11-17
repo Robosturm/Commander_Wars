@@ -5052,7 +5052,6 @@
         <file>resources/images/game/battlesprites/background/back_snowtempairport.png</file>
         <file>resources/images/game/battlesprites/background/back_snowtempharbour.png</file>
         <file>resources/images/game/battlesprites/background/back_wasteairport.png</file>
-        <file>resources/images/game/battlesprites/background/back_wastebridge.png</file>
         <file>resources/images/game/battlesprites/background/back_wastefactory.png</file>
         <file>resources/images/game/battlesprites/background/back_wasteforest.png</file>
         <file>resources/images/game/battlesprites/background/back_wasteharbour.png</file>
@@ -6097,5 +6096,6 @@
         <file>resources/images/units/motorbike+os+walk+mask.png</file>
         <file>resources/images/units/motorbike+yc+mask.png</file>
         <file>resources/images/units/motorbike+yc+walk+mask.png</file>
+        <file>resources/images/game/battlesprites/background/back_wastebridge+0.png</file>
     </qresource>
 </RCC>

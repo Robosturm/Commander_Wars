@@ -44,7 +44,7 @@ var Constructor = function()
                                 ["DESERT", 1],
                                 ["DESERT_DESTROYEDWELD", 1],
                                 ["DESERT_FOREST", 1],
-                                ["DESERT_FOREST", 1],
+                                ["DESERT_FOREST1", 1],
                                 ["DESERT_PATH", 1],
                                 ["DESERT_PATH1", 1],
                                 ["DESERT_ROCK", 1],
