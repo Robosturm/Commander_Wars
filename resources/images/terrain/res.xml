@@ -170,12 +170,14 @@
         <image file="mountain.png" />
         <image file="mountain+short.png" />
         
-        <image file="fog+0.png" />
-        <image file="fog+1.png" />
-        <image file="fog+2.png" />
+        <image file="fog.png" />
         <image file="fog+E.png" />
         <image file="fog+E+W.png" />
         <image file="fog+W.png" />
+        <image file="fog+NW.png" />
+        <image file="fog+NE.png" />
+        <image file="fog+SW.png" />
+        <image file="fog+SE.png" />
         
         <image file="beach+E+land+N.png" cols = "8" />
         <image file="beach+E+land+N+S.png" cols = "8" />
