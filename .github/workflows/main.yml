@@ -2,9 +2,9 @@ name: CMake
 on: [push]
 env:
   BUILD_TYPE: Release
-  compiler: gcc
   QT_Version: '6.2.1'
-  COMPILER_VERSION: 'win64_msvc2019_64'
+  COMPILER_VERSION: 'mingw-w64-x86_64'
+  # 'win64_msvc2019_64'
   
 jobs:
   install:
@@ -18,9 +18,9 @@ jobs:
     - uses: actions/checkout@v2
     
     - uses: msys2/setup-msys2@v2
-        #with:
-        #  install: mingw-w64-x86_64-toolchain
-        #  msystem: mingw64
+        with:
+          install: mingw-w64-x86_64-toolchain
+          msystem: mingw64
     
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
