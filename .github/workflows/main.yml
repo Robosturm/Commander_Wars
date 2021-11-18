@@ -1,9 +1,8 @@
-name: CMake
+name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.1'
-  COMPILER_VERSION: 'win64_msvc2019_64'
   # compiler options  
   # 'win64_mingw81'
   # 'android_armv7'
@@ -11,7 +10,26 @@ env:
 jobs:
   install:
     name: All
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest] # , macos-latest
+        include:
+          - os: windows-latest
+            COMPILER_VERSION: 'win64_msvc2019_64'
+            target: 'desktop'
+          - os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+          #- os: macos-latest
+          #  COMPILER_VERSION: 'win64_msvc2019_64'
+          #  target: 'ios'
+          #- os: windows-latest
+          #  COMPILER_VERSION: 'android_armv7'
+          #  target: 'android'
+            
+            
+        
+    runs-on: ${{matrix.os}}
     defaults:
       run:
         shell: bash
@@ -23,10 +41,9 @@ jobs:
       uses: jurplel/install-qt-action@v2    
       with:      
           aqtversion: '==2.0.2'
-          host: "windows"
-          target: 'desktop'
+          target: ${{matrix.target}}
           version: ${{env.QT_Version}}
-          arch: ${{env.COMPILER_VERSION}}
+          arch: ${{matrix.COMPILER_VERSION}}
           modules: 'qtmultimedia'
           dir: '${{ github.workspace }}/qt/'
           install-deps: "true"
