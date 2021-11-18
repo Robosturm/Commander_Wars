@@ -15,11 +15,9 @@ jobs:
             COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_mingw81'
             target: 'desktop'
-            additionalCalls: ''
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
-            additionalCalls: 'choco install gstreamer'
           #- os: macos-latest
           #  COMPILER_VERSION: ''
           #  target: 'ios'
@@ -30,12 +28,16 @@ jobs:
             
         
     runs-on: ${{matrix.os}}
-#    defaults:
-#      run:
-#        shell: bash
+    defaults:
+      run:
+        shell: bash
         
     steps:
     - uses: actions/checkout@v2
+        
+    - name: Install GStreamer
+      run: |
+        choco install gstreamer
         
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
