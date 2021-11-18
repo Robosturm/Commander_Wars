@@ -17,16 +17,20 @@ jobs:
             COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_mingw81'
             target: 'desktop'
+            asset_name: 'Commander_Wars_x64.zip'
           #- os: ubuntu-latest
           #  COMPILER_VERSION: ''
           #  target: 'desktop'
           #  runCommands: 'sudo apt install gstreamer-video-1.0'
+          #  asset_name: 'Commander_Wars_Ubuntu.zip'
           #- os: macos-latest
           #  COMPILER_VERSION: ''
           #  target: 'ios'
+          #  asset_name: 'Commander_Wars_iOS.zip'
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
+          #  asset_name: 'Commander_Wars_Android.apk'
         
     runs-on: ${{matrix.os}}
     defaults:
@@ -74,13 +78,13 @@ jobs:
           draft: false
           prerelease: false
     - name: build artifacts
-        # todo create zip artifact
+        run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
     - name: upload artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:          
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: '${{github.workspace}}'/install/${{env.BUILD_TYPE}}/Commander_Wars.zip
+          asset_path: '${{github.workspace}}'/install/Commander_Wars.zip
           asset_name: ${{matrix.asset_name}}
           asset_content_type: application/zip

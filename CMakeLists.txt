@@ -789,40 +789,49 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
 )
 
 message("install lib dir: ${CMAKE_INSTALL_PREFIX}")
-
+set(INSTALL_PATH "Commander_Wars_${CMAKE_BUILD_TYPE}")
 # install folders and executable
 install(TARGETS ${PROJECT_NAME}
-    RUNTIME         DESTINATION         "${CMAKE_BUILD_TYPE}"
-    BUNDLE          DESTINATION         "${CMAKE_BUILD_TYPE}"
-    LIBRARY         DESTINATION         "${CMAKE_BUILD_TYPE}")
+    RUNTIME         DESTINATION         "${INSTALL_PATH}"
+    BUNDLE          DESTINATION         "${INSTALL_PATH}"
+    LIBRARY         DESTINATION         "${INSTALL_PATH}")
 
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(DIRECTORY templates DESTINATION                                         "${CMAKE_BUILD_TYPE}")
+    install(DIRECTORY templates DESTINATION                                         "${INSTALL_PATH}")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
-        install(DIRECTORY system DESTINATION                "${CMAKE_BUILD_TYPE}")
-        install(DIRECTORY resources DESTINATION             "${CMAKE_BUILD_TYPE}")
-        install(DIRECTORY maps DESTINATION                  "${CMAKE_BUILD_TYPE}")
-        install(FILES ${QM_FILES} DESTINATION               "${CMAKE_BUILD_TYPE}/resources/translation/" OPTIONAL)
-        install(DIRECTORY customTerrainImages DESTINATION   "${CMAKE_BUILD_TYPE}")
-        install(DIRECTORY mods DESTINATION                  "${CMAKE_BUILD_TYPE}")
-        install(DIRECTORY savegames DESTINATION             "${CMAKE_BUILD_TYPE}")
-        install(DIRECTORY data DESTINATION                  "${CMAKE_BUILD_TYPE}")
+        install(DIRECTORY system DESTINATION                "${INSTALL_PATH}")
+        install(DIRECTORY resources DESTINATION             "${INSTALL_PATH}")
+        install(DIRECTORY maps DESTINATION                  "${INSTALL_PATH}")
+        install(FILES ${QM_FILES} DESTINATION               "${INSTALL_PATH}/resources/translation/" OPTIONAL)
+        install(DIRECTORY customTerrainImages DESTINATION   "${INSTALL_PATH}")
+        install(DIRECTORY mods DESTINATION                  "${INSTALL_PATH}")
+        install(DIRECTORY savegames DESTINATION             "${INSTALL_PATH}")
+        install(DIRECTORY data DESTINATION                  "${INSTALL_PATH}")
     endif()
     # install libs
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${CMAKE_BUILD_TYPE}" OPTIONAL)
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${CMAKE_BUILD_TYPE}/platforms" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_OS_LIBS} DESTINATION                    "${INSTALL_PATH}" OPTIONAL)
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
 endif()
 
+add_custom_target(createReleaseZip
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/"
+    COMMAND ${CMAKE_COMMAND} -E tar
+    "cfv"
+    "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
+    --format=zip
+    "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
+)
+
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    set(InstallPath "${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/")
-    message("Running windeployqt with path ${InstallPath}")
+    set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
+    message("Running windeployqt with path ${FullInstallPath}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E
         env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE:${PROJECT_NAME}>"
-                --libdir \"${InstallPath}\"
-                --plugindir \"${InstallPath}\"
+                --libdir \"${FullInstallPath}\"
+                --plugindir \"${FullInstallPath}\"
     )
 endif()
