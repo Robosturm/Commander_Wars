@@ -34,7 +34,7 @@ jobs:
     - name: Configure CMake
       env:
           CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}          
-      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX '${{github.workspace}}'/install
+      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}'/install
     
     - name: Build
       working-directory: ${{github.workspace}}/build
