@@ -121,6 +121,7 @@ void WorkerThread::start()
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
     Player::getNeutralTableAnim();
+    pInterpreter->doFunction("Global", "finalizeLoading");
 
     if (pApp->getSlave())
     {
