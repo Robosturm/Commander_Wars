@@ -3,9 +3,9 @@ on: [push]
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.1'
-  COMPILER_VERSION: 'win64_mingw81'
-  # compiler options
-  # 'win64_msvc2019_64'
+  COMPILER_VERSION: 'win64_msvc2019_64'
+  # compiler options  
+  # 'win64_mingw81'
   # 'android_armv7'
   
 jobs:
@@ -26,14 +26,14 @@ jobs:
           target: 'desktop'
           version: ${{env.QT_Version}}
           arch: ${{env.COMPILER_VERSION}}
-          modules: 'all'
+          modules: 'qtmultimedia'
           dir: '${{ github.workspace }}/qt/'
           install-deps: "true"
           
     - name: Configure CMake
       env:
           CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}          
-      run: cmake -G "CodeBlocks - MinGW Makefiles" -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}    
+      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}    
     
     - name: Build
       working-directory: ${{github.workspace}}/build
