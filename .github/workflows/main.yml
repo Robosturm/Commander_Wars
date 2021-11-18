@@ -9,7 +9,7 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest] # , macos-latest
+        os: [windows-latest , macos-latest] # ubuntu-latest
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
