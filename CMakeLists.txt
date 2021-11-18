@@ -22,6 +22,23 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(AUDIOSUPPORT ON)
 
+###################################################################################
+# show configuration
+###################################################################################
+
+message("Prefix Path: ${CMAKE_PREFIX_PATH}")
+message("Module Path: ${CMAKE_MODULE_PATH}")
+message("Qt-Dir: ${Qt6_DIR}")
+message("C-Compiler Path: ${C_COMPILER_PATH}")
+message("C-Compiler: ${CMAKE_C_COMPILER}")
+message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
+message("C++-Compiler: ${CMAKE_CXX_COMPILER}")
+message("C-Compiler ${CMAKEXX_COMPILER_ID}")
+message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
+message("OS: ${CMAKE_SYSTEM_NAME}")
+message("CFlags: ${CMAKE_C_FLAGS}")
+message("CXX Flags: ${CMAKE_CXX_FLAGS}")
+message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 
 ###################################################################################
 # Find external libs
@@ -132,25 +149,11 @@ else()  # this branch works at least for linux
     find_program(ADDR_2_LINE addr2line)
 endif()
 
-
 ###################################################################################
-# show configuration
+# show addr2line path
 ###################################################################################
 
-message("Prefix Path: ${CMAKE_PREFIX_PATH}")
-message("Module Path: ${CMAKE_MODULE_PATH}")
-message("Qt-Dir: ${Qt6_DIR}")
 message("Addr2Line Path: ${ADDR_2_LINE}")
-message("C-Compiler Path: ${C_COMPILER_PATH}")
-message("C-Compiler: ${CMAKE_C_COMPILER}")
-message("C++-Compiler Path: ${CXX_COMPILER_PATH}")
-message("C++-Compiler: ${CMAKE_CXX_COMPILER}")
-message("C-Compiler ${CMAKEXX_COMPILER_ID}")
-message("C++-Compiler ${CMAKE_CXX_COMPILER_ID}")
-message("OS: ${CMAKE_SYSTEM_NAME}")
-message("CFlags: ${CMAKE_C_FLAGS}")
-message("CXX Flags: ${CMAKE_CXX_FLAGS}")
-message("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
