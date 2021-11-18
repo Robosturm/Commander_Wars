@@ -1,5 +1,7 @@
-name: Commnader_Wars
+name: Commnader_Wars_Release
 on: [push]
+    tags:
+      - 'v*'
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.1'
@@ -15,11 +17,11 @@ jobs:
             COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_mingw81'
             target: 'desktop'
-            additionalCalls: ''
+            asset_name: 'CommanderWars_Win64.zip'
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
-            additionalCalls: 'choco install gstreamer'
+            asset_name: 'CommanderWars_Ubuntu.zip'
           #- os: macos-latest
           #  COMPILER_VERSION: ''
           #  target: 'ios'
@@ -30,9 +32,9 @@ jobs:
             
         
     runs-on: ${{matrix.os}}
-#    defaults:
-#      run:
-#        shell: bash
+    defaults:
+      run:
+        shell: bash
         
     steps:
     - uses: actions/checkout@v2
@@ -56,3 +58,31 @@ jobs:
     - name: Build
       working-directory: ${{github.workspace}}/build
       run: cmake --build '${{github.workspace}}'/build --config $BUILD_TYPE --target install -j16
+#----------------------------------------------------------------------------------------------------------------------------------------------
+# release creation and upload part
+#----------------------------------------------------------------------------------------------------------------------------------------------
+    - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: | 
+            Latest Commander Wars Release 
+            See the github wiki for the related change log:
+                https://github.com/Robosturm/Commander_Wars/wiki
+          draft: false
+          prerelease: false
+    - name: build artifacts
+        # todo create zip artifact
+    - name: upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:          
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: '${{github.workspace}}'/install/${{env.BUILD_TYPE}}/Commander_Wars.zip
+          asset_name: ${{matrix.asset_name}}
+          asset_content_type: application/zip
