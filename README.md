@@ -17,4 +17,4 @@ Latest Release is Beta 20 which can be found here: [CoW Beta 20](https://github.
 Videos of the game can be found on [Youtube](https://www.youtube.com/user/Robosturm)
 
 # Build Status
-Build Windows MSVC 2019 x64 [![Build Status](https://travis-ci.com/Robosturm/Commander_Wars.svg?branch=master)](https://travis-ci.com/Robosturm/Commander_Wars)
+![build result](https://github.com/Robosturm/Commander_Wars/actions/workflows/main.yml/badge.svg)
