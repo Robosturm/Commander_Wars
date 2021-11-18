@@ -2,8 +2,4 @@
 
 void Gamepad::update()
 {
-    if (!Mainapp::getInstance()->isActive())
-    {
-        return;
-    }
 }
