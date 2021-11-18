@@ -20,7 +20,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(AUDIOSUPPORT OFF)
+set(AUDIOSUPPORT ON)
+
 
 ###################################################################################
 # Find external libs
@@ -570,15 +571,15 @@ endif()
 
 if (NOT DEPLOY_RESOURCES_AS_FOLDER)
     message("Using compiled resources")
-    if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug" AND "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
-            "general.qrc"
-        )
-    else()
+    if(AUDIOSUPPORT)
         qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
                              "general.qrc"
                              "music.qrc"
                              "sound.qrc"
+        )
+    else()
+        qt_add_big_resources(${PROJECT_NAME}_Resource_SRCS
+            "general.qrc"
         )
     endif()
 endif()

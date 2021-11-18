@@ -9,8 +9,10 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QList>
-#include <QAudioDevice>
 #include <QApplication>
+#ifdef AUDIOSUPPORT
+#include <QAudioDevice>
+#endif
 
 AudioThread::AudioThread()
     :
@@ -195,8 +197,9 @@ void AudioThread::fillSoundCache(qint32 count, QString folder, QString file)
 }
 
 qint32 AudioThread::getSoundsBuffered()
-{
+{    
     qint32 count = 0;
+#ifdef AUDIOSUPPORT
     for (const auto & cache : qAsConst(m_soundCaches))
     {
         for (const auto & sound : qAsConst(cache->sound))
@@ -211,6 +214,7 @@ qint32 AudioThread::getSoundsBuffered()
             }
         }
     }
+#endif
     return count;
 }
 
@@ -353,7 +357,9 @@ void AudioThread::SlotPlayMusic(qint32 file)
 
 void AudioThread::loadMediaForFile(QString filePath)
 {
+#ifdef AUDIOSUPPORT
     m_player->m_player.setSource(GlobalUtils::getUrlForFile(filePath));
+#endif
 }
 
 void AudioThread::SlotPlayRandom()
@@ -434,6 +440,7 @@ void AudioThread::SlotAddMusic(QString file, qint64 startPointMs, qint64 endPoin
 #endif
 }
 
+#ifdef AUDIOSUPPORT
 void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     CONSOLE_PRINT("Media status changed for player to " + QString::number(status), Console::eDEBUG);
@@ -464,16 +471,18 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
         }
     }
 }
-
+#endif
 void AudioThread::loadNextAudioFile()
 {
     SlotPlayRandom();
 }
 
+#ifdef AUDIOSUPPORT
 void AudioThread::mediaPlaybackStateChanged(QMediaPlayer::PlaybackState newState)
 {
     CONSOLE_PRINT("Playback state changed to " + QString::number(newState) + " for player", Console::eDEBUG);
 }
+#endif
 
 void AudioThread::SlotLoadFolder(QString folder)
 {
@@ -518,7 +527,9 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
 void AudioThread::addMusicToPlaylist(QString file, qint64 startPointMs, qint64 endPointMs)
 {
     CONSOLE_PRINT("Adding " + file + " to play list", Console::eDEBUG);
+#ifdef AUDIOSUPPORT
     m_PlayListdata.append(PlaylistData(file, startPointMs, endPointMs));
+#endif
 }
 
 bool AudioThread::getLoadBaseGameFolders() const
@@ -533,6 +544,7 @@ void AudioThread::setLoadBaseGameFolders(bool loadBaseGameFolders)
 
 void AudioThread::SlotCheckMusicEnded(qint64 duration)
 {
+#ifdef AUDIOSUPPORT
     if (m_player->m_currentMedia >= 0 && m_player->m_currentMedia < m_PlayListdata.size())
     {
         qint64 loopPos = m_PlayListdata[m_player->m_currentMedia].m_endpointMs;
@@ -543,6 +555,7 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
             SlotPlayRandom();
         }
     }
+#endif
 }
 
 void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume)
@@ -595,11 +608,12 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float 
 #endif
 }
 
+#ifdef AUDIOSUPPORT
 bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & soundCache, qint32 i,
                                               QString & file, qint32 loops, qint32 delay, qreal sound)
 {
     bool started = false;
-#ifdef AUDIOSUPPORT
+
     if (!soundCache->sound[i]->isPlaying() &&
         !soundCache->timer[i]->isActive())
     {
@@ -620,9 +634,9 @@ bool AudioThread::tryPlaySoundAtCachePosition(std::shared_ptr<SoundData> & sound
         started = true;
         soundCache->nextSoundToUse = i + 1;
     }
-#endif
     return started;
 }
+#endif
 
 void AudioThread::SlotStopSound(QString file)
 {
@@ -649,11 +663,13 @@ void AudioThread::SlotStopSound(QString file)
 #endif
 }
 
+#ifdef AUDIOSUPPORT
 void AudioThread::stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex)
 {
     soundData->sound[soundIndex]->setVolume(0);
     soundData->sound[soundIndex]->setLoopCount(0);
 }
+#endif
 
 void AudioThread::SlotStopAllSounds()
 {
@@ -677,6 +693,7 @@ void AudioThread::SlotStopAllSounds()
 #endif
 }
 
+#ifdef AUDIOSUPPORT
 void AudioThread::reportReplayError(QMediaPlayer::Error error, const QString &errorString)
 {
     CONSOLE_PRINT("Error in player: " + errorString, Console::eERROR);
@@ -713,3 +730,4 @@ void AudioThread::reportReplayError(QMediaPlayer::Error error, const QString &er
         }
     }
 }
+#endif

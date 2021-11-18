@@ -22,6 +22,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
       with:      
+          aqtversion: '==2.0.2'
           host: "windows"
           target: 'desktop'
           version: ${{env.QT_Version}}
@@ -37,4 +38,4 @@ jobs:
     
     - name: Build
       working-directory: ${{github.workspace}}/build
-      run: cmake --build '${{github.workspace}}'/build --config $BUILD_TYPE --target install
+      run: cmake --build '${{github.workspace}}'/build --config $BUILD_TYPE --target install --j16
