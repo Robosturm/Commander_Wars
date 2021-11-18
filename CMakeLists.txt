@@ -557,10 +557,15 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         coreengine/android/crashreporter_os.cpp
         coreengine/android/Gamepad.cpp
     )
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS")
+    set(${PROJECT_NAME}_OS_SRCS
+        coreengine/ios/crashreporter_os.cpp
+        coreengine/ios/Gamepad.cpp
+    )
 else()  # this branch works at least for linux
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
-        coreengine/android/Gamepad.cpp
+        coreengine/linux/Gamepad.cpp
     )
 endif()
 
@@ -655,6 +660,10 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         Xinput
         )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        ${QT_LIBRARIES}
+        )
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
