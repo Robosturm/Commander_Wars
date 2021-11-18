@@ -9,7 +9,7 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest , macos-latest] # ubuntu-latest
+        os: [windows-latest, macos-latest] # ubuntu-latest 
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
@@ -48,7 +48,7 @@ jobs:
     - name: Configure CMake
       env:
           CMAKE_PREFIX_PATH: '${{env.Qt6_Dir}}'
-      run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
+      run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' -DQt6_DIR='${{env.Qt6_Dir}}'
     
     - name: Build
       working-directory: '${{github.workspace}}/build'

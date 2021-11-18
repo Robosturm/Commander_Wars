@@ -773,6 +773,7 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
     )
 endif()
+
 message("using qt lib naming convention: ${LibNameStart}Libname${LibNameEnd}")
 
 set(${PROJECT_NAME}_INSTALL_QT_LIBS

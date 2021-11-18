@@ -11,17 +11,16 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest] # , macos-latest
+        os: [windows-latest] # ubuntu-latest , macos-latest
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_mingw81'
             target: 'desktop'
-            asset_name: 'CommanderWars_Win64.zip'
-          - os: ubuntu-latest
-            COMPILER_VERSION: ''
-            target: 'desktop'
-            asset_name: 'CommanderWars_Ubuntu.zip'
+          #- os: ubuntu-latest
+          #  COMPILER_VERSION: ''
+          #  target: 'desktop'
+          #  runCommands: 'sudo apt install gstreamer-video-1.0'
           #- os: macos-latest
           #  COMPILER_VERSION: ''
           #  target: 'ios'
@@ -36,11 +35,7 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-        
-    - name: Install GStreamer
-      run: |
-        choco install gstreamer
-        
+              
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
       with:      
@@ -49,17 +44,18 @@ jobs:
           version: ${{env.QT_Version}}
           arch: ${{matrix.COMPILER_VERSION}}
           modules: 'qtmultimedia'
-          dir: '${{ github.workspace }}/qt/'
+          dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           
     - name: Configure CMake
       env:
-          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}          
-      run: cmake -B '${{github.workspace}}'/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}'/install
+          CMAKE_PREFIX_PATH: '${{env.Qt6_Dir}}'
+      run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install'
     
     - name: Build
-      working-directory: ${{github.workspace}}/build
-      run: cmake --build '${{github.workspace}}'/build --config $BUILD_TYPE --target install -j16
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
+
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
