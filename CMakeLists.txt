@@ -20,6 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+set(AUDIOSUPPORT OFF)
 
 ###################################################################################
 # Find external libs
@@ -30,7 +31,6 @@ find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
-find_package(Qt6 COMPONENTS Multimedia REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
@@ -57,8 +57,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
             #-DHEAVY_AI                 # experimental heavy ai unfinished
-            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-            -DAUDIOSUPPORT
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease            
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -68,7 +67,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DDEBUG_LEVEL=0             # default console log level
             #-DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-            #-DAUDIOSUPPORT              # currently not supported for mingw --> qt bug
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     else()
@@ -78,7 +76,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DDEBUG_LEVEL=0             # default console log level
             #-DHEAVY_AI                 # experimental heavy ai unfinished
             #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
-            -DAUDIOSUPPORT
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     endif()
@@ -88,14 +85,20 @@ else("Release")
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
-            #-DAUDIOSUPPORT
         )
     else()
         add_definitions(
             -DDEBUG_LEVEL=1             # default console log level
-            -DAUDIOSUPPORT
         )
     endif()
+endif()
+
+if (AUDIOSUPPORT)
+    message("Building with Audio")
+    find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+    add_definitions(
+        -DAUDIOSUPPORT
+    )
 endif()
 
 ###################################################################################
@@ -633,9 +636,15 @@ set(QT_LIBRARIES
     Qt6::Network
     Qt6::Widgets
     Qt6::Xml
-    Qt6::Multimedia
     Qt6::OpenGL
     )
+
+if (AUDIOSUPPORT)
+    set(QT_LIBRARIES
+        ${QT_LIBRARIES}
+        Qt6::Multimedia
+    )
+endif()
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(${PROJECT_NAME} PUBLIC
