@@ -16,13 +16,13 @@ jobs:
             # 'win64_mingw81'
             target: 'desktop'
             runCommands: ''
-          - os: ubuntu-latest
-            COMPILER_VERSION: ''
-            target: 'desktop'
-            runCommands: 'sudo apt install gstreamer-video-1.0'
-          #- os: macos-latest
+          #- os: ubuntu-latest
           #  COMPILER_VERSION: ''
-          #  target: 'ios'
+          #  target: 'desktop'
+          #  runCommands: 'sudo apt install gstreamer-video-1.0'
+          - os: macos-latest
+            COMPILER_VERSION: ''
+            target: 'ios'
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
@@ -34,10 +34,7 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-        
-    - name: Install GStreamer
-      run: ${{matrix.runCommands}}
-      
+              
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
       with:      
