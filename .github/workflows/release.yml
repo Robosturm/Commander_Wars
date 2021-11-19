@@ -23,6 +23,7 @@ jobs:
             qtPath: 'msvc2019_64'
             installerCommands1: ''
             installerCommands2: ''
+            source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_x64.zip'
             
           - os: ubuntu-latest
@@ -31,6 +32,7 @@ jobs:
             qtPath: ''
             installerCommands1: 'sudo apt-get update'
             installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'                
+            source_asset: 'Commander_Wars.zip'
             asset_name: 'Commander_Wars_Ubuntu.zip'
             
           - os: macos-latest
@@ -39,6 +41,7 @@ jobs:
             target: 'desktop'
             installerCommands1: ''
             installerCommands2: ''
+            source_asset: 'Commander_Wars_${{env.BUILD_TYPE}}/Commander_Wars.app'
             asset_name: 'Commander_Wars_macOS.zip'
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
@@ -104,6 +107,6 @@ jobs:
         GITHUB_TOKEN: ${{github.token}}
       with:
         upload_url: '${{steps.create_release.outputs.upload_url}}'
-        asset_path: '${{github.workspace}}/install/Commander_Wars.zip'
+        asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
         asset_content_type: application/zip
