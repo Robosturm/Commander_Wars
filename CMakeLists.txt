@@ -61,11 +61,9 @@ get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
 get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    find_program(DEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
-    find_program(DEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
-else()
-    set(DEPLOYQT_EXECUTABLE "")
+    find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 endif()
 
 ###################################################################################
@@ -103,16 +101,10 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     endif()
 else("Release")
     message("Compiling as Release")
-    set(DEPLOY_RESOURCES_AS_FOLDER 0)
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        add_definitions(
-            -DDEBUG_LEVEL=1             # default console log level
-        )
-    else()
-        add_definitions(
-            -DDEBUG_LEVEL=1             # default console log level
-        )
-    endif()
+    set(DEPLOY_RESOURCES_AS_FOLDER 0)    
+    add_definitions(
+        -DDEBUG_LEVEL=1             # default console log level
+    )
 endif()
 
 if (AUDIOSUPPORT)
@@ -147,10 +139,16 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     if ("${ANDROID_ABI}" STREQUAL armeabi-v7a)
         add_link_options("-long-plt")
     endif()
-else()  # this branch works at least for linux
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
     set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
     find_program(ADDR_2_LINE addr2line)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
+    find_program(ADDR_2_LINE addr2line)
+else()
+    message(FATAL_ERROR "Unsupported OS found")
 endif()
 
 ###################################################################################
@@ -569,11 +567,13 @@ elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
         coreengine/ios/crashreporter_os.cpp
         coreengine/ios/Gamepad.cpp
     )
-else()  # this branch works at least for linux
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/linux/crashreporter_os.cpp
         coreengine/linux/Gamepad.cpp
     )
+else()
+    message(FATAL_ERROR "Unsupported OS found")
 endif()
 
 ##############################################################################
@@ -674,7 +674,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
-else() # this branch works at least for linux
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
@@ -757,8 +757,14 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
     )
-
-else() # currently this is for linux systems -> may differ for macOs / iOS # todo maybe a proper check would be nice here
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    set(LibNameStart "../lib/libQt6")
+    set(LibNameEnd ".so")
+    set(${PROJECT_NAME}_INSTALL_OS_LIBS
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+    )
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(LibNameStart "../lib/libQt6")
     set(LibNameEnd ".so")
     set(${PROJECT_NAME}_INSTALL_OS_LIBS
@@ -776,6 +782,8 @@ else() # currently this is for linux systems -> may differ for macOs / iOS # tod
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
     )
+else()
+    message(FATAL_ERROR "Unsupported OS found")
 endif()
 
 message("using qt lib naming convention: ${LibNameStart}Libname${LibNameEnd}")
@@ -800,8 +808,9 @@ install(TARGETS ${PROJECT_NAME}
     BUNDLE          DESTINATION         "${INSTALL_PATH}"
     LIBRARY         DESTINATION         "${INSTALL_PATH}")
 
-if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
-    install(DIRECTORY templates DESTINATION                                         "${INSTALL_PATH}")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
+   "${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    install(DIRECTORY templates DESTINATION "${INSTALL_PATH}")
     if (DEPLOY_RESOURCES_AS_FOLDER)
         message("Installing resources as folder")
         install(DIRECTORY system DESTINATION                "${INSTALL_PATH}")
@@ -819,23 +828,36 @@ if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
 endif()
 
-add_custom_target(createReleaseZip
-    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/"
-    COMMAND ${CMAKE_COMMAND} -E tar
-    "cfv"
-    "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
-    --format=zip
-    "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
-)
-
-if(NOT "${DEPLOYQT_EXECUTABLE}" STREQUAL "")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
-    message("Running deployqt with path ${FullInstallPath}")
+    message("Build will run windeployqt with path ${FullInstallPath}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E
-        env PATH="${_qt_bin_dir}" "${DEPLOYQT_EXECUTABLE}"
+        env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE:${PROJECT_NAME}>"
                 --libdir \"${FullInstallPath}\"
                 --plugindir \"${FullInstallPath}\"
+        COMMENT "Running windeployqt..."
+    )
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    message("Build will run macdeployqt")
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
+            -always-overwrite
+        COMMENT "Running macdeployqt..."
+    )
+endif()
+
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+    message("Build will zip artifacts")
+    add_custom_target(createReleaseZip
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/"
+        COMMAND ${CMAKE_COMMAND} -E tar
+        "cfv"
+        "${CMAKE_INSTALL_PREFIX}/Commander_Wars.zip"
+        --format=zip
+        "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
+        COMMENT "Zipping Commander Wars..."
     )
 endif()
