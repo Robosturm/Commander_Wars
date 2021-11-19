@@ -72,27 +72,29 @@ jobs:
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
     - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: | 
-            Latest Commander Wars Release 
-            See the github wiki for the related change log:
-                https://github.com/Robosturm/Commander_Wars/wiki
-          draft: false
-          prerelease: false
+      id: create_release
+      uses: actions/create-release@v1.1.4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: | 
+          Latest Commander Wars Release 
+          See the github wiki for the related change log:
+              https://github.com/Robosturm/Commander_Wars/wiki
+        draft: false
+        prerelease: false
+        
     - name: build artifacts
-        run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
+      
     - name: upload artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:          
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: '${{github.workspace}}'/install/Commander_Wars.zip
-          asset_name: ${{matrix.asset_name}}
-          asset_content_type: application/zip
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:          
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: '${{github.workspace}}'/install/Commander_Wars.zip
+        asset_name: ${{matrix.asset_name}}
+        asset_content_type: application/zip
