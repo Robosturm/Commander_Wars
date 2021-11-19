@@ -56,7 +56,7 @@ jobs:
           install-deps: "true"
           
     - name: Configure CMake
-      run: cmake -S '${{github.workspace}}/Commander_Wars' -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+      run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
     
     - name: Build
       working-directory: '${{github.workspace}}/build'
