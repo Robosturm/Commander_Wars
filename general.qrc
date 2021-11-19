@@ -5353,11 +5353,6 @@
         <file>resources/images/terrain/riverend+W+2.png</file>
         <file>resources/images/terrain/riverend+W+3.png</file>
         <file>resources/images/terrain/riverend+W+4.png</file>
-        <file>resources/images/terrain/riverend+W+1.png</file>
-        <file>resources/images/terrain/riverend+W+2.png</file>
-        <file>resources/images/terrain/riverend+W+3.png</file>
-        <file>resources/images/terrain/riverend+W+4.png</file>
-        <file>resources/images/terrain/riverend+N+1+land+N+W.png</file>
         <file>resources/images/terrain/riverend+N+1+land+NW.png</file>
         <file>resources/scripts/cos/co_cairn.js</file>
         <file>resources/images/co/bd/co_cairn+face.png</file>

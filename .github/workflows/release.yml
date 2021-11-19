@@ -14,7 +14,7 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest] #  , macos-latest, ubuntu-latest
+        os: [windows-latest, ubuntu-latest] #  , macos-latest
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
@@ -23,12 +23,12 @@ jobs:
             qtPath: 'msvc2019_64'
             installerCommands: ''
             asset_name: 'Commander_Wars_x64.zip'
-          #- os: ubuntu-latest
-          #  COMPILER_VERSION: ''
-          #  target: 'desktop'
-          #  qtPath: ''
-          #  installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-          #  asset_name: 'Commander_Wars_Ubuntu.zip'
+          - os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            asset_name: 'Commander_Wars_Ubuntu.zip'
           #- os: macos-latest
           #  COMPILER_VERSION: 'clang_64'
           #  target: 'ios'
