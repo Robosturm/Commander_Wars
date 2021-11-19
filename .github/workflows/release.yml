@@ -41,7 +41,7 @@ jobs:
             target: 'desktop'
             installerCommands1: ''
             installerCommands2: ''
-            source_asset: 'Commander_Wars_${{env.BUILD_TYPE}}/Commander_Wars.app'
+            source_asset: 'Commander_Wars_Release/Commander_Wars.app'
             asset_name: 'Commander_Wars_macOS.zip'
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
