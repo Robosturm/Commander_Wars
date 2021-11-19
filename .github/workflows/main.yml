@@ -9,21 +9,22 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest] #  , macos-latest
+        os: [macos-latest] # [windows-latest, ubuntu-latest]
         include:
-          - os: windows-latest
-            COMPILER_VERSION: 'win64_msvc2019_64'
-            # 'win64_mingw81'
-            target: 'desktop'
-            installerCommands: ''
-          - os: ubuntu-latest
-            COMPILER_VERSION: ''
-            target: 'desktop'
-            installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-          #- os: macos-latest
-          #  COMPILER_VERSION: ''
-          #  target: 'ios'
           #- os: windows-latest
+          #  COMPILER_VERSION: 'win64_msvc2019_64'
+          #  # 'win64_mingw81'
+          #  target: 'desktop'
+          #  installerCommands: ''
+          #- os: ubuntu-latest
+          #  COMPILER_VERSION: ''
+          #  target: 'desktop'
+          #  installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+          - os: macos-latest
+            COMPILER_VERSION: 'clang_64'
+            target: 'ios'
+            installerCommands: ''
+          #- os: ubuntu-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
         
@@ -39,7 +40,7 @@ jobs:
       run: ${{matrix.installerCommands}}
       
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2    
+      uses: jurplel/install-qt-action@v2.14   
       with:      
           aqtversion: '==2.0.2'
           target: ${{matrix.target}}
