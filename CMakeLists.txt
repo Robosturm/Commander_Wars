@@ -61,9 +61,13 @@ get_filename_component(CXX_COMPILER_PATH "${CMAKE_CXX_COMPILER}" DIRECTORY)
 get_filename_component(C_COMPILER_PATH "${CMAKE_C_COMPILER}" DIRECTORY)
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-    find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    find_program(DEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+    find_program(DEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+else()
+    set(DEPLOYQT_EXECUTABLE "")
 endif()
-# find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+
 ###################################################################################
 # Set build dependend defines
 ###################################################################################
@@ -75,7 +79,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             -DGAMEDEBUG                 # adds additional js checks and asserts
             -DDEBUG_LEVEL=0             # default console log level
             #-DHEAVY_AI                 # experimental heavy ai unfinished
-            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease            
+            #-DMEMORYTRACING            # only enable it if you can deal with a drastical performance decrease
             -DOXYGINE_DEBUG_SAFECAST    # changes static casts to dynamic casts
             )
     elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -560,7 +564,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
         coreengine/android/crashreporter_os.cpp
         coreengine/android/Gamepad.cpp
     )
-elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS")
+elseif ("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     set(${PROJECT_NAME}_OS_SRCS
         coreengine/ios/crashreporter_os.cpp
         coreengine/ios/Gamepad.cpp
@@ -666,7 +670,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS")
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     target_link_libraries(${PROJECT_NAME} PUBLIC
         ${QT_LIBRARIES}
         )
@@ -754,7 +758,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/../plugins/platforms/qwindows${LibNameEnd}
     )
 
-else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
+else() # currently this is for linux systems -> may differ for macOs / iOS # todo maybe a proper check would be nice here
     set(LibNameStart "../lib/libQt6")
     set(LibNameEnd ".so")
     set(${PROJECT_NAME}_INSTALL_OS_LIBS
@@ -824,12 +828,12 @@ add_custom_target(createReleaseZip
     "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/"
 )
 
-if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+if(NOT "${DEPLOYQT_EXECUTABLE}" STREQUAL "")
     set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
-    message("Running windeployqt with path ${FullInstallPath}")
+    message("Running deployqt with path ${FullInstallPath}")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E
-        env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+        env PATH="${_qt_bin_dir}" "${DEPLOYQT_EXECUTABLE}"
                 "$<TARGET_FILE:${PROJECT_NAME}>"
                 --libdir \"${FullInstallPath}\"
                 --plugindir \"${FullInstallPath}\"
