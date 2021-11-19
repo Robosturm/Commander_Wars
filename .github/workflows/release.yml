@@ -21,21 +21,23 @@ jobs:
             # 'win64_mingw81'
             target: 'desktop'
             qtPath: 'msvc2019_64'
-            installerCommands: ''
+            installerCommands1: ''
+            installerCommands2: ''
             asset_name: 'Commander_Wars_x64.zip'
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
             qtPath: ''
-            # 'sudo apt-get update'
-            installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
                 
             asset_name: 'Commander_Wars_Ubuntu.zip'
           #- os: macos-latest
           #  COMPILER_VERSION: 'clang_64'
           #  target: 'ios'
           #  asset_name: 'Commander_Wars_iOS.zip'
-          #  installerCommands: ''
+            installerCommands1: ''
+            installerCommands2: ''
           #- os: windows-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
@@ -49,8 +51,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install OS Dependencies
-      run: ${{matrix.installerCommands}}
+    - name: Install OS Dependencies 1
+      run: ${{matrix.installerCommands1}}
+    
+    - name: Install OS Dependencies 2
+      run: ${{matrix.installerCommands2}}
       
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
