@@ -9,29 +9,14 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest] # macos-latest
+        os: [ubuntu-latest]
         include:
-          #- os: windows-latest
-          #  COMPILER_VERSION: 'win64_msvc2019_64'
-          #  # 'win64_mingw81'
-          #  target: 'desktop'
-          #  qtPath: 'msvc2019_64'
-          #  installerCommands: ''
-          #- os: ubuntu-latest
-          #  COMPILER_VERSION: ''
-          #  target: 'desktop'
-          #  qtPath: ''
-          #  installerCommands: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
-          #- os: macos-latest
-          #  COMPILER_VERSION: 'clang_64'
-          #  qtPath: 'ios'
-          #  target: 'ios'
-          #  installerCommands: ''
-          - os: windows-latest
+          - os: ubuntu-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            installerCommands: ''
+            installerCommands1: 'export ANDROID_SDK_ROOT=$ANDROID_HOME'
+            installerCommands2: 'export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle'
         
     runs-on: ${{matrix.os}}
     defaults:
@@ -40,10 +25,7 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Install OS Dependencies
-      run: ${{matrix.installerCommands}}
-      
+          
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.14.0
       with:      
@@ -55,6 +37,12 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           
+    - name: Install OS Dependencies 1
+      run: ${{matrix.installerCommands1}}
+    
+    - name: Install OS Dependencies 2
+      run: ${{matrix.installerCommands2}}
+      
     - name: Configure CMake
       run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
     
