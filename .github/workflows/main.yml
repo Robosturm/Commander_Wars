@@ -9,15 +9,17 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [windows-latest] # ubuntu-latest , macos-latest
+        os: [windows-latest, ubuntu-latest] #  , macos-latest
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_mingw81'
             target: 'desktop'
-          #- os: ubuntu-latest
-          #  COMPILER_VERSION: ''
-          #  target: 'desktop'
+            installerCommands: ''
+          - os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            installerCommands: 'apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
           #- os: macos-latest
           #  COMPILER_VERSION: ''
           #  target: 'ios'
@@ -32,7 +34,10 @@ jobs:
         
     steps:
     - uses: actions/checkout@v2
-              
+    
+    - name: Install OS Dependencies
+      run: ${{matrix.installerCommands}}
+      
     - name: Install Qt
       uses: jurplel/install-qt-action@v2    
       with:      
