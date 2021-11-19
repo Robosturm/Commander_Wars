@@ -1,7 +1,10 @@
+on:
+  push:
+    tags:
+      - 'Beta*'
+
 name: Commnader_Wars_Release
-on: push
-  tags:
-    - 'Beta*'
+
 env:
   BUILD_TYPE: Release
   QT_Version: '6.2.1'
