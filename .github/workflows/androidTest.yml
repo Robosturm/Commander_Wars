@@ -9,7 +9,7 @@ jobs:
     name: All
     strategy:
       matrix:
-        os: [ubuntu-latest] # macos-latest       windows-latest, 
+        os: [windows-latest] # macos-latest
         include:
           #- os: windows-latest
           #  COMPILER_VERSION: 'win64_msvc2019_64'
@@ -27,7 +27,7 @@ jobs:
           #  qtPath: 'ios'
           #  target: 'ios'
           #  installerCommands: ''
-          - os: ubuntu-latest
+          - os: windows-latest
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
