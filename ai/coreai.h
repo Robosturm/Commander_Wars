@@ -373,7 +373,7 @@ protected:
      * @param loadingIsland
      * @return
      */
-    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+    bool hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
                                   qint32 loadingIslandIdx, qint32 loadingIsland);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position

@@ -782,6 +782,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
     )
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
     message(FATAL_ERROR "Unsupported OS found")
 endif()

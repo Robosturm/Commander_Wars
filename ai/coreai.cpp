@@ -905,7 +905,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnit
                 if (addCaptureTargets && canCapture)
                 {
                     // no targets found -> try to speed up those infis
-                    found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                    found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
                                              loadingIslandIdx, loadingIsland);
                 }
                 else
@@ -994,13 +994,13 @@ bool CoreAI::hasTargets(qint32 transporterMovement, Unit* pLoadingUnit, bool can
     }
     if (!found)
     {
-        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+        found = hasCaptureTarget(pLoadingUnit, canCapture, pEnemyBuildings,
                                  loadingIslandIdx, loadingIsland);
     }
     return found;
 }
 
-bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
+bool CoreAI::hasCaptureTarget(Unit* pLoadingUnit, bool canCapture, spQmlVectorBuilding & pEnemyBuildings,
                               qint32 loadingIslandIdx, qint32 loadingIsland)
 {
     bool found = false;
@@ -1241,6 +1241,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
     qint32 unitIsland = getIsland(pUnit);
     spGameMap pMap = GameMap::getInstance();
     bool missileTarget = hasMissileTarget();
+    qint32 transporterMovement = pUnit->getMovementpoints(pUnit->Unit::getPosition());
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pTransporterUnit = pUnits->at(i);
@@ -1254,26 +1255,29 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit & pUni
                 // check captures on this island
                 qint32 transporterIslandIdx = getIslandIndex(pTransporterUnit);
                 qint32 transporterIsland = getIsland(pTransporterUnit);
-                for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
+                if (!hasCaptureTarget(pUnit, true, pEnemyBuildings, transporterIslandIdx, transporterIsland))
                 {
-                    qint32 x = pEnemyBuildings->at(i2)->Building::getX();
-                    qint32 y = pEnemyBuildings->at(i2)->Building::getY();
-                    // check if both can move there on this island
-                    // so we avoid loading and unloading a unit recursivly cause we think we need to transport it to another island
-                    // eventhough it has something to do here
-                    if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                        (m_IslandMaps[transporterIslandIdx]->getIsland(x, y) == transporterIsland) &&
-                        (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
-                        (pEnemyBuildings->at(i2)->isCaptureOrMissileBuilding(missileTarget)))
+                    for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
                     {
-                        goodTransporter = true;
-                        break;
+                        qint32 x = pEnemyBuildings->at(i2)->Building::getX();
+                        qint32 y = pEnemyBuildings->at(i2)->Building::getY();
+                        // check if both can move there on this island
+                        // so we avoid loading and unloading a unit recursivly cause we think we need to transport it to another island
+                        // eventhough it has something to do here
+                        if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                            (m_IslandMaps[transporterIslandIdx]->getIsland(x, y) == transporterIsland) &&
+                            (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
+                            (pEnemyBuildings->at(i2)->isCaptureOrMissileBuilding(missileTarget)))
+                        {
+                            goodTransporter = true;
+                            break;
+                        }
                     }
-                }
-                if (goodTransporter)
-                {
+                    if (goodTransporter)
+                    {
 
-                    targets.append(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), 1));
+                        targets.append(QVector3D(pTransporterUnit->Unit::getX(), pTransporterUnit->Unit::getY(), 1));
+                    }
                 }
             }
         }
