@@ -10,6 +10,30 @@ env:
   QT_Version: '6.2.1'
   
 jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    # Note this. We are going to use that in further jobs.
+    outputs:
+      upload_url: ${{steps.create_release.outputs.upload_url}}
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}  
+          draft: false
+          prerelease: false        
+          body: | 
+            Latest Commander Wars Release 
+            See the github wiki for the related change log:
+            https://github.com/Robosturm/Commander_Wars/wiki
+
+  
+jobs:
   install:
     name: All
     strategy:
@@ -52,8 +76,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        
-    steps:
+
     - uses: actions/checkout@v2
           
     - name: Install Qt
@@ -83,20 +106,6 @@ jobs:
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # release creation and upload part
 #----------------------------------------------------------------------------------------------------------------------------------------------
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1.1.4
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: | 
-          Latest Commander Wars Release 
-          See the github wiki for the related change log:
-              https://github.com/Robosturm/Commander_Wars/wiki
-        draft: false
-        prerelease: false
         
     - name: build artifacts
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
@@ -106,7 +115,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{github.token}}
       with:
-        upload_url: '${{steps.create_release.outputs.upload_url}}'
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
         asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
         asset_content_type: application/zip
