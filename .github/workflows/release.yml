@@ -10,6 +10,28 @@ env:
   QT_Version: '6.2.1'
   
 jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{steps.create_release.outputs.upload_url}}
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}  
+          draft: false
+          prerelease: false        
+          body: | 
+            Latest Commander Wars Release 
+            See the github wiki for the related change log:
+            https://github.com/Robosturm/Commander_Wars/wiki
+            
+jobs:
   install:
     name: All
     strategy:
