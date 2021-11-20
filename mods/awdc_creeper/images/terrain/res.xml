@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<resources>
+    <set path = "mods/awdc_creeper/images/terrain/" />
+    <atlas linearFilter = "false">
+        <image file="creeper+0.png" />
+        <image file="creeper+0+N.png" />
+        <image file="creeper+0+E.png" />
+        <image file="creeper+0+S.png" />
+        <image file="creeper+0+W.png" />
+        <image file="creeper+0+E+S+W.png" />
+        <image file="creeper+0+N+E.png" />
+        <image file="creeper+0+N+S.png" />
+        <image file="creeper+0+N+E+S.png" />
+        <image file="creeper+0+N+E+S+W.png" />
+        <image file="creeper+0+N+E+W.png" />
+        <image file="creeper+0+N+S+W.png" />
+        <image file="creeper+0+N+W.png" />
+        <image file="creeper+0+E+S.png" />
+        <image file="creeper+0+E+W.png" />
+        <image file="creeper+0+S+W.png" />
+        <image file="creeper+1.png" />
+        <image file="creeper+1+N.png" />
+        <image file="creeper+1+E.png" />
+        <image file="creeper+1+S.png" />
+        <image file="creeper+1+W.png" />
+        <image file="creeper+1+E+S+W.png" />
+        <image file="creeper+1+N+E.png" />
+        <image file="creeper+1+N+S.png" />
+        <image file="creeper+1+N+E+S.png" />
+        <image file="creeper+1+N+E+S+W.png" />
+        <image file="creeper+1+N+E+W.png" />
+        <image file="creeper+1+N+S+W.png" />
+        <image file="creeper+1+N+W.png" />
+        <image file="creeper+1+E+S.png" />
+        <image file="creeper+1+E+W.png" />
+        <image file="creeper+1+S+W.png" />
+        <image file="creeper+2+N+E+S+W.png" />
+        <image file="creeper+3+N+E+S+W.png" />
+        <image file="creeper+4+N+E+S+W.png" />
+    </atlas>
+</resources>

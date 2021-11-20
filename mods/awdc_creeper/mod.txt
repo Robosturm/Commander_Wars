@@ -1,0 +1,8 @@
+name=Advance Wars Darc Conflict Creeper terrain
+description=This mod changes the creeper tiles to resemble that as from their apperance in the Darc Conflict campaign. Created by K'Braid
+version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=
+cosmetic=true
+tags=Advance Wars DC;
