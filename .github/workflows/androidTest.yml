@@ -15,7 +15,7 @@ jobs:
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            target-api: ['27']
+            target-api: ['29']
             build-tools: ['30.0.2']
         
     runs-on: ${{matrix.os}}
@@ -29,8 +29,10 @@ jobs:
           aqtversion: '==2.0.2'
           target: ${{matrix.target}}
           version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
           modules: 'qtmultimedia'
           dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
           
     - name: Configure
       run: |      
@@ -50,11 +52,11 @@ jobs:
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
         -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
-        -DANDROID_ABI=${{matrix.abi}} \
-        -DANDROID_NATIVE_API_LEVEL=${{matrix.target-api}} \
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
         -DANDROID_STL=c++_shared \
         -DANDROID_TOOLCHAIN=clang \
-        -DANDROID_BUILDTOOLS_REVISION=${{matrix.build-tools}} \
+        -DANDROID_BUILDTOOLS_REVISION=${{ matrix.build-tools }} \
         -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
         
     - name: Build
