@@ -6,7 +6,7 @@ env:
   
 jobs:
   install:
-    name: All
+    name: Android Build
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -15,13 +15,10 @@ jobs:
             COMPILER_VERSION: 'android_armv7'
             qtPath: 'android_armv7'
             target: 'android'
-            installerCommands1: 'export ANDROID_SDK_ROOT=$ANDROID_HOME'
-            installerCommands2: 'export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle'
+            target-api: ['27']
+            build-tools: ['30.0.2']
         
     runs-on: ${{matrix.os}}
-    defaults:
-      run:
-        shell: bash
         
     steps:
     - uses: actions/checkout@v2
@@ -37,15 +34,31 @@ jobs:
           dir: '${{github.workspace}}/qt/'
           install-deps: "true"
           
-    - name: Install OS Dependencies 1
-      run: ${{matrix.installerCommands1}}
-    
-    - name: Install OS Dependencies 2
-      run: ${{matrix.installerCommands2}}
+    - name: Configure
+      run: |      
+        export JAVA_HOME=$JAVA_HOME_8_X64
+        export ANDROID_SDK=$ANDROID_SDK_ROOT
+        export ANDROID_NDK=$ANDROID_SDK/ndk-bundle
+        echo $ANDROID_SDK
+        echo $ANDROID_NDK
+        echo $JAVA_HOME
       
     - name: Configure CMake
-      run: cmake -B '${{github.workspace}}/build' -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
-    
+      run:  |
+        cmake \
+        -B '${{github.workspace}}/build' \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+        -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake \
+        -DANDROID_ABI=${{ matrix.abi }} \
+        -DANDROID_NATIVE_API_LEVEL=${{ matrix.target-api }} \
+        -DANDROID_STL=c++_shared \
+        -DANDROID_TOOLCHAIN=clang \
+        -DANDROID_BUILDTOOLS_REVISION=${{ matrix.build-tools }} \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \
+        
     - name: Build
       working-directory: '${{github.workspace}}/build'
       run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
