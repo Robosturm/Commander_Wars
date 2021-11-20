@@ -31,7 +31,6 @@ jobs:
             See the github wiki for the related change log:
             https://github.com/Robosturm/Commander_Wars/wiki
             
-jobs:
   install:
     name: All
     strategy:
