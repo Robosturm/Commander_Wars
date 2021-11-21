@@ -766,9 +766,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     )
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     set(LibNameStart "../lib/libQt6")
-    set(LibNameEnd ".so")
-    set(${PROJECT_NAME}_INSTALL_OS_LIBS
-    )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
         ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
         ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
@@ -782,6 +779,20 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
         ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
         ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
     )
+
+    set(LibNameEnd ".so.6")
+    set(${PROJECT_NAME}_INSTALL_OS_LIBS
+        ${QT_BIN_DIR}/${LibNameStart}Qml${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Core${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Network${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Multimedia${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Gui${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Widgets${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}Xml${LibNameEnd}
+        ${QT_BIN_DIR}/${LibNameStart}OpenGL${LibNameEnd}
+        ${ADDR_2_LINE}
+    )
+    set(LibNameEnd ".so")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
 else()
     message(FATAL_ERROR "Unsupported OS found")
