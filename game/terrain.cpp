@@ -199,6 +199,14 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+    for (auto & sprites : m_pOverlaySprites)
+    {
+        auto & tweens = sprites->getTweens();
+        for (auto & pTween : tweens)
+        {
+            pTween->setElapsed(syncTime);
+        }
+    }
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->syncAnimation(syncTime);

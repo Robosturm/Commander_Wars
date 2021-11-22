@@ -211,6 +211,7 @@ var Constructor = function()
     {
         switch (id)
         {
+        case "LAKE":
         case "SEA":
         case "BEACH":
         case "FOG":

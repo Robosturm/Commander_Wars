@@ -23,7 +23,14 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("SEA");
+        if (currentTerrainID === "LAKE")
+        {
+            terrain.loadBaseTerrain("LAKE");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("SEA");
+        }
     };
     this.loadBaseSprite = function(terrain)
     {

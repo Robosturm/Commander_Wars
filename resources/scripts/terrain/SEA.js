@@ -24,11 +24,11 @@ var Constructor = function()
         }
         else
         {
-            var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+            var surroundings = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
             // load overlay north east
             if (!surroundings.includes("+N") && !surroundings.includes("+E"))
             {
-                var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
+                var surroundingsNE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthEast, false);
                 if (surroundingsNE !== "")
                 {
                     surroundingsPlains += surroundingsNE;
@@ -37,7 +37,7 @@ var Constructor = function()
             // load overlay south east
             if (!surroundings.includes("+S") && !surroundings.includes("+E"))
             {
-                var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
+                var surroundingsSE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthEast, false);
                 if (surroundingsSE !== "")
                 {
                     surroundingsPlains += surroundingsSE;
@@ -46,7 +46,7 @@ var Constructor = function()
             // load overlay south west
             if (!surroundings.includes("+S") && !surroundings.includes("+W"))
             {
-                var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
+                var surroundingsSW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthWest, false);
                 if (surroundingsSW !== "")
                 {
                     surroundingsPlains +=  surroundingsSW;
@@ -55,7 +55,7 @@ var Constructor = function()
             // load overlay north west
             if (!surroundings.includes("+N") && !surroundings.includes("+W"))
             {
-                var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
+                var surroundingsNW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthWest, false);
                 if (surroundingsNW !== "")
                 {
                     surroundingsPlains += surroundingsNW;

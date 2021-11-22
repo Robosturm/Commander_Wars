@@ -12,7 +12,8 @@ MOVE_BOAT.getMovementpoints = function(terrain, unit, currentTerrain, trapChecki
             }
         }
     }
-    if (terrain.getID() === "BRIDGE" && terrain.getBaseTerrainID() === "SEA")
+    if (terrain.getID() === "BRIDGE" &&
+       (terrain.getBaseTerrainID() === "SEA" || terrain.getBaseTerrainID() === "LAKE"))
     {
         return 1;
     }

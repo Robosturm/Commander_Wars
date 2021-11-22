@@ -52,6 +52,7 @@ var Constructor = function()
                                 ["SNOW_WASTELAND", 1],
                                 ["SNOW_RUIN", 1],
                                 ["SEA", 2],
+                                ["LAKE", 1],
                                 ["FOG", 2],
                                 ["ROUGH_SEA", 4],
                                 ["REAF", 3],
@@ -67,6 +68,7 @@ var Constructor = function()
     this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
     {
         var id = terrain.getID();
+        var baseId = terrain.getBaseTerrainID();
         var currentId = currentTerrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
             (unit !== null) &&
@@ -75,6 +77,10 @@ var Constructor = function()
             return 1;
         }
         var costs = MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
+        if (baseId === "LAKE")
+        {
+            return costs;
+        }
         var currentGroup = currentTerrain.getTerrainGroup();
         var targetGroup = terrain.getTerrainGroup();
         // sea tile near land?

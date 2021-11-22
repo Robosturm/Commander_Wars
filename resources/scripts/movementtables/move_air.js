@@ -36,6 +36,7 @@ var Constructor = function()
                                 ["FOREST3", 1],
                                 ["WASTELAND", 1],
                                 ["SEA", 1],
+                                ["LAKE", 1],
                                 ["ROUGH_SEA", 1],
                                 ["REAF", 1],
                                 ["FOG", 1],

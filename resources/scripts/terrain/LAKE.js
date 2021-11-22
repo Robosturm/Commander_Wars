@@ -20,7 +20,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("LAKE", true, true, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_Direct, false);
         if (surroundings !== "")
         {
             terrain.loadOverlaySprite("lake" + surroundings);
@@ -29,7 +29,7 @@ var Constructor = function()
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
         {
-            var surroundingsSE = terrain.getSurroundings("LAKE", true, true, GameEnums.Directions_SouthEast, false);
+            var surroundingsSE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
                 terrain.loadOverlaySprite("lake" + surroundingsSE);
@@ -38,7 +38,7 @@ var Constructor = function()
         // load overlay north east
         if (!surroundings.includes("+N") && !surroundings.includes("+E"))
         {
-            var surroundingsNE = terrain.getSurroundings("LAKE", true, true, GameEnums.Directions_NorthEast, false);
+            var surroundingsNE = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
                 terrain.loadOverlaySprite("lake" + surroundingsNE);
@@ -47,7 +47,7 @@ var Constructor = function()
         // load overlay south west
         if (!surroundings.includes("+S") && !surroundings.includes("+W"))
         {
-            var surroundingsSW = terrain.getSurroundings("LAKE", true, true, GameEnums.Directions_SouthWest, false);
+            var surroundingsSW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
                 terrain.loadOverlaySprite("lake" + surroundingsSW);
@@ -56,14 +56,14 @@ var Constructor = function()
         // load overlay north west
         if (!surroundings.includes("+N") && !surroundings.includes("+W"))
         {
-            var surroundingsNW = terrain.getSurroundings("LAKE", true, true, GameEnums.Directions_NorthWest, false);
+            var surroundingsNW = terrain.getSurroundings("LAKE,SEA", true, true, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
                 terrain.loadOverlaySprite("lake" + surroundingsNW);
             }
         }
         // load river overlay
-        var surroundingLake = terrain.getSurroundings("LAKE", true, false, GameEnums.Directions_All, false);
+        var surroundingLake = terrain.getSurroundings("LAKE,SEA", true, false, GameEnums.Directions_All, false);
         var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
         var surroundingsRiver2 = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1);
         // load overlay north

@@ -6091,5 +6091,57 @@
         <file>resources/images/units/motorbike+yc+mask.png</file>
         <file>resources/images/units/motorbike+yc+walk+mask.png</file>
         <file>resources/images/game/battlesprites/background/back_wastebridge+0.png</file>
+        <file>resources/images/terrain/lake.png</file>
+        <file>resources/images/terrain/lake+desert+E+S.png</file>
+        <file>resources/images/terrain/lake+desert+E+S+W.png</file>
+        <file>resources/images/terrain/lake+desert+N+E.png</file>
+        <file>resources/images/terrain/lake+desert+N+E+S.png</file>
+        <file>resources/images/terrain/lake+desert+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake+desert+N+E+W.png</file>
+        <file>resources/images/terrain/lake+desert+N+S+W.png</file>
+        <file>resources/images/terrain/lake+desert+N+W.png</file>
+        <file>resources/images/terrain/lake+desert+S+W.png</file>
+        <file>resources/images/terrain/lake+E.png</file>
+        <file>resources/images/terrain/lake+E+S.png</file>
+        <file>resources/images/terrain/lake+E+S+W.png</file>
+        <file>resources/images/terrain/lake+E+W.png</file>
+        <file>resources/images/terrain/lake+N.png</file>
+        <file>resources/images/terrain/lake+N+E.png</file>
+        <file>resources/images/terrain/lake+N+E+S.png</file>
+        <file>resources/images/terrain/lake+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake+N+E+W.png</file>
+        <file>resources/images/terrain/lake+N+S.png</file>
+        <file>resources/images/terrain/lake+N+S+W.png</file>
+        <file>resources/images/terrain/lake+N+W.png</file>
+        <file>resources/images/terrain/lake+NE.png</file>
+        <file>resources/images/terrain/lake+NW.png</file>
+        <file>resources/images/terrain/lake+S.png</file>
+        <file>resources/images/terrain/lake+S+W.png</file>
+        <file>resources/images/terrain/lake+SE.png</file>
+        <file>resources/images/terrain/lake+snow+E+S.png</file>
+        <file>resources/images/terrain/lake+snow+E+S+W.png</file>
+        <file>resources/images/terrain/lake+snow+N+E.png</file>
+        <file>resources/images/terrain/lake+snow+N+E+S.png</file>
+        <file>resources/images/terrain/lake+snow+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake+snow+N+E+W.png</file>
+        <file>resources/images/terrain/lake+snow+N+S+W.png</file>
+        <file>resources/images/terrain/lake+snow+N+W.png</file>
+        <file>resources/images/terrain/lake+snow+S+W.png</file>
+        <file>resources/images/terrain/lake+SW.png</file>
+        <file>resources/images/terrain/lake+W.png</file>
+        <file>resources/images/terrain/lake+waste+E+S.png</file>
+        <file>resources/images/terrain/lake+waste+E+S+W.png</file>
+        <file>resources/images/terrain/lake+waste+N+E.png</file>
+        <file>resources/images/terrain/lake+waste+N+E+S.png</file>
+        <file>resources/images/terrain/lake+waste+N+E+S+W.png</file>
+        <file>resources/images/terrain/lake+waste+N+E+W.png</file>
+        <file>resources/images/terrain/lake+waste+N+S+W.png</file>
+        <file>resources/images/terrain/lake+waste+N+W.png</file>
+        <file>resources/images/terrain/lake+waste+S+W.png</file>
+        <file>resources/images/terrain/riverend_lake+E.png</file>
+        <file>resources/images/terrain/riverend_lake+N.png</file>
+        <file>resources/images/terrain/riverend_lake+S.png</file>
+        <file>resources/images/terrain/riverend_lake+W.png</file>
+        <file>resources/scripts/terrain/LAKE.js</file>
     </qresource>
 </RCC>

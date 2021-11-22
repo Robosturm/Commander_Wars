@@ -14,6 +14,7 @@ var Constructor = function()
     {
         var terrain = map.getTerrain(x, y);
         if ((terrain.getTerrainID() === "SEA") ||
+            (terrain.getTerrainID() === "LAKE") ||
             (terrain.getTerrainID() === "RIVER") ||
             (terrain.getTerrainID() === "DESERT_TRY_RIVER") ||
             (terrain.getTerrainID() === "BRIDGE") ||
@@ -40,6 +41,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT_TRY_RIVER");
         }
+        else if (currentTerrainID === "LAKE")
+        {
+            terrain.loadBaseTerrain("LAKE");
+        }
         else
         {
             terrain.loadBaseTerrain("RIVER");
@@ -47,7 +52,7 @@ var Constructor = function()
     };
     this.loadSprite = function(terrain, style)
     {
-        var surroundings = terrain.getSurroundings("RIVER,SEA,ROUGH_SEA,REAF,BEACH,FOG,DESERT_TRY_RIVER", false, false, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("RIVER,LAKE,SEA,ROUGH_SEA,REAF,BEACH,FOG,DESERT_TRY_RIVER", false, false, GameEnums.Directions_Direct, false);
         terrain.loadBaseSprite(style + surroundings);
     };
     this.useTerrainAsBaseTerrain = function()
@@ -70,6 +75,7 @@ var Constructor = function()
         var weatherModifier = TERRAIN.getWeatherModifier();
         switch (id)
         {
+            case "LAKE":
             case "SEA":
             case "BEACH":
             case "FOG":
