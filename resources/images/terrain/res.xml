@@ -6,7 +6,7 @@
         <image file="plains+1.png" />
         <image file="plains+2.png" />
         <image file="plains+3.png" />
-        <image file="plains+4.png" />        
+        <image file="plains+4.png" />
         <image file="plains+5.png" />
         <image file="plains+6.png" />
         <image file="plains+7.png" />
@@ -23,7 +23,7 @@
         <image file="plains+18.png" />
         <image file="plains+19.png" />
         <image file="plains+20.png" />
-        <image file="plains+destroyed.png" />        
+        <image file="plains+destroyed.png" />
         
         <image file="plains+plasma.png" />
         <image file="plains+plasma+E.png" />
@@ -77,13 +77,13 @@
         <image file="sea+N+E+S.png" cols = "8" />
         <image file="sea+N+E+W.png" cols = "8" />
         <image file="sea+N+S+W.png" cols = "8" />
-        <image file="sea+N+E+S+W.png" cols = "8" />        
+        <image file="sea+N+E+S+W.png" cols = "8" />
         <image file="sea+NE+SE+SW+NW.png" cols = "8" />
         <image file="sea+NE+SW+NW.png" cols = "8" />
         <image file="sea+NE+SE+SW.png" cols = "8" />
         <image file="sea+SE+SW+NW.png" cols = "8" />
-        <image file="sea+NE+SE+NW.png" cols = "8" />        
-        <image file="sea+NE+NW.png" cols = "8" />        
+        <image file="sea+NE+SE+NW.png" cols = "8" />
+        <image file="sea+NE+NW.png" cols = "8" />
         <image file="sea+NE+SE.png" cols = "8" />
         <image file="sea+NE+SW.png" cols = "8" />
         <image file="sea+SE+NW.png" cols = "8" />
@@ -152,7 +152,61 @@
         
         <image file="rough_sea+N+E+S+W.png" cols = "4" />
         
-        <image file="fire.png" cols = "6" />        
+		<image file="lake.png" cols = "8" />
+		<image file="lake+NE.png" cols = "8" />
+		<image file="lake+NW.png" cols = "8" />
+		<image file="lake+SE.png" cols = "8" />
+		<image file="lake+SW.png" cols = "8" />
+		<image file="lake+E.png" cols = "8" />
+		<image file="lake+E+S.png" cols = "8" />
+		<image file="lake+E+S+W.png" cols = "8" />
+		<image file="lake+E+W.png" cols = "8" />
+		<image file="lake+N.png" cols = "8" />
+		<image file="lake+N+E.png" cols = "8" />
+		<image file="lake+N+E+S.png" cols = "8" />
+		<image file="lake+N+E+S+W.png" cols = "8" />
+		<image file="lake+N+E+W.png" cols = "8" />
+		<image file="lake+N+S.png" cols = "8" />
+		<image file="lake+N+S+W.png" cols = "8" />
+		<image file="lake+N+W.png" cols = "8" />
+		<image file="lake+S.png" cols = "8" />
+		<image file="lake+S+W.png" cols = "8" />
+		<image file="lake+W.png" cols = "8" />
+		
+		<image file="riverend_lake+E.png" cols = "8" />
+		<image file="riverend_lake+S.png" cols = "8" />
+		<image file="riverend_lake+W.png" cols = "8" />
+		<image file="riverend_lake+N.png" cols = "8" />
+		
+        <image file="lake+snow+E+S.png" />
+        <image file="lake+snow+E+S+W.png" />
+        <image file="lake+snow+N+E.png" />
+        <image file="lake+snow+N+E+S.png" />
+        <image file="lake+snow+N+E+S+W.png" />
+        <image file="lake+snow+N+E+W.png" />
+        <image file="lake+snow+N+S+W.png" />
+        <image file="lake+snow+N+W.png" />
+        <image file="lake+snow+S+W.png" />
+        <image file="lake+desert+E+S.png" />
+        <image file="lake+desert+E+S+W.png" />
+        <image file="lake+desert+N+E.png" />
+        <image file="lake+desert+N+E+S.png" />
+        <image file="lake+desert+N+E+S+W.png" />
+        <image file="lake+desert+N+E+W.png" />
+        <image file="lake+desert+N+S+W.png" />
+        <image file="lake+desert+N+W.png" />
+        <image file="lake+desert+S+W.png" />
+        <image file="lake+waste+E+S.png"  />
+        <image file="lake+waste+E+S+W.png" />
+        <image file="lake+waste+N+E.png" />
+        <image file="lake+waste+N+E+S.png" />
+        <image file="lake+waste+N+E+S+W.png" />
+        <image file="lake+waste+N+E+W.png" />
+        <image file="lake+waste+N+S+W.png" />
+        <image file="lake+waste+N+W.png" />
+        <image file="lake+waste+S+W.png" />
+		
+        <image file="fire.png" cols = "6" />
 
         <image file="reaf+0+N+E+S+W.png" cols = "8" />
         <image file="reaf+1+N+E+S+W.png" cols = "8" />
