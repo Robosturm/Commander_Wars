@@ -9,7 +9,11 @@ var Constructor = function()
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = "";
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Weld");
