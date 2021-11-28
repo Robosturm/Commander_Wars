@@ -6143,5 +6143,7 @@
         <file>resources/images/terrain/riverend_lake+S.png</file>
         <file>resources/images/terrain/riverend_lake+W.png</file>
         <file>resources/scripts/terrain/LAKE.js</file>
+        <file>resources/images/units/icons/rank+hidden.png</file>
+        <file>resources/images/co/bd/co_cairn+mini.png</file>
     </qresource>
 </RCC>

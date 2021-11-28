@@ -457,6 +457,31 @@ bool CO::getHpHidden(Unit* pUnit, QPoint position)
     return false;
 }
 
+bool CO::getRankInfoHidden(Unit* pUnit, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRankInfoHidden";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isBool() && erg.toBool())
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool CO::getPerfectHpView(Unit* pUnit, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

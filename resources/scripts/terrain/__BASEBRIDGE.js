@@ -7,7 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(BRIDGE.getName(terrain));
+        terrain.setTerrainName(__BASEBRIDGE.getName(terrain));
     };
 
     this.canBePlaced = function(x, y)

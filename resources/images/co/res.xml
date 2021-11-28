@@ -321,7 +321,8 @@
         <!-- BD -->
         <image file="bd/co_cairn+nrm.png" scale_factor = "2" />
         <image file="bd/co_cairn+info.png" />
-        <image file="bd/co_cairn+face.png" cols = "3" />  
+        <image file="bd/co_cairn+mini.png" />
+        <image file="bd/co_cairn+face.png" cols = "3" />
         <image file="bd/co_tempest+nrm.png" />
         <image file="bd/co_tempest+info.png" />
         <image file="bd/co_tempest+face.png" cols = "3" />

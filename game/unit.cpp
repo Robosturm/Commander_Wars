@@ -2176,6 +2176,31 @@ bool Unit::getHpHidden(Player* pPlayer)
     return false;
 }
 
+bool Unit::getRankInfoHidden(Player* pPlayer)
+{
+    if (pPlayer != nullptr && pPlayer->isEnemy(m_pOwner))
+    {
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            if (pCO->getRankInfoHidden(this, QPoint(Unit::getX(), Unit::getY())))
+            {
+                return true;
+            }
+        }
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            if (pCO->getRankInfoHidden(this, QPoint(Unit::getX(), Unit::getY())))
+            {
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
 bool Unit::getPerfectHpView(Player* pPlayer)
 {
     if (pPlayer != nullptr)
@@ -2216,6 +2241,12 @@ void Unit::updateIcons(Player* pPlayer)
     unloadIcon("hp+hidden");
     unloadIcon("transport");
     unloadIcon("transport+hidden");
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QString function1 = "unloadIcons";
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args << obj1;
+    pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
     if (!getHpHidden(pPlayer))
     {
         if ((hpValue < Unit::MAX_UNIT_HP) && (hpValue > 0))
@@ -2238,6 +2269,22 @@ void Unit::updateIcons(Player* pPlayer)
             loadIcon("transport", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
         }
         updateStealthIcon();
+    }
+    if (getRankInfoHidden(pPlayer))
+    {
+        if (m_CORange.get() != nullptr)
+        {
+            m_CORange->setVisible(false);
+        }
+        loadIcon("rank+hidden", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
+    }
+    else
+    {
+        loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
+        if (m_CORange.get() != nullptr)
+        {
+            m_CORange->setVisible(true);
+        }
     }
 }
 
@@ -3815,9 +3862,5 @@ void Unit::updateRangeActor(oxygine::spActor & pActor, qint32 range, QString res
         CreateOutline::addCursorRangeOutline(pActor, resAnim, range, color);
         pActor->setPosition(GameMap::getImageSize() * Unit::getX(), GameMap::getImageSize() * Unit::getY());
         pMap->addChild(pActor);
-    }
-    else
-    {
-        pActor = nullptr;
     }
 }

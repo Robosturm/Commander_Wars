@@ -9,7 +9,11 @@ var Constructor = function()
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Destroyed Weld");
@@ -29,7 +33,11 @@ var Constructor = function()
     };
     this.getDefense = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return 0;
@@ -42,7 +50,11 @@ var Constructor = function()
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "DESERT")
         {
             return -20;
@@ -51,7 +63,11 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit, terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return 1;
@@ -78,7 +94,11 @@ var Constructor = function()
         }
         else
         {
-            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            var baseTerrainId = ""
+            if (terrain !== null)
+            {
+                baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+            }
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
@@ -141,7 +161,11 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "minimap_waste";
@@ -162,7 +186,11 @@ var Constructor = function()
 
     this.getDescription = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("<r>Waste terrain with reduced defense but clear view. In Fog of War, unit's gain </r><div c='#00ff00'>vision +1.</div>");
@@ -187,7 +215,11 @@ var Constructor = function()
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return WASTE.getTerrainAnimationForeground(unit, terrain)
@@ -207,7 +239,11 @@ var Constructor = function()
     };
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return WASTE.getTerrainAnimationBackground(unit, terrain)

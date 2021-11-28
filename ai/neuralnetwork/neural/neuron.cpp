@@ -181,6 +181,14 @@ void Neuron::mutateAllWeights(double mutationChance, double maxWeight, double mu
                 }
             }
         }
+        if (e->weight() < -maxWeight)
+        {
+            e->alterWeight(-maxWeight);
+        }
+        else if (e->weight() > maxWeight)
+        {
+            e->alterWeight(maxWeight);
+        }
     }
 }
 

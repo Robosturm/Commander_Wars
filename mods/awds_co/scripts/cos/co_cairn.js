@@ -39,14 +39,7 @@ CO_CAIRN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                         return 10 + startpower;
                     }
                 case GameEnums.PowerMode_Power:
-                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY))
-                    {
-                        return 10 + CO_CAIRN.defaultModifier;
-                    }
-                    else
-                    {
-                        return 10 + startpower;
-                    }
+                    return 10 + startpower;
                 default:
                     return startpower;
                 }

@@ -279,6 +279,12 @@ public slots:
      */
     bool getHpHidden(Player* pPlayer);
     /**
+     * @brief getRankInfoHidden
+     * @param pPlayer
+     * @return
+     */
+    bool getRankInfoHidden(Player* pPlayer);
+    /**
      * @brief getPerfectHpView
      * @param pPlayer
      * @return

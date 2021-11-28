@@ -22,6 +22,7 @@
 
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
@@ -256,6 +257,7 @@ void MapSelectionMapsMenue::buttonNext()
                     else
                     {
                         hideMapSelection();
+                        loadRules(Settings::getDefaultRuleset());
                         showRuleSelection();
                         m_MapSelectionStep = MapSelectionStep::selectRules;
                     }
@@ -355,7 +357,6 @@ void MapSelectionMapsMenue::ruleSelectionSizeChanged()
 {
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
 }
-
 
 void MapSelectionMapsMenue::showPlayerSelection()
 {
@@ -498,6 +499,12 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         spGameMap pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
+        spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset as default ruleset?"), true, tr("Yes"), tr("No"));
+        addChild(pMessageBox);
+        connect(pMessageBox.get(),  &DialogMessageBox::sigOk, this, [=]()
+        {
+            Settings::setDefaultRuleset(filename);
+        }, Qt::QueuedConnection);
     }
 }
 

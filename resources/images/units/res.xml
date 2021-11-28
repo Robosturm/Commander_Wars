@@ -25,6 +25,7 @@
         <image file="icons/general.png"  />
         <image file="icons/veteran.png"  />
         <image file="icons/hp+hidden.png"  />
+        <image file="icons/rank+hidden.png"  />
         <image file="icons/defensive.png"  />
         <image file="icons/hold.png"  />
         <image file="icons/normal.png"  />

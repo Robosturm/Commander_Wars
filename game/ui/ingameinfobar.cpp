@@ -377,7 +377,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
 {
     static constexpr qint32 xOffset = 2;
     static constexpr qint32 yOffset = 4;
-    bool HpHidden = false;
+    bool hpHidden = false;
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
@@ -390,7 +390,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     }
     if (pUnit.get() != nullptr)
     {
-        HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
+        hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
     }
     GameManager* pGameManager = GameManager::getInstance();
     m_pDetailedViewBox->removeChildren();
@@ -458,7 +458,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     if (pUnit.get() != nullptr)
     {
         qint32 hp = -1;
-        if (HpHidden)
+        if (hpHidden)
         {
             hp = Unit::MAX_UNIT_HP;
         }
@@ -535,9 +535,9 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         posY += 22;
         float hp = pUnit->getHp();
         float divider = static_cast<float>(hp) / static_cast<float>(Unit::MAX_UNIT_HP);
-        bool HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
+        bool hpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
         bool perfectHpVision = pUnit->getPerfectHpView(pGamemenu->getCurrentViewPlayer());
-        if (HpHidden)
+        if (hpHidden)
         {
             divider = 0.0f;
         }
@@ -559,7 +559,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         float countMax = Unit::MAX_UNIT_HP;
         pTextfield = spLabel::create(pAnim->getWidth() - 10);
         pTextfield->setStyle(smallStyle);
-        if (HpHidden)
+        if (hpHidden)
         {
             pTextfield->setHtmlText((tr("HP: ") + "?/10"));
         }

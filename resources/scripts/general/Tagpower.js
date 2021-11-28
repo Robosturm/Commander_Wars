@@ -320,6 +320,12 @@ var TAGPOWER =
         return false;
     },
 
+    getRankInfoHidden : function(co, unit, posX, posY)
+    {
+        // are the hp hidden of this unit?
+        return false;
+    },
+
     getPerfectHpView : function(co, unit, posX, posY)
     {
         // are the hp hidden of this unit?

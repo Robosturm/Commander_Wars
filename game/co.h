@@ -159,6 +159,13 @@ public slots:
      */
     bool getHpHidden(Unit* pUnit, QPoint position);
     /**
+     * @brief getRankInfoHidden
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool getRankInfoHidden(Unit* pUnit, QPoint position);
+    /**
      * @brief getPerfectHpView
      * @param pUnit
      * @param position

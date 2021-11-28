@@ -114,6 +114,7 @@ bool Settings::m_useCoMinis = true;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
+QString Settings::m_defaultRuleset = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
@@ -161,6 +162,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+const QString &Settings::getDefaultRuleset()
+{
+    return m_defaultRuleset;
+}
+
+void Settings::setDefaultRuleset(const QString &newDefaultRuleset)
+{
+    m_defaultRuleset = newDefaultRuleset;
 }
 
 float Settings::getGamepadSensitivity()
@@ -1436,6 +1447,7 @@ void Settings::loadSettings()
     }
     m_dialogAnimation = settings.value("DialogAnimation", true).toBool();
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
+    m_defaultRuleset = settings.value("DefaultRuleset", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
@@ -1628,6 +1640,7 @@ void Settings::saveSettings()
         settings.setValue("UseCoMinis",                     m_useCoMinis);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
+        settings.setValue("DefaultRuleset",                 m_defaultRuleset);
         settings.setValue("Username",                       m_Username);
         settings.setValue("ShowCursor",                     m_ShowCursor);
         settings.setValue("AutoEndTurn",                    m_AutoEndTurn);

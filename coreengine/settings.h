@@ -38,14 +38,16 @@ public:
 
     static void setUsername(const QString &Username);
 
-
+public slots:
     static bool getGamepadEnabled();
     static void setGamepadEnabled(bool newGamepadEnabled);
 
     static float getGamepadSensitivity();
     static void setGamepadSensitivity(float newGamepadSensitivity);
 
-public slots:
+    static const QString &getDefaultRuleset();
+    static void setDefaultRuleset(const QString &newDefaultRuleset);
+
     static bool getUseCoMinis();
     static void setUseCoMinis(bool newUseCoMinis);
 
@@ -544,6 +546,7 @@ private:
     static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
+    static QString m_defaultRuleset;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;

@@ -139,23 +139,18 @@ var Constructor = function()
                        "DESERT_FOREST1",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
-                       "DESERT_WASTELAND",
                        "FOREST",
                        "FOREST1",
                        "FOREST2",
                        "FOREST3",
                        "RIVER",
                        "MOUNTAIN",
-                       "WASTELAND",
                        "SNOW_FOREST",
                        "SNOW_FOREST1",
                        "SNOW_FOREST2",
                        "SNOW_MOUNTAIN",
-                       "SNOW_WASTELAND",
                        "WASTE_FOREST",
-                       "WASTE_MOUNTAIN",
-                       "WASTE_WASTELAND"];
-    // todo should waste land count?
+                       "WASTE_MOUNTAIN"];
     this.isWildernessTile = function(x, y)
     {
         if (typeof map !== 'undefined')
@@ -219,14 +214,7 @@ var Constructor = function()
                         return 10 + startpower;
                     }
                 case GameEnums.PowerMode_Power:
-                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY))
-                    {
-                        return 10 + CO_CAIRN.defaultModifier;
-                    }
-                    else
-                    {
-                        return 10 + startpower;
-                    }
+                    return 10 + startpower;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -387,7 +375,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A wilderness survival expert whi excels at using natural terrain to her advantage.");
+        return qsTr("A wilderness survival expert who excels at using natural terrain to her advantage.");
     };
     this.getHits = function(co)
     {
@@ -399,21 +387,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        var text = qsTr("Wilderness grant her units additional terrain stars. On-property firepower of her units is reduced.");
+        var text = qsTr("Wilderness (Forest, mountains, and rivers) grant her units additional terrain stars. On-property firepower of her units is reduced.");
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
                    qsTr("\nGlobal Effect: \nNone") +
-                   qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
+                   qsTr("\n\nCO Zone Effect: \nWilderness (Forest, mountains, and rivers) grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
         text = replaceTextArgs(text, [CO_CAIRN.coZoneStarBonus, CO_CAIRN.coFirepowerDebuff]);
         return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("When on crossing a wilderness tile her units gain increased firepower by %0% and gain indirect range by 1. Additionally movement through wilderness tiles is set to 1.");
+        var text = qsTr("When on crossing a wilderness tile her units gain increased firepower by %0% and gain indirect range by 1. Additionally movement through wilderness tiles is set to 1.\nMovement:        -1 Cost\nIndirect Range:  +1 Range\nVision Range:    +1 Range\n");
         text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
         return text;
     };
@@ -423,7 +411,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Each wilderness tile crossed restores 1 HP. Increases her firepower by %0% and lower enemy defense by %0% for each wilderness terrain star.");
+        var text = qsTr("Each wilderness tile crossed restores 1 HP. Each wilderness terrain star increases her unit firepower %0% and nullifies enemy defense on wilderness.\nMovement:        +1 HP per tile crossed\nFirepower:       +%0% per terrain star\nEnemy Defense:   lose terrain stars (no terrain defense bonus)");
         text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
         return text;
     };
@@ -511,9 +499,8 @@ var Constructor = function()
             defenseBoost = 10;
             if (wilderness)
             {
-                info.addBonusIcon("moveRange", "=1");
+                info.addBonusIcon("moveRange", "-1");
                 info.addBonusIcon("atkRange", "+1");
-                offensiveBoost = CO_CAIRN.zoneTerrainBonus * defenseStars + 10;
             }
         }
         else if (CO_CAIRN.globalRules)

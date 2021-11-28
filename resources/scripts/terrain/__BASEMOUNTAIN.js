@@ -9,7 +9,11 @@ var Constructor = function()
     this.baseTerrainId = "PLAINS";
     this.getName = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("Waste Rock");
@@ -29,7 +33,11 @@ var Constructor = function()
     };
     this.getDefense = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return 3;
@@ -42,7 +50,11 @@ var Constructor = function()
     this.getOffensiveFieldBonus = function(terrain, attacker, atkPosX, atkPosY,
                                            defender, defPosX, defPosY, isDefender, action, luckMode)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "DESERT")
         {
             return -20;
@@ -69,7 +81,11 @@ var Constructor = function()
         }
         else
         {
-            var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+            var baseTerrainId = ""
+            if (terrain !== null)
+            {
+                baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+            }
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
@@ -89,7 +105,11 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "minimap_waste_mountain";
@@ -109,7 +129,11 @@ var Constructor = function()
     };
     this.getBonusVision = function(unit, terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             if (baseTerrainId === "WASTE")
@@ -130,7 +154,11 @@ var Constructor = function()
 
     this.getDescription = function(terrain)
     {
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +4.</div><r> Extremly high movement costs for infantry units. Waste terrain with reduced defense but clear view. In Fog of War, other unit's gain </r><div c='#00ff00'>vision +1.</div>");
@@ -174,7 +202,11 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId
+        var baseTerrainId = ""
+        if (terrain !== null)
+        {
+            baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
+        }
         if (baseTerrainId === "WASTE")
         {
             return "back_wastemountain";

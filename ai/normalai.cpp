@@ -221,6 +221,14 @@ void NormalAi::randomizeIni(QString name, float chance, float mutationRate)
                 }
             }
         }
+        if (*entry.m_value < entry.m_minValue)
+        {
+            *entry.m_value = entry.m_minValue;
+        }
+        else if (*entry.m_value > entry.m_maxValue)
+        {
+            *entry.m_value = entry.m_maxValue;
+        }
     }
     saveIni(name);
 }

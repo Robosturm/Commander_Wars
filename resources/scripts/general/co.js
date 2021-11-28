@@ -103,9 +103,15 @@ var CO =
         return false;
     },
 
-    getPerfectHpView : function(co, unit, posX, posY)
+    getRankInfoHidden : function(co, unit, posX, posY)
     {
         // are the hp hidden of this unit?
+        return false;
+    },
+
+    getPerfectHpView : function(co, unit, posX, posY)
+    {
+        // are the co zone and rank hidden?
         return false;
     },
 

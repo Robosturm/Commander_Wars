@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "game/gamemap.h"
 
@@ -11,6 +12,7 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/spinbox.h"
 #include "objects/base/selectkey.h"
+#include "objects/dialogs/filedialog.h"
 
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {
@@ -469,6 +471,31 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
+    spLabel textField = spLabel::create(sliderOffset - 140);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Default rules:"));
+    textField->setPosition(10, y);
+    m_pOptions->addItem(textField);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spButton pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
+    pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+    m_pOptions->addItem(pScriptButton);
+    m_pDefaultRuleFile = spTextbox::create(pScriptButton->getX() - textField->getX() - textField->getWidth() - 20);
+    m_pDefaultRuleFile->setTooltipText(tr("The relative path from the exe to the default ruleset."));
+    m_pDefaultRuleFile->setPosition(sliderOffset - 130, textField->getY());
+    m_pDefaultRuleFile->setCurrentText(Settings::getDefaultRuleset());
+    connect(m_pDefaultRuleFile.get(), &Textbox::sigTextChanged, this, [=](QString text)
+    {
+        Settings::setDefaultRuleset(text);
+    });
+    m_pOptions->addItem(m_pDefaultRuleFile);
+    pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    {
+        emit sigShowSelectDefaultRules();
+    });
+    connect(this, &GameplayAndKeys::sigShowSelectDefaultRules, this, &GameplayAndKeys::showSelectDefaultRules, Qt::QueuedConnection);
+    y += 40;
+
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
@@ -918,4 +945,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     m_pOptions->setContentHeigth(20 + y);
     
+}
+
+void GameplayAndKeys::showSelectDefaultRules()
+{
+    QStringList wildcards;
+    wildcards.append("*.grl");
+    QString path = Settings::getUserPath() + "data/gamerules";
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
+    oxygine::Stage::getStage()->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &GameplayAndKeys::selectDefaultRules, Qt::QueuedConnection);
+}
+
+void GameplayAndKeys::selectDefaultRules(QString filename)
+{
+    if (filename.endsWith(".grl") && QFile::exists(filename))
+    {
+        Settings::setDefaultRuleset(filename);
+        m_pDefaultRuleFile->setCurrentText(filename);
+    }
 }
