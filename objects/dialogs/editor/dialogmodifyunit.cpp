@@ -272,15 +272,15 @@ void DialogModifyUnit::updateData()
     {
         if (size - 2 == value)
         {
-            m_pUnit->setUnitRank(GameEnums::UnitRank_CO0);
+            m_pUnit->setUnitRank(GameEnums::UnitRank_CO0, true);
         }
         else if (size - 1 == value)
         {
-            m_pUnit->setUnitRank(GameEnums::UnitRank_CO1);
+            m_pUnit->setUnitRank(GameEnums::UnitRank_CO1, true);
         }
         else
         {
-            m_pUnit->setUnitRank(value);
+            m_pUnit->setUnitRank(value, true);
         }
     });
     m_pPanel->addItem(pDropdownmenu);

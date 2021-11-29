@@ -53,6 +53,7 @@
 #include "objects/playerselection.h"
 #include "objects/dialogs/mapSelection/mapselectionfilterdialog.h"
 #include "objects/dialogs/editor/mapeditdialog.h"
+#include "objects/dialogs/gamepadinfo.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
@@ -175,4 +176,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<CustomCoBoostInfo>("CustomCoBoostInfo", 1);
     qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
     qmlRegisterInterface<CampaignMapData>("CampaignMapData", 1);
+    qmlRegisterInterface<GamepadInfo>("GamepadInfo", 1);
 }

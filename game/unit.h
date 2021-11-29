@@ -451,7 +451,7 @@ public slots:
     bool hasTerrainHide(Player* pPlayer);
 
     qint32 getUnitRank() const;
-    void setUnitRank(const qint32 &UnitRank);
+    void setUnitRank(const qint32 &UnitRank, bool force = false);
 
     qint32 getVision(QPoint position);
     void setVision(const qint32 &value);

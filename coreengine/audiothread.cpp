@@ -448,6 +448,7 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
     {
         case QMediaPlayer::NoMedia:
         {
+            m_player->m_currentMedia = -1;
             if (m_PlayListdata.size() > 0)
             {
                 emit sigLoadNextAudioFile();
@@ -456,6 +457,7 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
         }
         case QMediaPlayer::EndOfMedia:
         {
+            m_player->m_currentMedia = -1;
             CONSOLE_PRINT("Music stopped at position " + QString::number(m_player->m_player.position()), Console::eDEBUG);
             // shuffle through loaded media
             SlotPlayRandom();

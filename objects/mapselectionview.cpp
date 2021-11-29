@@ -10,6 +10,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
 
 #include "objects/base/moveinbutton.h"
 
@@ -238,6 +239,7 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(QFileInfo info, bool fast)
 {
+    CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), Console::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {

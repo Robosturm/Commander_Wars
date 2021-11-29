@@ -480,14 +480,15 @@ QString Unit::getUnitRangName(qint32 rang)
     return "Unknown";
 }
 
-void Unit::setUnitRank(const qint32 &UnitRank)
+void Unit::setUnitRank(const qint32 &UnitRank, bool force)
 {
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
         if (pMap->getGameRules()->getRankingSystem() ||
             (UnitRank == GameEnums::UnitRank_CO0) ||
-            (UnitRank == GameEnums::UnitRank_CO1))
+            (UnitRank == GameEnums::UnitRank_CO1) ||
+            force)
         {
             m_UnitRank = UnitRank;
         }
@@ -1622,7 +1623,7 @@ bool Unit::useTerrainDefense()
 bool Unit::useTerrainHide()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "useVisionHide";
+    QString function1 = "useTerrainHide";
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;

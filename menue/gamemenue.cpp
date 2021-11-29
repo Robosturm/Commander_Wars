@@ -1010,14 +1010,17 @@ void GameMenue::finishActionPerformed()
     pMap->getGameRules()->checkVictory();
     skipAnimations(true);
     pMap->getGameRules()->createFogVision();
-    if (!pMap->getCurrentPlayer()->getIsDefeated() &&
-        pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+    if (m_humanQuickButtons.get() != nullptr)
     {
-        m_humanQuickButtons->setEnabled(true);
-    }
-    else
-    {
-        m_humanQuickButtons->setEnabled(false);
+        if (!pMap->getCurrentPlayer()->getIsDefeated() &&
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        {
+            m_humanQuickButtons->setEnabled(true);
+        }
+        else
+        {
+            m_humanQuickButtons->setEnabled(false);
+        }
     }
 }
 
