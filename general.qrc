@@ -6145,5 +6145,7 @@
         <file>resources/scripts/terrain/LAKE.js</file>
         <file>resources/images/units/icons/rank+hidden.png</file>
         <file>resources/images/co/bd/co_cairn+mini.png</file>
+        <file>resources/ui/mainmenu.xml</file>
+        <file>resources/objects/commander_wars_icon.png</file>
     </qresource>
 </RCC>

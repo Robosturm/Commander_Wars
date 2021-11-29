@@ -69,5 +69,6 @@
         <!-- ingame stuff -->
         <image file="barforeground.png"/>
         <image file="gamepad.png"/>
+        <image file="commander_wars_icon.png"/>
     </atlas>
 </resources>
