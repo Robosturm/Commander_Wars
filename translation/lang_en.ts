@@ -2856,22 +2856,22 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="70"/>
+        <location filename="../menue/mainwindow.cpp" line="81"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="94"/>
+        <location filename="../menue/mainwindow.cpp" line="105"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="94"/>
+        <location filename="../menue/mainwindow.cpp" line="105"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="443"/>
+        <location filename="../menue/mainwindow.cpp" line="454"/>
         <source>Do you want to enable all current items in the shop?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2919,17 +2919,17 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Do you want to make the saved ruleset as default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

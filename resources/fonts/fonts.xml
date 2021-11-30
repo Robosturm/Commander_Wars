@@ -6,4 +6,5 @@
     <font file="main32.xml" />
     <font file="main48.xml" />
     <font file="main72.xml" />
+    <font file="logoFont.xml" />    
 </resources>

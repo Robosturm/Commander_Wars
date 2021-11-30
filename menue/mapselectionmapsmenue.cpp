@@ -309,8 +309,15 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {    
-    QFileInfo info = QFileInfo(item);
-    m_pMapSelectionView->loadMap(info);    
+    if (m_pMapSelectionView->getVisible())
+    {
+        QFileInfo info = QFileInfo(item);
+        m_pMapSelectionView->loadMap(info);
+    }
+    else
+    {
+        CONSOLE_PRINT("Ignoring map selection change", Console::eDEBUG);
+    }
 }
 
 void MapSelectionMapsMenue::hideMapSelection()
