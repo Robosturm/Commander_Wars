@@ -18,20 +18,20 @@ jobs:
             qtPath: 'mingw_64'
             installerCommands1: ''
             installerCommands2: ''
-            customCmakeArgs: '-GMinGW Makefiles'
+            cmakeArgs: '-GMinGW Makefiles'
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
             qtPath: ''
             installerCommands1: 'sudo apt-get update'
-            customCmakeArgs: ''
+            cmakeArgs: ''
           - os: macos-latest
             COMPILER_VERSION: 'clang_64'
             qtPath: 'clang_64'
             target: 'desktop'
             installerCommands1: ''
             installerCommands2: ''
-            customCmakeArgs: ''
+            cmakeArgs: ''
           #- os: ubuntu-latest
           #  COMPILER_VERSION: 'android_armv7'
           #  target: 'android'
@@ -68,8 +68,8 @@ jobs:
         -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
-        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
-        ${{customCmakeArgs}}
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/ \
+        ${{cmakeArgs}}
     
     - name: Build
       working-directory: '${{github.workspace}}/build'
