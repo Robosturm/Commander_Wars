@@ -65,17 +65,6 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
-    oxygine::spTextField pTextField = oxygine::spTextField::create();
-    pTextField->setWidth(200);
-    oxygine::TextStyle style2 = oxygine::TextStyle(FontManager::getLogoFont());
-    style2.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style2.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style2.multiline = false;
-    pTextField->setStyle(style2);
-    pTextField->setHtmlText("ABCDEF");
-    pTextField->setPosition(50, 50);
-    addChild(pTextField);
-
     if (Settings::getUsername().isEmpty())
     {
         spDialogTextInput pDialogTextInput = spDialogTextInput::create(tr("Select Username"), false, "");

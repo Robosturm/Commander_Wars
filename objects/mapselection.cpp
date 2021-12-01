@@ -25,8 +25,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
 
     oxygine::spButton pArrowUp = oxygine::spButton::create();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
-    if (pAnim != nullptr)
-    {
+
         pArrowUp->setResAnim(pAnim);
         pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         pArrowUp->setFlippedY(true);
@@ -50,10 +49,17 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
             m_spin = 0;
         });
         pArrowUp->setScaleX(4.0f);
-        pArrowUp->setPosition(width / 2 - pAnim->getWidth() * 2, 0);
+        if (pAnim != nullptr)
+        {
+            pArrowUp->setPosition(width / 2 - pAnim->getWidth() * 2, 0);
+        }
         addChild(pArrowUp);
 
-        qint32 arrowHeigth = static_cast<qint32>(pAnim->getHeight());
+        qint32 arrowHeigth = 0;
+        if (pAnim != nullptr)
+        {
+            arrowHeigth = static_cast<qint32>(pAnim->getHeight());
+        }
         qint32 y = arrowHeigth + 5;
 
         setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -61,12 +67,22 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         pAnim = pObjectManager->getResAnim("mapSelectionTop");
         oxygine::spBox9Sprite pBackground = oxygine::spBox9Sprite::create();
         pBackground->setResAnim(pAnim);
-        pBackground->setSize(width, pAnim->getHeight());
+        if (pAnim != nullptr)
+        {
+            pBackground->setSize(width, pAnim->getHeight());
+        }
         pBackground->setPosition(0, y);
-        y += pAnim->getHeight();
+        if (pAnim != nullptr)
+        {
+            y += pAnim->getHeight();
+        }
         addChild(pBackground);
 
-        m_itemCount = (heigth - 25 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
+        m_itemCount = 1;
+        if (pAnim != nullptr)
+        {
+            m_itemCount = (heigth - 25 - 2 * static_cast<qint32>(pAnim->getHeight()) - arrowHeigth * 2) / m_itemHeigth;
+        }
         createItemContainer(y, width, m_itemHeigth * m_itemCount);
 
         pAnim = pObjectManager->getResAnim("mapSelectionSelectedMap");
@@ -147,9 +163,15 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         pAnim = pObjectManager->getResAnim("mapSelectionBottom");
         pBackground = oxygine::spBox9Sprite::create();
         pBackground->setResAnim(pAnim);
-        pBackground->setSize(width, pAnim->getHeight());
+        if (pAnim != nullptr)
+        {
+            pBackground->setSize(width, pAnim->getHeight());
+        }
         pBackground->setPosition(0, y);
-        y += pAnim->getHeight();
+        if (pAnim != nullptr)
+        {
+            y += pAnim->getHeight();
+        }
         addChild(pBackground);
         oxygine::spButton pArrowDown = oxygine::spButton::create();
         pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
@@ -175,7 +197,10 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
             m_spin = 0;
         });
         pArrowDown->setScaleX(4.0f);
-        pArrowDown->setPosition(width / 2 - pAnim->getWidth() * 2, y + 5);
+        if (pAnim != nullptr)
+        {
+            pArrowDown->setPosition(width / 2 - pAnim->getWidth() * 2, y + 5);
+        }
         addChild(pArrowDown);
         changeFolder(folder);
         connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
@@ -189,7 +214,6 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
                 pTouchEvent->stopPropagation();
             }
         });
-    }
 }
 
 void MapSelection::createItemContainer(qint32 y, qint32 width, qint32 height)

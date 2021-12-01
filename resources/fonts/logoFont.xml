@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <font>
-  <info face="CommanderWarsAlphabet" size="7"/>
+  <info face="CommanderWarsAlphabet" size="-7"/>
   <common pages="1" />
   <pages linearFilter="false">
     <page id="0" file="logoFont.png" />

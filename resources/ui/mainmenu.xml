@@ -4,8 +4,15 @@
         <x>settings.getWidth() / 2 - 134</x>
         <y>currentMenu.getButtonY(0) - 60</y>
         <scale>1</scale>
-        <sprite>"commander_wars_icon"</sprite>
+        <sprite>"logo"</sprite>
     </Sprite>
+    <TextField>
+        <x>settings.getWidth() / 2 - 134 + 70</x>
+        <y>currentMenu.getButtonY(0) - 60 + 24</y>
+        <text>"DARK HORIZONS"</text>
+        <font>"logoFont"</font>
+        <fontColor>"#FFFFFF"</fontColor>
+    </TextField>
     <Button>
         <x>currentMenu.getButtonX(0)</x>
         <y>currentMenu.getButtonY(0)</y>

@@ -19,7 +19,11 @@ MoveInButton::MoveInButton(oxygine::Actor* pParent, qint32 moveInSize, qint32 di
     {
         m_pButton->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     }
-    m_pButton->setSize(m_pButton->getResAnim()->getSize());
+    auto* pAnim = m_pButton->getResAnim();
+    if (pAnim != nullptr)
+    {
+        m_pButton->setSize(pAnim->getSize());
+    }
     m_pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = m_pButton.get();
     m_pButton->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event*)

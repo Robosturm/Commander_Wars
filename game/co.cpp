@@ -1990,8 +1990,12 @@ void CO::setCoStyleFromUserdata()
     else
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        file = pCOSpriteManager->getResAnim(m_coID + "+nrm")->getResPath();
-        file.replace("+nrm.png", "");
+        auto* pAnim = pCOSpriteManager->getResAnim(m_coID + "+nrm");
+        if (pAnim != nullptr)
+        {
+            file = pAnim->getResPath();
+            file.replace("+nrm.png", "");
+        }
     }
     if (m_coID != CO_RANDOM)
     {

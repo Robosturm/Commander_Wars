@@ -29,6 +29,7 @@ static const char* const itemIconButton = "IconButton";
 static const char* const itemSlider = "Slider";
 static const char* const itemMoveInButton = "MoveInButton";
 static const char* const itemSprite = "Sprite";
+static const char* const itemTextField = "TextField";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -41,6 +42,7 @@ static const char* const attrStartValue = "startValue";
 static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
+static const char* const attrFontColor = "fontColor";
 static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
@@ -79,6 +81,7 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemSlider), std::bind(&UiFactory::createSlider, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemMoveInButton), std::bind(&UiFactory::createMoveInButton, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemSprite), std::bind(&UiFactory::createSprite, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemTextField), std::bind(&UiFactory::createTextfield, this, _1, _2, _3, _4)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -186,7 +189,12 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         qint32 height = getIntValue(getAttribute(childs, attrHeight));
         QString text = translate(getAttribute(childs, attrText));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
-        auto style = getStyle(getAttribute(childs, attrFont));
+        QString fontColor = getStringValue(getAttribute(childs, attrFontColor));
+        if (fontColor.isEmpty())
+        {
+            fontColor = FontManager::getFontColor().name();
+        }
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
         QString id = getId(getAttribute(childs, attrId));
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
@@ -211,6 +219,35 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         item = pLabel;
 
         m_lastCoordinates = QRect(x, y, width, height);
+    }
+    return success;
+}
+
+bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, CreatedGui* pMenu)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrText, attrFont});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        QString text = translate(getAttribute(childs, attrText));
+        QString fontColor = getStringValue(getAttribute(childs, attrFontColor));
+        if (fontColor.isEmpty())
+        {
+            fontColor = FontManager::getFontColor().name();
+        }
+        auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
+        oxygine::spTextField pLabel = oxygine::spTextField::create();
+        pLabel->setX(x);
+        pLabel->setY(y);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(text);
+        parent->addChild(pLabel);
+        item = pLabel;
+
+        const auto & textRect = pLabel->getTextRect();
+        m_lastCoordinates = QRect(x, y, textRect.getWidth(), textRect.getHeight());
     }
     return success;
 }
@@ -771,10 +808,10 @@ QString UiFactory::getStringValue(QString line)
     return value;
 }
 
-oxygine::TextStyle UiFactory::getStyle(QString styleName)
+oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor)
 {
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont(styleName));
-    style.color = FontManager::getFontColor();
+    style.color = fontColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

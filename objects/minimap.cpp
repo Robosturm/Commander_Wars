@@ -209,11 +209,14 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             }
                             else
                             {
-                                auto & tweens = m_Items[item].unit->getTweens();
-                                for (auto & tween : tweens)
+                                if (m_Items[item].unit.get() != nullptr)
                                 {
-                                    tween->reset();
-                                    tween->start(*m_Items[item].unit);
+                                    auto & tweens = m_Items[item].unit->getTweens();
+                                    for (auto & tween : tweens)
+                                    {
+                                        tween->reset();
+                                        tween->start(*m_Items[item].unit);
+                                    }
                                 }
                             }
                         }

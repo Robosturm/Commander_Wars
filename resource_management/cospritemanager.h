@@ -26,7 +26,7 @@ public:
      * @param ep
      * @return
      */
-    virtual oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+    virtual oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const override;
     /**
      * @brief release
      */

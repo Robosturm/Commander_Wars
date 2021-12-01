@@ -32,6 +32,7 @@ namespace oxygine
                 CONSOLE_PRINT(message, Console::eWARNING);
                 break;
             case ep_ignore_error:
+                CONSOLE_PRINT(message, Console::eDEBUG);
                 break;
             default:
                 Q_ASSERT(!"not implemented");

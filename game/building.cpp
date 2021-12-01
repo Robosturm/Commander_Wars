@@ -244,7 +244,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
     }
     else
     {
-        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load building sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
