@@ -640,7 +640,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     QT_ANDROID_VERSION_CODE "6"
     )
 
-
 # link libraries
 set(QT_LIBRARIES
     Qt6::Core
