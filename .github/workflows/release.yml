@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.1'
+  QT_Version: '6.2.2'
   
 jobs:
   create_release:
@@ -38,8 +38,8 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            COMPILER_VERSION: 'win64_msvc2019_64'
-            # 'win64_mingw81'
+            COMPILER_VERSION: 'win64_mingw90'
+            # 'win64_msvc2019_64'
             target: 'desktop'
             qtPath: 'msvc2019_64'
             installerCommands1: ''
