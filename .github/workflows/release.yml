@@ -38,15 +38,14 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
-            COMPILER_VERSION: 'win64_mingw90'
+            COMPILER_VERSION: 'win64_msvc2019_64'
             # 'win64_msvc2019_64'
             target: 'desktop'
             qtPath: 'msvc2019_64'
             installerCommands1: ''
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_x64.zip'
-            
+            asset_name: 'Commander_Wars_x64.zip'            
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
