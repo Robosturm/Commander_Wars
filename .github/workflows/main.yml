@@ -69,7 +69,7 @@ jobs:
         -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
         -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
         -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/ \
-        ${{cmakeArgs}}
+        ${{matrix.cmakeArgs}}
     
     - name: Build
       working-directory: '${{github.workspace}}/build'
