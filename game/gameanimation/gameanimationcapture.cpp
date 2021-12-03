@@ -276,6 +276,6 @@ void GameAnimationCapture::addBackgroundSprite(const QString & spriteID)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load animation sprite: " + spriteID, Console::eDEBUG);
     }
 }

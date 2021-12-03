@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 <ui>
     <Sprite>
-        <x>settings.getWidth() / 2 - 134</x>
-        <y>currentMenu.getButtonY(0) - 60</y>
-        <scale>1</scale>
+        <x>settings.getWidth() / 2 - 134 * 2</x>
+        <y>currentMenu.getButtonY(0) - 60 * 2</y>
+        <scale>2</scale>
         <sprite>"logo"</sprite>
     </Sprite>
     <TextField>
-        <x>settings.getWidth() / 2 - 134 + 70</x>
-        <y>currentMenu.getButtonY(0) - 60 + 24</y>
+        <x>settings.getWidth() / 2 - 134 * 2 + 70 * 2</x>
+        <y>currentMenu.getButtonY(0) - 60 * 2 + 24 * 2</y>
         <text>"DARK HORIZONS"</text>
         <font>"logoFont"</font>
+        <fontScale>2</fontScale>
         <fontColor>"#FFFFFF"</fontColor>
     </TextField>
     <Button>

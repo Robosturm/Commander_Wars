@@ -43,6 +43,7 @@ static const char* const attrText = "text";
 static const char* const attrOnUpdate = "onUpdate";
 static const char* const attrFont = "font";
 static const char* const attrFontColor = "fontColor";
+static const char* const attrFontScale = "fontScale";
 static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
@@ -195,6 +196,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
             fontColor = FontManager::getFontColor().name();
         }
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
+        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
         QString id = getId(getAttribute(childs, attrId));
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
@@ -202,6 +204,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
+        pLabel->setScale(fontScale);
         pLabel->setHtmlText(text);
         pLabel->setTooltipText(tooltip);
         pLabel->setObjectName(id);
@@ -238,10 +241,12 @@ bool UiFactory::createTextfield(oxygine::spActor parent, QDomElement element, ox
             fontColor = FontManager::getFontColor().name();
         }
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
+        float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
         oxygine::spTextField pLabel = oxygine::spTextField::create();
         pLabel->setX(x);
         pLabel->setY(y);
         pLabel->setStyle(style);
+        pLabel->setScale(fontScale);
         pLabel->setHtmlText(text);
         parent->addChild(pLabel);
         item = pLabel;

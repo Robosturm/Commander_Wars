@@ -50,6 +50,7 @@ find_package(Qt6 COMPONENTS Gui REQUIRED)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Xml REQUIRED)
 find_package(Qt6 COMPONENTS OpenGL REQUIRED)
+find_package(Doxygen OPTIONAL_COMPONENTS mscgen dia dot)
 if(NOT "${CMAKE_SYSTEM_NAME}" STREQUAL "Android")
     find_package(Qt6 COMPONENTS LinguistTools REQUIRED)
 endif()
@@ -839,6 +840,11 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "${INSTALL_PATH}/platforms" OPTIONAL)
 endif()
 
+if (DOXYGEN_FOUND)
+    doxygen_add_docs(doxyGen ${${PROJECT_NAME}_SRCS})
+endif()
+
+
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(FullInstallPath "${CMAKE_INSTALL_PREFIX}/${INSTALL_PATH}/")
     message("Build will run windeployqt with path ${FullInstallPath}")
@@ -850,6 +856,8 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
                 --plugindir \"${FullInstallPath}\"
         COMMENT "Running windeployqt..."
     )
+
+
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
     message("Build will run macdeployqt")
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
