@@ -27,4 +27,8 @@ var BASEGAMESCRIPT =
     {
         // called at the start of each players turn
     },
+    onGameLoaded : function(menu)
+    {
+
+    },
 };

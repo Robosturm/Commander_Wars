@@ -14,6 +14,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/Gamepad.h"
 
 #include "game/gamemap.h"
 
@@ -525,31 +526,32 @@ void OptionMenue::showSettings()
     connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
     m_pOptions->addItem(pCheckbox);
 
-
-    // gamepad button
-    oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
-    pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
-    m_pOptions->addItem(pButtonGamepad);
-    pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    if (Gamepad::isSupported())
     {
-        emit sigShowGamepadInfo();
-    });
-    connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
-    y += 40;
+        // gamepad button
+        oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
+        pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
+        m_pOptions->addItem(pButtonGamepad);
+        pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowGamepadInfo();
+        });
+        connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
+        y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
-    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
-    gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
-    gamepadSensitivity->setPosition(sliderOffset - 130, y);
-    connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
-    m_pOptions->addItem(gamepadSensitivity);
-    y += 40;
-
+        pTextfield = spLabel::create(sliderOffset - 140);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
+        pTextfield->setPosition(10, y);
+        m_pOptions->addItem(pTextfield);
+        spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
+        gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
+        gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
+        gamepadSensitivity->setPosition(sliderOffset - 130, y);
+        connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
+        m_pOptions->addItem(gamepadSensitivity);
+        y += 40;
+    }
     showSoundOptions(m_pOptions, sliderOffset, y, this);
 
     pTextfield = spLabel::create(sliderOffset - 140);

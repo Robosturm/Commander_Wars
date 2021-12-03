@@ -161,6 +161,12 @@ void GameMenue::onEnter()
         args << value;
         pInterpreter->doFunction(object, func, args);
     }
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr &&
+        pMap->getGameScript() != nullptr)
+    {
+        pMap->getGameScript()->onGameLoaded(this);
+    }
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

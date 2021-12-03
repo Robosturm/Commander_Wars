@@ -8,6 +8,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "menue/ingamemenue.h"
 
 #include "game/gameaction.h"
 
@@ -66,6 +67,11 @@ public:
      * @param player current player id
      */
     void turnStart(qint32 turn, qint32 player);
+    /**
+     * @brief onGameLoaded
+     * @param pMenu
+     */
+    void onGameLoaded(InGameMenue* pMenu);
 
     QString getScriptFile() const;
     void setScriptFile(const QString &value);

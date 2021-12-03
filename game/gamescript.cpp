@@ -169,6 +169,19 @@ void GameScript::turnStart(qint32 turn, qint32 player)
     }
 }
 
+void GameScript::onGameLoaded(InGameMenue* pMenu)
+{
+    if (m_loaded)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "onGameLoaded";
+        QJSValueList args;
+        QJSValue obj2 = pInterpreter->newQObject(pMenu);
+        args << obj2;
+        pInterpreter->doFunction(m_scriptName, function1, args);
+    }
+}
+
 QString GameScript::getScriptFile() const
 {
     return m_scriptFile;

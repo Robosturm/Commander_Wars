@@ -230,16 +230,8 @@ void AudioThread::SlotChangeAudioDevice(const QVariant& value)
     CONSOLE_PRINT("Changing to audio device: " + m_audioDevice.description(), Console::eDEBUG);
     m_audioOutput.setDevice(m_audioDevice);
     m_player->m_player.setAudioOutput(&m_audioOutput);
-    for (auto & cache : m_soundCaches)
-    {
-        for (auto & sound : cache->sound)
-        {
-            if (sound.get() != nullptr)
-            {
-                sound->setAudioDevice(m_audioDevice);
-            }
-        }
-    }
+    m_soundCaches.clear();
+    createSoundCache();
 #endif
 }
 

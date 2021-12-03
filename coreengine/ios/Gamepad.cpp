@@ -3,3 +3,8 @@
 void Gamepad::update()
 {
 }
+
+bool Gamepad::isSupported()
+{
+    return false;
+}

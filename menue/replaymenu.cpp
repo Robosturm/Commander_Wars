@@ -69,6 +69,12 @@ void ReplayMenu::onEnter()
         args << value;
         pInterpreter->doFunction(object, func, args);
     }
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr &&
+        pMap->getGameScript() != nullptr)
+    {
+        pMap->getGameScript()->onGameLoaded(this);
+    }
     if (m_valid)
     {
         emit sigActionPerformed();
