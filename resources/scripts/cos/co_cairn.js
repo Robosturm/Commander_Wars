@@ -387,21 +387,21 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        var text = qsTr("Wilderness (Forest, mountains, and rivers) grant her units additional terrain stars. On-property firepower of her units is reduced.");
+        var text = qsTr("Wilderness grant her units additional terrain stars. On-property firepower of her units is reduced.");
         return text;
     };
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
-                   qsTr("\nGlobal Effect: \nNone") +
-                   qsTr("\n\nCO Zone Effect: \nWilderness (Forest, mountains, and rivers) grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
+                qsTr("\nGlobal Effect: \nNone") +
+                qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
         text = replaceTextArgs(text, [CO_CAIRN.coZoneStarBonus, CO_CAIRN.coFirepowerDebuff]);
         return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("When on crossing a wilderness tile her units gain increased firepower by %0% and gain indirect range by 1. Additionally movement through wilderness tiles is set to 1.\nMovement:        -1 Cost\nIndirect Range:  +1 Range\nVision Range:    +1 Range\n");
+        var text = qsTr("Wilderness movement cost is reduced by 1.  Unit indirect range and vision are increased by 1 in wilderness.");
         text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
         return text;
     };
@@ -411,7 +411,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function(co)
     {
-        var text = qsTr("Each wilderness tile crossed restores 1 HP. Each wilderness terrain star increases her unit firepower %0% and nullifies enemy defense on wilderness.\nMovement:        +1 HP per tile crossed\nFirepower:       +%0% per terrain star\nEnemy Defense:   lose terrain stars (no terrain defense bonus)");
+        var text = qsTr("Each wilderness tile crossed restores 1 HP. Increases her firepower by %0% and lower enemy defense by %0% for each wilderness terrain star.");
         text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
         return text;
     };
@@ -421,21 +421,19 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Time for some wild tactics in peak form."),
-                qsTr("Strategic options branch forth from now."),
-                qsTr("The flow of battle favors this moment."),];
+        return [qsTr("The flow of battle favors this moment."),];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Nature enriches the wise."),
+        return [qsTr("Nature enpowers the wise."),
                 qsTr("Walk where others fail to tread."),
                 qsTr("Follow the path that naturally leads to victory."),
                 qsTr("Tranquility restored."),
-                qsTr("All is well.")];
+                qsTr("All is well."),];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("A humbling journey to reflect on.")];
+        return [qsTr("A humbling journey to reflect on."),];
     };
     this.getName = function()
     {
