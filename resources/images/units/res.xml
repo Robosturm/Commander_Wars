@@ -161,6 +161,8 @@
         <image file="missile+mask.png" cols = "4"  />
         <image file="missile+walk+mask.png" cols = "3" rows = "4"  />
         <!-- motorbike -->
+        <image file="motorbike++mask.png" cols = "4"  />
+        <image file="motorbike++walk+mask.png" cols = "3" rows = "4"  />
         <image file="motorbike+os+mask.png" cols = "4"  />
         <image file="motorbike+os+walk+mask.png" cols = "3" rows = "4"  />
         <image file="motorbike+bm+mask.png" cols = "4"  />

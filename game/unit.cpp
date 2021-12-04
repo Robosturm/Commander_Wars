@@ -2787,6 +2787,10 @@ qint32 Unit::getCaptureRate(QPoint position)
 
 void Unit::loadIcon(const QString & iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
+    if (iconID.isEmpty())
+    {
+        return;
+    }
     if (duration >= 0 && player >= 0)
     {
         IconDuration info;

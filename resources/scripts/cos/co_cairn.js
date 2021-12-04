@@ -33,16 +33,16 @@ var Constructor = function()
             {
                 delay *= i;
             }
-            animation.setSound("power0.wav", 1, delay);
+            animation.setSound("power1.wav", 1, delay);
             if (animations.length < 5)
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -421,22 +421,21 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),];
+        return [qsTr("Time for some wild tactics in peak form."),
+                qsTr("Strategic options branch forth from now."),
+                qsTr("The flow of battle favors this moment."),];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo")];
+        return [qsTr("Nature enriches the wise."),
+                qsTr("Walk where others fail to tread."),
+                qsTr("Follow the path that naturally leads to victory."),
+                qsTr("Tranquility restored."),
+                qsTr("All is well.")];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo")];
+        return [qsTr("A humbling journey to reflect on.")];
     };
     this.getName = function()
     {

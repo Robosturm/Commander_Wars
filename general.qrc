@@ -913,8 +913,6 @@
         <file>resources/images/units/missile_sub+walk+mask.png</file>
         <file>resources/images/units/missile+mask.png</file>
         <file>resources/images/units/missile+walk+mask.png</file>
-        <file>resources/images/units/motorbike+mask.png</file>
-        <file>resources/images/units/motorbike+walk+mask.png</file>
         <file>resources/images/units/neospider_tank+mask.png</file>
         <file>resources/images/units/neospider_tank+walk+mask.png</file>
         <file>resources/images/units/neotank+mask.png</file>
@@ -6149,5 +6147,7 @@
         <file>resources/fonts/logoFont.png</file>
         <file>resources/fonts/logoFont.xml</file>
         <file>resources/objects/logo.png</file>
+        <file>resources/images/units/motorbike++mask.png</file>
+        <file>resources/images/units/motorbike++walk+mask.png</file>
     </qresource>
 </RCC>

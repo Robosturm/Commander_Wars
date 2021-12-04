@@ -2749,10 +2749,9 @@ float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildDa
         score += m_nearEnemyBonus * data[Movementpoints] / GlobalUtils::roundUp(data[ReachDistance]);
     }
     if (data[UnitCount] > m_minUnitCountForDamageBonus &&
-        data[DamageData] < m_scoringCutOffDamageLow &&
-        score > 0)
+        data[DamageData] < m_scoringCutOffDamageLow)
     {
-        score = 0;
+        score = NO_BUILD_SCORE;
     }
     CONSOLE_PRINT("NormalAi::calcBuildScore final score=" + QString::number(score) + " for " + unitBuildData.unitId, Console::eDEBUG);
     return score;
