@@ -1383,8 +1383,7 @@ void GameMenue::showChangeSound()
 }
 
 void GameMenue::showGameInfo(qint32 player)
-{    
-    m_Focused = false;
+{
     CONSOLE_PRINT("showGameInfo() for player " + QString::number(player), Console::eDEBUG);
     QStringList header = {tr("Player"),
                           tr("Produced"),
@@ -1400,6 +1399,7 @@ void GameMenue::showGameInfo(qint32 player)
     Player* pViewPlayer = pMap->getPlayer(player);
     if (pViewPlayer != nullptr)
     {
+        m_Focused = false;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             QString funds = QString::number(pMap->getPlayer(i)->getFunds());
