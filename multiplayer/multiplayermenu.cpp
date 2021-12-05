@@ -997,6 +997,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());

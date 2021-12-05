@@ -116,6 +116,8 @@ void ReplayMenu::exitReplay()
     {
         GameAnimationFactory::finishAllAnimations();
     }
+    CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
+    Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);

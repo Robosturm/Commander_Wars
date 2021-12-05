@@ -35,11 +35,6 @@ ReplayRecorder::~ReplayRecorder()
         m_recordFile.flush();
     }
     m_recordFile.close();
-    if (m_playing)
-    {
-        CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
-        Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
-    }
 }
 
 void ReplayRecorder::startRecording()

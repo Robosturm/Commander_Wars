@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getTerrainGroup = function()
     {
-        return 3;
+        return 4;
     };
     this.baseTerrainId = "WASTE";
     this.loadBaseSprite = function(terrain)

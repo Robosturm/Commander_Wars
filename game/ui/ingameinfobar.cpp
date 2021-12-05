@@ -95,7 +95,8 @@ void IngameInfoBar::updatePlayerInfo()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    if (pMap.get() != nullptr &&
+        pMap->getCurrentPlayer() != nullptr)
     {
         m_pDetailedViewBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
         spGameMenue pMenu = GameMenue::getInstance();
