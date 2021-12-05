@@ -567,6 +567,10 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             // prepare action
             m_pGameAction = spGameAction::create();
             m_pGameAction->setTarget(QPoint(x, y));
+            if (m_pPlayer != nullptr)
+            {
+                m_pGameAction->setPlayer(m_pPlayer->getPlayerID());
+            }
             QStringList actions = getViewplayerActionList();
             QStringList possibleActions;
             for (qint32 i = 0; i < actions.size(); i++)
