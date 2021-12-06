@@ -1688,11 +1688,18 @@ qint32 Unit::getRepairBonus(QPoint position)
     return bonus;
 }
 
-void Unit::setUnitVisible(bool value)
+void Unit::setUnitVisible(bool value, Player* pPlayer)
 {
     if (m_CORange.get() != nullptr)
     {
-        m_CORange->setVisible(value);
+        if (!getRankInfoHidden(pPlayer))
+        {
+            m_CORange->setVisible(value);
+        }
+        else
+        {
+            m_CORange->setVisible(false);
+        }
     }
     for (auto & customRange: m_customRangeInfo)
     {

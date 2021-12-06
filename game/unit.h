@@ -806,7 +806,7 @@ public slots:
      * @brief setUnitVisible
      * @param value
      */
-    void setUnitVisible(bool value);
+    void setUnitVisible(bool value, Player* pPlayer);
     /**
      * @brief makeCOUnit
      * @param co

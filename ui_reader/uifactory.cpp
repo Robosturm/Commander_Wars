@@ -197,7 +197,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         }
         auto style = getStyle(getStringValue(getAttribute(childs, attrFont)), fontColor);
         float fontScale = getFloatValue(getAttribute(childs, attrFontScale), 1.0f);
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         spLabel pLabel = spLabel::create(width);
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         pLabel->setHeight(height);
@@ -382,7 +382,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
         qint32 x = getIntValue(getAttribute(childs, attrX));
         qint32 y = getIntValue(getAttribute(childs, attrY));
         QString tooltip = translate(getAttribute(childs, attrTooltip));
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         QString onEventLine = getAttribute(childs, attrOnEvent);
         bool value = getBoolValue(getAttribute(childs, attrStartValue));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
@@ -420,7 +420,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         QString tooltip = translate(getAttribute(childs,attrTooltip));
         QString onEventLine = getAttribute(childs,attrOnEvent);
         qint32 value = getIntValue(getAttribute(childs,attrStartValue));
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         spSpinBox pSpinBox = spSpinBox::create(width, min, max, SpinBox::Mode::Int);
         pSpinBox->setX(x);
@@ -448,7 +448,7 @@ bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygi
                                           attrMax, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -488,7 +488,7 @@ bool UiFactory::createTextbox(oxygine::spActor parent, QDomElement element, oxyg
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -528,7 +528,7 @@ bool UiFactory::createTimeSpinbox(oxygine::spActor parent, QDomElement element, 
     bool success = checkElements(childs, {attrX, attrY, attrWidth, attrOnEvent, attrStartValue});
     if (success)
     {
-        QString id = getId(getAttribute(childs, attrId));
+        QString id = getId(getStringValue(getAttribute(childs, attrId)));
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 width = getIntValue(getAttribute(childs,attrWidth));
@@ -826,7 +826,7 @@ oxygine::TextStyle UiFactory::getStyle(QString styleName, QColor fontColor)
 QString UiFactory::getId(QString attribute)
 {
     QString ret = "object" + QString::number(m_creationCount);
-    if (attribute.isEmpty())
+    if (!attribute.isEmpty())
     {
         ret = attribute;
     }

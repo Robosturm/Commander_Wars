@@ -19,7 +19,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePa
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    m_pUnit->setUnitVisible(false);
+    m_pUnit->setUnitVisible(false, nullptr);
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
 }
 
@@ -54,7 +54,7 @@ bool GameAnimationWalk::onFinished(bool skipping)
     Mainapp::getInstance()->getAudioThread()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
-        m_pUnit->setUnitVisible(true);
+        m_pUnit->setUnitVisible(true, pPlayer);
     }
     if (m_movePath.size() > 0)
     {

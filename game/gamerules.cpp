@@ -755,7 +755,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer, QColor fo
         showHideStealthUnit(pPlayer, pUnit);
         if (visible != GameEnums::VisionType_Clear)
         {
-            pUnit->setUnitVisible(false);
+            pUnit->setUnitVisible(false, pPlayer);
         }
     }
     if (pBuilding != nullptr)
@@ -795,7 +795,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer, QCol
         showHideStealthUnit(pPlayer, pUnit);
         if (visible != GameEnums::VisionType_Clear)
         {
-            pUnit->setUnitVisible(false);
+            pUnit->setUnitVisible(false, pPlayer);
         }
     }
     if (m_FogSprites[x][y].get() != nullptr)
@@ -875,17 +875,17 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
         {
             if (pUnit->isStealthed(pPlayer))
             {
-                pUnit->setUnitVisible(false);
+                pUnit->setUnitVisible(false, pPlayer);
             }
             else
             {
-                pUnit->setUnitVisible(true);
+                pUnit->setUnitVisible(true, pPlayer);
             }
             break;
         }
         case GameEnums::Alliance_Friend:
         {
-            pUnit->setUnitVisible(true);
+            pUnit->setUnitVisible(true, pPlayer);
             break;
         }
     }
