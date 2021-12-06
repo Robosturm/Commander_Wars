@@ -92,7 +92,7 @@ var Constructor = function()
                     "SNOW_PIPELINE,SNOW_DESTROYEDWELD,SNOW_WELD," +
                     "DESERT_PIPELINE,DESERT_DESTROYEDWELD,DESERT_WELD," +
                     "WASTE_PIPELINE,WASTE_DESTROYEDWELD,WASTE_WELD,"+
-                    "ZWELD_E_W,ZWELD_N_S,ZSNOWWELD_N_S,ZSNOWWELD_E_W,ZDESERTWELD_N_S,ZDESERTWELD_E_W";
+                    "ZWELD_E_W,ZWELD_N_S,ZSNOWWELD_N_S,ZSNOWWELD_E_W,ZDESERTWELD_N_S,ZDESERTWELD_E_W,ZWASTEWELD_N_S,ZWASTEWELD_E_W";
         var surroundings = terrain.getSurroundings(welds, false, false, GameEnums.Directions_Direct, true, true);
         var x = terrain.getX();
         var y = terrain.getY();

@@ -132,7 +132,7 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         if ((surroundings === "+E+W") || (surroundings === "+N+S"))
         {
             return true;

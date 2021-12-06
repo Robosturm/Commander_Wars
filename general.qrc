@@ -6149,5 +6149,7 @@
         <file>resources/objects/logo.png</file>
         <file>resources/images/units/motorbike++mask.png</file>
         <file>resources/images/units/motorbike++walk+mask.png</file>
+        <file>resources/scripts/building/zwasteweld_e_w.js</file>
+        <file>resources/scripts/building/zwasteweld_n_s.js</file>
     </qresource>
 </RCC>
