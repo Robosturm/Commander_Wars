@@ -49,7 +49,7 @@ public:
     {
         m_currentMapFile = QFileInfo(info);
     }
-    inline spCampaign getCurrentSetCampaign()
+    inline spCampaign getCurrentCampaign()
     {
         return m_CurrentSetCampaign;
     }

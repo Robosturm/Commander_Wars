@@ -7,7 +7,7 @@ var Constructor = function()
         terrain.setHp(100);
     };
     this.baseTerrainId = "PLAINS";
-    this.getName = function(terrain)
+    this.getName = function(terrain = null)
     {
         var baseTerrainId = "";
         if (terrain !== null)

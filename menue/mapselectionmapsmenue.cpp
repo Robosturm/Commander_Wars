@@ -161,7 +161,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pRuleSelection = spPanel::create(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
-    if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
+    if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
     {
         hidePlayerSelection();
         hideRuleSelection();
@@ -170,7 +170,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
-        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentSetCampaign());
+        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
@@ -204,7 +204,7 @@ void MapSelectionMapsMenue::buttonBack()
         }
         case MapSelectionStep::selectPlayer:
         {
-            if (m_pMapSelectionView->getCurrentSetCampaign().get() == nullptr)
+            if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
             {
                 showRuleSelection();
                 hidePlayerSelection();
@@ -215,11 +215,11 @@ void MapSelectionMapsMenue::buttonBack()
                 CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
                 if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), true));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), true));
                 }
                 else
                 {
-                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentSetCampaign(), false));
+                    oxygine::Stage::getStage()->addChild(spCampaignMenu::create(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
                 oxygine::Actor::detach();
             }
@@ -238,19 +238,22 @@ void MapSelectionMapsMenue::buttonNext()
         case MapSelectionStep::selectMap:
         {
             QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
-            if (QFile::exists(mapFile) ||
-                mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
-                mapFile == NetworkCommands::SERVERMAPIDENTIFIER)
+            bool isExternal = (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER ||
+                               mapFile == NetworkCommands::SERVERMAPIDENTIFIER);
+            if (QFile::exists(mapFile) || isExternal)
             {
-                m_pMapSelectionView->loadCurrentMap();
+                if (!isExternal)
+                {
+                    m_pMapSelectionView->loadCurrentMap();
+                }
                 QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
 
                 if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||
-                    (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER) ||
-                    (mapFile == NetworkCommands::SERVERMAPIDENTIFIER))
+                    isExternal)
                 {
-                    m_pMapSelectionView->getCurrentMap()->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
-                    if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
+                    spGameMap pMap = GameMap::getInstance();
+                    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+                    if (pMap->getGameScript()->immediateStart())
                     {
                         startGame();
                     }
@@ -389,7 +392,7 @@ void MapSelectionMapsMenue::startGame()
     spGameMap pMap = GameMap::getInstance();
     pMap->setVisible(false);
     pMap->initPlayersAndSelectCOs();
-    pMap->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
+    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites(-1, -1, false, true);
     // start game

@@ -481,7 +481,7 @@ void CampaignMenu::slotButtonNext()
         pMap->getGameScript()->immediateStart())
     {
         pMap->initPlayersAndSelectCOs();
-        pMap->setCampaign(m_pMapSelectionView->getCurrentSetCampaign());
+        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
         pMap->getGameScript()->gameStart();
         pMap->updateSprites();
         // start game
@@ -519,7 +519,7 @@ void CampaignMenu::saveCampaign(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        m_pMapSelectionView->getCurrentSetCampaign()->serializeObject(stream);
+        m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
         file.close();
     }   
 }
@@ -529,7 +529,7 @@ void CampaignMenu::autosave()
     if (Settings::getAutoSavingCycle() > 0)
     {
         CONSOLE_PRINT("CampaignMenu::autosave()", Console::eDEBUG);
-        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentSetCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
+        QString path = GlobalUtils::getNextAutosavePath(Settings::getUserPath() + "savegames/" + m_pMapSelectionView->getCurrentCampaign()->getName() + "_autosave_", ".camp", Settings::getAutoSavingCycle());
         saveCampaign(path);
     }
 }

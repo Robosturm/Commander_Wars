@@ -1145,28 +1145,28 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="463"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="464"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="468"/>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="510"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="469"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="511"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="472"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="473"/>
         <source>The percent building distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="515"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="516"/>
         <source>The percent unit distribution between the players. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="522"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="523"/>
         <source>The percent distribution between the units that will be spawned. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1174,12 +1174,12 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="423"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="424"/>
         <source>The percent distribution between the different terrains when a terrain is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="440"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="441"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1837,27 +1837,27 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1423"/>
+        <location filename="../menue/gamemenue.cpp" line="1419"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1433"/>
+        <location filename="../menue/gamemenue.cpp" line="1429"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1824"/>
+        <location filename="../menue/gamemenue.cpp" line="1820"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1855"/>
+        <location filename="../menue/gamemenue.cpp" line="1851"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1881"/>
+        <location filename="../menue/gamemenue.cpp" line="1877"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2919,17 +2919,17 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="512"/>
         <source>Do you want to make the saved ruleset as default ruleset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="512"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="512"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

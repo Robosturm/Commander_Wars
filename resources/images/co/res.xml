@@ -155,7 +155,7 @@
         <image file="os/co_andy+alt2+face.png" cols = "3" rows = "2" />
         <image file="os/co_andy+alt3+info.png" />
         <image file="os/co_andy+alt3+mini.png" />
-        <image file="os/co_andy+alt3+face.png" cols = "3" rows = "2" />
+        <image file="os/co_andy+alt3+face.png" cols = "3" />
         <image file="os/co_andy+alt3+nrm.png" scale_factor = "1.8" />
         <image file="os/co_hachi+nrm.png" />
         <image file="os/co_hachi+info.png" />
@@ -183,7 +183,7 @@
         <image file="os/co_max+alt2+nrm.png" scale_factor = "1.8" />
         <image file="os/co_max+alt3+info.png" />
         <image file="os/co_max+alt3+mini.png" />
-        <image file="os/co_max+alt3+face.png" cols = "3" rows = "2" />
+        <image file="os/co_max+alt3+face.png" cols = "3" />
         <image file="os/co_max+alt3+nrm.png" scale_factor = "1.8" />
         <image file="os/co_nell+nrm.png" />
         <image file="os/co_nell+info.png" />
@@ -219,7 +219,7 @@
         <image file="os/co_sami+alt2+nrm.png" scale_factor = "1.8" />
         <image file="os/co_sami+alt3+info.png" />
         <image file="os/co_sami+alt3+mini.png" />
-        <image file="os/co_sami+alt3+face.png" cols = "3" rows = "2" />
+        <image file="os/co_sami+alt3+face.png" cols = "3" />
         <image file="os/co_sami+alt3+nrm.png" scale_factor = "1.8" />
         <image file="os/co_jake+nrm.png" />
         <image file="os/co_jake+info.png" />
@@ -319,7 +319,7 @@
         <image file="bm/co_officier_bm+info.png" />
         
         <!-- BD -->
-        <image file="bd/co_cairn+nrm.png" scale_factor = "2" />
+        <image file="bd/co_cairn+nrm.png" />
         <image file="bd/co_cairn+info.png" />
         <image file="bd/co_cairn+mini.png" />
         <image file="bd/co_cairn+face.png" cols = "3" />
