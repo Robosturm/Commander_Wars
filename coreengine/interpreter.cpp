@@ -140,7 +140,6 @@ void Interpreter::loadScript(const QString & content, const QString & script)
     }
 }
 
-
 QJSValue Interpreter::doFunction(const QString & func, const QJSValueList & args)
 {
     QJSValue ret;

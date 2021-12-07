@@ -477,29 +477,31 @@ void CampaignMenu::slotButtonNext()
     Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr &&
-        pMap->getGameScript()->immediateStart())
+    if (pMap.get() != nullptr)
     {
-        pMap->initPlayersAndSelectCOs();
-        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-        pMap->getGameScript()->gameStart();
-        pMap->updateSprites();
-        // start game
-        CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
-        auto window = spGameMenue::create(false, spNetworkInterface());
-        oxygine::Stage::getStage()->addChild(window);
-        oxygine::Actor::detach();
+        if (pMap->getGameScript()->immediateStart())
+        {
+            pMap->initPlayersAndSelectCOs();
+            pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+            pMap->getGameScript()->gameStart();
+            pMap->updateSprites();
+            // start game
+            CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
+            auto window = spGameMenue::create(false, spNetworkInterface());
+            oxygine::Stage::getStage()->addChild(window);
+            oxygine::Actor::detach();
+        }
+        else if (m_Multiplayer)
+        {
+            // todo
+        }
+        else
+        {
+            auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
+            oxygine::Stage::getStage()->addChild(window);
+            oxygine::Actor::detach();
+        }
     }
-    else if (m_Multiplayer)
-    {
-        // todo
-    }
-    else
-    {
-        auto window = spMapSelectionMapsMenue::create(-1, m_pMapSelectionView);
-        oxygine::Stage::getStage()->addChild(window);
-        oxygine::Actor::detach();
-    }    
 }
 
 void CampaignMenu::showSaveCampaign()
