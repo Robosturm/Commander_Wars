@@ -24,9 +24,7 @@ namespace oxygine
         {
             case ep_show_error:
                 CONSOLE_PRINT(message, Console::eERROR);
-#ifdef GAMEDEBUG
-                Q_ASSERT(false);
-#endif
+                OXY_ASSERT(false);
                 break;
             case ep_show_warning:
                 CONSOLE_PRINT(message, Console::eWARNING);
@@ -35,7 +33,7 @@ namespace oxygine
                 CONSOLE_PRINT(message, Console::eDEBUG);
                 break;
             default:
-                Q_ASSERT(!"not implemented");
+                OXY_ASSERT(!"not implemented");
         }
     }
 }

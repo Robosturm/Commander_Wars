@@ -145,7 +145,7 @@ QJSValue Interpreter::doFunction(const QString & func, const QJSValueList & args
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);
 #ifdef GAMEDEBUG
-    Q_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
+    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
     if (funcPointer.isCallable())
     {
 #endif
@@ -173,7 +173,7 @@ QJSValue Interpreter::doFunction(const QString & obj, const QString & func, cons
     QJSValue ret;
     QJSValue objPointer = globalObject().property(obj);
 #ifdef GAMEDEBUG
-    Q_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
+    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
     if (objPointer.isObject())
     {
 #endif
@@ -210,7 +210,7 @@ QJSValue Interpreter::doFunction(const QString & obj, const QString & func, cons
 QJSValue Interpreter::doString(const QString & task)
 {
 #ifdef GAMEDEBUG
-    Q_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
+    OXY_ASSERT(Mainapp::getInstance()->getWorkerthread() == QThread::currentThread());
 #endif
     QJSValue value = evaluate(task, "GameCode");
     if (value.isError())
