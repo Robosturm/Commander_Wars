@@ -6151,5 +6151,9 @@
         <file>resources/images/units/motorbike++walk+mask.png</file>
         <file>resources/scripts/building/zwasteweld_e_w.js</file>
         <file>resources/scripts/building/zwasteweld_n_s.js</file>
+        <file>resources/images/building/waste_weld+E+W.png</file>
+        <file>resources/images/building/waste_weld+E+W+mask.png</file>
+        <file>resources/images/building/waste_weld+N+S.png</file>
+        <file>resources/images/building/waste_weld+N+S+mask.png</file>
     </qresource>
 </RCC>
