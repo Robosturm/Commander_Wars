@@ -348,7 +348,7 @@ void Terrain::loadSprites()
     unloadSprites();
     loadBaseTerrainSprites();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    if (m_FixedSprite)
+    if (m_FixedSprite && customSpriteExists())
     {
         loadBaseSprite(m_terrainSpriteName);
     }
@@ -403,8 +403,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
-    else if (QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
-             QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName))
+    else if (customSpriteExists())
     {
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
@@ -435,6 +434,12 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
     {
         CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eDEBUG);
     }
+}
+
+bool Terrain::customSpriteExists() const
+{
+    return QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
+           QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)

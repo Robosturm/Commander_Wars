@@ -195,6 +195,11 @@ var Constructor = function()
         return "back_" + weatherModifier + "beach";
     };
 
+    this.getTerrainAnimationForeground = function(unit, terrain, defender)
+    {
+        return ""  ;
+    };
+
     this.getDescription = function()
     {
         return qsTr("Beachs over great landing places for landing ground troops.");

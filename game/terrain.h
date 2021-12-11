@@ -514,6 +514,12 @@ protected:
      */
     void removeDownstream();
 private:
+    /**
+     * @brief customSpriteExists
+     * @return
+     */
+    bool customSpriteExists() const;
+
     friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y);
 
