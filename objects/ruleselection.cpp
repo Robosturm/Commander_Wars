@@ -507,7 +507,19 @@ void RuleSelection::showRuleSelection(bool advanced)
     spDropDownmenu fogOfWar = spDropDownmenu::create(400, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
-    fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());
+    auto fogMode = pMap->getGameRules()->getFogMode();
+    if (fogMode == GameEnums::Fog_OfMist)
+    {
+        fogOfWar->setCurrentItem(1);
+    }
+    else if (fogMode == GameEnums::Fog_Off)
+    {
+        fogOfWar->setCurrentItem(0);
+    }
+    else
+    {
+        fogOfWar->setCurrentItem(fogMode + 1);
+    }
     fogOfWar->setEnabled(m_ruleChangeEabled);
     GameMap* pPtrMap = pMap.get();
     connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, pMap->getGameRules(), [=](qint32 value)

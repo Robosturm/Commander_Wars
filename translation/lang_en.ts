@@ -4057,184 +4057,184 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="535"/>
+        <location filename="../objects/ruleselection.cpp" line="547"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="539"/>
+        <location filename="../objects/ruleselection.cpp" line="551"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="549"/>
+        <location filename="../objects/ruleselection.cpp" line="561"/>
         <source>Building Hiding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="553"/>
+        <location filename="../objects/ruleselection.cpp" line="565"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="563"/>
+        <location filename="../objects/ruleselection.cpp" line="575"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="566"/>
+        <location filename="../objects/ruleselection.cpp" line="578"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="566"/>
+        <location filename="../objects/ruleselection.cpp" line="578"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="568"/>
+        <location filename="../objects/ruleselection.cpp" line="580"/>
         <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="585"/>
+        <location filename="../objects/ruleselection.cpp" line="597"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="592"/>
+        <location filename="../objects/ruleselection.cpp" line="604"/>
         <source>CO Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="595"/>
-        <location filename="../objects/ruleselection.cpp" line="611"/>
-        <location filename="../objects/ruleselection.cpp" line="627"/>
+        <location filename="../objects/ruleselection.cpp" line="607"/>
+        <location filename="../objects/ruleselection.cpp" line="623"/>
+        <location filename="../objects/ruleselection.cpp" line="639"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="608"/>
+        <location filename="../objects/ruleselection.cpp" line="620"/>
         <source>Perk Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="624"/>
+        <location filename="../objects/ruleselection.cpp" line="636"/>
         <source>Action Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="640"/>
+        <location filename="../objects/ruleselection.cpp" line="652"/>
         <source>Terrain Defense: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="644"/>
+        <location filename="../objects/ruleselection.cpp" line="656"/>
         <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="656"/>
+        <location filename="../objects/ruleselection.cpp" line="668"/>
         <source>HP Defense Impact:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="660"/>
+        <location filename="../objects/ruleselection.cpp" line="672"/>
         <source>If checked the impact of terrain defense stars is reduced the less hp a unit has.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="670"/>
+        <location filename="../objects/ruleselection.cpp" line="682"/>
         <source>Ship bridges:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="674"/>
+        <location filename="../objects/ruleselection.cpp" line="686"/>
         <source>If checked ships and boats can move through bridges placed on sea tiles, like in advance wars darc conflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="684"/>
+        <location filename="../objects/ruleselection.cpp" line="696"/>
         <source>Transporter refresh: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="688"/>
+        <location filename="../objects/ruleselection.cpp" line="700"/>
         <source>If checked units can move after getting unload. If the unit remained in their transporter for more than one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="698"/>
+        <location filename="../objects/ruleselection.cpp" line="710"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="702"/>
+        <location filename="../objects/ruleselection.cpp" line="714"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="715"/>
+        <location filename="../objects/ruleselection.cpp" line="727"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="718"/>
+        <location filename="../objects/ruleselection.cpp" line="730"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="722"/>
+        <location filename="../objects/ruleselection.cpp" line="734"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="742"/>
+        <location filename="../objects/ruleselection.cpp" line="754"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="749"/>
+        <location filename="../objects/ruleselection.cpp" line="761"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="753"/>
+        <location filename="../objects/ruleselection.cpp" line="765"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="763"/>
+        <location filename="../objects/ruleselection.cpp" line="775"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="767"/>
+        <location filename="../objects/ruleselection.cpp" line="779"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="777"/>
+        <location filename="../objects/ruleselection.cpp" line="789"/>
         <source>Unit sell value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="781"/>
+        <location filename="../objects/ruleselection.cpp" line="793"/>
         <source>The amount of funds you get back for selling a unit. Only has an impact if the sell action is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="794"/>
+        <location filename="../objects/ruleselection.cpp" line="806"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="798"/>
+        <location filename="../objects/ruleselection.cpp" line="810"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="812"/>
+        <location filename="../objects/ruleselection.cpp" line="824"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
