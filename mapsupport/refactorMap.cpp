@@ -237,10 +237,12 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
         for (qint32 x = 0; x < currentWidth; x++)
         {
             spTerrain pTerrain = m_fields[y][x];
+            spUnit pUnit = pTerrain->getSpUnit();
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             pTerrain->setX(x);
             pTerrain->setY(y);
+            pTerrain->setUnit(pUnit);
         }
     }
     for (qint32 y = 0; y < currentHeigth; y++)

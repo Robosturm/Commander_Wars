@@ -52,7 +52,7 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         var owner = building.getOwner();
         var unitLimit = map.getGameRules().getUnitLimit();
-        var unitCount = unit.getOwner().getUnitCount();
+        var unitCount = owner.getUnitCount();
         if ((unitLimit <= 0 ||
             unitCount < unitLimit))
         {
