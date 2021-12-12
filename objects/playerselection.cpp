@@ -1131,7 +1131,8 @@ void PlayerSelection::autoSelectPlayerColors()
     {
         for (qint32 i = 0; i < playerCount; ++i)
         {
-            CO* pCO = pMap->getPlayer(i)->getCO(0);
+            Player* pPlayer = pMap->getPlayer(i);
+            CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1145,6 +1146,7 @@ void PlayerSelection::autoSelectPlayerColors()
                     {
                         usedColors.append(index);
                         m_playerColors[i]->setCurrentItem(index);
+                        playerColorChanged(m_playerColors[i]->getCurrentItemColor(), i, m_playerColors[i]->getCurrentItem());
                     }
                     else
                     {
@@ -1162,6 +1164,7 @@ void PlayerSelection::autoSelectPlayerColors()
                 {
                     usedColors.append(i);
                     m_playerColors[openPlayer]->setCurrentItem(i);
+                    playerColorChanged(m_playerColors[openPlayer]->getCurrentItemColor(), openPlayer, m_playerColors[openPlayer]->getCurrentItem());
                     break;
                 }
             }
