@@ -149,14 +149,14 @@
         <image file="os/co_andy+alt+info.png" />
         <image file="os/co_andy+alt+mini.png" />
         <image file="os/co_andy+alt+face.png" cols = "3" />
-        <image file="os/co_andy+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_andy+alt2+nrm.png" scale_factor = "1.2" />
         <image file="os/co_andy+alt2+info.png" />
         <image file="os/co_andy+alt2+mini.png" />
         <image file="os/co_andy+alt2+face.png" cols = "3" rows = "2" />
         <image file="os/co_andy+alt3+info.png" />
         <image file="os/co_andy+alt3+mini.png" />
         <image file="os/co_andy+alt3+face.png" cols = "3" />
-        <image file="os/co_andy+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_andy+alt3+nrm.png" scale_factor = "1.2" />
         <image file="os/co_hachi+nrm.png" />
         <image file="os/co_hachi+info.png" />
         <image file="os/co_hachi+mini.png" />
@@ -165,7 +165,7 @@
         <image file="os/co_hachi+alt+info.png" />
         <image file="os/co_hachi+alt+mini.png" />
         <image file="os/co_hachi+alt+face.png" cols = "3" />
-        <image file="os/co_hachi+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_hachi+alt2+nrm.png" scale_factor = "1.2" />
         <image file="os/co_hachi+alt2+info.png" />
         <image file="os/co_hachi+alt2+mini.png" />
         <image file="os/co_hachi+alt2+face.png" cols = "3" />
@@ -180,11 +180,11 @@
         <image file="os/co_max+alt2+info.png" />
         <image file="os/co_max+alt2+mini.png" />
         <image file="os/co_max+alt2+face.png" cols = "3" rows = "2" />
-        <image file="os/co_max+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_max+alt2+nrm.png" scale_factor = "1.2" />
         <image file="os/co_max+alt3+info.png" />
         <image file="os/co_max+alt3+mini.png" />
         <image file="os/co_max+alt3+face.png" cols = "3" />
-        <image file="os/co_max+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_max+alt3+nrm.png" scale_factor = "1.2" />
         <image file="os/co_nell+nrm.png" />
         <image file="os/co_nell+info.png" />
         <image file="os/co_nell+mini.png" />
@@ -196,15 +196,15 @@
         <image file="os/co_nell+alt2+info.png" />
         <image file="os/co_nell+alt2+mini.png" />
         <image file="os/co_nell+alt2+face.png" cols = "3" rows = "2" />    
-        <image file="os/co_nell+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_nell+alt2+nrm.png" scale_factor = "1.2" />
         <image file="os/co_nell+alt3+info.png" />
         <image file="os/co_nell+alt3+mini.png" />
         <image file="os/co_nell+alt3+face.png" cols = "3" />
-        <image file="os/co_nell+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_nell+alt3+nrm.png" scale_factor = "1.2" />
         <image file="os/co_nell+alt4+info.png" />
         <image file="os/co_nell+alt4+mini.png" />
         <image file="os/co_nell+alt4+face.png" cols = "3" />
-        <image file="os/co_nell+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_nell+alt4+nrm.png" scale_factor = "1.2" />
         <image file="os/co_sami+nrm.png" />
         <image file="os/co_sami+info.png" />
         <image file="os/co_sami+mini.png" />
@@ -216,11 +216,11 @@
         <image file="os/co_sami+alt2+info.png" />
         <image file="os/co_sami+alt2+mini.png" />
         <image file="os/co_sami+alt2+face.png" cols = "3" rows = "2" />
-        <image file="os/co_sami+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_sami+alt2+nrm.png" scale_factor = "1.2" />
         <image file="os/co_sami+alt3+info.png" />
         <image file="os/co_sami+alt3+mini.png" />
         <image file="os/co_sami+alt3+face.png" cols = "3" />
-        <image file="os/co_sami+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="os/co_sami+alt3+nrm.png" scale_factor = "1.2" />
         <image file="os/co_jake+nrm.png" />
         <image file="os/co_jake+info.png" />
         <image file="os/co_jake+mini.png" />
@@ -261,26 +261,26 @@
         <image file="bm/co_grit+alt+info.png" />
         <image file="bm/co_grit+alt+mini.png" />
         <image file="bm/co_grit+alt+face.png" cols = "3" />
-        <image file="bm/co_grit+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_grit+alt2+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt2+info.png" />
         <image file="bm/co_grit+alt2+mini.png" />
         <image file="bm/co_grit+alt2+face.png" cols = "3" rows = "2" />
         <image file="bm/co_grit+alt3+info.png" />
         <image file="bm/co_grit+alt3+mini.png" />
         <image file="bm/co_grit+alt3+face.png" cols = "3" />
-        <image file="bm/co_grit+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_grit+alt3+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt4+info.png" />
         <image file="bm/co_grit+alt4+mini.png" />
         <image file="bm/co_grit+alt4+face.png" cols = "3" />
-        <image file="bm/co_grit+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_grit+alt4+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt5+info.png" />
         <image file="bm/co_grit+alt5+mini.png" />
         <image file="bm/co_grit+alt5+face.png" cols = "3" />
-        <image file="bm/co_grit+alt5+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_grit+alt5+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_grit+alt6+info.png" />
         <image file="bm/co_grit+alt6+mini.png" />
         <image file="bm/co_grit+alt6+face.png" cols = "3" />
-        <image file="bm/co_grit+alt6+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_grit+alt6+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_olaf+nrm.png" />
         <image file="bm/co_olaf+info.png" />
         <image file="bm/co_olaf+mini.png" />
@@ -292,15 +292,15 @@
         <image file="bm/co_olaf+alt2+info.png" />
         <image file="bm/co_olaf+alt2+mini.png" /> 
         <image file="bm/co_olaf+alt2+face.png" cols = "3" rows = "2" />        
-        <image file="bm/co_olaf+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_olaf+alt2+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_olaf+alt3+info.png" />
         <image file="bm/co_olaf+alt3+mini.png" />
         <image file="bm/co_olaf+alt3+face.png" cols = "3" />    
-        <image file="bm/co_olaf+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_olaf+alt3+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_olaf+alt4+info.png" />
         <image file="bm/co_olaf+alt4+mini.png" />
         <image file="bm/co_olaf+alt4+face.png" cols = "3" />
-        <image file="bm/co_olaf+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="bm/co_olaf+alt4+nrm.png" scale_factor = "1.2" />
         <image file="bm/co_sasha+nrm.png" />
         <image file="bm/co_sasha+info.png" />
         <image file="bm/co_sasha+mini.png" />
@@ -415,14 +415,14 @@
         <image file="ge/co_eagle+alt+info.png" />
         <image file="ge/co_eagle+alt+mini.png" />
         <image file="ge/co_eagle+alt+face.png" cols = "3" />
-        <image file="ge/co_eagle+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_eagle+alt2+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_eagle+alt2+info.png" />
         <image file="ge/co_eagle+alt2+mini.png" />
         <image file="ge/co_eagle+alt2+face.png" cols = "3" rows = "2" />
-        <image file="ge/co_eagle+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_eagle+alt3+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_eagle+alt3+info.png" />
         <image file="ge/co_eagle+alt3+mini.png" />
-        <image file="ge/co_eagle+alt3+face.png" cols = "3" rows = "2" />
+        <image file="ge/co_eagle+alt3+face.png" cols = "3" />
         <image file="ge/co_jess+nrm.png" />
         <image file="ge/co_jess+info.png" />
         <image file="ge/co_jess+mini.png" />
@@ -431,7 +431,7 @@
         <image file="ge/co_jess+alt+info.png" />
         <image file="ge/co_jess+alt+mini.png" />
         <image file="ge/co_jess+alt+face.png" cols = "3" />
-        <image file="ge/co_jess+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_jess+alt2+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_jess+alt2+info.png" />
         <image file="ge/co_jess+alt2+mini.png" />
         <image file="ge/co_jess+alt2+face.png" cols = "3" />
@@ -446,15 +446,15 @@
         <image file="ge/co_drake+alt2+info.png" />
         <image file="ge/co_drake+alt2+mini.png" />
         <image file="ge/co_drake+alt2+face.png" cols = "3" rows = "2" />       
-        <image file="ge/co_drake+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_drake+alt2+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_drake+alt3+info.png" />
         <image file="ge/co_drake+alt3+mini.png" />
         <image file="ge/co_drake+alt3+face.png" cols = "3" /> 
-        <image file="ge/co_drake+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_drake+alt3+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_drake+alt4+info.png" />
         <image file="ge/co_drake+alt4+mini.png" />
         <image file="ge/co_drake+alt4+face.png" cols = "3" />
-        <image file="ge/co_drake+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="ge/co_drake+alt4+nrm.png" scale_factor = "1.2" />
         <image file="ge/co_peter+nrm.png" />
         <image file="ge/co_peter+info.png" />
         <image file="ge/co_peter+face.png" cols = "3" />
@@ -590,15 +590,15 @@
         <image file="yc/co_kanbei+alt+info.png" />
         <image file="yc/co_kanbei+alt+mini.png" />
         <image file="yc/co_kanbei+alt+face.png" cols = "3" />
-        <image file="yc/co_kanbei+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_kanbei+alt2+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_kanbei+alt2+mini.png" />
         <image file="yc/co_kanbei+alt2+info.png" />
         <image file="yc/co_kanbei+alt2+face.png" cols = "3" rows = "2" />
-        <image file="yc/co_kanbei+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_kanbei+alt3+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_kanbei+alt3+mini.png" />
         <image file="yc/co_kanbei+alt3+info.png" />
         <image file="yc/co_kanbei+alt3+face.png" cols = "3" />
-        <image file="yc/co_kanbei+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_kanbei+alt4+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_kanbei+alt4+info.png" />
         <image file="yc/co_kanbei+alt4+mini.png" />
         <image file="yc/co_kanbei+alt4+face.png" cols = "3" />
@@ -611,24 +611,24 @@
         <image file="yc/co_sonja+alt+mini.png" />
         <image file="yc/co_sonja+alt+face.png" cols = "3" />
         <image file="yc/co_sonja+alt2+mini.png" />
-        <image file="yc/co_sonja+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt2+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt2+info.png" />
         <image file="yc/co_sonja+alt2+face.png" cols = "3" rows = "2" />
         <image file="yc/co_sonja+alt3+info.png" />
         <image file="yc/co_sonja+alt3+mini.png" />
-        <image file="yc/co_sonja+alt3+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt3+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt3+face.png" cols = "3" />
         <image file="yc/co_sonja+alt4+info.png" />
         <image file="yc/co_sonja+alt4+mini.png" />
-        <image file="yc/co_sonja+alt4+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt4+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt4+face.png" cols = "3" />
         <image file="yc/co_sonja+alt5+info.png" />
         <image file="yc/co_sonja+alt5+mini.png" />
-        <image file="yc/co_sonja+alt5+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt5+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt5+face.png" cols = "3" />
         <image file="yc/co_sonja+alt6+info.png" />
         <image file="yc/co_sonja+alt6+mini.png" />
-        <image file="yc/co_sonja+alt6+nrm.png" scale_factor = "1.8" />
+        <image file="yc/co_sonja+alt6+nrm.png" scale_factor = "1.2" />
         <image file="yc/co_sonja+alt6+face.png" cols = "3" />
         <image file="yc/co_sensei+nrm.png" />
         <image file="yc/co_sensei+info.png" />
@@ -674,7 +674,7 @@
         <image file="bh/co_flak+alt+info.png" />
         <image file="bh/co_flak+alt+mini.png" />
         <image file="bh/co_flak+alt+face.png" cols = "3" />
-        <image file="bh/co_flak+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="bh/co_flak+alt2+nrm.png" scale_factor = "1.2" />
         <image file="bh/co_flak+alt2+info.png" />
         <image file="bh/co_flak+alt2+mini.png" />
         <image file="bh/co_flak+alt2+face.png" cols = "3" />
@@ -686,7 +686,7 @@
         <image file="bh/co_hawke+alt+info.png" />
         <image file="bh/co_hawke+alt+mini.png" />
         <image file="bh/co_hawke+alt+face.png" cols = "3" />
-        <image file="bh/co_hawke+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="bh/co_hawke+alt2+nrm.png" scale_factor = "1.2" />
         <image file="bh/co_hawke+alt2+info.png" />
         <image file="bh/co_hawke+alt2+mini.png" />
         <image file="bh/co_hawke+alt2+face.png" cols = "3" />
@@ -698,7 +698,7 @@
         <image file="bh/co_adder+alt+info.png" />
         <image file="bh/co_adder+alt+mini.png" />
         <image file="bh/co_adder+alt+face.png" cols = "3" />
-        <image file="bh/co_adder+alt2+nrm.png" scale_factor = "1.8" />
+        <image file="bh/co_adder+alt2+nrm.png" scale_factor = "1.2" />
         <image file="bh/co_adder+alt2+info.png" />
         <image file="bh/co_adder+alt2+mini.png" />
         <image file="bh/co_adder+alt2+face.png" cols = "3" />

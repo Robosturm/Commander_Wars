@@ -1,4 +1,4 @@
-#include <qlocalsocket.h>
+#include <QLocalSocket>
 
 #include "network/localclient.h"
 #include "network/rxtask.h"
