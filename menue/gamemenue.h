@@ -293,7 +293,7 @@ protected:
     bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const;
     bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const;
     bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
-
+    void showChat();
     void doSaveMap();
 protected:
     ReplayRecorder m_ReplayRecorder;
