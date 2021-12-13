@@ -527,6 +527,10 @@ void GameMenue::showChat()
     m_pChat->setVisible(!m_pChat->getVisible());
     setFocused(!m_pChat->getVisible());
     m_pChat->removeTweens();
+    if (m_chatButtonShineTween.get())
+    {
+        m_chatButtonShineTween->removeFromActor();
+    }
     m_ChatButton->setAddColor(0, 0, 0, 0);
 }
 
