@@ -125,6 +125,24 @@ void CO::startOfTurn()
     }
 }
 
+void CO::onUnitDeath(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onUnitDeath";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args << obj1;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            pInterpreter->doFunction(perk, function1, args);
+        }
+    }
+}
+
 void CO::setPowerFilled(const double &value)
 {
     if (!GameMap::getInstance()->getGameRules()->getNoPower())

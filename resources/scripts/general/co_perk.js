@@ -22,6 +22,10 @@ var CO_PERK =
     {
     },
 
+    onUnitDeath : function(co, unit)
+    {
+    },
+
     getMovementpointModifier : function(co, unit, posX, posY)
     {
         return 0;

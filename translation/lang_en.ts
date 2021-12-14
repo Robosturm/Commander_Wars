@@ -123,7 +123,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="335"/>
+        <location filename="../game/co.cpp" line="353"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2836,18 +2836,18 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="547"/>
+        <location filename="../coreengine/mainapp.cpp" line="559"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="553"/>
+        <location filename="../coreengine/mainapp.cpp" line="565"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="555"/>
+        <location filename="../coreengine/mainapp.cpp" line="567"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>

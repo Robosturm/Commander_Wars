@@ -60,13 +60,12 @@ BaseGameInputIF* Player::getBaseGameInput()
 float Player::getUnitBuildValue(const QString & unitID)
 {
     float modifier = 0.0f;
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        modifier += m_playerCOs[0]->getUnitBuildValue(unitID);
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        modifier += m_playerCOs[1]->getUnitBuildValue(unitID);
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getUnitBuildValue(unitID);
+        }
     }
     return modifier;
 }
@@ -113,16 +112,16 @@ void Player::loadVisionFields()
 
 void Player::loadCOMusic()
 {
-    if (m_playerCOs[0].get() != nullptr)
+    bool hasCo = false;
+    for(auto & pCO : m_playerCOs)
     {
-        m_playerCOs[0]->loadCOMusic();
+        if (pCO.get() != nullptr)
+        {
+            pCO->loadCOMusic();
+            hasCo = true;
+        }
     }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        m_playerCOs[1]->loadCOMusic();
-    }
-    if (m_playerCOs[0].get() == nullptr &&
-        m_playerCOs[0].get() == nullptr)
+    if (!hasCo)
     {
         Mainapp* pApp = Mainapp::getInstance();
         qint32 count = GlobalUtils::randIntBase(0, 1);
@@ -833,33 +832,46 @@ qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
     qint32 reduction = 0;
     if (!m_isDefeated)
     {
-        CO* pCO = getCO(0);
-        if (pCO != nullptr)
+        for(auto & pCO : m_playerCOs)
         {
-            reduction += pCO->getIncomeReduction(pBuilding, income);
-        }
-        pCO = getCO(1);
-        if (pCO != nullptr)
-        {
-            reduction += pCO->getIncomeReduction(pBuilding, income);
+            if (pCO.get() != nullptr)
+            {
+                reduction += pCO->getIncomeReduction(pBuilding, income);
+            }
         }
     }
     return reduction;
+}
+
+void Player::onUnitDeath(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "onUnitDeath";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args << obj1;
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args);
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            pCO->onUnitDeath(pUnit);
+        }
+    }
 }
 
 void Player::postAction(GameAction* pAction)
 {
     if (!m_isDefeated)
     {
-        CO* pCO = getCO(0);
-        if (pCO != nullptr)
+        for(auto & pCO : m_playerCOs)
         {
-            pCO->postAction(pAction);
-        }
-        pCO = getCO(1);
-        if (pCO != nullptr)
-        {
-            pCO->postAction(pAction);
+            if (pCO.get() != nullptr)
+            {
+                pCO->postAction(pAction);
+            }
         }
     }
 }
@@ -905,13 +917,12 @@ void Player::earnMoney(float modifier)
 qint32 Player::getCostModifier(const QString & id, qint32 baseCost)
 {
     qint32 costModifier = 0;
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        costModifier += m_playerCOs[0]->getCostModifier(id, baseCost);
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        costModifier += m_playerCOs[1]->getCostModifier(id, baseCost);
+        if (pCO.get() != nullptr)
+        {
+            costModifier += pCO->getCostModifier(id, baseCost);
+        }
     }
     return costModifier;
 }
@@ -920,37 +931,36 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
 {
     if (!m_isDefeated)
     {
-        if (m_playerCOs[0].get() != nullptr)
+        for(auto & pCO : m_playerCOs)
         {
-            m_playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked, weapon, pAction);
-        }
-        if (m_playerCOs[1].get() != nullptr)
-        {
-            m_playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked, weapon, pAction);
+            if (pCO.get() != nullptr)
+            {
+                pCO->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked, weapon, pAction);
+            }
         }
     }
 }
 
 void Player::buildedUnit(Unit* pUnit)
 {
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        m_playerCOs[0]->buildedUnit(pUnit);
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        m_playerCOs[1]->buildedUnit(pUnit);
+        if (pCO.get() != nullptr)
+        {
+            pCO->buildedUnit(pUnit);
+        }
     }
 }
 
 bool Player::getWeatherImmune()
 {
-    if ((m_playerCOs[0].get() != nullptr &&
-         m_playerCOs[0]->getWeatherImmune()) ||
-        (m_playerCOs[1].get() != nullptr &&
-         m_playerCOs[1]->getWeatherImmune()))
+    for(auto & pCO : m_playerCOs)
     {
-        return true;
+        if (pCO.get() != nullptr &&
+            pCO->getWeatherImmune())
+        {
+            return true;
+        }
     }
     return false;
 }
@@ -963,13 +973,12 @@ QStringList Player::getBuildList() const
 QStringList Player::getCOUnits(Building* pBuilding)
 {
     QStringList ret;
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        ret.append(m_playerCOs[0]->getCOUnits(pBuilding));
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        ret.append(m_playerCOs[1]->getCOUnits(pBuilding));
+        if (pCO.get() != nullptr)
+        {
+            ret.append(pCO->getCOUnits(pBuilding));
+        }
     }
     return ret;
 }
@@ -1310,13 +1319,12 @@ qint32 Player::getCosts(const QString & id)
 void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack)
 {
     float speed = GameMap::getInstance()->getGameRules()->getPowerGainSpeed();
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        m_playerCOs[0]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        m_playerCOs[1]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
+        if (pCO.get() != nullptr)
+        {
+            pCO->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
+        }
     }
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
@@ -1328,13 +1336,12 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
 qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        modifier += m_playerCOs[0]->getMovementcostModifier(pUnit, position);
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        modifier += m_playerCOs[1]->getMovementcostModifier(pUnit, position);
+        if (pCO.get() != nullptr)
+        {
+            modifier += pCO->getMovementcostModifier(pUnit, position);
+        }
     }
     return modifier;
 }
@@ -1353,15 +1360,12 @@ qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
 qint32 Player::getBonusMovementpoints(Unit* pUnit, QPoint position)
 {
     qint32 movementModifier = 0;
-    CO* pCO = getCO(0);
-    if (pCO != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        movementModifier += pCO->getMovementpointModifier(pUnit, position);
-    }
-    pCO = getCO(1);
-    if (pCO != nullptr)
-    {
-        movementModifier += pCO->getMovementpointModifier(pUnit, position);
+        if (pCO.get() != nullptr)
+        {
+            movementModifier += pCO->getMovementpointModifier(pUnit, position);
+        }
     }
     if (pUnit->getOwner() == this)
     {
@@ -1383,17 +1387,14 @@ void Player::startOfTurn()
     args1 << obj1;
     pInterpreter->doFunction("PLAYER", function1, args1);
 
-    if (m_playerCOs[0].get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        m_playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
-        m_playerCOs[0]->setCoRangeEnabled(true);
-        m_playerCOs[0]->startOfTurn();
-    }
-    if (m_playerCOs[1].get() != nullptr)
-    {
-        m_playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
-        m_playerCOs[1]->setCoRangeEnabled(true);
-        m_playerCOs[1]->startOfTurn();
+        if (pCO.get() != nullptr)
+        {
+            pCO->setPowerMode(GameEnums::PowerMode_Off);
+            pCO->setCoRangeEnabled(true);
+            pCO->startOfTurn();
+        }
     }
 }
 
@@ -1507,35 +1508,21 @@ QmlVectorBuilding* Player::getBuildings(const QString & id)
 
 void Player::updateVisualCORange()
 {
-    spCO pCo = m_playerCOs[0];
-    if (pCo.get() != nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        spUnit pCoUnit = spUnit(pCo->getCOUnit());
-        if (pCoUnit.get() != nullptr)
+        if (pCO.get() != nullptr)
         {
-            if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
+            spUnit pCoUnit = spUnit(pCO->getCOUnit());
+            if (pCoUnit.get() != nullptr)
             {
-                pCoUnit->createCORange(pCo->getCORange());
-            }
-            else
-            {
-                pCoUnit->createCORange(-1);
-            }
-        }
-    }
-    pCo = m_playerCOs[1];
-    if (pCo.get() != nullptr)
-    {
-        spUnit pCoUnit = spUnit(pCo->getCOUnit());
-        if (pCoUnit.get() != nullptr)
-        {
-            if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
-            {
-                pCoUnit->createCORange(pCo->getCORange());
-            }
-            else
-            {
-                pCoUnit->createCORange(-1);
+                if (pCO->getPowerMode() == GameEnums::PowerMode_Off)
+                {
+                    pCoUnit->createCORange(pCO->getCORange());
+                }
+                else
+                {
+                    pCoUnit->createCORange(-1);
+                }
             }
         }
     }
@@ -1798,23 +1785,20 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_funds;
     pStream << m_fundsModifier;
     pStream << m_playerArmy;
-    if (m_playerCOs[0].get() == nullptr)
+    for(auto & pCO : m_playerCOs)
     {
-        pStream << false;
-    }
-    else
-    {
-        pStream << true;
-        m_playerCOs[0]->serializeObject(pStream);
-    }
-    if (m_playerCOs[1].get() == nullptr)
-    {
-        pStream << false;
-    }
-    else
-    {
-        pStream << true;
-        m_playerCOs[1]->serializeObject(pStream);
+        if (pCO.get() != nullptr)
+        {
+            if (pCO.get() == nullptr)
+            {
+                pStream << false;
+            }
+            else
+            {
+                pStream << true;
+                pCO->serializeObject(pStream);
+            }
+        }
     }
     pStream << m_team;
     pStream << m_isDefeated;
@@ -1865,27 +1849,21 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> m_funds;
         pStream >> m_fundsModifier;
         pStream >> m_playerArmy;
-        bool hasC0 = false;
-        pStream >> hasC0;
-        if (hasC0)
+        qint32 co = 0;
+        for(auto & pCO : m_playerCOs)
         {
-            m_playerCOs[0] = spCO::create("", this);
-            m_playerCOs[0]->deserializer(pStream, fast);
-            if (!m_playerCOs[0]->isValid())
+            bool hasC0 = false;
+            pStream >> hasC0;
+            if (hasC0)
             {
-                m_playerCOs[0] = nullptr;
+                m_playerCOs[co] = spCO::create("", this);
+                m_playerCOs[co]->deserializer(pStream, fast);
+                if (!m_playerCOs[co]->isValid())
+                {
+                    m_playerCOs[co] = nullptr;
+                }
             }
-        }
-        bool hasC1 = false;
-        pStream >> hasC1;
-        if (hasC1)
-        {
-            m_playerCOs[1] = spCO::create("", this);
-            m_playerCOs[1]->deserializer(pStream, fast);
-            if (!m_playerCOs[1]->isValid())
-            {
-                m_playerCOs[1] = nullptr;
-            }
+            ++co;
         }
         if (version > 3)
         {

@@ -362,6 +362,10 @@ void Mainapp::doScreenshot()
 
 void Mainapp::changeScreenMode(qint32 mode)
 {
+    if (m_noUi)
+    {
+        return;
+    }
     CONSOLE_PRINT("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
     hide();
     switch (mode)
@@ -428,6 +432,10 @@ void Mainapp::changeScreenMode(qint32 mode)
 
 void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 {    
+    if (m_noUi)
+    {
+        return;
+    }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
@@ -445,6 +453,10 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 
 void Mainapp::changePosition(QPoint pos, bool invert)
 {
+    if (m_noUi)
+    {
+        return;
+    }
     setPosition(position() + pos);
     if (invert)
     {

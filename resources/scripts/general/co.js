@@ -331,6 +331,10 @@ var CO =
         // called after the action was performed
     },
 
+    onUnitDeath : function(co, unit)
+    {
+    },
+
     // CO - Intel
     getBio : function(co)
     {

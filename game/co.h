@@ -417,6 +417,11 @@ public slots:
      */
     void startOfTurn();
     /**
+     * @brief onUnitDeath
+     * @param pUnit
+     */
+    void onUnitDeath(Unit* pUnit);
+    /**
      * @brief getPlayer
      * @return
      */

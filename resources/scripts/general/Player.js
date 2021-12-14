@@ -446,4 +446,8 @@ var PLAYER =
         // do custom start of turn action for a player here.
         // Note this function gets called after earning money but before refulling units
     },
+
+    onUnitDeath : function(player, unit)
+    {
+    },
 }

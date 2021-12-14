@@ -479,4 +479,8 @@ var TAGPOWER =
     {
         return GameEnums.CounterAttackMode_Undefined;
     },
+
+    onUnitDeath : function(co, unit)
+    {
+    },
 };

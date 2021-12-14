@@ -328,4 +328,8 @@ var UNIT =
     {
         return false;
     },
+
+    onDeath : function(unit)
+    {
+    },
 };

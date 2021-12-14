@@ -325,6 +325,8 @@ void AudioThread::SlotPlayMusic(qint32 file)
 void AudioThread::loadMediaForFile(QString filePath)
 {
 #ifdef AUDIOSUPPORT
+    m_player->m_player.setPosition(0);
+    m_player->m_player.setSource(QUrl());
     m_player->m_player.setSource(GlobalUtils::getUrlForFile(filePath));
 #endif
 }
@@ -351,10 +353,15 @@ void AudioThread::SlotPlayRandom()
             {
                 loopPos = 0;
             }
-            m_player->m_player.setPosition(loopPos);
             if (m_player->m_player.playbackState() != QMediaPlayer::PlayingState)
             {
+                loadMediaForFile(m_PlayListdata[m_player->m_currentMedia].m_file);
+                m_player->m_player.setPosition(loopPos);
                 m_player->m_player.play();
+            }
+            else
+            {
+                m_player->m_player.setPosition(loopPos);
             }
             CONSOLE_PRINT("Seeking music for player: " + m_PlayListdata[m_player->m_currentMedia].m_file + " to " + QString::number(loopPos), Console::eDEBUG);
         }
@@ -415,11 +422,6 @@ void AudioThread::mediaStatusChanged(QMediaPlayer::MediaStatus status)
     {
         case QMediaPlayer::NoMedia:
         {
-            m_player->m_currentMedia = -1;
-            if (m_PlayListdata.size() > 0)
-            {
-                emit sigLoadNextAudioFile();
-            }
             break;
         }
         case QMediaPlayer::EndOfMedia:

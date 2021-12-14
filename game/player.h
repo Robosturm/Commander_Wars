@@ -124,6 +124,11 @@ signals:
 
 public slots:
     /**
+     * @brief onUnitDeath
+     * @param pUnit
+     */
+    void onUnitDeath(Unit* pUnit);
+    /**
      * @brief postAction
      * @param pAction
      */

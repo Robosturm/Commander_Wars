@@ -2707,6 +2707,14 @@ void Unit::removeUnit(bool killed)
 {    
     if (killed)
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "onDeath";
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
+        m_pOwner->onUnitDeath(this);
+
         if (m_UnitRank == GameEnums::UnitRank_CO0)
         {
             CO* pCO = m_pOwner->getCO(0);
