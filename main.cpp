@@ -43,6 +43,10 @@ int main(qint32 argc, char* argv[])
     {
         window.setPosition(Settings::getX(), Settings::getY());
     }
+    if (window.getNoUi())
+    {
+        window.launchGame();
+    }
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down

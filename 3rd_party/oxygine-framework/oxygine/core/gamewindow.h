@@ -125,6 +125,8 @@ namespace oxygine
         {
             return QThread::currentThreadId() == m_mainHandle;
         }
+        void launchGame();
+
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder);
         virtual void loadRessources(){}
@@ -187,5 +189,6 @@ namespace oxygine
 
         bool m_shuttingDown{false};
         bool m_noUi{false};
+        bool m_launched{false};
     };
 }

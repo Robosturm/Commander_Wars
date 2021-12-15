@@ -199,18 +199,24 @@ namespace oxygine
 
         STDRenderer::initialize();
 
-        registerResourceTypes();
-
         STDRenderer::instance = spSTDRenderer::create();
         RenderDelegate::instance = spRenderDelegate::create();
         Material::null = spMaterial::create();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;
+        launchGame();
+    }
 
-        // Create the stage. Stage is a root node for all updateable and drawable objects
-        oxygine::Stage::instance = oxygine::spStage::create();
-        emit sigLoadRessources();
+    void GameWindow::launchGame()
+    {
+        if (!m_launched)
+        {
+            registerResourceTypes();
+            // Create the stage. Stage is a root node for all updateable and drawable objects
+            oxygine::Stage::instance = oxygine::spStage::create();
+            emit sigLoadRessources();
+        }
     }
 
     void GameWindow::resizeGL(qint32 w, qint32 h)
@@ -224,7 +230,7 @@ namespace oxygine
 
     void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-        if (!m_shuttingDown)
+        if (!m_shuttingDown && !m_noUi)
         {
             if (isMainThread())
             {
