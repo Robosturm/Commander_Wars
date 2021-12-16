@@ -696,7 +696,9 @@ qint32 Unit::getCosts() const
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
-        return erg.toInt();
+        qint32 baseCost = erg.toInt();
+        qint32 bonusCost = m_pOwner->getCostModifier(m_UnitID, baseCost, getPosition());
+        return bonusCost + baseCost;
     }
     else
     {
@@ -810,9 +812,7 @@ qint32 Unit::getCoUnitValue()
 
 qint32 Unit::getUnitValue()
 {
-    qint32 baseCost = getCosts();
-    qint32 bonusCost = m_pOwner->getCostModifier(m_UnitID, baseCost, getPosition());
-    return static_cast<qint32>((bonusCost + baseCost)  * m_hp / Unit::MAX_UNIT_HP);
+    return static_cast<qint32>(getCosts()  * m_hp / Unit::MAX_UNIT_HP);
 }
 
 bool Unit::canBeRepaired(QPoint position)
