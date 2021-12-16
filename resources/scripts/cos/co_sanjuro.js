@@ -278,7 +278,7 @@ var Constructor = function()
         costModVar.writeDataFloat(costModifier);
     };
 
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
         var variables = co.getVariables();
         var costModVar = variables.createVariable("SANJURO_COST_MOD");

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
 		if (CO_PERK.isActive(co))
 		{

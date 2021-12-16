@@ -246,7 +246,7 @@ var Constructor = function()
         return false;
     };
 
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
         switch (co.getPowerMode())
         {

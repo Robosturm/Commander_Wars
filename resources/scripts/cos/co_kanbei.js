@@ -141,7 +141,7 @@ var Constructor = function()
     {
         return "YC";
     };
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
         return baseCost * CO_KANBEI.costIncrease / 100;
     };

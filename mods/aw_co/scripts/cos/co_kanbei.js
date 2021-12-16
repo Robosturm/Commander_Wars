@@ -15,7 +15,7 @@ CO_KANBEI.getSuperPowerName = function()
 {
     return CO_KANBEI.getPowerName();
 };
-CO_KANBEI.getCostModifier = function(co, id, baseCost)
+CO_KANBEI.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

@@ -188,7 +188,7 @@ var CO_PERK =
         return true;
     },
 
-    getCostModifier : function(co, id, baseCost)
+    getCostModifier : function(co, id, baseCost, posX, posY)
     {
         return 0;
     },
@@ -210,11 +210,6 @@ var CO_PERK =
     getCanMoveAndFire : function(co, unit, posX, posY)
     {
         return false;
-    },
-
-    getCostModifier : function(co, id, baseCost)
-    {
-        return 0;
     },
 
     gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
@@ -244,6 +239,31 @@ var CO_PERK =
     },
 
     getIncomeReduction : function(co, building, income)
+    {
+        return 0;
+    },
+
+    getEnemyCostModifier : function(co, id, baseCost, posX, posY)
+    {
+        return 0;
+    },
+
+    getBonusLoadingPlace : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getEnemyVisionBonus : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getEnemyMinFirerangeModifier : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getEnemyFirerangeModifier : function (co, unit, x, y)
     {
         return 0;
     },

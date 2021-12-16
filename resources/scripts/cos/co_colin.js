@@ -113,7 +113,7 @@ var Constructor = function()
     this.costModifier = 20;
     this.coZoneBoost = 5;
     this.globalBoost = 15;
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
         return -baseCost * CO_COLIN.costModifier / 100;
     };

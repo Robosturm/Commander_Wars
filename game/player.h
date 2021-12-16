@@ -272,6 +272,11 @@ public slots:
      */
     CO* getCO(quint8 id);
     /**
+     * @brief getMaxCoCount
+     * @return
+     */
+    qint32 getMaxCoCount() const;
+    /**
      * @brief setCO
      * @param coId the co we want to load
      * @param id the index at which we want this co
@@ -282,13 +287,13 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    qint32 getCosts(const QString & id);
+    qint32 getCosts(const QString & id, QPoint position);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
@@ -414,6 +419,13 @@ public slots:
      * @return
      */
     qint32 getUnitCount(Unit* pUnit, const QString & unitID);
+    /**
+     * @brief getEnemyBonus
+     * @param position
+     * @param pUnit
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getTeam
      * @return
@@ -574,7 +586,7 @@ private:
     oxygine::spResAnim m_ColorTableAnim;
     QString m_playerArmy{""};
     qint32 m_team{0};
-    spCO m_playerCOs[2]{spCO(), spCO()};
+     std::array<spCO, 2> m_playerCOs{spCO(), spCO()};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */

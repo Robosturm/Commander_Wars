@@ -38,7 +38,7 @@ CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-this.getCostModifier = function(co, id, baseCost)
+this.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

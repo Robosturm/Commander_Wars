@@ -202,7 +202,7 @@ var Constructor = function()
         }
         return 0;
     };    
-    this.getCostModifier = function(co, id, baseCost)
+    this.getCostModifier = function(co, id, baseCost, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {

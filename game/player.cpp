@@ -744,6 +744,19 @@ qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID)
     return ret;
 }
 
+qint32 Player::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
+{
+    qint32 ret = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ret += pCO->getCoBonus(position, pUnit, function);
+        }
+    }
+    return ret;
+}
+
 qint32 Player::getTeam() const
 {
     return m_team;
@@ -914,14 +927,31 @@ void Player::earnMoney(float modifier)
     setFunds(m_funds + calcIncome(modifier));
 }
 
-qint32 Player::getCostModifier(const QString & id, qint32 baseCost)
+qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
+    spGameMap pMap = GameMap::getInstance();
     qint32 costModifier = 0;
     for(auto & pCO : m_playerCOs)
     {
         if (pCO.get() != nullptr)
         {
-            costModifier += pCO->getCostModifier(id, baseCost);
+            costModifier += pCO->getCostModifier(id, baseCost, position);
+        }
+    }
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (pPlayer != nullptr &&
+            isEnemy(pPlayer) &&
+            !pPlayer->getIsDefeated())
+        {
+            for(auto & pCO : m_playerCOs)
+            {
+                if (pCO.get() != nullptr)
+                {
+                    costModifier += pCO->getEnemyCostModifier(id, baseCost, position);
+                }
+            }
         }
     }
     return costModifier;
@@ -1303,7 +1333,7 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
     }
 }
 
-qint32 Player::getCosts(const QString & id)
+qint32 Player::getCosts(const QString & id, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
@@ -1312,7 +1342,7 @@ qint32 Player::getCosts(const QString & id)
     {
         costs = ret.toInt();
     }
-    costs += getCostModifier(id, costs);
+    costs += getCostModifier(id, costs, position);
     return costs;
 }
 
@@ -1551,7 +1581,7 @@ spCO Player::getspCO(quint8 id)
 
 CO* Player::getCO(quint8 id)
 {
-    if (id <= 1)
+    if (id < m_playerCOs.max_size())
     {
         return m_playerCOs[id].get();
     }
@@ -1561,9 +1591,14 @@ CO* Player::getCO(quint8 id)
     }
 }
 
+qint32 Player::getMaxCoCount() const
+{
+    return m_playerCOs.max_size();
+}
+
 void Player::setCO(QString coId, quint8 idx)
 {
-    if (idx <= 1)
+    if (idx < m_playerCOs.max_size())
     {
         if (coId.isEmpty())
         {
@@ -1787,17 +1822,14 @@ void Player::serializeObject(QDataStream& pStream) const
     pStream << m_playerArmy;
     for(auto & pCO : m_playerCOs)
     {
-        if (pCO.get() != nullptr)
+        if (pCO.get() == nullptr)
         {
-            if (pCO.get() == nullptr)
-            {
-                pStream << false;
-            }
-            else
-            {
-                pStream << true;
-                pCO->serializeObject(pStream);
-            }
+            pStream << false;
+        }
+        else
+        {
+            pStream << true;
+            pCO->serializeObject(pStream);
         }
     }
     pStream << m_team;

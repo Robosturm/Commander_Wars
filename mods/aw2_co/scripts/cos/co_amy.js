@@ -62,7 +62,7 @@ CO_AMY.getMovementpointModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_AMY.getCostModifier = function(co, id, baseCost)
+CO_AMY.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

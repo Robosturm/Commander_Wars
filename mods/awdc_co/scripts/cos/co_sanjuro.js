@@ -84,7 +84,7 @@ CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 
-CO_SANJURO.getCostModifier = function(co, id, baseCost)
+CO_SANJURO.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     var variables = co.getVariables();
     var costModVar = variables.createVariable("SANJURO_COST_MOD");

@@ -723,7 +723,7 @@ void CO::buildedUnit(Unit* pUnit)
     }
 }
 
-qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
+qint32 CO::getCostModifier(const QString & id, qint32 baseCost, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCostModifier";
@@ -732,6 +732,34 @@ qint32 CO::getCostModifier(const QString & id, qint32 baseCost)
     args1 << obj2;
     args1 << id;
     args1 << baseCost;
+    args1 << position.x();
+    args1 << position.y();
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getEnemyCostModifier";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    args1 << id;
+    args1 << baseCost;
+    args1 << position.x();
+    args1 << position.y();
     qint32 ergValue = 0;
     for (const auto & perk : qAsConst(m_perkList))
     {
@@ -993,6 +1021,31 @@ qint32 CO::getOffensiveReduction(GameAction* pAction, Unit* pAttacker, QPoint at
         if (isJsFunctionEnabled(perk))
         {
             QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            if (erg.isNumber())
+            {
+                ergValue += erg.toInt();
+            }
+        }
+    }
+    return ergValue;
+}
+
+qint32 CO::getCoBonus(QPoint position, Unit* pUnit, const QString & function)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    args1 << position.x();
+    args1 << position.y();
+    qint32 ergValue = 0;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        if (isJsFunctionEnabled(perk))
+        {
+            QJSValue erg = pInterpreter->doFunction(perk, function, args1);
             if (erg.isNumber())
             {
                 ergValue += erg.toInt();

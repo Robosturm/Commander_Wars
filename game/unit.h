@@ -796,7 +796,7 @@ public slots:
      * @brief getUnitCosts
      * @return
      */
-    qint32 getUnitCosts();
+    qint32 getUnitCosts() const;
     /**
      * @brief getRepairBonus
      * @return
@@ -1016,6 +1016,12 @@ protected:
      * @brief updateCustomRangeActors
      */
     void updateCustomRangeActors();
+    /**
+     * @brief Unit::getEnemyBonus
+     * @param position
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &));
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;

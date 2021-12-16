@@ -1823,7 +1823,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
             for (auto & unitId : buildList)
             {
                 Unit dummy(unitId, m_pPlayer, false);
-                if (m_pPlayer->getCosts(unitId) < funds && dummy.hasWeapons())
+                if (m_pPlayer->getCosts(unitId, pBuilding->getPosition()) < funds && dummy.hasWeapons())
                 {
                     productionBuildings++;
                     break;

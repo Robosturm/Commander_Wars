@@ -556,7 +556,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
                         for (auto & unitId : buildList)
                         {
                             Unit dummy(unitId, m_pPlayer, false);
-                            if (m_pPlayer->getCosts(unitId) < funds && dummy.hasWeapons())
+                            if (m_pPlayer->getCosts(unitId, pBuilding->getPosition()) < funds && dummy.hasWeapons())
                             {
                                 BuildingData newData;
                                 newData.m_pBuilding = pBuilding;

@@ -46,7 +46,8 @@ var Constructor = function()
         action.startReading();
         var unitID = action.readDataString();
         var player = map.getCurrentPlayer();
-        var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
+        var target = action.getTarget();
+        var unit = map.spawnUnit(target.x, target.y, unitID, player);
         // pay for the unit
         map.getCurrentPlayer().addFunds(-action.getCosts());
         map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
@@ -75,7 +76,7 @@ var Constructor = function()
         var unitData = [];
         for (i = 0; i < units.length; i++)
         {
-            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            var cost = map.getCurrentPlayer().getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
         var funds = map.getCurrentPlayer().getFunds();
@@ -96,7 +97,7 @@ var Constructor = function()
         var unitData = [];
         for (i = 0; i < units.length; i++)
         {
-            var cost = map.getCurrentPlayer().getCosts(units[i]);
+            var cost = map.getCurrentPlayer().getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
         if (typeof map !== 'undefined')

@@ -65,7 +65,7 @@ CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_SANJURO.getCostModifier = function(co, id, baseCost)
+CO_SANJURO.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

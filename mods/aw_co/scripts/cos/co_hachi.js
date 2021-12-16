@@ -15,7 +15,7 @@ CO_HACHI.getSuperPowerName = function()
 {
     return CO_HACHI.getPowerName();
 };
-CO_HACHI.getCostModifier = function(co, id, baseCost)
+CO_HACHI.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

@@ -1,4 +1,4 @@
-CO_HACHI.getCostModifier = function(co, id, baseCost)
+CO_HACHI.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

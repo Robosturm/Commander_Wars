@@ -85,10 +85,15 @@ public:
      */
     oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
 
-
-signals:
-
 public slots:
+    /**
+     * @brief getCoBonus
+     * @param position
+     * @param pUnit
+     * @param function
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getCoRangeEnabled
      * @return
@@ -391,7 +396,15 @@ public slots:
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
+    /**
+     * @brief getEnemyCostModifier
+     * @param id
+     * @param baseCost
+     * @param position
+     * @return
+     */
+    qint32 getEnemyCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCOArmy
      */

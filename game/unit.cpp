@@ -360,7 +360,6 @@ qint32 Unit::getUnitType()
     }
 }
 
-
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;
@@ -508,16 +507,16 @@ qint32 Unit::getVision(QPoint position)
 {
     qint32 rangeModifier = 0;
     rangeModifier += getBonus(m_VisionBonus);
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    for (qint32 i = 0; i < m_pOwner->getMaxCoCount(); ++i)
     {
-        rangeModifier += pCO->getVisionrangeModifier(this, position);
+        CO* pCO = m_pOwner->getCO(i);
+        if (pCO != nullptr)
+        {
+            rangeModifier += pCO->getVisionrangeModifier(this, position);
+        }
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        rangeModifier += pCO->getVisionrangeModifier(this, position);
-    }
+    rangeModifier += getCoBonus(position, "getEnemyVisionBonus", &Player::getCoBonus);
+
     spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
     {
@@ -554,6 +553,23 @@ qint32 Unit::getVision(QPoint position)
     return points;
 }
 
+qint32 Unit::getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &))
+{
+    spGameMap pMap = GameMap::getInstance();
+    qint32 bonus = 0;
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (pPlayer != nullptr &&
+            m_pOwner->isEnemy(pPlayer) &&
+            !pPlayer->getIsDefeated())
+        {
+            bonus += (*pPlayer.*pBonusFunction)(position, this, function);
+        }
+    }
+    return bonus;
+}
+
 void Unit::setVision(const qint32 &value)
 {
     m_vision = value;
@@ -573,16 +589,15 @@ qint32 Unit::getBonusMaxRange(QPoint position)
 {
     qint32 rangeModifier = 0;
     rangeModifier += getBonus(m_FirerangeBonus);
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    for (qint32 i = 0; i < m_pOwner->getMaxCoCount(); ++i)
     {
-        rangeModifier += pCO->getFirerangeModifier(this, position);
+        CO* pCO = m_pOwner->getCO(i);
+        if (pCO != nullptr)
+        {
+            rangeModifier += pCO->getFirerangeModifier(this, position);
+        }
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        rangeModifier += pCO->getFirerangeModifier(this, position);
-    }
+    rangeModifier += getCoBonus(position, "getEnemyFirerangeModifier", &Player::getCoBonus);
 
     spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
@@ -645,16 +660,16 @@ qint32 Unit::getMinRange(QPoint position)
 qint32 Unit::getBonusMinRange(QPoint position)
 {
     qint32 rangeModifier = 0;
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    for (qint32 i = 0; i < m_pOwner->getMaxCoCount(); ++i)
     {
-        rangeModifier += pCO->getMinFirerangeModifier(this, position);
+        CO* pCO = m_pOwner->getCO(i);
+        if (pCO != nullptr)
+        {
+            rangeModifier += pCO->getMinFirerangeModifier(this, position);
+        }
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        rangeModifier += pCO->getMinFirerangeModifier(this, position);
-    }
+    rangeModifier += getCoBonus(position, "getEnemyMinFirerangeModifier", &Player::getCoBonus);
+
     spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
     {
@@ -667,7 +682,6 @@ qint32 Unit::getBonusMinRange(QPoint position)
     }
     return rangeModifier;
 }
-
 
 void Unit::setMinRange(const qint32 &value)
 {
@@ -796,7 +810,9 @@ qint32 Unit::getCoUnitValue()
 
 qint32 Unit::getUnitValue()
 {
-    return static_cast<qint32>(getCosts() * m_hp / Unit::MAX_UNIT_HP);
+    qint32 baseCost = getCosts();
+    qint32 bonusCost = m_pOwner->getCostModifier(m_UnitID, baseCost, getPosition());
+    return static_cast<qint32>((bonusCost + baseCost)  * m_hp / Unit::MAX_UNIT_HP);
 }
 
 bool Unit::canBeRepaired(QPoint position)
@@ -809,20 +825,15 @@ bool Unit::canBeRepaired(QPoint position)
             m_pOwner->isEnemy(pPlayer) &&
             !pPlayer->getIsDefeated())
         {
-            CO* pCO = pPlayer->getCO(0);
-            if (pCO != nullptr)
+            for (qint32 i = 0; i < pPlayer->getMaxCoCount(); ++i)
             {
-                if (!pCO->canBeRepaired(this, position))
+                CO* pCO = pPlayer->getCO(i);
+                if (pCO != nullptr)
                 {
-                    return false;
-                }
-            }
-            pCO = pPlayer->getCO(1);
-            if (pCO != nullptr)
-            {
-                if (!pCO->canBeRepaired(this, position))
-                {
-                    return false;
+                    if (!pCO->canBeRepaired(this, position))
+                    {
+                        return false;
+                    }
                 }
             }
         }
@@ -1067,20 +1078,15 @@ bool Unit::canMoveAndFire(QPoint position)
     {
         return true;
     }
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    for (qint32 i = 0; i < m_pOwner->getMaxCoCount(); ++i)
     {
-        if (pCO->getCanMoveAndFire(this, position))
+        CO* pCO = m_pOwner->getCO(i);
+        if (pCO != nullptr)
         {
-            return true;
-        }
-    }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        if (pCO->getCanMoveAndFire(this, position))
-        {
-            return true;
+            if (pCO->getCanMoveAndFire(this, position))
+            {
+                return true;
+            }
         }
     }
     return false;
@@ -1667,9 +1673,9 @@ qint32 Unit::getBonusMisfortune(QPoint position)
     return bonus;
 }
 
-qint32 Unit::getUnitCosts()
+qint32 Unit::getUnitCosts() const
 {
-    return m_pOwner->getCosts(m_UnitID);
+    return m_pOwner->getCosts(m_UnitID, getPosition());
 }
 
 qint32 Unit::getRepairBonus(QPoint position)
@@ -2012,7 +2018,6 @@ bool Unit::hasAmmo2() const
     }
 }
 
-
 QString Unit::getWeapon2ID() const
 {
     return m_weapon2ID;
@@ -2320,6 +2325,8 @@ QString Unit::getMovementType() const
 qint32 Unit::getLoadingPlace()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
+    qint32 bonus = getCoBonus(getPosition(), "getBonusLoadingPlace", &Player::getCoBonus);
+
     QString function1 = "getLoadingPlace";
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
@@ -2327,11 +2334,11 @@ qint32 Unit::getLoadingPlace()
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
     if (ret.isNumber())
     {
-        return ret.toInt();
+        return ret.toInt() + bonus;
     }
     else
     {
-        return 0;
+        return bonus;
     }
 }
 
@@ -2712,9 +2719,8 @@ void Unit::removeUnit(bool killed)
         QJSValueList args;
         QJSValue obj = pInterpreter->newQObject(this);
         args << obj;
-        QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
+        pInterpreter->doFunction(m_UnitID, function1, args);
         m_pOwner->onUnitDeath(this);
-
         if (m_UnitRank == GameEnums::UnitRank_CO0)
         {
             CO* pCO = m_pOwner->getCO(0);

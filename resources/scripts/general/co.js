@@ -180,7 +180,12 @@ var CO =
         return true;
     },
 
-    getCostModifier : function(co, id, baseCost)
+    getCostModifier : function(co, id, baseCost, posX, posY)
+    {
+        return 0;
+    },
+
+    getEnemyCostModifier : function(co, id, baseCost, posX, posY)
     {
         return 0;
     },
@@ -202,11 +207,6 @@ var CO =
     getCanMoveAndFire : function(co, unit, posX, posY)
     {
         return false;
-    },
-
-    getCostModifier : function(co, id, baseCost)
-    {
-        return 0;
     },
 
     getCOArmy : function()
@@ -295,6 +295,26 @@ var CO =
     getCOUnits : function(co, building)
     {
         return [];
+    },
+
+    getEnemyVisionBonus : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getEnemyMinFirerangeModifier : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getEnemyFirerangeModifier : function (co, unit, x, y)
+    {
+        return 0;
+    },
+
+    getBonusLoadingPlace : function (co, unit, x, y)
+    {
+        return 0;
     },
 
     getAdditionalBuildingActions : function(co, building)

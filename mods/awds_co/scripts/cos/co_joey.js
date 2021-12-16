@@ -110,7 +110,7 @@ CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
     return false;
 };
 
-CO_JOEY.getCostModifier = function(co, id, baseCost)
+CO_JOEY.getCostModifier = function(co, id, baseCost, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
