@@ -8,6 +8,7 @@ The project is seperated in three parts.
 * The ressource folder containing the javascript default data and images and sounds or music
 * The mod folder containing mods for the coreengine
 * refer to the [wiki page](https://github.com/Robosturm/Commander_Wars/wiki) for more information about the game and it's features
+* [Commander Wars Wiki](https://www.commanderwars.com/mediawiki/Main_Page/)
 
 If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
