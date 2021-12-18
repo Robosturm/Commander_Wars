@@ -113,6 +113,8 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"DamageToUnitCostRatioBonus", "Production", &m_damageToUnitCostRatioBonus, 20.0f, 0.0f, 100.0f},
                   {"SuperiorityRatio", "Production", &m_superiorityRatio, 1.8f, 1.0f, 10.0f},
                   {"CheapUnitRatio", "Production", &m_cheapUnitRatio, 1.8f, 0.5f, 2.0f},
+                  {"CheapUnitValue", "Production", &m_cheapUnitValue, 3000.0f, 1500.0f, 5000.0f},
+                  {"CheapUnitDamageMalus", "Production", &m_cheapUnitDamageMalus, 0.5f, 0.1f, 1.0f},
                   {"CheapUnitBonusMultiplier", "Production", &m_cheapUnitBonusMultiplier, 45.0f, 0.0f, 100.0f},
                   {"NormalUnitBonusMultiplier", "Production", &m_normalUnitBonusMultiplier, 45.0f, 0.0f, 100.0f},
                   {"ExpensiveUnitBonusMultiplier", "Production", &m_expensiveUnitBonusMultiplier, 20.0f, 0.0f, 100.0f},
@@ -127,12 +129,15 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"BuildingBonusMultiplier", "Production", &m_buildingBonusMultiplier, 6.0f, 0.0f, 30.0f},
                   {"MinInfantryCount", "Production", &m_minInfantryCount, 2.0f, 0.0f, 10.0f},
                   {"CanSupplyBonus", "Production", &m_canSupplyBonus, 10.0f, 5.0f, 40.0f},
-                  {"MaxSupplyUnitRatio", "Production", &m_maxSupplyUnitRatio, 0.05f, 0.01f, 0.0f},
+                  {"MaxSupplyUnitRatio", "Production", &m_maxSupplyUnitRatio, 0.05f, 0.01f, 0.05f},
                   {"AverageSupplySupport", "Production", &m_averageSupplySupport, 8.0f, 0.0f, 20.0f},
                   {"CappingFunds", "Production", &m_cappingFunds, 6500.0f, 2000.0f, 8000.0f},
                   {"CappedFunds", "Production", &m_cappedFunds, 1500.0f, 500.0f, 4000.0f},
                   {"TargetPriceDifference", "Production", &m_targetPriceDifference, 0.35f, 0.0f, 1.0f},
-                  {"HighDamageMultiplier", "Production", &m_highDamageMultiplier, 4.0f, 0.0f, 20.0f},};
+                  {"HighDamageMultiplier", "Production", &m_highDamageMultiplier, 4.0f, 0.0f, 20.0f},
+                  {"DamageBonus", "Production", &m_damageBonus, 3.0f, 0.1f, 10.0f},};
+
+
     loadIni( "normal/" + configurationFile);
 }
 
@@ -2479,6 +2484,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             {
                 factor = 0;
             }
+            if (pEnemyUnit->getUnitCosts() <= m_cheapUnitValue)
+            {
+                factor *= m_cheapUnitDamageMalus;
+            }
             damageCount += resDamage * factor;
             attacksCount++;
         }
@@ -2702,7 +2711,7 @@ float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildDa
     if (data[UnitCount] > m_minUnitCountForDamageBonus)
     {
         // apply damage bonus
-        score += data[DamageData] / Unit::DAMAGE_100;
+        score += data[DamageData] / Unit::DAMAGE_100 * m_damageBonus;
     }
     // infantry bonus
     if (data[InfantryUnit] == 1.0f)

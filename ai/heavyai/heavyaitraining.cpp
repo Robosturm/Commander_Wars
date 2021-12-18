@@ -29,6 +29,11 @@ void HeavyAi::mutateNeuralNetwork(qint32 network, double mutationChance, double 
     }
 }
 
+void HeavyAi::setDisabled(qint32 network, bool disabled)
+{
+    m_neuralNetworks[network]->setDisabled(disabled);
+}
+
 void HeavyAi::combineAi(QStringList aisToUse)
 {
     CONSOLE_PRINT("HeavyAi::combineAi", Console::eDEBUG);

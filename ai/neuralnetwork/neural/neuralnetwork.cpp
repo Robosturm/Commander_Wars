@@ -65,12 +65,28 @@ void NeuralNetwork::trigger()
 
 QVector<double> NeuralNetwork::output()
 {
-    return (m_layers.back())->output();
+    auto ret = (m_layers.back())->output();
+    if (m_disabled)
+    {
+        for (auto item : ret)
+        {
+            item = 0;
+        }
+    }
+    return ret;
 }
 
 double NeuralNetwork::output(qint32 index)
 {
-    return m_layers.back()->output()[index];
+    if (m_disabled)
+    {
+        return 0;
+    }
+    else
+    {
+        return m_layers.back()->output()[index];
+    }
+
 }
 
 void NeuralNetwork::connectComplete()
@@ -87,6 +103,16 @@ void NeuralNetwork::randomizeAllWeights()
     {
         m_layers[i_layer]->randomizeAllWeights(m_maxWeight);
     }
+}
+
+bool NeuralNetwork::getDisabled() const
+{
+    return m_disabled;
+}
+
+void NeuralNetwork::setDisabled(bool newDisabled)
+{
+    m_disabled = newDisabled;
 }
 
 void NeuralNetwork::mutateAllWeights(double mutationChance, double mutationRate)

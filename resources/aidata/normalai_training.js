@@ -1,5 +1,5 @@
 var Init =
-{
+        {
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Amber Valley.map",           // map that will be used for training
@@ -127,8 +127,8 @@ var Init =
                     "menu.buttonNext();\n" +
                     "menu.buttonNext();\n" +
                     "var gameRules = map.getGameRules();\n" +
-                    "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
-                    "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT_CAPTURE_RACE\");\n" +
+                    "gameRules.addVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
+                    "var victoryRule = gameRules.getVictoryRule(\"VICTORYRULE_TURNLIMIT\");\n" +
                     "victoryRule.setRuleValue(" + Init.turnLimit + ", 0);\n" +
                     "gameRules.setFogMode(" + Init.fogOfWar.toString() + ");\n" +
                     "gameRules.setRandomWeather(false);\n" +
@@ -215,6 +215,10 @@ var Init =
                 }
             }
         }
+        else
+        {
+            GameConsole.print("No player won the match", Init.logLevel);
+        }
 
         if (Init.startAi > Init.trainingAis.length - playerCount)
         {
@@ -268,31 +272,34 @@ var Init =
 
     prepareNextRun = function()
     {
-        GameConsole.print("Evaluating current run: " + Init.runCount, Init.logLevel);
+        GameConsole.print("Preparing next run", Init.logLevel);
         var bestAis = [];
         for (var i = 0; i < Init.matchData.length; ++i)
         {
             GameConsole.print("AI " + i + " got a score of " + Init.matchData[i] + " points", Init.logLevel);
             var aiScore = Init.matchData[i];
-            if (bestAis.length < Init.topAis)
+            if (aiScore > 0)
             {
-                bestAis.push([Init.trainingAis[i], aiScore]);
-            }
-            else
-            {
-                var lowestScore = aiScore;
-                var lowestIndex = -1;
-                for (var i2 = 0; i2 < bestAis.length; ++i2)
+                if (bestAis.length < Init.topAis)
                 {
-                    if (bestAis[i2][1] < lowestScore)
-                    {
-                        lowestScore = bestAis[i2][1];
-                        lowestIndex = i2;
-                    }
+                    bestAis.push([Init.trainingAis[i], aiScore]);
                 }
-                if (lowestIndex >= 0)
+                else
                 {
-                    bestAis[lowestIndex] = [trainingAis[i], aiScore];
+                    var lowestScore = aiScore;
+                    var lowestIndex = -1;
+                    for (var i2 = 0; i2 < bestAis.length; ++i2)
+                    {
+                        if (bestAis[i2][1] < lowestScore)
+                        {
+                            lowestScore = bestAis[i2][1];
+                            lowestIndex = i2;
+                        }
+                    }
+                    if (lowestIndex >= 0)
+                    {
+                        bestAis[lowestIndex] = [trainingAis[i], aiScore];
+                    }
                 }
             }
         }
@@ -323,12 +330,15 @@ var Init =
         Init.runCount = Init.runCount + 1;
         GameConsole.print("Starting run: " + Init.runCount, Init.logLevel);
         // reset data
-        Init.startAi = 0;
-        Init.rotationStartAi = 0;
-        Init.rotationCount = 0;
-        Init.matchData = [];
-        Init.battleData = [];
-        Init.selectCos();
+        if (Init.runCount < Init.maxRuns)
+        {
+            Init.startAi = 0;
+            Init.rotationStartAi = 0;
+            Init.rotationCount = 0;
+            Init.matchData = [];
+            Init.battleData = [];
+            Init.selectCos();
+        }
     },
 
     selectCos = function()

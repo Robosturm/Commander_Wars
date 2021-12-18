@@ -504,6 +504,9 @@ private:
     double m_targetPriceDifference{0.3f};
     double m_highDamageMultiplier{4.0f};
     double m_fundsPerBuildingFactorC{4};
+    double m_cheapUnitValue{3000.0f};
+    double m_cheapUnitDamageMalus{0.5f};
+    double m_damageBonus{3.0f};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};

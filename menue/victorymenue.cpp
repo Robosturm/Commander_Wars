@@ -505,7 +505,16 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     {
         // despawn slave process on finish
         CONSOLE_PRINT("Closing slave cause the game is finished.", Console::eDEBUG);
-        QCoreApplication::exit(pMap->getWinnerTeam() + 1);
+        qint32 ret = pMap->getWinnerTeam() + 1;
+        QString object = "Init";
+        QString func = "onMasterValue";
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        if (pInterpreter->exists(object, func))
+        {
+            QJSValue erg = pInterpreter->doFunction(object, func);
+            ret = erg.toInt();
+        }
+        QCoreApplication::exit(ret);
     }
     else
     {

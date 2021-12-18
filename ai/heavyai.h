@@ -242,6 +242,12 @@ public slots:
      */
     void mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate = 0.1f);
     /**
+     * @brief setDisabled
+     * @param network
+     * @param disabled
+     */
+    void setDisabled(qint32 network, bool disabled);
+    /**
      * @brief getAiName
      * @return
      */

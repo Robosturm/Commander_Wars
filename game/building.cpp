@@ -325,7 +325,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
     }
     else
     {
-        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load weather overlay sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
