@@ -115,13 +115,14 @@ ScriptEditor::ScriptEditor()
     m_Events->setPosition(30, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button
-    oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
-    pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
-    pSpriteBox->addChild(pEventButton);
-    pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
+    m_pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
+    pSpriteBox->addChild(m_pEventButton);
+    m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigAddEvent();
     });
+    m_pEventButton->setEnabled(false);
     connect(this, &ScriptEditor::sigAddEvent, this, &ScriptEditor::addEvent, Qt::QueuedConnection);
 
     pText = oxygine::spTextField::create();
@@ -318,22 +319,10 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         pSelectButton->setPosition(x + 140 * 2, boxY);
         pSpritebox->addChild(pSelectButton);
         auto pPtrSpritebox = pSpritebox.get();
+        auto pCondition = condition.get();
         pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
-            for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
-            {
-                m_ConditionBoxes[i]->setAddColor(0, 0, 0);
-            }
-            if (m_CurrentCondition == condition.get())
-            {
-                m_CurrentCondition = nullptr;
-            }
-            else
-            {
-                pPtrSpritebox->setAddColor(32, 200, 32);
-                m_CurrentCondition = condition.get();
-            }
-            emit sigUpdateEvents();
+            selectCondition(pPtrSpritebox, pCondition);
         });
         condition = condition->getSubCondition();
         if (condition.get() != nullptr)
@@ -345,6 +334,25 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 
     y += 54 + boxY;
     m_ConditionPanel->setContentWidth(x + 140 * 3 + 30);
+}
+
+void ScriptEditor::selectCondition(oxygine::Box9Sprite* pPtrSpritebox, ScriptCondition* pCondition)
+{
+    for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
+    {
+        m_ConditionBoxes[i]->setAddColor(0, 0, 0);
+    }
+    if (m_CurrentCondition == pCondition)
+    {
+        m_CurrentCondition = nullptr;
+    }
+    else
+    {
+        pPtrSpritebox->setAddColor(32, 200, 32);
+        m_CurrentCondition = pCondition;
+    }
+    m_pEventButton->setEnabled(m_CurrentCondition != nullptr);
+    emit sigUpdateEvents();
 }
 
 void ScriptEditor::updateEvents()

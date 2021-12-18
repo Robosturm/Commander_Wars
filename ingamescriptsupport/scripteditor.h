@@ -153,12 +153,16 @@ public slots:
      */
     void addConditionToData(spScriptCondition pCondition);
 private:
+    void selectCondition(oxygine::Box9Sprite* pPtrSpritebox, ScriptCondition* pCondition);
+
+private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;
     spCheckbox m_ImmediateStart;
     spScriptData m_Data;
     spDropDownmenu m_Conditions;
     spDropDownmenu m_Events;
+    oxygine::spButton m_pEventButton;
     ScriptCondition* m_CurrentCondition{nullptr};
     QVector<oxygine::spBox9Sprite> m_ConditionBoxes;
 };
