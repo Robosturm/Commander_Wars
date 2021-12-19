@@ -252,7 +252,7 @@ public slots:
      * @param modifier
      * @return
      */
-    qint32 calcIncome(float modifier = 1.0f);
+    qint32 calcIncome(float modifier = 1.0f) const;
     /**
      * @brief calcArmyValue
      * @return
@@ -394,7 +394,7 @@ public slots:
      * @brief calculatePlayerStrength
      * @return
      */
-    qint32 calculatePlayerStrength();
+    qint32 calculatePlayerStrength() const;
     /**
      * @brief getBuildingCount
      * @return
@@ -411,14 +411,14 @@ public slots:
      * @brief getUnitCount
      * @return
      */
-    qint32 getUnitCount(const QString & unitID = "");
+    qint32 getUnitCount(const QString & unitID = "") const;
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    qint32 getUnitCount(Unit* pUnit, const QString & unitID);
+    qint32 getUnitCount(Unit* pUnit, const QString & unitID) const;
     /**
      * @brief getEnemyBonus
      * @param position
@@ -577,6 +577,12 @@ private:
      * @param directView
      */
     void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
+    /**
+     * @brief calculatePlayerStrength
+     * @param pUnit
+     */
+    qint32 calculatePlayerStrength(Unit* pUnit) const;
+
 private:
     qint32 m_funds{0};
     float m_fundsModifier{1.0f};

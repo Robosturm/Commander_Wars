@@ -155,6 +155,16 @@ public:
 
 public slots:
     /**
+     * @brief setVirtualHp
+     * @param value
+     */
+    void setVirtualHp(const float &value);
+    /**
+     * @brief getVirtualHp
+     * @return
+     */
+    float getVirtualHp();
+    /**
      * @brief transformUnit
      * @param unitID
      */
@@ -1075,6 +1085,7 @@ private:
     QVector<spUnit> m_TransportUnits;
     qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
+    float m_virtualHp{0.0f};
 
     QVector<QPoint> m_cloaked;
     bool m_Hidden{false};

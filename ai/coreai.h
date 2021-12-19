@@ -179,7 +179,7 @@ public slots:
      * @param pBuilding
      * @return
      */
-    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding);
+    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding) const;
     /**
      * @brief createMovementMap
      */
@@ -232,7 +232,7 @@ public slots:
      * @param target
      * @return x = unit damage and y = counter damage
      */
-    QRectF calcUnitDamage(spGameAction & pAction, const QPoint & target);
+    QRectF calcUnitDamage(spGameAction & pAction, const QPoint & target) const;
     /**
      * @brief CoreAI::calcVirtuelUnitDamage
      * @param pAttacker
@@ -245,7 +245,7 @@ public slots:
      */
     QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
                                  Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                 bool ignoreOutOfVisionRange = false);
+                                 bool ignoreOutOfVisionRange = false) const;
     /**
      * @brief getBestTarget
      * @param pUnit
@@ -269,7 +269,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -277,7 +277,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief moveAwayFromProduction
      * @param pUnits
@@ -291,7 +291,7 @@ public slots:
      * @param pDef
      * @return
      */
-    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef);
+    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const;
     /**
      * @brief appendAttackTargets
      * @param pUnit
@@ -327,7 +327,7 @@ protected:
      * @param pTerrain
      * @return
      */
-    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage);
+    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage) const;
     /**
      * @brief processPredefinedAi
      * @return
@@ -446,14 +446,14 @@ protected:
      * @param pUnit2
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Unit* pUnit2);
+    bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
     /**
      * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
      * @param pUnit1
      * @param pBuilding
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Building* pBuilding);
+    bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
     /**
      * @brief onSameIsland
      * @param movemnetType
@@ -463,7 +463,7 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -473,19 +473,19 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief getIsland
      * @param pUnit1
      * @return
      */
-    qint32 getIsland(Unit* pUnit);
+    qint32 getIsland(Unit* pUnit) const;
     /**
      * @brief getIslandIndex
      * @param pUnit1
      * @return
      */
-    qint32 getIslandIndex(Unit* pUnit);
+    qint32 getIslandIndex(Unit* pUnit) const;
     /**
      * @brief createIslandMap
      * @param movementType
@@ -497,19 +497,19 @@ protected:
      * @param pUnit
      * @return
      */
-    bool needsRefuel(Unit* pUnit);
+    bool needsRefuel(Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param pUnit
      * @return
      */
-    bool isRefuelUnit(Unit* pUnit);
+    bool isRefuelUnit(Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param actionList
      * @return
      */
-    bool isRefuelUnit(const QStringList & actionList);
+    bool isRefuelUnit(const QStringList & actionList) const;
     /**
      * @brief hasMissileTarget
      * @return
@@ -554,7 +554,7 @@ protected:
      * @param pBuilding
      * @return
      */
-    bool isMoveableTile(Building* pBuilding);
+    bool isMoveableTile(Building* pBuilding) const;
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

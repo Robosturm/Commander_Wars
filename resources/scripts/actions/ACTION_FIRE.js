@@ -129,7 +129,7 @@ var Constructor = function()
     };
     this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
-        return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getHp() - takenDamage / 10.0),
+        return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0),
                                       defender, defender.getPosition(), false,
                                       luckMode)
     };
@@ -153,27 +153,28 @@ var Constructor = function()
         }
         if (baseDamage1 >= baseDamage2)
         {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender);
+            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y);
             result.height = 0;
         }
         else
         {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender);
+            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y);
             result.height = 1;
         }
         return result;
     };
-    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
+    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode, defenderX, defenderY)
     {
         var damage = -1;
         // only direct units can deal counter damage
-        if (defender.canCounterAttack(action, defender.getPosition(), attacker, attackerPosition, luckMode))
+        var defPos = Qt.point(defenderX, defenderY);
+        if (defender.canCounterAttack(action, defPos, attacker, attackerPosition, luckMode))
         {
-            if (defender.getMinRange(Qt.point(defender.getX(), defender.getY())) === 1 && defenderWeapon !== "")
+            if (defender.getMinRange(defPos) === 1 && defenderWeapon !== "")
             {
-                var health = defender.getHp() - takenDamage / 10.0;                
+                var health = defender.getVirtualHp() - takenDamage / 10.0;
                 health = globals.roundUp(health);
-                damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defender.getPosition(), health,
+                damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
                                                 attacker, attackerPosition, true,
                                                 luckMode);
             }
@@ -192,11 +193,11 @@ var Constructor = function()
         var damage = baseDamage;
         if (baseDamage > 0.0)
         {
-            var hp = attacker.getHp();
-            attacker.setHp(attackerBaseHp);
+            var hp = attacker.getVirtualHp();
+            attacker.setVirtualHp(attackerBaseHp);
             var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defenderPosition, isDefender, luckMode);
             var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
-            attacker.setHp(hp);
+            attacker.setVirtualHp(hp);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             var luckDamage = 0;
             if (luckMode !== GameEnums.LuckDamageMode_Off)

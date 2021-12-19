@@ -55,7 +55,7 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
     }
 }
 
-qint32 IslandMap::getIslandSize(qint32 island)
+qint32 IslandMap::getIslandSize(qint32 island) const
 {
     qint32 count = 0;
     for (const auto & data : qAsConst(m_Islands))

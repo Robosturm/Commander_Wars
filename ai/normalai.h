@@ -51,6 +51,11 @@ class NormalAi : public CoreAI
         qint32 m_y = -1;
         QVector<UnitBuildData> m_buildData;
     };
+    struct MoveUnitData
+    {
+        spUnit pUnit;
+        spUnitPathFindingSystem pUnitPfs;
+    };
 public:
     enum BuildItems
     {
@@ -139,7 +144,7 @@ protected:
      * @param refillTarget
      * @return
      */
-    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget);
+    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget)const;
     /**
      * @brief appendRefillTargets
      * @param actions
@@ -147,7 +152,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets);
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets) const;
     /**
      * @brief moveUnit
      * @param pAction
@@ -207,7 +212,7 @@ protected:
      * @return
      */
     qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
-                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
      * @brief moveToSafety
      * @param pUnit
@@ -255,11 +260,7 @@ protected:
      */
     qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector4D>& ret,
                                QVector<QVector3D>& moveTargetFields,
-                               spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
-    /**
-     * @brief updateEnemyData
-     */
-    void updateEnemyData(spQmlVectorUnit & pUnits);
+                               spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
      * @brief calcVirtualDamage
      */
@@ -270,7 +271,7 @@ protected:
      * @param newLife
      * @return
      */
-    float calculateCaptureBonus(Unit* pUnit, float newLife);
+    float calculateCaptureBonus(Unit* pUnit, float newLife) const;
     /**
      * @brief calculateCounterDamage
      * @param pUnit
@@ -281,7 +282,7 @@ protected:
     float calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QPoint newPosition,
                                  Unit* pEnemyUnit, float enemyTakenDamage,
                                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
-                                 bool ignoreOutOfVisionRange = false);
+                                 bool ignoreOutOfVisionRange = false) const;
     /**
      * @brief calculateCounteBuildingDamage
      * @param pUnit
@@ -289,7 +290,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    float calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
+    float calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
      * @brief clearEnemyData
      */
@@ -397,15 +398,35 @@ protected:
      * @return
      */
     float calcSupplyScore(QVector<float>& data, UnitBuildData & unitBuildData);
+    /**
+     * @brief updateAllUnitData
+     * @param pUnits
+     */
+    void updateAllUnitData(spQmlVectorUnit & pUnits);
+    /**
+     * @brief updateUnitData
+     * @param pUnitData
+     * @param enemy
+     */
+    void updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & pUnitData, bool enemy);
+    /**
+     * @brief getOwnSupportDamage
+     * @param moveTarget
+     * @param pEnemy
+     * @return
+     */
+    float getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy, float & hpDamage) const;
+
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
      */
-    QVector<spUnit> m_EnemyUnits;
+    QVector<MoveUnitData> m_EnemyUnits;
     /**
-     * @brief m_EnemyPfs all enemy pfs currently correct.
+     * @brief m_OwnUnits
      */
-    QVector<spUnitPathFindingSystem> m_EnemyPfs;
+    QVector<MoveUnitData> m_OwnUnits;
+
     /**
      * @brief updatePoints points we need to update for the next pfs
      */
@@ -507,6 +528,7 @@ private:
     double m_cheapUnitValue{3000.0f};
     double m_cheapUnitDamageMalus{0.5f};
     double m_damageBonus{3.0f};
+    double m_supportDamageBonus{1.0f};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};

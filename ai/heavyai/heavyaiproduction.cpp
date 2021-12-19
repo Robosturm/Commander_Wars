@@ -18,7 +18,7 @@ bool HeavyAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUn
                          spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings)
 {
     scoreUnitBuildings(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings);
-    double bestScore = std::numeric_limits<float>::min();
+    double bestScore = std::numeric_limits<float>::lowest();
     qint32 index = -1;
     for (qint32 i = 0; i < m_BuildingData.size(); ++i)
     {
@@ -322,14 +322,8 @@ void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QV
             double scoreMultiplier = getProductionScoreMultiplier(position, unit->Unit::getMapPosition(), movementPoints);
             requiredTransporterCount += scoreMultiplier;
         }
-        if (transportTargets.size() > 0)
-        {
-            data.unitBuildingDataInput[BuildingEntry::RequiredUnitsToTransportRatio] = requiredTransporterCount / static_cast<double>(transportTargets.size());
-        }
-        if (m_pUnits->size() > 0)
-        {
-            data.unitBuildingDataInput[BuildingEntry::UnitsToTransportRatio] = transporterCount / static_cast<double>(m_pUnits->size());
-        }
+        data.unitBuildingDataInput[BuildingEntry::RequiredUnitsToTransportRatio] = requiredTransporterCount / static_cast<double>(transportTargets.size() + 1);
+        data.unitBuildingDataInput[BuildingEntry::UnitsToTransportRatio] = transporterCount / static_cast<double>(m_pUnits->size() + 1);
     }
 }
 
@@ -492,16 +486,13 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
     {
         UnitCountData countData;
         GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
-        double count = pUnits->size();
-        if (count > 0)
-        {
-            data[DirectUnitRatio]       = static_cast<double>(countData.directUnits)   / count;
-            data[IndirectUnitRatio]     = static_cast<double>(countData.indirectUnits) / count;
-            data[InfantryUnitRatio]     = static_cast<double>(countData.infantryUnits) / count;
-            data[TransportUnitRatio]    = static_cast<double>(countData.transporterUnits) / count;
-            data[SupplyUnitRatio]       = static_cast<double>(countData.supplyUnits) / count;
-            data[SupplyRequiredRatio]   = static_cast<double>(countData.supplyNeededUnits) / count;
-        }
+        double count = pUnits->size() + 1;
+        data[DirectUnitRatio]       = static_cast<double>(countData.directUnits)   / count;
+        data[IndirectUnitRatio]     = static_cast<double>(countData.indirectUnits) / count;
+        data[InfantryUnitRatio]     = static_cast<double>(countData.infantryUnits) / count;
+        data[TransportUnitRatio]    = static_cast<double>(countData.transporterUnits) / count;
+        data[SupplyUnitRatio]       = static_cast<double>(countData.supplyUnits) / count;
+        data[SupplyRequiredRatio]   = static_cast<double>(countData.supplyNeededUnits) / count;
         if (pMap->getCurrentDay() >  m_earlyGameDays)
         {
             data[DayProgression] = 1.0 / static_cast<double>(pMap->getCurrentDay() - m_earlyGameDays);

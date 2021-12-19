@@ -289,7 +289,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
     return false;
 }
 
-float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding)
+float CoreAI::calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding) const
 {
     float counterDamage = 0.0f;
     GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
@@ -475,7 +475,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, QVecto
     }
 }
 
-void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
+void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -499,7 +499,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindi
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
 
-void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
+void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const
 {
     spGameMap pMap = GameMap::getInstance();
     // much easier case
@@ -543,7 +543,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QV
     }
 }
 
-bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage)
+bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage) const
 {
     if (damage >= m_minTerrainDamage)
     {
@@ -558,7 +558,7 @@ bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain, float damage)
     return false;
 }
 
-QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef)
+QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const
 {
     float atkDamage = static_cast<float>(damage.x()) / Unit::MAX_UNIT_HP;
     if (atkDamage > pDef->getHp())
@@ -568,17 +568,17 @@ QPointF CoreAI::calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef)
     float fundsDamage = pDef->getUnitCosts() * atkDamage / Unit::MAX_UNIT_HP;
     if (damage.width() >= 0.0)
     {
-        atkDamage = static_cast<float>(damage.width()) / Unit::MAX_UNIT_HP;
-        if (atkDamage > pAtk->getHp())
+        float counterDamage = static_cast<float>(damage.width()) / Unit::MAX_UNIT_HP;
+        if (counterDamage > pAtk->getHp())
         {
-            atkDamage = pAtk->getHp();
+            counterDamage = pAtk->getHp();
         }
-        fundsDamage -= pAtk->getUnitCosts() * atkDamage / Unit::MAX_UNIT_HP * m_ownUnitValue;
+        fundsDamage -= pAtk->getUnitCosts() * counterDamage / Unit::MAX_UNIT_HP * m_ownUnitValue;
     }
     return QPointF(atkDamage, fundsDamage);
 }
 
-QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target)
+QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
@@ -594,7 +594,7 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target)
 
 QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
                                      Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                     bool ignoreOutOfVisionRange)
+                                     bool ignoreOutOfVisionRange) const
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
@@ -1679,7 +1679,7 @@ void CoreAI::rebuildIsland(spQmlVectorUnit & pUnits)
     }
 }
 
-bool CoreAI::needsRefuel(Unit *pUnit)
+bool CoreAI::needsRefuel(Unit *pUnit) const
 {
     if (pUnit->getMaxFuel() > 0 &&
         pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
@@ -1701,13 +1701,13 @@ bool CoreAI::needsRefuel(Unit *pUnit)
     return false;
 }
 
-bool CoreAI::isRefuelUnit(Unit* pUnit)
+bool CoreAI::isRefuelUnit(Unit* pUnit) const
 {
     QStringList list = pUnit->getActionList();
     return isRefuelUnit(list);
 }
 
-bool CoreAI::isRefuelUnit(const QStringList & actionList)
+bool CoreAI::isRefuelUnit(const QStringList & actionList) const
 {
     return actionList.contains(ACTION_SUPPORTALL_RATION) ||
            actionList.contains(ACTION_SUPPORTALL_RATION_MONEY) ||
@@ -1734,7 +1734,7 @@ void CoreAI::createIslandMap(const QString & movementType, const QString & unitI
     }
 }
 
-bool CoreAI::onSameIsland(Unit* pUnit1, Unit* pUnit2)
+bool CoreAI::onSameIsland(Unit* pUnit1, Unit* pUnit2) const
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -1754,7 +1754,7 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Unit* pUnit2)
     return false;
 }
 
-bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding)
+bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding) const
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -1774,7 +1774,7 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding)
     return false;
 }
 
-bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
+bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const
 {
     for (auto i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -1786,12 +1786,12 @@ bool CoreAI::onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint
     return false;
 }
 
-bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1)
+bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const
 {
     return m_IslandMaps[islandIdx]->sameIsland(x, y, x1, y1);
 }
 
-qint32 CoreAI::getIsland(Unit* pUnit)
+qint32 CoreAI::getIsland(Unit* pUnit) const
 {
     for (qint32 i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -1803,7 +1803,7 @@ qint32 CoreAI::getIsland(Unit* pUnit)
     return -1;
 }
 
-qint32 CoreAI::getIslandIndex(Unit* pUnit)
+qint32 CoreAI::getIslandIndex(Unit* pUnit) const
 {
     for (qint32 i = 0; i < m_IslandMaps.size(); i++)
     {
@@ -2140,7 +2140,7 @@ bool CoreAI::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, spQmlVectorUnit
     return false;
 }
 
-bool CoreAI::isMoveableTile(Building* pBuilding)
+bool CoreAI::isMoveableTile(Building* pBuilding) const
 {
     return pBuilding == nullptr || pBuilding->getOwner() == nullptr ||
             pBuilding->getOwner()->isEnemy(m_pPlayer) ||

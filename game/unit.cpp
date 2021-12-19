@@ -2164,6 +2164,20 @@ void Unit::setHp(const float &value)
     }
 }
 
+void Unit::setVirtualHp(const float &value)
+{
+    m_virtualHp = value;
+}
+
+float Unit::getVirtualHp()
+{
+    if (m_virtualHp > 0.0f)
+    {
+        return m_virtualHp;
+    }
+    return m_hp;
+}
+
 bool Unit::getHpHidden(Player* pPlayer)
 {
     if (pPlayer != nullptr && pPlayer->isEnemy(m_pOwner))

@@ -704,7 +704,7 @@ qint32 Player::getBuildingListCount(const QStringList & list, bool whitelist)
     return ret;
 }
 
-qint32 Player::getUnitCount(const QString & unitID)
+qint32 Player::getUnitCount(const QString & unitID) const
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -729,15 +729,18 @@ qint32 Player::getUnitCount(const QString & unitID)
     return ret;
 }
 
-qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID)
+qint32 Player::getUnitCount(Unit* pUnit, const QString & unitID) const
 {
     qint32 ret = 0;
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
     {
         Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
-        if (pLoadedUnit->getUnitID() == unitID)
+        if (pLoadedUnit->getOwner() == this)
         {
-            ret++;
+            if (unitID.isEmpty() ||pLoadedUnit->getUnitID() == unitID )
+            {
+                ret++;
+            }
         }
         ret += getUnitCount(pLoadedUnit, unitID);
     }
@@ -889,7 +892,7 @@ void Player::postAction(GameAction* pAction)
     }
 }
 
-qint32 Player::calcIncome(float modifier)
+qint32 Player::calcIncome(float modifier) const
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -1790,7 +1793,7 @@ void Player::setFundsModifier(float value)
     m_fundsModifier = value;
 }
 
-qint32 Player::calculatePlayerStrength()
+qint32 Player::calculatePlayerStrength() const
 {
     qint32 ret = 0;
     spGameMap pMap = GameMap::getInstance();
@@ -1804,10 +1807,27 @@ qint32 Player::calculatePlayerStrength()
                 pUnit->getOwner() == this)
             {
                 ret += pUnit->getCoUnitValue();
+                ret += calculatePlayerStrength(pUnit);
             }
         }
     }
     return ret + calcIncome();
+}
+
+
+qint32 Player::calculatePlayerStrength(Unit* pUnit) const
+{
+    qint32 ret = 0;
+    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
+        if (pLoadedUnit->getOwner() == this)
+        {
+            ret += pLoadedUnit->getCoUnitValue();
+        }
+        ret += calculatePlayerStrength(pLoadedUnit);
+    }
+    return ret;
 }
 
 void Player::serializeObject(QDataStream& pStream) const

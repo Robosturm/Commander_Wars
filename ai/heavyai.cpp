@@ -245,7 +245,7 @@ void HeavyAi::endTurn()
 bool HeavyAi::selectActionToPerform()
 {
     CONSOLE_PRINT("HeavyAi selecting action to be performed", Console::eDEBUG);
-    float bestScore = std::numeric_limits<float>::min();
+    float bestScore = std::numeric_limits<float>::lowest();
     qint32 index = -1;
     qint32 pos = 0;
     for (const auto & ownUnit : qAsConst(m_ownUnits))
