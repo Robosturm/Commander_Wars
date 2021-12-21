@@ -1661,6 +1661,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                     }
                     else if (canMoveAndFire)
                     {
+                        bool found = false;
                         for (qint32 i2 = 0; i2 < targets.size(); i2++)
                         {
                             distance = GlobalUtils::getDistance(newPosition, targets[i2]);
@@ -1671,49 +1672,52 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                  pTerrainUnit == pUnit))
                             {
                                 damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, targets[i2], pUnit, 0, newPosition, ignoreOutOfVisionRange);
+                                found = true;
                                 break;
                             }
                         }
-                        QVector<Unit*> usedUnits;
-                        for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                        if (found)
                         {
-                            for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
+                            QVector<Unit*> usedUnits;
+                            for (qint32 i2 = 0; i2 < targets.size(); i2++)
                             {
-                                Unit* pUnit = pUnits->at(i3);
-                                if (!usedUnits.contains(pUnit))
+                                for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                                 {
-                                    distance = GlobalUtils::getDistance(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()), targets[i2]);
-                                    if (distance >= minFireRange && distance <= maxFireRange &&
-                                        (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
-                                         pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
-                                        pNextEnemy->isAttackable(pUnit, true))
+                                    Unit* pUnit = pUnits->at(i3);
+                                    if (!usedUnits.contains(pUnit))
                                     {
-                                        usedUnits.append(pUnit);
-                                        if (baseCosts[i3] > 0 && baseCost > 0)
+                                        distance = GlobalUtils::getDistance(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()), targets[i2]);
+                                        if (distance >= minFireRange && distance <= maxFireRange &&
+                                            (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
+                                             pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
+                                            pNextEnemy->isAttackable(pUnit, true))
                                         {
-                                            if (baseCost > baseCosts[i3])
+                                            usedUnits.append(pUnit);
+                                            if (baseCosts[i3] > 0 && baseCost > 0)
                                             {
-                                                // reduce damage the more units it can attack
-                                                damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
-                                            }
-                                            else
-                                            {
-                                                damageData.moveLeft(damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                                if (baseCost > baseCosts[i3])
+                                                {
+                                                    // reduce damage the more units it can attack
+                                                    damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
+                                                }
+                                                else
+                                                {
+                                                    damageData.moveLeft(damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            if (damageData.x() < 0)
+                            {
+                                damageData.moveLeft(damageData.x());
+                            }
+                            if (damageData.x() > 0)
+                            {
+                                counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).y());
+                            }
                         }
-                    }
-
-                    if (damageData.x() < 0)
-                    {
-                        damageData.moveLeft(damageData.x());
-                    }
-                    if (damageData.x() > 0)
-                    {
-                        counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).y());
                     }
                 }
             }
