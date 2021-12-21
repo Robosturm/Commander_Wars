@@ -1528,6 +1528,33 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
     return value;
 }
 
+float CO::getAiCoBuildRatioModifier()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    float value = 1.0f;
+    QString function1 = "getAiCoBuildRatioModifier";
+    if (pInterpreter->exists(m_coID, function1))
+    {
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
+        if (erg.isNumber())
+        {
+            value = erg.toNumber();
+        }
+        if (value > MAX_CO_UNIT_VALUE)
+        {
+            value = MAX_CO_UNIT_VALUE;
+        }
+        else if (value < 0.0001f)
+        {
+            value = 0.0001f;
+        }
+    }
+    return value;
+}
+
 QStringList CO::getPerkList()
 {
     QStringList ret = m_perkList;

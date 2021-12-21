@@ -31,10 +31,13 @@ class NormalAi : public CoreAI
         qint32 cost{0};
         qint32 baseRange{0};
         float damage{0.0f};
+        float counterDamage{0.0f};
         qint32 notAttackableCount{0};
         float coBonus{0.0f};
         float closestTarget{0.0f};
         qint32 movePoints{0};
+        qint32 attackCount{0};
+        float sameFundsMatchUpScore{0.0f};
 
         qint32 smallTransporterCount{0};
         qint32 loadingPlace{0};
@@ -49,6 +52,7 @@ class NormalAi : public CoreAI
     {
         qint32 m_x = -1;
         qint32 m_y = -1;
+        QStringList buildList;
         QVector<UnitBuildData> m_buildData;
     };
     struct MoveUnitData
@@ -56,6 +60,14 @@ class NormalAi : public CoreAI
         spUnit pUnit;
         spUnitPathFindingSystem pUnitPfs;
     };
+    struct ExpectedFundsData
+    {
+        float damage{0.0f};
+        float counterDamage{0.0f};
+        float notAttackableCount{0};
+        qint32 attackCount{0};
+    };
+
 public:
     enum BuildItems
     {
@@ -79,6 +91,9 @@ public:
         SupplyRatio = 17,
         RequiredSupplyRatio = 18,
         LowFunds = 19,
+        AttackCount = 20,
+        SameFundsMatchUpScore = 21,
+        CounterDamage = 22,
         Max,
     };
 
@@ -345,7 +360,7 @@ protected:
     void createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
                              spQmlVectorUnit & pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
                              spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
-                             QVector<QVector4D> & attackCount, QVector<float> & buildData);
+                             QVector<QVector4D> & attackCount, QVector<float> & buildData, const QStringList & buildList);
     /**
      * @brief calcCostScore
      * @param data
@@ -380,7 +395,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
+    ExpectedFundsData calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -416,7 +431,13 @@ protected:
      * @return
      */
     float getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy, float & hpDamage) const;
-
+    /**
+     * @brief calcSameFundsMatchUpScore
+     * @param dummy
+     * @param buildList
+     * @return
+     */
+    float calcSameFundsMatchUpScore(Unit& dummy, const QStringList & buildList);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -514,6 +535,7 @@ private:
     double m_damageToUnitCostRatioBonus{20};
     double m_superiorityRatio{2.5f};
     double m_cheapUnitRatio{1.0f};
+    double m_normalUnitRatio{1.0f};
     double m_cheapUnitBonusMultiplier{45};
     double m_normalUnitBonusMultiplier{10};
     double m_expensiveUnitBonusMultiplier{15};
@@ -523,18 +545,23 @@ private:
     double m_cappingFunds{4700};
     double m_cappedFunds{1999};
     double m_targetPriceDifference{0.3f};
-    double m_highDamageMultiplier{4.0f};
     double m_fundsPerBuildingFactorC{4};
     double m_cheapUnitValue{3000.0f};
-    double m_cheapUnitDamageMalus{0.5f};
-    double m_damageBonus{3.0f};
     double m_supportDamageBonus{1.0f};
+    double m_maxCloseDistanceDamageBonus{1.0f};
+    double m_minCloseDistanceDamageBonus{0.2f};
+    double m_earlyGame{5};
+    double m_startDayScoreVariancer{5.0f};
+    double m_sameFundsMatchUpBonus{16.0f};
+    double m_counterDamageBonus{25.0f};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};
     double m_ProducingTransportRatioBonus{1.7f};
     double m_ProducingTransportLoadingBonus{15.0f};
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
+
+    float m_currentDirectIndirectRatio{1.0f};
 
     QVector<IniData> m_iniData;
 };

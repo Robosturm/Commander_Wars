@@ -526,6 +526,12 @@ protected:
      */
     float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
     /**
+     * @brief getAiCoBuildRatioModifier
+     * @param pCO
+     * @return
+     */
+    float getAiCoBuildRatioModifier();
+    /**
      * @brief GetUnitCounts
      * @param pUnits
      * @param infantryUnits

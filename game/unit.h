@@ -155,6 +155,11 @@ public:
 
 public slots:
     /**
+     * @brief getCOSpecificUnit
+     * @return
+     */
+    bool getCOSpecificUnit();
+    /**
      * @brief setVirtualHp
      * @param value
      */
@@ -452,14 +457,19 @@ public slots:
      * @param pPlayer
      * @return
      */
-    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
+    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);    
     /**
      * @brief hasTerrainHide
      * @param pPlayer
      * @return
      */
     bool hasTerrainHide(Player* pPlayer);
-
+    /**
+     * @brief getBaseDamage
+     * @param pEnemyUnit
+     * @return
+     */
+    float getBaseDamage(Unit* pEnemyUnit);
     qint32 getUnitRank() const;
     void setUnitRank(const qint32 &UnitRank, bool force = false);
 

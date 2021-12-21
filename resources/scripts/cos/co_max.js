@@ -241,6 +241,12 @@ var Constructor = function()
         }
         return 0;
     };
+
+    this.getAiCoBuildRatioModifier = function(co)
+    {
+        return 10;
+    };
+
     this.getCOUnits = function(co, building)
     {
         var buildingId = building.getBuildingID();

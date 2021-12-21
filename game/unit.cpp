@@ -360,6 +360,26 @@ qint32 Unit::getUnitType()
     }
 }
 
+bool Unit::getCOSpecificUnit()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getCOSpecificUnit";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(nullptr);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
+
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;
@@ -3332,6 +3352,25 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         }
     }
     return false;
+}
+
+float Unit::getBaseDamage(Unit* pEnemyUnit)
+{
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    float dmg = 0.0f;
+    if (!getWeapon1ID().isEmpty())
+    {
+        dmg = pWeaponManager->getBaseDamage(getWeapon1ID(), pEnemyUnit);
+    }
+    if (!getWeapon2ID().isEmpty())
+    {
+        float dmg2 = pWeaponManager->getBaseDamage(getWeapon2ID(), pEnemyUnit);
+        if (dmg2 > dmg)
+        {
+            dmg = dmg2;
+        }
+    }
+    return dmg;
 }
 
 void Unit::serializeObject(QDataStream& pStream) const

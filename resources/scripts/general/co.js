@@ -467,6 +467,12 @@ var CO =
 //        return 0;
 //    },
 
+    getAiCoBuildRatioModifier : function(co)
+    {
+        // multiplier shifting the general indirect to direct unit ratio the ai tries to maintain.
+        return 1.0;
+    },
+
     getAiUsePowerAlways : function(co, powerSurplus)
     {
         if (co.canUseSuperpower())

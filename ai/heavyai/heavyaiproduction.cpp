@@ -451,22 +451,7 @@ float HeavyAi::getProductionScoreMultiplier(QPoint position, QPoint target, qint
 
 float HeavyAi::getBaseDamage(Unit* pAttacker, Unit* pDefender)
 {
-    WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    float dmg = 0.0f;
-    QString weaponId = pAttacker->getWeapon1ID();
-    if (!weaponId.isEmpty())
-    {
-        dmg = pWeaponManager->getBaseDamage(weaponId, pDefender);
-    }
-    weaponId = pAttacker->getWeapon2ID();
-    if (!weaponId.isEmpty())
-    {
-        float dmg2 = pWeaponManager->getBaseDamage(weaponId, pDefender);
-        if (dmg2 > dmg)
-        {
-            dmg = dmg2;
-        }
-    }
+    float dmg = pAttacker->getBaseDamage(pDefender);
     dmg *= pAttacker->getHp() / Unit::MAX_UNIT_HP;
     // cap damage
     if (dmg > pDefender->getHp() * Unit::MAX_UNIT_HP)

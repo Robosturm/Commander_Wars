@@ -245,6 +245,11 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoBuildRatioModifier = function(co)
+    {
+        return 0.1;
+    };
+
     this.getCOArmy = function()
     {
         return "BM";

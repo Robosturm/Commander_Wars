@@ -575,6 +575,13 @@ public slots:
      */
     float getAiCoUnitBonus(Unit* pUnit, bool & valid);
     /**
+     * @brief getAiCoBuildRatioModifier
+     * @param pUnit
+     * @param valid
+     * @return
+     */
+    float getAiCoBuildRatioModifier();
+    /**
      * @brief getPerkList
      * @return
      */

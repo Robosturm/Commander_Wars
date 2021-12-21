@@ -624,7 +624,7 @@ private:
     GameEnums::PowerGainZone m_powerGainZone{GameEnums::PowerGainZone_GlobalCoZoneBonus};
     GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
     float m_powerUsageReduction{0.2f};
-    float m_powerLoose{0.5f};
+    float m_powerLoose{0.0f};
 
     Password m_password;
     QString m_description;

@@ -1971,6 +1971,20 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
     return multiplier;
 }
 
+float CoreAI::getAiCoBuildRatioModifier()
+{
+    float multiplier = 1.0f;
+    for (qint32 i = 0; i < m_pPlayer->getMaxCoCount(); ++i)
+    {
+        CO* pCO = m_pPlayer->getCO(i);
+        if (pCO != nullptr)
+        {
+            multiplier *= pCO->getAiCoBuildRatioModifier();
+        }
+    }
+    return multiplier;
+}
+
 void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                               UnitCountData & countData)
 {
