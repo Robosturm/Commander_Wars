@@ -298,6 +298,10 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getAiCoBuildRatioModifier = function(co)
+    {
+        return 0.5;
+    };
     this.getCOUnits = function(co, building)
     {
         var buildingId = building.getBuildingID();

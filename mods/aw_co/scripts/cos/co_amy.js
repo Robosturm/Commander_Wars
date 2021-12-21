@@ -65,9 +65,14 @@ CO_AMY.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (unit.getMovementType() === "MOVE_HOVERCRAFT")
         {
-            if (unit.getMovementType() === "MOVE_HOVERCRAFT")
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+
+                return 2;
+            }
+            else
             {
                 return 1;
             }

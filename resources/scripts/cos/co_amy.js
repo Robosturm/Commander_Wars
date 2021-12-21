@@ -193,9 +193,14 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        if (unit.getMovementType() === "MOVE_HOVERCRAFT")
         {
-            if (unit.getMovementType() === "MOVE_HOVERCRAFT")
+            if (co.getPowerMode() === GameEnums.PowerMode_Power)
+            {
+
+                return 2;
+            }
+            else
             {
                 return 1;
             }
@@ -252,7 +257,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units.") +
+        var text = qsTr("\nGlobal Effect: \nReef movement costs are equal to 1 for all of Amy's units and Hovercrafts have one extra movement.") +
                 qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower.");
         text = replaceTextArgs(text, [CO_AMY.hoverCraftBoost]);
         return text;
