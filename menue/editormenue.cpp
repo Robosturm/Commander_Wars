@@ -188,7 +188,6 @@ EditorMenue::EditorMenue()
     connect(this, &EditorMenue::sigLeftClickUp, this, &EditorMenue::onMapClickedLeftUp, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::keyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
@@ -907,7 +906,7 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
                         // do nothing
                         break;
                     }
-                }
+                }                
             }
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
