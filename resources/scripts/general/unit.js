@@ -312,6 +312,14 @@ var UNIT =
         return GameEnums.WeaponType_Both;
     },
 
+    canUseWeapon : function(unit, weaponIndex, unitX, unitY, targetX, targetY)
+    {
+        // return false if the unit isn't allowed to attack from the new position
+        // note: this isn't used for ammo checks.
+        // You can use it for different range attack checks and other weird mechanics.
+        return true;
+    },
+
     onKilled : function(animation)
     {
         animation.seekBuffer();

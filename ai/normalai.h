@@ -94,6 +94,7 @@ public:
         AttackCount = 20,
         SameFundsMatchUpScore = 21,
         CounterDamage = 22,
+        EnemyUnitCount = 23,
         Max,
     };
 
@@ -489,6 +490,7 @@ private:
     double m_enemyUnitCountDamageReductionMultiplier{0.5f};
     double m_fundsPerBuildingFactorA{2.5f};
     double m_fundsPerBuildingFactorB{1.65f};
+    double m_fundsPerBuildingFactorD{3.0f};
     double m_ownUnitEnemyUnitRatioAverager{10};
     double m_maxDayScoreVariancer{10};
     double m_directIndirectUnitBonusFactor{1.2f};
@@ -554,6 +556,8 @@ private:
     double m_startDayScoreVariancer{5.0f};
     double m_sameFundsMatchUpBonus{16.0f};
     double m_counterDamageBonus{25.0f};
+    double m_attackCountBonus{25.0f};
+    double m_maxOverkillBonus{2.0f};
 
     double m_ProducingTransportSearchrange{6};
     double m_ProducingTransportSizeBonus{10};

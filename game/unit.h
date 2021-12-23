@@ -375,6 +375,8 @@ public slots:
     void setHp(const float &value);
     qint32 getHpRounded() const;
 
+    bool hasDirectWeapon();
+
     qint32 getAmmo1() const;
     void setAmmo1(const qint32 &value);
     bool hasAmmo1() const;

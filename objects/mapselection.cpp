@@ -437,11 +437,14 @@ void MapSelection::updateSelection(qint32 startIndex)
                         QString item;
                         for (qint32 i2 = 0; i2 < data3.size(); i2++)
                         {
-                            if (i2 > 0)
+                            if (!data3[i2].isEmpty())
                             {
-                                item += " ";
+                                if (i2 > 0)
+                                {
+                                    item += " ";
+                                }
+                                item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                             }
-                            item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                         }
                         m_Items[m_mapMapping.size()]->setHtmlText(item + mapNameEnding);
                     }

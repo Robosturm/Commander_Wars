@@ -243,6 +243,11 @@ qint32 GlobalUtils::getDistance(const QPoint & p1, const QPoint & p2)
     return qAbs(p1.x() - p2.x()) + qAbs(p1.y() - p2.y());
 }
 
+qint32 GlobalUtils::getDistance(qint32 x1, qint32 y1, qint32 x2, qint32 y2)
+{
+    return qAbs(x1 - x2) + qAbs(y1 - y2);
+}
+
 QmlVectorPoint* GlobalUtils::getEmptyPointArray()
 {
     return new QmlVectorPoint();

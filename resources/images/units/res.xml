@@ -278,5 +278,8 @@
         <!-- logi truck -->
         <image file="logi_truck+mask.png" cols = "4"  />
         <image file="logi_truck+walk+mask.png" cols = "4" rows = "4"  />
+        <!-- ranger -->
+        <image file="ranger+mask.png" cols = "4"  />
+        <image file="ranger+walk+mask.png" cols = "4" rows = "4"  />
     </atlas>
 </resources>

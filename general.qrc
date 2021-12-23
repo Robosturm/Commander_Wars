@@ -6155,5 +6155,9 @@
         <file>resources/images/building/waste_weld+E+W+mask.png</file>
         <file>resources/images/building/waste_weld+N+S.png</file>
         <file>resources/images/building/waste_weld+N+S+mask.png</file>
+        <file>resources/images/units/ranger+mask.png</file>
+        <file>resources/images/units/ranger+walk+mask.png</file>
+        <file>resources/scripts/weapons/weapon_designator.js</file>
+        <file>resources/scripts/units/__ZCOUNIT_RANGER.js</file>
     </qresource>
 </RCC>

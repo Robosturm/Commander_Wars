@@ -13,14 +13,26 @@ var Constructor = function()
         var ret = false;
         // are we allowed to attack from this field?
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-                ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
+            ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
         {
-            var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
+            var minRange = unit.getMinRange(actionTargetField);
+            var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));
+            if (unit.hasDirectWeapon() && minRange > 1)
+            {
+                var minFields = globals.getCircle(1, 1);
+                for (var i = 0; i < minFields.size(); ++i)
+                {
+                    fields.append(minFields.at(i))
+                }
+                minFields.remove();
+            }
+
             // check all fields we can attack
             for (var i = 0; i < fields.size(); i++)
             {
-                var x = fields.at(i).x + actionTargetField.x;
-                var y = fields.at(i).y + actionTargetField.y;
+                var field = fields.at(i);
+                var x = field.x + actionTargetField.x;
+                var y = field.y + actionTargetField.y;
                 if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
                 {
                     // check with which weapon we can attack and if we could deal damage with this weapon
@@ -95,7 +107,8 @@ var Constructor = function()
         return damage;
     };
 
-    this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result)
+    this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField,
+                                             defUnit, x, y, defenderTakenDamage, luckMode, result)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
@@ -116,7 +129,7 @@ var Constructor = function()
         {
             if (baseDamage1 >= baseDamage2)
             {
-                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);;
+                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);
                 result.y = 0;
             }
             else
@@ -389,7 +402,18 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
-        var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
+        var minRange = unit.getMinRange(actionTargetField);
+        var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));
+        if (unit.hasDirectWeapon() && minRange > 1)
+        {
+            var minFields = globals.getCircle(1, 1);
+            for (var i = 0; i < minFields.size(); ++i)
+            {
+                fields.append(minFields.at(i))
+            }
+            minFields.remove();
+        }
+
         data.setColor("#FFFF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
@@ -397,8 +421,9 @@ var Constructor = function()
         // check all fields we can attack
         for (var i = 0; i < fields.size(); i++)
         {
-            var x = fields.at(i).x + actionTargetField.x;
-            var y = fields.at(i).y + actionTargetField.y;
+            var field = fields.at(i)
+            var x = field.x + actionTargetField.x;
+            var y = field.y + actionTargetField.y;
             // generally attacks on shrouded fields are forbidden
             if (map.onMap(x, y) && unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {

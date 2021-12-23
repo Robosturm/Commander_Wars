@@ -363,7 +363,7 @@ var Constructor = function()
             buildingId === "TOWN" ||
             buildingId === "HQ")
         {
-            return [];
+            return ["ZCOUNIT_RANGER"];
         }
         return [];
     };

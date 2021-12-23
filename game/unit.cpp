@@ -1019,21 +1019,40 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
     }
     if (!ret)
     {
-        if (weaponType == GameEnums::WeaponType::WeaponType_Both)
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        QJSValue unit = pInterpreter->newQObject(this);
+        args << unit;
+        args << weaponIndex;
+        args << unitX;
+        args << unitY;
+        args << targetX;
+        args << targetY;
+        QJSValue erg = pInterpreter->doFunction(m_UnitID, "canUseWeapon", args);
+        if (!erg.isBool() || erg.toBool())
         {
-            ret = true;
-        }
-        else
-        {
-            qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
-            if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
-                (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+            if (weaponType == GameEnums::WeaponType::WeaponType_Both)
             {
                 ret = true;
+            }
+            else
+            {
+                qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
+                if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
+                    (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+                {
+                    ret = true;
+                }
             }
         }
     }
     return ret;
+}
+
+bool Unit::hasDirectWeapon()
+{
+    return getTypeOfWeapon1() == GameEnums::WeaponType::WeaponType_Direct ||
+           getTypeOfWeapon2() == GameEnums::WeaponType::WeaponType_Direct;
 }
 
 GameEnums::WeaponType Unit::getTypeOfWeapon1()
