@@ -58,6 +58,14 @@ public:
         double m_maxValue;
     };
 
+    struct DamageData
+    {
+        qint32 x{-1};
+        qint32 y{-1};
+        float fundsDamage{0};
+        float hpDamage{0};
+        float counterDamage{0.0f};
+    };
 
     /**
      * @brief The AISteps enum
@@ -269,7 +277,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const;
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -277,7 +285,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const;
+    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief moveAwayFromProduction
      * @param pUnits

@@ -576,18 +576,18 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
             pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
             UnitPathFindingSystem pfs(pUnit);
             pfs.explore();
-            QVector<QVector4D> ret;
+            QVector<CoreAI::DamageData> ret;
             QVector<QVector3D> moveTargetFields;
             CoreAI::getAttackTargets(pUnit, pAction, &pfs, ret, moveTargetFields);
             qint32 targetIdx = getBestAttackTarget(pUnit, pUnits, ret, moveTargetFields, pBuildings, pEnemyBuildings);
             if (targetIdx >= 0)
             {
-                QVector4D target = ret[targetIdx];
+                CoreAI::DamageData target = ret[targetIdx];
                 QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[targetIdx].x()),
                                                    static_cast<qint32>(moveTargetFields[targetIdx].y()));
                 pAction->setMovepath(path, pfs.getCosts(path));
-                CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
-                if (GameMap::getInstance()->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
+                CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
+                if (GameMap::getInstance()->getTerrain(static_cast<qint32>(target.x), static_cast<qint32>(target.y))->getUnit() == nullptr)
                 {
                     m_IslandMaps.clear();
                 }
@@ -595,7 +595,7 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint
                 {
                     m_updatePoints.append(pUnit->getPosition());
                     m_updatePoints.append(pAction->getActionTarget());
-                    m_updatePoints.append(QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
+                    m_updatePoints.append(QPoint(static_cast<qint32>(target.x), static_cast<qint32>(target.y)));
                     emit performAction(pAction);
                     return true;
                 }
@@ -1401,7 +1401,7 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitP
     return -1;
 }
 
-qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector4D>& ret,
+qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
                                      QVector<QVector3D>& moveTargetFields,
                                      spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const
 {
@@ -1415,7 +1415,7 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVec
     for (qint32 i = 0; i < ret.size(); i++)
     {
         QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
-        Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
+        Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x), static_cast<qint32>(ret[i].y))->getUnit();
 
         qint32 minfireRange = pUnit->getMinRange(moveTarget);
         qint32 fundsDamage = 0;
@@ -1423,8 +1423,8 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVec
         if (pEnemy != nullptr)
         {
             float currentHp = pEnemy->getHp();
-            float newHp = currentHp - static_cast<float>(ret[i].w());
-            fundsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
+            float newHp = currentHp - static_cast<float>(ret[i].hpDamage);
+            fundsDamage = static_cast<qint32>(ret[i].fundsDamage * calculateCaptureBonus(pEnemy, newHp));
             if (fundsDamage > minFundsDamage && newHp > 0)
             {
                 pEnemy->setVirtualHp(newHp);
@@ -1450,15 +1450,15 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVec
         }
         else
         {
-            fundsDamage = static_cast<qint32>(ret[i].z());
+            fundsDamage = static_cast<qint32>(ret[i].fundsDamage);
         }
-        float counterDamage = calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w() + bonusDamage, pBuildings, pEnemyBuildings);
+        float counterDamage = calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].hpDamage + bonusDamage, pBuildings, pEnemyBuildings);
         if (counterDamage < 0)
         {
             counterDamage = 0;
         }
         fundsDamage -= counterDamage;
-        Terrain* pTerrain = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()));
+        Terrain* pTerrain = pMap->getTerrain(static_cast<qint32>(ret[i].x), static_cast<qint32>(ret[i].y));
         qint32 targetDefense = pTerrain->getDefense(pUnit);
         if (fundsDamage >= minFundsDamage)
         {
@@ -1495,7 +1495,7 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
             {
                 spGameAction pAction = spGameAction::create(ACTION_FIRE);
                 pAction->setTarget(QPoint(pUnitData.pUnit->Unit::getX(), pUnitData.pUnit->Unit::getY()));
-                QVector<QVector4D> ret;
+                QVector<CoreAI::DamageData> ret;
                 QVector<QVector3D> moveTargetFields;
                 CoreAI::getAttackTargets(pUnitData.pUnit.get(), pAction, pUnitData.pUnitPfs.get(), ret, moveTargetFields);
                 QVector<Unit*> pUsedUnits;
@@ -1504,17 +1504,17 @@ float NormalAi::getOwnSupportDamage(Unit* pUnit, QPoint moveTarget, Unit* pEnemy
                 for (qint32 i = 0; i < ret.size(); i++)
                 {
                     QPoint newMoveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
-                    Unit* pNewEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
+                    Unit* pNewEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x), static_cast<qint32>(ret[i].y))->getUnit();
                     if (pNewEnemy == pEnemy &&
                         moveTarget != newMoveTarget &&
                         pNewEnemy != nullptr)
                     {
-                        float newHp = pEnemy->getHp() - static_cast<float>(ret[i].w());
-                        qint32 fundsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
+                        float newHp = pEnemy->getHp() - static_cast<float>(ret[i].hpDamage);
+                        qint32 fundsDamage = static_cast<qint32>(ret[i].fundsDamage * calculateCaptureBonus(pEnemy, newHp));
                         if (fundsDamage > minFundsDamage && fundsDamage > newFundsDamage)
                         {
                             newFundsDamage = fundsDamage;
-                            newHpDamage = ret[i].w();
+                            newHpDamage = ret[i].hpDamage;
                         }
                     }
                     else if (pNewEnemy != nullptr &&
@@ -1876,16 +1876,16 @@ void NormalAi::calcVirtualDamage(spQmlVectorUnit & pUnits)
             action->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
             UnitPathFindingSystem pfs(pUnit);
             pfs.explore();
-            QVector<QVector4D> ret;
+            QVector<CoreAI::DamageData> ret;
             QVector<QVector3D> moveTargetFields;
             CoreAI::getAttackTargets(pUnit, action, &pfs, ret, moveTargetFields);
             for (qint32 i2 = 0; i2 < ret.size(); i2++)
             {
-                QPoint pos(static_cast<qint32>(ret[i2].x()), static_cast<qint32>(ret[i2].y()));
+                QPoint pos(static_cast<qint32>(ret[i2].x), static_cast<qint32>(ret[i2].y));
                 if (!attackedUnits.contains(pos))
                 {
                     attackedUnits.append(pos);
-                    damage.append(ret[i2].w());
+                    damage.append(ret[i2].hpDamage);
                 }
             }
         }

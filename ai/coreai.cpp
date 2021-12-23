@@ -475,7 +475,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction & pAction, QVecto
     }
 }
 
-void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const
+void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -499,7 +499,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindi
     pAction->setMovepath(QVector<QPoint>(), 0);
 }
 
-void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields) const
+void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const
 {
     spGameMap pMap = GameMap::getInstance();
     // much easier case
@@ -526,7 +526,12 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QV
                     }
                 }
                 QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
-                ret.append(QVector4D(target.x(), target.y(), dmg.y(), dmg.x()));
+                DamageData data;
+                data.x = target.x();
+                data.y = target.y();
+                data.fundsDamage = dmg.y();
+                data.hpDamage = dmg.x();
+                ret.append(data);
                 QPoint point = pAction->getActionTarget();
                 moveTargetFields.append(QVector3D(point.x(), point.y(), 1 + stealthMalus));
             }
@@ -534,7 +539,12 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QV
             {
                 if (isAttackOnTerrainAllowed(pTerrain, damage.x()))
                 {
-                    ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue, damage.x()));
+                    DamageData data;
+                    data.x = target.x();
+                    data.y = target.y();
+                    data.fundsDamage = static_cast<float>(damage.x()) * m_buildingValue;
+                    data.hpDamage = damage.x();
+                    ret.append(data);
                     QPoint point = pAction->getActionTarget();
                     moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }

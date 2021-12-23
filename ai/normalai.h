@@ -274,7 +274,7 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector4D>& ret,
+    qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<CoreAI::DamageData>& ret,
                                QVector<QVector3D>& moveTargetFields,
                                spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings) const;
     /**
