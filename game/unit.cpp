@@ -2214,7 +2214,7 @@ float Unit::getVirtualHpValue() const
     return m_virtualHp;
 }
 
-float Unit::getVirtualHp()
+float Unit::getVirtualHp() const
 {
     if (m_virtualHp > 0.0f)
     {

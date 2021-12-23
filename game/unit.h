@@ -173,7 +173,7 @@ public slots:
      * @brief getVirtualHpValue
      * @return
      */
-    float getVirtualHpValue();
+    float getVirtualHpValue() const;
     /**
      * @brief transformUnit
      * @param unitID
