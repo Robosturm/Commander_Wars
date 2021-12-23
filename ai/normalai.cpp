@@ -1427,9 +1427,9 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVec
             fundsDamage = static_cast<qint32>(ret[i].fundsDamage * calculateCaptureBonus(pEnemy, newHp));
             if (fundsDamage > minFundsDamage && newHp > 0)
             {
-                pEnemy->setVirtualHp(newHp);
+                pEnemy->setVirtualHpValue(newHp);
                 fundsDamage += getOwnSupportDamage(pUnit, moveTarget, pEnemy, bonusDamage);
-                pEnemy->setVirtualHp(0.0f);
+                pEnemy->setVirtualHpValue(0.0f);
             }
             if (minfireRange > 1)
             {

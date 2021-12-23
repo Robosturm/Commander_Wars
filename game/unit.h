@@ -160,15 +160,20 @@ public slots:
      */
     bool getCOSpecificUnit();
     /**
-     * @brief setVirtualHp
+     * @brief setVirtualHpValue
      * @param value
      */
-    void setVirtualHp(const float &value);
+    void setVirtualHpValue(const float &value);
     /**
      * @brief getVirtualHp
      * @return
      */
-    float getVirtualHp();
+    float getVirtualHp() const;
+    /**
+     * @brief getVirtualHpValue
+     * @return
+     */
+    float getVirtualHpValue();
     /**
      * @brief transformUnit
      * @param unitID

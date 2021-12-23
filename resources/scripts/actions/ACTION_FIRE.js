@@ -186,7 +186,6 @@ var Constructor = function()
             if (defender.getMinRange(defPos) === 1 && defenderWeapon !== "")
             {
                 var health = defender.getVirtualHp() - takenDamage / 10.0;
-                health = globals.roundUp(health);
                 damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
                                                 attacker, attackerPosition, true,
                                                 luckMode);
@@ -206,11 +205,10 @@ var Constructor = function()
         var damage = baseDamage;
         if (baseDamage > 0.0)
         {
-            var hp = attacker.getVirtualHp();
-            attacker.setVirtualHp(attackerBaseHp);
+            var virtualHp = attacker.getVirtualHpValue();
+            attacker.setVirtualHpValue(attackerBaseHp);
             var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defenderPosition, isDefender, luckMode);
             var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
-            attacker.setVirtualHp(hp);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             var luckDamage = 0;
             if (luckMode !== GameEnums.LuckDamageMode_Off)
@@ -252,6 +250,7 @@ var Constructor = function()
             {
                 damage = 0.0;
             }
+            attacker.setVirtualHpValue(virtualHp);
         }
         return damage;
     };
@@ -369,7 +368,7 @@ var Constructor = function()
                         (defTerrain.getHp() > 0))
                 {
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
-                            unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
+                        unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
                     {
                         dmg1 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }

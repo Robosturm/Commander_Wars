@@ -2203,9 +2203,15 @@ void Unit::setHp(const float &value)
     }
 }
 
-void Unit::setVirtualHp(const float &value)
+void Unit::setVirtualHpValue(const float &value)
 {
     m_virtualHp = value;
+}
+
+
+float Unit::getVirtualHpValue() const
+{
+    return m_virtualHp;
 }
 
 float Unit::getVirtualHp()
