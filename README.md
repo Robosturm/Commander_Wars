@@ -13,7 +13,7 @@ The project is seperated in three parts.
 If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
 
-Latest Release is Beta 20 which can be found here: [CoW Beta 20](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_20)
+Latest Release is Beta 21 which can be found here: [CoW Beta 21](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_21_4)
 
 Videos of the game can be found on [Youtube](https://www.youtube.com/user/Robosturm)
 
