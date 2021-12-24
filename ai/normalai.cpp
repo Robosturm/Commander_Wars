@@ -1640,22 +1640,25 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                     {
                         // indirect attack
                         damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, enemyPos, pUnit, 0, newPosition, ignoreOutOfVisionRange);
-                        for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
+                        if (damageData.x() >= m_notAttackableDamage)
                         {
-                            distance = GlobalUtils::getDistance(QPoint(pUnits->at(i3)->Unit::getX(), pUnits->at(i3)->Unit::getY()), enemyPos);
-                            if (distance >= minFireRange && distance <= maxFireRange &&
-                                pNextEnemy->isAttackable(pUnits->at(i3), true))
+                            for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                             {
-                                if (baseCosts[i3] > 0 && baseCost > 0)
+                                distance = GlobalUtils::getDistance(QPoint(pUnits->at(i3)->Unit::getX(), pUnits->at(i3)->Unit::getY()), enemyPos);
+                                if (distance >= minFireRange && distance <= maxFireRange &&
+                                    pNextEnemy->isAttackable(pUnits->at(i3), true))
                                 {
-                                    if (baseCost > baseCosts[i3])
+                                    if (baseCosts[i3] > 0 && baseCost > 0)
                                     {
-                                        // reduce damage the more units it can attack
-                                        damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
-                                    }
-                                    else
-                                    {
-                                        damageData.moveLeft( damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                        if (baseCost > baseCosts[i3])
+                                        {
+                                            // reduce damage the more units it can attack
+                                            damageData.moveLeft(damageData.x() - damageData.x() * 0.5f * baseCosts[i3] / baseCost);
+                                        }
+                                        else
+                                        {
+                                            damageData.moveLeft(damageData.x() - damageData.x() * 0.5f *  baseCost / baseCosts[i3]);
+                                        }
                                     }
                                 }
                             }
@@ -1678,7 +1681,8 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                 break;
                             }
                         }
-                        if (found)
+                        if (found &&
+                            damageData.x() >= m_notAttackableDamage)
                         {
                             QVector<Unit*> usedUnits;
                             for (qint32 i2 = 0; i2 < targets.size(); i2++)
@@ -1700,11 +1704,11 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                                                 if (baseCost > baseCosts[i3])
                                                 {
                                                     // reduce damage the more units it can attack
-                                                    damageData.moveLeft(damageData.x() * baseCosts[i3] / baseCost / 2);
+                                                    damageData.moveLeft(damageData.x() - damageData.x() * 0.5f * baseCosts[i3] / baseCost );
                                                 }
                                                 else
                                                 {
-                                                    damageData.moveLeft(damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                                    damageData.moveLeft(damageData.x() - damageData.x() * 0.5f *  baseCost / baseCosts[i3]);
                                                 }
                                             }
                                         }
@@ -1713,7 +1717,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QP
                             }
                             if (damageData.x() < 0)
                             {
-                                damageData.moveLeft(damageData.x());
+                                damageData.moveLeft(0);
                             }
                             if (damageData.x() > 0)
                             {

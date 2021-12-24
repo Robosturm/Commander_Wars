@@ -3122,16 +3122,6 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="519"/>
-        <source>Gamepad: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="523"/>
-        <source>Enables Gamepad support for controllers. Note: This is experimental and won&apos;t 100% with all controllers and isn&apos;t supported for android and linux.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/optionmenue.cpp" line="506"/>
         <source>Touch Sensitivity: </source>
         <translation type="unfinished"></translation>
@@ -3139,6 +3129,16 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     <message>
         <location filename="../menue/optionmenue.cpp" line="510"/>
         <source>Selects how long a touch is treated as the same point. Used for detecting long press events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="519"/>
+        <source>Gamepad: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="523"/>
+        <source>Enables Gamepad support for controllers. Note: This is experimental and won&apos;t 100% with all controllers and isn&apos;t supported for android and linux.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
