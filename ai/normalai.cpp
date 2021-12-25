@@ -1968,7 +1968,9 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     data[InfantryCount] = countData.infantryUnits;
     m_currentDirectIndirectRatio = m_directIndirectRatio * getAiCoBuildRatioModifier();
     // calc average costs if we would build same cost units on every building
+
     float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorD;
+    CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
     if (fundsPerFactory <= m_cappingFunds)
     {
         data[LowFunds] = 1.0;
@@ -2439,16 +2441,20 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
         {
             enemyRange = (enemyMovepoints + enemyFirerange) * 0.5f;
         }
-
         float distance = GlobalUtils::getDistance(position, enemyPosition);
         float dmg = dummy.getBaseDamage(pEnemyUnit);
         if (dmg > pEnemyUnit->getHp() * Unit::MAX_UNIT_HP)
         {
             dmg = pEnemyUnit->getHp() * Unit::MAX_UNIT_HP;
         }
+        float counterDmg = -1.0f;
+        if (pEnemyUnit->hasWeapons())
+        {
+            counterDmg = pEnemyUnit->getBaseDamage(&dummy) * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
+        }
         if (dmg > 0.0f)
         {
-            bool firstStrikes = ownRange >= enemyRange;
+            bool firstStrikes = ownRange >= enemyRange || counterDmg <= m_notAttackableDamage;
             float resDamage = 0;
 
             auto enemyValue = pEnemyUnit->getCoUnitValue();
@@ -2459,7 +2465,7 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
                 resDamage = enemyValue * (m_maxOverkillBonus - enemyValue / resDamage);
             }
             float mult = (ownRange + m_smoothingValue) / (enemyRange + m_smoothingValue);
-            if (mult > m_maxDistanceMultiplier)
+            if (mult > m_maxDistanceMultiplier || counterDmg <= m_notAttackableDamage)
             {
                 mult = m_maxDistanceMultiplier;
             }
@@ -2471,11 +2477,11 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
             float factor = 0.0f;
             if (dmg > m_highDamage)
             {
-                factor += (attackCount[i3].w() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
+                factor += 1.5f - (attackCount[i3].w() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
             }
             else if (dmg > m_midDamage)
             {
-                factor += (attackCount[i3].z() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
+                factor += 1.0f - (attackCount[i3].z() + m_smoothingValue) / (attackCount[i3].x() + m_smoothingValue);
             }
             else if (dmg < m_notAttackableDamage)
             {
@@ -2550,12 +2556,17 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
             }
 
             damageCount += resDamage * factor;
-            attacksCount += factor;
+            if (dmg >= m_midDamage)
+            {
+                attacksCount += factor;
+            }
+            else
+            {
+                extraMalusCount += factor;
+            }
         }
-
-        if (pEnemyUnit->hasWeapons())
+        if (counterDmg >= 0.0f)
         {
-            float counterDmg = pEnemyUnit->getBaseDamage(&dummy) * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
             if ((counterDmg >= m_notAttackableDamage) ||
                 (counterDmg <= m_notAttackableDamage && dmg <= m_notAttackableDamage))
             {
@@ -2640,7 +2651,11 @@ float NormalAi::calcSameFundsMatchUpScore(Unit& dummy, const QStringList & build
             float dmg = dummy.getBaseDamage(&dummyMatchUp);
             if (dmg >= 0.0f)
             {
-                if (matchUpMovepoints > movepoints)
+                if (dmg <= m_notAttackableDamage)
+                {
+                    dmg = 0.0f;
+                }
+                else if (matchUpMovepoints > movepoints)
                 {
                     dmg *= 0.5f;
                 }
@@ -2879,18 +2894,20 @@ float NormalAi::calcBuildScore(QVector<float>& data, UnitBuildData & unitBuildDa
         GameMap::getInstance()->getCurrentDay() > m_earlyGame))
     {
         float attackScore = 0.0f;
+        float attackCountScore = 0.0f;
         attackScore += data[DamageData] / data[UnitCost] * m_damageToUnitCostRatioBonus;
         attackScore += (1.0f - data[CounterDamage] / data[UnitCost]) * m_counterDamageBonus;
         if (data[EnemyUnitCount] > 0)
         {
-            attackScore += data[AttackCount] / data[EnemyUnitCount] * m_attackCountBonus;
+            attackCountScore += data[AttackCount] / data[EnemyUnitCount] * m_attackCountBonus;
         }
-
-        attackScore += data[SameFundsMatchUpScore] * m_sameFundsMatchUpBonus;
-        score += attackScore;
+        float sameFoundsScore = data[SameFundsMatchUpScore] * m_sameFundsMatchUpBonus;
+        score += attackScore+ attackCountScore + sameFoundsScore;
         CONSOLE_PRINT("NormalAi::calcBuildScore damage=" + QString::number(data[DamageData]) +
                       " and counter damage " + QString::number(data[CounterDamage]) +
-                      " attack score=" + QString::number(attackScore), Console::eDEBUG);
+                      " attack score=" + QString::number(attackScore) +
+                      " attack count score=" + QString::number(attackCountScore) +
+                      " same founds score=" + QString::number(sameFoundsScore), Console::eDEBUG);
     }
     // apply co buff bonus
     score += data[COBonus] * m_coUnitBuffBonus;
@@ -2931,10 +2948,10 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
         score = 0;
     }
     else if (data[UseHighTechUnits] > 0.0f &&
-             data[FundsFactoryRatio] > m_normalUnitRatio -  m_targetPriceDifference &&
-             data[FundsFactoryRatio] < m_normalUnitRatio + m_targetPriceDifference)
+             data[FundsFactoryRatio] >= m_normalUnitRatio -  m_targetPriceDifference &&
+             data[FundsFactoryRatio] <= m_normalUnitRatio + m_targetPriceDifference)
     {
-        score += (1 + m_normalUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_expensiveUnitBonusMultiplier;
+        score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_expensiveUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] > m_superiorityRatio)
     {
@@ -2943,9 +2960,9 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     else if (data[FundsFactoryRatio] >= m_normalUnitRatio - m_targetPriceDifference &&
              data[FundsFactoryRatio] <= m_normalUnitRatio + m_targetPriceDifference)
     {
-        score += (1 + m_normalUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
+        score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_normalUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] < m_cheapUnitRatio + m_targetPriceDifference)
+    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
     {
         if (data[LowFunds] > 0)
         {
@@ -2953,19 +2970,19 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
         }
         else
         {
-            score -= (1 + m_cheapUnitRatio - m_targetPriceDifference - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
+            score -= (2 + m_cheapUnitRatio - m_targetPriceDifference - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
         }
     }
     else
     {
         if (data[LowFunds] > 0 &&
-            data[FundsFactoryRatio] < m_normalUnitRatio - m_targetPriceDifference)
+            data[FundsFactoryRatio] <= m_normalUnitRatio - m_targetPriceDifference)
         {
             score += (1 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
         }
         else
         {
-            score -= (2 + data[FundsFactoryRatio] - m_normalUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
+            score -= (3 + data[FundsFactoryRatio] - m_normalUnitRatio + m_targetPriceDifference) * m_expensiveUnitBonusMultiplier;
         }
     }
     CONSOLE_PRINT("NormalAi::calcCostScore score=" + QString::number(score) +

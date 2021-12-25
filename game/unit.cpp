@@ -2355,7 +2355,7 @@ void Unit::updateIcons(Player* pPlayer)
         loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
         if (m_CORange.get() != nullptr)
         {
-            m_CORange->setVisible(true);
+            m_CORange->setVisible(getVisible());
         }
     }
 }
