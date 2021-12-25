@@ -1989,7 +1989,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     {
         CONSOLE_PRINT("NormalAI: Building very expensive units", Console::eDEBUG);
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorC;
-        data[UseHighTechUnits] = 1.0f;
+        data[UseHighTechUnits] = 2.0f;
     }
     else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA)
     {
@@ -2556,7 +2556,8 @@ NormalAi::ExpectedFundsData NormalAi::calcExpectedFundsDamage(qint32 posX, qint3
         if (pEnemyUnit->hasWeapons())
         {
             float counterDmg = pEnemyUnit->getBaseDamage(&dummy) * pEnemyUnit->getHp() / Unit::MAX_UNIT_HP;
-            if (counterDmg >= 0.0f)
+            if ((counterDmg >= m_notAttackableDamage) ||
+                (counterDmg <= m_notAttackableDamage && dmg <= m_notAttackableDamage))
             {
                 bool firstStrikes = enemyRange >= ownRange;
                 float resDamage = 0;
@@ -2924,11 +2925,14 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
-    if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
+    if (data[UseHighTechUnits] > 1.0f &&
+        data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {
         score = 0;
     }
-    else if (data[UseHighTechUnits] > 0.0f && data[FundsFactoryRatio] > m_normalUnitRatio -  m_targetPriceDifference)
+    else if (data[UseHighTechUnits] > 0.0f &&
+             data[FundsFactoryRatio] > m_normalUnitRatio -  m_targetPriceDifference &&
+             data[FundsFactoryRatio] < m_normalUnitRatio + m_targetPriceDifference)
     {
         score += (1 + m_normalUnitRatio + m_targetPriceDifference - data[FundsFactoryRatio]) * m_expensiveUnitBonusMultiplier;
     }
