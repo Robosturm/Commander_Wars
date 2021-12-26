@@ -948,7 +948,7 @@ qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint posit
             isEnemy(pPlayer) &&
             !pPlayer->getIsDefeated())
         {
-            for(auto & pCO : m_playerCOs)
+            for(auto & pCO : pPlayer->m_playerCOs)
             {
                 if (pCO.get() != nullptr)
                 {

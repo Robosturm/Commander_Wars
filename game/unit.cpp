@@ -2384,7 +2384,7 @@ QString Unit::getMovementType() const
 qint32 Unit::getLoadingPlace()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    qint32 bonus = getCoBonus(getPosition(), "getBonusLoadingPlace", &Player::getCoBonus);
+    qint32 bonus = m_pOwner->getCoBonus(getPosition(), this, "getBonusLoadingPlace");
 
     QString function1 = "getLoadingPlace";
     QJSValueList args;
