@@ -31,14 +31,16 @@ DecisionTree::DecisionTree(const QString & treeFile, const QString & trainingDat
     setObjectName("DecisionTree");
     QFile file(treeFile);
     QFile trainingFile(trainingDataFile);
-
-    trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
-    myHash.addData(&trainingFile);
-    myHash.addData(Settings::getModConfigString().toUtf8());
-    QByteArray hash = myHash.result();
-    trainingFile.close();
-
+    QByteArray hash;
+    if (trainingFile.exists())
+    {
+        trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
+        QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+        myHash.addData(&trainingFile);
+        myHash.addData(Settings::getModConfigString().toUtf8());
+        hash = myHash.result();
+        trainingFile.close();
+    }
     bool needsTraining = true;
     if (file.exists())
     {
