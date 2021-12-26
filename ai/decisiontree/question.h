@@ -1,10 +1,9 @@
 #ifndef AI_QUESTION
 #define AI_QUESTION
 
-#include "QObject"
-#include "QVector"
-#include "QString"
-
+#include <QObject>
+#include <QVector>
+#include <QString>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 

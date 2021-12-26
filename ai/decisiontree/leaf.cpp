@@ -1,5 +1,5 @@
-#include "ai/leaf.h"
-#include "ai/decisiontree.h"
+#include "ai/decisiontree/leaf.h"
+#include "ai/decisiontree/decisiontree.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
@@ -105,6 +105,5 @@ void Leaf::deserializeObject(QDataStream& pStream)
         pStream >> item;
         m_Answers.append(item);
     }
-
     pStream >> m_totalChance;
 }

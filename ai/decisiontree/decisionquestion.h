@@ -1,11 +1,11 @@
 #pragma once
-#include "QObject"
-#include "QVector"
+#include <QObject>
+#include <QVector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-#include "ai/question.h"
+#include "ai/decisiontree/question.h"
 
 class DecisionQuestion;
 typedef oxygine::intrusive_ptr<DecisionQuestion> spDecisionQuestion;

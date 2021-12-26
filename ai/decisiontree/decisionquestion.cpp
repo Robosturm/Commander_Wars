@@ -1,4 +1,4 @@
-#include "ai/decisionquestion.h"
+#include "ai/decisiontree/decisionquestion.h"
 
 DecisionQuestion::DecisionQuestion()
 {

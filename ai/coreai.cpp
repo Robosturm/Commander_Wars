@@ -1,20 +1,12 @@
 #include "ai/coreai.h"
-
 #include "ai/targetedunitpathfindingsystem.h"
 
-
 #include "game/gameanimation/gameanimationfactory.h"
-
 #include "game/gamemap.h"
-
 #include "game/unit.h"
-
 #include "game/gameaction.h"
-
 #include "game/unitpathfindingsystem.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
@@ -24,10 +16,8 @@
 #include "coreengine/globalutils.h"
 
 #include "resource_management/cospritemanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/buildingspritemanager.h"
 
-#include <qfile.h>
+#include <QFile>
 
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
@@ -63,8 +53,7 @@ const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
 const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 
 CoreAI::CoreAI(GameEnums::AiTypes aiType)
-    : BaseGameInputIF(aiType),
-      m_COPowerTree("resources/aidata/copower.tree", "resources/aidata/copower.txt")
+    : BaseGameInputIF(aiType)
 {
     setObjectName("CoreAI");
     Interpreter::setCppOwnerShip(this);
@@ -239,11 +228,6 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 
             GameEnums::PowerMode result = pCO->getAiUsePower(data[2], pUnits->size(), repairUnits, indirectUnits,
                     directUnits, pEnemyUnits->size(), turnMode);
-            if (result == GameEnums::PowerMode_Unknown)
-            {
-                result = static_cast<GameEnums::PowerMode>(m_COPowerTree.getDecision(data));
-            }
-
             if (result == GameEnums::PowerMode_Power)
             {
                 spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0);
@@ -681,192 +665,6 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
         }
     }
     return false;
-}
-
-
-void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
-{
-    QFile trainingFile(file);
-    if (!trainingFile.exists())
-    {
-        trainingFile.setFileName(oxygine::Resource::RCC_PREFIX_PATH + file);
-    }
-    trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-    QTextStream stream(&trainingFile);
-    bool questionsFound = false;
-    QStringList types;
-    QVector<spDecisionQuestion> readQuestions;
-
-    readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
-
-    QStringList mods = Settings::getMods();
-    QStringList fullMods;
-    for(const QString & mod : qAsConst(mods))
-    {
-        fullMods.append(oxygine::Resource::RCC_PREFIX_PATH + mod);
-        fullMods.append(Settings::getUserPath() + mod);
-    }
-    for (qint32 i = 0; i < fullMods.size(); i++)
-    {
-        QString modFilename = file;
-        QFile modFile(modFilename.replace("resources/", fullMods[i] + "/"));
-        if (modFile.exists())
-        {
-            modFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-            QTextStream modStream(&modFile);
-            readTrainingFile(modStream, questionsFound, types, readQuestions, trainingData, questions);
-        }
-    }
-}
-
-void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
-                              QVector<spDecisionQuestion>& readQuestions,
-                              QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
-{
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-
-    while (!stream.atEnd())
-    {
-        QString line = stream.readLine();
-        line = line.simplified();
-        if (line.startsWith("//"))
-        {
-            // skip comments
-        }
-        else
-        {
-            if (line.startsWith("type") && !questionsFound )
-            {
-                questionsFound = true;
-                QStringList items = line.split(" ");
-                for (qint32 i = 1; i < items.size(); i++)
-                {
-                    readQuestions.append(spDecisionQuestion::create());
-                    qint32 index = types.size();
-                    QString typeLine = items[i];
-                    if (typeLine.startsWith("NUMBER:"))
-                    {
-                        if (typeLine.startsWith("NUMBERFILE:"))
-                        {
-                            QFile numberFile(typeLine.split(":")[1]);
-                            numberFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-                            QTextStream stream(&numberFile);
-                            typeLine = stream.readLine();
-                        }
-                        QStringList questionString = typeLine.split(":")[1].split("|");
-                        for (qint32 i2 = 0; i2 < questionString.size(); i2++)
-                        {
-                            QStringList questionData = questionString[i2].split("_");
-                            if (questionData.size() == 2)
-                            {
-                                float value = questionData[0].toFloat();
-                                if (questionData[1] == "<")
-                                {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Greater));
-                                }
-                                else if (questionData[1] == ">")
-                                {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Smaler));
-                                }
-                                else if (questionData[1] == "=")
-                                {
-                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Equal));
-                                }
-                            }
-                            else if (questionData.size() == 3)
-                            {
-                                float value1 = questionData[0].toFloat();
-                                float value2 = questionData[2].toFloat();
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(value1, value2, index, GameEnums::AIQuestionType_Between));
-                            }
-                        }
-                        types.append("NUMBER");
-                    }
-                    else
-                    {
-                        if (items[i] == "CO")
-                        {
-                            for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
-                            {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
-                            }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
-                        }
-                        else if (items[i] == "BUILDING")
-                        {
-                            for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getCount(); i2++)
-                            {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
-                            }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
-                        }
-                        else if (items[i] == "UNIT")
-                        {
-                            for (qint32 i2 = 0; i2 < pUnitSpriteManager->getCount(); i2++)
-                            {
-                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
-                            }
-                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
-                        }
-                        types.append(items[i]);
-                    }
-                }
-            }
-            else if (questionsFound)
-            {
-                QStringList items = line.split(" ");
-                // check for identic match here
-                if (items.size() == types.size())
-                {
-                    trainingData.append(QVector<float>());
-                    questions.append(QVector<spDecisionQuestion>());
-                    qint32 item = trainingData.size() - 1;
-                    for (qint32 i = 0; i < types.size(); i++)
-                    {
-                        // convert all data to numbers
-                        if (types[i] == "CO")
-                        {
-                            qint32 index = pCOSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
-                            if (i < types.size() - 1)
-                            {
-                                questions[item].append(readQuestions[i]);
-                            }
-                        }
-                        else if (types[i] == "BUILDING")
-                        {
-                            qint32 index = pBuildingSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
-                            if (i < types.size() - 1)
-                            {
-                                questions[item].append(readQuestions[i]);
-                            }
-                        }
-                        else if (types[i] == "UNIT")
-                        {
-                            qint32 index = pUnitSpriteManager->getIndex(items[i]);
-                            trainingData[item].append(index);
-                            if (i < types.size() - 1)
-                            {
-                                questions[item].append(readQuestions[i]);
-                            }
-                        }
-                        else if (types[i] == "NUMBER")
-                        {
-                            float value = items[i].toFloat();
-                            trainingData[item].append(value);
-                            if (i < types.size() - 1)
-                            {
-                                questions[item].append(readQuestions[i]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 void CoreAI::addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost)

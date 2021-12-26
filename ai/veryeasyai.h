@@ -4,7 +4,7 @@
 #include "qvector.h"
 
 #include "ai/coreai.h"
-#include "ai/decisiontree.h"
+#include "ai/decisiontree/decisiontree.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;

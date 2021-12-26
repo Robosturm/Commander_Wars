@@ -457,11 +457,6 @@ set(${PROJECT_NAME}_SRCS
     mapsupport/mapfilter.cpp
 
     # ai
-    ai/leaf.cpp
-    ai/decisionnode.cpp
-    ai/question.cpp
-    ai/decisionquestion.cpp
-    ai/decisiontree.cpp
     ai/coreai.cpp
     ai/veryeasyai.cpp
     ai/targetedunitpathfindingsystem.cpp
@@ -473,11 +468,17 @@ set(${PROJECT_NAME}_SRCS
     ai/heavyai/heavyaiproduction.cpp
     ai/heavyai/heavyaitraining.cpp
     ai/influencefrontmap.cpp
-
+    # neuralnetwork
     ai/neuralnetwork/neural/edge.cpp
     ai/neuralnetwork/neural/layer.cpp
     ai/neuralnetwork/neural/neuralnetwork.cpp
     ai/neuralnetwork/neural/neuron.cpp
+    # decision tree
+    ai/decisiontree/leaf.cpp
+    ai/decisiontree/decisionnode.cpp
+    ai/decisiontree/question.cpp
+    ai/decisiontree/decisionquestion.cpp
+    ai/decisiontree/decisiontree.cpp
 
     # multiplayer
     multiplayer/lobbymenu.cpp

@@ -6,7 +6,6 @@
 #include "ai/coreai.h"
 
 #include "game/unitpathfindingsystem.h"
-#include "ai/decisiontree.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;

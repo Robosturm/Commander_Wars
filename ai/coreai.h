@@ -8,9 +8,9 @@
 #include "gameinput/basegameinputif.h"
 #include "game/gameaction.h"
 
-#include "ai/decisionquestion.h"
 #include "ai/islandmap.h"
-#include "ai/decisiontree.h"
+
+#include "ai/decisiontree/decisiontree.h"
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
@@ -308,25 +308,6 @@ public slots:
      */
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
 
-    /**
-     * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
-     * @param file
-     * @param trainingData
-     * @param questions
-     */
-    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
-    /**
-     * @brief readTrainingFile
-     * @param stream
-     * @param questionsFound
-     * @param types
-     * @param readQuestions
-     * @param trainingData
-     * @param questions
-     */
-    static void readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
-                                 QVector<spDecisionQuestion>& readQuestions,
-                                 QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
@@ -570,7 +551,6 @@ protected:
      */
     bool isMoveableTile(Building* pBuilding) const;
 protected:
-    DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
     double m_ownUnitValue{1.0f};

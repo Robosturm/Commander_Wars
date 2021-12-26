@@ -1,4 +1,4 @@
-#include "QElapsedTimer"
+#include <QElapsedTimer>
 #include <QSettings>
 
 #include "coreengine/qmlvector.h"

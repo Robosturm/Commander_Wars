@@ -1,6 +1,5 @@
-#include "ai/decisionnode.h"
-
-#include "ai/leaf.h"
+#include "ai/decisiontree/decisionnode.h"
+#include "ai/decisiontree/leaf.h"
 
 DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const QVector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),
