@@ -212,6 +212,17 @@ var Constructor = function()
         return 1;
     };
 
+    this.getEnemyFirerangeModifier = function (co, unit, x, y)
+    {
+        return -1;
+    };
+
+    this.getBonusLoadingPlace = function (co, unit, x, y)
+    {
+        return 1;
+    };
+
+
     // CO - Intel
     this.getBio = function(co)
     {

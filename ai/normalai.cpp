@@ -322,6 +322,7 @@ bool NormalAi::performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pE
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    else if (m_aiStep <= AISteps::moveUnits && joinCaptureBuildings(pUnits)){}
     else if (m_aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
     else if (m_aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
@@ -557,6 +558,45 @@ bool NormalAi::captureBuildings(spQmlVectorUnit & pUnits)
         }
     }
     return false;
+}
+
+bool NormalAi::joinCaptureBuildings(spQmlVectorUnit & pUnits)
+{
+    CONSOLE_PRINT("NormalAi::joinCaptureBuildings()", Console::eDEBUG);
+    spGameMap pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved() &&
+            pUnit->getActionList().contains(ACTION_CAPTURE) &&
+            pUnit->getActionList().contains(ACTION_JOIN))
+        {
+            spGameAction pAction = spGameAction::create(ACTION_JOIN);
+            pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
+            UnitPathFindingSystem pfs(pUnit);
+            pfs.explore();
+            QVector<QPoint> targets = pfs.getAllNodePoints();
+            for (qint32 i2 = 0; i2 < targets.size(); i2++)
+            {
+                auto target = targets[i2];
+                pAction->setMovepath(QVector<QPoint>(1, target), 0);
+                if (pAction->canBePerformed())
+                {
+                    Unit* pCaptureUnit = pMap->getTerrain(target.x(), target.y())->getUnit();
+                    if (pCaptureUnit->getCapturePoints() > 0)
+                    {
+                        QVector<QPoint> path = pfs.getPath(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()));
+                        pAction->setMovepath(path, pfs.getCosts(path));
+                        m_updatePoints.append(pUnit->getPosition());
+                        m_updatePoints.append(pAction->getActionTarget());
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+     return false;
 }
 
 bool NormalAi::fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
@@ -1549,39 +1589,35 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife) const
         qint32 currentHp = pUnit->getHpRounded();
         qint32 newHp = GlobalUtils::roundUp(newLife);
         qint32 remainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(currentHp));
-        if (newHp <= 0)
+        if (remainingDays <= 1)
         {
-            if (remainingDays > 0)
+            if (newHp <= 0)
             {
-                ret = 1 + (m_antiCaptureBonus - currentHp) / currentHp;
+                ret = m_antiCaptureBonus;
             }
             else
             {
-                ret = m_antiCaptureBonus + 1.0f;
-            }
-        }
-        else
-        {
-            qint32 newRemainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(newHp));
-            if (remainingDays > newRemainingDays)
-            {
-                ret = 0.8f;
-            }
-            else if (remainingDays == newRemainingDays && remainingDays < 2)
-            {
-                ret = 1.0f;
-            }
-            else if (remainingDays == 0)
-            {
-                ret = 1.0f;
-            }
-            else
-            {
-                ret = 1 + (newRemainingDays - remainingDays) / remainingDays;
-            }
-            if (ret > m_antiCaptureBonusScoreReduction)
-            {
-                ret = ret / m_antiCaptureBonusScoreDivider + m_antiCaptureBonusScoreReduction / m_antiCaptureBonusScoreDivider;
+                qint32 newRemainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(newHp));
+                if (remainingDays > newRemainingDays)
+                {
+                    ret = 0.8f;
+                }
+                else if (remainingDays == newRemainingDays && remainingDays < 2)
+                {
+                    ret = 1.0f;
+                }
+                else if (remainingDays == 0)
+                {
+                    ret = 1.0f;
+                }
+                else
+                {
+                    ret = 1 + (newRemainingDays - remainingDays) / remainingDays;
+                }
+                if (ret > m_antiCaptureBonusScoreReduction)
+                {
+                    ret = ret / m_antiCaptureBonusScoreDivider + m_antiCaptureBonusScoreReduction / m_antiCaptureBonusScoreDivider;
+                }
             }
         }
     }
@@ -1807,7 +1843,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                 data.pUnitPfs = spUnitPathFindingSystem::create(pUnit);
                 if (enemy)
                 {
-                    data.pUnitPfs->setIgnoreEnemies(true);
+                    data.pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                 }
                 data.pUnitPfs->explore();
                 data.pUnit = pUnit;
@@ -1856,7 +1892,7 @@ void NormalAi::updateUnitData(spQmlVectorUnit & pUnits, QVector<MoveUnitData> & 
                         pUnitData[i2].pUnitPfs = spUnitPathFindingSystem::create(pUnitData[i2].pUnit.get());
                         if (enemy)
                         {
-                            pUnitData[i2].pUnitPfs->setIgnoreEnemies(true);
+                            pUnitData[i2].pUnitPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                         }
                         pUnitData[i2].pUnitPfs->explore();
                     }

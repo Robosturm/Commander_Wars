@@ -369,7 +369,10 @@ void HeavyAi::addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool 
     data.m_pPfs = spUnitPathFindingSystem::create(pUnit);
     data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
     data.m_pPfs->setMovepoints(data.m_movepoints * 2);
-    data.m_pPfs->setIgnoreEnemies(enemyUnits);
+    if (enemyUnits)
+    {
+        data.m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+    }
     data.m_pPfs->explore();
     if (!enemyUnits)
     {
@@ -437,7 +440,10 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
                     units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
                     units[i2].m_pPfs = spUnitPathFindingSystem::create(units[i2].m_pUnit);
-                    units[i2].m_pPfs->setIgnoreEnemies(enemyUnits);
+                    if (enemyUnits)
+                    {
+                        units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
+                    }
                     units[i2].m_pPfs->explore();
                     if (!enemyUnits)
                     {
@@ -529,7 +535,7 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
                 if (GlobalUtils::getDistance(pos, QPoint(hqPos.x(), hqPos.y())) <= dayDistance * movePoints)
                 {
                     TargetedUnitPathFindingSystem pfs = TargetedUnitPathFindingSystem(enemy.m_pUnit, hqPositions, &m_MoveCostMap);
-                    pfs.setIgnoreEnemies(true);
+                    pfs.setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                     pfs.setMovepoints(movePoints * dayDistance);
                     pfs.setAbortOnCostExceed(true);
                     pfs.setFast(true);

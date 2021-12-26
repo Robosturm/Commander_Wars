@@ -12,6 +12,13 @@ class UnitPathFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
 public:
+    enum class CollisionIgnore
+    {
+        Off,
+        OnlyNotMovedEnemies,
+        All,
+    };
+
     explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
     virtual ~UnitPathFindingSystem() = default;
     /**
@@ -98,19 +105,19 @@ public:
      * @brief getIgnoreEnemies
      * @return
      */
-    bool getIgnoreEnemies() const;
+    CollisionIgnore getIgnoreEnemies() const;
     /**
      * @brief setIgnoreEnemies
      * @param ignoreEnemies
      */
-    void setIgnoreEnemies(bool ignoreEnemies);
+    void setIgnoreEnemies(CollisionIgnore ignoreEnemies);
 
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-2};
     bool m_fast{false};
-    bool m_ignoreEnemies{false};
+    CollisionIgnore m_ignoreEnemies{CollisionIgnore::Off};
     QMap<QString, qint32> m_costInfo;
 };
 

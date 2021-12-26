@@ -245,6 +245,12 @@ protected:
      */
     bool captureBuildings(spQmlVectorUnit & pUnits);
     /**
+     * @brief joinCaptureBuildings
+     * @param pUnits
+     * @return
+     */
+    bool joinCaptureBuildings(spQmlVectorUnit & pUnits);
+    /**
      * @brief fireWithIndirectUnits
      * @param pUnits
      * @return
