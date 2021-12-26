@@ -293,6 +293,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Supply Warning: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pSupplyWarning = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 0, 100, "%");
+    pBattleAnimationSpeed->setTooltipText(tr("Selects when the supply warnings for ammo and fuel appear."));
+    pBattleAnimationSpeed->setPosition(sliderOffset - 130, y);
+    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getSupplyWarning() * 100.0f));
+    m_pOptions->addItem(pBattleAnimationSpeed);
+    connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setSupplyWarning(value / 100.0f);
+    });
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Show PC Cursor: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

@@ -133,6 +133,7 @@ bool Settings::m_simpleDeselect = false;
 bool Settings::m_showDetailedBattleForcast = true;
 bool Settings::m_autoMoveCursor = false;
 QString Settings::m_userPath = "";
+float Settings::m_supplyWarning = 0.33f;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -162,6 +163,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getSupplyWarning()
+{
+    return m_supplyWarning;
+}
+
+void Settings::setSupplyWarning(float newSupplyWarning)
+{
+    m_supplyWarning = newSupplyWarning;
 }
 
 const QString &Settings::getDefaultRuleset()
@@ -1430,6 +1441,16 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_MenuItemRowCount = 1;
     }
+
+    m_supplyWarning = settings.value("SupplyWarning", 0.33f).toFloat(&ok);
+    if(!ok || m_supplyWarning > 1.0f || m_supplyWarning < 0.0f)
+    {
+        QString error = "Error in the Ini File: [Game] Setting: SupplyWarning";
+        CONSOLE_PRINT(error, Console::eERROR);
+        m_supplyWarning = 0.33f;
+    }
+
+
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();    
     if (Settings::getSmallScreenDevice())
     {

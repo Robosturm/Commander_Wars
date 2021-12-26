@@ -38,7 +38,11 @@ public:
 
     static void setUsername(const QString &Username);
 
+
 public slots:
+    static float getSupplyWarning();
+    static void setSupplyWarning(float newSupplyWarning);
+
     static bool getGamepadEnabled();
     static void setGamepadEnabled(bool newGamepadEnabled);
 
@@ -565,6 +569,7 @@ private:
     static bool m_simpleDeselect;
     static bool m_showDetailedBattleForcast;
     static bool m_autoMoveCursor;
+    static float m_supplyWarning;
 
     // internal members
     static spSettings m_pInstance;
