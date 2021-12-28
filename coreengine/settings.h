@@ -38,8 +38,10 @@ public:
 
     static void setUsername(const QString &Username);
 
-
 public slots:
+    static bool getMuted();
+    static void setMuted(bool newMuted);
+
     static float getSupplyWarning();
     static void setSupplyWarning(float newSupplyWarning);
 
@@ -526,6 +528,7 @@ private:
     static qint32 m_MusicVolume;
     static qint32 m_SoundVolume;
     static QVariant m_audioOutput;
+    static bool m_muted;
     // Network
     static quint16 m_GamePort;
     static quint16 m_ServerPort;

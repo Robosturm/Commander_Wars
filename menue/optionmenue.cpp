@@ -768,6 +768,23 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Muted: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    spCheckbox pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked mutes all sounds and music are muted."));
+    pCheckbox->setChecked(Settings::getMuted());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [=](bool checked)
+    {
+        Settings::setMuted(checked);
+        pAudio->setVolume(Settings::getMusicVolume());
+    }, Qt::QueuedConnection);
+    pOwner->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Audio Device: "));
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);

@@ -1016,6 +1016,19 @@ QStringList Player::getCOUnits(Building* pBuilding)
     return ret;
 }
 
+QStringList Player::getTransportUnits(Unit* pUnit)
+{
+    QStringList ret;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ret.append(pCO->getTransportUnits(pUnit));
+        }
+    }
+    return ret;
+}
+
 void Player::setBuildList(const QStringList & BuildList)
 {
     m_BuildList = BuildList;

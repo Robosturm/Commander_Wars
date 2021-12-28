@@ -3,7 +3,6 @@ var Constructor = function()
     this.getCOStyles = function()
     {
         // string array containing the endings of the alternate co style
-
         return ["+alt", "+alt2", "+alt3"];
     };
 
@@ -211,17 +210,6 @@ var Constructor = function()
     {
         return 1;
     };
-
-    this.getEnemyFirerangeModifier = function (co, unit, x, y)
-    {
-        return -1;
-    };
-
-    this.getBonusLoadingPlace = function (co, unit, x, y)
-    {
-        return 1;
-    };
-
 
     // CO - Intel
     this.getBio = function(co)

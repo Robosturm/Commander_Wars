@@ -378,8 +378,6 @@ bool Unit::getCOSpecificUnit()
     }
 }
 
-
-
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;
@@ -907,7 +905,6 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
-
 float Unit::getEnvironmentDamage(QString terrainID)
 {
     float damage = 0;
@@ -926,7 +923,6 @@ float Unit::getEnvironmentDamage(QString terrainID)
     }
     return damage;
 }
-
 
 bool Unit::isAttackableFromPosition(Unit* pDefender, QPoint unitPos)
 {
@@ -1244,7 +1240,27 @@ QStringList  Unit::getTransportUnits()
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
-    return erg.toVariant().toStringList();
+    QStringList transportUnits = erg.toVariant().toStringList();
+    QStringList extraTransportUnits;
+    if (m_pOwner != nullptr)
+    {
+        extraTransportUnits = m_pOwner->getTransportUnits(this);
+    }
+    if (extraTransportUnits.size() > 0)
+    {
+        for (qint32 i = 0; i < extraTransportUnits.size(); i++)
+        {
+            if (extraTransportUnits[i].startsWith("-"))
+            {
+                transportUnits.removeAll(extraTransportUnits[i].replace("-", ""));
+            }
+            else
+            {
+                transportUnits.append(extraTransportUnits[i]);
+            }
+        }
+    }
+    return transportUnits;
 }
 
 bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)

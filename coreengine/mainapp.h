@@ -249,6 +249,7 @@ private:
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};
+    bool m_noAudio{false};
 };
 
 #endif // MAINAPP_H

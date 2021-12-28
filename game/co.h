@@ -132,6 +132,12 @@ public slots:
      */
     QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getTransportUnits
+     * @param pUnit
+     * @return
+     */
+    QStringList getTransportUnits(Unit* pUnit);
+    /**
      * @brief getMovementpointModifier the bonus movementpoints of this co
      * @param pUnit
      * @param position

@@ -372,6 +372,24 @@ QStringList CO::getCOUnits(Building* pBuilding)
     return ret;
 }
 
+QStringList CO::getTransportUnits(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTransportUnits";
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pInterpreter->newQObject(pUnit);
+    args1 << obj1;
+    QStringList ret;
+    for (const auto & perk : qAsConst(m_perkList))
+    {
+        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        ret.append(erg.toVariant().toStringList());
+    }
+    return ret;
+}
+
 qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

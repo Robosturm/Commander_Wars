@@ -90,6 +90,7 @@ qint32 Settings::m_TotalVolume       = 100;
 qint32 Settings::m_MusicVolume       = 80;
 qint32 Settings::m_SoundVolume       = 100;
 QVariant Settings::m_audioOutput = QVariant();
+bool Settings::m_muted = false;
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
@@ -163,6 +164,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getMuted()
+{
+    return m_muted;
+}
+
+void Settings::setMuted(bool newMuted)
+{
+    m_muted = newMuted;
 }
 
 float Settings::getSupplyWarning()
@@ -1348,6 +1359,7 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_SoundVolume = 100;
     }
+    m_muted = settings.value("Muted", 0).toBool();
 #ifdef AUDIOSUPPORT
     const QAudioDevice &defaultDeviceInfo = QMediaDevices::defaultAudioOutput();
     QString description = settings.value("AudioDevice", "").toString();
@@ -1647,6 +1659,7 @@ void Settings::saveSettings()
         settings.setValue("SoundVolume",               m_SoundVolume);
         auto audioDevice = m_audioOutput.value<QAudioDevice>();
         settings.setValue("AudioDevice",               audioDevice.description());
+        settings.setValue("Muted",                     m_muted);
         settings.endGroup();
 
         settings.beginGroup("Game");

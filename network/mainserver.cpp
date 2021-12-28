@@ -156,6 +156,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     args << "-slaveServer";
     args << slaveName;
     args << "-noui"; // comment out for debugging
+    args << "-noaudio";
     args << "-mods";
     args << Settings::getModConfigString(mods);
     args << "-initScript";
@@ -164,7 +165,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     args << initScript;
     if (Mainapp::getInstance()->getCreateSlaveLogs())
     {
-        // args << "-createSlaveLogs";
+        args << "-createSlaveLogs";
     }
     QString markername = "temp/" + slaveName + ".marker";
     if (QFile::exists(markername))

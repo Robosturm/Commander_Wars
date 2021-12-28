@@ -126,7 +126,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
     {
         case StartupPhase::General:
         {
-            m_Audiothread = new AudioThread();
+            m_Audiothread = new AudioThread(m_noAudio);
             m_AudioWorker.start(QThread::Priority::HighPriority);
             m_Audiothread->moveToThread(&m_AudioWorker);
             emit m_Audiothread->sigInitAudio();
@@ -626,6 +626,7 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setTotalVolume(0);
         m_Timer.stop();
     }
+    m_noAudio = args.contains("-noaudio");
     if (args.contains("-slaveServer"))
     {
         Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);

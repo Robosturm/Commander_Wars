@@ -712,6 +712,11 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         posY += 5 + pTextfield->getTextRect().getHeight();
 
         qint32 loadingPlace = pUnit->getLoadingPlace();
+        qint32 loadingCount = pUnit->getLoadedUnitCount();
+        if (loadingCount > loadingPlace)
+        {
+            loadingPlace = loadingCount;
+        }
         if (loadingPlace > 0)
         {
             bool transportHidden = pUnit->getTransportHidden(pPlayer);

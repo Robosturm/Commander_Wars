@@ -233,6 +233,13 @@ var CO_PERK =
         return "";
     },
 
+    getTransportUnits : function(co, unit)
+    {
+        // called to check for additional loading units for a transporter
+        // - before an unit id will remove the unit from the loading list
+        return [];
+    },
+
     getBonusIncome : function(co, building, income)
     {
         return 0;

@@ -517,6 +517,12 @@ public slots:
      */
     QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getTransportUnits
+     * @param pUnit
+     * @return
+     */
+    QStringList getTransportUnits(Unit* pUnit);
+    /**
      * @brief setBuildList
      * @param BuildList
      */

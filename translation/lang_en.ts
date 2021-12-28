@@ -2618,7 +2618,7 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../game/ui/ingameinfobar.cpp" line="565"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="571"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="575"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="823"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2654,13 +2654,13 @@ Fullscreen  - Animations are upscaled based on the resolution
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="640"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="862"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="867"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="645"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="857"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="862"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2690,12 +2690,12 @@ Fullscreen  - Animations are upscaled based on the resolution
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="840"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="845"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="853"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="858"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3268,120 +3268,130 @@ Warning disabling this on a smaller screen may lead to unplayable game experienc
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="771"/>
-        <source>Audio Device: </source>
+        <source>Muted: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="775"/>
+        <source>If checked mutes all sounds and music are muted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="788"/>
+        <source>Audio Device: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="805"/>
         <source>Selects the primary audio output device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="803"/>
+        <location filename="../menue/optionmenue.cpp" line="820"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="807"/>
+        <location filename="../menue/optionmenue.cpp" line="824"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="820"/>
+        <location filename="../menue/optionmenue.cpp" line="837"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="824"/>
+        <location filename="../menue/optionmenue.cpp" line="841"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="837"/>
+        <location filename="../menue/optionmenue.cpp" line="854"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="841"/>
+        <location filename="../menue/optionmenue.cpp" line="858"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="885"/>
+        <location filename="../menue/optionmenue.cpp" line="902"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="888"/>
+        <location filename="../menue/optionmenue.cpp" line="905"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="889"/>
+        <location filename="../menue/optionmenue.cpp" line="906"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="890"/>
+        <location filename="../menue/optionmenue.cpp" line="907"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="891"/>
+        <location filename="../menue/optionmenue.cpp" line="908"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="893"/>
+        <location filename="../menue/optionmenue.cpp" line="910"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="902"/>
+        <location filename="../menue/optionmenue.cpp" line="919"/>
         <source>Tag Filter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="982"/>
+        <location filename="../menue/optionmenue.cpp" line="999"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="984"/>
+        <location filename="../menue/optionmenue.cpp" line="1001"/>
         <source>Filters the mods by the given tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1073"/>
+        <location filename="../menue/optionmenue.cpp" line="1090"/>
         <source>The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1075"/>
+        <location filename="../menue/optionmenue.cpp" line="1092"/>
         <source>Compatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1080"/>
+        <location filename="../menue/optionmenue.cpp" line="1097"/>
         <source>Incompatible Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1085"/>
+        <location filename="../menue/optionmenue.cpp" line="1102"/>
         <source>Required Mods:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1090"/>
+        <location filename="../menue/optionmenue.cpp" line="1107"/>
         <source>Tags:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1095"/>
+        <location filename="../menue/optionmenue.cpp" line="1112"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
