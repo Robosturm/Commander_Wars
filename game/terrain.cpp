@@ -438,8 +438,9 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
 
 bool Terrain::customSpriteExists() const
 {
-    return QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
-           QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
+    return pAnim != nullptr;
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
