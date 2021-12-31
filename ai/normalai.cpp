@@ -1,5 +1,4 @@
 #include <QElapsedTimer>
-#include <QSettings>
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
@@ -145,105 +144,12 @@ NormalAi::NormalAi(QString configurationFile, GameEnums::AiTypes aiType)
                   {"CounterDamageBonus", "Production", &m_counterDamageBonus, 25.0f, 1.0f, 100.0f},
                   {"EarlyGame", "Production", &m_earlyGame, 5.0f, 2.f, 10.0f},};
 
-    loadIni( "normal/" + configurationFile);
-}
-
-void NormalAi::readIni(QString name)
-{
-    if (QFile::exists(name))
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr &&
+        !pMap->getSavegame())
     {
-        QSettings settings(name, QSettings::IniFormat);
-        CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
-        QString lastGroup = "";
-        for (auto & entry : m_iniData)
-        {
-            bool ok = false;
-            if (entry.m_group != lastGroup)
-            {
-                if (!lastGroup.isEmpty())
-                {
-                    settings.endGroup();
-                }
-                settings.beginGroup(entry.m_group);
-                lastGroup = entry.m_group;
-            }
-            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
-            if (!ok)
-            {
-                *entry.m_value = entry.m_defaultValue;
-            }
-        }
-        settings.endGroup();
+        loadIni( "normal/" + configurationFile);
     }
-}
-
-void NormalAi::saveIni(QString name) const
-{
-    QSettings settings(name, QSettings::IniFormat);
-    CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
-    QString lastGroup = "";
-    for (auto & entry : m_iniData)
-    {
-        bool ok = false;
-        if (entry.m_group != lastGroup)
-        {
-            if (!lastGroup.isEmpty())
-            {
-                settings.endGroup();
-            }
-            settings.beginGroup(entry.m_group);
-            lastGroup = entry.m_group;
-        }
-        settings.setValue(entry.m_name, *entry.m_value);
-    }
-    settings.endGroup();
-}
-
-void NormalAi::randomizeIni(QString name, float chance, float mutationRate)
-{
-    for (auto & entry : m_iniData)
-    {
-        if (GlobalUtils::randFloat(0.0f, 1.0f) < chance)
-        {
-            if (qAbs(*entry.m_value) <= 0.05f)
-            {
-                qint32 rand = GlobalUtils::randInt(-1, 1);
-                if (rand == 0)
-                {
-                    *entry.m_value = 0.0f;
-                }
-                else if (rand > 0)
-                {
-                    *entry.m_value = 0.075f;
-                }
-                else if (rand < 0)
-                {
-                    *entry.m_value = -0.075f;
-                }
-            }
-            else
-            {
-                qint32 rand = GlobalUtils::randInt(0, 1);
-                if (rand == 0)
-                {
-                    *entry.m_value -= *entry.m_value * mutationRate;
-                }
-                else
-                {
-                    *entry.m_value += *entry.m_value * mutationRate;
-                }
-            }
-        }
-        if (*entry.m_value < entry.m_minValue)
-        {
-            *entry.m_value = entry.m_minValue;
-        }
-        else if (*entry.m_value > entry.m_maxValue)
-        {
-            *entry.m_value = entry.m_maxValue;
-        }
-    }
-    saveIni(name);
 }
 
 void NormalAi::process()

@@ -440,7 +440,9 @@ bool Terrain::customSpriteExists() const
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(m_terrainSpriteName, oxygine::error_policy::ep_ignore_error);
-    return pAnim != nullptr;
+    return pAnim != nullptr ||
+           QFile::exists(Settings::getUserPath() + m_terrainSpriteName) ||
+           QFile::exists(oxygine::Resource::RCC_PREFIX_PATH + m_terrainSpriteName);
 }
 
 void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)

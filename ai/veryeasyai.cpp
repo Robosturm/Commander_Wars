@@ -28,99 +28,30 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
-    loadIni("very_easy/very_easy.ini");
-}
 
-void VeryEasyAI::readIni(QString name)
-{
-    if (QFile::exists(name))
+    m_iniData = { // General
+                  {"OwnUnitValue", "General", &m_ownUnitValue, 1.0f, -10.0f, 10.0f},
+                  {"BuildingValue", "General", &m_buildingValue, 1.0f, 1.0f, 1.0f},
+                  {"MinDamage", "General", &m_minDamage, -500, -5000.0f, 5000.0f},
+                  {"MinSiloDamage", "General", &m_minDamage, 4000, 1000.0f, 4000.0f},
+                  {"OwnUnitDamageDivider", "General", &m_ownUnitDamageDivider, 4, 0.0f, 10.0f},
+                  {"MinAllBuildingFunds", "General", &m_minAllBuildingFunds, 8000, 8000.0f, 8000.0f},
+                  {"MaxTreeDecisionTries", "General", &m_maxTreeDecisionTries, 10, 1.0f, 20.0f},
+                  {"FuelResupply", "General", &m_fuelResupply, 0.33f, 0.33f, 0.33f},
+                  {"AmmoResupply", "General", &m_ammoResupply, 0.25f, 0.25f, 0.25f},                  // CO Unit
+                  {"CoUnitValue", "CoUnit", &m_coUnitValue, 6000.0f, 5000.0f, 10000.0f},
+                  {"MinCoUnitScore", "CoUnit", &m_minCoUnitScore, 5000.0f, 3000.0f, 10000.0f},
+                  {"CoUnitRankReduction", "CoUnit", &m_coUnitRankReduction, 1000.0f, 0.0f, 5000.0f},
+                  {"CoUnitScoreMultiplier", "CoUnit", &m_coUnitScoreMultiplier, 1.1f, 1.0f, 3.0f},
+                  {"MinCoUnitCount", "CoUnit", &m_minCoUnitCount, 5.0f, 1.0f, 10.0f},
+                  {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
+                  {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
+                };
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr &&
+        !pMap->getSavegame())
     {
-        QSettings settings(name, QSettings::IniFormat);
-        settings.beginGroup("General");
-        bool ok = false;
-        m_ownUnitValue = settings.value("OwnUnitValue", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ownUnitValue = 1.0f;
-        }
-        m_buildingValue = settings.value("BuildingValue", 1.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_buildingValue = 1.0f;
-        }
-        m_minDamage = settings.value("MinDamage", -500).toInt(&ok);
-        if(!ok)
-        {
-            m_minDamage = -500;
-        }
-        m_minSiloDamage = settings.value("MinSiloDamage", 4000).toInt(&ok);
-        if(!ok)
-        {
-            m_minSiloDamage = 4000;
-        }
-        m_ownUnitDamageDivider = settings.value("OwnUnitDamageDivider", 4).toFloat(&ok);
-        if(!ok || m_ownUnitDamageDivider < 0.0f)
-        {
-            m_ownUnitDamageDivider = 4;
-        }
-        m_minAllBuildingFunds = settings.value("MinAllBuildingFunds", 8000).toInt(&ok);
-        if(!ok)
-        {
-            m_minAllBuildingFunds = 8000;
-        }
-        m_maxTreeDecisionTries = settings.value("MaxTreeDecisionTries", 10).toInt(&ok);
-        if(!ok)
-        {
-            m_maxTreeDecisionTries = 8000;
-        }
-        m_fuelResupply = settings.value("FuelResupply", 0.33f).toFloat(&ok);
-        if(!ok)
-        {
-            m_fuelResupply = 0.33f;
-        }
-        m_ammoResupply = settings.value("AmmoResupply", 0.25f).toFloat(&ok);
-        if(!ok)
-        {
-            m_ammoResupply = 0.25f;
-        }
-        settings.endGroup();
-        settings.beginGroup("CoUnit");
-        m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
-        if(!ok)
-        {
-            m_coUnitValue = 6000;
-        }
-        m_minCoUnitScore = settings.value("MinCoUnitScore", 5000).toFloat(&ok);
-        if(!ok)
-        {
-            m_minCoUnitScore = 5000;
-        }
-        m_coUnitRankReduction = settings.value("CoUnitRankReduction", 1000).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitRankReduction = 1000;
-        }
-        m_coUnitScoreMultiplier = settings.value("CoUnitScoreMultiplier", 1.1f).toFloat(&ok);
-        if(!ok)
-        {
-            m_coUnitScoreMultiplier = 1.1f;
-        }
-        m_minCoUnitCount = settings.value("MinCoUnitCount", 5).toInt(&ok);
-        if(!ok)
-        {
-            m_minCoUnitCount = 5;
-        }
-        m_minSameIslandDistance = settings.value("MinSameIslandDistance", 3.0f).toFloat(&ok);
-        if(!ok)
-        {
-            m_minSameIslandDistance = 3.0f;
-        }
-        m_slowUnitSpeed = settings.value("SlowUnitSpeed", 2).toInt(&ok);
-        if(!ok)
-        {
-            m_slowUnitSpeed = 2;
-        }
-        settings.endGroup();
+        loadIni("very_easy/very_easy.ini");
     }
 }
 

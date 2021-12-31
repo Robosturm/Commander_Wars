@@ -65,8 +65,12 @@ HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"UsedCapturePointIncrease", "General", &m_usedCapturePointIncrease, 1.5f, 1.5f, 1.5f},
                 };
-
-    loadIni("heavy/" + m_aiName.toLower() + ".ini");
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr &&
+        !pMap->getSavegame())
+    {
+        loadIni("heavy/" + m_aiName.toLower() + ".ini");
+    }
     loadNeuralNetworks(aiType);
     if (NeuralNetworkNames.length() != NeuralNetworksMax)
     {
@@ -137,35 +141,6 @@ void HeavyAi::loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
         network->serializeObject(stream);
-    }
-}
-
-void HeavyAi::readIni(QString name)
-{
-    if (QFile::exists(name))
-    {
-        QSettings settings(name, QSettings::IniFormat);
-        CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
-        QString lastGroup = "";
-        for (auto & entry : m_iniData)
-        {
-            bool ok = false;
-            if (entry.m_group != lastGroup)
-            {
-                if (!lastGroup.isEmpty())
-                {
-                    settings.endGroup();
-                }
-                settings.beginGroup(entry.m_group);
-                lastGroup = entry.m_group;
-            }
-            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
-            if (!ok)
-            {
-                *entry.m_value = entry.m_defaultValue;
-            }
-        }
-        settings.endGroup();
     }
 }
 

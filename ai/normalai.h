@@ -103,22 +103,8 @@ signals:
 
 public slots:
     virtual void process() override;
-    /**
-     * @brief readIni
-     * @param name
-     */
-    virtual void readIni(QString name) override;
-    /**
-     * @brief saveIni
-     * @param name
-     */
-    void saveIni(QString name) const;
-    /**
-     * @brief randomizeIni
-     */
-    void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
 protected:
-    static constexpr float maxDayDistance = 6.0f;;
+    static constexpr float maxDayDistance = 6.0f;
 
     bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
                             spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
@@ -570,9 +556,6 @@ private:
     double m_ProducingTransportLoadingBonus{15.0f};
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
 
-    float m_currentDirectIndirectRatio{1.0f};
-
-    QVector<IniData> m_iniData;
-};
+    float m_currentDirectIndirectRatio{1.0f};};
 
 #endif // NORMALAI_H

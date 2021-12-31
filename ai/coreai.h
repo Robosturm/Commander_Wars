@@ -151,7 +151,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
 signals:
     /**
@@ -173,7 +173,28 @@ public slots:
      * @brief readIni
      * @param name
      */
-    virtual void readIni(QString name) = 0;
+    virtual void readIni(QString name);
+    /**
+     * @brief saveIni
+     * @param name
+     */
+    void saveIni(QString name) const;
+    /**
+     * @brief randomizeIni
+     */
+    void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
+    /**
+     * @brief setInitValue changes an ini-file loaded parameter to the given value if the name doesn't exist nothing happens
+     * @param name
+     * @param newValue
+     */
+    void setInitValue(QString name, double newValue);
+    /**
+     * @brief getInitValue gets the current value of an ini-file loaded parameter if the name doesn't exist returns 0.
+     * @param name
+     * @return
+     */
+    double getInitValue(QString name) const;
     /**
      * @brief useCOPower
      * @param pUnits
@@ -550,6 +571,12 @@ protected:
      * @return
      */
     bool isMoveableTile(Building* pBuilding) const;
+    /**
+     * @brief deserializeObjectVersion
+     * @param stream
+     * @param version
+     */
+    void deserializeObjectVersion(QDataStream &stream, qint32 version);
 protected:
     QVector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
@@ -569,6 +596,8 @@ protected:
     double m_minSameIslandDistance{2.5};
     double m_slowUnitSpeed{2};
     double m_minTerrainDamage{20.0f};
+
+    QVector<IniData> m_iniData;
 private:
     bool finish{false};
     struct FlareInfo

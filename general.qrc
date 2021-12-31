@@ -3999,7 +3999,6 @@
         <file>resources/images/terrain/beach+SE.png</file>
         <file>resources/images/terrain/beach+SW.png</file>
         <file>maps/advance_wars_days_of_ruin.jsm</file>
-        <file>resources/aidata/heavyai_training.js</file>
         <file>resources/aidata/heavy/heavy_ai1.ini</file>
         <file>resources/aidata/heavy/heavy_ai1.js</file>
         <file>resources/aidata/heavy/heavy_ai2.ini</file>
@@ -4926,7 +4925,6 @@
         <file>resources/images/battleanimations/GeneralSprites/flak_shot.png</file>
         <file>resources/images/battleanimations/GeneralSprites/flak_shot_air.png</file>
         <file>resources/images/game/battlesprites/background/back_bridge+sea.png</file>
-        <file>resources/aidata/normalai_training.js</file>
         <file>resources/images/game/battlesprites/background/back_rainairport.png</file>
         <file>resources/images/game/battlesprites/background/back_rainbeach+sea.png</file>
         <file>resources/images/game/battlesprites/background/back_rainbridge+0.png</file>
@@ -6159,5 +6157,7 @@
         <file>resources/images/units/ranger+walk+mask.png</file>
         <file>resources/scripts/weapons/weapon_designator.js</file>
         <file>resources/scripts/units/__ZCOUNIT_RANGER.js</file>
+        <file>ai/training/heavyai_training.js</file>
+        <file>ai/training/normalai_training.js</file>
     </qresource>
 </RCC>

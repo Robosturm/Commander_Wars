@@ -205,12 +205,6 @@ public slots:
      * @brief process
      */
     virtual void process() override;
-    /**
-     * @brief readIni
-     * @param name
-     */
-    virtual void readIni(QString name) override;
-
 
     /*******************************************************************/
     // training section
@@ -598,7 +592,6 @@ private:
     spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
     QVector<QPoint> m_possibleCaptureTargets;
 
-    QVector<IniData> m_iniData;
     double m_minActionScore{0.2};
     double m_actionScoreVariant{0.05};
     double m_stealthDistanceMultiplier{2.0};

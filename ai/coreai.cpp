@@ -18,6 +18,7 @@
 #include "resource_management/cospritemanager.h"
 
 #include <QFile>
+#include <QSettings>
 
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
@@ -102,28 +103,150 @@ void CoreAI::init()
 
 void CoreAI::loadIni(QString file)
 {
-    CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
-    m_iniFiles.append(file);
-    QStringList searchFiles;
-    if (!file.isEmpty())
-    {
-        searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/aidata/" + file);
-        searchFiles.append("resources/aidata/" + file);
-        // make sure to overwrite existing js stuff
-        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        CONSOLE_PRINT("CoreAI::loadIni " + file, Console::eDEBUG);
+        m_iniFiles.append(file);
+        QStringList searchFiles;
+        if (!file.isEmpty())
         {
-            searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/aidata/" + file);
-            searchFiles.append(Settings::getUserPath() + Settings::getMods().at(i) + "/aidata/" + file);
+            searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/aidata/" + file);
+            searchFiles.append("resources/aidata/" + file);
+            // make sure to overwrite existing js stuff
+            for (qint32 i = 0; i < Settings::getMods().size(); i++)
+            {
+                searchFiles.append(QString(oxygine::Resource::RCC_PREFIX_PATH) + Settings::getMods().at(i) + "/aidata/" + file);
+                searchFiles.append(Settings::getUserPath() + Settings::getMods().at(i) + "/aidata/" + file);
+            }
+        }
+        for (qint32 i = 0; i < searchFiles.size(); i++)
+        {
+            if (QFile::exists(searchFiles[i]))
+            {
+                readIni(searchFiles[i]);
+            }
+        }
+}
+
+void CoreAI::readIni(QString name)
+{
+    if (QFile::exists(name))
+    {
+        QSettings settings(name, QSettings::IniFormat);
+        CONSOLE_PRINT("NormalAi::readIni status=" + QString::number(settings.status()), Console::eDEBUG);
+        QString lastGroup = "";
+        for (auto & entry : m_iniData)
+        {
+            bool ok = false;
+            if (entry.m_group != lastGroup)
+            {
+                if (!lastGroup.isEmpty())
+                {
+                    settings.endGroup();
+                }
+                settings.beginGroup(entry.m_group);
+                lastGroup = entry.m_group;
+            }
+            *entry.m_value = settings.value(entry.m_name, entry.m_defaultValue).toDouble(&ok);
+            if (!ok)
+            {
+                *entry.m_value = entry.m_defaultValue;
+            }
+        }
+        settings.endGroup();
+    }
+}
+
+void CoreAI::saveIni(QString name) const
+{
+    QSettings settings(name, QSettings::IniFormat);
+    CONSOLE_PRINT("NormalAi::saveIni status=" + QString::number(settings.status()), Console::eDEBUG);
+    QString lastGroup = "";
+    for (auto & entry : m_iniData)
+    {
+        bool ok = false;
+        if (entry.m_group != lastGroup)
+        {
+            if (!lastGroup.isEmpty())
+            {
+                settings.endGroup();
+            }
+            settings.beginGroup(entry.m_group);
+            lastGroup = entry.m_group;
+        }
+        settings.setValue(entry.m_name, *entry.m_value);
+    }
+    settings.endGroup();
+}
+
+void CoreAI::randomizeIni(QString name, float chance, float mutationRate)
+{
+    for (auto & entry : m_iniData)
+    {
+        if (GlobalUtils::randFloat(0.0f, 1.0f) < chance)
+        {
+            if (qAbs(*entry.m_value) <= 0.05f)
+            {
+                qint32 rand = GlobalUtils::randInt(-1, 1);
+                if (rand == 0)
+                {
+                    *entry.m_value = 0.0f;
+                }
+                else if (rand > 0)
+                {
+                    *entry.m_value = 0.075f;
+                }
+                else if (rand < 0)
+                {
+                    *entry.m_value = -0.075f;
+                }
+            }
+            else
+            {
+                qint32 rand = GlobalUtils::randInt(0, 1);
+                if (rand == 0)
+                {
+                    *entry.m_value -= *entry.m_value * mutationRate;
+                }
+                else
+                {
+                    *entry.m_value += *entry.m_value * mutationRate;
+                }
+            }
+        }
+        if (*entry.m_value < entry.m_minValue)
+        {
+            *entry.m_value = entry.m_minValue;
+        }
+        else if (*entry.m_value > entry.m_maxValue)
+        {
+            *entry.m_value = entry.m_maxValue;
         }
     }
-    for (qint32 i = 0; i < searchFiles.size(); i++)
+    saveIni(name);
+}
+
+void CoreAI::setInitValue(QString name, double newValue)
+{
+    for (auto & entry : m_iniData)
     {
-        if (QFile::exists(searchFiles[i]))
+        if (entry.m_name == name)
         {
-            readIni(searchFiles[i]);
+            *entry.m_value = newValue;
         }
     }
 }
+
+double CoreAI::getInitValue(QString name) const
+{
+    for (auto & entry : m_iniData)
+    {
+        if (entry.m_name == name)
+        {
+            return *entry.m_value;
+        }
+    }
+    return 0.0;
+}
+
 
 void CoreAI::nextAction()
 {
@@ -1996,6 +2119,12 @@ void CoreAI::serializeObject(QDataStream& stream) const
         QString file =  m_iniFiles[i];
         stream << file;
     }
+    stream << static_cast<qint32>(m_iniData.size());
+    for (const auto & item : qAsConst(m_iniData))
+    {
+        stream << item.m_name;
+        stream << *item.m_value;
+    }
 }
 
 void CoreAI::deserializeObject(QDataStream& stream)
@@ -2003,6 +2132,11 @@ void CoreAI::deserializeObject(QDataStream& stream)
     CONSOLE_PRINT("reading core ai", Console::eDEBUG);
     qint32 version;
     stream >> version;
+    deserializeObjectVersion(stream, version);
+}
+
+void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
+{
     if (version > 1)
     {
         stream >> m_enableNeutralTerrainAttack;
@@ -2049,6 +2183,27 @@ void CoreAI::deserializeObject(QDataStream& stream)
             QString list;
             stream >> list;
             loadIni(list);
+        }
+    }
+    if (version > 5)
+    {
+        CoreAI::deserializeObject(stream);
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; ++i)
+        {
+            QString name;
+            stream >> name;
+            double value;
+            stream >> value;
+            for (auto & item : m_iniData)
+            {
+                if (item.m_name == name)
+                {
+                    *item.m_value = value;
+                    break;
+                }
+            }
         }
     }
 }
