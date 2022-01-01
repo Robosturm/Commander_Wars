@@ -21,14 +21,17 @@ public:
         InfluenceInfo(GameMap* pMap);
         void reset();
         void updateOwner(Player* pOwner);
-        QVector<qint32> playerValues;
-        qint32 highestInfluence{0};
-        qint32 ownInfluence{0};
-        qint32 highestEnemyInfluence{0};
+        qint32 getPlayerInfluence(qint32 playerId);
+        void increaseInfluence(qint32 player, qint32 value);
         QVector<qint32> owners;
         QStringList frontMovetype;
         QVector<qint32> frontOwners;
         bool frontLineCreated{false};
+        qint32 highestInfluence{0};
+        qint32 ownInfluence{0};
+        qint32 highestEnemyInfluence{0};
+    private:
+        QVector<qint32> playerValues;
     };
     explicit InfluenceFrontMap(const QVector<spIslandMap> & islands);
     virtual ~InfluenceFrontMap() = default;

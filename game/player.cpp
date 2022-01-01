@@ -610,6 +610,23 @@ bool Player::isPlayerIdEnemy(qint32 playerId)
     return true;
 }
 
+bool Player::isPlayerIdAlly(qint32 playerId)
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        if (playerId < 0 || playerId >= pMap->getPlayerCount())
+        {
+            oxygine::handleErrorPolicy(oxygine::error_policy::ep_show_error, "Player::isPlayerIdEnemy playerId outside player range");
+        }
+        else
+        {
+            return (checkAlliance(pMap->getPlayer(playerId)) == GameEnums::Alliance_Friend);
+        }
+    }
+    return true;
+}
+
 bool Player::isEnemy(Player* pOwner)
 {
     return (checkAlliance(pOwner) == GameEnums::Alliance_Enemy);
@@ -1626,6 +1643,19 @@ void Player::setCO(QString coId, quint8 idx)
         }
 
     }
+}
+
+qint32 Player::getCoCount() const
+{
+    qint32 ret = 0;
+    for(auto & pCO : m_playerCOs)
+    {
+        if (pCO.get() != nullptr)
+        {
+            ++ret;
+        }
+    }
+    return ret;
 }
 
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)

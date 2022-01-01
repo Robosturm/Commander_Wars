@@ -84,12 +84,37 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
     QVector<double> scores;
     building.m_action = nullptr;
     building.m_score = 0;
+    qint32 coCount = m_pPlayer->getCoCount();
+    qint32 maxCoCount = m_pPlayer->getMaxCoCount();
     for (qint32 i = 0; i < building.buildingDataInput.size(); ++i)
     {
         if (building.buildingDataInput[i].enabled)
         {
+            qint32 x = building.m_pBuilding->Building::getX();
+            qint32 y = building.m_pBuilding->Building::getY();
             auto score = m_neuralNetworks[NeuralNetworks::Production]->predict(building.buildingDataInput[i].unitBuildingDataInput);
             double value = score[0] * BaseGameInputIF::getUnitBuildValue(building.buildingDataInput[i].unitId);
+            if (m_pPlayer->getCoCount() > 0)
+            {
+                Unit dummy(building.buildingDataInput[i].unitId, m_pPlayer, false);
+                dummy.setVirtuellX(x);
+                dummy.setVirtuellY(y);
+                double bonusScore = 0;
+                for (qint32 co = 0; co < maxCoCount; ++co)
+                {
+                    bonusScore += getAiCoUnitMultiplier(m_pPlayer->getCO(co), &dummy);
+                }
+                double modifier = value * (1 + bonusScore / (CO::MAX_CO_UNIT_VALUE * coCount));
+                if (bonusScore > 0)
+                {
+                    value += modifier;
+                }
+                else
+                {
+                    value -= modifier;
+                }
+                // todo boost co indirect / direct ratio
+            }
             if (value > m_maxScore)
             {
                 value = m_maxScore;
@@ -263,10 +288,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
         }
         QPoint position(pBuilding->Building::getX(), pBuilding->Building::getY());
         auto & influenceInfo = m_InfluenceFrontMap.getInfluenceInfo(position.x(), position.y());
-        double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();
-        double value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
-        value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
-        data.unitBuildingDataInput[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
+        double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();        
         data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
         data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
         data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(pMap->getMapHeight() * pMap->getMapWidth());

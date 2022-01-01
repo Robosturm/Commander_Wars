@@ -36,7 +36,6 @@ class HeavyAi : public CoreAI
         LocalUnitData           ,
         BasicAttackRange = LocalUnitData,
         CaptureUnit             ,
-        CoUnitValue             ,
         Movementpoints          ,
         MapMovementpoints,
         FondsUsage              ,

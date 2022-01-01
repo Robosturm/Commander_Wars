@@ -247,7 +247,6 @@ double CoreAI::getInitValue(QString name) const
     return 0.0;
 }
 
-
 void CoreAI::nextAction()
 {
     CONSOLE_PRINT("CoreAI::nextAction", Console::eDEBUG);
@@ -734,7 +733,6 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     return erg.toVariant().toRectF();
 }
 
-
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("CoreAI::moveAwayFromProduction", Console::eDEBUG);
@@ -806,7 +804,6 @@ void CoreAI::addSelectedFieldData(spGameAction & pGameAction, const QPoint & poi
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }
-
 
 QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit & pUnits,
                                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,

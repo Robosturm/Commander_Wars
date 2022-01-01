@@ -2904,7 +2904,8 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     {
         score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_normalUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference)
+    else if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference &&
+             data[UseHighTechUnits] <= 1)
     {
         if (data[LowFunds] > 0)
         {
@@ -2918,7 +2919,8 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     else
     {
         if (data[LowFunds] > 0 &&
-            data[FundsFactoryRatio] <= m_normalUnitRatio - m_targetPriceDifference)
+            data[FundsFactoryRatio] <= m_normalUnitRatio - m_targetPriceDifference &&
+            data[UseHighTechUnits] <= 1)
         {
             score += (1 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
         }

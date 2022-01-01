@@ -72,11 +72,11 @@ void InfluenceFrontMap::addBuildingInfluence()
                         qint32 dis = GlobalUtils::getDistance(curPos, pos);
                         if (dis > 0)
                         {
-                            m_InfluenceMap[x][y].playerValues[buildingOwners[building]] += maxScore / dis;
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore / dis);
                         }
                         else
                         {
-                            m_InfluenceMap[x][y].playerValues[buildingOwners[building]] += maxScore;
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore);
                         }
                     }
                 }
@@ -127,28 +127,43 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
+        qint32 influence = getPlayerInfluence(player);
         if (playerId != player &&
             pOwner->isPlayerIdEnemy(player))
         {
-            if (highestEnemy < playerValues[player])
+            if (highestEnemy < influence)
             {
-                highestEnemy = playerValues[player];
+                highestEnemy = influence;
             }
         }
-        if (playerValues[player] > highestValue)
+        if (influence > highestValue)
         {
-            highestValue = playerValues[player];
+            highestValue = influence;
             owners.clear();
             owners.append(player);
         }
-        else if (playerValues[player] > 0 &&
-                 playerValues[player] == highestValue)
+        else if (influence > 0 &&
+                 influence == highestValue)
         {
             owners.append(player);
         }
     }
-    ownInfluence = playerValues[playerId];
+    ownInfluence = getPlayerInfluence(playerId);
     highestInfluence = highestValue;
+}
+
+qint32 InfluenceFrontMap::InfluenceInfo::getPlayerInfluence(qint32 playerId)
+{
+    qint32 influence = 0;
+    Player* pOwner = GameMap::getInstance()->getPlayer(playerId);
+    for (qint32 player = 0; player < playerValues.size(); ++player)
+    {
+        if (pOwner->isPlayerIdAlly(player))
+        {
+            influence += playerValues[player];
+        }
+    }
+    return influence;
 }
 
 void InfluenceFrontMap::InfluenceInfo::reset()
@@ -162,6 +177,11 @@ void InfluenceFrontMap::InfluenceInfo::reset()
     frontMovetype.clear();
     frontOwners.clear();
     frontLineCreated = false;
+}
+
+void InfluenceFrontMap::InfluenceInfo::increaseInfluence(qint32 player, qint32 value)
+{
+    playerValues[player] += value;
 }
 
 void InfluenceFrontMap::reset()
@@ -186,13 +206,13 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
     auto points = pPfs->getAllNodePoints();
     for (const auto & point : points)
     {
-        float divider = 1.0f;
+        float multiplier = 1.0f;
         qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
         if (movePoints > 0 && fieldCost > 0)
         {
-            divider = GlobalUtils::roundUp(static_cast<float>(fieldCost) / static_cast<float>(movePoints));
+            multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
         }
-        m_InfluenceMap[point.x()][point.y()].playerValues[owner] += value / divider;
+        m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
     }
 }
 

@@ -1,5 +1,5 @@
 var Init =
-        {
+{
     // training setup data
     trainingFolder  = "maps/2_player/",             // map folder used
     trainingMap     = "Amber Valley.map",           // map that will be used for training
@@ -64,7 +64,6 @@ var Init =
     {
         Init.startAllCores();
     },
-
 
     startAllCores = function()
     {

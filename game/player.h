@@ -222,6 +222,12 @@ public slots:
      */
     bool isPlayerIdEnemy(qint32 playerId);
     /**
+     * @brief Player::isPlayerIdAlly
+     * @param playerId
+     * @return
+     */
+    bool isPlayerIdAlly(qint32 playerId);
+    /**
      * @brief isAlly
      * @param pOwner
      * @return
@@ -282,6 +288,11 @@ public slots:
      * @param id the index at which we want this co
      */
     void setCO(QString coId, quint8 idx);
+    /**
+     * @brief getCoCount
+     * @return
+     */
+    qint32 getCoCount() const;
     /**
      * @brief getCostModifier
      * @param baseCost
