@@ -40,6 +40,8 @@ bool FocusableObject::handleEvent(QEvent *event)
             case QEvent::InputMethod:
             case QEvent::KeyPress:
             case QEvent::KeyRelease:
+            case QEvent::Shortcut:
+            case QEvent::ShortcutOverride:
             {
                 std::shared_ptr<QEvent> ev(event->clone());
                 emit Mainapp::getInstance()->sigFocusedObjectEvent(ev);

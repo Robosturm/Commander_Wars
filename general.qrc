@@ -6156,9 +6156,32 @@
         <file>resources/images/units/ranger+mask.png</file>
         <file>resources/images/units/ranger+walk+mask.png</file>
         <file>resources/scripts/weapons/weapon_designator.js</file>
-        <file>resources/scripts/units/__ZCOUNIT_RANGER.js</file>
         <file>ai/training/heavyai_training.js</file>
         <file>ai/training/normalai_training.js</file>
         <file>ai/training/situation_training.js</file>
+        <file>resources/scripts/units/ZCOUNIT_RANGER.js</file>
+        <file>resources/images/battleanimations/ranger/ranger+dying+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+fire+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+fire+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+idle+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+idle.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+idle+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+stop.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+stop+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+walk.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+walk+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+stop+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+walk+mask.png</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_ZCOUNIT_RANGER.js</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot+air.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot+down.png</file>
     </qresource>
 </RCC>

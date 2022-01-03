@@ -18,7 +18,14 @@ using spNormalAi = oxygine::intrusive_ptr<NormalAi>;
 class NormalAi : public CoreAI
 {
     Q_OBJECT
-    static constexpr float NO_BUILD_SCORE = -500000.0f;
+    enum FundsMode
+    {
+        Normal,
+        Expensive,
+        VeryExpensive
+    };
+
+    static constexpr float NO_BUILD_SCORE = std::numeric_limits<float>::lowest();
     struct UnitBuildData
     {
         QString unitId;
@@ -66,6 +73,7 @@ class NormalAi : public CoreAI
         float notAttackableCount{0};
         qint32 attackCount{0};
     };
+
 
 public:
     enum BuildItems

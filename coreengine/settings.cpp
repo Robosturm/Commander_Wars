@@ -15,8 +15,10 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QInputDevice>
+#ifdef AUDIOSUPPORT
 #include <QMediaDevices>
 #include <QAudioDevice>
+#endif
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";
@@ -1657,8 +1659,10 @@ void Settings::saveSettings()
         settings.setValue("TotalVolume",               m_TotalVolume);
         settings.setValue("MusicVolume",               m_MusicVolume);
         settings.setValue("SoundVolume",               m_SoundVolume);
+#ifdef AUDIOSUPPORT
         auto audioDevice = m_audioOutput.value<QAudioDevice>();
         settings.setValue("AudioDevice",               audioDevice.description());
+#endif
         settings.setValue("Muted",                     m_muted);
         settings.endGroup();
 

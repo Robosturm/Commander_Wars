@@ -156,7 +156,6 @@ var Constructor = function()
             defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y))
         {
             baseDamage1 = Global[weaponID1].getBaseDamage(unit);
-
         }
         var weaponID2 = defUnit.getWeapon2ID();
         if (defUnit.hasAmmo2() && weaponID2 !== "" &&
@@ -164,15 +163,18 @@ var Constructor = function()
         {
             baseDamage2 = Global[weaponID2].getBaseDamage(unit);
         }
-        if (baseDamage1 >= baseDamage2)
+        if ((baseDamage1 >= 0.0) || (baseDamage2 >= 0.0))
         {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y);
-            result.height = 0;
-        }
-        else
-        {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y);
-            result.height = 1;
+            if (baseDamage1 >= baseDamage2)
+            {
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y);
+                result.height = 0;
+            }
+            else
+            {
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y);
+                result.height = 1;
+            }
         }
         return result;
     };
@@ -181,16 +183,10 @@ var Constructor = function()
         var damage = -1;
         // only direct units can deal counter damage
         var defPos = Qt.point(defenderX, defenderY);
-        if (defender.canCounterAttack(action, defPos, attacker, attackerPosition, luckMode))
-        {
-            if (defender.getMinRange(defPos) === 1 && defenderWeapon !== "")
-            {
-                var health = defender.getVirtualHp() - takenDamage / 10.0;
-                damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
-                                                attacker, attackerPosition, true,
-                                                luckMode);
-            }
-        }
+        var health = defender.getVirtualHp() - takenDamage / 10.0;
+        damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
+                                        attacker, attackerPosition, true,
+                                        luckMode);
         return damage;
     };
     this.calcDamage = function(action, attacker, attackerWeapon, attackerPosition, attackerBaseHp,

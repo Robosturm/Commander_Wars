@@ -14,8 +14,8 @@ var Constructor = function()
         unit.setMaxAmmo2(3);
         unit.setWeapon2ID("WEAPON_BAZOOKA");
 
-        unit.setFuel(99);
-        unit.setMaxFuel(99);
+        unit.setFuel(100);
+        unit.setMaxFuel(100);
         unit.setBaseMovementPoints(4);
         unit.setMinRange(1);
         unit.setMaxRange(1);

@@ -7,7 +7,7 @@ TextInput::TextInput()
 {
     Mainapp* pApp = Mainapp::getInstance();
     emit pApp->sigCreateLineEdit();
-    m_lineEdit = pApp->getLastCreateLineEdit();
+    m_lineEdit = pApp->getLastCreateLineEdit();    
     connect(m_lineEdit, &QLineEdit::returnPressed, this, &TextInput::editFinished, Qt::QueuedConnection);
     m_toggle.start();
 }
@@ -57,14 +57,16 @@ void TextInput::doHandleEvent(std::shared_ptr<QEvent> event)
             case QEvent::InputMethodQuery:
             case QEvent::InputMethod:
             case QEvent::KeyRelease:
+            case QEvent::Shortcut:
+            case QEvent::ShortcutOverride:
             {
-                // CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
+                CONSOLE_PRINT("Handling event: " + QString::number(event->type()), Console::eDEBUG);
                 m_lineEdit->event(event.get());
                 break;
             }
             default:
             {
-                // do nothing
+                CONSOLE_PRINT("Ignoring event: " + QString::number(event->type()), Console::eDEBUG);
                 break;
             }
         }

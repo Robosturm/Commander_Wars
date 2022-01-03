@@ -56,6 +56,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
+    };
 }
 
 Constructor.prototype = UNIT;

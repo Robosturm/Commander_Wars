@@ -34,6 +34,7 @@ var Init =
     cos = ["CO_ANDY", "CO_JESS"],
     start = false,
     coreData = [],
+    // enum states for remote game triggering
     runNextBattle = 0,
     sleep = 1,
     nextRun = 2,
@@ -291,7 +292,7 @@ var Init =
                     }
                     if (lowestIndex >= 0)
                     {
-                        bestAis[lowestIndex] = [trainingAis[i], aiScore];
+                        bestAis[lowestIndex] = [Init.trainingAis[i], aiScore];
                     }
                 }
             }

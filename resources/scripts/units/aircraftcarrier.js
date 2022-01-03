@@ -113,6 +113,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Naval;
     };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
+    };
 }
 
 Constructor.prototype = UNIT;

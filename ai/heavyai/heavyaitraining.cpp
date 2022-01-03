@@ -99,3 +99,14 @@ void HeavyAi::hideFrontMap()
 {
     m_InfluenceFrontMap.hide();
 }
+
+
+double HeavyAi::getMinActionScore() const
+{
+    return m_minActionScore;
+}
+
+void HeavyAi::setMinActionScore(double newMinActionScore)
+{
+    m_minActionScore = newMinActionScore;
+}

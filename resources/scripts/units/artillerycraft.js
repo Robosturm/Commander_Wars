@@ -53,6 +53,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Hovercraft;
     };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
+    };
 }
 
 Constructor.prototype = UNIT;

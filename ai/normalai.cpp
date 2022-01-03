@@ -1910,7 +1910,6 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     data[InfantryCount] = countData.infantryUnits;
     m_currentDirectIndirectRatio = m_directIndirectRatio * getAiCoBuildRatioModifier();
     // calc average costs if we would build same cost units on every building
-
     float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorD;
     CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);
     if (fundsPerFactory <= m_cappingFunds)
@@ -1933,13 +1932,13 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     {
         CONSOLE_PRINT("NormalAI: Building very expensive units", Console::eDEBUG);
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorC;
-        data[UseHighTechUnits] = 2.0f;
+        data[UseHighTechUnits] = FundsMode::VeryExpensive;
     }
     else if (fundsPerFactory >= m_spamingFunds * m_fundsPerBuildingFactorA)
     {
         CONSOLE_PRINT("NormalAI: Building expensive units", Console::eDEBUG);
         fundsPerFactory = m_spamingFunds * m_fundsPerBuildingFactorA;
-        data[UseHighTechUnits] = 1.0f;
+        data[UseHighTechUnits] = FundsMode::Expensive;
     }
     CONSOLE_PRINT("NormalAI: fundsPerFactory=" + QString::number(fundsPerFactory), Console::eDEBUG);
     data[DirectUnitRatio] = static_cast<float>(countData.directUnits) / static_cast<float>(countData.indirectUnits + 1);
@@ -2884,12 +2883,12 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
 {
     float score = 0;
     // funds bonus
-    if (data[UseHighTechUnits] > 1.0f &&
+    if (data[UseHighTechUnits] > FundsMode::Expensive &&
         data[FundsFactoryRatio] > m_normalUnitRatio + m_targetPriceDifference)
     {
         score = 0;
     }
-    else if (data[UseHighTechUnits] > 0.0f &&
+    else if (data[UseHighTechUnits] > FundsMode::Normal &&
              data[FundsFactoryRatio] >= m_normalUnitRatio -  m_targetPriceDifference &&
              data[FundsFactoryRatio] <= m_normalUnitRatio + m_targetPriceDifference)
     {
@@ -2905,7 +2904,7 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
         score += (1 + ((m_normalUnitRatio + m_targetPriceDifference) - data[FundsFactoryRatio]) / (2 * m_targetPriceDifference)) * m_normalUnitBonusMultiplier;
     }
     else if (data[FundsFactoryRatio] <= m_cheapUnitRatio + m_targetPriceDifference &&
-             data[UseHighTechUnits] <= 1)
+             data[UseHighTechUnits] <= FundsMode::Expensive)
     {
         if (data[LowFunds] > 0)
         {
@@ -2920,7 +2919,7 @@ float NormalAi::calcCostScore(QVector<float>& data, UnitBuildData & unitBuildDat
     {
         if (data[LowFunds] > 0 &&
             data[FundsFactoryRatio] <= m_normalUnitRatio - m_targetPriceDifference &&
-            data[UseHighTechUnits] <= 1)
+            data[UseHighTechUnits] <= FundsMode::Expensive)
         {
             score += (1 + m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
         }

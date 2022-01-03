@@ -199,6 +199,7 @@ public:
     virtual ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);
+
 public slots:
     /**
      * @brief process
@@ -234,6 +235,16 @@ public slots:
      * @return
      */
     void mutateNeuralNetwork(qint32 network, double mutationChance, double mutationRate = 0.1f);
+    /**
+     * @brief getMinActionScore
+     * @return
+     */
+    double getMinActionScore() const;
+    /**
+     * @brief setMinActionScore
+     * @param newMinActionScore
+     */
+    void setMinActionScore(double newMinActionScore);
     /**
      * @brief setDisabled
      * @param network

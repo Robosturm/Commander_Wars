@@ -2184,7 +2184,6 @@ void CoreAI::deserializeObjectVersion(QDataStream &stream, qint32 version)
     }
     if (version > 5)
     {
-        CoreAI::deserializeObject(stream);
         qint32 size = 0;
         stream >> size;
         for (qint32 i = 0; i < size; ++i)

@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(AUDIOSUPPORT ON)
+set(AUDIOSUPPORT OFF)
 
 ###################################################################################
 # show configuration

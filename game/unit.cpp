@@ -1027,15 +1027,19 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
         QJSValue erg = pInterpreter->doFunction(m_UnitID, "canUseWeapon", args);
         if (!erg.isBool() || erg.toBool())
         {
-            if (weaponType == GameEnums::WeaponType::WeaponType_Both)
+            qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
+            QPoint position(unitX, unitY);
+            bool inIndirectRange = distance >= getMinRange(position) &&
+                                   distance <= getMaxRange(position);
+            if (weaponType == GameEnums::WeaponType::WeaponType_Both &&
+                (inIndirectRange || distance == 1))
             {
                 ret = true;
             }
             else
             {
-                qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
                 if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
-                    (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+                    (weaponType == GameEnums::WeaponType::WeaponType_Indirect && inIndirectRange))
                 {
                     ret = true;
                 }
@@ -1487,7 +1491,7 @@ float Unit::getTrueDamage(GameAction* pAction, float damage, QPoint position, qi
 
 bool Unit::canCounterAttack(GameAction* pAction, QPoint position, Unit* pDefender, QPoint defPosition, GameEnums::LuckDamageMode luckMode)
 {
-    bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1;
+    bool directCombat = qAbs(position.x() - defPosition.x()) + qAbs(position.y() - defPosition.y()) == 1 ;
     CO* pCO = m_pOwner->getCO(0);
     auto mode = GameEnums::CounterAttackMode_Undefined;
     if (pCO != nullptr)

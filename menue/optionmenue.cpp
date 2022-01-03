@@ -514,21 +514,19 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(touchPointSensitivity);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Gamepad: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android, iOS, macOS and linux."));
-    pCheckbox->setChecked(Settings::getGamepadEnabled());
-    pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
-    m_pOptions->addItem(pCheckbox);
-    y +=40;
-
     if (Gamepad::isSupported())
     {
+        pTextfield = spLabel::create(sliderOffset - 140);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Gamepad: "));
+        pTextfield->setPosition(10, y);
+        m_pOptions->addItem(pTextfield);
+        pCheckbox = spCheckbox::create();
+        pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android, iOS, macOS and linux."));
+        pCheckbox->setChecked(Settings::getGamepadEnabled());
+        pCheckbox->setPosition(sliderOffset - 130, y);
+        connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
+        m_pOptions->addItem(pCheckbox);
         // gamepad button
         oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
         pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);

@@ -81,7 +81,7 @@ var Constructor = function()
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
         var weatherModifier = TERRAIN.getWeatherModifier();
-        return "back_" + weatherModifier +"sea";
+        return "back_" + weatherModifier + "sea";
     };
 
     this.getTerrainAnimationMoveSpeed = function()
@@ -96,6 +96,10 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;
+    };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
     };
 }
 

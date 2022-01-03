@@ -81,7 +81,7 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
+        var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
         var i = 0;
         sprite.loadSprite("artillery_hit", false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                           1, 1.0, 0, 0, true);

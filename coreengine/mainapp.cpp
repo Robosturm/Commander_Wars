@@ -73,6 +73,7 @@ Mainapp::Mainapp()
 void Mainapp::createLineEdit()
 {
     m_pLineEdit = new QLineEdit();
+    m_pLineEdit->setInputMethodHints(static_cast<Qt::InputMethodHints>(Qt::ImQueryAll));
 }
 
 void Mainapp::shutdown()

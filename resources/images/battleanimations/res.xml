@@ -50,6 +50,10 @@
         <image file="GeneralSprites/flak_shot.png" cols = "6" />
         <image file="GeneralSprites/flak_shot_air.png" cols = "6" />
         <image file="GeneralSprites/flak_hit.png" cols = "10" />
+        <image file="GeneralSprites/designator_shot.png" cols = "4" />
+        <image file="GeneralSprites/designator_shot+air.png" cols = "4" />
+        <image file="GeneralSprites/designator_shot+down.png" cols = "4" />
+
         <!-- spotters -->
         <image file="spotter/spotter+ac+mask.png" />
         <image file="spotter/spotter+bm+mask.png" />
@@ -1233,7 +1237,26 @@
         <image file="watermine/watermine.png" cols = "4" />
         <image file="watermine/watermine+mask.png" cols = "4" />
         <!-- ranger -->
+        <image file="ranger/ranger+dying+mask.png" />
+        <image file="ranger/ranger+fire+down+mask.png" cols = "2" />
         <image file="ranger/ranger+fire+mask.png" cols = "2" />
+        <image file="ranger/ranger+fire+up+mask.png" cols = "2" />
+        <image file="ranger/ranger+idle+mask.png" />
+        <image file="ranger/ranger+mask.png" />
+        <image file="ranger/ranger+river.png" />
+        <image file="ranger/ranger+river+mask.png" />
+        <image file="ranger/ranger+river+fire.png" cols = "2" />
+        <image file="ranger/ranger+river+fire+mask.png" cols = "2" />
+        <image file="ranger/ranger+river+fire+up.png" cols = "2" />
+        <image file="ranger/ranger+river+fire+up+mask.png" cols = "2" />
+        <image file="ranger/ranger+river+idle.png" />
+        <image file="ranger/ranger+river+idle+mask.png" />
+        <image file="ranger/ranger+river+stop.png" cols = "2" />
+        <image file="ranger/ranger+river+stop+mask.png" cols = "2" />
+        <image file="ranger/ranger+river+walk.png" cols = "6" />
+        <image file="ranger/ranger+river+walk+mask.png" cols = "6" />
+        <image file="ranger/ranger+stop+mask.png" cols = "2" />
+        <image file="ranger/ranger+walk+mask.png" cols = "6" />
         
     </atlas>
 </resources>

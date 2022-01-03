@@ -44,7 +44,7 @@ jobs:
             installerCommands1: ''
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_x64.zip'            
+            asset_name: 'Commander_Wars_Win10_x64.zip'            
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
