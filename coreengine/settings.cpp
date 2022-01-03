@@ -35,6 +35,7 @@ bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
 bool Settings::m_gamepadEnabled = false;
 float Settings::m_gamepadSensitivity = 1.0f;
+qint32 Settings::m_framesPerSecond = 60;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
@@ -166,6 +167,30 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getFramesPerSecond()
+{
+    return m_framesPerSecond;
+}
+
+void Settings::setFramesPerSecond(qint32 newFramesPerSecond)
+{
+    constexpr qint32 msPerSec = 1000;
+    m_framesPerSecond = newFramesPerSecond;
+    if (m_framesPerSecond >= msPerSec)
+    {
+        m_framesPerSecond = msPerSec;
+    }
+    else if (m_framesPerSecond < 30)
+    {
+        m_framesPerSecond = 30;
+    }
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp != nullptr)
+    {
+        pApp->setTimerCycle(msPerSec / m_framesPerSecond);
+    }
 }
 
 bool Settings::getMuted()
@@ -987,6 +1012,9 @@ void Settings::loadSettings()
     {
         m_gamepadSensitivity = 1.0f;
     }
+    m_framesPerSecond = settings.value("MaxFPS", 60).toInt(&ok);
+    setFramesPerSecond(m_framesPerSecond);
+
 
     settings.endGroup();
     CONSOLE_PRINT("Settings::loadSettings() inital data already loaded", Console::eDEBUG);
@@ -1587,6 +1615,8 @@ void Settings::saveSettings()
         settings.setValue("TouchPointSensitivity",      m_touchPointSensitivity);
         settings.setValue("GamepadEnabled",             m_gamepadEnabled);
         settings.setValue("GamepadSensitivity",         m_gamepadSensitivity);
+        settings.setValue("MaxFPS",                     m_framesPerSecond);
+
         settings.endGroup();
 
         settings.beginGroup("Resolution");

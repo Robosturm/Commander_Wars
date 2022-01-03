@@ -490,6 +490,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Max FPS: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 30, 60, "");
+    pSlider->setTooltipText(tr("Selects the maximum FPS use it to reduce power consumption on smartphones."));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getFramesPerSecond());
+    connect(pSlider.get(), &Slider::sliderValueChanged, Settings::getInstance(), &Settings::setFramesPerSecond, Qt::QueuedConnection);
+    m_pOptions->addItem(pSlider);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Touch screen: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

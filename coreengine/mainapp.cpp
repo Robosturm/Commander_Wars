@@ -306,6 +306,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (!m_noUi)
             {
                 update();
+                // refresh timer cycle before using it.
+                Settings::setFramesPerSecond(Settings::getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
             }
             break;

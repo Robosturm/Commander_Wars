@@ -39,6 +39,10 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+
+    static qint32 getFramesPerSecond();
+    static void setFramesPerSecond(qint32 newFramesPerSecond);
+
     static bool getMuted();
     static void setMuted(bool newMuted);
 
@@ -465,6 +469,7 @@ private:
     static qint32 m_touchPointSensitivity;
     static bool m_gamepadEnabled;
     static float m_gamepadSensitivity;
+    static qint32 m_framesPerSecond;
 
     static bool m_borderless;
     static bool m_fullscreen;

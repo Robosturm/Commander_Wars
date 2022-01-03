@@ -40,9 +40,6 @@ namespace oxygine
         connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
         connect(this, &GameWindow::sigQuit, this, &GameWindow::quit, Qt::QueuedConnection);
         connect(QApplication::instance(), &QApplication::aboutToQuit, this, &GameWindow::quitApp);
-
-        connect(this, &GameWindow::sigStopUpdateTimer, this, &GameWindow::stopUpdateTimer);
-        connect(this, &GameWindow::sigStartUpdateTimer, this, &GameWindow::startUpdateTimer);
         connect(this, &GameWindow::sigShowKeyboard, this, &GameWindow::showKeyboard, Qt::QueuedConnection);
     }
 
@@ -96,6 +93,21 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
+        static qint32 fps = 0;
+        static auto lastUpdate = std::chrono::system_clock::now().time_since_epoch();
+        auto now = std::chrono::system_clock::now().time_since_epoch();
+        ++fps;
+        if (now - lastUpdate > std::chrono::milliseconds(1000))
+        {
+            lastUpdate = now;
+
+            if (fps < 30)
+            {
+                qint32 a = 0;
+            }
+            fps = 0;
+        }
+
         updateData();
         if (m_pauseMutex.tryLock())
         {
@@ -110,6 +122,10 @@ namespace oxygine
                 swapDisplayBuffers();
             }
             m_pauseMutex.unlock();
+        }
+        else
+        {
+            update();
         }
         // check for termination
         if (m_quit)
@@ -311,6 +327,7 @@ namespace oxygine
     {
         emit sigWheelEvent(event->angleDelta().x(), event->angleDelta().y());
     }
+
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
         emit sigMouseMoveEvent(event->position().x(), event->position().y());
@@ -383,6 +400,11 @@ namespace oxygine
     bool GameWindow::sameTouchpoint(QPointF pos1, QPointF pos2) const
     {
         return qAbs(pos1.x() - pos2.x()) + qAbs(pos1.y() - pos2.y()) <= Settings::getTouchPointSensitivity();
+    }
+
+    void GameWindow::setTimerCycle(qint32 newTimerCycle)
+    {
+        m_timerCycle = newTimerCycle;
     }
 
     void GameWindow::handleZoomGesture(QList<QTouchEvent::TouchPoint> & touchPoints)
