@@ -73,7 +73,6 @@ Mainapp::Mainapp()
 void Mainapp::createLineEdit()
 {
     m_pLineEdit = new QLineEdit();
-    m_pLineEdit->setInputMethodHints(static_cast<Qt::InputMethodHints>(Qt::ImQueryAll));
 }
 
 void Mainapp::shutdown()
@@ -755,4 +754,14 @@ bool Mainapp::getCreateSlaveLogs() const
 void Mainapp::setCreateSlaveLogs(bool create)
 {
     m_createSlaveLogs = create;
+}
+
+void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+{
+    FocusableObject::handleInputMethodQuery(query, arg);
+}
+
+void Mainapp::slotCursorPositionChanged(int oldPos, int newPos)
+{
+    emit cursorPositionChanged(oldPos, newPos);
 }

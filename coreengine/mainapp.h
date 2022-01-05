@@ -204,6 +204,19 @@ public slots:
      */
     void doScreenshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
+    /**
+     * @brief inputMethodQuery dummy function to rerout qlineedit events
+     * @param query
+     * @param ret
+     */
+    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+    /**
+     * @brief slotCursorPositionChanged dummy function to rerout qlineedit events
+     * @param oldPos
+     * @param newPos
+     */
+    void slotCursorPositionChanged(int oldPos, int newPos);
+
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -224,7 +237,12 @@ signals:
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
-    void sigFocusedObjectEvent(std::shared_ptr<QEvent> event);
+    /**
+     * @brief cursorPositionChanged dummy function to rerout qlineedit events
+     * @param oldPos
+     * @param newPos
+     */
+    void cursorPositionChanged(int oldPos, int newPos);
 private slots:
     void createLineEdit();
 protected:

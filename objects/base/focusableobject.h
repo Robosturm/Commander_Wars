@@ -6,6 +6,9 @@
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
+class FocusableObject;
+using spFocusableObject = oxygine::intrusive_ptr<FocusableObject>;
+
 class FocusableObject : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
@@ -22,22 +25,24 @@ public:
         return m_focusedObject;
     }
     static bool handleEvent(QEvent *event);
+    static void handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
 protected:
     virtual void focused(){};
     virtual void looseFocusInternal();
+    virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg){};
+    /**
+     * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
+     * @param event
+     */
+    virtual bool doHandleEvent(QEvent *event)
+    {
+        return false;
+    };
 signals:
     void sigFocusedLost();
     void sigFocused();
 public slots:
     virtual void focusedLost(){};
-protected slots:
-    /**
-     * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
-     * @param event
-     */
-    virtual void doHandleEvent(std::shared_ptr<QEvent> event)
-    {
-    };
 private slots:
     void focusedInternal();
 protected:

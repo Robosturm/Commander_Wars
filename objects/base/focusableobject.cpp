@@ -14,7 +14,6 @@ FocusableObject::FocusableObject()
     setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
-    connect(Mainapp::getInstance(), &Mainapp::sigFocusedObjectEvent, this, &FocusableObject::doHandleEvent, Qt::QueuedConnection);
     if (!m_registeredAtStage)
     {
         m_registeredAtStage = true;
@@ -32,7 +31,8 @@ FocusableObject::FocusableObject()
 bool FocusableObject::handleEvent(QEvent *event)
 {
     bool handled = false;
-    if (FocusableObject::getFocusedObject() != nullptr)
+    spFocusableObject pObj(FocusableObject::getFocusedObject());
+    if (pObj.get() != nullptr)
     {
         switch (event->type())
         {
@@ -43,9 +43,7 @@ bool FocusableObject::handleEvent(QEvent *event)
             case QEvent::Shortcut:
             case QEvent::ShortcutOverride:
             {
-                std::shared_ptr<QEvent> ev(event->clone());
-                emit Mainapp::getInstance()->sigFocusedObjectEvent(ev);
-                handled = true;
+                handled = pObj->doHandleEvent(event);
                 break;
             }
             default:
@@ -55,6 +53,14 @@ bool FocusableObject::handleEvent(QEvent *event)
         }
     }
     return handled;
+}
+
+void FocusableObject::handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+{
+    if (FocusableObject::getFocusedObject() != nullptr)
+    {
+        FocusableObject::getFocusedObject()->inputMethodQuery(query, arg);
+    }
 }
 
 
