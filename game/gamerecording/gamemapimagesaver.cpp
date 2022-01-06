@@ -13,8 +13,7 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
     if (pMap.get() != nullptr &&
         pMenu.get() != nullptr)
     {
-        constexpr qint32 extraBorder = 5;
-        QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX() + extraBorder, GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY() + extraBorder);
+        QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX(), GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY());
         QOpenGLFramebufferObject buffer(size);
         buffer.bind();
         QColor clearColor(0, 0, 255, 255);
@@ -36,7 +35,7 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
         oxygine::Material::null->apply();
         pMap->setPosition(orgPos);
         pMenu->getCursor()->setVisible(true);
-        auto img = buffer.toImage().copy(QRect(0, 0, size.width() - extraBorder, size.height() - extraBorder));
+        auto img = buffer.toImage();
         img.save(filename);
         buffer.release();
     }
