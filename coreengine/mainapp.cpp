@@ -17,6 +17,8 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
 
+#include "game/gamerecording/gamemapimagesaver.h"
+
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
@@ -362,6 +364,26 @@ void Mainapp::doScreenshot()
     }
 }
 
+void Mainapp::doMapshot()
+{
+    if (beginRendering())
+    {
+        qint32 i = 0;
+        QDir dir("screenshots/");
+        dir.mkpath(".");
+        while (i < std::numeric_limits<qint32>::max())
+        {
+            QString filename = "screenshots/mapshot+" + QString::number(i) + ".png";
+            if (!QFile::exists(filename))
+            {
+                GamemapImageSaver::saveMapAsImage(filename);
+                break;
+            }
+            ++i;
+        }
+    }
+}
+
 void Mainapp::changeScreenMode(qint32 mode)
 {
     if (m_noUi)
@@ -492,6 +514,10 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     else if (cur == Settings::getKey_screenshot())
     {
         doScreenshot();
+    }
+    else if (cur == Settings::getKey_mapshot())
+    {
+        doMapshot();
     }
     else
     {

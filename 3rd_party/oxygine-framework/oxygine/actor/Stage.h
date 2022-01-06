@@ -19,6 +19,7 @@ namespace oxygine
         static spStage instance;
 
         static Rect calcCenteredViewport(const Point& displaySize, const Point& gameSize);
+        static QMatrix4x4 getViewProjectionMatrix(const Rect& viewport);
         explicit Stage();
         virtual ~Stage() = default;
 

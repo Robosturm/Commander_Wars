@@ -39,6 +39,8 @@ public:
     static void setUsername(const QString &Username);
 
 public slots:
+    static Qt::Key getKey_mapshot();
+    static void setKey_mapshot(Qt::Key newKey_mapshot);
 
     static qint32 getFramesPerSecond();
     static void setFramesPerSecond(qint32 newFramesPerSecond);
@@ -477,6 +479,7 @@ private:
     static Qt::Key m_key_escape;
     static Qt::Key m_key_console;
     static Qt::Key m_key_screenshot;
+    static Qt::Key m_key_mapshot;
     static Qt::Key m_key_up;
     static Qt::Key m_key_down;
     static Qt::Key m_key_right;

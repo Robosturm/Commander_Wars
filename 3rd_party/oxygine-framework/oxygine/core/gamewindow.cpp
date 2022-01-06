@@ -240,7 +240,6 @@ namespace oxygine
         CONSOLE_PRINT("core::restore()", Console::eDEBUG);
         VideoDriver::instance->restore();
         STDRenderer::restore();
-        oxygine::Stage::instance->setSize(w, h);
         CONSOLE_PRINT("core::restore() done", Console::eDEBUG);
     }
 

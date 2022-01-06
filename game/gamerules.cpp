@@ -570,7 +570,7 @@ void GameRules::createWeatherSprites()
                         pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
                         pSprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                         pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
-                        m_WeatherSprites.append(pSprite);
+                        m_WeatherSprites.push_back(pSprite);
                         pMap->addChild(pSprite);
                     }
                 }
@@ -634,10 +634,10 @@ void GameRules::createFogVision()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            m_FogSprites.append(QVector<oxygine::spSprite>());
+            m_FogSprites.push_back(std::vector<oxygine::spSprite>());
             for (qint32 y = 0; y < heigth; y++)
             {
-                m_FogSprites[x].append(oxygine::spSprite());
+                m_FogSprites[x].push_back(oxygine::spSprite());
             }
         }
     }

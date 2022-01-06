@@ -1,6 +1,6 @@
 #include <QFile>
-#include <qdir.h>
-#include <qcryptographichash.h>
+#include <QDir>
+#include <QCryptographicHash>
 
 #include "menue/editormenue.h"
 #include "menue/mainwindow.h"

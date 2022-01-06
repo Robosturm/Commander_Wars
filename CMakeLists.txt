@@ -410,6 +410,8 @@ set(${PROJECT_NAME}_SRCS
     game/gamerecording/specialevent.cpp
     game/gamerecording/gamerecorder.cpp
     game/gamerecording/replayrecorder.cpp
+    game/gamerecording/gamemapimagesaver.cpp
+
     # cool ingame script support
     game/gamescript.cpp
     game/campaign.cpp

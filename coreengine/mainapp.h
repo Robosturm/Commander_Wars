@@ -203,6 +203,10 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
+    /**
+     * @brief doMapshot
+     */
+    void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
      * @brief inputMethodQuery dummy function to rerout qlineedit events

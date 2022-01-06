@@ -862,9 +862,21 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = spSelectKey::create(Settings::getKey_screenshot());
-    pSelectKey->setTooltipText(tr("Key for taking an screenshot."));
+    pSelectKey->setTooltipText(tr("Key for taking a screenshot."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_screenshot, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Mapshot: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = spSelectKey::create(Settings::getKey_mapshot());
+    pSelectKey->setTooltipText(tr("Key for taking a mapshot. Saving the current map in an image."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_mapshot, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 

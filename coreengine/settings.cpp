@@ -40,6 +40,7 @@ qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
+Qt::Key Settings::m_key_mapshot                     = Qt::Key_F6;
 Qt::Key Settings::m_key_up                          = Qt::Key_W;
 Qt::Key Settings::m_key_down                        = Qt::Key_S;
 Qt::Key Settings::m_key_right                       = Qt::Key_D;
@@ -167,6 +168,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+void Settings::setKey_mapshot(Qt::Key newKey_mapshot)
+{
+    m_key_mapshot = newKey_mapshot;
+}
+
+Qt::Key Settings::getKey_mapshot()
+{
+    return m_key_mapshot;
 }
 
 qint32 Settings::getFramesPerSecond()
@@ -1039,6 +1050,14 @@ void Settings::loadSettings()
         CONSOLE_PRINT(error, Console::eERROR);
         m_key_screenshot = Qt::Key_F5;
     }
+
+    m_key_mapshot      = static_cast<Qt::Key>(settings.value("key_mapshot", Qt::Key_F6).toInt(&ok));
+    if(!ok){
+        QString error = "Error in the Ini File: [Key] Setting: key_mapshot";
+        CONSOLE_PRINT(error, Console::eERROR);
+        m_key_mapshot = Qt::Key_F6;
+    }
+
     m_key_up = static_cast<Qt::Key>(settings.value("key_up", Qt::Key_W).toInt(&ok));
     if(!ok)
     {
@@ -1636,6 +1655,7 @@ void Settings::saveSettings()
         settings.setValue("key_escape",                     m_key_escape);
         settings.setValue("key_console",                    m_key_console);
         settings.setValue("key_screenshot",                 m_key_screenshot);
+        settings.setValue("key_mapshot",                    m_key_mapshot);
         settings.setValue("key_up",                         m_key_up);
         settings.setValue("key_down",                       m_key_down);
         settings.setValue("key_right",                      m_key_right);

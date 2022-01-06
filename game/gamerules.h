@@ -591,8 +591,8 @@ private:
     GameEnums::Fog m_FogMode{GameEnums::Fog_Off};
     qint32 m_UnitLimit{0};
 
-    QVector<QVector<oxygine::spSprite>> m_FogSprites;
-    QVector<oxygine::spSprite> m_WeatherSprites;
+    std::vector<std::vector<oxygine::spSprite>> m_FogSprites;
+    std::vector<oxygine::spSprite> m_WeatherSprites;
 
     qint32 roundTime{0};
     Timer m_RoundTimer;
