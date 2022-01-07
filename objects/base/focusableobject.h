@@ -26,9 +26,12 @@ public:
     }
     static bool handleEvent(QEvent *event);
     static void handleInputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+signals:
+    void sigFocusedLost();
+    void sigFocused();
+    void sigLooseFocusInternal();
 protected:
     virtual void focused(){};
-    virtual void looseFocusInternal();
     virtual void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg){};
     /**
      * @brief keyInputMethodQueryEvent called in case a focused object shows a virtual key board
@@ -38,9 +41,8 @@ protected:
     {
         return false;
     };
-signals:
-    void sigFocusedLost();
-    void sigFocused();
+protected slots:
+    virtual void looseFocusInternal();
 public slots:
     virtual void focusedLost(){};
 private slots:

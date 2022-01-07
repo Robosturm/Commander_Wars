@@ -14,6 +14,7 @@ FocusableObject::FocusableObject()
     setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
+    connect(this, &FocusableObject::sigLooseFocusInternal, this, &FocusableObject::looseFocusInternal);
     if (!m_registeredAtStage)
     {
         m_registeredAtStage = true;

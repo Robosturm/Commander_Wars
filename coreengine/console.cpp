@@ -310,7 +310,7 @@ void Console::toggleView()
     }
     else
     {
-       looseFocusInternal();
+       emit sigLooseFocusInternal();
     }
     m_toggled = true;
 }
