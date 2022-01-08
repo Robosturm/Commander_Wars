@@ -189,14 +189,14 @@ Settings::Settings()
     m_SettingValues =
     {
         // resolution
-        new Value<qint32>{"Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max()},
-        new Value<qint32>{"Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max()},
-        new Value<qint32>{"Resolution", "width", &m_width, size.width(), 1, size.width()},
-        new Value<qint32>{"Resolution", "height", &m_height, size.height(), 1, size.height()},
+        new Value<qint32>{"Resolution", "x", &m_x, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
+        new Value<qint32>{"Resolution", "y", &m_y, 0, std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::max(), true},
+        new Value<qint32>{"Resolution", "width", &m_width, size.width(), 1, size.width(), true},
+        new Value<qint32>{"Resolution", "height", &m_height, size.height(), 1, size.height(), true},
         new Value<float>{"Resolution", "brightness", &m_brightness, 0, -50, 50},
         new Value<float>{"Resolution", "gamma", &m_gamma, 1, 0, 50},
-        new Value<bool>{"Resolution", "borderless", &m_borderless, true, false, true},
-        new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true},
+        new Value<bool>{"Resolution", "borderless", &m_borderless, true, false, true, true},
+        new Value<bool>{"Resolution", "fullscreen", &m_fullscreen, false, false, true, true},
         new Value<bool>{"Resolution", "recordgames", &m_record, false, false, true},
         new Value<bool>{"Resolution", "SmallScreenDevice", &m_smallScreenDevice, smallScreenDevice, false, true},
         // general

@@ -113,7 +113,7 @@ class Settings : public QObject, public oxygine::ref_counter
             else if constexpr (std::is_same<TType, std::chrono::seconds>::value)
             {
                 bool ok = false;
-                *m_value = std::chrono::seconds(settings.value(m_name, m_defaultValue.count()).toUInt(&ok));
+                *m_value = std::chrono::seconds(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
                 if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
@@ -134,7 +134,7 @@ class Settings : public QObject, public oxygine::ref_counter
             settings.beginGroup(m_group);
             if constexpr (std::is_same<TType, std::chrono::seconds>::value)
             {
-                settings.setValue(m_name, (*m_value).count());
+                settings.setValue(m_name, static_cast<qint64>((*m_value).count()));
             }
             else
             {
