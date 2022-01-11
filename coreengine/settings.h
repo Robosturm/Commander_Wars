@@ -136,6 +136,10 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 settings.setValue(m_name, static_cast<qint64>((*m_value).count()));
             }
+            else if constexpr (std::is_same<TType, QStringList>::value)
+            {
+                settings.setValue(m_name, Settings::getConfigString(*m_value));
+            }
             else
             {
                 settings.setValue(m_name, *m_value);
@@ -190,7 +194,8 @@ class Settings : public QObject, public oxygine::ref_counter
         virtual void saveValue(QSettings & settings)
         {
             settings.beginGroup(m_group);
-            settings.setValue(m_name,              *m_value);
+            auto device = (*m_value).value<QAudioDevice>();
+            settings.setValue(m_name, device.description());
             settings.endGroup();
         }
         virtual void resetValue()
@@ -428,8 +433,8 @@ public slots:
     static qint32 getMenuItemCount();
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
-    static QString getModConfigString();
-    static QString getModConfigString(QStringList mods);
+    static QString getModString();
+    static QString getConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();
     static void setMultiTurnCounter(const quint32 &value);

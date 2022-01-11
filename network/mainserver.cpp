@@ -158,7 +158,7 @@ void MainServer::spawnSlave(const QString & initScript, const QStringList & mods
     args << "-noui"; // comment out for debugging
     args << "-noaudio";
     args << "-mods";
-    args << Settings::getModConfigString(mods);
+    args << Settings::getConfigString(mods);
     args << "-initScript";
     args << initScript;
     args << "-initScript";

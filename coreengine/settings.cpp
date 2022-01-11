@@ -1108,23 +1108,23 @@ void Settings::saveSettings()
     }
 }
 
-QString Settings::getModConfigString()
+QString Settings::getModString()
 {
-    return getModConfigString(m_activeMods);
+    return getConfigString(m_activeMods);
 }
 
-QString Settings::getModConfigString(QStringList mods)
+QString Settings::getConfigString(QStringList list)
 {
-    QString modString = "";
-    for (qint32 i = 0; i < mods.size(); i++)
+    QString listString = "";
+    for (qint32 i = 0; i < list.size(); i++)
     {
-        modString += mods[i] ;
-        if (i < mods.size() - 1)
+        listString += list[i] ;
+        if (i < list.size() - 1)
         {
-            modString += ",";
+            listString += ",";
         }
     }
-    return modString;
+    return listString;
 }
 
 float Settings::getMouseSensitivity()

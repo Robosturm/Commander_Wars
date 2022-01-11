@@ -121,3 +121,13 @@ jobs:
         asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
         asset_content_type: application/zip
+
+    - name: upload unofficial compatible pack
+      uses: actions/upload-release-asset@v1.0.2
+      if: ${{ matrix.os == 'windows-latest' }}
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_name: 'UnofficialCommanderWars_Win7CompatiblePack.zip'
+        asset_path: '${{github.workspace}}/Commander_Wars/3rd_party/UnofficialCommanderWars_Win7CompatiblePack.zip'

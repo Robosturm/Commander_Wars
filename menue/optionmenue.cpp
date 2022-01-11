@@ -108,7 +108,7 @@ OptionMenue::OptionMenue()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
+    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -116,6 +116,15 @@ OptionMenue::OptionMenue()
     });
     connect(this, &OptionMenue::sigExitMenue, this, &OptionMenue::exitMenue, Qt::QueuedConnection);
 
+    oxygine::spButton pButtonReset = ObjectManager::createButton(tr("Reset settings"));
+    addChild(pButtonReset);
+    pButtonReset->setPosition(Settings::getWidth()  / 2.0f - pButtonReset->getWidth() - 10,
+                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowResetBox();
+    });
+    connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
 
 
     oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
@@ -178,6 +187,8 @@ OptionMenue::OptionMenue()
     m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
+
     addChild(m_ModSelector);
     showSettings();
     pApp->continueRendering();
@@ -202,7 +213,7 @@ void OptionMenue::exitMenue()
 {    
     // save changed settings :)
     Settings::saveSettings();
-    if (restartNeeded)
+    if (m_restartNeeded)
     {
         spDialogMessageBox pMessage = spDialogMessageBox::create("Some changes need a restart of the game. The game will restart. Press Ok to restart.", true);
         connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
@@ -231,7 +242,7 @@ void OptionMenue::reloadSettings()
     CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
     spOptionMenue newMenu = spOptionMenue::create();
     // carry over restart flag
-    newMenu->restartNeeded = restartNeeded;
+    newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
 }
@@ -574,7 +585,7 @@ void OptionMenue::showSettings()
     items.clear();
     QLocale english("en");
     items.append(english.nativeLanguageName());
-    languages.append("en");
+    m_languages.append("en");
     qint32 current = 0;
     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
     QStringList filter;
@@ -588,7 +599,7 @@ void OptionMenue::showSettings()
             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
             if (lang != "en")
             {
-                languages.append(lang);
+                m_languages.append(lang);
                 QLocale langLoc(lang);
                 items.append(langLoc.nativeLanguageName());
                 if (lang == Settings::getLanguage())
@@ -607,8 +618,8 @@ void OptionMenue::showSettings()
             [=](qint32 item)
     {
         CONSOLE_PRINT("Marking restart cause language changed.", Console::eDEBUG);
-        Settings::setLanguage(languages[item]);
-        restartNeeded = true;
+        Settings::setLanguage(m_languages[item]);
+        m_restartNeeded = true;
         emit sigReloadSettings();
     });
     y += 40;
@@ -683,7 +694,7 @@ void OptionMenue::showSettings()
             if (value != Settings::getUsername())
             {
                 CONSOLE_PRINT("Marking restart cause user changed.", Console::eDEBUG);
-                restartNeeded = true;
+                m_restartNeeded = true;
             }
             Settings::setUsername(value);
         }
@@ -736,7 +747,7 @@ void OptionMenue::showSettings()
     {
         CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
-        restartNeeded = true;
+        m_restartNeeded = true;
     });
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
@@ -986,7 +997,7 @@ void OptionMenue::showMods()
             {
                 Settings::removeMod(mod);
             }
-            restartNeeded = true;
+            m_restartNeeded = true;
             emit sigUpdateModCheckboxes();
         });
         pBox->setPosition(10, 10 + mods * 50);
@@ -1144,7 +1155,7 @@ void OptionMenue::selectMods(qint32 item)
             Settings::addMod(addMod);
         }
         CONSOLE_PRINT("Marking restart cause mods changed.", Console::eDEBUG);
-        restartNeeded = true;
+        m_restartNeeded = true;
         showMods();
     }
 }
@@ -1271,3 +1282,16 @@ void OptionMenue::showGamepadInfo()
     addChild(pGamepadInfo);
 }
 
+void OptionMenue::showResetBox()
+{
+    spDialogMessageBox pMessage = spDialogMessageBox::create("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu. ", true);
+    connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::onReset, Qt::QueuedConnection);
+    addChild(pMessage);
+}
+
+void OptionMenue::onReset()
+{
+    Settings::resetSettings();
+    m_restartNeeded = true;
+    reloadSettings();
+}
