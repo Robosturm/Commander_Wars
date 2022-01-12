@@ -53,7 +53,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toFloat(&ok);
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);
@@ -73,7 +73,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toUInt(&ok);
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);
@@ -84,7 +84,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = settings.value(m_name, m_defaultValue).toInt(&ok);
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);
@@ -95,7 +95,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = static_cast<TType>(settings.value(m_name, m_defaultValue).toInt(&ok));
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);
@@ -114,7 +114,7 @@ class Settings : public QObject, public oxygine::ref_counter
             {
                 bool ok = false;
                 *m_value = std::chrono::seconds(settings.value(m_name, static_cast<qint64>(m_defaultValue.count())).toUInt(&ok));
-                if(!ok || *m_value <= m_minValue || *m_value >= m_maxValue)
+                if(!ok || *m_value < m_minValue || *m_value > m_maxValue)
                 {
                     QString error = "Error in the Ini File: [" + QString(m_group) + "] Setting: " + QString(m_name);
                     CONSOLE_PRINT(error, Console::eERROR);

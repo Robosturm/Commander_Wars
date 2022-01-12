@@ -950,57 +950,49 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
 }
 
 void PlayerSelection::allPlayerIncomeChanged(float value)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->setFundsModifier(value);
         m_playerIncomes[i]->setCurrentValue(value);
     }
-    playerDataChanged();
-    
+    playerDataChanged();    
 }
+
 void PlayerSelection::allPlayerStartFundsChanged(float value)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->setFunds(static_cast<qint32>(value));
         m_playerStartFunds[i]->setCurrentValue(value);
     }
-    playerDataChanged();
-    
+    playerDataChanged();    
 }
+
 void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 {
-    spGameMap pMap = GameMap::getInstance();
-    
+    spGameMap pMap = GameMap::getInstance();    
     pMap->getPlayer(playerIdx)->setFundsModifier(value);
-    playerDataChanged();
-    
+    playerDataChanged();    
 }
 
 void PlayerSelection::slotShowAllBuildList()
 {
-    // use player 0 as default for showing all
-    
+    // use player 0 as default for showing all    
     spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = spBuildListDialog::create(0, pMap->getPlayer(0)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
-    
 }
 
 void PlayerSelection::slotShowPlayerBuildList(qint32 player)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = spBuildListDialog::create(player, pMap->getPlayer(player)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
-    
 }
 
 void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
@@ -1024,13 +1016,12 @@ void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList build
 }
 
 void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     pMap->getPlayer(playerIdx)->setFunds(static_cast<qint32>(value));
-    playerDataChanged();
-    
+    playerDataChanged();    
 }
+
 void PlayerSelection::playerTeamChanged(qint32 value, qint32 playerIdx)
 {    
     spGameMap pMap = GameMap::getInstance();
@@ -1198,6 +1189,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
         }
     }
 }
+
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {    
     if (!m_saveGame)
@@ -1229,6 +1221,7 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
     m_pPlayerSelection->setVisible(true);
     
 }
+
 void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
 {
     spGameMap pMap = GameMap::getInstance();
@@ -1694,7 +1687,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         stream >> name;
         stream >> player;
         stream >> aiType;
-        CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType), Console::eDEBUG);
+        CONSOLE_PRINT("Remote change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType), Console::eDEBUG);
         if (socket != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
@@ -1706,15 +1699,16 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 {
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
-                CONSOLE_PRINT("Change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+                CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
             }
             else if (!clientRequest)
             {
-                if (aiType == GameEnums::AiTypes::AiTypes_Human)
+                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                    aiType != GameEnums::AiTypes::AiTypes_Closed)
                 {
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
-                CONSOLE_PRINT("Change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+                CONSOLE_PRINT("Remapped change of Player " + QString::number(player) + " with name " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
             }
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
@@ -1748,7 +1742,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         }
         else
         {
-            CONSOLE_PRINT("Update Ignored", Console::eDEBUG);
+            CONSOLE_PRINT("Update ignored", Console::eDEBUG);
         }
     }
 }
