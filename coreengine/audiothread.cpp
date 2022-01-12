@@ -27,7 +27,6 @@ AudioThread::AudioThread(bool noAudio)
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
     moveToThread(Mainapp::getAudioWorker());
-    Mainapp* pApp = Mainapp::getInstance();
     if (!m_noAudio)
     {
         connect(this, &AudioThread::sigPlayMusic,         this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
@@ -579,7 +578,7 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
 void AudioThread::SlotPlaySound(QString file, qint32 loops, qint32 delay, float volume)
 {
 #ifdef AUDIOSUPPORT
-    if (Settings::getMuted() || !m_noAudio)
+    if (Settings::getMuted() || m_noAudio)
     {
         return;
     }
