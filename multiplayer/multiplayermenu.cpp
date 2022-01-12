@@ -163,8 +163,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
 }
 
 void Multiplayermenu::loadSaveGame(QString filename)
-{
-    
+{    
     if (filename.endsWith(".msav"))
     {
         QFile file(filename);
@@ -178,24 +177,19 @@ void Multiplayermenu::loadSaveGame(QString filename)
             m_MapSelectionStep = MapSelectionStep::selectRules;
             buttonNext();
         }
-    }
-    
+    }    
 }
 
 void Multiplayermenu::hideMapSelection()
-{
-    
+{    
     m_pButtonLoadSavegame->setVisible(false);
-    MapSelectionMapsMenue::hideMapSelection();
-    
+    MapSelectionMapsMenue::hideMapSelection();    
 }
 
 void Multiplayermenu::showMapSelection()
-{
-    
+{    
     m_pButtonLoadSavegame->setVisible(true);
-    MapSelectionMapsMenue::showMapSelection();
-    
+    MapSelectionMapsMenue::showMapSelection();    
 }
 
 void Multiplayermenu::playerJoined(quint64 socketID)
@@ -967,7 +961,6 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
 
 bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, bool m_saveGame)
 {
-
     bool found = false;
     while (dirIter.hasNext() && !found)
     {
@@ -990,8 +983,7 @@ bool Multiplayermenu::findAndLoadMap(QDirIterator & dirIter, QByteArray& hash, b
 }
 
 void Multiplayermenu::showRuleSelection()
-{
-    
+{    
     m_pRuleSelection->setVisible(true);
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
@@ -1000,8 +992,7 @@ void Multiplayermenu::showRuleSelection()
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
-    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
-    
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());    
 }
 
 void Multiplayermenu::disconnected(quint64)
@@ -1127,8 +1118,7 @@ void Multiplayermenu::createChat()
 }
 
 void Multiplayermenu::disconnectNetwork()
-{
-    
+{    
     m_GameStartTimer.stop();
     if (m_NetworkInterface.get() != nullptr)
     {
@@ -1139,8 +1129,7 @@ void Multiplayermenu::disconnectNetwork()
         }
         m_pPlayerSelection->attachNetworkInterface(spNetworkInterface());
         m_NetworkInterface = nullptr;
-    }
-    
+    }    
 }
 
 bool Multiplayermenu::getGameReady()
