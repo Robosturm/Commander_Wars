@@ -958,18 +958,21 @@ qint32 Player::getCostModifier(const QString & id, qint32 baseCost, QPoint posit
             costModifier += pCO->getCostModifier(id, baseCost, position);
         }
     }
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (pMap.get() != nullptr)
     {
-        Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer != nullptr &&
-            isEnemy(pPlayer) &&
-            !pPlayer->getIsDefeated())
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            for(auto & pCO : pPlayer->m_playerCOs)
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer != nullptr &&
+                isEnemy(pPlayer) &&
+                !pPlayer->getIsDefeated())
             {
-                if (pCO.get() != nullptr)
+                for(auto & pCO : pPlayer->m_playerCOs)
                 {
-                    costModifier += pCO->getEnemyCostModifier(id, baseCost, position);
+                    if (pCO.get() != nullptr)
+                    {
+                        costModifier += pCO->getEnemyCostModifier(id, baseCost, position);
+                    }
                 }
             }
         }
