@@ -312,7 +312,7 @@ var UNIT =
         return GameEnums.WeaponType_Both;
     },
 
-    canUseWeapon : function(unit, weaponIndex, unitX, unitY, targetX, targetY)
+    canUseWeapon : function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck)
     {
         // return false if the unit isn't allowed to attack from the new position
         // note: this isn't used for ammo checks.

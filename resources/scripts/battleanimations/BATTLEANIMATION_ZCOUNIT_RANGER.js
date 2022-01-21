@@ -58,7 +58,7 @@ var Constructor = function()
         return Qt.point(0, 0);
     };
 
-    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon, direction = "")
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_RANGER.getMaxUnitCount());
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ZCOUNIT_RANGER.armyData);
@@ -84,17 +84,34 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadSpriteV2("designator+mask", GameEnums.Recoloring_Matrix, 1, Qt.point(90, 5),
+            BATTLEANIMATION_ZCOUNIT_RANGER.loadDesignator(sprite, unit, direction);
+        }
+    };
+
+    this.loadDesignator = function(sprite, unit, direction)
+    {
+        var riverName = BATTLEANIMATION_ZCOUNIT_RANGER.getRiverString(unit);
+        sprite.loadSpriteV2("ranger+designator" + riverName + direction + "+mask", GameEnums.Recoloring_Matrix, 1, Qt.point(90, 5),
+                            1, 1, 20);
+        var spriteId = "ranger+designator" + riverName + direction;
+        if (sprite.existResAnim(spriteId))
+        {
+            sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_None, 1, Qt.point(90, 5),
                                 1, 1, 20);
         }
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, count, direction = "")
     {
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_ZCOUNIT_RANGER.armyData);
         var riverName = BATTLEANIMATION_ZCOUNIT_RANGER.getRiverString(unit);
         var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ZCOUNIT_RANGER.animationData);
         var offset = Qt.point(data[0] + data[1].x, data[1].y);
+        if (weapon === 1)
+        {
+            ending = "+idle" + ending;
+        }
+
         sprite.loadSpriteV2("ranger" + riverName + ending + "+mask", GameEnums.Recoloring_Matrix,
                             BATTLEANIMATION_ZCOUNIT_RANGER.getMaxUnitCount(), offset, count);
         var spriteId = "ranger" + riverName + ending;
@@ -103,14 +120,13 @@ var Constructor = function()
             sprite.loadSpriteV2(spriteId, GameEnums.Recoloring_None,
                                 BATTLEANIMATION_ZCOUNIT_RANGER.getMaxUnitCount(), offset, count);
         }
-        if (weapon === 0)
+        if (weapon === 1)
         {
-            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
+            BATTLEANIMATION_ZCOUNIT_RANGER.loadDesignator(sprite, unit, direction);
         }
         else
         {
-            sprite.loadSpriteV2("designator+mask", GameEnums.Recoloring_Matrix, 1, Qt.point(90, 5),
-                                1, 1, 20);
+            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
         }
     };
 
@@ -131,12 +147,10 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        var position = BATTLEANIMATION.getRelativePosition(unit, defender);
         if (weapon === 0)
         {
-            var count = sprite.getUnitCount(BATTLEANIMATION_ZCOUNIT_RANGER.getMaxUnitCount());
-            var armyName = BATTLEANIMATION_ZCOUNIT_RANGER.getArmyName(unit);
             var offset = Qt.point(0, 0);
-            var position = BATTLEANIMATION.getRelativePosition(unit, defender);
             var data = Global.getDataFromTable(armyName, BATTLEANIMATION_ZCOUNIT_RANGER.animationData);
             if (position > 0)
             {
@@ -165,7 +179,17 @@ var Constructor = function()
         }
         else
         {
-
+            var direction = "";
+            if (position > 0)
+            {
+                direction = "+up";
+            }
+            else if (position < 0)
+            {
+                direction = "+down";
+            }
+            BATTLEANIMATION_ZCOUNIT_RANGER.loadSprite(sprite, unit, defender, weapon, "", 6, direction);
+            sprite.loadSprite("designator_shot" + direction,  false, 1, Qt.point(90, 5), 10);
         }
     };
 
@@ -224,7 +248,8 @@ var Constructor = function()
     this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         var terrainId = unit.getTerrain().getTerrainID();
-        if (BATTLEANIMATION_ZCOUNIT_RANGER.isMountain(terrainId))
+        if (BATTLEANIMATION_ZCOUNIT_RANGER.isMountain(terrainId) ||
+            weapon === 1)
         {
             return false;
         }
@@ -274,14 +299,13 @@ var Constructor = function()
                                          GameEnums.Recoloring_None,
                                          offset, movement, rotation, 400);
         }
-        if (weapon === 0)
+        if (weapon === 1)
         {
-            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
+            BATTLEANIMATION_ZCOUNIT_RANGER.loadDesignator(sprite, unit, "");
         }
         else
         {
-            sprite.loadSpriteV2("designator+mask", GameEnums.Recoloring_Matrix, 1, Qt.point(90, 5),
-                                1, 1, 20);
+            BATTLEANIMATION.loadSpotterOrCoMini(sprite, unit, false);
         }
     };
 };

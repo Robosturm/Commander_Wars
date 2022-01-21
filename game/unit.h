@@ -920,7 +920,7 @@ public slots:
      * @param targetY
      * @return
      */
-    bool canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY);
+    bool canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY, GameEnums::AttackRangeCheck rangeCheck = GameEnums::AttackRangeCheck_All);
     /**
      * @brief canAttackStealthedUnit
      * @param pDefender

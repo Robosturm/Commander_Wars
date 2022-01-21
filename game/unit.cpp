@@ -983,7 +983,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
     return false;
 }
 
-bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY)
+bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY, GameEnums::AttackRangeCheck rangeCheck)
 {
     GameEnums::WeaponType weaponType = GameEnums::WeaponType::WeaponType_Both;
     if (weaponIndex == 0)
@@ -1007,6 +1007,7 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
         args << unitY;
         args << targetX;
         args << targetY;
+        args << rangeCheck;
         QJSValue erg = pInterpreter->doFunction("ACTION_FIRE", "extendedCanAttackCheck", args);
         if (erg.isBool())
         {
@@ -1024,13 +1025,14 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
         args << unitY;
         args << targetX;
         args << targetY;
+        args << rangeCheck;
         QJSValue erg = pInterpreter->doFunction(m_UnitID, "canUseWeapon", args);
         if (!erg.isBool() || erg.toBool())
         {
             qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
             QPoint position(unitX, unitY);
-            bool inIndirectRange = distance >= getMinRange(position) &&
-                                   distance <= getMaxRange(position);
+            bool inIndirectRange = (distance >= getMinRange(position) || rangeCheck == GameEnums::AttackRangeCheck_None || rangeCheck == GameEnums::AttackRangeCheck_OnlyMax) &&
+                                   (distance <= getMaxRange(position) || rangeCheck == GameEnums::AttackRangeCheck_None || rangeCheck == GameEnums::AttackRangeCheck_OnlyMin);
             if (weaponType == GameEnums::WeaponType::WeaponType_Both &&
                 (inIndirectRange || distance == 1))
             {
@@ -1038,7 +1040,7 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
             }
             else
             {
-                if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
+                if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1 || rangeCheck == GameEnums::AttackRangeCheck_None) ||
                     (weaponType == GameEnums::WeaponType::WeaponType_Indirect && inIndirectRange))
                 {
                     ret = true;

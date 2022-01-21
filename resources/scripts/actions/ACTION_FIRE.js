@@ -108,19 +108,19 @@ var Constructor = function()
     };
 
     this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField,
-                                             defUnit, x, y, defenderTakenDamage, luckMode, result)
+                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
         var weaponID1 = unit.getWeapon1ID();
         if (unit.hasAmmo1() && weaponID1 !== "" &&
-            unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
+            unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y, rangeCheck))
         {
             baseDamage1 = Global[weaponID1].getBaseDamage(defUnit);
         }
         var weaponID2 = unit.getWeapon2ID();
         if (unit.hasAmmo2() && weaponID2 !== "" &&
-            unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
+            unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y, rangeCheck))
         {
             baseDamage2 = Global[weaponID2].getBaseDamage(defUnit);
         }
@@ -147,19 +147,19 @@ var Constructor = function()
                                       luckMode)
     };
 
-    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result)
+    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, rangeCheck = 0)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
         var weaponID1 = defUnit.getWeapon1ID();
         if (defUnit.hasAmmo1() && weaponID1 !== "" &&
-            defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y))
+            defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y, rangeCheck))
         {
             baseDamage1 = Global[weaponID1].getBaseDamage(unit);
         }
         var weaponID2 = defUnit.getWeapon2ID();
         if (defUnit.hasAmmo2() && weaponID2 !== "" &&
-            defUnit.canAttackWithWeapon(1, x, y, actionTargetField.x, actionTargetField.y))
+            defUnit.canAttackWithWeapon(1, x, y, actionTargetField.x, actionTargetField.y, rangeCheck))
         {
             baseDamage2 = Global[weaponID2].getBaseDamage(unit);
         }
@@ -825,7 +825,7 @@ var Constructor = function()
     }
 
     // you may implement the following function in a mod to further tweak when a unit can attack with a certain weapon.
-    // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY)
+    // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY, rangeCheck)
 }
 
 

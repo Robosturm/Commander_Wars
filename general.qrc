@@ -6181,7 +6181,20 @@
         <file>resources/images/battleanimations/ranger/ranger+walk+mask.png</file>
         <file>resources/scripts/battleanimations/BATTLEANIMATION_ZCOUNIT_RANGER.js</file>
         <file>resources/images/battleanimations/GeneralSprites/designator_shot.png</file>
-        <file>resources/images/battleanimations/GeneralSprites/designator_shot+air.png</file>
         <file>resources/images/battleanimations/GeneralSprites/designator_shot+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+laser.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+laser+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+down+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot+up.png</file>
     </qresource>
 </RCC>

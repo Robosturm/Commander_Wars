@@ -51,7 +51,7 @@
         <image file="GeneralSprites/flak_shot_air.png" cols = "6" />
         <image file="GeneralSprites/flak_hit.png" cols = "10" />
         <image file="GeneralSprites/designator_shot.png" cols = "4" />
-        <image file="GeneralSprites/designator_shot+air.png" cols = "4" />
+        <image file="GeneralSprites/designator_shot+up.png" cols = "4" />
         <image file="GeneralSprites/designator_shot+down.png" cols = "4" />
 
         <!-- spotters -->
@@ -1257,6 +1257,14 @@
         <image file="ranger/ranger+river+walk+mask.png" cols = "6" />
         <image file="ranger/ranger+stop+mask.png" cols = "2" />
         <image file="ranger/ranger+walk+mask.png" cols = "6" />
-        
+        <image file="ranger/ranger+designator+down+mask.png" />
+        <image file="ranger/ranger+designator+laser.png" />
+        <image file="ranger/ranger+designator+laser+up.png" />
+        <image file="ranger/ranger+designator+mask.png" />
+        <image file="ranger/ranger+designator+up+mask.png" />
+        <image file="ranger/ranger+river+designator.png" />
+        <image file="ranger/ranger+river+designator+mask.png" />
+        <image file="ranger/ranger+river+designator+up.png" />
+        <image file="ranger/ranger+river+designator+up+mask.png" />
     </atlas>
 </resources>

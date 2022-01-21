@@ -107,6 +107,12 @@ var Constructor = function()
             {
                 bonus += 50;
             }
+            var ownHp = attacker.getHpRounded();
+            var unitToUseHp = indirectToUse.getHpRounded();
+
+            var baseBonus = 100;
+            var hpBonus = (unitToUseHp / ownHp) * (baseBonus + bonus) - baseBonus - bonus;
+            bonus += hpBonus;
         }
         return bonus;
     };
@@ -144,7 +150,7 @@ var Constructor = function()
             if (enemy !== null)
             {
                 var pos = Qt.point(unitX, unitY);
-                var fields = globals.getCircle(unit.getMinRange(pos), unit.getMaxRange(pos));
+                var fields = globals.getCircle(1, unit.getMaxRange(pos));
                 var owner = unit.getOwner();
                 var indirectToUse = null;
                 var damage = -1;
@@ -163,14 +169,16 @@ var Constructor = function()
                             !indirectUnit.getHasMoved())
                         {
                             result = ACTION_FIRE.calcAttackerWeaponDamage(null, indirectUnit, 0, indirectUnit.getPosition(),
-                                                                          enemy, targetX, targetY, 0, GameEnums.LuckDamageMode_Average, result);
-                            if (result.x > damage)
+                                                                          enemy, targetX, targetY, 0, GameEnums.LuckDamageMode_Average, result,
+                                                                          GameEnums.AttackRangeCheck_None);
+                            var newDamage = result.x * indirectUnit.getHpRounded() / 10;
+                            if (newDamage > damage)
                             {
                                 if ((result.y === 0 && indirectUnit.hasAmmo1()) ||
                                      indirectUnit.hasAmmo2())
                                 {
                                     indirectToUse = indirectUnit;
-                                    damage = result.x;
+                                    damage = newDamage;
                                 }
                             }
                         }
@@ -181,7 +189,7 @@ var Constructor = function()
         return indirectToUse;
     };
 
-    this.canUseWeapon = function(unit, weaponIndex, unitX, unitY, targetX, targetY)
+    this.canUseWeapon = function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck)
     {
         var pos = unit.getPosition();
         if (weaponIndex === 0 &&
