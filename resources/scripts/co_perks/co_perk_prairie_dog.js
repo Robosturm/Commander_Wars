@@ -6,7 +6,7 @@ var Constructor = function()
         {
             if (unit.getOwner() === co.getOwner())
             {
-                if (typeof map !== 'undefined')
+                if (map !== null)
                 {
                     if (map.onMap(posX, posY))
                     {

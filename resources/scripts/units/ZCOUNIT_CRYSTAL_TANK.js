@@ -30,7 +30,7 @@ var Constructor = function()
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("crystal_tank+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;

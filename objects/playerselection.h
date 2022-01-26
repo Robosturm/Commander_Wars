@@ -21,14 +21,16 @@
 
 #include "game/campaign.h"
 
+class GameMap;
+using spGameMap = oxygine::intrusive_ptr<GameMap>;
 class PlayerSelection;
-typedef oxygine::intrusive_ptr<PlayerSelection> spPlayerSelection;
+using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 
 class PlayerSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit PlayerSelection(qint32 width, qint32 heigth);
+    explicit PlayerSelection(qint32 width, qint32 heigth, GameMap* pMap);
     virtual ~PlayerSelection();
 
     void showPlayerSelection();
@@ -280,6 +282,7 @@ private:
     bool m_saveGame{false};
     bool m_PlayerReady{false};
     bool m_isServerGame{false};
+    spGameMap m_pMap{nullptr};
 };
 
 #endif // PLAYERSELECTION_H

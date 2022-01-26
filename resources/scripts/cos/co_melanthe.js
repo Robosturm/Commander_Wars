@@ -60,7 +60,7 @@ var Constructor = function()
             var unit = units.at(i);
             if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
             {
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
 
                 animation.writeDataInt32(unit.getX());
                 animation.writeDataInt32(unit.getY());
@@ -110,7 +110,7 @@ var Constructor = function()
 
                         if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
                         {
-                            animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                            animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                             animation.writeDataInt32(unit.getX());
                             animation.writeDataInt32(unit.getY());
                             animation.writeDataInt32(damage);
@@ -211,7 +211,7 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender, action)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {

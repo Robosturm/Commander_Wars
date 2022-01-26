@@ -6,11 +6,13 @@
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
 
-TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY)
+TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QString terrainID, qint32 startX, qint32 startY)
     : PathFindingSystem(startX, startY,
-                        GameMap::getInstance()->getMapWidth(),
-                        GameMap::getInstance()->getMapHeight()),
-      m_terrainIDs(terrainID)
+                        pMap->getMapWidth(),
+                        pMap->getMapHeight()),
+      m_terrainIDs(terrainID),
+      m_data(pMap),
+      m_pMap(pMap)
 {
     setObjectName("TerrainFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
@@ -18,11 +20,13 @@ TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qin
     Interpreter::setCppOwnerShip(this);
 }
 
-TerrainFindingSystem::TerrainFindingSystem(QStringList terrainIDs, qint32 startX, qint32 startY)
+TerrainFindingSystem::TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs, qint32 startX, qint32 startY)
     : PathFindingSystem(startX, startY,
-                        GameMap::getInstance()->getMapWidth(),
-                        GameMap::getInstance()->getMapHeight()),
-      m_terrainIDs(terrainIDs)
+                        pMap->getMapWidth(),
+                        pMap->getMapHeight()),
+      m_terrainIDs(terrainIDs),
+      m_data(pMap),
+      m_pMap(pMap)
 {
     setObjectName("TerrainFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
@@ -44,10 +48,10 @@ qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, 
 {
     if (m_movecosts[index][0] == infinite)
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr && pMap->onMap(x, y))
+        
+        if (m_pMap != nullptr && m_pMap->onMap(x, y))
         {
-            if (m_terrainIDs.contains(pMap->getTerrain(x, y)->getID()))
+            if (m_terrainIDs.contains(m_pMap->getTerrain(x, y)->getID()))
             {
                 m_movecosts[index][0] = 1;
                 return m_movecosts[index][0];

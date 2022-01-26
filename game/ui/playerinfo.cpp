@@ -14,8 +14,8 @@
 
 #include "game/ui/copowermeter.h"
 
-PlayerInfo::PlayerInfo()
-    : QObject()
+PlayerInfo::PlayerInfo(GameMap* pMap)
+    : m_pMap{pMap}
 {
     setObjectName("PlayerInfo");
     Mainapp* pApp = Mainapp::getInstance();
@@ -29,11 +29,11 @@ void PlayerInfo::updateData()
     // clean up
     removeChildren();
     // recreate the ui
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 playerIdx = 0;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        if (pMap->getCurrentPlayer() == pMap->getPlayer(i))
+        if (m_pMap->getCurrentPlayer() == m_pMap->getPlayer(i))
         {
             playerIdx = i;
             break;
@@ -42,13 +42,13 @@ void PlayerInfo::updateData()
     GameManager* pGameManager = GameManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
-    Player* pViewPlayer = pMap->getCurrentViewPlayer();
+    Player* pViewPlayer = m_pMap->getCurrentViewPlayer();
     qint32 yPos = 0;
     qint32 currentPlayer = playerIdx;
-    qint32 count = pMap->getPlayerCount();
+    qint32 count = m_pMap->getPlayerCount();
     qint32 maxCount = count;
     if (Settings::getShowCoCount() > 0 &&
-        Settings::getShowCoCount() < pMap->getPlayerCount())
+        Settings::getShowCoCount() < m_pMap->getPlayerCount())
     {
         maxCount = Settings::getShowCoCount();
     }
@@ -56,12 +56,12 @@ void PlayerInfo::updateData()
     for (qint32 i = 0; i < count; i++)
     {
         currentPlayer = playerIdx + i;
-        if (currentPlayer >= pMap->getPlayerCount())
+        if (currentPlayer >= m_pMap->getPlayerCount())
         {
-            currentPlayer -= pMap->getPlayerCount();
+            currentPlayer -= m_pMap->getPlayerCount();
         }
 
-        spPlayer pPlayer = pMap->getspPlayer(currentPlayer);
+        spPlayer pPlayer = m_pMap->getspPlayer(currentPlayer);
         // draw player if he is alive
         if (!pPlayer->getIsDefeated())
         {
@@ -171,8 +171,8 @@ void PlayerInfo::updateData()
                 Text->setStyle(style);
                 QString number = QString::number(pPlayer->getFunds());
                 if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                    pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                    pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+                    m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                    m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                 {
                     number = "?";
                 }
@@ -203,6 +203,11 @@ void PlayerInfo::updateData()
 bool PlayerInfo::getFlippedX() const
 {
     return m_flippedX;
+}
+
+GameMap *PlayerInfo::getMap() const
+{
+    return m_pMap;
 }
 
 void PlayerInfo::setFlippedX(bool value)

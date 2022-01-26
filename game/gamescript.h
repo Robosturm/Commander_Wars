@@ -12,6 +12,7 @@
 
 #include "game/gameaction.h"
 
+class GameMap;
 class GameScript;
 typedef oxygine::intrusive_ptr<GameScript> spGameScript;
 
@@ -19,7 +20,7 @@ class GameScript : public QObject, public FileSerializable, public oxygine::ref_
 {
     Q_OBJECT
 public:
-    explicit GameScript();
+    explicit GameScript(GameMap* pMap);
     virtual ~GameScript();
     /**
      * @brief serialize stores the object
@@ -77,9 +78,11 @@ public:
     void setScriptFile(const QString &value);
 
     QString getVictoryInfo();
+
 signals:
 
 public slots:
+    GameMap *getMap() const;
     /**
      * @brief getVariables returns the enviroment variables of this game script
      * @return
@@ -94,6 +97,7 @@ private:
     QString m_scriptFile;
     ScriptVariables m_Variables;
     bool m_loaded{false};
+    GameMap* m_pMap{nullptr};
     static const QString m_scriptName;
 };
 

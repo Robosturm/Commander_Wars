@@ -7,34 +7,34 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             var playername = settings.getUsername();
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Same old shanty! I just can't beat you guys."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Commander Drake, would you please tell us why you've been attacking us?"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Haven't you sensed him? The person behind all of htis fighting? Sonja and Grit have tried to lure him out of hiding."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The person behind all this?"),
                         "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("We've been trying to keep Sonja's movements a secret. So, we staged these battles to draw his attention away from her. But I think we're finished now. It seems Sonja's found something. I'll be joining her as soon as I'm able, but... I've got things to take care of in Green Earth. This is a difficult thing from me to ask..."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("That sounds like something Sonja would do."),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I can't leave Green Earth unprotected. I promised Eagle. You understand? So... Would you go in my stead? They need your help."),
                         "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Of course! We'll do all we can! Eagle, Sonja, and Grit are our friends!"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             dialog1.queueAnimation(dialog2);
@@ -50,7 +50,7 @@ var Constructor = function()
             samiCounter.writeDataInt32(samiCounter.readDataInt32() + 1);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -65,7 +65,7 @@ var Constructor = function()
         map.getPlayer(0).setBuildList(list);
         map.getPlayer(1).setBuildList(list);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var count = map.getPlayer(0).getUnitCount("INFANTRY");
         if (count === 0)
@@ -74,15 +74,15 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
         else if (turn === 1 && player === 1)
         {
-            gameScript.day1Dialog();
+            gameScript.day1Dialog(map);
         }
         else if (turn === 8 && player === 0)
         {
@@ -90,61 +90,61 @@ var Constructor = function()
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I saw his face! That had to be Andy, but...."),
                     "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hello, Eagle."),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You... you're Sonja from Yellow Comet. What are you doing here?"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("It wasn't Andy who attacked you. It was someone else."),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Do you know something about all of this?"),
                     "co_eagle", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes, I do. I'll tell you who's pulling all of our strings if you'll follow me."),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But I..."),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I know what you're worried about. Go ahead and go with her."),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Are you sure it's OK?"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I'll take care of Green Earth for you, don't worry. That's what shipmates are for, right?"),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You have my gratitude, Drake."),
                     "co_eagle", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I like the idea of getting a closer look at the Orange Star Army. I'll meet you again later. Watch yourself, Eagle!"),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
 
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("") + playername + qsTr("! Sami! Can you hear me?"),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What is it, Nell?"),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("We've been able to outsmart CO Drake! One of his landers is carrying vital cargo, and it's hiding in this area. It's up to you to flush it out and destroy it!"),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So, we need to perform a rescue mission, correct? Understood."),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("That's right. Specifically we need you to save this infantry unit. Eight days, Sami! If you can protect if for eight days, we'll take over. I know you can handle it, ") + playername + qsTr("."),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);
@@ -165,11 +165,11 @@ var Constructor = function()
         dialog15.queueAnimation(dialog16);
     };
 
-    this.day1Dialog = function()
+    this.day1Dialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Let's take stock: anti-air and md tank units on the ground... cruisers to prevent escape by transport copter... All right! Everything's shipshape. There's no escape for that unit! Time to make a big splash and give Eagle some cover."),
                     "co_drake", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
     };

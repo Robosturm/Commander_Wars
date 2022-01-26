@@ -91,7 +91,7 @@ var Constructor = function()
         var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
         var y = terrain.getY();
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(x, y + 1))
             {
@@ -149,7 +149,7 @@ var Constructor = function()
         var y = terrain.getY();
         map.replaceTerrainOnly(spriteId, x, y);
         map.getTerrain(x, y).loadSprites();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("pipe_destroyed.wav");

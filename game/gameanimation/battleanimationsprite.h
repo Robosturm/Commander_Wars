@@ -26,7 +26,7 @@ public:
     static const QString dyingAnimation;
     static const QString stopAnimation;
 
-    explicit BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
+    explicit BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
     virtual ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
@@ -109,9 +109,15 @@ public:
      */
     void setPlayNextFrame(bool newPlayNextFrame);
 
+
 signals:
     void sigDetachChild(oxygine::spActor pActor);
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief existResAnim
      * @param spriteID
@@ -594,6 +600,7 @@ private:
 
     oxygine::spSprite m_pBackgroundSprite;
     float m_backgroundSpeed{0.0f};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

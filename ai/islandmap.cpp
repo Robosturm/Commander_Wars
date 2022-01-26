@@ -14,11 +14,11 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 width = pMap->getMapWidth();
-        qint32 heigth = pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
 
         for (qint32 x = 0; x < width; x++)
         {
@@ -80,18 +80,18 @@ void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemy
 {
     ownValue = 0;
     enemyValue = 0;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 width = pMap->getMapWidth();
-        qint32 heigth = pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
         for (qint32 x = 0; x < width; x++)
         {
             for (qint32 y = 0; y < heigth; y++)
             {
                 if (m_Islands[x][y] == island)
                 {
-                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                     if (pUnit != nullptr)
                     {
                         if (pUnit->getOwner() == m_pOwner)

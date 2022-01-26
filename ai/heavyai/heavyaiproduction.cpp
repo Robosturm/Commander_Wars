@@ -266,8 +266,8 @@ void HeavyAi::setAiName(const QString &newAiName)
 
 void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBuildData & data, const QVector<Unit*> & immuneUnits, qint32 movementPoints)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QStringList actionList = pUnit->getActionList();
         if (pUnit->getBaseMaxRange() > 1)
@@ -291,7 +291,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, UnitBui
         double highestInfluence = m_InfluenceFrontMap.getTotalHighestInfluence();        
         data.unitBuildingDataInput[BuildingEntry::Movementpoints] = static_cast<double>(movementPoints) / static_cast<double>(m_maxMovementpoints);
         data.unitBuildingDataInput[BuildingEntry::VisionPotential] = pUnit->getVision(position) / m_maxVision;
-        data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(pMap->getMapHeight() * pMap->getMapWidth());
+        data.unitBuildingDataInput[BuildingEntry::MapMovementpoints] = movementPoints / static_cast<double>(m_pMap->getMapHeight() * m_pMap->getMapWidth());
         data.unitBuildingDataInput[BuildingEntry::FireRange] = static_cast<double>(pUnit->getMaxRange(position)) / static_cast<double>(m_maxFirerange);
         data.unitBuildingDataInput[BuildingEntry::Flying] = (pUnit->useTerrainDefense() == false) ? 1 : -1;
         data.unitBuildingDataInput[BuildingEntry::LoadingPotential] = static_cast<double>(pUnit->getLoadingPlace()) / 4.0;
@@ -351,11 +351,11 @@ void HeavyAi::getTransportInputVector(Building* pBuilding, Unit* pUnit, const QV
 
 void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qint32 movementPoints, QPoint position, UnitBuildData & data, const QVector<Unit*> & immuneUnits)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 mapWidth = pMap->getMapWidth();
-        qint32 mapHeight = pMap->getMapHeight();
+        qint32 mapWidth = m_pMap->getMapWidth();
+        qint32 mapHeight = m_pMap->getMapHeight();
         qint32 unitValue = pUnit->getCoUnitValue();
         bool canCapture = (data.unitBuildingDataInput[BuildingEntry::CaptureUnit] > 0);
         double fundsDamage = 0.0;
@@ -372,7 +372,7 @@ void HeavyAi::calculateUnitProductionDamage(Building* pBuilding, Unit* pUnit, qi
         {
             for (qint32 y = 0; y < mapHeight; ++y)
             {
-                Terrain* pTerrain = pMap->getTerrain(x, y);
+                Terrain* pTerrain = m_pMap->getTerrain(x, y);
                 Unit* pEnemyUnit = pTerrain->getUnit();
                 Building* pBuilding = pTerrain->getBuilding();
                 double scoreMultiplier = getProductionScoreMultiplier(position, QPoint(x, y), movementPoints);
@@ -488,8 +488,8 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
                                             QVector<std::tuple<Unit*, Unit*>> & transportTargets)
 {
     QVector<double> data(BuildingEntryMaxSize, 0.0);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         UnitCountData countData;
         GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings, countData);
@@ -500,9 +500,9 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
         data[TransportUnitRatio]    = static_cast<double>(countData.transporterUnits) / count;
         data[SupplyUnitRatio]       = static_cast<double>(countData.supplyUnits) / count;
         data[SupplyRequiredRatio]   = static_cast<double>(countData.supplyNeededUnits) / count;
-        if (pMap->getCurrentDay() >  m_earlyGameDays)
+        if (m_pMap->getCurrentDay() >  m_earlyGameDays)
         {
-            data[DayProgression] = 1.0 / static_cast<double>(pMap->getCurrentDay() - m_earlyGameDays);
+            data[DayProgression] = 1.0 / static_cast<double>(m_pMap->getCurrentDay() - m_earlyGameDays);
         }
         else
         {
@@ -510,12 +510,12 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
         }
         double enemeyCount = 0;
         double playerCount = 0;
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            if (!pMap->getPlayer(i)->getIsDefeated())
+            if (!m_pMap->getPlayer(i)->getIsDefeated())
             {
                 playerCount++;
-                if (m_pPlayer->isEnemy(pMap->getPlayer(i)))
+                if (m_pPlayer->isEnemy(m_pMap->getPlayer(i)))
                 {
                     enemeyCount++;
                 }

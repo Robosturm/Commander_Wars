@@ -96,8 +96,8 @@ bool CoreAI::moveOoziums(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits
 bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
 {
     CONSOLE_PRINT("moveBlackBombs()", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<QVector3D> enemyTargets;
         spQmlVectorPoint enemyFields = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
@@ -106,7 +106,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUn
             Unit* pUnit = pEnemyUnits->at(i);
             for (qint32 i2 = 0; i2 < enemyFields->size(); i2++)
             {
-                if (pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
+                if (m_pMap->onMap(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y()))
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + enemyFields->at(i2).x(), pUnit->Unit::getY() + enemyFields->at(i2).y(), 1);
                     if (!enemyTargets.contains(point))
@@ -187,8 +187,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
 {
     CONSOLE_PRINT("CoreAI::moveSupport", Console::eDEBUG);
     m_aiStep = step;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<QVector3D> unitTargets;
         QVector<QPoint> unitPos;
@@ -200,8 +200,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
             {
                 for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
                 {
-                    if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
-                        pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                    if (m_pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
+                        m_pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
                     {
                         QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
                         if (!unitTargets.contains(point) )
@@ -218,8 +218,8 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit & pUnits, bool useTranspo
             Unit* pUnit = pUnits->at(i);
             for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
             {
-                if (pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
-                    pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                if (m_pMap->onMap(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y()) &&
+                    m_pMap->getTerrain(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y())->getUnit() == nullptr)
                 {
                     QVector3D point = QVector3D(pUnit->Unit::getX() + unitFields->at(i2).x(), pUnit->Unit::getY() + unitFields->at(i2).y(), 1);
                     if (!unitTargets.contains(point) )

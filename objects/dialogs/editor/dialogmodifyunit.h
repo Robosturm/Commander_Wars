@@ -11,7 +11,7 @@
 #include "objects/base/panel.h"
 
 class Unit;
-
+class GameMap;
 class DialogModifyUnit;
 typedef oxygine::intrusive_ptr<DialogModifyUnit> spDialogModifyUnit;
 
@@ -19,7 +19,7 @@ class DialogModifyUnit : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogModifyUnit(Unit* pUnit);
+    explicit DialogModifyUnit(GameMap* pMap, Unit* pUnit);
     virtual ~DialogModifyUnit() = default;
 signals:
     void sigFinished();
@@ -35,6 +35,7 @@ private:
     spPanel m_pPanel;
     Unit* m_pUnit{nullptr};
     oxygine::spButton m_OkButton;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // DIALOGMODIFYUNIT_H

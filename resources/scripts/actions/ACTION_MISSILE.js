@@ -124,7 +124,7 @@ var Constructor = function()
             }
         }
         fields.remove();
-        var animation = GameAnimationFactory.createAnimation(ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav");
         // replace silo with rocket with

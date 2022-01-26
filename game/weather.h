@@ -11,6 +11,7 @@
 #include "game/unit.h"
 #include "game/terrain.h"
 
+class GameMap;
 class Weather;
 typedef oxygine::intrusive_ptr<Weather> spWeather;
 
@@ -19,8 +20,8 @@ class Weather : public QObject, public FileSerializable, public oxygine::ref_cou
 {
     Q_OBJECT
 public:
-    explicit Weather();
-    explicit Weather(QString weatherId);
+    explicit Weather(GameMap* pMap);
+    explicit Weather(QString weatherId, GameMap* pMap);
     virtual ~Weather() = default;
     /**
      * @brief serialize stores the object
@@ -62,6 +63,7 @@ public slots:
 private:
     QString m_WeatherId;
     ScriptVariables m_Variables;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // WEATHER_H

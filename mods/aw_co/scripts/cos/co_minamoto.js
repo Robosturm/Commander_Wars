@@ -21,7 +21,7 @@ CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     if (co.getIsCO0() === true)
     {
         var nearMountains = false;
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             var fields = globals.getCircle(0, 2);
             for (var i = 0; i < fields.size(); i++)

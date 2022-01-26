@@ -36,7 +36,7 @@ PLAYER.coop_ModDoStartOfTurnRepairing = function(player)
                             UNIT.repairUnit(unit, repairAmount);
                             if (!unit.isStealthed(map.getCurrentViewPlayer()))
                             {
-                                var animation = GameAnimationFactory.createAnimation(x, y);
+                                var animation = GameAnimationFactory.createAnimation(map, x, y);
                                 var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
                                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                                 animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);

@@ -17,6 +17,7 @@
 
 #include "co.h"
 
+class GameMap;
 class Player;
 typedef oxygine::intrusive_ptr<Player> spPlayer;
 
@@ -28,7 +29,7 @@ public:
     /**
      * @brief Player
      */
-    explicit Player();
+    explicit Player(GameMap* pMap);
     virtual ~Player() = default;
     /**
      * @brief init
@@ -609,7 +610,7 @@ private:
     oxygine::spResAnim m_ColorTableAnim;
     QString m_playerArmy{""};
     qint32 m_team{0};
-     std::array<spCO, 2> m_playerCOs{spCO(), spCO()};
+    std::array<spCO, 2> m_playerCOs;
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
@@ -638,6 +639,7 @@ private:
     quint64 m_socketId{0};
     bool m_playerArmySelected{false};
     qint32 m_averageCosts{-1};
+    GameMap* m_pMap{nullptr};
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

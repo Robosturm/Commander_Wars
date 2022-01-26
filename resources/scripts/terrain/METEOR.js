@@ -132,7 +132,7 @@ var Constructor = function()
             }
         }
         testFields.remove();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("explosion+land.wav");

@@ -191,10 +191,10 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
         auto fileData = Filesupport::readList(file + ".bl", "data/perkselection/");
         QStringList perks = fileData.items;
         qint32 i = 0;
-        spGameMap pMap = GameMap::getInstance();
+        
         while (i < perks.size())
         {
-            if (pMap->getGameRules()->getAllowedPerks().contains(perks[i]))
+            if (m_pMap->getGameRules()->getAllowedPerks().contains(perks[i]))
             {
                 ++i;
             }
@@ -203,7 +203,7 @@ void PerkSelectionDialog::setPerkBannlist(qint32)
                 perks.removeAt(i);
             }
         }
-        qint32 maxPerkCount = pMap->getGameRules()->getMaxPerkCount();
+        qint32 maxPerkCount = m_pMap->getGameRules()->getMaxPerkCount();
         while (perks.size() > maxPerkCount)
         {
             perks.removeLast();

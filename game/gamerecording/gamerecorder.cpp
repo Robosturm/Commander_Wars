@@ -10,8 +10,8 @@
 
 #include "coreengine/filesupport.h"
 
-GameRecorder::GameRecorder()
-    : QObject()
+GameRecorder::GameRecorder(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("GameRecorder");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
@@ -167,7 +167,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
 
 void GameRecorder::newDay()
 {
-    qint32 playerCount = GameMap::getInstance()->getPlayerCount();
+    qint32 playerCount = m_pMap->getPlayerCount();
     if (m_destroyedUnits.size() == 0)
     {
         for (qint32 i = 0; i < playerCount; i++)
@@ -283,19 +283,19 @@ void GameRecorder::setMapTime(const qint32 &mapTime)
 
 void GameRecorder::updatePlayerData(qint32 player)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (m_Record.size() > 0 && pMap.get() != nullptr)
+    
+    if (m_Record.size() > 0 && m_pMap != nullptr)
     {
-        m_Record[m_Record.size() - 1]->addPlayerRecord(player, pMap->getCurrentDay());
+        m_Record[m_Record.size() - 1]->addPlayerRecord(player, m_pMap->getCurrentDay());
     }
 }
 
 void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialEvents event)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (m_Record.size() > 0 && pMap.get() != nullptr)
+    
+    if (m_Record.size() > 0 && m_pMap != nullptr)
     {
-        m_Record[m_Record.size() - 1]->addSpecialEvent(player, pMap->getCurrentDay(), event);
+        m_Record[m_Record.size() - 1]->addSpecialEvent(player, m_pMap->getCurrentDay(), event);
     }
 }
 
@@ -341,31 +341,31 @@ const QVector<GameRecorder::PlayerData> & GameRecorder::getPlayerDataRecords() c
 
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 score = 0;
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
-        qint32 winnerTeam = pMap->getWinnerTeam();
-        qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
+        qint32 winnerTeam = m_pMap->getWinnerTeam();
+        qint32 mapSize = m_pMap->getMapWidth() * m_pMap->getMapHeight();
         // calc speed points
-        qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight());
+        qint32 mapTime = (m_pMap->getMapWidth() + m_pMap->getMapHeight());
         if (m_mapTime > 0)
         {
             mapTime = m_mapTime;
         }
-        if (pMap->getCurrentDay() < mapTime)
+        if (m_pMap->getCurrentDay() < mapTime)
         {
-            scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
+            scorePoints.setX(200 - (m_pMap->getCurrentDay() * 100 / mapTime));
         }
         else
         {
-            scorePoints.setX(100 - ((pMap->getCurrentDay() - mapTime) * 100 / (3 * mapTime)));
+            scorePoints.setX(100 - ((m_pMap->getCurrentDay() - mapTime) * 100 / (3 * mapTime)));
         }
         if (scorePoints.x() < 0)
         {
             scorePoints.setX(0);
         }
-        Player* pPlayer = pMap->getPlayer(player);
+        Player* pPlayer = m_pMap->getPlayer(player);
         if (pPlayer->getTeam() != winnerTeam && winnerTeam >= 0)
         {
             qint32 lostDay = 0;
@@ -373,7 +373,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
             {
                 if (i == m_Record.size() - 1)
                 {
-                    lostDay = pMap->getCurrentDay();
+                    lostDay = m_pMap->getCurrentDay();
                 }
                 else if (m_Record[i]->getPlayerRecord(player)->getUnits() == -1)
                 {
@@ -381,7 +381,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
                     break;
                 }
             }
-            scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / pMap->getCurrentDay()));
+            scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / m_pMap->getCurrentDay()));
         }
         // Force
         qint32 power = 0;

@@ -41,7 +41,7 @@ public:
 
     static inline EditorMenue* getInstance()
     {
-        return m_pInstance;
+        return static_cast<EditorMenue*>(m_pInstance.get());
     }
     /**
      * @brief cleanTemp clean ups undo and redo steps
@@ -387,8 +387,6 @@ private:
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
     spLabel m_xyTextInfo;
-
-    static EditorMenue* m_pInstance;
 
     qint32 m_tempCounter{0};
 

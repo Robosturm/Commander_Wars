@@ -10,7 +10,7 @@ class TargetedUnitPathFindingSystem : public UnitPathFindingSystem
 {
     Q_OBJECT
 public:
-    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap);
+    explicit TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap);
     virtual ~TargetedUnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost

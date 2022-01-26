@@ -53,18 +53,18 @@ oxygine::spSprite GameManager::getIcon(const QString & icon)
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         if (pUnitSpriteManager->exists(icon))
         {
-            spGameMap pMap = GameMap::getInstance();
+            
             spPlayer pPlayer;
-            if (pMap.get() == nullptr ||
-                pMap->getCurrentPlayer() == nullptr ||
-                pMap->getCurrentPlayer()->getColorTableAnim().get() == nullptr)
+            if (m_pMap == nullptr ||
+                m_pMap->getCurrentPlayer() == nullptr ||
+                m_pMap->getCurrentPlayer()->getColorTableAnim().get() == nullptr)
             {
                 pPlayer = spPlayer::create();
                 pPlayer->init();
             }
             else
             {
-                pPlayer = pMap->getCurrentPlayer();
+                pPlayer = m_pMap->getCurrentPlayer();
             }
             oxygine::spSprite ret = spUnit::create(icon, pPlayer.get(), false);
             return ret;
@@ -72,11 +72,11 @@ oxygine::spSprite GameManager::getIcon(const QString & icon)
         else if (pBuildingSpriteManager->exists(icon))
         {
             // check buildings?
-            spGameMap pMap = GameMap::getInstance();
+            
             spPlayer pPlayer;
-            if (pMap.get() != nullptr)
+            if (m_pMap != nullptr)
             {
-                pPlayer = pMap->getCurrentPlayer();
+                pPlayer = m_pMap->getCurrentPlayer();
             }
             spBuilding pBuilding = spBuilding::create(icon);
             pBuilding->setOwner(pPlayer.get());

@@ -46,7 +46,7 @@ var Constructor = function()
                 {
                     unit.refill();
                     unit.setHp(unit.getHpRounded() - damage);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2);
                 }
             }

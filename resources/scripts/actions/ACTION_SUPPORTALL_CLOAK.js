@@ -79,7 +79,7 @@ var Constructor = function()
                     owner === unit.getOwner())
                 {
                     unit.setCloaked(1);
-                    var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("stealth.wav", 1);
                 }

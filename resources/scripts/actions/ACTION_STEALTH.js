@@ -47,7 +47,7 @@ var Constructor = function()
     this.performPostAnimation = function(action)
     {
         // disable unit commandments for this turn
-        var animation = GameAnimationFactory.createAnimation(ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());
         if (ACTION_STEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
             ACTION_STEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
         {

@@ -34,7 +34,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
 
         var owner = building.getOwner();
-        var talonGunAnimation = GameAnimationFactory.createAnimation(x, y);
+        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y);
         talonGunAnimation.addSprite("talon+gun+fire", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
@@ -50,7 +50,7 @@ var Constructor = function()
                 {
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
                     unit.setHp(unit.getHpRounded() - damage);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
                     talonGunAnimation.queueAnimation(animation);
                     if (unit.getHp() <= 0)

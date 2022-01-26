@@ -10,7 +10,8 @@
 const QString VictoryRule::checkbox = "checkbox";
 const QString VictoryRule::spinbox = "spinbox";
 
-VictoryRule::VictoryRule()
+VictoryRule::VictoryRule(GameMap* pMap)
+    : m_pMap{pMap}
 {
     setObjectName("VictoryRule");
     Mainapp* pApp = Mainapp::getInstance();
@@ -18,9 +19,9 @@ VictoryRule::VictoryRule()
     Interpreter::setCppOwnerShip(this);
 }
 
-VictoryRule::VictoryRule(QString ruleID)
-    : QObject(),
-      m_RuleID(ruleID)
+VictoryRule::VictoryRule(QString ruleID, GameMap* pMap)
+    : m_RuleID(ruleID),
+      m_pMap{pMap}
 {
     setObjectName("VictoryRule");
     init();
@@ -36,6 +37,8 @@ void VictoryRule::init()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     pInterpreter->doFunction(m_RuleID, function1, args1);
 }
 
@@ -60,6 +63,8 @@ QString VictoryRule::getRuleName(qint32 itemNumber)
     QString function1 = "getRuleName";
     QJSValueList args;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
@@ -80,6 +85,8 @@ void VictoryRule::setRuleValue(qint32 value, qint32 itemNumber)
     args << obj1;
     args << value;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     pInterpreter->doFunction(m_RuleID, function1, args);
 }
 
@@ -89,6 +96,8 @@ qint32 VictoryRule::getInfiniteValue(qint32 itemNumber)
     QString function1 = "getInfiniteValue";
     QJSValueList args;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
@@ -106,6 +115,8 @@ qint32 VictoryRule::getDefaultValue(qint32 itemNumber)
     QString function1 = "getDefaultRuleValue";
     QJSValueList args;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
@@ -125,6 +136,8 @@ qint32 VictoryRule::getRuleValue(qint32 itemNumber)
     QJSValue obj1 = pInterpreter->newQObject(this);
     args << obj1;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
@@ -142,6 +155,8 @@ QString VictoryRule::getRuleDescription(qint32 itemNumber)
     QString function1 = "getRuleDescription";
     QJSValueList args;
     args << itemNumber;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
@@ -162,6 +177,8 @@ qint32 VictoryRule::getRuleProgress(Player* pPlayer)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pPlayer);
     args1 << obj2;
+    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(m_RuleID, function1, args1);
     if (ret.isNumber())
     {
@@ -190,11 +207,11 @@ void VictoryRule::deserializeObject(QDataStream& pStream)
 
 void VictoryRule::checkDefeat()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        Player* pPlayer = pMap->getPlayer(i);
+        Player* pPlayer = m_pMap->getPlayer(i);
         if (!pPlayer->getIsDefeated())
         {
             QString function1 = "checkDefeat";
@@ -203,6 +220,8 @@ void VictoryRule::checkDefeat()
             args1 << obj1;
             QJSValue obj2 = pInterpreter->newQObject(pPlayer);
             args1 << obj2;
+            QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+            args1 << objArg5;
             QJSValue erg = pInterpreter->doFunction(m_RuleID, function1, args1);
             if (erg.isNumber())
             {
@@ -222,19 +241,24 @@ void VictoryRule::checkDefeat()
                     case GameEnums::DefeatType_ByCurrentPlayer:
                     {
                         CONSOLE_PRINT("Defeating player and moving ownership of buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
-                        pPlayer->defeatPlayer(pMap->getCurrentPlayer());
+                        pPlayer->defeatPlayer(m_pMap->getCurrentPlayer());
                         break;
                     }
                     case GameEnums::DefeatType_Domination:
                     {
                         CONSOLE_PRINT("Defeating player and moving ownership of units and buildings to current player. Caused by rule " + m_RuleID, Console::eDEBUG);
-                        pPlayer->defeatPlayer(pMap->getCurrentPlayer(), true);
+                        pPlayer->defeatPlayer(m_pMap->getCurrentPlayer(), true);
                         break;
                     }
                 }
             }
         }
     }
+}
+
+GameMap *VictoryRule::getMap() const
+{
+    return m_pMap;
 }
 
 QString VictoryRule::getRuleID() const

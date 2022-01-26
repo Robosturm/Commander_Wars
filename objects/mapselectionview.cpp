@@ -161,7 +161,7 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
     m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::getImageSize() + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i));
+        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i), nullptr);
         building->updateBuildingSprites(false);
         building->setVisible(false);
         m_content->addChild(building);

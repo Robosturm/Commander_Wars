@@ -52,7 +52,7 @@ var Constructor = function()
                 for (i = 0; i < count; i++)
                 {
                     var unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {

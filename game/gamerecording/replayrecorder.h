@@ -8,14 +8,16 @@
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
+class GameMap;
+using spGameMap = oxygine::intrusive_ptr<GameMap>;
 class GameAction;
-typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
 class ReplayRecorder : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReplayRecorder();
+    explicit ReplayRecorder(GameMap* pMap);
     virtual ~ReplayRecorder();
     /**
      * @brief startRecording
@@ -30,7 +32,7 @@ public:
      * @brief loadRecord
      * @param filename
      */
-    bool loadRecord(const QString & filename);
+    bool loadRecord(const QString & filename, spGameMap & pMap);
     /**
      * @brief nextAction
      */
@@ -74,7 +76,7 @@ public:
      * @param day
      * @return
      */
-    void seekToDay(qint32 day);
+    void seekToDay(qint32 day, spGameMap & pMap);
 signals:
 
 private:
@@ -93,6 +95,7 @@ private:
     QBuffer m_dailyBuffer;
     QDataStream m_dailyStream{&m_dailyBuffer};
     qint32 m_currentDay{0};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // REPLAYRECORDER_H

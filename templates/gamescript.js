@@ -11,15 +11,15 @@ var Constructor = function()
     {
         // called when a player wins
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         // function called after all animations are finished
     };
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         // called at the start of each players turn
     };

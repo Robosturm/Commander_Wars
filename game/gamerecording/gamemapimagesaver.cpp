@@ -8,12 +8,12 @@
 
 void GamemapImageSaver::saveMapAsImage(QString filename)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     spInGameMenue pMenu(InGameMenue::getMenuInstance());
-    if (pMap.get() != nullptr &&
+    if (m_pMap != nullptr &&
         pMenu.get() != nullptr)
     {
-        QSize size(GameMap::getImageSize() * pMap->getMapWidth() * pMap->getScaleX(), GameMap::getImageSize() * pMap->getMapHeight() * pMap->getScaleY());
+        QSize size(GameMap::getImageSize() * m_pMap->getMapWidth() * m_pMap->getScaleX(), GameMap::getImageSize() * m_pMap->getMapHeight() * m_pMap->getScaleY());
         QOpenGLFramebufferObject buffer(size);
         buffer.bind();
         QColor clearColor(0, 0, 255, 255);
@@ -27,13 +27,13 @@ void GamemapImageSaver::saveMapAsImage(QString filename)
         oxygine::RenderState rs;
         oxygine::RectF clip(0.0f, 0.0f, viewport.getWidth(), viewport.getHeight());
         rs.clip = &clip;        
-        auto orgPos = pMap->getPosition();
-        pMap->setPosition(0, 0);
+        auto orgPos = m_pMap->getPosition();
+        m_pMap->setPosition(0, 0);
         pMenu->getCursor()->setVisible(false);
-        pMap->render(rs);
+        m_pMap->render(rs);
         oxygine::STDRenderer::getCurrent()->flush();
         oxygine::Material::null->apply();
-        pMap->setPosition(orgPos);
+        m_pMap->setPosition(orgPos);
         pMenu->getCursor()->setVisible(true);
         auto img = buffer.toImage();
         img.save(filename);

@@ -20,7 +20,7 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {

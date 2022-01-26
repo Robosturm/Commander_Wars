@@ -114,14 +114,6 @@ public:
     void rotateY();
 
     /**
-     * @brief getInstance
-     * @return
-     */
-    inline static spGameMap getInstance()
-    {
-        return m_pInstance;
-    }
-    /**
      * @brief getTerrain smart pointer
      * @param x
      * @param y
@@ -789,8 +781,8 @@ private:
     qint32 m_currentDay{0};
     spGameRules m_Rules;
     spCampaign m_Campaign;
-    spGameRecorder m_Recorder{spGameRecorder::create()};
-    spGameScript m_GameScript{spGameScript::create()};
+    spGameRecorder m_Recorder{spGameRecorder::create(this)};
+    spGameScript m_GameScript{spGameScript::create(this)};
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     bool m_loaded{false};

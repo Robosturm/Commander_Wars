@@ -8,14 +8,15 @@
 
 #include "game/building.h"
 
+class GameMap;
 class DialogModifyBuilding;
-typedef oxygine::intrusive_ptr<DialogModifyBuilding> spDialogModifyBuilding;
+using spDialogModifyBuilding = oxygine::intrusive_ptr<DialogModifyBuilding>;
 
 class DialogModifyBuilding : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogModifyBuilding(Building* pBuilding);
+    explicit DialogModifyBuilding(GameMap* pMap, Building* pBuilding);
     virtual ~DialogModifyBuilding() = default;
 signals:
     void sigFinished();

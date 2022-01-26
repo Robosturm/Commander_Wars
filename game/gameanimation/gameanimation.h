@@ -12,6 +12,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
+class GameMap;
 
 class GameAnimation;
 typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
@@ -20,15 +21,21 @@ class GameAnimation : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
-    explicit GameAnimation(quint32 frameTime);
+    explicit GameAnimation(quint32 frameTime, GameMap* pMap);
     virtual ~GameAnimation() = default;
     virtual void restart();
     virtual void stop();
+
 
 signals:
     void sigFinished(bool skipping);
     void sigStart();
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getStopSoundAtAnimationEnd
      * @return
@@ -342,6 +349,7 @@ protected:
         qint32 delayMs;
     };
     QVector<SoundData> m_SoundData;
+    GameMap* m_pMap{nullptr};
 private:
 
     QVector<spGameAnimation> m_QueuedAnimations;
@@ -358,7 +366,6 @@ private:
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
     QVector<oxygine::spTween> m_stageTweens;
-
 };
 
 #endif // GAMEANIMATION_H

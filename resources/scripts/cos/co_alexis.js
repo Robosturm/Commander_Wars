@@ -40,7 +40,7 @@ var Constructor = function()
                     if ((unit !== null) &&
                             (unit.getOwner() === co.getOwner()))
                     {
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         animation.writeDataInt32(unit.getX());
                         animation.writeDataInt32(unit.getY());
                         animation.writeDataInt32(3);
@@ -114,7 +114,7 @@ var Constructor = function()
                     if ((unit !== null) &&
                             (unit.getOwner() === player))
                     {
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         animation.writeDataInt32(unitX);
                         animation.writeDataInt32(unitY);
                         animation.writeDataInt32(3);
@@ -173,7 +173,7 @@ var Constructor = function()
                             if ((unit !== null) &&
                                     (co.getOwner().isEnemyUnit(unit)))
                             {
-                                animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                                animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                                 animation.writeDataInt32(unit.getX());
                                 animation.writeDataInt32(unit.getY());
                                 animation.writeDataInt32(3);
@@ -245,7 +245,7 @@ var Constructor = function()
     {
         var nearBuildings = false;
         var fields = globals.getCircle(0, 2);
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             for (var i = 0; i < fields.size(); i++)
             {
@@ -328,7 +328,7 @@ var Constructor = function()
                                     (unit.getOwner() === co.getOwner()))
                             {
                                 UNIT.repairUnit(unit, 1);
-                                animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                                animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                                 var delay = globals.randInt(135, 265);
                                 if (animations.length < 5)
                                 {

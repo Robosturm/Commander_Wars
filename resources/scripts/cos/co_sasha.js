@@ -39,7 +39,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.setSound("power_sasha.wav");
@@ -82,7 +82,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {

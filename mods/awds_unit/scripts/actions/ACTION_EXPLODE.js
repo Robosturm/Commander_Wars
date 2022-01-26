@@ -28,7 +28,7 @@ ACTION_EXPLODE.performPostAnimation = function(postAnimation)
                     unit.killUnit();
                 }
             }
-            var animation = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+            var animation = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
             animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
             audio.playSound("explosion+land.wav");
         }

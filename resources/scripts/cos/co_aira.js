@@ -41,7 +41,7 @@ var Constructor = function()
                 for (i = 0; i < units.size(); i++)
                 {
                     var unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     var delay = globals.randInt(135, 265);
                     if (animations.length < 5)
                     {
@@ -111,7 +111,7 @@ var Constructor = function()
                     var unit = units.at(i);
                     if (i >= size / 2 || unit.useTerrainDefense() === false)
                     {
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                         var delay = globals.randInt(135, 265);
                         if (animations.length < 5)
                         {

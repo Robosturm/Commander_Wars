@@ -100,7 +100,7 @@ var Constructor = function()
     };
     this.performPostAnimation = function(postAnimation)
     {
-        var animation = GameAnimationFactory.createAnimation(ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
         animation.addSprite("flare_explosion", -map.getImageSize() * 2.5, -map.getImageSize() * 2.5 - 1, 0, 2);
         animation.addSound("flare_launch.wav");
         animation.addSound("flare_explosion.wav", 1, 300);

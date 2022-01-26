@@ -12,34 +12,34 @@ var Constructor = function()
         return qsTr("Destroy the Mini Cannons surrounding the Fortress.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("What? It can't be! Our beautiful fortress... We were unlucky, nothing more. And so, for now, we must retreat. "),
                         "co_adder", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Whew... We won. Somehow, we won! "),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
 
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Sonja! "),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Father, did you observe the battle? "),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I did. Those were dangerous tactics you employed, Daughter. However, I was mistaken. You were the perfect CO to fight this fight. "),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Father... "),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("However, this war is going to be more dangerous, and more violent. You must never let your guard down. Do you understand, Sonja? "),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Yes, sir! I do! "),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             dialog1.queueAnimation(dialog2);
@@ -51,7 +51,7 @@ var Constructor = function()
             dialog7.queueAnimation(dialog8);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -66,7 +66,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var variables = map.getGameScript().getVariables();
         var mapTown = map.getTerrain(6, 8).getBuilding();
@@ -76,7 +76,7 @@ var Constructor = function()
             var mapTownDialog = variables.createVariable("mapTownDialog");
             if (mapTownDialog.readDataBool() === false)
             {
-                gameScript.mapTownDialog();
+                gameScript.mapTownDialog(map);
                 // enable yc map lab
                 var campaignVariables = map.getCampaign().getVariables();
                 var ycLabFound = campaignVariables.createVariable("ycLabFound");
@@ -105,18 +105,18 @@ var Constructor = function()
         }
     };
 
-    this.mapTownDialog = function()
+    this.mapTownDialog = function(map)
     {
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander! This was found when we captured a new base. "),
                     "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Ah! It's a map! A map showing the location of their lab! This must be where they're developing those new weapons we've heard about. Please deliver this to my father! He will send reinforcements for sure. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes, ma'am! I'll deliver it to CO Kanbei right away! "),
                     "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" Now, I just have to do something with this mess. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         dialog1.queueAnimation(dialog2);
@@ -124,97 +124,97 @@ var Constructor = function()
         dialog3.queueAnimation(dialog4);
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Are you sure the enemy is here? "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes. Somewhere. My reports say that... Eeeek! "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Sonja! Are you all right? "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Ouch... "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Blood! Sonja, you're bleeding! Quickly! Prepare for a transfusion! "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Sir? "),
                     "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" Fa-Father! Stop! I just fell down. Please stop overreacting. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But I'm worried. If anything ever happened to you, I don't know what I would do. I knew it! You should be in the rear. It's much safer there. "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Ooh! I am a Yellow Comet CO! I can handle this responsibility! I'll prove it to you! "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But, Sonja... I... "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Wait! Father, look at that! "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hm? That... That's... "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("A huge enemy stronghold? When did that get there? "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("How dare they build that monstrosity on our sacred soil! It is time to clean the rust from my blade! "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Patience, Father! First, we need to reconnoiter. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
 
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But... "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog17 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog17 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Intel is the most important part of combat. Rushing blindly to war just increases your casualties. Leave this to me. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog18 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog18 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Never! It is too dangerous. "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog19 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog19 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I think you should let her go. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog20 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog20 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Sensei? I don't... "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog21 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog21 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Sonja is a respected CO in the Yellow Comet Army. Believe in your daughter, Kanbei. It's the right thing to do. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog22 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog22 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hmmm... Sonja, are you truly ready for this? "),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog23 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog23 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("One hundred percent! I'm your daughter, aren't I?! I'll prove I'm worthy to command. "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog24 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog24 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("How to capture that giant fortress... Looks like I need to smash the 8 cannons protecting it. If I can do that, the fortress will be powerless, and I'll win! It's either that or capture their HQ... "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog25 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog25 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Heh heh... It seems that this terrain has our friends in a quandary. Not that it matters. Whatever they decide to do, they can only fail. "),
                     "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog26 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog26 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("CO Adder of the Black Hole Army, I presume. I should have known Black Hole was behind this! "),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog27 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog27 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("This fortress was built on the strength of the Black Hole nation. It will never fall to the likes of Yellow Comet. Once I've taken care of things here, I must destroy this map. It wouldn't do to have these fools showing up at our hidden lab... Now then, let's see what skills this foe possesses. "),
                     "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
 

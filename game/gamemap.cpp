@@ -39,9 +39,6 @@ const qint32 GameMap::frameTime = 100;
 static constexpr qint32 loadingScreenSize = 900;
 qint32 GameMap::m_imagesize = GameMap::defaultImageSize;
 
-
-spGameMap GameMap::m_pInstance;
-
 qint32 GameMap::getFrameTime()
 {
     return frameTime;
@@ -1079,7 +1076,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
             pTerrainOld->setUnit(spUnit());
 
-            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID());
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this);
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
@@ -1324,7 +1321,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
         // create player
-        m_players.append(spPlayer::create());
+        m_players.append(spPlayer::create(this));
         // get player data from stream
         m_players[i]->deserializer(pStream, fast);
     }
@@ -1346,7 +1343,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         m_fields.push_back(std::vector<spTerrain>());
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
-            spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
+            spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
             m_fields[y].push_back(pTerrain);
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
@@ -1365,7 +1362,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = spGameRules::create();
+    m_Rules = spGameRules::create(this);
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
@@ -1394,7 +1391,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_GameScript = spGameScript::create();
+            m_GameScript = spGameScript::create(this);
         }
         if (showLoadingScreen)
         {
@@ -1406,7 +1403,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> exists;
             if (exists)
             {
-                m_Campaign = spCampaign::create();
+                m_Campaign = spCampaign::create(this);
                 m_Campaign->deserializeObject(pStream);
             }
         }
@@ -2127,13 +2124,13 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             spGameMenue pMenu = GameMenue::getInstance();
             if (pMenu.get() != nullptr)
             {
-                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(m_CurrentPlayer.get(), GameMap::frameTime, true);
+                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
                 pMenu->addChild(pAnim);
             }
         }
         else
         {
-            GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
+            GameAnimationFactory::createGameAnimationNextDay(this, m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
         }
         if (nextDay)
         {
@@ -2181,7 +2178,7 @@ void GameMap::initPlayersAndSelectCOs()
     QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
-        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        Player* pPlayer = getPlayer(i);
         if (pPlayer->getCO(0) != nullptr)
         {
             bannList.removeAll(pPlayer->getCO(0)->getCoID());
@@ -2200,7 +2197,7 @@ void GameMap::initPlayersAndSelectCOs()
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
-        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        Player* pPlayer = getPlayer(i);
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);

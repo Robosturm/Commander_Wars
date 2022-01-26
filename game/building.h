@@ -19,6 +19,7 @@ class Unit;
 class Terrain;
 class GameAction;
 class Weather;
+class GameMap;
 
 class Building;
 using spBuilding = oxygine::intrusive_ptr<Building>;
@@ -36,7 +37,7 @@ class Building : public Tooltip, public FileSerializable
 
 public:
 
-    explicit Building(QString BuildingID);
+    explicit Building(QString BuildingID, GameMap* pMap);
 
     virtual ~Building() = default;
     /**
@@ -108,6 +109,11 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getPMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getBuildingName
      * @return

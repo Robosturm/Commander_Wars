@@ -8,7 +8,8 @@
 
 #include "game/gamemap.h"
 
-TerrainFlowData::TerrainFlowData()
+TerrainFlowData::TerrainFlowData(GameMap* pMap)
+    : m_pMap{pMap}
 {
     setObjectName("TerrainFlowData");
     Mainapp* pApp = Mainapp::getInstance();
@@ -189,16 +190,16 @@ QVector<QPoint> TerrainFlowData::getOverlayTiles(const QStringList & terrains)
 {
     QVector<QPoint> ret;
     spQmlVectorPoint circle(GlobalUtils::getCircle(1, 1));
-    spGameMap pMap = GameMap::getInstance();
+    
     const qint32 size = circle->size();
     for (qint32 i2 = 0; i2 < m_positions.size(); ++i2)
     {
         for (qint32 i = 0; i < size; ++i)
         {
             QPoint newPos = m_positions[i2] + circle->at(i);
-            if (pMap->onMap(newPos.x(), newPos.y()) &&
+            if (m_pMap->onMap(newPos.x(), newPos.y()) &&
                 !ret.contains(newPos) &&
-                terrains.contains(pMap->getTerrain(newPos.x(), newPos.y())->getID()))
+                terrains.contains(m_pMap->getTerrain(newPos.x(), newPos.y())->getID()))
             {
                 ret.append(newPos);
                 m_overlayTileMapping.append(i2);
@@ -211,4 +212,9 @@ QVector<QPoint> TerrainFlowData::getOverlayTiles(const QStringList & terrains)
 QVector<qint32> TerrainFlowData::getOverlayTileMapping() const
 {
     return m_overlayTileMapping;
+}
+
+GameMap *TerrainFlowData::getMap() const
+{
+    return m_pMap;
 }

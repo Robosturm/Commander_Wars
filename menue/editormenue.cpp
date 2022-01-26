@@ -39,8 +39,6 @@
 
 #include "ui_reader/uifactory.h"
 
-EditorMenue* EditorMenue::m_pInstance = nullptr;
-
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20, "", false),
       m_autosaveTimer(this)
@@ -68,7 +66,7 @@ EditorMenue::EditorMenue()
         m_autoScrollBorder = QRect(50, 135, selectionWidth, 50);
         initSlidingActor(50, 125, Settings::getWidth() - selectionWidth - 100, Settings::getHeight() - 175);
     }
-    m_mapSlidingActor->addChild(GameMap::getInstance());
+    m_mapSlidingActor->addChild(m_pMap);
     m_mapSliding->setLocked(true);
     loadHandling();
     changeBackground("editormenu");
@@ -156,7 +154,7 @@ EditorMenue::EditorMenue()
     addChild(m_Topbar);
 
     Cursor* pCursor = m_Cursor.get();
-    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    m_pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -265,8 +263,8 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     QDataStream stream(&file);
-    spGameMap pMap = GameMap::getInstance();
-    pMap->serializeObject(stream);
+    
+    m_pMap->serializeObject(stream);
     file.close();
 
     QFile previous("temp/temp" + QString::number(m_tempCounter - 1) + ".tmp");
@@ -313,11 +311,11 @@ void EditorMenue::editorUndo()
             m_tempCounter -= 2;
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->deserializeObject(stream);
+            m_pMap->deserializeObject(stream);
             file.close();
-            spGameMap pMap = GameMap::getInstance();
+            
             Mainapp::getInstance()->pauseRendering();
-            pMap->updateSprites();
+            m_pMap->updateSprites();
             Mainapp::getInstance()->continueRendering();
             m_EditorSelection->createPlayerSelection();
         }
@@ -337,11 +335,11 @@ void EditorMenue::editorRedo()
     {
         file.open(QIODevice::ReadOnly);
         QDataStream stream(&file);
-        GameMap::getInstance()->deserializeObject(stream);
+        m_pMap->deserializeObject(stream);
         file.close();
-        spGameMap pMap = GameMap::getInstance();
+        
         Mainapp::getInstance()->pauseRendering();
-        pMap->updateSprites();
+        m_pMap->updateSprites();
         Mainapp::getInstance()->continueRendering();
         m_EditorSelection->createPlayerSelection();
     }
@@ -407,31 +405,31 @@ void EditorMenue::clickedTopbar(QString itemID)
 
 void EditorMenue::toggleGridLayout()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
         m_gridVisible = !m_gridVisible;
-        pMap->showGrid(m_gridVisible);
+        m_pMap->showGrid(m_gridVisible);
     }
 }
 
 void EditorMenue::toggleMiddleCrossGrid()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
         m_middleCrossGridVisible = !m_middleCrossGridVisible;
-        pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
+        m_pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
     }
 }
 
 void EditorMenue::updateGrids()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap.get() != nullptr)
     {
-        pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
-        pMap->showGrid(m_gridVisible);
+        m_pMap->showMiddleCrossGrid(m_middleCrossGridVisible);
+        m_pMap->showGrid(m_gridVisible);
     }
 }
 
@@ -440,7 +438,7 @@ void EditorMenue::showSaveMap()
     QStringList wildcards;
     wildcards.append("*.map");
     QString path = Settings::getUserPath() + "maps";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName());
     addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
     connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -462,7 +460,7 @@ void EditorMenue::showLoadMap()
 void EditorMenue::showResizeMap()
 {
     CONSOLE_PRINT("showResizeMap()", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
+    
     spGenericBox pBox = spGenericBox::create(true);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
@@ -479,10 +477,10 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Left: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox leftBox = spSpinBox::create(150, -pMap->getMapWidth() + 1, 9999);
+    spSpinBox leftBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 9999);
     leftBox->setTooltipText(tr("Change of the map size on the left map border."));
     leftBox->setPosition(width, y);
-    leftBox->setInfinityValue(-pMap->getMapWidth());
+    leftBox->setInfinityValue(-m_pMap->getMapWidth());
     leftBox->setCurrentValue(0);
     pBox->addItem(leftBox);
     y += 40;
@@ -492,10 +490,10 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Top: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox topBox = spSpinBox::create(150, -pMap->getMapHeight() + 1, 999999);
+    spSpinBox topBox = spSpinBox::create(150, -m_pMap->getMapHeight() + 1, 999999);
     topBox->setTooltipText(tr("Change of the map size on the top map border."));
     topBox->setPosition(width, y);
-    topBox->setInfinityValue(-pMap->getMapHeight());
+    topBox->setInfinityValue(-m_pMap->getMapHeight());
     topBox->setCurrentValue(0);
     pBox->addItem(topBox);
     y += 40;
@@ -505,10 +503,10 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Right: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox rightBox = spSpinBox::create(150, -pMap->getMapWidth() + 1, 999999);
+    spSpinBox rightBox = spSpinBox::create(150, -m_pMap->getMapWidth() + 1, 999999);
     rightBox->setTooltipText(tr("Change of the map size on the right map border."));
     rightBox->setPosition(width, y);
-    rightBox->setInfinityValue(-pMap->getMapWidth());
+    rightBox->setInfinityValue(-m_pMap->getMapWidth());
     rightBox->setCurrentValue(0);
     pBox->addItem(rightBox);
     y += 40;
@@ -518,10 +516,10 @@ void EditorMenue::showResizeMap()
     pText->setHtmlText(tr("Bottom: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox bottomBox = spSpinBox::create(150, -pMap->getMapHeight() + 1, 999999);
+    spSpinBox bottomBox = spSpinBox::create(150, -m_pMap->getMapHeight() + 1, 999999);
     bottomBox->setTooltipText(tr("Change of the map size on the bottom map border."));
     bottomBox->setPosition(width, y);
-    bottomBox->setInfinityValue(-pMap->getMapHeight());
+    bottomBox->setInfinityValue(-m_pMap->getMapHeight());
     bottomBox->setCurrentValue(0);
     pBox->addItem(bottomBox);
     y += 40;
@@ -632,7 +630,7 @@ void EditorMenue::showNewMap()
 
 void EditorMenue::showEditMap()
 {
-    spGameMap pGameMap = GameMap::getInstance();
+    spGameMap pGameMap = m_pMap;
     MapEditDialog::MapEditInfo info;
     info.mapName = pGameMap->getMapName();
     info.author = pGameMap->getMapAuthor();
@@ -653,25 +651,25 @@ void EditorMenue::showEditMap()
 
 void EditorMenue::flipX()
 {
-    spGameMap pGameMap = GameMap::getInstance();
+    spGameMap pGameMap = m_pMap;
     pGameMap->flipX();
 }
 
 void EditorMenue::flipY()
 {
-    spGameMap  pGameMap = GameMap::getInstance();
+    spGameMap  pGameMap = m_pMap;
     pGameMap->flipY();
 }
 
 void EditorMenue::rotateX()
 {
-    spGameMap  pGameMap = GameMap::getInstance();
+    spGameMap  pGameMap = m_pMap;
     pGameMap->rotateX();
 }
 
 void EditorMenue::rotateY()
 {
-    spGameMap  pGameMap = GameMap::getInstance();
+    spGameMap  pGameMap = m_pMap;
     pGameMap->rotateY();
 }
 
@@ -744,7 +742,7 @@ void EditorMenue::copy()
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
 {    
     CONSOLE_PRINT("EditorMenue::resizeMap", Console::eDEBUG);
-    GameMap::getInstance()->resizeMap(left, top, right, bottom);    
+    m_pMap->resizeMap(left, top, right, bottom);    
     updateGrids();
 }
 
@@ -764,7 +762,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 {
     CONSOLE_PRINT("EditorMenue::createRandomMap", Console::eDEBUG);
     cleanTemp(-1);
-    spGameMap pGameMap = GameMap::getInstance();
+    spGameMap pGameMap = m_pMap;
     RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed,
@@ -784,9 +782,9 @@ void EditorMenue::playersChanged()
 {    
     CONSOLE_PRINT("EditorMenue::playersChanged", Console::eDEBUG);
     m_EditorSelection->createPlayerSelection();
-    spGameMap pMap = GameMap::getInstance();
+    
     Mainapp::getInstance()->pauseRendering();
-    pMap->updateSprites();
+    m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
     setFocused(true);
 }
@@ -801,16 +799,16 @@ void EditorMenue::optimizePlayers()
 {
     CONSOLE_PRINT("EditorMenue::optimizePlayers", Console::eDEBUG);
     createTempFile();
-    spGameMap pMap = GameMap::getInstance();
-    QVector<bool> foundPlayers(pMap->getPlayerCount(), false);
-    qint32 mapWidth = pMap->getMapWidth();
-    qint32 mapHeigth = pMap->getMapHeight();
+    
+    QVector<bool> foundPlayers(m_pMap->getPlayerCount(), false);
+    qint32 mapWidth = m_pMap->getMapWidth();
+    qint32 mapHeigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < mapWidth; x++)
     {
         for (qint32 y = 0; y < mapHeigth; y++)
         {
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
             if (pBuilding != nullptr && pBuilding->getOwner() != nullptr)
             {
                 foundPlayers[pBuilding->getOwner()->getPlayerID()] = true;
@@ -823,19 +821,19 @@ void EditorMenue::optimizePlayers()
     }
     for (qint32 i = foundPlayers.size() - 1; i >= 0; i--)
     {
-        if (pMap->getPlayerCount() > 2)
+        if (m_pMap->getPlayerCount() > 2)
         {
             if (foundPlayers[i] == false)
             {
-                pMap->removePlayer(i);
+                m_pMap->removePlayer(i);
             }
         }
     }
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        if (pMap->getPlayer(i)->getTeam() >= pMap->getPlayerCount())
+        if (m_pMap->getPlayer(i)->getTeam() >= m_pMap->getPlayerCount())
         {
-            pMap->getPlayer(i)->setTeam(i);
+            m_pMap->getPlayer(i)->setTeam(i);
         }
     }
     m_EditorSelection->createPlayerSelection();
@@ -911,10 +909,10 @@ void EditorMenue::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                spGameMap pMap = GameMap::getInstance();
-                if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+                
+                if (m_pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
-                    Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    Terrain* pTerrain = m_pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
@@ -948,11 +946,11 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     {
         m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
     }
-    spGameMap pMap = GameMap::getInstance();
+    
     m_copyRectActor->detach();
-    if (pMap->onMap(x, y))
+    if (m_pMap->onMap(x, y))
     {
-        pMap->addChild(m_cursorActor);
+        m_pMap->addChild(m_cursorActor);
         m_cursorActor->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
 
@@ -1048,7 +1046,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         case EditorModes::CopySelection:
         {
             m_Cursor->changeCursor("cursor+default");
-            pMap->addChild(m_copyRectActor);
+            m_pMap->addChild(m_copyRectActor);
             if (m_copyRect.x() >= 0 && m_copyRect.y() >= 0 &&
                 m_copyRect.width() == 0 && m_copyRect.height() == 0)
             {
@@ -1068,7 +1066,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::onMapClickedRight", Console::eDEBUG);
     // resolve click
-    spGameMap pMap = GameMap::getInstance();
+    
     switch (m_EditorMode)
     {
         case EditorModes::CopySelection:
@@ -1090,8 +1088,8 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
                 case EditorSelection::EditorMode::Terrain:
                 case EditorSelection::EditorMode::Building:
                 {
-                    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
+                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                     if (pUnit != nullptr)
                     {
                         m_EditorSelection->selectUnit(pUnit->getUnitID());
@@ -1102,7 +1100,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
                     }
                     else
                     {
-                        QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
+                        QString terrainID = m_pMap->getTerrain(x, y)->getTerrainID();
                         m_EditorSelection->selectTerrain(terrainID);
                     }
                     selectionChanged();
@@ -1126,7 +1124,7 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
             if (m_copyRect.x() < 0)
             {
                 pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
-                GameMap::getInstance()->addChild(m_copyRectActor);
+                m_pMap->addChild(m_copyRectActor);
                 if (m_copyRect.width() == 0)
                 {
                     createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
@@ -1157,7 +1155,7 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
             if (m_copyRect.x() >= 0)
             {
                 pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
-                GameMap::getInstance()->addChild(m_copyRectActor);
+                m_pMap->addChild(m_copyRectActor);
                 if (m_copyRect.width() == 0)
                 {
                     createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
@@ -1185,7 +1183,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
     {
         case EditorModes::RemoveUnits:
         {
-            Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
+            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
                 createTempFile();
@@ -1195,7 +1193,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
         }
         case EditorModes::EditUnits:
         {
-            Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
+            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
                 createTempFile();
@@ -1208,7 +1206,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
         }
         case EditorModes::EditTerrain:
         {
-            Terrain* pTerrain  = GameMap::getInstance()->getTerrain(x, y);
+            Terrain* pTerrain  = m_pMap->getTerrain(x, y);
             if (pTerrain->getBuilding() == nullptr)
             {
                 createTempFile();
@@ -1285,12 +1283,12 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    
+    if (m_pMap->onMap(x, y))
     {
-        if (pMap->canBePlaced(terrainID, x, y))
+        if (m_pMap->canBePlaced(terrainID, x, y))
         {
-            Terrain* pTerrain = pMap->getTerrain(x, y);
+            Terrain* pTerrain = m_pMap->getTerrain(x, y);
             if (pTerrain->getTerrainID() != terrainID ||
                 pTerrain->getBuilding() != nullptr ||
                 m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
@@ -1305,11 +1303,11 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    
+    if (m_pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-        ret = pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y));
+        ret = pCurrentBuilding->canBuildingBePlaced(m_pMap->getTerrain(x, y));
     }
     return ret;
 }
@@ -1317,12 +1315,12 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    
+    if (m_pMap->onMap(x, y))
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y), pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
+        if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x, y), m_pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
         {
             ret = true;
         }
@@ -1334,7 +1332,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeTerrain", Console::eDEBUG);
     QVector<QPoint> points;
-    spGameMap pMap = GameMap::getInstance();
+    
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::None:
@@ -1358,7 +1356,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         }
         case EditorSelection::PlacementSize::Fill:
         {
-            TerrainFindingSystem Pfs(pMap->getTerrain(x, y)->getID(),x , y);
+            TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
             points = Pfs.getAllNodePoints();
             break;
@@ -1373,21 +1371,21 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
             spUnit pUnit;
-            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
+            m_pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
-            pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
+            m_pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
         }
     }
     if (points.size() > 10)
     {
-        pMap->updateSprites();
+        m_pMap->updateSprites();
     }
     else
     {
-        pMap->updateSpritesOfTiles(points);
+        m_pMap->updateSpritesOfTiles(points);
     }
     pApp->continueRendering();
 }
@@ -1395,7 +1393,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
     CONSOLE_PRINT("EditorMenue::placeBuilding", Console::eDEBUG);    
-    spGameMap pMap = GameMap::getInstance();
+    
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1420,7 +1418,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         }
         case EditorSelection::PlacementSize::Fill:
         {
-            TerrainFindingSystem Pfs(pMap->getTerrain(x, y)->getID(),x , y);
+            TerrainFindingSystem Pfs(m_pMap.get(), m_pMap->getTerrain(x, y)->getID(),x , y);
             Pfs.explore();
             points = Pfs.getAllNodePoints();
             break;
@@ -1445,29 +1443,29 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             pCurrentBuilding->getBuildingHeigth() == 1)
         {
             QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
-            pMap->replaceTerrain(baseTerrain, curX, curY, false, false);
+            m_pMap->replaceTerrain(baseTerrain, curX, curY, false, false);
         }
         if (canBuildingBePlaced(curX, curY))
         {
-            if (pCurrentBuilding->getBuildingID() != pMap->getTerrain(curX, curY)->getTerrainID())
+            if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(curX, curY)->getTerrainID())
             {
                 spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
             }
         }
     }
     if (points.size() > 10)
     {
-        pMap->updateSprites();
+        m_pMap->updateSprites();
     }
     else
     {
-        pMap->updateSpritesOfTiles(points);
+        m_pMap->updateSpritesOfTiles(points);
     }
     if (Settings::getSyncAnimations())
     {
-        GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+        m_pMap->syncUnitsAndBuildingAnimations();
     }
     pApp->continueRendering();
 }
@@ -1513,14 +1511,14 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
-            spGameMap pMap = GameMap::getInstance();
-            pMap->getTerrain(curX, curY)->setUnit(pUnit);
+            
+            m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
             
         }
     }
     if (Settings::getSyncAnimations())
     {
-        GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+        m_pMap->syncUnitsAndBuildingAnimations();
     }
 }
 
@@ -1536,8 +1534,8 @@ void EditorMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->serializeObject(stream);
+        
+        m_pMap->serializeObject(stream);
         file.close();
     }
     setFocused(true);    
@@ -1555,12 +1553,12 @@ void EditorMenue::loadMap(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->deserializeObject(stream);
+            m_pMap->deserializeObject(stream);
             file.close();
-            spGameMap pMap = GameMap::getInstance();
+            
             Mainapp::getInstance()->pauseRendering();
-            pMap->updateSprites(-1, -1, true);
-            pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
+            m_pMap->updateSprites(-1, -1, true);
+            m_pMap->centerMap(m_pMap->getMapWidth() / 2, m_pMap->getMapHeight() / 2);
             m_EditorSelection->createPlayerSelection();
             Mainapp::getInstance()->continueRendering();
         }
@@ -1578,7 +1576,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            GameMap::getInstance()->importAWDCMap(filename);
+            m_pMap->importAWDCMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1595,7 +1593,7 @@ void EditorMenue::importAWByWeb(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            GameMap::getInstance()->importAWByWebMap(filename);
+            m_pMap->importAWByWebMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1612,7 +1610,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            GameMap::getInstance()->importAWDSMap(filename);
+            m_pMap->importAWDSMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1625,7 +1623,7 @@ void EditorMenue::exportAWDSAwsMap(QString filename)
     CONSOLE_PRINT("EditorMenue::exportAWDSAwsMap", Console::eDEBUG);
     if (filename.endsWith(".aws"))
     {
-        GameMap::getInstance()->exportAWDSMap(filename);
+        m_pMap->exportAWDSMap(filename);
     }
     setFocused(true);
 }
@@ -1639,7 +1637,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
         if (file.exists())
         {
             cleanTemp(-1);
-            GameMap::getInstance()->importTxtMap(filename);
+            m_pMap->importTxtMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -1651,15 +1649,15 @@ void EditorMenue::newMap(MapEditDialog::MapEditInfo info)
 {
     CONSOLE_PRINT("EditorMenue::newMap", Console::eDEBUG);
     cleanTemp(-1);
-    spGameMap pMap = GameMap::getInstance();
-    pMap->setMapName(info.mapName);
-    pMap->setMapAuthor(info.author);
-    pMap->setMapDescription(info.description);
-    pMap->getGameScript()->setScriptFile(info.scriptFile);
-    pMap->newMap(info.mapWidth, info.mapHeigth, info.playerCount);
-    pMap->setMapFlags(info.mapFlags);
-    pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
-    pMap->getGameRecorder()->setMapTime(info.turnLimit);
+    
+    m_pMap->setMapName(info.mapName);
+    m_pMap->setMapAuthor(info.author);
+    m_pMap->setMapDescription(info.description);
+    m_pMap->getGameScript()->setScriptFile(info.scriptFile);
+    m_pMap->newMap(info.mapWidth, info.mapHeigth, info.playerCount);
+    m_pMap->setMapFlags(info.mapFlags);
+    m_pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
+    m_pMap->getGameRecorder()->setMapTime(info.turnLimit);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     updateGrids();
@@ -1669,15 +1667,15 @@ void EditorMenue::changeMap(MapEditDialog::MapEditInfo info)
 {    
     CONSOLE_PRINT("EditorMenue::changeMap", Console::eDEBUG);
     createTempFile();
-    spGameMap pMap = GameMap::getInstance();
-    pMap->setMapName(info.mapName);
-    pMap->setMapAuthor(info.author);
-    pMap->setMapDescription(info.description);
-    pMap->getGameScript()->setScriptFile(info.scriptFile);
-    pMap->changeMap(info.mapWidth, info.mapHeigth, info.playerCount);
-    pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
-    pMap->getGameRecorder()->setMapTime(info.turnLimit);
-    pMap->setMapFlags(info.mapFlags);
+    
+    m_pMap->setMapName(info.mapName);
+    m_pMap->setMapAuthor(info.author);
+    m_pMap->setMapDescription(info.description);
+    m_pMap->getGameScript()->setScriptFile(info.scriptFile);
+    m_pMap->changeMap(info.mapWidth, info.mapHeigth, info.playerCount);
+    m_pMap->getGameRecorder()->setDeployLimit(info.deployLimit);
+    m_pMap->getGameRecorder()->setMapTime(info.turnLimit);
+    m_pMap->setMapFlags(info.mapFlags);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     updateGrids();
@@ -1866,8 +1864,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
 void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
 {
     CONSOLE_PRINT("EditorMenue::pasteSelection", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    
+    if (m_pMap->onMap(x, y))
     {
         if (m_copyRect.x() < 0)
         {
@@ -1903,8 +1901,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
         else if (!click)
         {
             QRect rect(x, y, m_copyRect.width(), m_copyRect.height());
-            if (pMap->onMap(rect.x(), rect.y()) &&
-                pMap->onMap(rect.right(), rect.bottom()) &&
+            if (m_pMap->onMap(rect.x(), rect.y()) &&
+                m_pMap->onMap(rect.right(), rect.bottom()) &&
                 !m_copyRect.intersects(QRect(x, y, m_copyRect.width(), m_copyRect.height())))
             {
                 createTempFile();
@@ -1921,10 +1919,10 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                             case EditorSelection::EditorMode::All:
                             case EditorSelection::EditorMode::Terrain:
                             {
-                                Terrain* pCopyTerrain = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos);
-                                pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false);
-                                pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false);
-                                Terrain* pTerrain = pMap->getTerrain(x + xPos, y + yPos);
+                                Terrain* pCopyTerrain = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos);
+                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false);
+                                m_pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false);
+                                Terrain* pTerrain = m_pMap->getTerrain(x + xPos, y + yPos);
                                 QString id = pCopyTerrain->getTerrainSpriteName();
                                 pTerrain->setFixedSprite(!id.isEmpty());
                                 pTerrain->setTerrainSpriteName(id);
@@ -1935,20 +1933,20 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                             }
                             case EditorSelection::EditorMode::Building:
                             {
-                                Building* pBuilding = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getBuilding();
+                                Building* pBuilding = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getBuilding();
                                 if (pBuilding != nullptr &&
                                     pBuilding->getBuildingWidth() == 1 &&
                                     pBuilding->getBuildingHeigth() == 1)
                                 {
-                                    if (pBuilding->canBuildingBePlaced(pMap->getTerrain(x + xPos, y + yPos)))
+                                    if (pBuilding->canBuildingBePlaced(m_pMap->getTerrain(x + xPos, y + yPos)))
                                     {
                                         auto baseTerrains = pBuilding->getBaseTerrain();
                                         QString baseTerrain = baseTerrains[0];
-                                        pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
+                                        m_pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
                                     }
                                     spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
-                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
+                                    m_pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
                                 if (selection != EditorSelection::EditorMode::All)
                                 {
@@ -1957,17 +1955,17 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                             }
                             case EditorSelection::EditorMode::Unit:
                             {
-                                Unit* pUnit = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getUnit();
+                                Unit* pUnit = m_pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getUnit();
                                 if (pUnit != nullptr)
                                 {
                                     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
                                     QString movementType = pUnit->getMovementType();
-                                    if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
+                                    if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
                                         spUnit pUnit;
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
+                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
+                                        m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());
                                         pCopyUnit->setAmmo2(pUnit->getAmmo2());
@@ -1985,7 +1983,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                         }
                     }
                 }
-                pMap->updateSprites();
+                m_pMap->updateSprites();
             }
         }
     }
@@ -2008,8 +2006,8 @@ void EditorMenue::autosave()
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->serializeObject(stream);
+        
+        m_pMap->serializeObject(stream);
         file.close();
     }    
 }

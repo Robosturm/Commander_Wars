@@ -51,7 +51,7 @@ var Constructor = function()
         var y = building.getY();
         map.replaceTerrainOnly("PLAINS_DESTROYED", x, y);
         map.getTerrain(x, y).loadSprites();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2, 100);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.addSound("crystal_explode_2.wav");

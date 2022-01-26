@@ -7,37 +7,37 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             var playername = settings.getUsername();
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Now, I want some answers! Why're you hounding Andy?"),
                         "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("You demand an answer. Very well. Here's your answer, Max. Your compatriot, Andy, viciously attacked my homeland."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Huh?"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The look on his face during the assault... I'll never forget! Never!"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Hey! Hold up a minute, Eagle. There's no way Andy would do something like that. C'mon! He couldn't have planned all that out. He's just a kid!"),
                         "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Um... Excuse me?"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("What I mean is, he does things for a reason. And there's no reason for him to attack Green Earth. He didn't do it!"),
                         "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Hmm... Very well. I'll take you at your word... for the moment. But don't believe for a moment that I trust any of you."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Andy, if I find that you're lying to me, you'll curse the day you were born!"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
@@ -50,7 +50,7 @@ var Constructor = function()
             dialog8.queueAnimation(dialog9);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -65,39 +65,39 @@ var Constructor = function()
         map.getPlayer(0).setBuildList(list);
         map.getPlayer(1).setBuildList(list);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
 
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Aye, like I said, that's a rough opponent. Doesn't this old sea dog deserve some smooth sailing now and then?"),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Drake! Listen... About our earlier conversation..."),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Ahoy there, Eagle. It's time for you to test the waters. Battle Orange Star yourself and see if my theory holds any water."),
                     "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I think you're right."),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yeah, those are Eagle's boys. It's just like him to deploy such a well-balanced battalion. But the key here is a strong frontal assault, and at that, I'm the king!"),
                     "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You know, I gotta find out what his beef with Andy's all about. Yeah, I owe it to the kid to get this guy off his back. OK, Paul, let's do this!"),
                     "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);
@@ -107,11 +107,11 @@ var Constructor = function()
         dialog4.queueAnimation(dialog5);
     };
 
-    this.day1Dialog = function()
+    this.day1Dialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Despite Drake's conviction, I find it hard to credit his hypothesis."),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
     };

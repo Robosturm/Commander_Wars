@@ -7,28 +7,28 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
        
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         
     };
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         // called at the start of each players turn
         if (turn === 1 && player === 0)
         {
             // play the inital dialog on day one and player 0
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         
     };

@@ -168,11 +168,11 @@ void ScriptData::writeScript(QTextStream& rStream)
     CONSOLE_PRINT("ScriptData::writeScript", Console::eDEBUG);
     m_variableCounter = 0;
     rStream << "var Constructor = function() { // " + scriptStart + "\n";
-    rStream << "    this.immediateStart = function() { // " + immediateStart + "\n";
+    rStream << "    this.immediateStart = function(map) { // " + immediateStart + "\n";
     rStream << "        return " + QVariant(startMode).toString() +  ";\n";
     rStream << "    }; // " + immediateStart + "\n";
 
-    rStream << "    this.getVictoryInfo = function() // " + victoryInfo + "\n";
+    rStream << "    this.getVictoryInfo = function(map) // " + victoryInfo + "\n";
     rStream << "    {\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var textData = " << variables << ".createVariable(\"victory_info\");\n";
@@ -180,7 +180,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "    }; // " + victoryInfo + "\n";
 
     // victory
-    rStream << "    this.victory = function(team) { // " + victory + "\n";
+    rStream << "    this.victory = function(team, map) { // " + victory + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";
@@ -201,7 +201,7 @@ void ScriptData::writeScript(QTextStream& rStream)
 
 
     // turn start
-    rStream << "    this.turnStart = function(turn, player) { // " + turnStart + "\n";
+    rStream << "    this.turnStart = function(turn, player, map) { // " + turnStart + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";
@@ -221,7 +221,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "    }; // " + turnStart + "\n";
 
     // action conditions
-    rStream << "    this.actionDone = function(action) { // " + actionConditions + "\n";
+    rStream << "    this.actionDone = function(action, map) { // " + actionConditions + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";

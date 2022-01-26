@@ -52,7 +52,7 @@ var Constructor = function()
                 for (i = 0; i < units.size() / 2; i++)
                 {
                     var unit = units.at(i);
-                    var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.writeDataInt32(unit.getX());
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
@@ -99,7 +99,7 @@ var Constructor = function()
             {
                 if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
                 {
-                    var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY());
                     animation.writeDataInt32(building.getX());
                     animation.writeDataInt32(building.getY());
                     animation.writeDataString(invasion[i % invasion.length]);

@@ -34,7 +34,7 @@ var Constructor = function()
             if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 unit.setHasMoved(false);
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
                 {
@@ -79,7 +79,7 @@ var Constructor = function()
             if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 unit.setHasMoved(false);
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 7)
                 {

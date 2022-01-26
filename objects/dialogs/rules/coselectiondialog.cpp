@@ -131,7 +131,7 @@ void COSelectionDialog::showCOInfo()
     {
         coid = m_coids[0];
     }
-    Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
+    Player* pPlayer = m_pMap->getPlayer(m_player);
     spCO co = spCO::create(coid, pPlayer);
     addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {        

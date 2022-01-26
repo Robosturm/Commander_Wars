@@ -19,7 +19,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
             {
@@ -60,7 +60,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {

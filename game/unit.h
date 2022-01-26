@@ -19,6 +19,7 @@ class Terrain;
 class Unit;
 class GameAction;
 class GameAnimation;
+class GameMap;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 
@@ -58,9 +59,9 @@ public:
     /**
      * @brief Unit only for deserialization
      */
-    explicit Unit();
+    explicit Unit(GameMap* pMap);
 
-    explicit Unit(const QString & unitID, Player* pOwner, bool aquireId);
+    explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
 
     virtual ~Unit();
     /**
@@ -151,9 +152,15 @@ public:
      */
     void syncAnimation(oxygine::timeMS syncTime);
 
-    signals:
+
+signals:
 
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getCOSpecificUnit
      * @return
@@ -1136,6 +1143,7 @@ private:
     QVector<QPoint> m_FirerangeBonus;
 
     QVector<IconDuration> m_IconDurations;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // UNIT_H

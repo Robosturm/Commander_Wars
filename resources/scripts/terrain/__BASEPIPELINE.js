@@ -96,7 +96,7 @@ var Constructor = function()
         var surroundings = terrain.getSurroundings(welds, false, false, GameEnums.Directions_Direct, true, true);
         var x = terrain.getX();
         var y = terrain.getY();
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(x, y + 1))
             {

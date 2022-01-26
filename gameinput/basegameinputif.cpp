@@ -191,7 +191,7 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
 {
     if (Settings::getAutoCamera())
     {
-        if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+        if (m_pMap->getCurrentPlayer() == m_pPlayer ||
             m_pPlayer == nullptr)
         {
             if (pAction != nullptr)
@@ -204,10 +204,10 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
             }
             else
             {
-                spGameMap pMap =  GameMap::getInstance();
-                if (pMap.get() != nullptr)
+                spGameMap pMap =  m_pMap;
+                if (m_pMap != nullptr)
                 {
-                    pMap->centerOnPlayer(m_pPlayer);
+                    m_pMap->centerOnPlayer(m_pPlayer);
                 }
             }
         }

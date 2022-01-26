@@ -24,7 +24,7 @@ var Constructor = function()
     this.postAnimationTrapSignY = -1;
     this.performPostAnimation = function(postAnimation)
     {
-        var animation = GameAnimationFactory.createAnimation(ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
         var width = animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 25, 2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("trap", map.getImageSize() / 2 + 4, 4, 400, 2);

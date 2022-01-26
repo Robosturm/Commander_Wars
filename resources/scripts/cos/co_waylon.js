@@ -21,7 +21,7 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
                 {
@@ -72,7 +72,7 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 7)
                 {

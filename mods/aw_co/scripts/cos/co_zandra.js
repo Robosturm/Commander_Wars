@@ -20,7 +20,7 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             switch (co.getPowerMode())
             {

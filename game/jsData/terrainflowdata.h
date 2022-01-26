@@ -5,14 +5,17 @@
 
 #include "game/GameEnums.h"
 
+class GameMap;
+
 class TerrainFlowData : public QObject
 {
     Q_OBJECT
 public:
-    explicit TerrainFlowData();
+    explicit TerrainFlowData(GameMap* pMap);
     virtual ~TerrainFlowData() = default;
 
 public slots:
+    GameMap *getMap() const;
     bool addData(QPoint newPosition, qint32 newCosts, GameEnums::FlowDirections newFlowDirection);
     void addFlowDirection(qint32 index, GameEnums::FlowDirections newFlowDirection);
     QPoint getPosition(qint32 index) const;
@@ -43,5 +46,6 @@ private:
     QVector<qint32> m_costs;
     QVector<GameEnums::FlowDirections> m_flowDirections;
     QVector<qint32> m_overlayTileMapping;
+    GameMap* m_pMap{nullptr};
 };
 

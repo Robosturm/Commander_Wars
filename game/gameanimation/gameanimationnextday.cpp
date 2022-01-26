@@ -12,8 +12,8 @@
 
 #include "menue/gamemenue.h"
 
-GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
-    : GameAnimation(frameTime),
+GameAnimationNextDay::GameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
+    : GameAnimation(frameTime, pMap),
       m_permanent(permanent),
       m_endTimer(this)
 {
@@ -95,10 +95,10 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::spTextField textField = oxygine::spTextField::create();
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        textField->setHtmlText((QString("Day ") + QString::number(pMap->getCurrentDay())));
+        textField->setHtmlText((QString("Day ") + QString::number(m_pMap->getCurrentDay())));
     }
     textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().getHeight() / 2);
     if (pCO != nullptr)
@@ -197,10 +197,10 @@ void GameAnimationNextDay::restart()
 bool GameAnimationNextDay::onFinished(bool skipping)
 {
     bool ret = true;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+        m_pMap->getGameScript()->turnStart(m_pMap->getCurrentDay(), m_pMap->getCurrentPlayer()->getPlayerID());
         if (!m_permanent)
         {
             ret = GameAnimation::onFinished(skipping);

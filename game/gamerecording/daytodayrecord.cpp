@@ -85,8 +85,8 @@ SpecialEvent* DayToDayRecord::getSpecialEvent(qint32 index)
 
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
 {
-    spGameMap pMap = GameMap::getInstance();
-    Player* pPlayer = pMap->getPlayer(player);
+    
+    Player* pPlayer = m_pMap->getPlayer(player);
     if (!pPlayer->getIsDefeated())
     {
         m_PlayerRecords[player] = spPlayerRecord::create(day, player, pPlayer->getFunds(), pPlayer->calcIncome(),

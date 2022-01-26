@@ -38,7 +38,7 @@ var Constructor = function()
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("commando+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveboots.wav", -2);
         return animation;
@@ -87,7 +87,7 @@ var Constructor = function()
                     {
                         queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
                     }
-                    var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("stealth.wav", 1);
                     if (queueAnimation !== null)
@@ -103,7 +103,7 @@ var Constructor = function()
                 var cloakedNow = unit.getCloaked();
                 if (cloaked !== cloakedNow)
                 {
-                    var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("unstealth.wav", 1);
                 }

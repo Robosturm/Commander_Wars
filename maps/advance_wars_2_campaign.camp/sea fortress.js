@@ -12,42 +12,42 @@ var Constructor = function()
         return qsTr("Destroy all 8 Minicannons of the Fortress.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Commander! The minicannons... They're all..."),
                         "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("They've been destroyed? That's it then. We shall withdraw."),
                         "co_hawke", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Look at that! The enemy's abandoning the fortress!"),
                         "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("It appears that we've won."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Shall we launch a pursuit, sir?"),
                         "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("No, we deal with the fortress first."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Yes, sir."),
                         "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("You have my gratitude. It was your bravery that led me... that led US to victory."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Thank you, sir. We appreciate that."),
                         "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The war has just begun. The road before us will be long and hard."),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("No problem, sir. As long as you're in command, we can't lose!"),
                         "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
@@ -62,7 +62,7 @@ var Constructor = function()
             dialog10.queueAnimation(dialog11);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -71,7 +71,7 @@ var Constructor = function()
         map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
         // here we decide how you can win the game
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var miniCannon1 = map.getTerrain(20, 1).getBuilding();
         var miniCannon2 = map.getTerrain(20, 8).getBuilding();
@@ -94,76 +94,76 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Adder, will the fortress be completed on schedule?"),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes. We're proceeding without delays."),
                     "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" And the minicannons?"),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("All 8 of them have been constructed on the sites you selected."),
                     "co_adder", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Then all is well."),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander! We've reports of a large Green Earth force heading this way!"),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I estimated they'd be appearing about this time. They're all air units?"),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Hold on... Er... I think so, sir. Nothing but air units, sir."),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("How predictable. Deploy our troops immediately."),
                     "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yes, sir."),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Attention all units! Target that fortress and open fire!"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Oh no! Hold on, sir! This is no good! There are anti-aircraft units everywhere!"),
                     "co_officier_ge", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What?! They knew we were coming... (What should I do? If we allow them to complete that factory, Green Earth will suffer. If we press our attack, we might win, but the casualties will be enormous.)"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Commander! Let's continue with the attack."),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("But..."),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("We're Green Earth's strongest force. We cannot lose. That's what you always tell us, isn't it? "),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog17 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog17 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("He's right, sir. We won't be beaten by the likes of those Black Hole thugs. And we can't sit by and let them complete that fortress! We can't!"),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog18 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog18 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" Let's hit 'em, Commander!"),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog19 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog19 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("C'mon, sir!"),
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-        var dialog20 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog20 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("My soldiers... All right, we proceed as planned. Aim for the heart of their offensive power, the minicannons. Let's give them a show of power they won't soon forget!"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         dialog1.queueAnimation(dialog2);

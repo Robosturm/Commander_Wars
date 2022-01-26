@@ -18,6 +18,7 @@
 
 #include "coreengine/fileserializable.h"
 
+class GameMap;
 class GameAction;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 
@@ -26,8 +27,8 @@ class GameAction : public QObject, public FileSerializable, public oxygine::ref_
     Q_OBJECT
 
 public:
-    explicit GameAction();
-    explicit GameAction(const QString & actionID);
+    explicit GameAction(GameMap* pMap);
+    explicit GameAction(const QString & actionID, GameMap* pMap);
     virtual ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
@@ -106,9 +107,13 @@ public:
      * @return
      */
     spMarkedFieldData getMarkedFieldStepData();
-signals:
 
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getPlayer
      * @return
@@ -385,6 +390,7 @@ private:
     qint64 m_roundTimerTime{0};
     qint32 m_player{-1};
     qint32 m_variableCount{0};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // GAMEACTION_H

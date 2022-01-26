@@ -19,8 +19,8 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
       m_pPlayer(pPlayer)
 {
     setObjectName("DialogAttackLog");
-    spGameMap pMap = GameMap::getInstance();
-    m_Log = pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
+    
+    m_Log = m_pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
 
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
@@ -120,7 +120,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             y += 40;
         }
 
-        Terrain* pTerrain = pMap->getTerrain(log->attackerX, log->attackerY);
+        Terrain* pTerrain = m_pMap->getTerrain(log->attackerX, log->attackerY);
         spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
         Building* pBuilding = pTerrain->getBuilding();
@@ -131,7 +131,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->attackerID, pMap->getPlayer(log->attackerOwnerID), false));
+        pActor->addChild(spUnit::create(log->attackerID, m_pMap->getPlayer(log->attackerOwnerID), false));
         pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
         {
@@ -182,7 +182,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pText->setPosition(320, y);
         pPanel->addItem(pText);
 
-        pTerrain = pMap->getTerrain(log->defenderX, log->defenderY);
+        pTerrain = m_pMap->getTerrain(log->defenderX, log->defenderY);
         pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pBuilding = pTerrain->getBuilding();
         pActor->loadSprites();
@@ -193,7 +193,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->defenderID, pMap->getPlayer(log->defenderOwnerID), false));
+        pActor->addChild(spUnit::create(log->defenderID, m_pMap->getPlayer(log->defenderOwnerID), false));
         if (log->defenderKilled)
         {
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");
@@ -278,12 +278,12 @@ void DialogAttackLog::remove()
 void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef)
 {
     
-    spGameMap pMap = GameMap::getInstance();
-    HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(pMap->getCurrentPlayer()->getBaseGameInput());
+    
+    HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(m_pMap->getCurrentPlayer()->getBaseGameInput());
     if (pInput != nullptr)
     {
-        pInput->createMarkedField(QPoint(posAtkX, posAtkY), pMap->getPlayer(playerAtk)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
-        pInput->createMarkedField(QPoint(posDefX, posDefY), pMap->getPlayer(playerDef)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+        pInput->createMarkedField(QPoint(posAtkX, posAtkY), m_pMap->getPlayer(playerAtk)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+        pInput->createMarkedField(QPoint(posDefX, posDefY), m_pMap->getPlayer(playerDef)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
     }
     emit sigFinished();
     oxygine::Actor::detach();

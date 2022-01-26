@@ -18,7 +18,7 @@
 
 #include "objects/base/label.h"
 
-IngameInfoBar::IngameInfoBar()
+IngameInfoBar::IngameInfoBar(GameMap* pMap)
     : QObject()
 {
     setObjectName("IngameInfoBar");
@@ -46,7 +46,7 @@ IngameInfoBar::IngameInfoBar()
     pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pMinimap = spMinimap::create();
     m_pMinimap->setPosition(0, 0);
-    m_pMinimap->updateMinimap(GameMap::getInstance());
+    updateMinimap();
     m_pMinimap->setScale(2.0f);
     m_pMinimapSlider = oxygine::spSlidingActor::create();
     m_pMinimapSlider->setPosition(10, 10);
@@ -94,15 +94,15 @@ void IngameInfoBar::updatePlayerInfo()
     m_pGameInfoBox->removeChildren();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr &&
-        pMap->getCurrentPlayer() != nullptr)
+    
+    if (m_pMap != nullptr &&
+        m_pMap->getCurrentPlayer() != nullptr)
     {
-        m_pDetailedViewBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+        m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
         spGameMenue pMenu = GameMenue::getInstance();
         if (pMenu.get() != nullptr)
         {
-            Player* pPlayer = pMap->getCurrentPlayer();
+            Player* pPlayer = m_pMap->getCurrentPlayer();
             if (pPlayer != nullptr)
             {
                 oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -136,7 +136,7 @@ void IngameInfoBar::updatePlayerInfo()
                 m_pGameInfoBox->addChild(pSprite);
 
                 pSprite = oxygine::spSprite::create();
-                pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
+                pAnim = pGameManager->getResAnim((m_pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
                 if (pAnim != nullptr)
                 {
                     pSprite->setResAnim(pAnim);
@@ -150,28 +150,28 @@ void IngameInfoBar::updatePlayerInfo()
                 pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                 oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
                 pBox->setResAnim(pAnim);
-                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
                 pBox->setPosition(101, 8);
                 m_pGameInfoBox->addChild(pBox);
                 pBox = oxygine::spBox9Sprite::create();
                 pBox->setResAnim(pAnim);
-                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
                 pBox->setPosition(10, 8);
                 m_pGameInfoBox->addChild(pBox);
                 // weather box
                 pBox = oxygine::spBox9Sprite::create();
                 pBox->setResAnim(pAnim);
-                pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+                pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                 pBox->setSize(91, 95);
                 pBox->setPosition(198, 8);
                 m_pGameInfoBox->addChild(pBox);
 
-                if (pMap->getGameRules()->getWeatherPrediction())
+                if (m_pMap->getGameRules()->getWeatherPrediction())
                 {
                     pSprite = oxygine::spSprite::create();
-                    Weather* pWeather = pMap->getGameRules()->getWeatherAtDay(1, pMap->getCurrentPlayer()->getPlayerID());
+                    Weather* pWeather = m_pMap->getGameRules()->getWeatherAtDay(1, m_pMap->getCurrentPlayer()->getPlayerID());
                     if (pWeather != nullptr)
                     {
                         pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
@@ -186,13 +186,13 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox = oxygine::spBox9Sprite::create();
                     pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
-                    pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+                    pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(45, 47);
                     pBox->setPosition(198, 104);
                     m_pGameInfoBox->addChild(pBox);
 
                     pSprite = oxygine::spSprite::create();
-                    pWeather = pMap->getGameRules()->getWeatherAtDay(2, pMap->getCurrentPlayer()->getPlayerID());
+                    pWeather = m_pMap->getGameRules()->getWeatherAtDay(2, m_pMap->getCurrentPlayer()->getPlayerID());
                     if (pWeather != nullptr)
                     {
                         pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
@@ -207,7 +207,7 @@ void IngameInfoBar::updatePlayerInfo()
                     pBox = oxygine::spBox9Sprite::create();
                     pAnim = pObjectManager->getResAnim("panel_transparent+mask");
                     pBox->setResAnim(pAnim);
-                    pBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+                    pBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
                     pBox->setSize(45, 47);
                     pBox->setPosition(243, 104);
                     m_pGameInfoBox->addChild(pBox);
@@ -234,7 +234,7 @@ void IngameInfoBar::updatePlayerInfo()
 
                 pTextfield = spLabel::create(width);
                 pTextfield->setStyle(style);
-                pTextfield->setHtmlText(QString::number(pMap->getCurrentDay()));
+                pTextfield->setHtmlText(QString::number(m_pMap->getCurrentDay()));
                 pTextfield->setPosition(x2, y);
                 m_pGameInfoBox->addChild(pTextfield);
                 y += 25;
@@ -250,8 +250,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }
@@ -273,8 +273,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }
@@ -295,8 +295,8 @@ void IngameInfoBar::updatePlayerInfo()
                     pTextfield = spLabel::create(width);
                     pTextfield->setStyle(style);
                     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
-                        pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off &&
+                        m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_OfMist)
                     {
                         pTextfield->setHtmlText("?");
                     }
@@ -342,7 +342,8 @@ void IngameInfoBar::updatePlayerInfo()
 
 void IngameInfoBar::updateMinimap()
 {
-    m_pMinimap->updateMinimap(GameMap::getInstance(), true);
+    spGameMap pMap(m_pMap);
+    m_pMinimap->updateMinimap(pMap, true);
 }
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
@@ -352,10 +353,10 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 {    
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr && pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
+    
+    if (m_pMap != nullptr && m_pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
-        m_pDetailedViewBox->setColorTable(pMap->getCurrentPlayer()->getColorTableAnim(), true);
+        m_pDetailedViewBox->setColorTable(m_pMap->getCurrentPlayer()->getColorTableAnim(), true);
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
@@ -380,8 +381,8 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     static constexpr qint32 yOffset = 4;
     bool hpHidden = false;
     spGameMenue pGamemenu = GameMenue::getInstance();
-    spGameMap pMap = GameMap::getInstance();
-    Terrain* pTerrain = pMap->getTerrain(x, y);
+    
+    Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
     spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
@@ -514,8 +515,8 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
     spGameMenue pGamemenu = GameMenue::getInstance();
-    spGameMap pMap = GameMap::getInstance();
-    Terrain* pTerrain = pMap->getTerrain(x, y);
+    
+    Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
     if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
@@ -763,8 +764,8 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     if (pAnim != nullptr)
     {
     spGameMenue pGamemenu = GameMenue::getInstance();
-    spGameMap pMap = GameMap::getInstance();
-    Terrain* pTerrain = pMap->getTerrain(x, y);
+    
+    Terrain* pTerrain = m_pMap->getTerrain(x, y);
     spBuilding pBuilding = spBuilding(pTerrain->getBuilding());
     spUnit pUnit = spUnit(pTerrain->getUnit());
     Player* pPlayer = pGamemenu->getCurrentViewPlayer();
@@ -900,10 +901,10 @@ void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor 
 
 void IngameInfoBar::syncMinimapPosition()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        QPoint centeredPos = pMap->getCenteredPosition();
+        QPoint centeredPos = m_pMap->getCenteredPosition();
         oxygine::RectF bounds = m_pMinimapSlider->getDragBounds();
         oxygine::Vector2 size = m_pMinimapSlider->getSize();
         qint32 newX = size.x / 2 - centeredPos.x() * Minimap::IMAGE_SIZE * m_pMinimap->getScaleX();
@@ -926,6 +927,16 @@ void IngameInfoBar::syncMinimapPosition()
         }
         m_pMinimapSlider->getContent()->setPosition(newX, newY);
     }
+}
+
+GameMap *IngameInfoBar::getMap() const
+{
+    return m_pMap;
+}
+
+void IngameInfoBar::setMap(GameMap *newMap)
+{
+    m_pMap = newMap;
 }
 
 oxygine::spBox9Sprite IngameInfoBar::getDetailedViewBox() const

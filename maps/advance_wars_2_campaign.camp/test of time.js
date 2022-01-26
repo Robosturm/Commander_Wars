@@ -12,40 +12,40 @@ var Constructor = function()
         return qsTr("Capture the enemy labor.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Lord Flak... The new weapons plans have been stolen... "),
                         "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr(".........Assemble everyone in the factory. "),
                         "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("In the factory... Yes, sir! "),
                         "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Blast! "),
                         "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
 
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("All right! We've shut down the enemy lab! "),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Excellent work, in spite of difficult conditions. With these plans, we should be able to develop neotanks of our own. I think we'll have more intel on them by the time you deploy them. Anyway, congratulations! This was a great victory. "),
                         "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Sami's intel really helped a lot! "),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I just wish I could've done more. "),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("The two of you really make a great team. Let's head for home and celebrate! "),
                         "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Wahoo! Let's have a BBQ! "),
                         "co_andy", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
             dialog1.queueAnimation(dialog2);
@@ -63,7 +63,7 @@ var Constructor = function()
             osNeotanks.writeDataBool(true);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -75,7 +75,7 @@ var Constructor = function()
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
         turnLimit.setRuleValue(7, 0);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var variables = map.getGameScript().getVariables();
         // check if the buildings changed there owner to a certain player and call a dialog on it
@@ -93,7 +93,7 @@ var Constructor = function()
             var infDialog = variables.createVariable("infDialog");
             if (infDialog.readDataBool() === false)
             {
-                var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+                var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                             qsTr("Infantry and mech units can do more that just capture, you know. They can increase their vision range by climbing mountains! Since we have some mountains so close by, you should test it out. "),
                             "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
                 infDialog.writeDataBool(true);
@@ -101,101 +101,101 @@ var Constructor = function()
         }
 
     };
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         //
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
         else if (turn === 1 && player === 1)
         {
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Hurry up! We gotta stop their advance here. "),
                         "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Yes, sir. "),
                         "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
             dialog1.queueAnimation(dialog2);
         }
         else if (turn === 2 && player === 0)
         {
-            gameScript.day2Dialog();
+            gameScript.day2Dialog(map);
         }
         else if (turn === 3 && player === 0)
         {
-            gameScript.day3Dialog();
+            gameScript.day3Dialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Lord Flak! The Orange Star Army! "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What? How did they find us here?!? "),
                     "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I... I don't know, sir. Maybe a map fell into their hands? "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Grrrr! How long will it take to erase all of the weapon data? "),
                     "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("10... No, we should be able to do it if we have 7 days.  "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Well, get started! Don't let them get that intel! "),
                     "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
 
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Do you see that? It's a Black Hole lab. If this goes well, we might be able to seize their new weapon designs. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Nell! We're ready to advance! But... shouldn't this be Sami's mission? "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("No can do, Andy! I'm still gathering my troops. My last battle left me with a shortage of combat-ready soldiers. But to be honest, I'd love to try and infiltrate their base by myself. "),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Do you honestly think that I would approve such recklessness? "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" It's OK, Sami! Helping each other is what we're all about! My troops are fresh and itching to go! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Let's move out, Andy. We're in Fog of War, so let's exercise caution"),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Fog of War... That's where you can't see very far, right? It's tough fighting in this gunk! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Everything will be fine. It just takes a little getting used to is all. Let's get started. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("As I mentioned earlier, this terrain is hidden by Fog of War. It prevents units from seeing beyond their individual vision ranges. For example, the vision range of infantry is 2 spaces, so they can see 2 spaces from the space they're deployed. Your own properties are lit up, but enemy and neutral properties aren't. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("That's a recon unit. Its vision range is terrific! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog17 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog17 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("With a vision of 5, recon units are indispensable in Fog of War. They also have extended movement ranges and can take on infantry and mech units with decent success. They're handy units to have around. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog18 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog18 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I can't see into those woods! What's going on? "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog19 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog19 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You can't see into woods even if they're within your vision range. The only way to tell if an enemy unit is hiding there is to move to the space next to the woods. The same goes for the enemy, too. If you conceal a unit in the woods, it won't be spotted unless the enemy gets right next to it. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog20 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog20 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("So battling in Fog of War's like a big game of hide-and-seek! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog21 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog21 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("You know, Andy, you're right. It is. You'll also have to watch out for ambushes in Fog of War. These occur when you try to move to or through a space occupied by an enemy unit. If this happens, you'll stop moving, and you won't be able to move until the next day. There are lots of ambushes in woods, so be extra careful. "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog22 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog22 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Got it! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog1.queueAnimation(dialog2);
@@ -221,22 +221,22 @@ var Constructor = function()
         dialog21.queueAnimation(dialog22);
     };
 
-    this.day2Dialog = function()
+    this.day2Dialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Andy, I have some soldiers out reconnoitering the field. According to my reports, there's an indirect-combat unit hiding in one of the 3 woods at the top of the map. "),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Really? OK, I got it! I'll advance carefully. Thanks a bunch, Sami!"),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("How's the Fog of War? "),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("It really slows things down. Strong units are useless if they can't see anything. It's tough if you don't use recon units well. "),
                     "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Understanding that's half the battle! The rest comes with experience. Oh yes, there's something I forgot to tell you yesterday. In addition to woods, there's one other terrain type that conceals units until you're next to it. It's reefs. Like this one here. If you're looking to take out all enemy units, don't forget to look here! "),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog1.queueAnimation(dialog2);
@@ -245,13 +245,13 @@ var Constructor = function()
         dialog4.queueAnimation(dialog5);
     };
 
-    this.day3Dialog = function()
+    this.day3Dialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" I have some new intel, Andy. Somewhere in the woods near the lab is another indirect-combat unit. If you suddenly come under fire, check the woods first. "),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" Understood! Couldn't do this without you, Sami! I'll try and hold up my end! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog1.queueAnimation(dialog2);

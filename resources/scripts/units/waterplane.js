@@ -37,7 +37,7 @@ var Constructor = function()
     };
     this.createExplosionAnimation = function(x, y, unit)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+air.wav");
         return animation;
@@ -57,7 +57,7 @@ var Constructor = function()
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveair.wav", -2);

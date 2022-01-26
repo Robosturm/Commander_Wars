@@ -59,8 +59,8 @@ DialogVictoryConditions::DialogVictoryConditions()
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    spGameMap pMap = GameMap::getInstance();
-    GameRules* pRules = pMap->getGameRules();
+    
+    GameRules* pRules = m_pMap->getGameRules();
 
     qint32 y = 10;
     oxygine::spTextField pTextfield = oxygine::spTextField::create();
@@ -69,7 +69,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
     pPanel->addItem(pTextfield);
     y += 60;
-    QString info = pMap->getGameScript()->getVictoryInfo();
+    QString info = m_pMap->getGameScript()->getVictoryInfo();
 
     pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
@@ -93,9 +93,9 @@ DialogVictoryConditions::DialogVictoryConditions()
 
         qint32 x = 10;
         qint32 stepWidth = 250;
-        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
-            Player* pPlayer = pMap->getPlayer(i2);
+            Player* pPlayer = m_pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
                 qint32 ruleValue = pVictoryRule->getRuleValue(0);
@@ -117,7 +117,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pTextfield);
                 x += stepWidth;
-                if (x + stepWidth > Settings::getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
+                if (x + stepWidth > Settings::getWidth() - 90 && i2 < m_pMap->getPlayerCount() - 1)
                 {
                     x = 10;
                     y += 60;

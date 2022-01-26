@@ -305,11 +305,11 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         else if (pBuildingSpriteManager->exists(file))
         {
             // check buildings?
-            spGameMap pMap = GameMap::getInstance();
+            
             spPlayer pPlayer;
-            if (pMap.get() != nullptr)
+            if (m_pMap != nullptr)
             {
-                pPlayer = pMap->getCurrentPlayer();
+                pPlayer = m_pMap->getCurrentPlayer();
             }
             spBuilding pBuilding = spBuilding::create((file));
             pBuilding->setOwner(pPlayer.get());

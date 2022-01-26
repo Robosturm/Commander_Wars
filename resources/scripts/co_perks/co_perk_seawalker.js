@@ -4,7 +4,7 @@ var Constructor = function()
     {
         if (CO_PERK.isActive(co))
         {
-            if (typeof map !== 'undefined')
+            if (map !== null)
             {
                 if (unit.getOwner() === co.getOwner())
                 {

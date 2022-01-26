@@ -520,7 +520,7 @@ var Constructor = function()
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
                 currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
-            var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
+            var animation2 = GameAnimationFactory.createAnimation(map, ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 2, 0, 2);
             animation2.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
             animation.queueAnimation(animation2);
@@ -671,12 +671,12 @@ var Constructor = function()
                 var unitBattleAnimation = null;
                 if (defFirststrike && !atkFirststrike && counterdamage >= 0)
                 {
-                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon,
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(map, defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon,
                                                                                      attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon, attackerDamage);
                 }
                 else
                 {
-                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(map, attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
                                                                                      defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon, defenderDamage);
                 }
 
@@ -688,7 +688,7 @@ var Constructor = function()
         else
         {
             // we attacked a building or terrain ;)
-            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, -1, -1, attackerWeapon,
+            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(map, attacker.getTerrain(), attacker, -1, -1, attackerWeapon,
                                                                                   defTerrain, null, -1, -1, defenderWeapon, -1);
             buildBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostBuildingAnimation");
             ACTION_FIRE.postBuildingAnimationTerrain = defTerrain;
@@ -798,11 +798,11 @@ var Constructor = function()
         // attacking unit
         var atkDamage = globals.roundUp(defStartHp) - globals.roundUp(defEndHp);
         var defDamage = globals.roundUp(atkStartHp) - globals.roundUp(atkEndHp);
-        var pAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY(), 70);
+        var pAtk = GameAnimationFactory.createAnimation(map, pDefTerrain.getX(), pDefTerrain.getY(), 70);
         var imageSize = map.getImageSize();
         pAtk.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
         pAtk.setSound("talongunhit.wav", 1);
-        var pDmgTextAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY());
+        var pDmgTextAtk = GameAnimationFactory.createAnimation(map, pDefTerrain.getX(), pDefTerrain.getY());
         pDmgTextAtk.addText(atkDamage + " Hp", -8, 0, 2.0, "#FF0000");
         pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * imageSize, (pDefTerrain.getY() - 2) * imageSize), 1000);
         pDmgTextAtk.addTweenWait(1500);
@@ -810,11 +810,11 @@ var Constructor = function()
         if (defenderDamage >= 0)
         {
             // counter damage
-            pRet = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
+            pRet = GameAnimationFactory.createAnimation(map, pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
             pRet.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
             pRet.setSound("talongunhit.wav", 1);
             pDmgTextAtk.queueAnimation(pRet);
-            var pDmgTextDef = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY());
+            var pDmgTextDef = GameAnimationFactory.createAnimation(map, pAtkTerrain.getX(), pAtkTerrain.getY());
             pDmgTextDef.addText(defDamage + " Hp", -8, 0, 2.0, "#FF0000");
             pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * imageSize, (pAtkTerrain.getY() - 2) * imageSize), 1000);
             pDmgTextDef.addTweenWait(1500);

@@ -1,17 +1,17 @@
 var VICTORYRULE =
 {
-    getRuleDescription : function(itemNumber)
+    getRuleDescription : function(itemNumber, map)
     {
         return "";
     },
 
-    getRuleProgress : function(rule, player)
+    getRuleProgress : function(rule, player, map)
     {
         return 0;
     },
 
     // shown name in the game
-    getRuleName : function(itemNumber)
+    getRuleName : function(itemNumber, map)
     {
         return "";
     },
@@ -22,21 +22,21 @@ var VICTORYRULE =
         return "checkbox";
     },
     // defines the default value during map selection for this rule
-    getDefaultRuleValue : function(itemNumber)
+    getDefaultRuleValue : function(itemNumber, map)
     {
         return 0;
     },
-    getInfiniteValue : function(itemNumber)
+    getInfiniteValue : function(itemNumber, map)
     {
         // disable value of the rule for spinboxes. :)
         return 0;
     },
     // create and initialize the variables for this rule
-    init : function(rule)
+    init : function(rule, map)
     {
     },
     // sets the rule value of the spinbox
-    setRuleValue : function(rule, value, item = 0)
+    setRuleValue : function(rule, value, item = 0, map)
     {
         var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
@@ -44,7 +44,7 @@ var VICTORYRULE =
         variable.writeDataInt32(value);
     },
     // called from the engine when the player changes the value in the selection screen
-    getRuleValue : function(rule, item = 0)
+    getRuleValue : function(rule, item = 0, map)
     {
         var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
@@ -53,7 +53,7 @@ var VICTORYRULE =
     },
 
     // checks if the selected player is declared defeated by this rule
-    checkDefeat : function(rule, player)
+    checkDefeat : function(rule, player, map)
     {
         return GameEnums.DefeatType_Alive;
     },

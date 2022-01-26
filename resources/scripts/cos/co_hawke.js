@@ -64,7 +64,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(value);
@@ -108,7 +108,7 @@ var Constructor = function()
                 for (i = 0; i < units.size(); i++)
                 {
                     unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.writeDataInt32(unit.getX());
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);

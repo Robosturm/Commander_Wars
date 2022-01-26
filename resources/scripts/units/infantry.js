@@ -57,7 +57,7 @@ var Constructor = function()
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         // none neutral player
         var player = unit.getOwner();
         // get army name

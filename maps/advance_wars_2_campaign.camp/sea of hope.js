@@ -12,27 +12,27 @@ var Constructor = function()
         return qsTr("Capture the enemy labor.");
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("These are... the plans for the new weapon! With these, we should be able to produce that new tank design!"),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("You risked a lot to come to our aid. You have our gratitude."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("No, thank YOU. You helped me out of a jam. It's time for me to return to Orange Star, but we'll meet again."),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Left without offering a name... Is that what passes for manners these days?"),
                         "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Don't worry, I'm sure we'll be meeting again."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("My thoughts exactly. We'll be meeting again."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             dialog1.queueAnimation(dialog2);
@@ -47,7 +47,7 @@ var Constructor = function()
             ycNeotanks.writeDataBool(true);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -64,7 +64,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
         var labor = map.getTerrain(7, 2).getBuilding();
         if (labor.getOwner().getPlayerID() === 0)
@@ -73,39 +73,39 @@ var Constructor = function()
         }
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("If my intel is accurate, they're working on a new type of tank in there. Calculating from Adder's skill and the speed of our advance... I estimate we have 18 days to capture the lab or rout our foe. If we can do that, we might be able to get our hands on the weapon specs."),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I see... We've no time to tarry then. Hm? It looks like the battle's started without us."),
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("What? Who in the world could it be?"),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("It's Black Hole on one side, but who are they fighting?"),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("My enemy's enemy is my ally... Or something like that."),
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Prepare to advance! We must not be late!"),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("This is the location of Black Hole's secret lab. We have to get this information to Yellow Comet."),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Those troops... They don't appear to be the enemy's. Combining our resources just may give us a chance."),
                     "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         dialog1.queueAnimation(dialog2);

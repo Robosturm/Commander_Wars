@@ -47,9 +47,9 @@ VeryEasyAI::VeryEasyAI()
                   {"MinSameIslandDistance", "General", &m_minSameIslandDistance, 3.0f, 3.0f, 3.0f},
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                 };
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr &&
-        !pMap->getSavegame())
+    
+    if (m_pMap != nullptr &&
+        !m_pMap->getSavegame())
     {
         loadIni("very_easy/very_easy.ini");
     }
@@ -304,7 +304,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
             }
             CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
             // attacing none unit targets may modify the islands for a unit -> rebuild all for the love of god
-            if (GameMap::getInstance()->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
+            if (m_pMap->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
             {
                 rebuildIslandMaps = true;
             }
@@ -603,8 +603,8 @@ bool VeryEasyAI::moveUnit(spGameAction & pAction, Unit* pUnit, QStringList& acti
 bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("VeryEasyAI::buildUnits()", Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<float> data;
         qint32 productionBuildings = 0;
@@ -612,7 +612,7 @@ bool VeryEasyAI::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & 
         {
             Building* pBuilding = pBuildings->at(i);
             if (pBuilding->isProductionBuilding() &&
-                pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
+                m_pMap->getTerrain(pBuilding->Building::getX(), pBuilding->Building::getY())->getUnit() == nullptr)
             {
                 productionBuildings++;
             }

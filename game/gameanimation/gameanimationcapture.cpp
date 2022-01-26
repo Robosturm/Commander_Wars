@@ -14,8 +14,8 @@ const qint32 GameAnimationCapture::m_jumpSprites = 3;
 const qint32 GameAnimationCapture::m_ayeAyeSprites = 2;
 const qint32 GameAnimationCapture::m_jumpingCount = 3;
 
-GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints)
-    : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints, GameMap* pMap)
+    : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
       m_startPoints(startPoints),
       m_endPoints(endPoints),
       m_maxPoints(maxPoints)
@@ -104,8 +104,8 @@ void GameAnimationCapture::getRecoloredImage(Player* startPlayer, Player* captur
 
 void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Player* startPlayer, Player* capturedPlayer)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr &&
+    
+    if (m_pMap != nullptr &&
         pAnim != nullptr)
     {
         float endPoints = m_endPoints;
@@ -149,7 +149,7 @@ void GameAnimationCapture::createBuildingAnimation(oxygine::ResAnim* pAnim, Play
             tween2->addDoneCallback([=](oxygine::Event *)
             {
                 pSrite->setResAnim(m_captureBuildingResAnim.get());
-                if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
+                if (m_pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
                 {
                     Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
                 }

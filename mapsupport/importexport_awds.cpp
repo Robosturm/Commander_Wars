@@ -1612,8 +1612,8 @@ void GameMap::importAWDSMap(QString file)
 
 void GameMap::exportAWDSMap(QString file)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap->getPlayerCount() <= 5)
+    
+    if (m_pMap->getPlayerCount() <= 5)
     {
         QFile data(file);
         data.open(QFile::WriteOnly);
@@ -1628,16 +1628,16 @@ void GameMap::exportAWDSMap(QString file)
         stream << static_cast<uchar>(3 * 16 + 0);
         stream << static_cast<uchar>(3 * 16 + 1);
         stream << static_cast<uchar>(0);
-        stream << static_cast<uchar>(pMap->getMapWidth());
-        stream << static_cast<uchar>(pMap->getMapHeight());
+        stream << static_cast<uchar>(m_pMap->getMapWidth());
+        stream << static_cast<uchar>(m_pMap->getMapHeight());
         // Terrain Style
         stream << static_cast<uchar>(0);
-        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
+            for (qint32 y = 0 ; y < m_pMap->getMapHeight(); y++)
             {
-                spBuilding pBuilding = spBuilding(pMap->getTerrain(x, y)->getBuilding());
-                Terrain* pTerrain = pMap->getTerrain(x, y);
+                spBuilding pBuilding = spBuilding(m_pMap->getTerrain(x, y)->getBuilding());
+                Terrain* pTerrain = m_pMap->getTerrain(x, y);
                 if (pBuilding.get() != nullptr)
                 {
                     if (pBuilding->getBuildingID() == "HQ")
@@ -2664,11 +2664,11 @@ void GameMap::exportAWDSMap(QString file)
                 }
             }
         }
-        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        for (qint32 x = 0; x < m_pMap->getMapWidth(); x++)
         {
-            for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
+            for (qint32 y = 0 ; y < m_pMap->getMapHeight(); y++)
             {
-                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                 if (pUnit == nullptr)
                 {
                     stream << static_cast<uchar>(std::numeric_limits<uchar>::max());
@@ -3360,7 +3360,7 @@ void GameMap::exportAWDSMap(QString file)
                 }
             }
         }
-        QString mapName = pMap->getMapName();
+        QString mapName = m_pMap->getMapName();
         mapName = mapName.remove(254, mapName.size());
         stream << static_cast<uchar>(mapName.length());
         stream << static_cast<uchar>(0);
@@ -3371,7 +3371,7 @@ void GameMap::exportAWDSMap(QString file)
         {
             stream << static_cast<uchar>(array[i]);
         }
-        QString mapAuthor = pMap->getMapAuthor();
+        QString mapAuthor = m_pMap->getMapAuthor();
         mapAuthor = mapAuthor.remove(254, mapAuthor.size());
         stream << static_cast<uchar>(mapAuthor.length());
         stream << static_cast<uchar>(0);
@@ -3382,7 +3382,7 @@ void GameMap::exportAWDSMap(QString file)
         {
             stream << static_cast<uchar>(array[i]);
         }
-        QString mapDescription = pMap->getMapDescription();
+        QString mapDescription = m_pMap->getMapDescription();
         mapDescription = mapDescription.remove(254, mapDescription.size());
         stream << static_cast<uchar>(mapDescription.length());
         stream << static_cast<uchar>(0);

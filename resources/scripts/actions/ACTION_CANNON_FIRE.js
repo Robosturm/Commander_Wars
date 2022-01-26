@@ -99,7 +99,7 @@ var Constructor = function()
         ACTION_CANNON_FIRE.postAnimationBuilding = building;
         ACTION_CANNON_FIRE.postAnimationUnit = map.getTerrain(targetX, targetY).getUnit();
         var animation = Global[building.getBuildingID()].getShotAnimation(building);
-        var animation2 = GameAnimationFactory.createAnimation(targetX, targetY, 70);
+        var animation2 = GameAnimationFactory.createAnimation(map, targetX, targetY, 70);
         animation2.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2);
         animation2.setSound("minicanon_hit.wav");
         animation2.setEndOfAnimationCall("ACTION_CANNON_FIRE", "performPostAnimation");

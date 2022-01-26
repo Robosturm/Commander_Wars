@@ -289,8 +289,8 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
 
 void CampaignMenu::showMinimap()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
         qint32 x = m_currentMapFlagPosition.x();
@@ -331,7 +331,7 @@ void CampaignMenu::hideMinimap()
 void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 {
     m_currentMapFlagPosition = QPoint(x, y);
-    spGameMap pMap = GameMap::getInstance();
+    
     QString folder = m_campaignData.getFolder();
     auto files = m_campaignData.getMapFilenames();
     QString file;
@@ -476,15 +476,15 @@ void CampaignMenu::slotButtonNext()
 {
     Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        if (pMap->getGameScript()->immediateStart())
+        if (m_pMap->getGameScript()->immediateStart())
         {
-            pMap->initPlayersAndSelectCOs();
-            pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-            pMap->getGameScript()->gameStart();
-            pMap->updateSprites();
+            m_pMap->initPlayersAndSelectCOs();
+            m_pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+            m_pMap->getGameScript()->gameStart();
+            m_pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
             auto window = spGameMenue::create(false, spNetworkInterface());

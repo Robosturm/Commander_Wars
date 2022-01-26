@@ -20,6 +20,7 @@ class Building;
 class GameAnimationDialog;
 class GameAnimationPower;
 class GameAction;
+class GameMap;
 
 class CO;
 typedef oxygine::intrusive_ptr<CO> spCO;
@@ -31,7 +32,7 @@ public:
     static constexpr const char* const CO_RANDOM = "CO_RANDOM";
     static constexpr qint32 MAX_CO_UNIT_VALUE = 10;
 
-    explicit CO(QString coID, Player* owner);
+    explicit CO(QString coID, Player* owner, GameMap* pMap);
     virtual ~CO() = default;
     /**
      * @brief serialize stores the object
@@ -85,7 +86,13 @@ public:
      */
     oxygine::ResAnim* getResAnim(const QString & id, oxygine::error_policy ep = oxygine::ep_ignore_error) const;
 
+
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getCoBonus
      * @param position
@@ -738,6 +745,7 @@ private:
     qint32 m_powerUsed{0};
     bool m_powerCharging{false};
     bool m_coRangeEnabled{true};
+    GameMap* m_pMap{nullptr};
 
     QStringList m_perkList;
     struct CustomCoStyle

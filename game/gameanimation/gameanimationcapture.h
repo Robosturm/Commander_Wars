@@ -14,7 +14,7 @@ class GameAnimationCapture : public GameAnimation
 {
     Q_OBJECT
 public:
-    explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints);
+    explicit GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints, GameMap* pMap);
     virtual ~GameAnimationCapture() = default;
 public slots:
     /**

@@ -18,7 +18,7 @@ CO_JAKE.getSuperPowerName = function()
 CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                              defender, defPosX, defPosY, isDefender, action)
 {
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         if (map.onMap(atkPosX, atkPosY))
         {

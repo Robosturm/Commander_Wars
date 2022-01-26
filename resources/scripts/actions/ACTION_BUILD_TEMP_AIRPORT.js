@@ -53,7 +53,7 @@ var Constructor = function()
         }
         var x = action.getActionTarget().x * map.getImageSize() - 10;
         var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
         captureAnimation.addBackgroundSprite("capture_background");
         var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), ACTION_CAPTURE.armyData);
         Global["TEMPORARY_AIRPORT"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());

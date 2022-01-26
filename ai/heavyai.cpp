@@ -65,9 +65,9 @@ HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
                   {"SlowUnitSpeed", "General", &m_slowUnitSpeed, 2.0f, 2.0f, 2.0f},
                   {"UsedCapturePointIncrease", "General", &m_usedCapturePointIncrease, 1.5f, 1.5f, 1.5f},
                 };
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr &&
-        !pMap->getSavegame())
+    
+    if (m_pMap != nullptr &&
+        !m_pMap->getSavegame())
     {
         loadIni("heavy/" + m_aiName.toLower() + ".ini");
     }
@@ -365,8 +365,8 @@ void HeavyAi::updateUnits()
 
 void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, bool enemyUnits)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() == nullptr)
+    
+    if (m_pMap == nullptr)
     {
         return;
     }
@@ -440,10 +440,10 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
             for (qint32 i3 = 0; i3 < pPoints->size(); ++i3)
             {
                 QPoint pos = pPoints->at(i3) + m_updatePoints[i];
-                if (pMap->onMap(pos.x(), pos.y()))
+                if (m_pMap->onMap(pos.x(), pos.y()))
                 {
                     bool found = false;
-                    Unit* pUnit = pMap->getTerrain(pos.x(), pos.y())->getUnit();
+                    Unit* pUnit = m_pMap->getTerrain(pos.x(), pos.y())->getUnit();
                     if (pUnit != nullptr &&
                         pUnit->getOwner() == m_pPlayer)
                     {
@@ -829,11 +829,11 @@ void HeavyAi::getBasicFieldInputVector(spGameAction & action, QVector<double> & 
 
 void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, double moveCosts, double movepoints, QVector<double> & data)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        bool fogOfWar = pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off;
-        Terrain* pTerrainTarget = pMap->getTerrain(moveTarget.x(), moveTarget.y());
+        bool fogOfWar = m_pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off;
+        Terrain* pTerrainTarget = m_pMap->getTerrain(moveTarget.x(), moveTarget.y());
         Building* pBuildingTarget = pTerrainTarget->getBuilding();
         qint32 playerId = m_pPlayer->getPlayerID();
         const double highestInfluece = m_InfluenceFrontMap.getTotalHighestInfluence();
@@ -871,9 +871,9 @@ void HeavyAi::getBasicFieldInputVector(Unit* pMoveUnit, QPoint & moveTarget, dou
         {
             QPoint pos = pCircle->at(i);
             pos += moveTarget;
-            if (pMap->onMap(pos.x(), pos.y()))
+            if (m_pMap->onMap(pos.x(), pos.y()))
             {
-                Unit* pUnit = pMap->getTerrain(pos.x(), pos.y())->getUnit();
+                Unit* pUnit = m_pMap->getTerrain(pos.x(), pos.y())->getUnit();
                 if (pUnit != nullptr &&
                     m_pPlayer->isAlly(pUnit->getOwner()))
                 {
@@ -998,9 +998,9 @@ void HeavyAi::scoreCapture(ScoreData & data, UnitData & unitData, QVector<double
 
 void HeavyAi::scoreFire(ScoreData & data, UnitData & unitData, QVector<double> baseData)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     baseData.append(QList<double>(static_cast<qsizetype>(AttackInfoMaxSize - AttackInfoStart)));
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
         data.m_gameAction->startReading();
         Unit* pAttacker = data.m_gameAction->getTargetUnit();
@@ -1008,7 +1008,7 @@ void HeavyAi::scoreFire(ScoreData & data, UnitData & unitData, QVector<double> b
         double attackerUnitValue = pAttacker->getCoUnitValue();
         qint32 x = data.m_gameAction->readDataInt32();
         qint32 y = data.m_gameAction->readDataInt32();
-        Terrain* pTerrain = pMap->getTerrain(x, y);
+        Terrain* pTerrain = m_pMap->getTerrain(x, y);
         Unit* pDefUnit = pTerrain->getUnit();
         auto damageData = calcUnitDamage(data.m_gameAction, QPoint(x, y));
         if (damageData.x() < 0)
@@ -1214,15 +1214,15 @@ void HeavyAi::scoreUnload(ScoreData & data, UnitData & unitData, QVector<double>
 qint32 HeavyAi::getNumberOfTargetsOnIsland(const QVector<QPoint> & ignoreList)
 {
     qint32 ret = 0;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         const auto & targets = m_currentTargetedfPfs->getTargets();
         for (const auto & point : targets)
         {
             if (!ignoreList.contains(QPoint(point.x(), point.y())))
             {
-                Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+                Unit* pUnit = m_pMap->getTerrain(point.x(), point.y())->getUnit();
                 if (pUnit == nullptr ||
                     m_pPlayer->isEnemyUnit(pUnit))
                 {
@@ -1289,11 +1289,11 @@ void HeavyAi::prepareWaitPfs(UnitData & unitData, QStringList & actions)
 void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVector3D> & targets)
 {
     // todo
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 mapWidth = pMap->getMapWidth();
-        qint32 mapHeight = pMap->getMapHeight();
+        qint32 mapWidth = m_pMap->getMapWidth();
+        qint32 mapHeight = m_pMap->getMapHeight();
         qint32 unitIslandIdx = getIslandIndex(unit.m_pUnit);
         qint32 minFirerange = unit.m_pUnit->getMinRange(unit.m_pUnit->getPosition());
         qint32 maxFirerange = unit.m_pUnit->getMaxRange(unit.m_pUnit->getPosition());
@@ -1310,7 +1310,7 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
                 if (unit.m_pUnit->canMoveOver(x, y) &&
                     onSameIsland(unitIslandIdx, unit.m_pUnit->Unit::getX(), unit.m_pUnit->Unit::getY(), x, y))
                 {
-                    Terrain* pTerrain = pMap->getTerrain(x, y);
+                    Terrain* pTerrain = m_pMap->getTerrain(x, y);
                     addCaptureTargets(actions, pTerrain, targets);
                     addAttackTargets(unit.m_pUnit, pTerrain, pTargetFields.get(), targets);
                     addCaptureTransporterTargets(unit.m_pUnit, actions, pTerrain, targets);
@@ -1380,8 +1380,8 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
 
 void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         qint32 x = pTerrain->Terrain::getX();
         qint32 y = pTerrain->Terrain::getY();
@@ -1389,9 +1389,9 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
         {
             qint32 targetX = pTargetFields->at(i).x() + x;
             qint32 targetY = pTargetFields->at(i).y() + y;
-            if (pMap->onMap(targetX, targetY))
+            if (m_pMap->onMap(targetX, targetY))
             {
-                Terrain* pTargetTerrain = pMap->getTerrain(targetX, targetY);
+                Terrain* pTargetTerrain = m_pMap->getTerrain(targetX, targetY);
                 Unit* pEnemy = pTargetTerrain->getUnit();
                 if (pEnemy != nullptr &&
                     pUnit->isAttackable(pEnemy, true))

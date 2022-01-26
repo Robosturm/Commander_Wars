@@ -13,9 +13,9 @@
 #include "game/player.h"
 #include "game/co.h"
 
-spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID)
+spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, const QString & currentTerrainID, GameMap* pMap)
 {
-    spTerrain pTerrain = spTerrain::create(terrainID, x, y);
+    spTerrain pTerrain = spTerrain::create(terrainID, x, y, pMap);
     pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {
@@ -44,11 +44,12 @@ spTerrain Terrain::createTerrain(const QString & terrainID, qint32 x, qint32 y, 
     return pTerrain;
 }
 
-Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
+Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
     : m_terrainID(terrainID),
       m_x(x),
       m_y(y),
-      m_Building{nullptr}
+      m_Building{nullptr},
+      m_pMap{pMap}
 {
     setObjectName("Terrain");
     Mainapp* pApp = Mainapp::getInstance();
@@ -57,6 +58,11 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
     setSize(GameMap::getImageSize(),
             GameMap::getImageSize());
+}
+
+GameMap *Terrain::getMap() const
+{
+    return m_pMap;
 }
 
 bool Terrain::getHasFlowDirection() const
@@ -166,6 +172,8 @@ void Terrain::init()
     QJSValueList args;
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args << obj4;
     pInterpreter->doFunction(m_terrainID, function, args);
 }
 
@@ -235,6 +243,8 @@ void Terrain::createBaseTerrain(const QString & currentTerrainID)
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
     args << currentTerrainID;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args << obj4;
     // load sprite of the base terrain
     QString function = "loadBaseTerrain";
     pInterpreter->doFunction(m_terrainID, function, args);
@@ -248,7 +258,10 @@ qint32 Terrain::getTerrainGroup()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainGroup";
-    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
+    QJSValueList args;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args << obj4;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -264,6 +277,8 @@ QString Terrain::getWeatherOverlayId()
     QJSValueList args1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
     if (ret.isString())
     {
@@ -280,6 +295,8 @@ QPoint Terrain::getWeatherOverlaySpeed()
     QJSValueList args1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
     return ret.toVariant().toPoint();
 }
@@ -294,6 +311,8 @@ QString Terrain::getDescription()
         QJSValueList args1;
         QJSValue obj2 = pInterpreter->newQObject(this);
         args1 << obj2;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         QJSValue ret = pInterpreter->doFunction(m_terrainID, function, args1);
         if (ret.isString())
         {
@@ -358,6 +377,8 @@ void Terrain::loadSprites()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         pInterpreter->doFunction(m_terrainID, function1, args1);
     }
     // ony load this for valid positions
@@ -368,6 +389,8 @@ void Terrain::loadSprites()
         QJSValueList args2;
         QJSValue obj2 = pInterpreter->newQObject(this);
         args2 << obj2;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args2 << obj4;
         pInterpreter->doFunction(m_terrainID, function2, args2);
     }
 }
@@ -454,6 +477,8 @@ void Terrain::updateFlowSprites(TerrainFindingSystem* pPfs)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pPfs);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     pInterpreter->doFunction(m_terrainID, function1, args1);
 }
 
@@ -461,6 +486,9 @@ QStringList Terrain::getFlowTiles()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFlowTiles";
+    QJSValueList args1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
     return ret.toVariant().toStringList();
 }
@@ -489,7 +517,6 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         qint32 curY = m_y;
         // get our x, y coordinates
         GameMap::getField(curX, curY, static_cast<GameEnums::Directions>(i));
-        spGameMap pGameMap = GameMap::getInstance();
         bool found = false;
         QString addString = "";
         // load compare value
@@ -639,11 +666,11 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         {
             // do nothing
         }
-        if (pGameMap.get() != nullptr && pGameMap->onMap(curX, curY))
+        if (m_pMap != nullptr && m_pMap->onMap(curX, curY))
         {
             QString terrainID = "";
             QString neighbourID = "";
-            Terrain* pTerrain = pGameMap->getTerrain(curX, curY);
+            Terrain* pTerrain = m_pMap->getTerrain(curX, curY);
             terrainID = pTerrain->getTerrainID();
             if (useBuildingID && pTerrain->getBuilding() != nullptr)
             {
@@ -731,6 +758,8 @@ qint32 Terrain::getBaseDefense()
     {
         QJSValue obj = pInterpreter->newQObject(this);
         args1 << obj;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
         if (ret.isNumber())
         {
@@ -741,6 +770,8 @@ qint32 Terrain::getBaseDefense()
     {
         QJSValue obj = pInterpreter->newQObject(m_Building.get());
         args1 << obj;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         QJSValue ret = pInterpreter->doFunction(m_Building->getBuildingID(), function1, args1);
         if (ret.isNumber())
         {
@@ -757,6 +788,8 @@ QString Terrain::getMinimapIcon()
     QJSValueList args1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (ret.isString())
     {
@@ -781,6 +814,8 @@ qint32 Terrain::getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 
     args1 << y;
     args1 << curX;
     args1 << curY;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
     {
@@ -801,6 +836,8 @@ qint32 Terrain::getFirerangeModifier(Unit* pUnit)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
     {
@@ -821,6 +858,8 @@ qint32 Terrain::getMinFirerangeModifier(Unit* pUnit)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
     {
@@ -842,10 +881,10 @@ qint32 Terrain::getDefense(Unit* pUnit)
             return 0;
         }
         defense += pUnit->getTerrainDefenseModifier(QPoint(m_x, m_y));
-        spGameMap pMap = GameMap::getInstance();
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            Player* pPlayer = pMap->getPlayer(i);
+            Player* pPlayer = m_pMap->getPlayer(i);
             if (pPlayer->isEnemyUnit(pUnit) && !pPlayer->getIsDefeated())
             {
                 CO* pCO = pPlayer->getCO(0);
@@ -881,7 +920,7 @@ void Terrain::setBuilding(spBuilding pBuilding)
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
         if (m_x >= 0 && m_y >= 0)
         {
-            pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
+            pBuilding->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         }
         addChild(pBuilding);
         if (m_x >= 0 && m_y >= 0)
@@ -903,7 +942,7 @@ void Terrain::removeBuilding()
             m_Building->detach();
             qint32 width = m_Building->getBuildingWidth();
             qint32 heigth = m_Building->getBuildingHeigth();
-            spGameMap pMap = GameMap::getInstance();
+            
             // remove pointers
             for (qint32 x1 = 0; x1 < width; x1++)
             {
@@ -911,9 +950,9 @@ void Terrain::removeBuilding()
                 {
                     // remove down stream on all other fields
                     if (!((x1 == 0) && (y1 == 0)) &&
-                        pMap->onMap(m_x - x1, m_y - y1))
+                        m_pMap->onMap(m_x - x1, m_y - y1))
                     {
-                        pMap->getTerrain(m_x - x1, m_y - y1)->removeDownstream();
+                        m_pMap->getTerrain(m_x - x1, m_y - y1)->removeDownstream();
                     }
                 }
             }
@@ -939,7 +978,7 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
         if (!OnlyDownStream)
         {
-            pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
+            pBuilding->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             addChild(pBuilding);
         }
     }
@@ -956,7 +995,7 @@ void Terrain::loadBuilding(const QString & buildingID)
     m_Building = spBuilding::create(buildingID);
     m_Building->updateBuildingSprites(false);
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-    m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
+    m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
     addChild(m_Building);
     createBuildingDownStream();
 }
@@ -982,14 +1021,14 @@ void Terrain::setUnit(spUnit pUnit)
         }
         // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::m_y) + 2);
-        pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
+        pUnit->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
         pUnit->setPosition(Terrain::m_x * GameMap::getImageSize(), Terrain::m_y * GameMap::getImageSize());
 
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get())
+        
+        if (m_pMap)
         {
-            Player* pPlayer = pMap->getCurrentViewPlayer();
-            Player* pCurrentPlayer = pMap->getCurrentPlayer();
+            Player* pPlayer = m_pMap->getCurrentViewPlayer();
+            Player* pCurrentPlayer = m_pMap->getCurrentPlayer();
             if (pPlayer != pCurrentPlayer &&
                 pPlayer != nullptr &&
                 pPlayer->getFieldVisibleLoaded() &&
@@ -997,7 +1036,7 @@ void Terrain::setUnit(spUnit pUnit)
             {
                 pUnit->setVisible(false);
             }
-            pMap->addChild(pUnit);
+            m_pMap->addChild(pUnit);
         }
     }
 }
@@ -1028,6 +1067,8 @@ QString Terrain::getTerrainAnimationBase()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isString())
     {
@@ -1048,6 +1089,8 @@ QString Terrain::getTerrainAnimationForeground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isString())
     {
@@ -1068,6 +1111,8 @@ QString Terrain::getTerrainAnimationBackground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isString())
     {
@@ -1086,6 +1131,8 @@ float Terrain::getTerrainAnimationMoveSpeed()
     QJSValueList args1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
     {
@@ -1101,6 +1148,9 @@ QStringList Terrain::getTerrainSprites()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainSprites";
+    QJSValueList args1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1);
     return erg.toVariant().toStringList();
 }
@@ -1139,6 +1189,8 @@ qint32 Terrain::getVision(Player* pPlayer)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (ret.isNumber())
     {
@@ -1166,16 +1218,18 @@ bool Terrain::getVisionHide(Player* pPlayer)
     args1 << obj2;
     QJSValue obj1 = pInterpreter->newQObject(pPlayer);
     args1 << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1);
-    spGameMap pMap = GameMap::getInstance();
-    if (ret.isBool() && pMap.get() != nullptr)
+    
+    if (ret.isBool() && m_pMap != nullptr)
     {
         bool value = ret.toBool();
         if (!value &&
             m_Building.get() != nullptr &&
             pPlayer != nullptr &&
             pPlayer->isEnemy(m_Building->getOwner()) &&
-            pMap->getGameRules()->getBuildingVisionHide())
+            m_pMap->getGameRules()->getBuildingVisionHide())
         {
             value = m_Building->getVisionHide();
         }
@@ -1215,6 +1269,8 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (ret.isNumber())
     {
@@ -1233,6 +1289,8 @@ bool Terrain::isLoadingTile()
     QJSValueList args1;
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (ret.isBool())
     {
@@ -1253,6 +1311,8 @@ void Terrain::startOfTurn()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+        args1 << obj4;
         pInterpreter->doFunction(m_terrainID, function1, args1);
     }
     for (auto & item : m_terrainOverlay)
@@ -1287,6 +1347,8 @@ qint32 Terrain::getOffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QPo
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
@@ -1315,6 +1377,8 @@ qint32 Terrain::getDeffensiveFieldBonus(GameAction* pAction, Unit* pAttacker, QP
     QJSValue obj4 = pInterpreter->newQObject(pAction);
     args1 << obj4;
     args1 << luckMode;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     qint32 ergValue = 0;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
     if (erg.isNumber())
@@ -1478,7 +1542,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
     {        
-        m_pBaseTerrain = createTerrain("", m_x, m_y, "");
+        m_pBaseTerrain = createTerrain("", m_x, m_y, "", m_pMap);
         m_pBaseTerrain->deserializer(pStream, fast);
         if (!fast)
         {
@@ -1498,7 +1562,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     pStream >> hasBuilding;
     if (hasBuilding)
     {
-        m_Building = spBuilding::create("");
+        m_Building = spBuilding::create("", m_pMap);
         m_Building->deserializer(pStream, fast);
 
         if (m_Building->isValid())
@@ -1508,7 +1572,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
                 m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
                 addChild(m_Building);
             }
-            m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::m_x, Terrain::m_y));
+            m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
             createBuildingDownStream();
         }
         else
@@ -1520,7 +1584,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     pStream >> hasUnit;
     if (hasUnit)
     {
-        m_Unit = spUnit::create("", nullptr, false);
+        m_Unit = spUnit::create("", nullptr, false, m_pMap);
         m_Unit->deserializer(pStream, fast);
         if (m_Unit->isValid())
         {
@@ -1584,7 +1648,7 @@ void Terrain::createBuildingDownStream()
 {
     qint32 width = m_Building->getBuildingWidth();
     qint32 heigth = m_Building->getBuildingHeigth();
-    spGameMap pMap = GameMap::getInstance();
+    
     // recreate pointers
     for (qint32 x1 = 0; x1 < width; x1++)
     {
@@ -1593,7 +1657,7 @@ void Terrain::createBuildingDownStream()
             // create down stream on all other fields
             if (!((x1 == 0) && (y1 == 0)))
             {
-                pMap->getTerrain(m_x - x1, m_y - y1)->setSpBuilding(m_Building, true);
+                m_pMap->getTerrain(m_x - x1, m_y - y1)->setSpBuilding(m_Building, true);
             }
         }
     }

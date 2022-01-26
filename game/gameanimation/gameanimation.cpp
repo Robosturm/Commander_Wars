@@ -10,9 +10,9 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
-GameAnimation::GameAnimation(quint32 frameTime)
-    : QObject(),
-      m_frameTime(frameTime / Settings::getAnimationSpeed())
+GameAnimation::GameAnimation(quint32 frameTime, GameMap* pMap)
+    : m_frameTime(frameTime / Settings::getAnimationSpeed()),
+      m_pMap{pMap}
 {
     setObjectName("GameAnimation");
     Mainapp* pApp = Mainapp::getInstance();
@@ -30,8 +30,8 @@ GameAnimation::GameAnimation(quint32 frameTime)
 
 void GameAnimation::restart()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         m_stopped = false;
         m_previousAnimation = nullptr;
@@ -39,7 +39,7 @@ void GameAnimation::restart()
         {
             oxygine::Stage::getStage()->addTween(tween);
         }
-        pMap->addChild(spGameAnimation(this));
+        m_pMap->addChild(spGameAnimation(this));
         start();
     }
 }
@@ -69,8 +69,15 @@ void GameAnimation::doPreAnimationCall()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
+        QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+        args1 << objArg5;
         pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args1);
     }
+}
+
+GameMap *GameAnimation::getMap() const
+{
+    return m_pMap;
 }
 
 void GameAnimation::stop()
@@ -376,6 +383,8 @@ bool GameAnimation::onFinished(bool skipping)
             QJSValueList args1;
             QJSValue obj1 = pInterpreter->newQObject(this);
             args1 << obj1;
+            QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
+            args1 << objArg5;
             pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args1);
         }
     }

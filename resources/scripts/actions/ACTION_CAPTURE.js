@@ -98,7 +98,7 @@ var Constructor = function()
         {
             var x = targetX * map.getImageSize() - 10;
             var y = targetY * map.getImageSize() - 30;
-            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, ACTION_CAPTURE.postAnimationUnit.getCapturePoints(), maxCapturePoints);
+            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(map, x , y, capturePoints, ACTION_CAPTURE.postAnimationUnit.getCapturePoints(), maxCapturePoints);
             captureAnimation.addBackgroundSprite("capture_background");
             var armyName = Global.getArmyNameFromPlayerTable(ACTION_CAPTURE.postAnimationUnit.getOwner(), ACTION_CAPTURE.armyData);
             Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, building.getOwner(), ACTION_CAPTURE.postAnimationUnit.getOwner());

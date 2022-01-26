@@ -106,9 +106,9 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 void Chat::addMessage(QString message, bool local)
 {    
     spGameMenue pGamemenu = GameMenue::getInstance();
-    spGameMap pMap = GameMap::getInstance();
+    
     bool show = true;
-    if (message.startsWith("@") && pMap.get() != nullptr && pGamemenu.get() != nullptr)
+    if (message.startsWith("@") && pGamemenu.get() != nullptr)
     {
         QString target = message.split(" ")[0];
         message = message.remove(0, message.indexOf(" "));
@@ -182,8 +182,8 @@ void Chat::sendData(QString message)
     {
         QString text;
         spGameMenue pGamemenu = GameMenue::getInstance();
-        spGameMap pMap = GameMap::getInstance();
-        if (message.startsWith("@") && pMap.get() != nullptr &&
+        
+        if (message.startsWith("@") &&
             pGamemenu.get() != nullptr)
         {
             QStringList list = message.split(" ");

@@ -20,7 +20,7 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     var nearBuildings = false;
     var fields = globals.getCircle(0, 2);
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         for (var i = 0; i < fields.size(); i++)
         {

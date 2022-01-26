@@ -64,7 +64,7 @@ var Constructor = function()
             {
                 if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
                 {
-                    var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY());
                     animation.writeDataInt32(building.getX());
                     animation.writeDataInt32(building.getY());
                     animation.writeDataString(unitID);

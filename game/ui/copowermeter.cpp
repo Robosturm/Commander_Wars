@@ -14,9 +14,9 @@ CoPowermeter::CoPowermeter(CO* pCO)
 void CoPowermeter::drawPowerMeter()
 {
     removeChildren();
-    spGameMap pMap = GameMap::getInstance();
-    if ((pMap.get() == nullptr ||
-        !pMap->getGameRules()->getNoPower()) &&
+    
+    if ((m_pMap == nullptr ||
+        !m_pMap->getGameRules()->getNoPower()) &&
         m_pCO != nullptr)
     {
         GameManager* pGameManager = GameManager::getInstance();

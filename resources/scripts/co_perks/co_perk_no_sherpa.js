@@ -5,7 +5,7 @@ var Constructor = function()
     {
         if (CO_PERK.isActive(co))
         {
-            if (typeof map !== 'undefined')
+            if (map !== null)
             {
                 if (map.onMap(atkPosX, atkPosY))
                 {

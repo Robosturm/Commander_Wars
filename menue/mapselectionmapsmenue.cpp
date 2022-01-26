@@ -251,9 +251,9 @@ void MapSelectionMapsMenue::buttonNext()
                 if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||
                     isExternal)
                 {
-                    spGameMap pMap = GameMap::getInstance();
-                    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-                    if (pMap->getGameScript()->immediateStart())
+                    
+                    m_pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+                    if (m_pMap->getGameScript()->immediateStart())
                     {
                         startGame();
                     }
@@ -389,12 +389,12 @@ void MapSelectionMapsMenue::startGame()
 {    
     CONSOLE_PRINT("Start game", Console::eDEBUG);
     defeatClosedPlayers();
-    spGameMap pMap = GameMap::getInstance();
-    pMap->setVisible(false);
-    pMap->initPlayersAndSelectCOs();
-    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-    pMap->getGameScript()->gameStart();
-    pMap->updateSprites(-1, -1, false, true);
+    
+    m_pMap->setVisible(false);
+    m_pMap->initPlayersAndSelectCOs();
+    m_pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+    m_pMap->getGameScript()->gameStart();
+    m_pMap->updateSprites(-1, -1, false, true);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
     auto window = spGameMenue::create(false, spNetworkInterface());
@@ -404,8 +404,8 @@ void MapSelectionMapsMenue::startGame()
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
 {
-    spGameMap pMap = GameMap::getInstance();
-    if(!pMap->getGameScript()->immediateStart())
+    
+    if(!m_pMap->getGameScript()->immediateStart())
     {
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
         {
@@ -413,7 +413,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
             if (aiType == GameEnums::AiTypes::AiTypes_Closed)
             {
                 CONSOLE_PRINT("Defeating player " + QString::number(i) + " cause he's selected as closed player.", Console::eDEBUG);
-                pMap->getPlayer(i)->setIsDefeated(true);
+                m_pMap->getPlayer(i)->setIsDefeated(true);
             }
         }
     }
@@ -491,7 +491,7 @@ void MapSelectionMapsMenue::loadRules(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->getGameRules()->deserializeObject(stream);
+            m_pMap->getGameRules()->deserializeObject(stream);
             file.close();
             hideRuleSelection();
             showRuleSelection();
@@ -506,8 +506,8 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->getGameRules()->serializeObject(stream);
+        
+        m_pMap->getGameRules()->serializeObject(stream);
         file.close();
         spDialogMessageBox pMessageBox = spDialogMessageBox::create(tr("Do you want to make the saved ruleset as default ruleset?"), true, tr("Yes"), tr("No"));
         addChild(pMessageBox);
@@ -543,8 +543,8 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->serializeObject(stream);
+        
+        m_pMap->serializeObject(stream);
         file.close();
     }
     

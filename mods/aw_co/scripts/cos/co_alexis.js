@@ -22,7 +22,7 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     {
         var nearBuildings = false;
         var fields = globals.getCircle(0, 2);
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             for (var i = 0; i < fields.size(); i++)
             {
@@ -86,7 +86,7 @@ CO_ALEXIS.startOfTurn = function(co)
                                 (unit.getOwner() === co.getOwner()))
                         {
                             UNIT.repairUnit(unit, 1);
-                            animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                            animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                             var delay = globals.randInt(135, 265);
                             if (animations.length < 5)
                             {

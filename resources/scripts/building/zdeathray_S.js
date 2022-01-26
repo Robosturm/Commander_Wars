@@ -86,7 +86,7 @@ var Constructor = function()
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
         var y = building.getY();
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.addScreenshake(45, 0.98, 3000, 200);
@@ -96,9 +96,9 @@ var Constructor = function()
 
     this.createRayAnimation = function(building, x, y, fields)
     {
-        var animation = GameAnimationFactory.createAnimation(x - 1, y - 1);
+        var animation = GameAnimationFactory.createAnimation(map, x - 1, y - 1);
         animation.addSprite("deathray_start_loading", 0, 0, 0, 2);
-        var animation2 = GameAnimationFactory.createAnimation(x - 1, y - 1);
+        var animation2 = GameAnimationFactory.createAnimation(map, x - 1, y - 1);
         animation2.addSprite("deathray_start", 0, 0, 0, 2);
         animation.queueAnimation(animation2);
 
@@ -109,7 +109,7 @@ var Constructor = function()
             {
                 if ((point.x === -1) && ((point.y) % 2 === 0))
                 {
-                    animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                    animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
                     animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 2);
                     animation.queueAnimation(animation2);
                 }

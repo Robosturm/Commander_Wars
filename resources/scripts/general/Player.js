@@ -293,7 +293,7 @@ var PLAYER =
                    [Qt.point(145, 22),  "#f784f7"],
     ],
 
-    getColorForTable(index)
+    getColorForTable(index, map)
     {
         if (index < PLAYER.colorShades.length)
         {
@@ -301,7 +301,7 @@ var PLAYER =
         }
         return 100;
     },
-    getPositionForTable(index)
+    getPositionForTable(index, map)
     {
         if (index < PLAYER.colorShades.length)
         {
@@ -309,13 +309,13 @@ var PLAYER =
         }
         return Qt.point(255, 255);
     },
-    getColorTableCount : function()
+    getColorTableCount : function(table, map)
     {
         // amount of different colors in the table (minus transparent)
         return PLAYER.colorShades.length;
     },
     // return the default set for colors
-    loadDefaultPlayerColor : function (player)
+    loadDefaultPlayerColor : function (player, map)
     {
         var color = PLAYER.getDefaultColor(player.getPlayerID());
         player.setColor(color);
@@ -346,7 +346,7 @@ var PLAYER =
                    qsTr("Pink Frontier"),
                    qsTr("Teal Island"),
                    qsTr("Dark Matter")],
-    getDefaultArmy : function (player)
+    getDefaultArmy : function (player, map)
     {
         var id = player.getPlayerID() % (PLAYER.armies.length);
         var armies = PLAYER.getArmies();
@@ -441,13 +441,13 @@ var PLAYER =
                 "CO_YUKIO", "CO_RANDOM"];
     },
 
-    startOfTurn : function(player)
+    startOfTurn : function(player, map)
     {
         // do custom start of turn action for a player here.
         // Note this function gets called after earning money but before refulling units
     },
 
-    onUnitDeath : function(player, unit)
+    onUnitDeath : function(player, unit, map)
     {
     },
 }

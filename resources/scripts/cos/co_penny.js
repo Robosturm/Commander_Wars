@@ -13,7 +13,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
@@ -31,7 +31,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
@@ -74,7 +74,7 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender, action)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             switch (co.getPowerMode())
             {
@@ -110,7 +110,7 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.getGameRules().getCurrentWeather() !== null &&
                     map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&

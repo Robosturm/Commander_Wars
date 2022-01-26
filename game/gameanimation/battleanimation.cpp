@@ -12,8 +12,9 @@
 #include "game/co.h"
 
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
-    : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
+                                 GameMap* pMap)
+    : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
       m_battleTimer(this),
       m_pAtkTerrain(pAtkTerrain),
       m_pAtkUnit(pAtkUnit),

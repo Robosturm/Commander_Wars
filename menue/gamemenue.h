@@ -33,14 +33,13 @@ class GameMenue : public InGameMenue
     Q_OBJECT
 public:
 
-    explicit GameMenue(bool saveGame, spNetworkInterface pNetworkInterface);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
-    explicit GameMenue();
+    explicit GameMenue(spGameMap pMap);
     virtual ~GameMenue();
-    void deleteMenu();
     static spGameMenue getInstance()
     {
-        return m_pGameMenuInstance;
+        return oxygine::static_pointer_cast<GameMenue>(m_pInstance);
     }
     /**
      * @brief attachInterface
@@ -302,7 +301,6 @@ protected:
     spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
     spHumanQuickButtons m_humanQuickButtons;
-    static spGameMenue m_pGameMenuInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};

@@ -17,8 +17,8 @@
 const float EditorSelection::m_xFactor = 1.5f;
 const float EditorSelection::m_yFactor = 2.5f;
 
-EditorSelection::EditorSelection(qint32 width, bool smallScreen)
-    : QObject()
+EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("EditorSelection");
     Mainapp* pApp = Mainapp::getInstance();
@@ -133,7 +133,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrainIDs)
     {
-        spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "");
+        spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "", m_pMap);
         pTerrain->setTooltipText(pTerrain->getTerrainName());
         m_Terrains.append(pTerrain);
         m_Terrains[m_Terrains.size() - 1]->loadSprites();
@@ -151,7 +151,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i));
+        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i), m_pMap);
         building->setTooltipText(building->getName());
         qint32 width = building->getBuildingWidth();
         qint32 heigth = building->getBuildingHeigth();
@@ -159,7 +159,7 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
         building->setScaleY(1.0f / static_cast<float>(heigth));
         m_Buildings.append(building);
         m_Buildings[i]->updateBuildingSprites(false);
-        spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "");
+        spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "", m_pMap);
         pSprite->loadSprites();
         pSprite->setPriority(-100);
         pSprite->setScaleX(1 / building->getScaleX()); //  * GameMap::getImageSize() / pAnim->getWidth()
@@ -181,13 +181,13 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
 
-    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "");
-    spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "");
+    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+    spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "", m_pMap);
 
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false);
+        spUnit unit = spUnit::create(unitId, m_Players.at(1)->getOwner(), false, m_pMap);
         unit->setTooltipText(unit->getName());
         m_Units.append(unit);
         oxygine::spSprite pSprite = oxygine::spSprite::create();
@@ -395,9 +395,9 @@ void EditorSelection::createPlayerSelection()
     pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 30, 10);
     m_BoxSelectedPlayer->addChild(pButtonRight);
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    for (qint32 i = -1; i < GameMap::getInstance()->getPlayerCount(); i++)
+    for (qint32 i = -1; i < m_pMap->getPlayerCount(); i++)
     {
-        spBuilding pBuilding = spBuilding::create("HQ");
+        spBuilding pBuilding = spBuilding::create("HQ", m_pMap);
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
@@ -407,7 +407,7 @@ void EditorSelection::createPlayerSelection()
         m_Players.append(pBuilding);
         if (i >= 0)
         {
-            pBuilding->setOwner(GameMap::getInstance()->getPlayer(i));
+            pBuilding->setOwner(m_pMap->getPlayer(i));
         }
         else
         {
@@ -871,12 +871,12 @@ void EditorSelection::KeyInput(Qt::Key cur)
     }
     else if (cur  == Settings::getKey_EditorNextTeam())
     {
-        spGameMap pMap = GameMap::getInstance();
+        
         qint32 player = 0;
         if (m_currentPlayer.get() != nullptr)
         {
             player = m_currentPlayer->getPlayerID() + 1;
-            if (player >= pMap->getPlayerCount())
+            if (player >= m_pMap->getPlayerCount())
             {
                 player = -1;
             }
@@ -889,7 +889,7 @@ void EditorSelection::KeyInput(Qt::Key cur)
     }
     else if (cur  == Settings::getKey_EditorPreviousTeam())
     {
-        spGameMap pMap = GameMap::getInstance();
+        
         qint32 player = 0;
         if (m_currentPlayer.get() != nullptr)
         {
@@ -897,7 +897,7 @@ void EditorSelection::KeyInput(Qt::Key cur)
         }
         else
         {
-            player = pMap->getPlayerCount() - 1;
+            player = m_pMap->getPlayerCount() - 1;
         }
         changeSelectedPlayer(player);
     }

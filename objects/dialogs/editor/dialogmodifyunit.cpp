@@ -22,9 +22,9 @@
 #include "objects/base/textbox.h"
 #include "objects/base/spinbox.h"
 
-DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
-    : QObject(),
-      m_pUnit(pUnit)
+DialogModifyUnit::DialogModifyUnit(GameMap* pMap, Unit* pUnit)
+    : m_pUnit(pUnit),
+      m_pMap(pMap)
 {
     setObjectName("DialogModifyUnit");
     Mainapp* pApp = Mainapp::getInstance();
@@ -206,8 +206,8 @@ void DialogModifyUnit::updateData()
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     QStringList items;
-    spGameMap pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));
     }
@@ -215,10 +215,9 @@ void DialogModifyUnit::updateData()
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
-    GameMap* pPtrMap = pMap.get();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
-        m_pUnit->setOwner(pPtrMap->getPlayer(value));
+        m_pUnit->setOwner(m_pMap->getPlayer(value));
 
     });
     m_pPanel->addItem(pDropdownmenu);
@@ -350,7 +349,7 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
     }
     else
     {
-        spUnit pUnit = spUnit::create(unitID, m_pUnit->getOwner(), false);
+        spUnit pUnit = spUnit::create(unitID, m_pUnit->getOwner(), false, m_pMap);
         m_pUnit->loadUnit(pUnit.get());
     }
     emit sigUpdateData();
@@ -373,10 +372,10 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         auto points = m_pUnit->getAiMovePath();
-        spGameMap pMap = GameMap::getInstance();
+        
         for (qint32 i = 0; i < points.size(); i++)
         {
-            spSpinBox pSpinbox = spSpinBox::create(200, 0, pMap->getMapWidth() - 1);
+            spSpinBox pSpinbox = spSpinBox::create(200, 0, m_pMap->getMapWidth() - 1);
             pSpinbox->setCurrentValue(points[i].x());
             pSpinbox->setTooltipText("X-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset - 160, y);
@@ -387,7 +386,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
                 points[i].setX(value);
                 m_pUnit->setAiMovePathPoint(i, points[i]);
             });
-            pSpinbox = spSpinBox::create(200, 0, pMap->getMapHeight() - 1);
+            pSpinbox = spSpinBox::create(200, 0, m_pMap->getMapHeight() - 1);
             pSpinbox->setCurrentValue(points[i].y());
             pSpinbox->setTooltipText("Y-Coordinate for the move path.");
             pSpinbox->setPosition(sliderOffset + 50, y);

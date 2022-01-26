@@ -206,9 +206,9 @@ void WorkerThread::onQuit()
     {
         EditorMenue::getInstance()->deleteMenu();
     }
-    if (GameMap::getInstance().get() != nullptr)
+    if (m_pMap.get() != nullptr)
     {
-        GameMap::getInstance()->deleteMap();
+        m_pMap->deleteMap();
     }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();

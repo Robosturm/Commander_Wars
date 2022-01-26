@@ -30,11 +30,11 @@ VictoryRulePopup::~VictoryRulePopup()
 
 void VictoryRulePopup::updateInfo()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     clearContent();
-    if (pMap.get() != nullptr)
+    if (m_pMap != nullptr)
     {
-        GameRules* pRules = pMap->getGameRules();
+        GameRules* pRules = m_pMap->getGameRules();
         VictoryRule* pVictoryRule = pRules->getVictoryRule(m_rule);
         qint32 x = 10;
         qint32 y = 10;
@@ -58,9 +58,9 @@ void VictoryRulePopup::updateInfo()
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = true;
 
-        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
         {
-            Player* pPlayer = pMap->getPlayer(i2);
+            Player* pPlayer = m_pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
                 qint32 ruleValue = pVictoryRule->getRuleValue(0);

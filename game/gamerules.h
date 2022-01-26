@@ -18,6 +18,7 @@
 
 class Player;
 class Unit;
+class GameMap;
 
 class GameRules;
 typedef oxygine::intrusive_ptr<GameRules> spGameRules;
@@ -38,7 +39,7 @@ public:
         Permanent
     };
 
-    explicit GameRules();
+    explicit GameRules(GameMap* pMap);
     virtual ~GameRules() = default;
     /**
      * @brief serialize stores the object
@@ -84,9 +85,15 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getHpDefenseReduction
      * @return
@@ -625,6 +632,7 @@ private:
     GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
     float m_powerUsageReduction{0.2f};
     float m_powerLoose{0.0f};
+    GameMap* m_pMap{nullptr};
 
     Password m_password;
     QString m_description;

@@ -75,7 +75,7 @@ CO_CAULDER.startOfTurn = function(co)
                 {
                     delay *= i;
                 }
-                var animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                var animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                 animation.setSound("power0.wav", 1, delay);
                 if (animations.length < 5)
                 {

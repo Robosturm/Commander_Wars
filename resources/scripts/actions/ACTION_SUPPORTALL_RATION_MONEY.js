@@ -121,7 +121,7 @@ var Constructor = function()
             refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
-                animation = GameAnimationFactory.createAnimation(x, y);
+                animation = GameAnimationFactory.createAnimation(map, x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
@@ -154,7 +154,7 @@ var Constructor = function()
             refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
-                animation = GameAnimationFactory.createAnimation(x, y);
+                animation = GameAnimationFactory.createAnimation(map, x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
@@ -188,7 +188,7 @@ var Constructor = function()
             refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
-                animation = GameAnimationFactory.createAnimation(x, y);
+                animation = GameAnimationFactory.createAnimation(map, x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);
@@ -221,7 +221,7 @@ var Constructor = function()
             refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
-                animation = GameAnimationFactory.createAnimation(x, y);
+                animation = GameAnimationFactory.createAnimation(map, x, y);
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 4, 4, 400, 2);

@@ -1,33 +1,33 @@
 var BASEGAMESCRIPT =
 {
-    immediateStart : function()
+    immediateStart : function(map)
     {
         // called to check if the game should start immediatly
         return false;
     },
 
-    getVictoryInfo : function()
+    getVictoryInfo : function(map)
     {
         return qsTr("No additional Victory Conditions are active.");
     },
 
-    victory : function(team)
+    victory : function(team, map)
     {
         // called when a player wins
     },
-    gameStart : function()
+    gameStart : function(map)
     {
         // called before a game starts
     },
-    actionDone : function(action)
+    actionDone : function(action, map)
     {
         // function called after all animations are finished
     },
-    turnStart : function(turn, player)
+    turnStart : function(turn, player, map)
     {
         // called at the start of each players turn
     },
-    onGameLoaded : function(menu)
+    onGameLoaded : function(menu, map)
     {
 
     },

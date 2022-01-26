@@ -18,7 +18,7 @@ CO_KOAL.getSuperPowerName = function()
 CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                              defender, defPosX, defPosY, isDefender, action)
 {
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         if (map.onMap(atkPosX, atkPosY))
         {

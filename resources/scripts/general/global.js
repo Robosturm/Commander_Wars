@@ -138,7 +138,7 @@ bresenhamFromTerrain = function(terrain1, terrain2, includeStartEnd, asTerrainAr
 bresenhamLine = function (x0, y0, x1, y1, includeStartEnd, asTerrainArray)
 {
     var ret = [];
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         var sx0 = x0;
         var sy0 = y0;

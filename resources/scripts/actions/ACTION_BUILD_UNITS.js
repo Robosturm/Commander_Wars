@@ -100,7 +100,7 @@ var Constructor = function()
             var cost = map.getCurrentPlayer().getCosts(units[i], building.getPosition());
             unitData.push([cost, units[i]]);
         }
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             // only sort for humans player to maintain ai speed
             if (map.getCurrentPlayer().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)

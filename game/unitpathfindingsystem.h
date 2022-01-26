@@ -19,7 +19,7 @@ public:
         All,
     };
 
-    explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
+    explicit UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player* pPlayer = nullptr);
     virtual ~UnitPathFindingSystem() = default;
     /**
      * @brief getRemainingCost
@@ -119,6 +119,7 @@ protected:
     bool m_fast{false};
     CollisionIgnore m_ignoreEnemies{CollisionIgnore::Off};
     QMap<QString, qint32> m_costInfo;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H

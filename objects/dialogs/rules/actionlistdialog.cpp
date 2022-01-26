@@ -111,8 +111,8 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
 
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     qint32 x = 10;
-    spGameMap pMap = GameMap::getInstance();
-    m_CurrentActionList = pMap->getGameRules()->getAllowedActions();
+    
+    m_CurrentActionList = m_pMap->getGameRules()->getAllowedActions();
 
     for (qint32 i = 0; i < actionList.size(); i++)
     {

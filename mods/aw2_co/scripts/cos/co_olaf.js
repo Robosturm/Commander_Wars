@@ -32,7 +32,7 @@ CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
             {

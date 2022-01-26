@@ -46,7 +46,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
             {
@@ -97,7 +97,7 @@ var Constructor = function()
         // let a rocket fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
         
-        var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
+        var animation = GameAnimationFactory.createAnimation(map, rocketTarget.x - 2, rocketTarget.y - 2 - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 2, 0);
         animation.setSound("missle_explosion.wav", 1);
         animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());

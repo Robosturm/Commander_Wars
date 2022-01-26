@@ -1,11 +1,11 @@
 // this is the base class for terrain
 var ACTION =
 {
-    canBePerformed : function(action)
+    canBePerformed : function(action, map)
 	{
 		return false;
     },
-    perform : function(action)
+    perform : function(action, map)
     {
     },
     //
@@ -24,7 +24,7 @@ var ACTION =
     {
         return "";
     },
-    isFinalStep : function(action)
+    isFinalStep : function(action, map)
     {
         // make the action infinite
         return false;
@@ -44,18 +44,18 @@ var ACTION =
         return ACTION.viewplayerActionList;
     },
 
-    getStepInputType : function(action)
+    getStepInputType : function(action, map)
     {
         // supported types are MENU and FIELD
         return "";
     },
 
-    getStepCursor : function(action, cursorData)
+    getStepCursor : function(action, cursorData, map)
     {
         return "cursor+default";
     },
 
-    getStepData : function(action, data)
+    getStepData : function(action, data, map)
     {
         // type of the data object depends on the StepInputType
     },
@@ -65,7 +65,7 @@ var ACTION =
         return "";
     },
 
-    getRequiresEmptyField : function(action)
+    getRequiresEmptyField : function(action, map)
     {
         return true;
     },

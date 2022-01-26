@@ -9,12 +9,13 @@
 #include "game/gamemap.h"
 #include "game/unitpathfindingsystem.h"
 
-UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
+UnitPathFindingSystem::UnitPathFindingSystem(GameMap* pMap, Unit* pUnit, Player* pPlayer)
     : PathFindingSystem(pUnit->Unit::getX(), pUnit->Unit::getY(),
-                        GameMap::getInstance()->getMapWidth(),
-                        GameMap::getInstance()->getMapHeight()),
+                        pMap->getMapWidth(),
+                        pMap->getMapHeight()),
       m_pUnit(pUnit),
-      m_pPlayer(pPlayer)
+      m_pPlayer(pPlayer),
+      m_pMap(pMap)
 {
     setObjectName("UnitPathFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
@@ -29,8 +30,8 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr && pMap->onMap(x, y) && m_Movepoints > 0)
+    
+    if (m_pMap != nullptr && m_pMap->onMap(x, y) && m_Movepoints > 0)
     {
         return m_Movepoints - currentCost;
     }
@@ -58,10 +59,10 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     }
     else if (m_movecosts[index][direction] == infinite)
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr && pMap->onMap(x, y))
+        
+        if (m_pMap != nullptr && m_pMap->onMap(x, y))
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
             // check for an enemy on the field
             if (pUnit != nullptr)
             {
@@ -81,7 +82,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
             bool found = false;
             if (m_fast)
             {
-                QString id = pMap->getTerrain(curX, curY)->getID() + pMap->getTerrain(x, y)->getID();
+                QString id = m_pMap->getTerrain(curX, curY)->getID() + m_pMap->getTerrain(x, y)->getID();
                 found = m_costInfo.contains(id);
                 if (found)
                 {
@@ -123,8 +124,8 @@ qint32 UnitPathFindingSystem::getCosts(const QVector<QPoint> & path)
 
 QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
         QVector<QVector4D> usedNodes;
         QVector<QVector4D> nextNodes;
@@ -142,7 +143,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
             currentNodes.removeFirst();
             usedNodes.append(currentNode);
             qint32 currentCost = getTargetCosts(currentNode.x(), currentNode.y());
-            Unit* pNodeUnit = pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
+            Unit* pNodeUnit = m_pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
             // empty field or unit ignores collision and can move on the field
             // or we are on this field
             if (isCrossable(pNodeUnit, currentNode.x(), currentNode.y(), currentNode.z(), currentNode.w(),
@@ -215,14 +216,14 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
         QVector<QPoint> ret;
         QVector<QPoint> buffer;
         qint32 currentCosts = 0;
-        spGameMap pMap = GameMap::getInstance();
+        
         QPoint lastValidPoint = path[path.size() - 1];
         ret.append(lastValidPoint);
-        if (pMap.get() != nullptr)
+        if (m_pMap != nullptr)
         {
             for (qint32 i = path.size() - 2; i >= 0; i--)
             {
-                Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
+                Unit* pNodeUnit = m_pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
                 currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
                                          path[i + 1].x(), path[i + 1].y());
                 if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), path[i + 1].x(), path[i + 1].y(), currentCosts, movepoints))

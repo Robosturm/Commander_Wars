@@ -1,6 +1,6 @@
 var UNIT =
 {
-    getUnitDamageID : function(unit)
+    getUnitDamageID : function(unit, map)
     {
         // empty string will be replaced by the actual unit id to find the damage value in the table
         // else the given string is used to get the entry
@@ -8,7 +8,7 @@ var UNIT =
         return "";
     },
 
-    getUnitDamage : function(weaponID, defender)
+    getUnitDamage : function(weaponID, defender, map)
     {
         // weaponID string of the used weaponID
         // defender pointer to the which is attacked or used to check how much damage we will deal to it
@@ -17,7 +17,7 @@ var UNIT =
         return -1;
     },
 
-    init : function(unit)
+    init : function(unit, map)
     {
         unit.setAmmo1(0);
         unit.setMaxAmmo1(0);
@@ -31,81 +31,81 @@ var UNIT =
         unit.setMaxRange(1);
         unit.setVision(1);
     },
-    initForMods : function(unit)
+    initForMods : function(unit, map)
     {
         // you can use this init function to extend
     },
 
-    loadSprites : function(unit)
+    loadSprites : function(unit, map)
     {
     },
-    getMovementType : function(unit)
+    getMovementType : function(unit, map)
     {
         return "";
     },
     actionList : ["ACTION_FIRE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_UNLOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"],
-    getActions : function(unit)
+    getActions : function(unit, map)
     {
         // returns a string id list of the actions this unit can perform
         return Global[unit.getUnitID()].actionList;
     },
 
-    getName : function(unit)
+    getName : function(unit, map)
     {
         return "";
     },
 
-    getBaseCost : function()
+    getBaseCost : function(map)
     {
         return -1;
     },
 
-    createExplosionAnimation : function(x, y, unit)
+    createExplosionAnimation : function(x, y, unit, map)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+land.wav");
         return animation;
     },
 
-    doWalkingAnimation : function(action)
+    doWalkingAnimation : function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSprite(unitID + "+walk+mask", true);
         animation.loadSprite(unitID + "+walk", false);
         return animation;
     },
 
-    startOfTurn : function(unit)
+    startOfTurn : function(unit, map)
     {
         // gets called at the start of a turn
     },
 
-    canMoveAndFire : function(unit)
+    canMoveAndFire : function(unit, map)
     {
         return false;
     },
     // number of units that can be loaded by this unit
-    getLoadingPlace : function(unit)
+    getLoadingPlace : function(unit, map)
     {
         return 0;
     },
-    useTerrainDefense : function(unit)
+    useTerrainDefense : function(unit, map)
     {
         return true;
     },
-    useTerrainHide : function(unit)
+    useTerrainHide : function(unit, map)
     {
         return true;
     },
     transportList : [],
-    getTransportUnits : function(unit)
+    getTransportUnits : function(unit, map)
     {
         return Global[unit.getUnitID()].transportList;
     },
-    transporterRefilling : function (unit)
+    transporterRefilling : function (unit, map)
     {
         // carrier refilling and unmoving is done here
         for (var i = 0; i < unit.getLoadedUnitCount(); i++)
@@ -121,7 +121,7 @@ var UNIT =
         }
     },
 
-    repairUnit : function (unit, repairAmount)
+    repairUnit : function (unit, repairAmount, map)
     {
         // repair it
         var costs = unit.getUnitCosts();
@@ -157,37 +157,37 @@ var UNIT =
         unit.getOwner().addFunds(-healingDone / 10 * costs);
     },
 
-    getTerrainAnimationBase : function(unit, terrain, defender)
+    getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
         return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender);
     },
 
-    getTerrainAnimationForeground : function(unit, terrain, defender)
+    getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
         return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender);
     },
 
-    getTerrainAnimationBackground : function(unit, terrain, defender)
+    getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
         return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender);
     },
 
-    getTerrainAnimationMoveSpeed : function(unit)
+    getTerrainAnimationMoveSpeed : function(unit, map)
     {
         return 0;
     },
 
-    getDescription : function(unit)
+    getDescription : function(unit, map)
     {
         return "";
     },
-    getUnitType : function(unit)
+    getUnitType : function(unit, map)
     {
         return GameEnums.UnitType_Ground;
     },
 
     // unit boosts
-    postBattleActions : function(unit, damage, otherUnit, gotAttacked, weapon, action)
+    postBattleActions : function(unit, damage, otherUnit, gotAttacked, weapon, action, map)
     {
         // unit the unit getting postBattleAction applied
         // damage taken (if gotAttacked = true) or dealt (if gotAttacked = false)
@@ -195,19 +195,19 @@ var UNIT =
         // gotAttacked if true we're defending else we're attacking
         // this function gets called twice for a unit for one attack.
     },
-    postAction : function(unit, action)
+    postAction : function(unit, action, map)
     {
     },
-    getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckMode)
+    getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckMode, map)
     {
         return 0;
     },
-    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action, luckMode)
+    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isAttacker, action, luckMode, map)
     {
         return 0;
     },
 
-    canAttackStealthedUnit : function(attacker, defender)
+    canAttackStealthedUnit : function(attacker, defender, map)
     {
         var attackerType = attacker.getUnitType();
         attackerType = UNIT.unitTypeToGround(attackerType);
@@ -227,7 +227,7 @@ var UNIT =
         return false;
     },
 
-    unitTypeToGround : function(unitType)
+    unitTypeToGround : function(unitType, map)
     {
         if (unitType === GameEnums.UnitType_Hovercraft ||
             unitType === GameEnums.UnitType_Ground)
@@ -237,12 +237,12 @@ var UNIT =
         return unitType;
     },
 
-    getCOSpecificUnit : function(building)
+    getCOSpecificUnit : function(building, map)
     {
         return false;
     },
 
-    getUnitTypeText : function(unitType)
+    getUnitTypeText : function(unitType, map)
     {
         switch (unitType)
         {
@@ -296,7 +296,7 @@ var UNIT =
     {
         return UNIT.unitNavalSortList;
     },
-    getTypeOfWeapon1 : function(unit)
+    getTypeOfWeapon1 : function(unit, map)
     {
         // changes for which ranges the ammo can be used
         // WeaponType_Direct
@@ -304,7 +304,7 @@ var UNIT =
         return GameEnums.WeaponType_Both;
     },
 
-    getTypeOfWeapon2 : function(unit)
+    getTypeOfWeapon2 : function(unit, map)
     {
         // changes for which ranges the ammo can be used.
         // WeaponType_Direct
@@ -312,7 +312,7 @@ var UNIT =
         return GameEnums.WeaponType_Both;
     },
 
-    canUseWeapon : function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck)
+    canUseWeapon : function(unit, weaponIndex, unitX, unitY, targetX, targetY, rangeCheck, map)
     {
         // return false if the unit isn't allowed to attack from the new position
         // note: this isn't used for ammo checks.
@@ -320,7 +320,7 @@ var UNIT =
         return true;
     },
 
-    onKilled : function(animation)
+    onKilled : function(animation, map)
     {
         animation.seekBuffer();
         var x = animation.readDataInt32();
@@ -332,12 +332,12 @@ var UNIT =
         }
     },
 
-    getFirstStrike : function(unit, posX, posY, attacker, isDefender)
+    getFirstStrike : function(unit, posX, posY, attacker, isDefender, map)
     {
         return false;
     },
 
-    onDeath : function(unit)
+    onDeath : function(unit, map)
     {
     },
 };
