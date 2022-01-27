@@ -53,7 +53,7 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream, QStrin
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
-                            .replace(").getBuilding().getOwner() === null && map.getTerrain(", ",")
+                            .replace(").getBuilding().getOwner() !== null && map.getTerrain(", ",")
                             .replace(").getBuilding().getOwner().getPlayerID() === ", ",")
                             .replace(" && ", ",").split(",");
     if (items.size() >= 6)
