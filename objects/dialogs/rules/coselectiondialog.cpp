@@ -13,9 +13,10 @@
 #include "game/co.h"
 
 
-COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, QStringList coids)
-    : QObject(),
-      m_player(player)
+COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, qint32 player, QStringList coids)
+    : m_player(player),
+      m_pMap(pMap)
+
 {
     setObjectName("COSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();

@@ -19,10 +19,9 @@
 
 #include "gameinput/basegameinputif.h"
 
+#include "game/gamemap.h"
 #include "game/campaign.h"
 
-class GameMap;
-using spGameMap = oxygine::intrusive_ptr<GameMap>;
 class PlayerSelection;
 using spPlayerSelection = oxygine::intrusive_ptr<PlayerSelection>;
 

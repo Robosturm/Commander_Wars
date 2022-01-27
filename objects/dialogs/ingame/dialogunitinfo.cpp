@@ -16,8 +16,6 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     : QObject()
 {
     setObjectName("DialogUnitInfo");
-    
-
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -79,6 +77,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     y += 40;
     spQmlVectorUnit pUnits = spQmlVectorUnit(pPlayer->getUnits());
 
+    GameMap* pMap = pPlayer->getMap();
     y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -88,8 +87,8 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pText->setPosition(10, y);
         pPanel->addItem(pText);
         Unit* pUnit = pUnits->at(i);
-        Terrain* pTerrain = m_pMap->getTerrain(pUnit->Unit::getX(), pUnit->Unit::getY());
-        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
+        Terrain* pTerrain = pMap->getTerrain(pUnit->Unit::getX(), pUnit->Unit::getY());
+        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "", pMap);
         pActor->loadSprites();
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr)

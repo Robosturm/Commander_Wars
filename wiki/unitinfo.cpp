@@ -289,7 +289,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     qint32 x = 0;
     for (const auto& terrainId : sortedTerrains)
     {
-        spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "");
+        spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
@@ -321,7 +321,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
+        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
         spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i));
         // pBuilding->setOwner(pUnit->getOwner());

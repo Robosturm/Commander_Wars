@@ -121,9 +121,12 @@ public:
      */
     static const QImage &getNeutralTableImage();
 
-signals:
-
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief onUnitDeath
      * @param pUnit

@@ -1767,7 +1767,7 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="89"/>
+        <location filename="../menue/gamemenue.cpp" line="88"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>

@@ -60,7 +60,6 @@ GameMenue::GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkI
 {
     setObjectName("GameMenue");
     CONSOLE_PRINT("Creating game menu singleton", Console::eDEBUG);
-    m_pGameMenuInstance = spGameMenue(this, true);
     Interpreter::setCppOwnerShip(this);
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -140,8 +139,9 @@ GameMenue::GameMenue(spGameMap pMap)
     pApp->continueRendering();
 }
 
-GameMenue::~GameMenue()
+spGameMenue GameMenue::getInstance()
 {
+    return oxygine::static_pointer_cast<GameMenue>(m_pInstance);
 }
 
 void GameMenue::onEnter()

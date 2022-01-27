@@ -1861,6 +1861,11 @@ void Player::setFundsModifier(float value)
     m_fundsModifier = value;
 }
 
+GameMap *Player::getMap() const
+{
+    return m_pMap;
+}
+
 qint32 Player::calculatePlayerStrength() const
 {
     qint32 ret = 0;

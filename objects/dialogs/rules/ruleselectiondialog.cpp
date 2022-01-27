@@ -8,8 +8,8 @@
 
 #include "objects/dialogs/filedialog.h"
 
-RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
-    : QObject()
+RuleSelectionDialog::RuleSelectionDialog(GameMap* pMap, RuleSelection::Mode mode, bool enabled)
+    : m_pMap(pMap)
 {
     setObjectName("RuleSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();

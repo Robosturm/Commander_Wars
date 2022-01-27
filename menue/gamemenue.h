@@ -36,11 +36,8 @@ public:
     explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue(spGameMap pMap);
-    virtual ~GameMenue();
-    static spGameMenue getInstance()
-    {
-        return oxygine::static_pointer_cast<GameMenue>(m_pInstance);
-    }
+    virtual ~GameMenue() = default;
+    static spGameMenue getInstance();
     /**
      * @brief attachInterface
      * @param pNetworkInterface

@@ -17,9 +17,9 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
 
-ActionListDialog::ActionListDialog(QStringList bannlist)
-    : QObject(),
-      m_CurrentActionList(bannlist)
+ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
+    : m_CurrentActionList(bannlist),
+      m_pMap(pMap)
 {
     setObjectName("ActionListDialog");
     Mainapp* pApp = Mainapp::getInstance();

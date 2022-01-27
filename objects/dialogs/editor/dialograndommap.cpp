@@ -414,7 +414,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 }
                 else
                 {
-                    spTerrain pTerrain = Terrain::createTerrain(m_TerrainIDs[i], -1, -1, "");
+                    spTerrain pTerrain = Terrain::createTerrain(m_TerrainIDs[i], -1, -1, "", nullptr);
                     terrainStrings.append(pTerrain->getTerrainName());
                 }
                 terrainChances.append(terrainChancesVariant[i].toInt());
