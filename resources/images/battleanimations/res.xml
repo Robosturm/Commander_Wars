@@ -261,6 +261,7 @@
         <image file="flak/flak+yc+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ma+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+pf+fire+air+mask.png" cols = "4" />
+        <image file="flak/flak+ti+fire+air+mask.png" cols = "4" />
         <image file="flak/flak+ac+fire+mask.png" cols = "4" />
         <image file="flak/flak+bd+fire+mask.png" cols = "4" />
         <image file="flak/flak+bh+fire+mask.png" cols = "4" />

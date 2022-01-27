@@ -120,7 +120,7 @@ var Constructor = function()
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot_air+flak" + data[3],  false, sprite.getMaxUnitCount(),
-                                        mgData[1 + i2 * 2],
+                                  mgData[1 + i2 * 2],
                                   data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }
@@ -130,7 +130,7 @@ var Constructor = function()
             for (var i2 = 0; i2 < mgCount; ++i2)
             {
                 sprite.loadSprite("mg_shot+flak" + data[3],  false, sprite.getMaxUnitCount(),
-                                        mgData[1 + i2 * 2],
+                                  mgData[1 + i2 * 2],
                                   data[2], 1, mgData[0 + i2 * 2], 100 * i2);
             }
         }
