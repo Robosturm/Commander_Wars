@@ -475,6 +475,11 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 stream >> aiType;
                 m_pPlayerSelection->setPlayerAiName(i, name);
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
+                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                    aiType != GameEnums::AiTypes::AiTypes_Closed)
+                {
+                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                }
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<GameEnums::AiTypes>(aiType)));
                 m_pPlayerSelection->updatePlayerData(i);
             }

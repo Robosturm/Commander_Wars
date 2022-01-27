@@ -89,7 +89,7 @@ var Constructor = function()
 
     this.loadBase = function(terrain, spriteId)
     {
-        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
+        var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
                                                 false, false, GameEnums.Directions_Direct, false, true);
         terrain.loadBaseSprite(spriteId + surroundings);
     };
