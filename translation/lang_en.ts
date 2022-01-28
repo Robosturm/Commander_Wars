@@ -261,17 +261,17 @@
 <context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="40"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="50"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="51"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="60"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1200,12 +1200,12 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>DialogUnitInfo</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="40"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="38"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="154"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="153"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5883,17 +5883,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitStatisticView</name>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="23"/>
+        <location filename="../objects/unitstatisticview.cpp" line="25"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="24"/>
+        <location filename="../objects/unitstatisticview.cpp" line="26"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/unitstatisticview.cpp" line="25"/>
+        <location filename="../objects/unitstatisticview.cpp" line="27"/>
         <source>Destroyed</source>
         <translation type="unfinished"></translation>
     </message>

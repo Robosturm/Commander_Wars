@@ -221,7 +221,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     if (cos.size() == 0 ||
         cos[0] != "")
     {
-        spCOSelectionDialog dialog = spCOSelectionDialog::create(coid, m_pMap->getPlayer(player)->getColor(), player, cos);
+        spCOSelectionDialog dialog = spCOSelectionDialog::create(m_pMap.get(), coid, m_pMap->getPlayer(player)->getColor(), player, cos);
         oxygine::Stage::getStage()->addChild(dialog);
         m_pPlayerSelection->setVisible(false);
         if (co == 0)

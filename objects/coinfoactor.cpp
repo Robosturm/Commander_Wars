@@ -291,7 +291,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
             QString coid = pCOSpriteManager->getID(i);
-            spCO testCO = spCO::create(coid, nullptr);
+            spCO testCO = spCO::create(coid, pPlayer.get(), pPlayer->getMap());
 
             QJSValueList args;
             QJSValue obj1 = pInterpreter->newQObject(pCO.get());
@@ -370,7 +370,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             for (qint32 i = 0; i < sortedUnits.size(); i++)
             {
                 QString unitID = sortedUnits[i];
-                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
                 pUnit->setVirtuellX(-2);
                 pUnit->setVirtuellY(-2);
                 showCOBoost(pUnit, pCO, x, y);
@@ -395,7 +395,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             for (qint32 i = 0; i < sortedUnits.size(); i++)
             {
                 QString unitID = sortedUnits[i];
-                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
+                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
                 showCOBoost(pUnit, pCO, x, y);
             }
         }

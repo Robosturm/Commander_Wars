@@ -17,10 +17,10 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/base/label.h"
 
-BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
-    : QObject(),
-      m_CurrentBuildList(buildList),
-      m_Player(player)
+BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList buildList)
+    : m_CurrentBuildList(buildList),
+      m_Player(player),
+      m_pMap(pMap)
 {
     setObjectName("BuildListDialog");
     Mainapp* pApp = Mainapp::getInstance();

@@ -837,7 +837,7 @@ void RuleSelection::showRuleSelection(bool advanced)
         if (pRule.get() == nullptr && m_ruleChangeEabled)
         {
             CONSOLE_PRINT("Creating default ruleset for " + ruleID, Console::eDEBUG);
-            pRule = spVictoryRule::create(ruleID);
+            pRule = spVictoryRule::create(ruleID, m_pMap);
             QStringList types = pRule->getRuleType();
             for (qint32 i2 = 0; i2 < types.size(); i2++)
             {
@@ -1054,7 +1054,7 @@ void RuleSelection::showPerkBannlist()
 void RuleSelection::showActionBannlist()
 {
     
-    spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions());
+    spActionListDialog pBannlist = spActionListDialog::create(m_pMap->getGameRules()->getAllowedActions(), m_pMap);
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
     
