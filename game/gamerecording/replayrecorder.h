@@ -76,8 +76,7 @@ public:
      * @param day
      * @return
      */
-    void seekToDay(qint32 day, spGameMap & pMap);
-signals:
+    void seekToDay(qint32 day);
 
 private:
     QFile m_recordFile;

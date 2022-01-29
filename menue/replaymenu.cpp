@@ -389,7 +389,7 @@ void ReplayMenu::seekToDay(qint32 day)
         auto slidingPos = m_mapSliding->getPosition();
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
-        m_ReplayRecorder.seekToDay(day, m_pMap);
+        m_ReplayRecorder.seekToDay(day);
         m_pMap->registerMapAtInterpreter();
         m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale

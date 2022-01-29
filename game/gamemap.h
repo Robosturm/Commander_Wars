@@ -71,10 +71,6 @@ public:
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     virtual ~GameMap();
     /**
-     * @brief deleteMap
-     */
-    static void deleteMap();
-    /**
      * @brief newMap
      * @param width
      * @param heigth
@@ -770,7 +766,6 @@ private:
     QColor getGridColor();
     void updateMapFlags() const;
 private:
-    static spGameMap m_pInstance;
     QString m_mapPath;
     MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
@@ -783,7 +778,6 @@ private:
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{spGameRecorder::create(this)};
     spGameScript m_GameScript{spGameScript::create(this)};
-    static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;

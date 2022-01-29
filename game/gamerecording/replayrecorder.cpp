@@ -155,17 +155,15 @@ spGameAction ReplayRecorder::nextAction()
     return spGameAction();
 }
 
-void ReplayRecorder::seekToDay(qint32 day, spGameMap & pMap)
+void ReplayRecorder::seekToDay(qint32 day)
 {
     if (day <= 1)
     {
         seekToStart();
     }
     else
-    {
-        
-        m_pMap->deleteMap();
-
+    {        
+        m_pMap->clearMap();
         m_recordFile.seek(m_dailyMapPos);
         // not needed size of the buffer array
         qint32 bufferSize = 0;
@@ -185,8 +183,7 @@ void ReplayRecorder::seekToDay(qint32 day, spGameMap & pMap)
                 qint64 seekPos = 0;
                 m_stream >> seekPos;
                 m_progress = curCount;
-                pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
-                m_pMap = pMap.get();
+                m_pMap->deserializeObject(m_stream);
                 m_pMap->setIsHumanMatch(false);
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
@@ -208,8 +205,9 @@ void ReplayRecorder::seekToStart()
 {    
     m_recordFile.seek(m_mapPos);
     
-    m_pMap->deleteMap();
-    spGameMap::create<QDataStream &, bool>(m_stream, true);
+    m_pMap->detach();
+    m_pMap->clearMap();
+    m_pMap->deserializeObject(m_stream);
     m_pMap->setIsHumanMatch(false);
     m_progress = 0;
     // swap out all ai's / or players with a proxy ai.

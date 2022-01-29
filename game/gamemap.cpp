@@ -33,7 +33,6 @@
 
 #include "objects/loadingscreen.h"
 
-const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
 static constexpr qint32 loadingScreenSize = 900;
@@ -113,8 +112,6 @@ void GameMap::setMapNameFromFilename(QString filename)
 
 void GameMap::loadMapData()
 {
-    deleteMap();
-    m_pInstance = spGameMap(this, true);
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
     if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
@@ -138,7 +135,6 @@ bool GameMap::getIsHumanMatch() const
 void GameMap::registerMapAtInterpreter()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
 }
 
@@ -322,16 +318,6 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
     });
 }
 
-void GameMap::deleteMap()
-{
-    CONSOLE_PRINT("deleteMap()", Console::eDEBUG);
-    if (m_pInstance.get() != nullptr)
-    {
-        m_pInstance->detach();
-    }
-    m_pInstance = nullptr;
-}
-
 GameMap::~GameMap()
 {
     CONSOLE_PRINT("desctructing map.", Console::eDEBUG);
@@ -345,12 +331,6 @@ GameMap::~GameMap()
         m_fields[y].clear();
     }
     m_fields.clear();
-    // remove us from the interpreter again
-    if (m_pInstance.get() == nullptr)
-    {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_JavascriptName);
-    }
     CONSOLE_PRINT("map was deleted", Console::eDEBUG);
 }
 

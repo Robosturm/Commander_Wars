@@ -256,7 +256,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_CurrentLoadedCampaign = nullptr;
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->deleteMap();
+                m_pCurrentMap->detach();
                 m_pCurrentMap = nullptr;
             }
             bool savegame = info.fileName().endsWith(".msav");
@@ -307,7 +307,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         {
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->deleteMap();
+                m_pCurrentMap->detach();
                 m_currentMapFile = QFileInfo();
                 m_pCurrentMap = nullptr;
             }
@@ -325,7 +325,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     {
         if (m_pCurrentMap.get() != nullptr)
         {
-            m_pCurrentMap->deleteMap();
+            m_pCurrentMap->detach();
             m_pCurrentMap = nullptr;
         }
         m_CurrentLoadedCampaign = nullptr;
