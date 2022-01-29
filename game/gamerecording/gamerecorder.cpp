@@ -75,7 +75,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
     m_Record.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        m_Record.append(spDayToDayRecord::create());
+        m_Record.append(spDayToDayRecord::create(m_pMap));
         m_Record[i]->deserializeObject(pStream);
     }
     pStream >> size;

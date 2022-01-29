@@ -17,11 +17,10 @@ MapMover::MapMover(InGameMenue* pOwner)
 }
 
 void MapMover::mouseWheel(float direction)
-{
-    
-    if (m_pMap)
+{    
+    if (m_pOwner->getMap())
     {
-        m_pMap->setZoom(direction);
+        m_pOwner->getMap()->setZoom(direction);
     }
     m_pOwner->centerMapOnCursor();
 }
@@ -40,15 +39,15 @@ void MapMover::autoScroll()
     {
         auto sliding = m_pOwner->getMapSliding();
         auto slidingActor = m_pOwner->getMapSlidingActor();
-        
+        GameMap* pMap = m_pOwner->getMap();
         if (sliding.get() != nullptr &&
             slidingActor.get() != nullptr &&
-            m_pMap != nullptr)
+            pMap != nullptr)
         {
-            auto position = sliding->getPosition() + slidingActor->getPosition() + m_pMap->getPosition();
+            auto position = sliding->getPosition() + slidingActor->getPosition() + pMap->getPosition();
             auto* pCursor = m_pOwner->getCursor();
-            curPos.setX(position.x + pCursor->getMapPointX() * m_pMap->getImageSize() * m_pMap->getZoom() + m_pMap->getImageSize() * m_pMap->getZoom() / 2);
-            curPos.setY(position.y + pCursor->getMapPointY() * m_pMap->getImageSize() * m_pMap->getZoom() + m_pMap->getImageSize() * m_pMap->getZoom() / 2);
+            curPos.setX(position.x + pCursor->getMapPointX() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
+            curPos.setY(position.y + pCursor->getMapPointY() * pMap->getImageSize() * pMap->getZoom() + pMap->getImageSize() * pMap->getZoom() / 2);
             posValid = true;
         }
     }
@@ -61,9 +60,9 @@ void MapMover::autoScroll()
 void MapMover::keyInput(oxygine::KeyEvent event)
 {
     if (m_pOwner->getFocused())
-    {
-        
-        if (m_pMap != nullptr)
+    {        
+        GameMap* pMap = m_pOwner->getMap();
+        if (pMap != nullptr)
         {
             constexpr qint64 scrollspeed = 75;
             qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();
@@ -103,7 +102,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                 currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapUp] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::MoveMapUp] = currentTimestamp;
-                m_pMap->moveMap(0, -GameMap::getImageSize());
+                pMap->moveMap(0, -GameMap::getImageSize());
                 m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
             }
             else if ((cur == Settings::getKey_moveMapDown() ||
@@ -111,7 +110,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                     currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapDown] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::MoveMapDown] = currentTimestamp;
-                m_pMap->moveMap(0, GameMap::getImageSize());
+                pMap->moveMap(0, GameMap::getImageSize());
                 m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
             }
             else if ((cur == Settings::getKey_moveMapRight() ||
@@ -119,7 +118,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                      currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapRight] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::MoveMapRight] = currentTimestamp;
-                m_pMap->moveMap(GameMap::getImageSize(), 0);
+                pMap->moveMap(GameMap::getImageSize(), 0);
                 m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
             }
             else if ((cur == Settings::getKey_moveMapLeft() ||
@@ -127,7 +126,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                      currentTimestamp - m_lastUpdateTimestamp[Keys::MoveMapLeft] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::MoveMapLeft] = currentTimestamp;
-                m_pMap->moveMap(-GameMap::getImageSize(), 0);
+                pMap->moveMap(-GameMap::getImageSize(), 0);
                 m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
             }
             else if ((cur == Settings::getKey_MapZoomIn() ||
@@ -135,7 +134,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                      currentTimestamp - m_lastUpdateTimestamp[Keys::ZoomIn] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::ZoomIn] = currentTimestamp;
-                m_pMap->setZoom(1);
+                pMap->setZoom(1);
                 m_pOwner->centerMapOnCursor();
             }
             else if ((cur == Settings::getKey_MapZoomOut() ||
@@ -143,7 +142,7 @@ void MapMover::keyInput(oxygine::KeyEvent event)
                      currentTimestamp - m_lastUpdateTimestamp[Keys::ZoomOut] >= scrollspeed)
             {
                 m_lastUpdateTimestamp[Keys::ZoomOut] = currentTimestamp;
-                m_pMap->setZoom(-1);
+                pMap->setZoom(-1);
                 m_pOwner->centerMapOnCursor();
             }
         }

@@ -16,8 +16,8 @@
 #include "objects/base/label.h"
 #include "objects/dialogs/filedialog.h"
 
-ScriptEventGeneric::ScriptEventGeneric(EventType type, QString eventIdentifier)
-    : ScriptEvent (type),
+ScriptEventGeneric::ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier)
+    : ScriptEvent(pMap, type),
       m_eventIdentifier(eventIdentifier)
 {
     connect(this, &ScriptEventGeneric::sigShowSelectFile, this, &ScriptEventGeneric::showSelectFile, Qt::QueuedConnection);

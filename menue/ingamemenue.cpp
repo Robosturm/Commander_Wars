@@ -206,6 +206,11 @@ void InGameMenue::connectMapCursor()
     m_pMap->addChild(m_Cursor);
 }
 
+GameMap* InGameMenue::getMap() const
+{
+    return m_pMap.get();
+}
+
 oxygine::spSlidingActorNoClipRect InGameMenue::getMapSliding() const
 {
     return m_mapSliding;

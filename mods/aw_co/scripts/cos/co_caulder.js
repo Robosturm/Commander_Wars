@@ -1,9 +1,9 @@
-CO_CAULDER.init = function(co)
+CO_CAULDER.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(7);
 };
-CO_CAULDER.activateSuperpower = function(co, powerMode)
+CO_CAULDER.activateSuperpower = function(co, powerMode, map)
 {
     CO_CAULDER.activatePower(co, powerMode);
 };
@@ -21,7 +21,7 @@ CO_CAULDER.powerBonus = 30;
 CO_CAULDER.superPowerBonus = 30;
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action)
+                                         defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -38,7 +38,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action)
+                                        defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -54,7 +54,7 @@ CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 
-CO_CAULDER.startOfTurn = function(co)
+CO_CAULDER.startOfTurn = function(co, map)
 {
     if (co.getIsCO0() === true)
     {

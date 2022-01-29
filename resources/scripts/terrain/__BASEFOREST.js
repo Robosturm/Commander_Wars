@@ -74,7 +74,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -103,13 +103,13 @@ var Constructor = function()
         }
     };
 
-    this.loadBase = function(terrain, terrainId, spriteId)
+    this.loadBase = function(terrain, terrainId, spriteId, map)
     {
         var surroundings = terrain.getSurroundings(terrainId, false, false, GameEnums.Directions_East, false);
         surroundings += terrain.getSurroundings(terrainId, false, false, GameEnums.Directions_West, false);
         terrain.loadBaseSprite(spriteId + surroundings);
     };
-    this.loadOverlay = function(terrain, terrainId, spriteId)
+    this.loadOverlay = function(terrain, terrainId, spriteId, map)
     {
         // Check every side.
         var surroundings = terrain.getSurroundings(terrainId, false, false, GameEnums.Directions_Direct, false);
@@ -208,7 +208,7 @@ var Constructor = function()
                 spriteId + "+W"];
     };
 
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {        
         var baseTerrainId = ""
         if (terrain !== null)
@@ -229,15 +229,15 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return "base_" + weatherModifier + "forest";
         }
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
@@ -271,7 +271,7 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return "back_" + weatherModifier + "forest+" + rand.toString();
         }
     };

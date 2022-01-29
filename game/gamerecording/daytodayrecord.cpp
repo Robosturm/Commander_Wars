@@ -4,8 +4,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
-DayToDayRecord::DayToDayRecord()
-    : QObject()
+DayToDayRecord::DayToDayRecord(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());

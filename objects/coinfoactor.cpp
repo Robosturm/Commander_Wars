@@ -16,7 +16,8 @@
 
 #include "wiki/wikidatabase.h"
 
-COInfoActor::COInfoActor(qint32 width)
+COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
+    : m_pMap(pMap)
 {
     setObjectName("COInfoActor");
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -119,7 +120,7 @@ COInfoActor::COInfoActor(qint32 width)
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
     addChild(m_InfoText);
 
-    m_pCoPowermeter = spCoPowermeter::create(nullptr);
+    m_pCoPowermeter = spCoPowermeter::create(m_pMap, nullptr);
     addChild(m_pCoPowermeter);
 
     m_PowerSprite = oxygine::spSprite::create();
@@ -529,7 +530,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
         pCO->getCustomUnitZoneBoost(index, info);
     }
     WikiDatabase* pDatabase = WikiDatabase::getInstance();
-    m_UnitDataActors[i]->addChild(pDatabase->getIcon(info.getIconId(), GameMap::defaultImageSize * 2));
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize * 2));
     QString wikiLink = info.getLink();
     m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
     {

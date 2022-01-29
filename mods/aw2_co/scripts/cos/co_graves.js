@@ -1,4 +1,4 @@
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -26,13 +26,13 @@ CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
     }
 };
 CO_GRAVES.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_GRAVES.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

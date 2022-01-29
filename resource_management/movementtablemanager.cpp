@@ -9,6 +9,7 @@
 
 #include "game/unit.h"
 #include "game/terrain.h"
+#include "game/gamemap.h"
 
 MovementTableManager::MovementTableManager()
     : RessourceManagement<MovementTableManager>("",
@@ -59,6 +60,8 @@ qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, T
     QJSValue obj4 = pInterpreter->newQObject(pCurrentTerrain);
     args1 << obj4;
     args1 << trapChecking;
+    QJSValue obj5 = pInterpreter->newQObject(pCurrentTerrain->getMap());
+    args1 << obj5;
     QJSValue ret = pInterpreter->doFunction(movementID, function1, args1);
     if (ret.isNumber())
     {

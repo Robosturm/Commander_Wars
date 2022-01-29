@@ -1,4 +1,4 @@
-MOVE_MECH.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking)
+MOVE_MECH.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking, map)
 {
     return 1;
 };

@@ -11,14 +11,15 @@
 #include "game/terrain.h"
 #include "game/player.h"
 
+class GameMap;
 class TerrainInfo;
-typedef oxygine::intrusive_ptr<TerrainInfo> spTerrainInfo;
+using spTerrainInfo = oxygine::intrusive_ptr<TerrainInfo>;
 
 class TerrainInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit TerrainInfo(Terrain* pTerrain, qint32 width);
+    explicit TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width);
     virtual ~TerrainInfo() = default;
 signals:
     /**
@@ -37,6 +38,7 @@ private:
 
 private:
     spPlayer m_pPlayer;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // TERRAININFO_H

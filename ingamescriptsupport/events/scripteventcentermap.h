@@ -10,7 +10,7 @@ class ScriptEventCenterMap: public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventCenterMap();
+    explicit ScriptEventCenterMap(GameMap* pMap);
 };
 
 #endif // SCRIPTEVENTCENTERMAP_H

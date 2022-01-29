@@ -1,4 +1,4 @@
-ACTION_EXPLODE.getStepCursor = function(action, cursorData)
+ACTION_EXPLODE.getStepCursor = function(action, cursorData, map)
 {
     cursorData.setCursor("cursor+radius_3");
     cursorData.setXOffset(- map.getImageSize() * 3);
@@ -6,7 +6,7 @@ ACTION_EXPLODE.getStepCursor = function(action, cursorData)
     cursorData.setScale(2);
 };
 
-ACTION_EXPLODE.performPostAnimation = function(postAnimation)
+ACTION_EXPLODE.performPostAnimation = function(postAnimation, map)
 {
     var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
     var x = ACTION_EXPLODE.postAnimationTargetX;

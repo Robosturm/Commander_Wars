@@ -1,4 +1,4 @@
-CO_AIRA.getMovementFuelCostModifier = function(co, unit, fuelCost)
+CO_AIRA.getMovementFuelCostModifier = function(co, unit, fuelCost, map)
 {
     if (co.getPowerMode() === GameEnums.PowerMode_Power &&
             co.getOwner().isEnemyUnit(unit) === true)
@@ -8,7 +8,7 @@ CO_AIRA.getMovementFuelCostModifier = function(co, unit, fuelCost)
     return 0;
 };
 CO_AIRA.coZoneBonus = 0;
-CO_AIRA.getMovementcostModifier = function(co, unit, posX, posY)
+CO_AIRA.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
          co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
@@ -20,7 +20,7 @@ CO_AIRA.getMovementcostModifier = function(co, unit, posX, posY)
 };
 
 CO_AIRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_AIRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_AIRA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

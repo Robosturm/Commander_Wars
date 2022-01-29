@@ -94,7 +94,7 @@ var Constructor = function()
         userdata.addAchievement("GAME_VICTORY", 500, qsTr("The best!"),       qsTr("Win the given amount of games."),     "s_rang",       false);
         userdata.addAchievement("GAME_LOST",    100, qsTr("Biggest Looser"),  qsTr("Loose the given amount of games."),   "surrender",    false);
     };
-    this.onVictory = function(team, humanWin)
+    this.onVictory = function(team, humanWin, map)
     {
         var count = map.getPlayerCount();
         if (humanWin && team >= 0)

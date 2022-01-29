@@ -1,5 +1,5 @@
 CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -56,7 +56,7 @@ CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -82,7 +82,7 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -110,7 +110,7 @@ CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
     return false;
 };
 
-CO_JOEY.getCostModifier = function(co, id, baseCost, posX, posY)
+CO_JOEY.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

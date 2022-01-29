@@ -34,14 +34,14 @@ var Constructor = function()
     {
         return FACTORY.constructionList;
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier + "factory";
     };
 

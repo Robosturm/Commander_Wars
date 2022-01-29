@@ -3,6 +3,8 @@
 
 #include "resource_management/ressourcemanagement.h"
 
+class GameMap;
+
 class GameManager : public QObject, public RessourceManagement<GameManager>
 {
     Q_OBJECT
@@ -17,7 +19,7 @@ public:
     virtual void reset() override;
 
     QString getActionIcon(const QString & actionID);
-    oxygine::spSprite getIcon(const QString & icon);
+    oxygine::spSprite getIcon(GameMap* pMap, const QString & icon);
     /**
      * @brief getDescription
      * @param position

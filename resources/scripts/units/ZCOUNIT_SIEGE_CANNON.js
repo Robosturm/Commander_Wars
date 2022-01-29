@@ -40,7 +40,7 @@ var Constructor = function()
         return qsTr("Siege Cannon");
     };
 
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -83,7 +83,7 @@ var Constructor = function()
         }
     };
     this.offBonus = 15;
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var variables = unit.getVariables();
         var turnCount = variables.createVariable("TURN_COUNT");

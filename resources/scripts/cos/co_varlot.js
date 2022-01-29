@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(4);
@@ -13,7 +13,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -35,7 +35,7 @@ var Constructor = function()
         player.addFunds(income / 4);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -136,7 +136,7 @@ var Constructor = function()
         }
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -156,7 +156,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -165,7 +165,7 @@ var Constructor = function()
         return "DM";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -195,7 +195,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -205,7 +205,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.startOfTurn = function(co)
+    this.startOfTurn = function(co, map)
     {
         // reset repair stop
         var variables = co.getVariables();
@@ -216,7 +216,7 @@ var Constructor = function()
         bonusOffVariable.writeDataListInt32(empty);
     };
 
-    this.getCaptureBonus = function(co, unit, posX, posY)
+    this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
@@ -225,7 +225,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getIncomeReduction = function(co, building, income)
+    this.getIncomeReduction = function(co, building, income, map)
     {
         var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
         // set income to 0 during scop
@@ -235,11 +235,11 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

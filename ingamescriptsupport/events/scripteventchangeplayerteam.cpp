@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventchangeplayerteam.h"
 
-ScriptEventChangePlayerTeam::ScriptEventChangePlayerTeam()
-    : ScriptEventGeneric(EventType::ChangePlayerTeam, ScriptEvent::EventChangePlayerTeam)
+ScriptEventChangePlayerTeam::ScriptEventChangePlayerTeam(GameMap* pMap)
+    : ScriptEventGeneric(pMap, EventType::ChangePlayerTeam, ScriptEvent::EventChangePlayerTeam)
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

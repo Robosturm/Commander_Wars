@@ -2,8 +2,8 @@
 
 #include "resource_management/buildingspritemanager.h"
 
-ScriptEventSpawnBuilding::ScriptEventSpawnBuilding()
-    : ScriptEventGeneric(EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding)
+ScriptEventSpawnBuilding::ScriptEventSpawnBuilding(GameMap* pMap)
+    : ScriptEventGeneric(pMap, EventType::SpawnBuilding, ScriptEvent::EventSpawnBuilding)
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

@@ -1,4 +1,4 @@
-CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -16,7 +16,7 @@ CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY)
 };
 CO_ADDER.coZoneBonus = 0;
 CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -29,7 +29,7 @@ CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -41,7 +41,7 @@ CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
 {
     var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     co.setPowerFilled(co.getPowerFilled() + powerGain * 2 * 1.2);

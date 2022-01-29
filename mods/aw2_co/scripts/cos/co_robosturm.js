@@ -1,5 +1,5 @@
 CO_ROBOSTURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action)
+                                          defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -21,7 +21,7 @@ CO_ROBOSTURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 
 
 CO_ROBOSTURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action)
+                                           defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -38,7 +38,7 @@ CO_ROBOSTURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 
-CO_ROBOSTURM.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ROBOSTURM.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

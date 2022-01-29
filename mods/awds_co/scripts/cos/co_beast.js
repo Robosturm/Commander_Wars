@@ -1,6 +1,6 @@
 CO_BEAST.coZoneBonus = 30;
 CO_BEAST.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -21,7 +21,7 @@ CO_BEAST.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_BEAST.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -32,7 +32,7 @@ CO_BEAST.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY)
+CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -44,7 +44,7 @@ CO_BEAST.getMovementpointModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_BEAST.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_BEAST.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {

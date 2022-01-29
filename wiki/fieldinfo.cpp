@@ -12,7 +12,7 @@ FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
     qint32 y = 10;
     if (pTerrain != nullptr)
     {
-        spTerrainInfo pTerrainInfo = spTerrainInfo::create(pTerrain, m_pPanel->getWidth() - 80);
+        spTerrainInfo pTerrainInfo = spTerrainInfo::create(pTerrain->getMap(), pTerrain, m_pPanel->getWidth() - 80);
         pTerrainInfo->setPosition(20, y);
         m_pPanel->addItem(pTerrainInfo);
         m_pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getHeight());

@@ -464,7 +464,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         {
             hp = Unit::MAX_UNIT_HP;
         }
-        spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, hp, false);
+        spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(m_pMap, pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, hp, false);
         pBattleAnimationSprite->setPosition(xOffset, yOffset);
         pBattleAnimationSprite->setPriority(3);
         m_pDetailedViewBox->addChild(pBattleAnimationSprite);
@@ -735,7 +735,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
                     Unit* pTransportUnit = pUnit->getLoadedUnit(i);
                     if (pTransportUnit != nullptr)
                     {
-                        spUnit pCopypTransportUnit = spUnit::create(pTransportUnit->getUnitID(), pTransportUnit->getOwner(), false);
+                        spUnit pCopypTransportUnit = spUnit::create(pTransportUnit->getUnitID(), pTransportUnit->getOwner(), false, m_pMap);
                         pCopypTransportUnit->setHasMoved(pTransportUnit->getHasMoved());
                         pCopypTransportUnit->setHp(pTransportUnit->getHp());
                         pCopypTransportUnit->setAmmo1(pTransportUnit->getAmmo1());

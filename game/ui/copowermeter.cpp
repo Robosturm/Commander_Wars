@@ -4,9 +4,9 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
-CoPowermeter::CoPowermeter(CO* pCO)
-    : QObject(),
-      m_pCO(pCO)
+CoPowermeter::CoPowermeter(GameMap* pMap, CO* pCO)
+    : m_pCO(pCO),
+      m_pMap(pMap)
 {
     setObjectName("CoPowermeter");
 }

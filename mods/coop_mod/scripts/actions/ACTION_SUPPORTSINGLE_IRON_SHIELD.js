@@ -1,4 +1,4 @@
-ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields = function(action)
+ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields = function(action, map)
 {
     var targetField = action.getActionTarget();
     var targetFields = [Qt.point(targetField.x + 1, targetField.y),
@@ -24,7 +24,7 @@ ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields = function(action)
     return ret;
 };
 
-ACTION_SUPPORTSINGLE_IRON_SHIELD.performPostAnimation = function(postAnimation)
+ACTION_SUPPORTSINGLE_IRON_SHIELD.performPostAnimation = function(postAnimation, map)
 {
     var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
     var defenseUnit = terrain.getUnit();

@@ -16,7 +16,7 @@ var Constructor = function()
         return "weather_symbol_snow_alt";
     };
 
-    this.activate = function(weather)
+    this.activate = function(weather, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();
         var queueAnimation = null;
@@ -35,7 +35,7 @@ var Constructor = function()
         }
     };
 
-    this.getMovementCostModifier = function(weather, unit, terrain)
+    this.getMovementCostModifier = function(weather, unit, terrain, map)
     {
         var id = terrain.getID();
         if ((unit.getUnitType() === GameEnums.UnitType_Air) ||

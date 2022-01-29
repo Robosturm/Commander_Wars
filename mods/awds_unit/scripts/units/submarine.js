@@ -19,7 +19,7 @@ SUBMARINE.getBaseCost = function()
 {
     return 20000;
 };
-SUBMARINE.startOfTurn = function(unit)
+SUBMARINE.startOfTurn = function(unit, map)
 {
     // pay unit upkeep
     var fuelCosts = 1 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 1);

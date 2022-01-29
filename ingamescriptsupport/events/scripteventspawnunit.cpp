@@ -16,8 +16,8 @@
 #include "game/unit.h"
 #include "game/player.h"
 
-ScriptEventSpawnUnit::ScriptEventSpawnUnit()
-    : ScriptEvent (ScriptEvent::EventType::spawnUnit)
+ScriptEventSpawnUnit::ScriptEventSpawnUnit(GameMap* pMap)
+    : ScriptEvent(pMap, ScriptEvent::EventType::spawnUnit)
 {
 
 }
@@ -169,9 +169,9 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     }
     auto creator = [=](QString id)
     {
-        spPlayer pPlayer = spPlayer::create();
+        spPlayer pPlayer = spPlayer::create(m_pMap);
         pPlayer->init();
-        spUnit pSprite = spUnit::create(id, pPlayer.get(), false);
+        spUnit pSprite = spUnit::create(id, pPlayer.get(), false, m_pMap);
         pSprite->setOwner(nullptr);
         return pSprite;
     };

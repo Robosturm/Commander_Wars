@@ -11,7 +11,7 @@ var Constructor = function()
         return "weather_symbol_mist";
     };
 
-    this.activate = function(weather)
+    this.activate = function(weather, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();
         var queueAnimation = null;
@@ -38,7 +38,7 @@ var Constructor = function()
         }
     };
 
-    this.deactivate = function(weather)
+    this.deactivate = function(weather, map)
     {
         var variable = weather.getVariables().getVariable("FOGMODE");
         var mode = variable.readDataInt32();

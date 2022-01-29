@@ -1,5 +1,5 @@
 CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_ZANDRA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -44,7 +44,7 @@ CO_ZANDRA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY)
+CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -67,7 +67,7 @@ CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_ZANDRA.getWeatherImmune = function(co)
+CO_ZANDRA.getWeatherImmune = function(co, map)
 {
     if (co.getIsCO0() === true)
     {

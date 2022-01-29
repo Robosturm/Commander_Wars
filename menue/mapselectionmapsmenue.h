@@ -121,6 +121,7 @@ protected:
     spPlayerSelection m_pPlayerSelection;
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
+    spGameMap m_pMap{nullptr};
 };
 
 #endif // MAPSELECTIONMENUE_H

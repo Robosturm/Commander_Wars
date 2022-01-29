@@ -206,10 +206,6 @@ void WorkerThread::onQuit()
     {
         EditorMenue::getInstance()->deleteMenu();
     }
-    if (m_pMap.get() != nullptr)
-    {
-        m_pMap->deleteMap();
-    }
     GameAnimationFactory::getInstance()->release();
     Interpreter::release();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();

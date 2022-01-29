@@ -1,4 +1,4 @@
-ACTION_SUPPORTALL_RATION.checkUnit = function(unit, x, y)
+ACTION_SUPPORTALL_RATION.checkUnit = function(unit, x, y, map)
 {
     if (map.onMap(x, y))
     {
@@ -14,7 +14,7 @@ ACTION_SUPPORTALL_RATION.checkUnit = function(unit, x, y)
     }
     return false;
 };
-ACTION_SUPPORTALL_RATION_MONEY.checkUnit = function(unit, x, y)
+ACTION_SUPPORTALL_RATION_MONEY.checkUnit = function(unit, x, y, map)
 {
     if (map.onMap(x, y))
     {

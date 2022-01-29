@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if (CO_PERK.isActive(co))
         {
@@ -26,7 +26,7 @@ var Constructor = function()
     {
         return qsTr("Sets movement costs over plains to 1.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "prairiedog";
     };

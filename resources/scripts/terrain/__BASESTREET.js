@@ -58,7 +58,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -87,7 +87,7 @@ var Constructor = function()
         }
     };
 
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
         var surroundings = terrain.getSurroundings("STREET,STREET1,BRIDGE,BRIDGE1,SNOW_STREET,DESERT_PATH,DESERT_PATH1,WASTE_PATH",
                                                 false, false, GameEnums.Directions_Direct, false, true);
@@ -161,7 +161,7 @@ var Constructor = function()
                 spriteId + "+S+W",
                 spriteId + "+W"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
@@ -195,11 +195,11 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return "fore_" + weatherModifier + "street+" + rand.toString();
         }
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
@@ -219,10 +219,10 @@ var Constructor = function()
         {
             baseTerrainId = Global[terrain.getTerrainID()].baseTerrainId;
         }
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         if (baseTerrainId === "WASTE")
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
         }
         else if (baseTerrainId === "SNOW")
@@ -235,7 +235,7 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return __BASESTREET.getStreetAnimationBackground(id, weatherModifier);
         }        
     };

@@ -1,9 +1,9 @@
-CO_ANDY.init = function(co)
+CO_ANDY.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_ANDY.activateSuperpower = function(co, powerMode)
+CO_ANDY.activateSuperpower = function(co, powerMode, map)
 {
     CO_ANDY.activatePower(co, powerMode);
 };
@@ -17,17 +17,17 @@ CO_ANDY.getSuperPowerName = function()
 };
 CO_ANDY.coZoneBonus = 0;
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
-CO_ANDY.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ANDY.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
 CO_ANDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

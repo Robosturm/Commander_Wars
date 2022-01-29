@@ -27,7 +27,7 @@ var Constructor = function()
     {
         unit.loadSpriteV2("chaperon+mask", GameEnums.Recoloring_Matrix);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -63,7 +63,7 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var variables = unit.getVariables();
         var unitDefendedVariable = variables.createVariable("UNITDEFENDED");

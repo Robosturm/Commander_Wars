@@ -43,7 +43,7 @@ var Constructor = function()
     this.init = function(rule)
     {
     };
-    this.getWinnerTeam = function(rule, player)
+    this.getWinnerTeam = function(rule, player, map)
     {
         var winnerTeam = -1;
         var maxBuildings = 0;
@@ -67,7 +67,7 @@ var Constructor = function()
         }
         return winnerTeam;
     };
-    this.getBuildingCount = function(rule, player)
+    this.getBuildingCount = function(rule, player, map)
     {
         var count = player.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
         var teamVictory = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, 1);
@@ -89,11 +89,11 @@ var Constructor = function()
     };
 
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
         var turn = map.getCurrentDay();
-        var turnLimit = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule);
-        var victoryTeam = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getWinnerTeam(rule, player);
+        var turnLimit = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getRuleValue(rule, map);
+        var victoryTeam = VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getWinnerTeam(rule, player, map);
         if (turn <= turnLimit ||
             player.getTeam() === victoryTeam)
         {
@@ -102,9 +102,9 @@ var Constructor = function()
         // all players loose if the time limit is exceeded
         return GameEnums.DefeatType_Defeated;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
-        return VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getBuildingCount(rule, player);
+        return VICTORYRULE_TURNLIMIT_CAPTURE_RACE.getBuildingCount(rule, player, map);
     };
 };
 

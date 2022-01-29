@@ -1749,7 +1749,7 @@ GameAnimationDialog* CO::createPowerSentence()
     QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
-    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(m_pMap, sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
     return pGameAnimationDialog;
@@ -1791,7 +1791,7 @@ QString CO::getVictorySentence()
 
 GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, this, frameTime);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_pMap, m_Owner->getColor(), powerMode, this, frameTime);
     return pGameAnimationPower;
 }
 

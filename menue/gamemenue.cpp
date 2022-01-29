@@ -141,7 +141,7 @@ GameMenue::GameMenue(spGameMap pMap)
 
 spGameMenue GameMenue::getInstance()
 {
-    return oxygine::static_pointer_cast<GameMenue>(m_pInstance);
+    return spGameMenue(static_cast<GameMenue*>(m_pInstance.get()));
 }
 
 void GameMenue::onEnter()
@@ -366,11 +366,11 @@ void GameMenue::loadGameMenue()
         }
     }
     // back to normal code
-    m_pPlayerinfo = spPlayerInfo::create();
+    m_pPlayerinfo = spPlayerInfo::create(m_pMap.get());
     m_pPlayerinfo->updateData();
     addChild(m_pPlayerinfo);
 
-    m_IngameInfoBar = spIngameInfoBar::create();
+    m_IngameInfoBar = spIngameInfoBar::create(m_pMap.get());
     m_IngameInfoBar->updateMinimap();
     addChild(m_IngameInfoBar);
     if (Settings::getSmallScreenDevice())
@@ -586,7 +586,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
                         {
                             // replace current action with auto moving none moved units
                             m_pStoredAction = pGameAction;
-                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_WAIT);
+                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_WAIT, m_pMap.get());
                             if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
                             {
                                 multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
@@ -617,7 +617,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
                         }
                         else if (pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
                         {
-                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_CAPTURE);
+                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_CAPTURE, m_pMap.get());
                             multiTurnMovement->setTarget(pUnit->getPosition());
                             if (multiTurnMovement->canBePerformed())
                             {
@@ -720,7 +720,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             else if (m_pMap->getCurrentPlayer()->getIsDefeated())
             {
                 CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = spGameAction::create();
+                spGameAction pAction = spGameAction::create(m_pMap.get());
                 pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
             }
@@ -761,7 +761,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
                 {
                     if (i > 0)
                     {
-                        spGameAction pTrapAction = spGameAction::create("ACTION_TRAP");
+                        spGameAction pTrapAction = spGameAction::create(CoreAI::ACTION_TRAP, m_pMap.get());
                         pTrapAction->setMovepath(trapPathNotEmptyTarget, trapPathCostNotEmptyTarget);
                         pTrapAction->writeDataInt32(trapPoint.x());
                         pTrapAction->writeDataInt32(trapPoint.y());
@@ -816,7 +816,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
                         break;
                     }
                 }
-                spGameAction pTrapAction = spGameAction::create("ACTION_TRAP");
+                spGameAction pTrapAction = spGameAction::create(CoreAI::ACTION_TRAP, m_pMap.get());
                 pTrapAction->setMovepath(trapPath, trapPathCost);
                 pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
                 pTrapAction->writeDataInt32(point.x());
@@ -859,6 +859,8 @@ bool GameMenue::isTrap(const QString & function, spGameAction pAction, Unit* pMo
     args << previousPoint.x();
     args << previousPoint.y();
     args << moveCost;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap.get());
+    args << obj5;
     QJSValue erg = pInterpreter->doFunction("ACTION_TRAP", function, args);
     if (erg.isBool())
     {
@@ -1060,7 +1062,7 @@ void GameMenue::actionPerformed()
                 else if (m_pMap->getCurrentPlayer()->getIsDefeated())
                 {
                     CONSOLE_PRINT("Triggering next player cause current player is defeated", Console::eDEBUG);
-                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+                    spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
                     performAction(pAction);
                 }
                 else if (m_pStoredAction.get() != nullptr)
@@ -1276,11 +1278,11 @@ void GameMenue::victory(qint32 team)
             if (m_pMap->getCampaign() != nullptr)
             {
                 CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
-                m_pMap->getCampaign()->mapFinished(humanWin);
+                m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
             }
             AchievementManager::getInstance()->onVictory(team, humanWin);
             CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
-            auto window = spVictoryMenue::create(m_pNetworkInterface);
+            auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
             oxygine::Stage::getStage()->addChild(window);
             deleteMenu();
         }
@@ -1291,7 +1293,7 @@ void GameMenue::showAttackLog(qint32 player)
 {    
     m_Focused = false;
     CONSOLE_PRINT("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
-    spDialogAttackLog pAttackLog = spDialogAttackLog::create(m_pMap->getPlayer(player));
+    spDialogAttackLog pAttackLog = spDialogAttackLog::create(m_pMap.get(), m_pMap->getPlayer(player));
     connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
     {
         m_Focused = true;
@@ -1303,7 +1305,7 @@ void GameMenue::showRules()
 {
     m_Focused = false;
     CONSOLE_PRINT("showRuleSelection()", Console::eDEBUG);
-    spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(RuleSelection::Mode::Singleplayer, false);
+    spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(m_pMap.get(), RuleSelection::Mode::Singleplayer, false);
     connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, [=]()
     {
         m_Focused = true;
@@ -1569,7 +1571,7 @@ void GameMenue::showSaveAndExitGame()
 void GameMenue::victoryInfo()
 {    
     CONSOLE_PRINT("victoryInfo()", Console::eDEBUG);
-    spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create();
+    spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create(m_pMap.get());
     addChild(pVictoryConditions);
     setFocused(false);
     connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -1683,7 +1685,7 @@ void GameMenue::startGame()
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         CONSOLE_PRINT("Triggering action next player in order to start the game.", Console::eDEBUG);
-        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap.get());
         if (m_pNetworkInterface.get() != nullptr)
         {
             pAction->setSeed(GlobalUtils::getSeed());
@@ -1859,7 +1861,7 @@ void GameMenue::showSurrenderGame()
 void GameMenue::surrenderGame()
 {    
     CONSOLE_PRINT("GameMenue::surrenderGame", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create();
+    spGameAction pAction = spGameAction::create(m_pMap.get());
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
     m_Focused = true;
@@ -1888,7 +1890,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
     CONSOLE_PRINT("GameMenue::nicknameUnit", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create();
+    spGameAction pAction = spGameAction::create(m_pMap.get());
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);

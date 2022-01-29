@@ -13,8 +13,8 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/label.h"
 
-ScriptConditionCheckVariable::ScriptConditionCheckVariable()
-    : ScriptCondition (ConditionType::checkVariable)
+ScriptConditionCheckVariable::ScriptConditionCheckVariable(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::checkVariable)
 {
 
 }
@@ -45,11 +45,11 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream, QString l
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionVictory, line))
+        if (readSubCondition(m_pMap, rStream, ConditionVictory, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

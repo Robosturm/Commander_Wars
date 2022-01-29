@@ -1,9 +1,9 @@
-CO_NELL.init = function(co)
+CO_NELL.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_NELL.activateSuperpower = function(co, powerMode)
+CO_NELL.activateSuperpower = function(co, powerMode, map)
 {
     CO_NELL.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_NELL.getSuperPowerName = function()
 {
     return CO_NELL.getPowerName();
 };
-CO_NELL.getBonusLuck = function(co, unit, posX, posY)
+CO_NELL.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,13 +33,13 @@ CO_NELL.getBonusLuck = function(co, unit, posX, posY)
 };
 
 CO_NELL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_NELL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -1,9 +1,9 @@
-CO_ADDER.init = function(co)
+CO_ADDER.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_ADDER.activateSuperpower = function(co, powerMode)
+CO_ADDER.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ADDER.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ADDER.getSuperPowerName = function()
     return CO_ADDER.getPowerName();
 };
 CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -33,7 +33,7 @@ CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ADDER.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

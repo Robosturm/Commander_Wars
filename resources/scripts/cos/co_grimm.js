@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -64,7 +64,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -113,7 +113,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -133,7 +133,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -142,7 +142,7 @@ var Constructor = function()
         return "YC";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -161,7 +161,7 @@ var Constructor = function()
         return 30;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -171,11 +171,11 @@ var Constructor = function()
         return -10;
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

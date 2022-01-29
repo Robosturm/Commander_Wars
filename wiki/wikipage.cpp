@@ -118,7 +118,7 @@ void Wikipage::showLink(QString pageID)
 void Wikipage::loadImage(QString file, float scale, QString pageID)
 {
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::spSprite pSprite = pWikiDatabase->getIcon(file, 24);
+    oxygine::spSprite pSprite = pWikiDatabase->getIcon(nullptr, file, 24);
     pSprite->setScale(scale);
     pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, m_y);
     pSprite->addClickListener([=](oxygine::Event*)

@@ -1,9 +1,9 @@
-CO_EAGLE.init = function(co)
+CO_EAGLE.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_EAGLE.activateSuperpower = function(co, powerMode)
+CO_EAGLE.activateSuperpower = function(co, powerMode, map)
 {
     CO_EAGLE.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_EAGLE.getSuperPowerName = function()
 {
     return CO_EAGLE.getPowerName();
 };
-CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
+CO_EAGLE.getFuelCostModifier = function(co, unit, costs, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -28,7 +28,7 @@ CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
 };
 
 CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -64,7 +64,7 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_EAGLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

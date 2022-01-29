@@ -73,12 +73,12 @@ var Constructor = function()
         return "minimap_hq";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var player = terrain.getBuilding().getOwner();
         // get army name
@@ -103,7 +103,7 @@ var Constructor = function()
         }
         else
         {
-            weatherModifier = TERRAIN.getWeatherModifier();
+            weatherModifier = TERRAIN.getWeatherModifier(map);
         }
         return "back_" + weatherModifier + "hq+" + armyName;
     };

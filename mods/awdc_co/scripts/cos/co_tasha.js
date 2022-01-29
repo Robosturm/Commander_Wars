@@ -1,9 +1,9 @@
-CO_TASHA.init = function(co)
+CO_TASHA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_TASHA.activateSuperpower = function(co, powerMode)
+CO_TASHA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_TASHA.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_TASHA.getSuperPowerName = function()
     return CO_TASHA.getPowerName();
 };
 CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -46,7 +46,7 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -75,7 +75,7 @@ CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_TASHA.getMovementpointModifier = function(co, unit, posX, posY)
+CO_TASHA.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

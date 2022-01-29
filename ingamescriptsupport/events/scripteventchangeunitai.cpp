@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventchangeunitai.h"
 
-ScriptEventChangeUnitAI::ScriptEventChangeUnitAI()
-    : ScriptEventGeneric(EventType::ChangeUnitAI, ScriptEvent::EventChangeUnitAI)
+ScriptEventChangeUnitAI::ScriptEventChangeUnitAI(GameMap* pMap)
+    : ScriptEventGeneric(pMap, EventType::ChangeUnitAI, ScriptEvent::EventChangeUnitAI)
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

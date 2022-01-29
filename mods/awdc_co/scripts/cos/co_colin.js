@@ -1,9 +1,9 @@
-CO_COLIN.init = function(co)
+CO_COLIN.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_COLIN.activateSuperpower = function(co, powerMode)
+CO_COLIN.activateSuperpower = function(co, powerMode, map)
 {
 	CO_COLIN.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_COLIN.getSuperPowerName = function()
     return CO_COLIN.getPowerName();
 };
 CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {

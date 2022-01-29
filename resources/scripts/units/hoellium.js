@@ -36,7 +36,7 @@ var Constructor = function()
     {
         return qsTr("Oozium");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -54,7 +54,7 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.createExplosionAnimation = function(x, y, unit)
+    this.createExplosionAnimation = function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y, 200);
         animation.addSpriteAnimTable("hoellium_die+mask", 0, 0, unit.getOwner(), 0, 2, 2);

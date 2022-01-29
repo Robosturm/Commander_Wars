@@ -1,4 +1,4 @@
-CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
+CO_EAGLE.getFuelCostModifier = function(co, unit, costs, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -10,7 +10,7 @@ CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
     return 0;
 };
 
-CO_EAGLE.activatePower = function(co)
+CO_EAGLE.activatePower = function(co, map)
 {
     var dialogAnimation = co.createPowerSentence();
     var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -55,7 +55,7 @@ CO_EAGLE.activatePower = function(co)
 };
 
 CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -100,7 +100,7 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_EAGLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

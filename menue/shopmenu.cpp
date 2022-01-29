@@ -246,27 +246,27 @@ oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType, QString ke
     {
         case GameEnums::ShopItemType_CO:
         {
-            pRet = WikiDatabase::getInstance()->getIcon("shop_co", 32);
+            pRet = WikiDatabase::getInstance()->getIcon(nullptr, "shop_co", 32);
             break;
         }
         case GameEnums::ShopItemType_CO_Skin:
         {
-            pRet = WikiDatabase::getInstance()->getIcon("shop_co_color", 32);
+            pRet = WikiDatabase::getInstance()->getIcon(nullptr, "shop_co_color", 32);
             break;
         }
         case GameEnums::ShopItemType_Map:
         {
-            pRet = WikiDatabase::getInstance()->getIcon("shop_map", 32);
+            pRet = WikiDatabase::getInstance()->getIcon(nullptr, "shop_map", 32);
             break;
         }
         case GameEnums::ShopItemType_Perk:
         {
-            pRet = WikiDatabase::getInstance()->getIcon("shop_perk", 32);
+            pRet = WikiDatabase::getInstance()->getIcon(nullptr, "shop_perk", 32);
             break;
         }
         case GameEnums::ShopItemType_Unit:
         {
-            pRet = WikiDatabase::getInstance()->getIcon(key, 32);
+            pRet = WikiDatabase::getInstance()->getIcon(nullptr, key, 32);
             break;
         }
         case GameEnums::ShopItemType_All:

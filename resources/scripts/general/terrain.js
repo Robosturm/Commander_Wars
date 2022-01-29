@@ -101,7 +101,7 @@ var TERRAIN =
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     },
 
@@ -120,12 +120,12 @@ var TERRAIN =
         {
             rand = variable.readDataInt32();
         }
-        var foreground = TERRAIN.getFactoryForeground(terrain);
+        var foreground = TERRAIN.getFactoryForeground(terrain, map);
         if (foreground !== "")
         {
             return foreground;
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "fore_" + weatherModifier + "plains+" + rand.toString();
     },
 
@@ -183,7 +183,7 @@ var TERRAIN =
 
     getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var weatherModifier = TERRAIN.getWeatherModifier(map);
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },

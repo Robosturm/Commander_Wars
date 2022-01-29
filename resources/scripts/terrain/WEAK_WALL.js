@@ -15,7 +15,7 @@ var Constructor = function()
     {
         return qsTr("Weak Wall");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -34,7 +34,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("WALL,WEAK_WALL,ZGATE_E_W,ZGATE_N_S", false, false, GameEnums.Directions_Direct, true, true);
         var x = terrain.getX();
@@ -57,7 +57,7 @@ var Constructor = function()
             terrain.loadBaseSprite("weak_wall+E+W");
         }
     };
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
         var surroundings = terrain.getSurroundings("WALL,WEAK_WALL,ZGATE_E_W,ZGATE_N_S", false, false, GameEnums.Directions_Direct, true, true);
@@ -74,7 +74,7 @@ var Constructor = function()
     {
         return "minimap_weld";
     };
-    this.onDestroyed = function(terrain)
+    this.onDestroyed = function(terrain, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
@@ -86,7 +86,7 @@ var Constructor = function()
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("pipe_destroyed.wav");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_pipeline";
     };
@@ -101,7 +101,7 @@ var Constructor = function()
         return ["weak_wall+E+W",
                 "weak_wall+N+S"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_walltop";
     };

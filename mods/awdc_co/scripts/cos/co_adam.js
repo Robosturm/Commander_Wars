@@ -1,9 +1,9 @@
-CO_ADAM.init = function(co)
+CO_ADAM.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_ADAM.activateSuperpower = function(co, powerMode)
+CO_ADAM.activateSuperpower = function(co, powerMode, map)
 {
 	CO_ADAM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ADAM.getSuperPowerName = function()
     return CO_ADAM.getPowerName();
 };
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
 {
     var ret = 0;
     var variables = co.getVariables();
@@ -50,7 +50,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return ret;
 };
 
-CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     var variables = co.getVariables();
     var bonusUnitVariable = variables.createVariable("BONUSUNITS");

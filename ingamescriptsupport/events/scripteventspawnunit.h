@@ -10,7 +10,7 @@ class ScriptEventSpawnUnit : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventSpawnUnit();
+    explicit ScriptEventSpawnUnit(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

@@ -146,7 +146,6 @@ public:
     QPoint getTest() const;
     void setTest(QPoint newTest);
 
-
 public slots:
     /**
      * @brief getMap

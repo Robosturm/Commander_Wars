@@ -1,9 +1,9 @@
-CO_KANBEI.init = function(co)
+CO_KANBEI.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_KANBEI.activateSuperpower = function(co, powerMode)
+CO_KANBEI.activateSuperpower = function(co, powerMode, map)
 {
 	CO_KANBEI.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_KANBEI.getSuperPowerName = function()
     return CO_KANBEI.getPowerName();
 };
 CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -34,7 +34,7 @@ CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return CO_KANBEI.globalBonus;
 };
 CO_KANBEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                   defender, defPosX, defPosY, isAttacker, action)
+                                   defender, defPosX, defPosY, isAttacker, action, map)
 {
     switch (co.getPowerMode())
     {

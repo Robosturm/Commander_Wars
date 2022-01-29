@@ -10,8 +10,8 @@ const QString ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().ge
 
 const QString ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
 
-ScriptEventDialog::ScriptEventDialog()
-    : ScriptEvent (EventType::dialog)
+ScriptEventDialog::ScriptEventDialog(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::dialog)
 {
 
 }

@@ -1,9 +1,9 @@
-CO_STURM.init = function(co)
+CO_STURM.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_STURM.activateSuperpower = function(co, powerMode)
+CO_STURM.activateSuperpower = function(co, powerMode, map)
 {
 	CO_STURM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_STURM.getSuperPowerName = function()
     return CO_STURM.getPowerName();
 };
 CO_STURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -34,7 +34,7 @@ CO_STURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_STURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, map)
 {
     switch (co.getPowerMode())
     {

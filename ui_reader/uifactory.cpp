@@ -566,7 +566,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         bool enabled = getBoolValue(getAttribute(childs, attrEnabled), true);
         QString icon = getStringValue(getAttribute(childs, attrStartValue));
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pIcon = pWikiDatabase->getIcon(icon, size);
+        oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, icon, size);
         pIcon->setPosition(x, y);
         parent->addChild(pIcon);
         pIcon->setEnabled(enabled);

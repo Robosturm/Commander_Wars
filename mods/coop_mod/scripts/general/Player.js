@@ -1,12 +1,12 @@
-PLAYER.startOfTurn = function(player)
+PLAYER.startOfTurn = function(player, map)
 {
     // moved all code to sub functions so it easier to cross mod against this vanilla mod
-    PLAYER.coop_ModDoStartOfTurnRepairing(player);
-    PLAYER.coop_ModApplyDefenceDebuf(player);
-    PLAYER.coop_ModApplyRoyalGuardDebuf(player);
+    PLAYER.coop_ModDoStartOfTurnRepairing(player, map);
+    PLAYER.coop_ModApplyDefenceDebuf(player, map);
+    PLAYER.coop_ModApplyRoyalGuardDebuf(player, map);
 };
 
-PLAYER.coop_ModDoStartOfTurnRepairing = function(player)
+PLAYER.coop_ModDoStartOfTurnRepairing = function(player, map)
 {
     if (!player.getIsDefeated())
     {
@@ -50,7 +50,7 @@ PLAYER.coop_ModDoStartOfTurnRepairing = function(player)
     }
 }
 
-PLAYER.coop_ModApplyDefenceDebuf = function(player)
+PLAYER.coop_ModApplyDefenceDebuf = function(player, map)
 {
     var variables = player.getVariables();
     var boostVariable = variables.createVariable("COOP_MOD_DEFENSEBOOST_UNITS");
@@ -69,7 +69,7 @@ PLAYER.coop_ModApplyDefenceDebuf = function(player)
     boostVariable.writeDataListInt32(empty);
 };
 
-PLAYER.coop_ModApplyRoyalGuardDebuf = function(player)
+PLAYER.coop_ModApplyRoyalGuardDebuf = function(player, map)
 {
     var variables = player.getVariables();
     var boostVariable = variables.createVariable("COOP_MOD_ROYAL_GUARD_UNITS");

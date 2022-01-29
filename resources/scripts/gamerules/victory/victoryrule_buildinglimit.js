@@ -30,23 +30,23 @@ var Constructor = function()
         return ["spinbox", "checkbox"];
     };
     // defines the default value during map selection for this rule
-    this.getDefaultRuleValue = function(itemNumber)
+    this.getDefaultRuleValue = function(itemNumber, map)
     {
         if (itemNumber === 0)
         {
-            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount(map);
         }
         else
         {
             return 0;
         }
     };
-    this.getInfiniteValue = function(itemNumber)
+    this.getInfiniteValue = function(itemNumber, map)
     {
         if (itemNumber === 0)
         {
             // disable value of the rule for spinboxes. :)
-            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount(map);
         }
         else
         {
@@ -54,7 +54,7 @@ var Constructor = function()
         }
     };
 
-    this.getMinimumCount = function()
+    this.getMinimumCount = function(map)
     {
         var players = map.getPlayerCount();
         var buildingCount = 0;
@@ -74,11 +74,11 @@ var Constructor = function()
     {
     };
 
-    this.getBuildings = function(rule, player)
+    this.getBuildings = function(rule, player, map)
     {
         var count = player.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
         var players = map.getPlayerCount();
-        var teamVictory = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 1);
+        var teamVictory = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 1, map);
         if (teamVictory === 1)
         {
             for (var i = 0; i < players; i++)
@@ -94,10 +94,10 @@ var Constructor = function()
         return count;
     };
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
-        var buildings = VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player);
-        var buildingLimit = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule);
+        var buildings = VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player, map);
+        var buildingLimit = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, map);
         if (buildings >= buildingLimit)
 		{
             // defeat all other player
@@ -113,9 +113,9 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
-        return VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player);
+        return VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player, map);
     };
 };
 

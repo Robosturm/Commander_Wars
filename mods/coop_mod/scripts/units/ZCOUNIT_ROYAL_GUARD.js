@@ -1,4 +1,4 @@
-ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit)
+ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
 {
     var owner = unit.getOwner();
     var playerId  = owner.getPlayerID();

@@ -11,7 +11,7 @@ class ScriptEventChangeBuildlist : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventChangeBuildlist();
+    explicit ScriptEventChangeBuildlist(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

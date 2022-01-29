@@ -10,7 +10,7 @@ class ScriptConditionCheckVariable : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionCheckVariable();
+    explicit ScriptConditionCheckVariable(GameMap* pMap);
 
     qint32 getTeam() const;
     void setTeam(const qint32 &value);

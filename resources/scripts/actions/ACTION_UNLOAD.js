@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -13,13 +13,13 @@ var Constructor = function()
         }
 
 
-        if (ACTION_UNLOAD.isUnloadTerrain(unit, transportTerrain) &&
+        if (ACTION_UNLOAD.isUnloadTerrain(unit, transportTerrain, map) &&
             (actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
             for (var i = 0; i < unit.getLoadedUnitCount(); i++)
             {
-                if (ACTION_UNLOAD.getUnloadFields(action, i).length > 0)
+                if (ACTION_UNLOAD.getUnloadFields(action, i, map).length > 0)
                 {
                     return true;
                 }
@@ -29,7 +29,7 @@ var Constructor = function()
 
     };
 
-    this.isUnloadTerrain = function(unit, transportTerrain)
+    this.isUnloadTerrain = function(unit, transportTerrain, map)
     {
         var unitID = unit.getUnitID();
         var terrainId = transportTerrain.getID();
@@ -58,7 +58,7 @@ var Constructor = function()
         return true;
     };
 
-    this.getUnloadFields = function(action, transportUnitIdx)
+    this.getUnloadFields = function(action, transportUnitIdx, map)
     {
         var targetField = action.getActionTarget();
         var targetFields = [Qt.point(targetField.x + 1, targetField.y),
@@ -96,15 +96,15 @@ var Constructor = function()
         return ret;
     };
 
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Unload");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "load";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         // check if the final step was a wait command
         var step = action.getInputStep();
@@ -130,7 +130,7 @@ var Constructor = function()
         }
         else
         {
-            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action);
+            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action, map);
             if (unloadableUnits.length === 0)
             {
                 action.writeDataString("ACTION_WAIT");
@@ -141,7 +141,7 @@ var Constructor = function()
         return false;
     };
 
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         // supported types are MENU and FIELD
         if (globals.isEven(action.getInputStep()))
@@ -150,7 +150,7 @@ var Constructor = function()
             var unitIndexes = [];
             var blockedFields = [];
             ACTION_UNLOAD.getUsedUnitsAndFields(action, unitIndexes, blockedFields);
-            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action);
+            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action, map);
             if (unitIndexes.length === 0 && unloadableUnits.length === 1)
             {
                 // skip selecting a unit when only one can be unloaded
@@ -179,13 +179,13 @@ var Constructor = function()
             if (i2 !== step - 1)
             {
                 var x = action.readDataInt32();
-                var y= action.readDataInt32();
+                var y = action.readDataInt32();
                 blockedFields.push(Qt.point(x, y))
             }
         }
     };
 
-    this.getUnloadableUnits = function(action)
+    this.getUnloadableUnits = function(action, map)
     {
         var ret = [];
         var unitIndexes = [];
@@ -200,7 +200,7 @@ var Constructor = function()
         {
             if (unitIndexes.indexOf(i) < 0)
             {
-                fields = ACTION_UNLOAD.getUnloadFields(action, i);
+                fields = ACTION_UNLOAD.getUnloadFields(action, i, map);
                 for (i3 = 0; i3 < fields.length; i3++)
                 {
                     found = false;
@@ -224,7 +224,7 @@ var Constructor = function()
         return ret;
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var step = action.getInputStep();
 
@@ -243,7 +243,7 @@ var Constructor = function()
             {
                 if (unitIndexes.indexOf(i) < 0)
                 {
-                    fields = ACTION_UNLOAD.getUnloadFields(action, i);
+                    fields = ACTION_UNLOAD.getUnloadFields(action, i, map);
                     for (i3 = 0; i3 < fields.length; i3++)
                     {
                         found = false;
@@ -269,7 +269,7 @@ var Constructor = function()
         else
         {
             // find out which unit we want to unload
-            fields = ACTION_UNLOAD.getUnloadFields(action, unitIndexes[unitIndexes.length - 1]);
+            fields = ACTION_UNLOAD.getUnloadFields(action, unitIndexes[unitIndexes.length - 1], map);
             for (i3 = 0; i3 < fields.length; i3++)
             {
                 found = false;
@@ -294,11 +294,11 @@ var Constructor = function()
     this.postAnimationTransportUnits = [];
     this.postAnimationTransportUnitsPosX = [];
     this.postAnimationTransportUnitsPosY = [];
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         ACTION_UNLOAD.postAnimationUnit = action.getTargetUnit();
-        var animation = Global[ACTION_UNLOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_UNLOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_UNLOAD", "performPostAnimation");
         // move unit to target position
         ACTION_UNLOAD.postAnimationUnit.moveUnitAction(action);
@@ -322,7 +322,7 @@ var Constructor = function()
             }
         }
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         // unloading the units here :)
         for (var i = 0; i < ACTION_UNLOAD.postAnimationTransportUnits.length; i++)

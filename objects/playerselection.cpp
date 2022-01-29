@@ -198,7 +198,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     QStringList cos;
     if (m_pCampaign.get() != nullptr)
     {
-        cos = m_pCampaign->getSelectableCOs(m_pMap.get(), player, co);
+        cos = m_pCampaign->getSelectableCOs(m_pMap, player, co);
     }
     else
     {
@@ -221,7 +221,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     if (cos.size() == 0 ||
         cos[0] != "")
     {
-        spCOSelectionDialog dialog = spCOSelectionDialog::create(m_pMap.get(), coid, m_pMap->getPlayer(player)->getColor(), player, cos);
+        spCOSelectionDialog dialog = spCOSelectionDialog::create(m_pMap, coid, m_pMap->getPlayer(player)->getColor(), player, cos);
         oxygine::Stage::getStage()->addChild(dialog);
         m_pPlayerSelection->setVisible(false);
         if (co == 0)
@@ -245,7 +245,7 @@ bool PlayerSelection::getIsCampaign()
 bool PlayerSelection::getIsArmyCustomizationAllowed()
 {
     
-    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(m_pMap.get()) || Console::getDeveloperMode());
+    return (m_pCampaign.get() == nullptr || m_pCampaign->getAllowArmyCustomization(m_pMap) || Console::getDeveloperMode());
 }
 
 qint32 PlayerSelection::getDefaultColorCount()
@@ -561,7 +561,7 @@ void PlayerSelection::showPlayerSelection()
             }
             else
             {
-                pPlayer->setBaseGameInput(spHumanPlayerInput::create());
+                pPlayer->setBaseGameInput(spHumanPlayerInput::create(m_pMap));
             }
         }
     }
@@ -982,7 +982,7 @@ void PlayerSelection::slotShowAllBuildList()
 {
     // use player 0 as default for showing all    
     
-    spBuildListDialog dialog = spBuildListDialog::create(0, m_pMap->getPlayer(0)->getBuildList());
+    spBuildListDialog dialog = spBuildListDialog::create(m_pMap, 0, m_pMap->getPlayer(0)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
 }
@@ -990,7 +990,7 @@ void PlayerSelection::slotShowAllBuildList()
 void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 {    
     
-    spBuildListDialog dialog = spBuildListDialog::create(player, m_pMap->getPlayer(player)->getBuildList());
+    spBuildListDialog dialog = spBuildListDialog::create(m_pMap, player, m_pMap->getPlayer(player)->getBuildList());
     oxygine::Stage::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
 }
@@ -1105,7 +1105,7 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
         }
     }
     updateCO1Sprite(coid, playerIdx);
-    if (getIsCampaign() && m_pCampaign->getAutoSelectPlayerColors(m_pMap.get()))
+    if (getIsCampaign() && m_pCampaign->getAutoSelectPlayerColors(m_pMap))
     {
         autoSelectPlayerColors();
     }
@@ -1322,7 +1322,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
     {
         Userdata* pUserdata = Userdata::getInstance();
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
-        spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(pPlayer, m_pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
+        spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(m_pMap, pPlayer, m_pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
         oxygine::Stage::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
         {
@@ -1412,10 +1412,10 @@ void PlayerSelection::selectAI(qint32 player)
 void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
 {
     
-    if(m_pMap.get() != nullptr)
+    if(m_pMap != nullptr)
     {
         Player* pPlayer = m_pMap->getPlayer(player);
-        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
+        pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, type));
         if (pPlayer->getBaseGameInput() != nullptr)
         {
             pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(m_pMap->getGameRules()->getAiAttackTerrain());
@@ -1629,7 +1629,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             else
             {
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes_ProxyAi));
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes_ProxyAi));
                 pPlayer->setSocketId(socketID);
                 m_playerAIs[player]->setCurrentItemText(username);
                 m_PlayerSockets[player] = socketID;
@@ -1713,7 +1713,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
             m_pMap->getPlayer(player)->deserializeObject(stream);
-            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(eAiType));
+            m_pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, eAiType));
 
             bool humanFound = false;
             for (qint32 i = 0; i < m_playerAIs.size(); i++)

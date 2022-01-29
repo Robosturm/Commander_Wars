@@ -8,8 +8,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptEventModifyUnit::ScriptEventModifyUnit()
-    : ScriptEvent (ScriptEvent::EventType::modifyUnit)
+ScriptEventModifyUnit::ScriptEventModifyUnit(GameMap* pMap)
+    : ScriptEvent(pMap, ScriptEvent::EventType::modifyUnit)
 {
 
 }

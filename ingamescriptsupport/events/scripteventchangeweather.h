@@ -10,7 +10,7 @@ class ScriptEventChangeWeather : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventChangeWeather();
+    explicit ScriptEventChangeWeather(GameMap* pMap);
 
     /**
      * @brief readEvent

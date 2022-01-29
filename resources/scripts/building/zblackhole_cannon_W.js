@@ -20,7 +20,7 @@ var Constructor = function()
         return 0;
     };
     this.actionList = ["ACTION_CANNON_FIRE"];
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(1);
     };
@@ -73,7 +73,7 @@ var Constructor = function()
     {
         return GameEnums.BuildingTarget_Enemy;
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
@@ -85,7 +85,7 @@ var Constructor = function()
         animation2.setSound("black_canon_destroyed.wav");
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
-    this.getShotAnimation = function(building)
+    this.getShotAnimation = function(building, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY(), 70);
         animation.addSprite("blackhole_shot_west", -map.getImageSize() * 3.0, -map.getImageSize() * 3.0, 0, 2);

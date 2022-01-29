@@ -8,18 +8,19 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
+class GameMap;
 
 class AttackReport;
-typedef oxygine::intrusive_ptr<AttackReport> spAttackReport;
+using spAttackReport = oxygine::intrusive_ptr<AttackReport>;
 
 class DialogAttackLog;
-typedef oxygine::intrusive_ptr<DialogAttackLog> spDialogAttackLog;
+using spDialogAttackLog = oxygine::intrusive_ptr<DialogAttackLog>;
 
 class DialogAttackLog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogAttackLog(Player* pPlayer);
+    explicit DialogAttackLog(GameMap* pMap, Player* pPlayer);
     virtual ~DialogAttackLog() = default;
 signals:
     void sigFinished();
@@ -31,6 +32,7 @@ private slots:
 private:
     QVector<spAttackReport> m_Log;
     Player* m_pPlayer{nullptr};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // DIALOGATTACKLOG_H

@@ -67,7 +67,7 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(5, 10);
     },
-	getFORESTPlaceable : function(x, y)
+    getFORESTPlaceable : function(x, y, map)
     {
         return true;
     },
@@ -87,7 +87,7 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(1, 1);
     },
-	getPLAINSPlaceable : function(x, y)
+    getPLAINSPlaceable : function(x, y, map)
     {
         return true;
     },
@@ -107,7 +107,7 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(3, 5);
     },
-	getRIVERPlaceable : function(x, y)
+    getRIVERPlaceable : function(x, y, map)
     {
         return true;
     },
@@ -131,7 +131,7 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(2, 6);
     },
-	getMOUNTAINPlaceable : function(x, y)
+    getMOUNTAINPlaceable : function(x, y, map)
     {
         return true;
     },
@@ -151,7 +151,7 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(1, 4);
     },
-	getSEAPlaceable : function(x, y)
+    getSEAPlaceable : function(x, y, map)
     {
         return true;
     },
@@ -161,25 +161,25 @@ var RANDOMMAPGENERATOR =
     },
     // get + Building + Placeable -> returns if a building can be placed at the given location
     // get + Building + BaseTerrainID -> terrain that replaces the current one before the building is placed
-    getFACTORYPlaceable : function(x, y)
+    getFACTORYPlaceable : function(x, y, map)
     {
         //  mandatory
-        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y);
+        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y, map);
     },
     getFACTORYBaseTerrainID : function()
     {
         //  mandatory
         return "PLAINS";
     },
-    getAIRPORTPlaceable : function(x, y)
+    getAIRPORTPlaceable : function(x, y, map)
     {
-        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y);
+        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y, map);
     },
     getAIRPORTBaseTerrainID : function()
     {
         return "PLAINS";
     },
-    getHARBOURPlaceable : function(x, y)
+    getHARBOURPlaceable : function(x, y, map)
     {
         for (var i = 0; i < 4; i++)
         {
@@ -216,34 +216,34 @@ var RANDOMMAPGENERATOR =
     {
         return "PLAINS";
     },
-    getTOWNPlaceable : function(x, y)
+    getTOWNPlaceable : function(x, y, map)
     {
-        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y);
+        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y, map);
     },
     getTOWNBaseTerrainID : function()
     {
         return "PLAINS";
     },
-    getMINEPlaceable : function(x, y)
+    getMINEPlaceable : function(x, y, map)
     {
-        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y);
+        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y, map);
     },
     getMINEBaseTerrainID : function()
     {
         return "PLAINS";
     },
 
-    getHQPlaceable : function(x, y)
+    getHQPlaceable : function(x, y, map)
     {
         // mandatory
-        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y);
+        return RANDOMMAPGENERATOR.getBuildingBaseTerrain(x, y, map);
     },
     getHQBaseTerrainID : function()
     {
         //  mandatory
         return "PLAINS";
     },
-    getOILRIGPlaceable : function(x, y)
+    getOILRIGPlaceable : function(x, y, map)
     {
         var id = map.getTerrain(x, y).getTerrainID();
         if (id === "SEA")
@@ -256,7 +256,7 @@ var RANDOMMAPGENERATOR =
     {
         return "SEA";
     },
-    getBuildingBaseTerrain : function(x, y)
+    getBuildingBaseTerrain : function(x, y, map)
     {
         var id = map.getTerrain(x, y).getTerrainID();
         if (id === "PLAINS" ||

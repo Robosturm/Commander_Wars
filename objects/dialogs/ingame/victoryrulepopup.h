@@ -3,13 +3,14 @@
 
 #include "objects/base/closeablepopup.h"
 
+class GameMap;
 class VictoryRulePopup;
 using spVictoryRulePopup = oxygine::intrusive_ptr<VictoryRulePopup>;
 
 class VictoryRulePopup : public CloseablePopUp
 {
 public:
-    VictoryRulePopup(QString rule, qint32 width, qint32 heigth);
+    VictoryRulePopup(GameMap* pMap, QString rule, qint32 width, qint32 heigth);
     virtual ~VictoryRulePopup();
     static bool exists(QString rule)
     {
@@ -20,6 +21,7 @@ public slots:
     void updateInfo();
 private:
     QString m_rule;
+    GameMap* m_pMap{nullptr};
     static QStringList m_popUps;
 };
 

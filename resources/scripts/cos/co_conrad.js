@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(4);
@@ -13,7 +13,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -26,7 +26,7 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation2);
     };
     this.bonusLuckDamage = 50;
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -78,7 +78,7 @@ var Constructor = function()
         dmgModVar.writeDataFloat(CO_CONRAD.bonusLuckDamage);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -98,7 +98,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -107,7 +107,7 @@ var Constructor = function()
         return "TI";
     };
 
-    this.startOfTurn = function(co)
+    this.startOfTurn = function(co, map)
     {
         var variables = co.getVariables();
         // clean up possible variables from scop
@@ -115,7 +115,7 @@ var Constructor = function()
     }
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         if (isDefender)
         {
@@ -154,7 +154,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -164,14 +164,14 @@ var Constructor = function()
         return 0;
     };
 
-    this.getBonusLuck = function(co, unit, posX, posY)
+    this.getBonusLuck = function(co, unit, posX, posY, map)
     {
         // reduce luck to zero
         return -unit.getHpRounded() / 2;
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
     {
         if (isDefender === false)
         {
@@ -192,7 +192,7 @@ var Constructor = function()
         return attackerBaseHp / 4;
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
@@ -221,7 +221,7 @@ var Constructor = function()
         }
     };
 
-    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -235,11 +235,11 @@ var Constructor = function()
         }
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

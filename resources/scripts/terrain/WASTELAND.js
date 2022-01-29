@@ -5,7 +5,7 @@ var Constructor = function()
         return 1;
     };
     this.baseTerrainId = "PLAINS";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         __BASEWASTELAND.loadBase(terrain, "wasteland")
     };

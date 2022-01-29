@@ -1,9 +1,9 @@
-CO_ISABELLA.init = function(co)
+CO_ISABELLA.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_ISABELLA.activateSuperpower = function(co, powerMode)
+CO_ISABELLA.activateSuperpower = function(co, powerMode, map)
 {
     CO_ISABELLA.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_ISABELLA.getSuperPowerName = function()
     return CO_ISABELLA.getPowerName();
 };
 CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action)
+                                         defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -34,7 +34,7 @@ CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ISABELLA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action)
+                                          defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -51,7 +51,7 @@ CO_ISABELLA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ISABELLA.getFirerangeModifier = function(co, unit, posX, posY)
+CO_ISABELLA.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -72,7 +72,7 @@ CO_ISABELLA.getFirerangeModifier = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_ISABELLA.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ISABELLA.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

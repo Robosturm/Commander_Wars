@@ -11,7 +11,7 @@ var Constructor = function()
         return "weather_symbol_sun";
     };
 
-    this.activate = function(weather)
+    this.activate = function(weather, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();
         var queueAnimation = null;

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-	this.getBonusMisfortune = function(co, unit, posX, posY)
+	this.getBonusMisfortune = function(co, unit, posX, posY, map)
     {
         if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Increases the missfortune of units by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "cursed";
     };

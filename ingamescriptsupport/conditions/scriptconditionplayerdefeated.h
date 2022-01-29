@@ -10,7 +10,7 @@ class ScriptConditionPlayerDefeated : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionPlayerDefeated();
+    explicit ScriptConditionPlayerDefeated(GameMap* pMap);
 
     /**
      * @brief readCondition

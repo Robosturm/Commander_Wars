@@ -1,7 +1,7 @@
 var Constructor = function()
 {
         this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -9,11 +9,11 @@ var Constructor = function()
 		}
         return 0;
     };
-	this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+	this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
 		if (CO_PERK.isActive(co))
 		{
-            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack);
+            var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map);
             co.setPowerFilled(co.getPowerFilled() + powerGain * 0.1);
 		}
         return 0;
@@ -23,7 +23,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the defence of units by 10% and increases the power charge speed by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "flimsy";
     };

@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt", "+alt2"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(2);
         co.setSuperpowerStars(4);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -33,7 +33,7 @@ var Constructor = function()
         }
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -82,7 +82,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -102,7 +102,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 1;
     };
@@ -113,12 +113,12 @@ var Constructor = function()
     this.costModifier = 20;
     this.coZoneBoost = 5;
     this.globalBoost = 15;
-    this.getCostModifier = function(co, id, baseCost, posX, posY)
+    this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
         return -baseCost * CO_COLIN.costModifier / 100;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -139,7 +139,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -148,11 +148,11 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

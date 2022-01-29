@@ -36,7 +36,7 @@ var Constructor = function()
     {
         return qsTr("APC");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -50,12 +50,12 @@ var Constructor = function()
         return 1;
     };
     this.transportList = ["INFANTRY", "MECH", "SNIPER", "ZCOUNIT_COMMANDO", "ZCOUNIT_PARTISAN"];
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         // pay unit upkeep
         if (unit.getTerrain() !== null)
         {
-            ACTION_SUPPORTALL_RATION.giveRation(unit);
+            ACTION_SUPPORTALL_RATION.giveRation(unit, map);
         }
         UNIT.transporterRefilling(unit);
     };

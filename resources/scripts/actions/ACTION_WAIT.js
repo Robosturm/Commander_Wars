@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -20,23 +20,23 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Wait");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "wait";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        Global[unit.getUnitID()].doWalkingAnimation(action);
+        Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
@@ -49,10 +49,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = ACTION;
-var ACTION_WAIT = new Constructor();
-
-Constructor = function()
-{
-}
-Constructor.prototype = ACTION_WAIT;
 var ACTION_WAIT = new Constructor();

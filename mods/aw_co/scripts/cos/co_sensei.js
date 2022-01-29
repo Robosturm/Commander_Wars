@@ -1,9 +1,9 @@
-CO_SENSEI.init = function(co)
+CO_SENSEI.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(2);
 };
-CO_SENSEI.activateSuperpower = function(co, powerMode)
+CO_SENSEI.activateSuperpower = function(co, powerMode, map)
 {
     CO_SENSEI.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SENSEI.getSuperPowerName = function()
     return CO_SENSEI.getPowerName();
 };
 CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -61,7 +61,7 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_SENSEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -72,7 +72,7 @@ CO_SENSEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SENSEI.getMovementpointModifier = function(co, unit, posX, posY)
+CO_SENSEI.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

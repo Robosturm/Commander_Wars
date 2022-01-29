@@ -11,8 +11,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
-MenuData::MenuData()
-    : QObject()
+MenuData::MenuData(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("MenuData");
     Mainapp* pApp = Mainapp::getInstance();
@@ -27,7 +27,7 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
     m_costList.append(costs);
     m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    m_iconList.append(pGameManager->getIcon(icon));
+    m_iconList.append(pGameManager->getIcon(m_pMap, icon));
 }
 
 void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 costs, bool enabled)
@@ -37,7 +37,7 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
     m_costList.append(costs);
     m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    spUnit menuIcon = oxygine::dynamic_pointer_cast<Unit>(pGameManager->getIcon(pIcon->getUnitID()));
+    spUnit menuIcon = oxygine::dynamic_pointer_cast<Unit>(pGameManager->getIcon(m_pMap, pIcon->getUnitID()));
     if (menuIcon.get() != nullptr)
     {
         menuIcon->setHasMoved(pIcon->getHasMoved());
@@ -66,4 +66,9 @@ bool MenuData::validData()
     }
     CONSOLE_PRINT("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
     return false;
+}
+
+GameMap *MenuData::getMap() const
+{
+    return m_pMap;
 }

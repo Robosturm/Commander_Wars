@@ -1,9 +1,9 @@
-CO_PENNY.init = function(co)
+CO_PENNY.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_PENNY.activateSuperpower = function(co, powerMode)
+CO_PENNY.activateSuperpower = function(co, powerMode, map)
 {
     CO_PENNY.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_PENNY.getSuperPowerName = function()
     return CO_PENNY.getPowerName();
 };
 CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (map !== null)
     {
@@ -41,22 +41,22 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY)
+CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
-CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY)
+CO_PENNY.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
-CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
-CO_PENNY.getPerfectVision = function(co)
+CO_PENNY.getPerfectVision = function(co, map)
 {
     return false;
 };

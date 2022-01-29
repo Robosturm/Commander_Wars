@@ -1,5 +1,5 @@
 CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -51,7 +51,7 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_JESS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -63,7 +63,7 @@ CO_JESS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
+CO_JESS.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

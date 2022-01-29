@@ -45,7 +45,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getBonusVision = function(unit, terrain)
+    this.getBonusVision = function(unit, terrain, map)
     {
         var baseTerrainId = ""
         if (terrain !== null)
@@ -58,7 +58,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -86,7 +86,7 @@ var Constructor = function()
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
         var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
         var x = terrain.getX();
@@ -129,7 +129,7 @@ var Constructor = function()
             terrain.loadBaseSprite(spriteId + "+E+W");
         }
     };
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
         var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE,WASTE_PIPELINE", false, false, GameEnums.Directions_Direct, true);
@@ -142,7 +142,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.onBaseDestroyed = function(terrain, spriteId)
+    this.onBaseDestroyed = function(terrain, spriteId, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
@@ -158,14 +158,14 @@ var Constructor = function()
     {
         return "minimap_weld";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_pipeline";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var baseTerrainId = ""
         if (terrain !== null)
         {
@@ -185,7 +185,7 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return TERRAIN.getTerrainBackgroundId(id, weatherModifier, true);
         }
     };

@@ -1,4 +1,4 @@
-RADAR.getVision = function(building)
+RADAR.getVision = function(building, map)
 {
     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN" &&
         !building.getOwner().getWeatherImmune())

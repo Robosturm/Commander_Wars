@@ -1,9 +1,9 @@
-CO_GRAVES.init = function(co)
+CO_GRAVES.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_GRAVES.activateSuperpower = function(co, powerMode)
+CO_GRAVES.activateSuperpower = function(co, powerMode, map)
 {
     CO_GRAVES.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_GRAVES.getSuperPowerName = function()
 {
     return CO_GRAVES.getPowerName();
 };
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -41,13 +41,13 @@ CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
     }
 };
 CO_GRAVES.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_GRAVES.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(8);
         co.setSuperpowerStars(7);
@@ -13,28 +13,28 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var invasion = ["ARTILLERY", "FLAK", "LIGHT_TANK", "FLAK", "LIGHT_TANK"];
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
-        CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation);
+        CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation, map);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var invsion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation);
-        CO_YUKIO.yukioDamage(co, 3, powerNameAnimation);
+        CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation, map);
+        CO_YUKIO.yukioDamage(co, 3, powerNameAnimation, map);
     };
 
 
-    this.yukioDamage = function(co, value, powerNameAnimation)
+    this.yukioDamage = function(co, value, powerNameAnimation, map)
     {
         var player = co.getOwner();
         var animations = [];
@@ -86,7 +86,7 @@ var Constructor = function()
         }
     };
 
-    this.spawnUnits = function(co, count, invasion, powerNameAnimation)
+    this.spawnUnits = function(co, count, invasion, powerNameAnimation, map)
     {
         var buildings = co.getOwner().getBuildings();
         var animations = [];
@@ -143,7 +143,7 @@ var Constructor = function()
         buildings.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -163,7 +163,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 4;
     };
@@ -173,7 +173,7 @@ var Constructor = function()
     };
     this.mintrueDamage = 10;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -191,7 +191,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -202,7 +202,7 @@ var Constructor = function()
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
     {
         // reduce counter damage by a flat amount here
         switch (co.getPowerMode())
@@ -229,7 +229,7 @@ var Constructor = function()
     };
 
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender, luckMode)
+                                  defender, defPosX, defPosY, isDefender, luckMode, map)
     {
         // reduce counter damage by a flat amount here
         switch (co.getPowerMode())
@@ -247,11 +247,11 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

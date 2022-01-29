@@ -17,6 +17,7 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
 class GameAction;
 class UnitPathFindingSystem;
 
@@ -42,7 +43,7 @@ public:
         Down
     };
 
-    explicit HumanPlayerInput();
+    explicit HumanPlayerInput(GameMap* pMap);
     virtual ~HumanPlayerInput();
 
     virtual void init() override;

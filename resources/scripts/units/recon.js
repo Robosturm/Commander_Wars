@@ -30,7 +30,7 @@ var Constructor = function()
     {
         return "MOVE_TIRE_A";
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);

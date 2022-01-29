@@ -1,11 +1,11 @@
 CO_BRENNER.powerBonus = 20;
 CO_BRENNER.superPowerBonus = 20;
-CO_BRENNER.init = function(co)
+CO_BRENNER.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_BRENNER.activateSuperpower = function(co, powerMode)
+CO_BRENNER.activateSuperpower = function(co, powerMode, map)
 {
     CO_BRENNER.activatePower(co, powerMode);
 };
@@ -19,7 +19,7 @@ CO_BRENNER.getSuperPowerName = function()
 };
 CO_BRENNER.coZoneBonus = 0;
 CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action)
+                                         defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -37,7 +37,7 @@ CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_BRENNER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };

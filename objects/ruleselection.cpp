@@ -1046,7 +1046,7 @@ void RuleSelection::showCOBannlist()
 void RuleSelection::showPerkBannlist()
 {
     
-    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(nullptr, -1, true, QStringList());
+    spPerkSelectionDialog pBannlist = spPerkSelectionDialog::create(m_pMap, nullptr, -1, true, QStringList());
     oxygine::Stage::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, m_pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
 }

@@ -12,8 +12,9 @@
 
 #include "objects/base/label.h"
 
-InfluenceFrontMap::InfluenceFrontMap(const QVector<spIslandMap> & islands)
-    : m_islands(islands)
+InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> & islands)
+    : m_islands(islands),
+      m_pMap(pMap)
 {
     setObjectName("InfluenceFrontMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -111,8 +112,9 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, QMap<QStri
 }
 
 InfluenceFrontMap::InfluenceInfo::InfluenceInfo(GameMap* pMap)
+    : m_pMap(pMap)
 {
-    qint32 playerCount = m_pMap->getPlayerCount();
+    qint32 playerCount = pMap->getPlayerCount();
     for (qint32 x = 0; x < playerCount; x++)
     {
         playerValues.append(0);

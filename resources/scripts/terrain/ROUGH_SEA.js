@@ -14,7 +14,7 @@ var Constructor = function()
     {
         return qsTr("Rough Sea");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "LAKE")
         {
@@ -25,7 +25,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("SEA");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         terrain.loadBaseSprite("rough_sea+N+E+S+W");
     };
@@ -33,7 +33,7 @@ var Constructor = function()
     {
         return 2;
     };
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
         var baseId = terrain.getBaseTerrainID();
@@ -50,7 +50,7 @@ var Constructor = function()
         }
         return false;
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         SEA.loadOverlaySprite(terrain);
         LAKE.loadOverlaySprite(terrain);
@@ -59,13 +59,13 @@ var Constructor = function()
     {
         return "minimap_rough_sea";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()

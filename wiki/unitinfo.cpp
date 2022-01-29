@@ -71,7 +71,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setColorTable(pUnit->getOwner()->getColorTableAnim(), true);
     addChild(pSpriteBox);
 
-    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
+    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit->getMap(), spUnit(pUnit), nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
     pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
     addChild(pBattleAnimationSprite);
@@ -323,7 +323,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", pUnit->getMap());
         pTerrain->loadSprites();
-        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i));
+        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i), pUnit->getMap());
         // pBuilding->setOwner(pUnit->getOwner());
         pBuilding->updateBuildingSprites(false);
         qint32 buildingWidth = pBuilding->getBuildingWidth();
@@ -407,7 +407,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, const QString & weaponID, qint32& 
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
-        spUnit pDummy = spUnit::create(sortedUnits[i], pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(sortedUnits[i], pUnit->getOwner(), false, pUnit->getMap());
         QString unitId = sortedUnits[i];
         pDummy->addClickListener([=](oxygine::Event*)
         {
@@ -442,7 +442,7 @@ void UnitInfo::createLoadingTable(Unit* pUnit, const QStringList & loadables, qi
     qint32 x = 0;
     for (const auto& unitID : loadables)
     {
-        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {
@@ -464,7 +464,7 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
     {
         spUnit loadedUnit = spUnit(pUnit->getLoadedUnit(i));
-        spUnit pDummy = spUnit::create(loadedUnit->getUnitID(), pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(loadedUnit->getUnitID(), pUnit->getOwner(), false, pUnit->getMap());
         pDummy->setPosition(x, y);
         pDummy->setHasMoved(loadedUnit->getHasMoved());
         pDummy->setHp(loadedUnit->getHp());
@@ -494,7 +494,7 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
     qint32 x = 0;
     for (const auto& unitID : sortedUnits)
     {
-        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false, pUnit->getMap());
         if (pDummy->canTransportUnit(pUnit, true))
         {
             pDummy->setPosition(x, y);
@@ -520,9 +520,9 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
     for (const auto & action : actions)
     {
         // QString text = GameAction::getActionText(action);
-        QString icon = GameAction::getActionIcon(action);
+        QString icon = GameAction::getActionIcon(pUnit->getMap(), action);
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon, GameMap::getImageSize());
+        oxygine::spSprite pSprite = pWikiDatabase->getIcon(pUnit->getMap(), icon, GameMap::getImageSize());
         pSprite->setPosition(x, y);
         pSprite->addClickListener([=](oxygine::Event*)
         {

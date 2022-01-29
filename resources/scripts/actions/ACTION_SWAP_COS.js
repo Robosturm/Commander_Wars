@@ -1,19 +1,19 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         // disabled in normal mode
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Swap CO's");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "swap";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         var player = map.getCurrentPlayer();
         var co0 = player.getCO(0);
@@ -33,7 +33,7 @@ var Constructor = function()
 
 
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };

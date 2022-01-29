@@ -34,12 +34,12 @@ var Constructor = function()
     {
         return TEMPORARY_HARBOUR.constructionList;
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_harbour";
     };

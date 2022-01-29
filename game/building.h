@@ -106,6 +106,7 @@ public:
      * @param syncTime
      */
     void syncAnimation(oxygine::timeMS syncTime);
+
 signals:
 
 public slots:
@@ -467,6 +468,7 @@ private:
     bool m_neutralLoaded{false};
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // BUILDING_H

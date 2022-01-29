@@ -1,9 +1,9 @@
-CO_SONJA.init = function(co)
+CO_SONJA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_SONJA.activateSuperpower = function(co, powerMode)
+CO_SONJA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_SONJA.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_SONJA.getSuperPowerName = function()
 {
     return CO_SONJA.getPowerName();
 };
-CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {
@@ -27,7 +27,7 @@ CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
             return -1;
     }
 };
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
 {
     return false;
 };

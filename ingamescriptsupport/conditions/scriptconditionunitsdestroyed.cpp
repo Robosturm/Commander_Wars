@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionUnitsDestroyed::ScriptConditionUnitsDestroyed()
-    : ScriptCondition(ConditionType::unitsDestroyed)
+ScriptConditionUnitsDestroyed::ScriptConditionUnitsDestroyed(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::unitsDestroyed)
 {
 
 }
@@ -52,11 +52,11 @@ void ScriptConditionUnitsDestroyed::readCondition(QTextStream& rStream, QString 
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionUnitsDestroyed, line))
+        if (readSubCondition(m_pMap, rStream, ConditionUnitsDestroyed, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getCostModifier = function(co, id, baseCost, posX, posY)
+    this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Production cost -5%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "saleprice";
     };

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -35,7 +35,7 @@ var Constructor = function()
         
     };
 
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         var unitID = "WATERPLANE";
         var costs = Global[unitID].getBaseCost();
@@ -48,16 +48,16 @@ var Constructor = function()
         return qsTr(name + " " + costs.toString());
     };
 
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "WATERPLANE";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         var unitID = "WATERPLANE";
         // we need to move the unit to the target position

@@ -1,9 +1,9 @@
-CO_AMY.init = function(co)
+CO_AMY.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_AMY.activateSuperpower = function(co, powerMode)
+CO_AMY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_AMY.activatePower(co, powerMode);
 };

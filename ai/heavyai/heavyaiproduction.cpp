@@ -96,7 +96,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
             double value = score[0] * BaseGameInputIF::getUnitBuildValue(building.buildingDataInput[i].unitId);
             if (m_pPlayer->getCoCount() > 0)
             {
-                Unit dummy(building.buildingDataInput[i].unitId, m_pPlayer, false);
+                Unit dummy(building.buildingDataInput[i].unitId, m_pPlayer, false, m_pMap);
                 dummy.setVirtuellX(x);
                 dummy.setVirtuellY(y);
                 double bonusScore = 0;
@@ -150,7 +150,7 @@ void HeavyAi::scoreBuildingProductionData(HeavyAi::BuildingData & building)
         qint32 item = GlobalUtils::randInt(0, bestItems.size() - 1);
         building.m_score = scores[item];
         building.m_selectedData = bestItems[item];
-        building.m_action = spGameAction::create(CoreAI::ACTION_BUILD_UNITS);
+        building.m_action = spGameAction::create(CoreAI::ACTION_BUILD_UNITS, m_pMap);
         building.m_action->setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
         CoreAI::addMenuItemData(building.m_action, building.buildingDataInput[building.m_selectedData].unitId, building.buildingDataInput[building.m_selectedData].cost);
     }
@@ -161,8 +161,8 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
 {
     // create new
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
-    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
+    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
+    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS, m_pMap);
     qint32 x = building.m_pBuilding->Building::getX();
     qint32 y = building.m_pBuilding->Building::getY();
     pAction->setTarget(QPoint(x, y));
@@ -182,10 +182,10 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
                     UnitBuildData unitData;
                     unitData.unitId = actionIds[i];
                     unitData.cost = costs[i];
-                    Unit dummy(unitData.unitId, m_pPlayer, false);
+                    Unit dummy(unitData.unitId, m_pPlayer, false, m_pMap);
                     dummy.setVirtuellX(x);
                     dummy.setVirtuellY(y);
-                    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
+                    spTerrain pDummyTerrain = Terrain::createTerrain("PLAINS", -1, -1, "", m_pMap);
                     qint32 baseMovementCost = pMovementTableManager->getBaseMovementPoints(dummy.getMovementType(), pDummyTerrain.get(), pDummyTerrain.get(), &dummy);
                     if (baseMovementCost < 0)
                     {
@@ -204,7 +204,7 @@ void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & dat
 
 void HeavyAi::updateUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds)
 {
-    GameAction action = GameAction(ACTION_BUILD_UNITS);
+    GameAction action = GameAction(ACTION_BUILD_UNITS, m_pMap);
     action.setTarget(QPoint(building.m_pBuilding->Building::getX(), building.m_pBuilding->Building::getY()));
     if (action.canBePerformed())
     {
@@ -553,7 +553,7 @@ QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding & pBuildings, sp
                         auto buildList = pBuilding->getConstructionList();
                         for (auto & unitId : buildList)
                         {
-                            Unit dummy(unitId, m_pPlayer, false);
+                            Unit dummy(unitId, m_pPlayer, false, m_pMap);
                             if (m_pPlayer->getCosts(unitId, pBuilding->getPosition()) < funds && dummy.hasWeapons())
                             {
                                 BuildingData newData;

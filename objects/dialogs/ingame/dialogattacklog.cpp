@@ -14,9 +14,9 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
-DialogAttackLog::DialogAttackLog(Player* pPlayer)
-    : QObject(),
-      m_pPlayer(pPlayer)
+DialogAttackLog::DialogAttackLog(GameMap* pMap, Player* pPlayer)
+    : m_pPlayer(pPlayer),
+      m_pMap(pMap)
 {
     setObjectName("DialogAttackLog");
     
@@ -121,17 +121,17 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         }
 
         Terrain* pTerrain = m_pMap->getTerrain(log->attackerX, log->attackerY);
-        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
+        spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "", m_pMap);
         pActor->loadSprites();
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID());
+            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), m_pMap);
             pTerrainBuilding->setOwner(nullptr);
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->attackerID, m_pMap->getPlayer(log->attackerOwnerID), false));
+        pActor->addChild(spUnit::create(log->attackerID, m_pMap->getPlayer(log->attackerOwnerID), false, m_pMap));
         pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
         {
@@ -183,17 +183,17 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pPanel->addItem(pText);
 
         pTerrain = m_pMap->getTerrain(log->defenderX, log->defenderY);
-        pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
+        pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "", m_pMap);
         pBuilding = pTerrain->getBuilding();
         pActor->loadSprites();
         if (pBuilding != nullptr)
         {
-            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID());
+            spBuilding pTerrainBuilding = spBuilding::create(pBuilding->getBuildingID(), m_pMap);
             pTerrainBuilding->setOwner(nullptr);
             pTerrainBuilding->scaleAndShowOnSingleTile();
             pActor->addChild(pTerrainBuilding);
         }
-        pActor->addChild(spUnit::create(log->defenderID, m_pMap->getPlayer(log->defenderOwnerID), false));
+        pActor->addChild(spUnit::create(log->defenderID, m_pMap->getPlayer(log->defenderOwnerID), false, m_pMap));
         if (log->defenderKilled)
         {
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_fire");

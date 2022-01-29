@@ -1,8 +1,8 @@
-CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (CO_MELANTHE.isNature(posX, posY) === true)
+        if (CO_MELANTHE.isNature(posX, posY, map) === true)
         {
             switch (co.getPowerMode())
             {
@@ -17,7 +17,7 @@ CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY)
+CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -26,7 +26,7 @@ CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY)
     return 0;
 };
 CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action)
+                                         defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -57,7 +57,7 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MELANTHE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

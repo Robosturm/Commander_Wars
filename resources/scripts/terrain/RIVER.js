@@ -14,7 +14,7 @@ var Constructor = function()
     {
         return qsTr("River");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -33,7 +33,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {        
         terrain.loadBaseSprite("river+0+land+N+E+S+W");
     };
@@ -125,11 +125,11 @@ var Constructor = function()
                 "river+W+land+S",
                 "river+W+land+S+NE+NW",];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");
@@ -144,7 +144,7 @@ var Constructor = function()
         {
             rand = variable.readDataInt32();
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         var baseId = terrain.getBaseTerrainID();        
         return "back_" + weatherModifier + "river+" + rand.toString();
     };
@@ -152,7 +152,7 @@ var Constructor = function()
     {
         return ["RIVER", "BRIDGE", "BRIDGE1"];
     };
-    this.updateFlowSprites = function(terrain, pPfs)
+    this.updateFlowSprites = function(terrain, pPfs, map)
     {
         var flowData = pPfs.getFlowData();        
         var length = flowData.size()
@@ -166,7 +166,7 @@ var Constructor = function()
                 {
                     currentTerrain.unloadSprites();
                     currentTerrain.loadBaseTerrainSprites();
-                    RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+                    RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
                 }
             }
             else
@@ -174,11 +174,11 @@ var Constructor = function()
                 currentTerrain = currentTerrain.getBaseTerrain("RIVER");
                 currentTerrain.unloadSprites();
                 currentTerrain.loadBaseTerrainSprites();
-                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i);
+                RIVER.loadSpriteFromFlowData(currentTerrain, pos, flowData, i, map);
             }
         }
     };
-    this.loadSpriteFromFlowData = function(terrain, pos, flowData, index)
+    this.loadSpriteFromFlowData = function(terrain, pos, flowData, index, map)
     {
         var flow = flowData.getFlowString(index);
         var surroundingsDirect = terrain.getSurroundings("RIVER,BRIDGE,BRIDGE1,LAKE,SEA,REAF", false, true, GameEnums.Directions_Direct, false);

@@ -281,7 +281,7 @@ private:
     bool m_saveGame{false};
     bool m_PlayerReady{false};
     bool m_isServerGame{false};
-    spGameMap m_pMap{nullptr};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // PLAYERSELECTION_H

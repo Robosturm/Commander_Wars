@@ -53,7 +53,7 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);

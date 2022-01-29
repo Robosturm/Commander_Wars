@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(4);
@@ -13,7 +13,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -55,7 +55,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -107,7 +107,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.postAnimationRanking = function(postAnimation)
+    this.postAnimationRanking = function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -126,7 +126,7 @@ var Constructor = function()
         }
     }
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -146,7 +146,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -155,7 +155,7 @@ var Constructor = function()
         return "GS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -217,7 +217,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -277,7 +277,7 @@ var Constructor = function()
             }
         }
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

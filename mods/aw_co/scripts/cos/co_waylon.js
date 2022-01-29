@@ -1,9 +1,9 @@
-CO_WAYLON.init = function(co)
+CO_WAYLON.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_WAYLON.activateSuperpower = function(co, powerMode)
+CO_WAYLON.activateSuperpower = function(co, powerMode, map)
 {
     CO_WAYLON.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_WAYLON.getSuperPowerName = function()
     return CO_WAYLON.getPowerName();
 };
 CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -38,7 +38,7 @@ CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

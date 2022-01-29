@@ -1,4 +1,4 @@
-CO_NELL.getBonusLuck = function(co, unit, posX, posY)
+CO_NELL.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -17,7 +17,7 @@ CO_NELL.getBonusLuck = function(co, unit, posX, posY)
 };
 
 CO_NELL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -30,7 +30,7 @@ CO_NELL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_NELL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

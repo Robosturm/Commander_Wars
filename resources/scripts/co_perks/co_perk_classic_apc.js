@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the transporter defense by 20%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "classic_apc";
     };

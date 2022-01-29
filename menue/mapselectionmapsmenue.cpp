@@ -60,7 +60,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
 
     if (pMapSelectionView.get() == nullptr)
     {
-        m_pMapSelectionView = spMapSelectionView::create();
+        m_pMapSelectionView = spMapSelectionView::create(m_pMap);
     }
     else
     {
@@ -152,8 +152,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         heigth = Settings::getHeight() - 40 * 2;
     }
-    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20,
-                                                   heigth);
+    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20, heigth, m_pMap.get());
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
@@ -356,7 +355,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
+    m_pRuleSelectionView = spRuleSelection::create(m_pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &MapSelectionMapsMenue::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
@@ -397,7 +396,7 @@ void MapSelectionMapsMenue::startGame()
     m_pMap->updateSprites(-1, -1, false, true);
     // start game
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(false, spNetworkInterface());
+    auto window = spGameMenue::create(m_pMap, false, spNetworkInterface());
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
 }
@@ -441,20 +440,20 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             bool mirrored)
 {
     
-    spGameMap pGameMap = spGameMap::create(width, heigth, playerCount);
-    RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
+    m_pMap = spGameMap::create(width, heigth, playerCount);
+    RandomMapGenerator::randomMap(m_pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed, mirrored);
-    pGameMap->setMapName(mapName);
+    m_pMap->setMapName(mapName);
     if (mapName.isEmpty())
     {
-        pGameMap->setMapName("Random Map");
+        m_pMap->setMapName("Random Map");
     }
-    pGameMap->setMapAuthor(author);
-    pGameMap->setMapDescription(description);
+    m_pMap->setMapAuthor(author);
+    m_pMap->setMapDescription(description);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
-    m_pMapSelectionView->setCurrentMap(pGameMap);
+    m_pMapSelectionView->setCurrentMap(m_pMap);
     emit sigButtonNext();
     
 }

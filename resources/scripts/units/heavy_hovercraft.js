@@ -22,7 +22,7 @@ var Constructor = function()
     {
         unit.loadSpriteV2("heavy_hovercraft+mask", GameEnums.Recoloring_Matrix);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);

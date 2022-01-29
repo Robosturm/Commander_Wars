@@ -1,5 +1,5 @@
 CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action)
+                                          defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -31,7 +31,7 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action)
+                                           defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -62,7 +62,7 @@ CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_GREYFIELD.getMovementpointModifier = function(co, unit, posX, posY)
+CO_GREYFIELD.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

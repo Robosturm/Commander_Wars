@@ -105,7 +105,7 @@ public:
         Max,
     };
 
-    explicit NormalAi(QString configurationFile, GameEnums::AiTypes aiType);
+    explicit NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes aiType);
     virtual ~NormalAi() = default;
 signals:
 

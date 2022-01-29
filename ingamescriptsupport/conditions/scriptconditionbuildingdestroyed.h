@@ -10,7 +10,7 @@ class ScriptConditionBuildingDestroyed : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionBuildingDestroyed();
+    explicit ScriptConditionBuildingDestroyed(GameMap* pMap);
 
     /**
      * @brief readCondition

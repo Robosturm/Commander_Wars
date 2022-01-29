@@ -10,7 +10,7 @@ class ScriptEventChangeUnitAI : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventChangeUnitAI();
+    explicit ScriptEventChangeUnitAI(GameMap* pMap);
     /**
      * @brief removeCustomStart
      * @param text

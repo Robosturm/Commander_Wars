@@ -22,7 +22,7 @@ var Constructor = function()
         unit.setMaxRange(6);
         unit.setVision(1);
     };
-	this.startOfTurn = function(unit)
+	this.startOfTurn = function(unit, map)
     {
         if (unit.getTerrain() !== null)
         {
@@ -57,14 +57,14 @@ var Constructor = function()
     {
         return qsTr("Missile Submarine");
     };
-	this.createExplosionAnimation = function(x, y, unit)
+	this.createExplosionAnimation = function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+water.wav");
         return animation;
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -77,20 +77,20 @@ var Constructor = function()
         return "Submarine that can fire at range at enemy forces without taking a lot of risks.";
     };
 
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
 
-	this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
 

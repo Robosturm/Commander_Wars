@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
@@ -12,19 +12,19 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();

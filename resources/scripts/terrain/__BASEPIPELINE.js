@@ -58,7 +58,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -86,7 +86,7 @@ var Constructor = function()
             terrain.loadBaseTerrain(baseTerrainId);
         }
     };
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
         var welds = "PIPELINE,WELD,DESTROYEDWELD,PIPESTATION," +
                     "SNOW_PIPELINE,SNOW_DESTROYEDWELD,SNOW_WELD," +
@@ -130,14 +130,14 @@ var Constructor = function()
     {
         return "minimap_pipeline";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_pipeline";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         var baseTerrainId = ""
         if (terrain !== null)
         {
@@ -157,7 +157,7 @@ var Constructor = function()
         }
         else
         {
-            var weatherModifier = TERRAIN.getWeatherModifier();
+            var weatherModifier = TERRAIN.getWeatherModifier(map);
             return TERRAIN.getTerrainBackgroundId(id, weatherModifier, true);
         }
     };

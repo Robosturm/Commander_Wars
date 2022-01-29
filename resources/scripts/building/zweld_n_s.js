@@ -28,7 +28,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.onDestroyed = function(terrain)
+    this.onDestroyed = function(terrain, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
@@ -44,13 +44,13 @@ var Constructor = function()
     {
         return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "fore_pipeline";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "", true);
     };
 }

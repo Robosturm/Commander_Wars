@@ -26,7 +26,7 @@ class MapSelectionView : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MapSelectionView(qint32 mapInfoHeight = -1);
+    explicit MapSelectionView(spGameMap & pMap, qint32 mapInfoHeight = -1);
     virtual ~MapSelectionView() = default;
 
     inline MapSelection* getMapSelection()
@@ -86,7 +86,7 @@ private:
       * @brief m_currentMapFile stores the current map info
       */
     QFileInfo m_currentMapFile;
-    spGameMap m_pCurrentMap{nullptr};
+    spGameMap & m_pCurrentMap;
     // map selection
     spMapSelection m_pMapSelection;
     spPanel m_MapInfo;

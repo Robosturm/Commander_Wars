@@ -14,13 +14,13 @@
 #include "game/unit.h"
 
 class COInfoActor;
-typedef oxygine::intrusive_ptr<COInfoActor> spCOInfoActor;
+using spCOInfoActor = oxygine::intrusive_ptr<COInfoActor>;
 
 class COInfoActor : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit COInfoActor(qint32 width);
+    explicit COInfoActor(GameMap* pMap, qint32 width);
     virtual ~COInfoActor() = default;
     /**
      * @brief showCO
@@ -107,6 +107,7 @@ protected:
     QVector<oxygine::spActor> m_PerkActors;
 
     QVector<oxygine::spActor> m_UnitDataActors;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // COINFOACTOR_H

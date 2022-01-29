@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -52,7 +52,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         terrain.loadBaseSprite("fire");
     };
@@ -60,7 +60,7 @@ var Constructor = function()
     {
         return "minimap_fire";
     };
-    this.getVision = function(player)
+    this.getVision = function(player, terrain, map)
     {
         return 5;
     };

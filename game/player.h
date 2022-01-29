@@ -603,6 +603,8 @@ private:
      * @param pUnit
      */
     qint32 calculatePlayerStrength(Unit* pUnit) const;
+protected:
+    GameMap* m_pMap{nullptr};
 
 private:
     qint32 m_funds{0};
@@ -642,7 +644,6 @@ private:
     quint64 m_socketId{0};
     bool m_playerArmySelected{false};
     qint32 m_averageCosts{-1};
-    GameMap* m_pMap{nullptr};
     static oxygine::spResAnim m_neutralTableAnim;
     static QImage m_neutralTableImage;
 };

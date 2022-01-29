@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getCaptureBonus = function(co, unit, posX, posY)
+    this.getCaptureBonus = function(co, unit, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Increases the capture rate by 2.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "invader";
     };

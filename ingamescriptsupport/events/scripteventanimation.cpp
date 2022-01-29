@@ -18,8 +18,8 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/label.h"
 
-ScriptEventAnimation::ScriptEventAnimation()
-    : ScriptEvent(EventType::animation)
+ScriptEventAnimation::ScriptEventAnimation(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::animation)
 {
     connect(this, &ScriptEventAnimation::sigShowLoadDialog, this, &ScriptEventAnimation::showLoadDialog, Qt::QueuedConnection);
 }

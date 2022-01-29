@@ -1200,7 +1200,7 @@ void Unit::loadUnit(Unit* pUnit)
 void Unit::loadSpawnedUnit(const QString & unitId)
 {
     CONSOLE_PRINT("Unit::loadSpawnedUnit " + unitId, Console::eDEBUG);
-    spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
+    spUnit pUnit = spUnit::create(unitId, m_pOwner, true, m_pMap);
     if (canTransportUnit(pUnit.get()))
     {
         loadUnit(pUnit.get());
@@ -1219,7 +1219,7 @@ Unit* Unit::spawnUnit(const QString & unitID)
         {
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, m_pOwner, true);
+        spUnit pUnit = spUnit::create(unitID, m_pOwner, true, m_pMap);
         m_TransportUnits.append(pUnit);
         updateIcons(m_pMap->getCurrentViewPlayer());
         return pUnit.get();
@@ -3686,7 +3686,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> units;
         for (qint32 i = 0; i < units; i++)
         {
-            m_TransportUnits.append(spUnit::create());
+            m_TransportUnits.append(spUnit::create(m_pMap));
             m_TransportUnits[m_TransportUnits.size() - 1]->deserializer(pStream, fast);
             if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
             {

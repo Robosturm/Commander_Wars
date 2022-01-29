@@ -19,7 +19,7 @@ class VeryEasyAI : public CoreAI
     Q_OBJECT
 public:
 
-    explicit VeryEasyAI();
+    explicit VeryEasyAI(GameMap* pMap);
     virtual ~VeryEasyAI() = default;
 public slots:
     /**

@@ -13,8 +13,8 @@
 #include "game/gamemap.h"
 #include "game/weather.h"
 
-ScriptEventChangeWeather::ScriptEventChangeWeather()
-    : ScriptEvent (EventType::changeWeather)
+ScriptEventChangeWeather::ScriptEventChangeWeather(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::changeWeather)
 {
 
 }

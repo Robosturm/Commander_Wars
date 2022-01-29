@@ -20,8 +20,8 @@
 
 #include "ai/coreai.h"
 
-HumanPlayerInput::HumanPlayerInput()
-    : BaseGameInputIF(GameEnums::AiTypes_Human)
+HumanPlayerInput::HumanPlayerInput(GameMap* pMap)
+    : BaseGameInputIF(pMap, GameEnums::AiTypes_Human)
 {    
     setObjectName("HumanPlayerInput");
     Mainapp* pApp = Mainapp::getInstance();
@@ -249,7 +249,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
             spQmlVectorPoint pPoints = spQmlVectorPoint(GlobalUtils::getCircle(minRange, maxRange));
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-            UnitPathFindingSystem pfs(m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
+            UnitPathFindingSystem pfs(m_pMap, m_pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             QVector<QPoint> points = pfs.getAllNodePoints();
             for (qint32 i = 0; i < points.size(); i++)
@@ -420,7 +420,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             else if (m_pGameAction.get() == nullptr)
             {
                 // prepare action
-                m_pGameAction = spGameAction::create();
+                m_pGameAction = spGameAction::create(m_pMap);
                 if (m_pPlayer != nullptr)
                 {
                     m_pGameAction->setPlayer(m_pPlayer->getPlayerID());
@@ -565,7 +565,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         else if (isViewPlayer)
         {
             // prepare action
-            m_pGameAction = spGameAction::create();
+            m_pGameAction = spGameAction::create(m_pMap);
             m_pGameAction->setTarget(QPoint(x, y));
             if (m_pPlayer != nullptr)
             {
@@ -666,7 +666,7 @@ void HumanPlayerInput::getNextStepData()
             spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
             {
-                m_CurrentMenu = spHumanPlayerInputMenu::create(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
+                m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
         }
@@ -751,13 +751,12 @@ void HumanPlayerInput::createActionMenu(const QStringList & actionIDs, qint32 x,
 {
     CONSOLE_PRINT("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
-    MenuData data;
-
+    MenuData data(m_pMap);
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
-        data.addData(GameAction::getActionText(actionIDs[i]), actionIDs[i], GameAction::getActionIcon(actionIDs[i]));
+        data.addData(GameAction::getActionText(m_pMap, actionIDs[i]), actionIDs[i], GameAction::getActionIcon(m_pMap, actionIDs[i]));
     }
-    m_CurrentMenu = spHumanPlayerInputMenu::create(data.getTexts(), actionIDs, data.getIconList());
+    m_CurrentMenu = spHumanPlayerInputMenu::create(m_pMap, data.getTexts(), actionIDs, data.getIconList());
     attachActionMenu(x, y);
 }
 
@@ -802,7 +801,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     
     Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
-    m_pUnitPathFindingSystem = spUnitPathFindingSystem::create(pUnit, m_pPlayer);
+    m_pUnitPathFindingSystem = spUnitPathFindingSystem::create(m_pMap, pUnit, m_pPlayer);
     if ((pUnit->getOwner() == m_pPlayer) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
     {
@@ -1119,7 +1118,7 @@ void HumanPlayerInput::nextTurn()
     spGameMenue pMenu = GameMenue::getInstance();
     if (inputAllowed())
     {
-        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
         if (pAction->canBePerformed())
         {
             emit performAction(pAction);
@@ -1441,7 +1440,7 @@ void HumanPlayerInput::performBasicAction(QString action)
 {
     if (inputAllowed())
     {
-        spGameAction pAction = spGameAction::create(action);
+        spGameAction pAction = spGameAction::create(action, m_pMap);
         if (pAction->canBePerformed())
         {
             emit performAction(pAction);
@@ -1561,7 +1560,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)
 {
     Mainapp::getInstance()->pauseRendering();
-    UnitPathFindingSystem pfs(pUnit, m_pPlayer);
+    UnitPathFindingSystem pfs(m_pMap, pUnit, m_pPlayer);
     QVector<QPoint> points;
     QPoint position = pUnit->getPosition();
     bool canMoveAndFire = pUnit->canMoveAndFire(position);
@@ -1773,7 +1772,7 @@ void HumanPlayerInput::nextSelectOption()
                     else if ((pBuilding != nullptr) &&
                              (pBuilding->getOwner() == m_pPlayer))
                     {
-                        GameAction action;
+                        GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
@@ -1817,7 +1816,7 @@ void HumanPlayerInput::nextSelectOption()
                     else if ((pBuilding != nullptr) &&
                              (pBuilding->getOwner() == m_pPlayer))
                     {
-                        GameAction action;
+                        GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
@@ -1883,7 +1882,7 @@ void HumanPlayerInput::previousSelectOption()
                     else if ((pBuilding != nullptr) &&
                              (pBuilding->getOwner() == m_pPlayer))
                     {
-                        GameAction action;
+                        GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
@@ -1927,7 +1926,7 @@ void HumanPlayerInput::previousSelectOption()
                     else if ((pBuilding != nullptr) &&
                              (pBuilding->getOwner() == m_pPlayer))
                     {
-                        GameAction action;
+                        GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
@@ -1987,7 +1986,7 @@ void HumanPlayerInput::autoEndTurn()
                     }
                     if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer)
                     {
-                        GameAction action;
+                        GameAction action(m_pMap);
                         action.setTarget(QPoint(x, y));
                         QStringList actions = pBuilding->getActionList();
                         for (qint32 i = 0; i < actions.size(); i++)
@@ -2002,7 +2001,7 @@ void HumanPlayerInput::autoEndTurn()
                 }
             }
             CONSOLE_PRINT("Auto triggering next player cause current player can't input any actions.", Console::eDEBUG);
-            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
+            spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER, m_pMap);
             emit performAction(pAction);
         }
     }

@@ -1,9 +1,9 @@
-CO_SABAKI.init = function(co)
+CO_SABAKI.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_SABAKI.activateSuperpower = function(co, powerMode)
+CO_SABAKI.activateSuperpower = function(co, powerMode, map)
 {
     CO_SABAKI.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_SABAKI.getSuperPowerName = function()
 {
     return CO_SABAKI.getPowerName();
 };
-CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -45,13 +45,13 @@ CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 };
 
 CO_SABAKI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_SABAKI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

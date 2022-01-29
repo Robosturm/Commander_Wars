@@ -1,9 +1,9 @@
-CO_KINDLE.init = function(co)
+CO_KINDLE.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_KINDLE.activateSuperpower = function(co, powerMode)
+CO_KINDLE.activateSuperpower = function(co, powerMode, map)
 {
     CO_KINDLE.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_KINDLE.getSuperPowerName = function()
     return CO_KINDLE.getPowerName();
 };
 CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -49,7 +49,7 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_KINDLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

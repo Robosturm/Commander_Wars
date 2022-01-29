@@ -1,5 +1,5 @@
 CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -8,19 +8,19 @@ CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
             var count = 0;
-            if (CO_XAVIER.isAlliedUnit(attacker, defPosX, defPosY + 1))
+            if (CO_XAVIER.isAlliedUnit(attacker, defPosX, defPosY + 1, map))
             {
                 count++;
             }
-            if (CO_XAVIER.isAlliedUnit(attacker, defPosX, defPosY - 1))
+            if (CO_XAVIER.isAlliedUnit(attacker, defPosX, defPosY - 1, map))
             {
                 count++;
             }
-            if (CO_XAVIER.isAlliedUnit(attacker, defPosX + 1, defPosY))
+            if (CO_XAVIER.isAlliedUnit(attacker, defPosX + 1, defPosY, map))
             {
                 count++;
             }
-            if (CO_XAVIER.isAlliedUnit(attacker, defPosX - 1, defPosY))
+            if (CO_XAVIER.isAlliedUnit(attacker, defPosX - 1, defPosY, map))
             {
                 count++;
             }
@@ -34,7 +34,7 @@ CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_XAVIER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -46,7 +46,7 @@ CO_XAVIER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_XAVIER.getBonusLuck = function(co, unit, posX, posY)
+CO_XAVIER.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -76,7 +76,7 @@ CO_XAVIER.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_XAVIER.getBonusMisfortune = function(co, unit, posX, posY)
+CO_XAVIER.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

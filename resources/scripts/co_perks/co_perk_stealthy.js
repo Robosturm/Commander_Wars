@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getFuelCostModifier = function(co, unit, costs)
+    this.getFuelCostModifier = function(co, unit, costs, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -16,7 +16,7 @@ var Constructor = function()
     {
         return qsTr("Dive/Hide fuel cost -2.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "sneaky";
     };

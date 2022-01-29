@@ -21,7 +21,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "LAKE")
         {
@@ -32,13 +32,13 @@ var Constructor = function()
             terrain.loadBaseTerrain("SEA");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_East, false);
         surroundings += terrain.getSurroundings("FOG", false, false, GameEnums.Directions_West, false);
 		terrain.loadBaseSprite("fog" + surroundings);
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
 		// Check every side.
         var surroundings = terrain.getSurroundings("FOG", false, false, GameEnums.Directions_Direct, false);
@@ -83,13 +83,13 @@ var Constructor = function()
     {
         return "minimap_fog";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()

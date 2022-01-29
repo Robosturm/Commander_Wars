@@ -128,7 +128,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist, GameMap* pMap)
 
             spTooltip pTooltip = spTooltip::create();
 
-            oxygine::spSprite pSprite = pGameManager->getIcon(icon);
+            oxygine::spSprite pSprite = pGameManager->getIcon(pMap, icon);
             pSprite->setScale(1.25f * pSprite->getScaleX());
             pTooltip->addChild(pSprite);
             pTooltip->setPosition(x + 45, y);

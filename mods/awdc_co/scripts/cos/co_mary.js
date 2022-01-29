@@ -1,9 +1,9 @@
-CO_MARY.init = function(co)
+CO_MARY.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_MARY.activateSuperpower = function(co, powerMode)
+CO_MARY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_MARY.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_MARY.getSuperPowerName = function()
 {
     return CO_MARY.getPowerName();
 };
-CO_MARY.canBeRepaired = function(co, unit, posX, posY)
+CO_MARY.canBeRepaired = function(co, unit, posX, posY, map)
 {
     // disable enemy repairs
     switch (co.getPowerMode())
@@ -38,7 +38,7 @@ CO_MARY.canBeRepaired = function(co, unit, posX, posY)
 };
 
 CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     // get cop and scop offensive bonus
     switch (co.getPowerMode())
@@ -57,12 +57,12 @@ CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                              defender, defPosX, defPosY, isAttacker, action)
+                              defender, defPosX, defPosY, isAttacker, action, map)
 {
     return 0;
 };
 
-CO_MARY.getAdditionalBuildingActions = function(co, building)
+CO_MARY.getAdditionalBuildingActions = function(co, building, map)
 {
     switch (co.getPowerMode())
     {
@@ -81,7 +81,7 @@ CO_MARY.getAdditionalBuildingActions = function(co, building)
     return "";
 };
 
-CO_MARY.getCaptureBonus = function(co, unit, posX, posY)
+CO_MARY.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     var applyBonus = false;
     // store capture bonus

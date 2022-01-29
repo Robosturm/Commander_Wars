@@ -10,7 +10,7 @@ class ScriptEventChangePlayerTeam : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventChangePlayerTeam();
+    explicit ScriptEventChangePlayerTeam(GameMap* pMap);
 };
 
 #endif // SCRIPTEVENTCHANGEPLAYERTEAM_H

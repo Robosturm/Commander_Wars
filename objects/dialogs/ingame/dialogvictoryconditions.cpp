@@ -17,8 +17,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
-DialogVictoryConditions::DialogVictoryConditions()
-    : QObject()
+DialogVictoryConditions::DialogVictoryConditions(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("DialogVictoryConditions");
     Mainapp* pApp = Mainapp::getInstance();
@@ -60,7 +60,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pSpriteBox->addChild(pPanel);
 
     
-    GameRules* pRules = m_pMap->getGameRules();
+    GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
     oxygine::spTextField pTextfield = oxygine::spTextField::create();
@@ -69,7 +69,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
     pPanel->addItem(pTextfield);
     y += 60;
-    QString info = m_pMap->getGameScript()->getVictoryInfo();
+    QString info = pMap->getGameScript()->getVictoryInfo();
 
     pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
@@ -93,9 +93,9 @@ DialogVictoryConditions::DialogVictoryConditions()
 
         qint32 x = 10;
         qint32 stepWidth = 250;
-        for (qint32 i2 = 0; i2 < m_pMap->getPlayerCount(); i2++)
+        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
         {
-            Player* pPlayer = m_pMap->getPlayer(i2);
+            Player* pPlayer = pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
                 qint32 ruleValue = pVictoryRule->getRuleValue(0);
@@ -106,7 +106,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
-                spBuilding building = spBuilding::create("HQ");
+                spBuilding building = spBuilding::create("HQ", pMap);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 pPanel->addItem(building);
@@ -117,7 +117,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pTextfield);
                 x += stepWidth;
-                if (x + stepWidth > Settings::getWidth() - 90 && i2 < m_pMap->getPlayerCount() - 1)
+                if (x + stepWidth > Settings::getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
                 {
                     x = 10;
                     y += 60;
@@ -150,7 +150,7 @@ void DialogVictoryConditions::showPopup(QString rule)
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
     {
-        spVictoryRulePopup pPopup = spVictoryRulePopup::create(rule, 180, 250);
+        spVictoryRulePopup pPopup = spVictoryRulePopup::create(m_pMap, rule, 180, 250);
         pPopup->setY(Settings::getHeight() - pPopup->getHeight());
         pMenu->addChild(pPopup);
     }

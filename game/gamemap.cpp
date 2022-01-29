@@ -46,7 +46,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create())
+      m_Rules(spGameRules::create(this))
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -59,7 +59,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create()),
+      m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -72,7 +72,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create()),
+      m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -361,7 +361,7 @@ QStringList GameMap::getAllUnitIDs()
 
 spGameAction GameMap::createAction()
 {
-    return spGameAction::create();
+    return spGameAction::create(this);
 }
 
 void GameMap::queueAction(spGameAction pAction)
@@ -555,7 +555,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
-        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
+        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
         m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
         auto points = pPfs->getAllNodePoints();
@@ -734,7 +734,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
             CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true);
+        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true, this);
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
@@ -1128,7 +1128,7 @@ void GameMap::replaceBuilding(const QString & buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        spBuilding pBuilding = spBuilding::create(buildingID);
+        spBuilding pBuilding = spBuilding::create(buildingID, this);
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
@@ -1403,7 +1403,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> exists;
             if (exists)
             {
-                m_Campaign = spCampaign::create(this);
+                m_Campaign = spCampaign::create();
                 m_Campaign->deserializeObject(pStream);
             }
         }
@@ -1505,7 +1505,7 @@ void GameMap::showUnitStatistics()
 
 void GameMap::startGame()
 {
-    m_Recorder = spGameRecorder::create();
+    m_Recorder = spGameRecorder::create(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
@@ -2201,7 +2201,7 @@ void GameMap::initPlayersAndSelectCOs()
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
-            pPlayer->setBaseGameInput(spHumanPlayerInput::create());
+            pPlayer->setBaseGameInput(spHumanPlayerInput::create(this));
         }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&

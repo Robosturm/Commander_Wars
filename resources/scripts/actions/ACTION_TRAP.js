@@ -1,16 +1,16 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         return false;
     };
     // this action can't be performed by the player it's performed when moving over a stealthed unit by the game itself
     // it replaces the actual action that should have been performed
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         // move unit to target position
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
@@ -22,7 +22,7 @@ var Constructor = function()
     };
     this.postAnimationTrapSignX = -1;
     this.postAnimationTrapSignY = -1;
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
         var width = animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 25, 2, 1);
@@ -36,7 +36,7 @@ var Constructor = function()
     {
         return qsTr("This action can't be disabled.");
     };
-    this.isTrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost)
+    this.isTrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost, map)
     {
         // used to determine if a trap is in the move path.
         // the engine takes care of checking the path in the correct order and cutting the path.
@@ -50,7 +50,7 @@ var Constructor = function()
         return false;
     };
 
-    this.isStillATrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost)
+    this.isStillATrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost, map)
     {
         // this function gets called to find a field at which the unit can actually stop it's movement
         // E.g. don't get trapped on a teleport tile or getting trapped on an allied unit etc.

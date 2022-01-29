@@ -32,7 +32,7 @@ ReplayMenu::ReplayMenu(QString filename)
     m_valid = m_ReplayRecorder.loadRecord(filename, m_pMap);
     if (m_valid)
     {
-        m_Viewplayer = spViewplayer::create();
+        m_Viewplayer = spViewplayer::create(m_pMap.get());
         // store animation modes
         m_storedOverworldAnimations = Settings::getOverworldAnimations();
         m_storedBattleAnimMode = Settings::getBattleAnimationMode();
@@ -49,7 +49,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_pMap->registerMapAtInterpreter();
         m_pMap->updateSprites();
         loadUIButtons();
-        m_HumanInput = spHumanPlayerInput::create();
+        m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
         m_HumanInput->init();
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);

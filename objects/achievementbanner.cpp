@@ -23,7 +23,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     setSize(bannerWidth, 60);
     addChild(pButtonBox);
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+    oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize * 2);
     pIcon->setPosition(5, 5);
     pButtonBox->addChild(pIcon);
 

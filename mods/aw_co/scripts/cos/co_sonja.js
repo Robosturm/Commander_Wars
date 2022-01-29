@@ -1,9 +1,9 @@
-CO_SONJA.init = function(co)
+CO_SONJA.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_SONJA.activateSuperpower = function(co, powerMode)
+CO_SONJA.activateSuperpower = function(co, powerMode, map)
 {
     CO_SONJA.activatePower(co, powerMode);
 };
@@ -16,13 +16,13 @@ CO_SONJA.getSuperPowerName = function()
     return CO_SONJA.getPowerName();
 };
 CO_SONJA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_SONJA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -34,7 +34,7 @@ CO_SONJA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_SONJA.getBonusMisfortune = function(co, unit, posX, posY)
+CO_SONJA.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -43,7 +43,7 @@ CO_SONJA.getBonusMisfortune = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_SONJA.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_SONJA.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -59,12 +59,12 @@ CO_SONJA.getVisionrangeModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_SONJA.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
-CO_SONJA.getPerfectVision = function(co)
+CO_SONJA.getPerfectVision = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -81,12 +81,12 @@ CO_SONJA.getPerfectVision = function(co)
     return false;
 };
 
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
 {
     return false;
 };
 
-CO_SONJA.getHpHidden = function(co, unit, posX, posY)
+CO_SONJA.getHpHidden = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

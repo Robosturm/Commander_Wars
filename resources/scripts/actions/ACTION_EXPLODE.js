@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -20,33 +20,33 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Explode");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
         cursorData.setScale(2);
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         data.setColor("#C8FF0000");
         data.addPoint(Qt.point(actionTargetField.x, actionTargetField.y));
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -61,11 +61,11 @@ var Constructor = function()
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_EXPLODE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -75,7 +75,7 @@ var Constructor = function()
         ACTION_EXPLODE.postAnimationTargetX = action.readDataInt32();
         ACTION_EXPLODE.postAnimationTargetY = action.readDataInt32();
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
         var x = ACTION_EXPLODE.postAnimationTargetX;

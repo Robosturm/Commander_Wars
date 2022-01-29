@@ -1,9 +1,9 @@
-CO_VON_BOLT.init = function(co)
+CO_VON_BOLT.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_VON_BOLT.activateSuperpower = function(co, powerMode)
+CO_VON_BOLT.activateSuperpower = function(co, powerMode, map)
 {
 	CO_VON_BOLT.activatePower(co, powerMode);
 };

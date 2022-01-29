@@ -1661,7 +1661,7 @@ void Player::setCO(QString coId, quint8 idx)
         }
         else
         {
-            m_playerCOs[idx] = spCO::create(coId, this);
+            m_playerCOs[idx] = spCO::create(coId, this, m_pMap);
         }
 
     }
@@ -1981,7 +1981,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             pStream >> hasC0;
             if (hasC0)
             {
-                m_playerCOs[co] = spCO::create("", this);
+                m_playerCOs[co] = spCO::create("", this, m_pMap);
                 m_playerCOs[co]->deserializer(pStream, fast);
                 if (!m_playerCOs[co]->isValid())
                 {
@@ -1997,7 +1997,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (version > 4)
         {
             pStream >> m_isDefeated;
-            m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream, version);
+            m_pBaseGameInput = BaseGameInputIF::deserializeInterface(m_pMap, pStream, version);
             if (m_pBaseGameInput.get() != nullptr)
             {
                 m_pBaseGameInput->setPlayer(this);
@@ -2005,7 +2005,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_pBaseGameInput = spHumanPlayerInput::create();
+            m_pBaseGameInput = spHumanPlayerInput::create(m_pMap);
             m_pBaseGameInput->setPlayer(this);
         }
         m_FogVisionFields.clear();

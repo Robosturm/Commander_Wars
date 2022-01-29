@@ -195,7 +195,7 @@ public:
         QVector<UnitBuildData> buildingDataInput;
     };
 
-    explicit HeavyAi(QString type, GameEnums::AiTypes aiType);
+    explicit HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType);
     virtual ~HeavyAi() = default;
 
     void loadNeuralNetwork(QString netName, spNeuralNetwork & network, qint32 inputVectorSize, qint32 netDepth, bool randomize, qint32 outputSize = 1);

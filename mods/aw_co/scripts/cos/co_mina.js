@@ -1,9 +1,9 @@
-CO_MINA.init = function(co)
+CO_MINA.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_MINA.activateSuperpower = function(co, powerMode)
+CO_MINA.activateSuperpower = function(co, powerMode, map)
 {
     CO_MINA.activatePower(co, powerMode);
 };
@@ -16,13 +16,13 @@ CO_MINA.getSuperPowerName = function()
     return CO_MINA.getPowerName();
 };
 CO_MINA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_MINA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -35,7 +35,7 @@ CO_MINA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MINA.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                      defender, defPosX, defPosY, isDefender, luckMode)
+                                      defender, defPosX, defPosY, isDefender, luckMode, map)
 {
     if (co.getIsCO0() === true)
     {

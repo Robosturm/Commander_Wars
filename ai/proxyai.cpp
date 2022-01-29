@@ -6,8 +6,8 @@
 
 #include "QMutexLocker"
 
-ProxyAi::ProxyAi()
-    : CoreAI (GameEnums::AiTypes_ProxyAi)
+ProxyAi::ProxyAi(GameMap* pMap)
+    : CoreAI (pMap, GameEnums::AiTypes_ProxyAi)
 {
     setObjectName("ProxyAi");
     Interpreter::setCppOwnerShip(this);
@@ -51,7 +51,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         {
             CONSOLE_PRINT("Received action from network for player " + QString::number(player), Console::eDEBUG);
             QMutexLocker locker(&m_ActionMutex);
-            spGameAction pAction = spGameAction::create();
+            spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
             if (m_actionRunning == false &&

@@ -22,7 +22,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(7);
     };

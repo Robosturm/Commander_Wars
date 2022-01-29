@@ -1,9 +1,9 @@
-CO_GRIMM.init = function(co)
+CO_GRIMM.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_GRIMM.activateSuperpower = function(co, powerMode)
+CO_GRIMM.activateSuperpower = function(co, powerMode, map)
 {
     CO_GRIMM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_GRIMM.getSuperPowerName = function()
     return CO_GRIMM.getPowerName();
 };
 CO_GRIMM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_GRIMM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_GRIMM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

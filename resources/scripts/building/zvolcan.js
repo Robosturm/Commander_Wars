@@ -57,7 +57,7 @@ var Constructor = function()
         // offset for large buildings since there reference point is bound to the lower right corner.
         return Qt.point(-2, -2);
     };
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         // do some fire action here
         if (building.getFireCount() === 0)
@@ -81,11 +81,11 @@ var Constructor = function()
                 }
             }
             targetFields.remove();
-            ZVOLCAN.volcanFire(building, targets);
+            ZVOLCAN.volcanFire(building, targets, map);
         }
     };
 
-    this.volcanFire = function(building, targets)
+    this.volcanFire = function(building, targets, map)
     {
         var animationCount = GameAnimationFactory.getAnimationCount();
         var targetOffset = building.getActionTargetOffset();

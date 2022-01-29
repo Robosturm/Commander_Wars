@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(6);
         co.setSuperpowerStars(4);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,25 +33,25 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation);
+        CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation, map);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation);
+        CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation, map);
     };
 
-    this.throwLaserray = function(co, damage, range, powerNameAnimation)
+    this.throwLaserray = function(co, damage, range, powerNameAnimation, map)
     {
         // let a meteor fall :D
         var meteorTarget = co.getOwner().getRockettarget(range, damage);
@@ -70,7 +70,7 @@ var Constructor = function()
     this.postAnimationLaserrayTarget = null;
     this.postAnimationLaserrayDamage = 0;
     this.postAnimationLaserrayRange = 0;
-    this.postAnimationLaserray = function(animation)
+    this.postAnimationLaserray = function(animation, map)
     {
         var laserTarget = CO_VON_BOLT.postAnimationLaserrayTarget;
         var damage = CO_VON_BOLT.postAnimationLaserrayDamage;
@@ -107,7 +107,7 @@ var Constructor = function()
         CO_VON_BOLT.postAnimationLaserrayRange = 0;
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -116,7 +116,7 @@ var Constructor = function()
         return "BG";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -134,7 +134,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -152,7 +152,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
@@ -163,7 +163,7 @@ var Constructor = function()
         }
         return [];
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

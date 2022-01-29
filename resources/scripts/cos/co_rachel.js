@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,7 +33,7 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -81,18 +81,18 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0);
-        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret, 1);
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret, 2);
+        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0, map);
+        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret, 1, map);
+        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret, 2, map);
     };
 
-    this.throwRocket = function(co, damage, targetType, animation2, index)
+    this.throwRocket = function(co, damage, targetType, animation2, index, map)
     {
         // let a rocket fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
@@ -109,19 +109,19 @@ var Constructor = function()
     this.postAnimationThrowRocketTarget = [null, null, null];
     this.postAnimationThrowRocketDamage = [0, 0, 0];
 
-    this.postAnimationThrowRocket0 = function( animation)
+    this.postAnimationThrowRocket0 = function(animation, map)
     {
-        CO_RACHEL.postAnimationThrowRocket(0);
+        CO_RACHEL.postAnimationThrowRocket(0, map);
     };
-    this.postAnimationThrowRocket1 = function( animation)
+    this.postAnimationThrowRocket1 = function(animation, map)
     {
-        CO_RACHEL.postAnimationThrowRocket(1);
+        CO_RACHEL.postAnimationThrowRocket(1, map);
     };
-    this.postAnimationThrowRocket2 = function( animation)
+    this.postAnimationThrowRocket2 = function(animation, map)
     {
-        CO_RACHEL.postAnimationThrowRocket(2);
+        CO_RACHEL.postAnimationThrowRocket(2, map);
     };
-    this.postAnimationThrowRocket = function(index)
+    this.postAnimationThrowRocket = function(index, map)
     {
         var rocketTarget = CO_RACHEL.postAnimationThrowRocketTarget[index];
         var damage = CO_RACHEL.postAnimationThrowRocketDamage[index];
@@ -155,7 +155,7 @@ var Constructor = function()
         CO_RACHEL.postAnimationThrowRocketDamage[index] = 0;
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -164,7 +164,7 @@ var Constructor = function()
         return "OS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -182,7 +182,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action)
+                                           defender, defPosX, defPosY, isAttacker, action, map)
         {
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                     co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -191,7 +191,7 @@ var Constructor = function()
             }
             return 0;
         };
-    this.getBonusLuck = function(co, unit, posX, posY)
+    this.getBonusLuck = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -206,11 +206,11 @@ var Constructor = function()
         return 0;
     };
 
-    this.getRepairBonus = function(co, unit, posX, posY)
+    this.getRepairBonus = function(co, unit, posX, posY, map)
     {
         return 1;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

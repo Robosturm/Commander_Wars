@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -15,7 +15,7 @@ var Constructor = function()
     {
         return qsTr("Increases the defense boost per tower by 5%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "towerpower";
     };

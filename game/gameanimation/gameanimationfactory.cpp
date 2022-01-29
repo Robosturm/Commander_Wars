@@ -127,7 +127,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(GameMap* 
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pPlayer, frameTime, false, uptimeMs, pMap);
+        spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pMap, pPlayer, frameTime, false, uptimeMs);
         pGameMenue->addChild(pAnim);
         m_Animations.append(pAnim);
         return pAnim.get();

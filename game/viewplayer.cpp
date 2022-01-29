@@ -1,7 +1,8 @@
 #include "game/viewplayer.h"
 #include "game/gamemap.h"
 
-Viewplayer::Viewplayer()
+Viewplayer::Viewplayer(GameMap* pMap)
+    : Player(pMap)
 {
     setObjectName("Viewplayer");
 }

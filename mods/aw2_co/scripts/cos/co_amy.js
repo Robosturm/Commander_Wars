@@ -2,7 +2,7 @@ CO_AMY.powerHoverCraftBoost = 30;
 CO_AMY.hoverCraftBoost = 20;
 CO_AMY.superPowerDeffensiveBonus = 110;
 CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                    defender, defPosX, defPosY, isDefender, action)
+                                    defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -27,7 +27,7 @@ CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_AMY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isAttacker, action)
+                                     defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -48,7 +48,7 @@ CO_AMY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_AMY.getMovementpointModifier = function(co, unit, posX, posY)
+CO_AMY.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -67,7 +67,7 @@ CO_AMY.getMovementpointModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_AMY.getCostModifier = function(co, id, baseCost, posX, posY)
+CO_AMY.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -82,7 +82,7 @@ CO_AMY.getCostModifier = function(co, id, baseCost, posX, posY)
     return 0;
 };
 
-CO_AMY.getMovementcostModifier = function(co, unit, posX, posY)
+CO_AMY.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

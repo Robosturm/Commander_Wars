@@ -12,6 +12,11 @@ const QString ScriptData::actionConditions = "actionConditions";
 
 quint32 ScriptData::m_variableCounter = 0;
 
+ScriptData::ScriptData(GameMap* pMap)
+    : m_pMap(pMap)
+{
+}
+
 void ScriptData::clearData()
 {
     m_Victory.clear();
@@ -151,7 +156,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             }
             continue;
         }
-        spScriptCondition pCondition = ScriptCondition::createReadCondition(rStream, line);
+        spScriptCondition pCondition = ScriptCondition::createReadCondition(m_pMap, rStream, line);
         if (pCondition.get() != nullptr)
         {
             rVector->append(pCondition);

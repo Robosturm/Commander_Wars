@@ -8,8 +8,9 @@
 
 #include "conditions/scriptcondition.h"
 
+class GameMap;
 class ScriptData;
-typedef oxygine::intrusive_ptr<ScriptData> spScriptData;
+using spScriptData = oxygine::intrusive_ptr<ScriptData>;
 
 class ScriptData : public QObject, public oxygine::ref_counter
 {
@@ -25,7 +26,7 @@ public:
     static constexpr auto campaignVariables = "campaignVariables";
     static constexpr auto variables = "variables";
 
-    explicit ScriptData() = default;
+    explicit ScriptData(GameMap* pMap);
     virtual ~ScriptData() = default;
     /**
      * @brief readScript
@@ -144,6 +145,7 @@ private:
 
     QString customCode;
     bool startMode{false};
+    GameMap* m_pMap{nullptr};
 
     static quint32 m_variableCounter;
 };

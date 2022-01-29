@@ -226,7 +226,7 @@ var BUILDING =
 
     getTerrainAnimationBase : function(unit, terrain, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     },
 
@@ -277,7 +277,7 @@ var BUILDING =
         {
             army = Global.getArmyNameFromPlayerTable(player, BUILDING.armyData);
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         if (baseId === "DESERT" ||
             weatherModifier === "desert")
         {

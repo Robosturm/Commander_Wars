@@ -81,7 +81,7 @@ public slots:
     /**
      * @brief mapFiniished
      */
-    void mapFinished(bool result);
+    void mapFinished(GameMap* pMap, bool result);
     /**
      * @brief getCampaignFinished
      * @return
@@ -130,7 +130,6 @@ private:
     QString m_scriptFile;
     ScriptVariables m_Variables;
     bool m_loaded{false};
-
 };
 
 #endif // CAMPAIGN_H

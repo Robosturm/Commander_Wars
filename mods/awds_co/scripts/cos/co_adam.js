@@ -1,5 +1,5 @@
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -46,7 +46,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -70,7 +70,7 @@ CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return ret;
 };
 
-CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -131,7 +131,7 @@ CO_ADAM.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
 };
 
 
-CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY)
+CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -144,7 +144,7 @@ CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY)
 };
 
 CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -74,7 +74,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -103,7 +103,7 @@ var Constructor = function()
         }
     };
 
-    this.loadBase = function(terrain, spriteId)
+    this.loadBase = function(terrain, spriteId, map)
     {
         var random = globals.randInt(0, 5);
         terrain.loadBaseSprite(spriteId + "+" + random.toString());
@@ -166,11 +166,11 @@ var Constructor = function()
                 spriteId + "+4",
                 spriteId + "+5"];
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         var baseTerrainId = ""
         if (terrain !== null)

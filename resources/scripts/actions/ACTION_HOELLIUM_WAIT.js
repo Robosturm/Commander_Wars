@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -22,24 +22,24 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Wait");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "wait";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var targetUnit = action.getMovementTarget();
-        Global[unit.getUnitID()].doWalkingAnimation(action);
+        Global[unit.getUnitID()].doWalkingAnimation(action, map);
         if ((targetUnit !== null) && (targetUnit !== unit))
         {
             targetUnit.killUnit();

@@ -17,8 +17,8 @@
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
-MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
-    : QObject()
+MapSelectionView::MapSelectionView(spGameMap & pMap, qint32 mapInfoHeight)
+    : m_pCurrentMap(pMap)
 {
     setObjectName("MapSelectionView");
     ObjectManager* pObjectManager = ObjectManager::getInstance();

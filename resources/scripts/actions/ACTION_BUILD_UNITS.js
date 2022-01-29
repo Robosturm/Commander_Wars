@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var building = action.getTargetBuilding();
@@ -13,22 +13,22 @@ var Constructor = function()
             var unitCount = building.getOwner().getUnitCount();
             if ((unitLimit <= 0 ||
                 unitCount < unitLimit) &&
-                ACTION_BUILD_UNITS.canBuildUnits(building))
+                ACTION_BUILD_UNITS.canBuildUnits(building, map))
             {
                 return true;
             }
 		}
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Build");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "build";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 0)
         {
@@ -41,7 +41,7 @@ var Constructor = function()
     };
 
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         var unitID = action.readDataString();
@@ -60,7 +60,7 @@ var Constructor = function()
         }
     };
 
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         // supported types are MENU and FIELD
         if (action.getInputStep() === 0)
@@ -70,7 +70,7 @@ var Constructor = function()
         return "";
     };
 
-    this.canBuildUnits = function(building)
+    this.canBuildUnits = function(building, map)
     {
         var units = building.getConstructionList();
         var unitData = [];
@@ -90,7 +90,7 @@ var Constructor = function()
         return false;
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var building = action.getTargetBuilding();
         var units = building.getConstructionList();

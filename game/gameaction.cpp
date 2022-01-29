@@ -279,11 +279,13 @@ bool GameAction::isFinalStep(const QString & actionID)
     return false;
 }
 
-QString GameAction::getActionText(const QString & actionID)
+QString GameAction::getActionText(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionText";
     QJSValueList args1;
+    QJSValue objArg5 = pInterpreter->newQObject(pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
@@ -292,11 +294,13 @@ QString GameAction::getActionText(const QString & actionID)
     return "";
 }
 
-QString GameAction::getActionIcon(const QString & actionID)
+QString GameAction::getActionIcon(GameMap* pMap, const QString & actionID)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
     QJSValueList args1;
+    QJSValue objArg5 = pInterpreter->newQObject(pMap);
+    args1 << objArg5;
     QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
@@ -358,7 +362,7 @@ spCursorData GameAction::getStepCursor()
 spMenuData GameAction::getMenuStepData()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    spMenuData data = spMenuData::create();
+    spMenuData data = spMenuData::create(m_pMap);
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);

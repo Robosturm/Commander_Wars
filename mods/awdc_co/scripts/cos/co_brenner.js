@@ -1,11 +1,11 @@
 CO_BRENNER.powerBonus = 30;
 CO_BRENNER.superPowerBonus = 30;
-CO_BRENNER.init = function(co)
+CO_BRENNER.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_BRENNER.activateSuperpower = function(co, powerMode)
+CO_BRENNER.activateSuperpower = function(co, powerMode, map)
 {
 	CO_BRENNER.activatePower(co, powerMode);
 };
@@ -18,7 +18,7 @@ CO_BRENNER.getSuperPowerName = function()
     return CO_BRENNER.getPowerName();
 };
 CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, map)
 {
     switch (co.getPowerMode())
     {

@@ -1,9 +1,9 @@
-CO_JUGGER.init = function(co)
+CO_JUGGER.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_JUGGER.activateSuperpower = function(co, powerMode)
+CO_JUGGER.activateSuperpower = function(co, powerMode, map)
 {
 	CO_JUGGER.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_JUGGER.getSuperPowerName = function()
 {
     return CO_JUGGER.getPowerName();
 };
-CO_JUGGER.getBonusLuck = function(co, unit, posX, posY)
+CO_JUGGER.getBonusLuck = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {
@@ -33,7 +33,7 @@ CO_JUGGER.getBonusLuck = function(co, unit, posX, posY)
     return 14;
 };
 
-CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY)
+CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {

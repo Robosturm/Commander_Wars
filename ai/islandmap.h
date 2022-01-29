@@ -5,16 +5,16 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
-
+class GameMap;
 class IslandMap;
-typedef oxygine::intrusive_ptr<IslandMap> spIslandMap;
+using spIslandMap = oxygine::intrusive_ptr<IslandMap>;
 
 class IslandMap : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;
 public:
-    explicit IslandMap(const QString & unitID, Player* pOwner);
+    explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner);
     virtual ~IslandMap() = default;
 
 
@@ -65,4 +65,5 @@ private:
     QVector<QVector<qint32>> m_Islands;
     QString m_MovementType;
     Player* m_pOwner;
+    GameMap* m_pMap{nullptr};
 };

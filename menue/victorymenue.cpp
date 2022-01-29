@@ -4,7 +4,6 @@
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 
-#include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 #include "game/player.h"
 #include "game/co.h"
@@ -25,10 +24,10 @@
 #include "objects/base/moveinbutton.h"
 
 
-VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
-    : Basemenu(),
-      m_ProgressTimer(this),
-      m_pNetworkInterface(pNetworkInterface)
+VictoryMenue::VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface)
+    : m_ProgressTimer(this),
+      m_pNetworkInterface(pNetworkInterface),
+      m_pMap(pMap)
 {
     setObjectName("VictoryMenue");
     Mainapp* pApp = Mainapp::getInstance();
@@ -797,7 +796,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 void VictoryMenue::updateGraph()
 {    
     
-    if (m_pMap != nullptr)
+    if (m_pMap.get() != nullptr)
     {
         if (m_CurrentGraphMode < GraphModes::Max)
         {
@@ -1085,6 +1084,8 @@ void VictoryMenue::onEnter()
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
+        QJSValue value1 = pInterpreter->newQObject(m_pMap.get());
+        args << value1;
         pInterpreter->doFunction(object, func, args);
     }
 }

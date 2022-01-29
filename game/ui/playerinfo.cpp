@@ -117,7 +117,7 @@ void PlayerInfo::updateData()
                 addChild(pSprite);
                 if (pCO != nullptr)
                 {
-                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(pCO);
+                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
                     pCoPowermeter->setY(pSprite->getY());
                     pCoPowermeter->setFlippedX(m_flippedX);
                     if (m_flippedX)
@@ -139,7 +139,7 @@ void PlayerInfo::updateData()
                     pSprite = oxygine::spSprite::create();
                     pSprite->setResAnim(pAnim);
                     pSprite->setY(yPos + 62);
-                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(pCO);
+                    spCoPowermeter pCoPowermeter = spCoPowermeter::create(m_pMap, pCO);
                     pCoPowermeter->setY(pSprite->getY());
                     pCoPowermeter->setFlippedX(m_flippedX);
                     pCoPowermeter->drawPowerMeter();

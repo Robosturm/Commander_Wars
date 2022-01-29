@@ -49,7 +49,7 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y, GameMap* pMap)
       m_x(x),
       m_y(y),
       m_Building{nullptr},
-      m_pMap{pMap}
+      m_pMap(pMap)
 {
     setObjectName("Terrain");
     Mainapp* pApp = Mainapp::getInstance();
@@ -397,7 +397,7 @@ void Terrain::loadSprites()
 
 void Terrain::loadBaseTerrain(const QString & terrainID)
 {
-    m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y);
+    m_pBaseTerrain = spTerrain::create(terrainID, m_x, m_y, m_pMap);
     m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     addChild(m_pBaseTerrain);
@@ -992,7 +992,7 @@ void Terrain::loadBuilding(const QString & buildingID)
     {
         removeBuilding();
     }
-    m_Building = spBuilding::create(buildingID);
+    m_Building = spBuilding::create(buildingID, m_pMap);
     m_Building->updateBuildingSprites(false);
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
     m_Building->setTerrain(m_pMap->getTerrain(Terrain::m_x, Terrain::m_y));
@@ -1204,7 +1204,7 @@ qint32 Terrain::getVision(Player* pPlayer)
 
 TerrainFindingSystem* Terrain::createTerrainFindingSystem()
 {
-    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), Terrain::getX(), Terrain::getY());
+    TerrainFindingSystem* pPfs = new TerrainFindingSystem(m_pMap, getID(), Terrain::getX(), Terrain::getY());
     pPfs->explore();
     return pPfs;
 }

@@ -15,6 +15,7 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
 class Unit;
 class CO;
 class UnitPathFindingSystem;
@@ -112,10 +113,11 @@ public:
     static const QString ACTION_CO_UNIT_1;
     static const QString ACTION_EXPLODE;
     static const QString ACTION_FLARE;
+    static const QString ACTION_TRAP;
 
     static const QString UNIT_INFANTRY;
 
-    explicit CoreAI(GameEnums::AiTypes aiType);
+    explicit CoreAI(GameMap* pMap, GameEnums::AiTypes aiType);
     virtual ~CoreAI() = default;
     /**
      * @brief init

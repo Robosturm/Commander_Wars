@@ -5,13 +5,13 @@ var Constructor = function()
         return 1;
     };
     this.baseTerrainId = "PLAINS";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEFOREST.loadBase(terrain, "FOREST2", "forest_style0")
+        __BASEFOREST.loadBase(terrain, "FOREST2", "forest_style0", map)
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
-        __BASEFOREST.loadOverlay(terrain, "FOREST2", "forest_style0");
+        __BASEFOREST.loadOverlay(terrain, "FOREST2", "forest_style0", map);
     };
 
     this.getTerrainSprites = function()

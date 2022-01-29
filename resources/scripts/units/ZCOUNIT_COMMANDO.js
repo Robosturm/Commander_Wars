@@ -35,7 +35,7 @@ var Constructor = function()
         return "MOVE_MECH";
     };
     this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -60,12 +60,12 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Infantry;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
-        ZCOUNIT_COMMANDO.cloak(unit);
+        ZCOUNIT_COMMANDO.cloak(unit, map);
     };
 
-    this.cloak = function(unit)
+    this.cloak = function(unit, map)
     {
         var terrain = unit.getTerrain();
         if (terrain !== null)
@@ -110,9 +110,9 @@ var Constructor = function()
             }
         }
     };
-    this.postAction = function(unit, action)
+    this.postAction = function(unit, action, map)
     {
-        ZCOUNIT_COMMANDO.cloak(unit);
+        ZCOUNIT_COMMANDO.cloak(unit, map);
     };
     this.getCOSpecificUnit = function(building)
     {

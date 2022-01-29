@@ -130,12 +130,12 @@ sortDataArray = function(data)
     return sortedData;
 }
 
-bresenhamFromTerrain = function(terrain1, terrain2, includeStartEnd, asTerrainArray)
+bresenhamFromTerrain = function(terrain1, terrain2, includeStartEnd, asTerrainArray, map)
 {
-    return Global.bresenhamLine(terrain1.getX(), terrain1.getY(), terrain2.getX(), terrain2.getY(), includeStartEnd, asTerrainArray);
+    return Global.bresenhamLine(terrain1.getX(), terrain1.getY(), terrain2.getX(), terrain2.getY(), includeStartEnd, asTerrainArray, map);
 }
 
-bresenhamLine = function (x0, y0, x1, y1, includeStartEnd, asTerrainArray)
+bresenhamLine = function (x0, y0, x1, y1, includeStartEnd, asTerrainArray, map)
 {
     var ret = [];
     if (map !== null)

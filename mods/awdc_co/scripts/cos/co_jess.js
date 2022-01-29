@@ -1,9 +1,9 @@
-CO_JESS.init = function(co)
+CO_JESS.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_JESS.activateSuperpower = function(co, powerMode)
+CO_JESS.activateSuperpower = function(co, powerMode, map)
 {
 	CO_JESS.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_JESS.getSuperPowerName = function()
     return CO_JESS.getPowerName();
 };
 CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -67,7 +67,7 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
+CO_JESS.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

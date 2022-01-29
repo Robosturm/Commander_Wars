@@ -8,11 +8,12 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
 class ScriptEvent;
-typedef oxygine::intrusive_ptr<ScriptEvent> spScriptEvent;
+using spScriptEvent = oxygine::intrusive_ptr<ScriptEvent>;
 
 class ScriptEditor;
-typedef oxygine::intrusive_ptr<ScriptEditor> spScriptEditor;
+using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
 
 class ScriptEvent : public QObject, public oxygine::ref_counter
 {
@@ -62,13 +63,13 @@ public:
         PlayGameSound,
     };
 
-    static spScriptEvent createEvent(EventType type);
+    static spScriptEvent createEvent(GameMap* pMap, EventType type);
     /**
      * @brief createReadEvent
      * @param rStream
      * @return
      */
-    static spScriptEvent createReadEvent(QTextStream& rStream, QString line);
+    static spScriptEvent createReadEvent(GameMap* pMap, QTextStream& rStream, QString line);
     /**
      * @brief readEvent
      * @param rStream
@@ -102,8 +103,9 @@ public:
      */
     virtual qint32 getVersion() const = 0;
 protected:
-    explicit ScriptEvent(EventType type);
+    explicit ScriptEvent(GameMap* pMap, EventType type);
     EventType m_Type;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // SCRIPTEVENT_H

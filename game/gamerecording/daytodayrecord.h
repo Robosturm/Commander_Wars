@@ -11,14 +11,15 @@
 #include "game/gamerecording/playerrecord.h"
 #include "game/gamerecording/specialevent.h"
 
+class GameMap;
 class DayToDayRecord;
-typedef oxygine::intrusive_ptr<DayToDayRecord> spDayToDayRecord;
+using spDayToDayRecord = oxygine::intrusive_ptr<DayToDayRecord>;
 
 class DayToDayRecord : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    explicit DayToDayRecord();
+    explicit DayToDayRecord(GameMap* pMap);
     explicit DayToDayRecord(qint32 playerCount);
     virtual ~DayToDayRecord() = default;
     /**
@@ -66,6 +67,7 @@ public:
 private:
     QVector<spSpecialEvent> m_SpecialEvents;
     QVector<spPlayerRecord> m_PlayerRecords;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // DAYTODAYRECORD_H

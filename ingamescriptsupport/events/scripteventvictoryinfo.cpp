@@ -11,8 +11,8 @@
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 
-ScriptEventVictoryInfo::ScriptEventVictoryInfo()
-    : ScriptEvent (EventType::victoryInfo)
+ScriptEventVictoryInfo::ScriptEventVictoryInfo(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::victoryInfo)
 {
 
 }

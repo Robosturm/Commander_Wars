@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(2);
         co.setSuperpowerStars(4);
@@ -13,9 +13,8 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -62,7 +61,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -110,7 +109,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -130,7 +129,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -140,7 +139,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (defender !== null)
         {
@@ -173,7 +172,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
@@ -224,7 +223,7 @@ var Constructor = function()
         }
     };
 
-    this.buildedUnit = function(co, unit)
+    this.buildedUnit = function(co, unit, map)
     {
         // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
         var variables = co.getVariables();
@@ -232,7 +231,7 @@ var Constructor = function()
         buildedVar.writeDataBool(true);
     };
 
-    this.startOfTurn = function(co)
+    this.startOfTurn = function(co, map)
     {
         var player = co.getOwner();
         var funds = player.getFunds();
@@ -278,7 +277,7 @@ var Constructor = function()
         costModVar.writeDataFloat(costModifier);
     };
 
-    this.getCostModifier = function(co, id, baseCost, posX, posY)
+    this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
         var variables = co.getVariables();
         var costModVar = variables.createVariable("SANJURO_COST_MOD");
@@ -303,7 +302,7 @@ var Constructor = function()
         return (baseCost * costMod);
     };
 
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -329,7 +328,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         if (gotAttacked === true && defender.getOwner() === co.getOwner())
         {
@@ -353,11 +352,11 @@ var Constructor = function()
             }
         }
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

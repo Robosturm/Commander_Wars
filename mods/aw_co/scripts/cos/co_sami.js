@@ -1,9 +1,9 @@
-CO_SAMI.init = function(co)
+CO_SAMI.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(2);
 };
-CO_SAMI.activateSuperpower = function(co, powerMode)
+CO_SAMI.activateSuperpower = function(co, powerMode, map)
 {
     CO_SAMI.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SAMI.getSuperPowerName = function()
     return CO_SAMI.getPowerName();
 };
 CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -48,7 +48,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
+CO_SAMI.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -58,7 +58,7 @@ CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
     return 0;
 };
 CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -69,7 +69,7 @@ CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
+CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -92,7 +92,7 @@ CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_SAMI.getMovementcostModifier = function(co, unit, posX, posY)
+CO_SAMI.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

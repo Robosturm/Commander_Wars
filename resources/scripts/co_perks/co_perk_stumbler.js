@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementpointModifier = function(co, unit, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -21,7 +21,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the movement range of all units by 1 during power and by 2 during superpower.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "stumbler";
     };

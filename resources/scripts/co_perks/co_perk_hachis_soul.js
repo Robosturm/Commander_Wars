@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getAdditionalBuildingActions = function(co, building)
+    this.getAdditionalBuildingActions = function(co, building, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -27,7 +27,7 @@ var Constructor = function()
     {
         return qsTr("During your Superpower you can build units from cities.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "hachisoul";
     };

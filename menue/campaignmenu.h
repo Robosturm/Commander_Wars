@@ -65,6 +65,7 @@ private:
     oxygine::spButton m_pButtonSave;
 
     bool m_Multiplayer{false};
+    spGameMap m_pMap;
 };
 
 #endif // CAMPAIGNMENU_H

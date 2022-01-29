@@ -23,7 +23,7 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();

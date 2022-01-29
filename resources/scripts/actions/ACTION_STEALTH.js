@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -20,23 +20,23 @@ var Constructor = function()
         }
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Stealth");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "dive";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_STEALTH", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -44,7 +44,7 @@ var Constructor = function()
 
     };
     this.postAnimationUnit = null;
-    this.performPostAnimation = function(action)
+    this.performPostAnimation = function(action, map)
     {
         // disable unit commandments for this turn
         var animation = GameAnimationFactory.createAnimation(map, ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());

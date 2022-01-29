@@ -45,7 +45,7 @@ public:
         QString startFolder;
     };
 
-    ScriptEventGeneric(EventType type, QString eventIdentifier);
+    explicit ScriptEventGeneric(GameMap* pMap, EventType type, QString eventIdentifier);
     /**
      * @brief readEvent
      * @param rStream

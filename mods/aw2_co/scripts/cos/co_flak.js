@@ -1,4 +1,4 @@
-CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
+CO_FLAK.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -16,7 +16,7 @@ CO_FLAK.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY)
+CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -35,13 +35,13 @@ CO_FLAK.getBonusMisfortune = function(co, unit, posX, posY)
 };
 
 CO_FLAK.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_FLAK.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

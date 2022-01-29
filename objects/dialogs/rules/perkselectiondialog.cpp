@@ -11,9 +11,10 @@
 
 #include "coreengine/filesupport.h"
 
-PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList)
+PerkSelectionDialog::PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList)
     : m_pPlayer(pPlayer),
-      m_banning(banning)
+      m_banning(banning),
+      m_pMap(pMap)
 {
     setObjectName("PerkSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -98,7 +99,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     {
         m_pPanel->setPosition(30, 75);
     }
-    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, maxPerkcount, banning, hiddenList);
+    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, maxPerkcount, banning, hiddenList, m_pMap);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getHeight() + 40);
     m_pPanel->setContentWidth(m_pPerkSelection->getWidth());

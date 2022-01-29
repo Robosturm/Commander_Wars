@@ -1,4 +1,4 @@
-CO_DAVIS.getBonusLuck = function(co, unit, posX, posY)
+CO_DAVIS.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -31,7 +31,7 @@ CO_DAVIS.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY)
+CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -76,13 +76,13 @@ CO_DAVIS.getBonusMisfortune = function(co, unit, posX, posY)
 };
 
 CO_DAVIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_DAVIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

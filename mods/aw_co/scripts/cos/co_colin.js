@@ -1,9 +1,9 @@
-CO_COLIN.init = function(co)
+CO_COLIN.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(2);
 };
-CO_COLIN.activateSuperpower = function(co, powerMode)
+CO_COLIN.activateSuperpower = function(co, powerMode, map)
 {
     CO_COLIN.activatePower(co, powerMode);
 };
@@ -17,7 +17,7 @@ CO_COLIN.getSuperPowerName = function()
 };
 CO_COLIN.globalBoost = 10;
 CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -27,7 +27,7 @@ CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -38,7 +38,7 @@ CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-this.getCostModifier = function(co, id, baseCost, posX, posY)
+this.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

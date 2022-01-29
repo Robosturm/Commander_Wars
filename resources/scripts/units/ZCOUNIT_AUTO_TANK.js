@@ -28,7 +28,7 @@ var Constructor = function()
         unit.loadSpriteV2("auto_tank+mask", GameEnums.Recoloring_Matrix);
         unit.loadSpriteV2("auto_tank", GameEnums.Recoloring_None);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -71,7 +71,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var variables = unit.getVariables();
         var unitAttackVariable = variables.createVariable("SECOND_ATTACK");

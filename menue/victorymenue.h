@@ -16,6 +16,8 @@
 
 #include "network/NetworkInterface.h"
 
+#include "game/gamemap.h"
+
 #include "coreengine/LUPDATE_MACROS.h"
 #include "menue/basemenu.h"
 
@@ -45,7 +47,7 @@ public:
         Lost
     };
 
-    explicit VictoryMenue(spNetworkInterface pNetworkInterface);
+    explicit VictoryMenue(spGameMap pMap, spNetworkInterface pNetworkInterface);
     virtual ~VictoryMenue() = default;
 
     /**
@@ -167,7 +169,7 @@ private:
     qint32 m_progress = 0;
 
     spNetworkInterface m_pNetworkInterface;
-
+    spGameMap m_pMap;
 };
 
 #endif // VICTORYMENUE_H

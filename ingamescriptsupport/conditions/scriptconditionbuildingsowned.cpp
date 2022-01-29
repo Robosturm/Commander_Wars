@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionBuildingsOwned::ScriptConditionBuildingsOwned()
-    : ScriptCondition(ConditionType::buildingsOwned)
+ScriptConditionBuildingsOwned::ScriptConditionBuildingsOwned(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::buildingsOwned)
 {
 
 }
@@ -52,11 +52,11 @@ void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream, QString 
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionBuildingsOwned, line))
+        if (readSubCondition(m_pMap, rStream, ConditionBuildingsOwned, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

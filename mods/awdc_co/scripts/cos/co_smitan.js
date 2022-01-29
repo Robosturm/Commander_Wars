@@ -1,9 +1,9 @@
-CO_SMITAN.init = function(co)
+CO_SMITAN.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_SMITAN.activateSuperpower = function(co, powerMode)
+CO_SMITAN.activateSuperpower = function(co, powerMode, map)
 {
 	CO_SMITAN.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SMITAN.getSuperPowerName = function()
     return CO_SMITAN.getPowerName();
 };
 CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     var inRangeCount = 0;
     if (attacker.getBaseMaxRange() === 1)
@@ -65,7 +65,7 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SMITAN.getFirerangeModifier = function(co, unit, posX, posY)
+CO_SMITAN.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {

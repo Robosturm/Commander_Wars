@@ -19,8 +19,7 @@
 COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
                            std::function<void (spCO& m_CurrrentCO, spPlayer& pPlayer, qint32 direction)> stepFunction,
                            bool ingame)
-    : QObject(),
-      m_CurrentCO(pCO),
+    : m_CurrentCO(pCO),
       m_pCurrentPlayer(pPlayer),
       m_StepFunction(stepFunction),
       m_Ingame(ingame)
@@ -73,7 +72,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
                          QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
-    m_COInfo = spCOInfoActor::create(m_pPanel->getWidth());
+    m_COInfo = spCOInfoActor::create(pCO->getMap(), m_pPanel->getWidth());
     m_pPanel->addItem(m_COInfo);
     showCO();
     connect(this, &COInfoDialog::quit, this, &COInfoDialog::remove, Qt::QueuedConnection);

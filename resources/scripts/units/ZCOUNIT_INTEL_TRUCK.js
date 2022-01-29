@@ -39,7 +39,7 @@ var Constructor = function()
     {
         return qsTr("Intel Truck");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);

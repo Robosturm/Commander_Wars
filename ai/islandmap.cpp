@@ -7,8 +7,9 @@
 #include "game/co.h"
 #include "game/unitpathfindingsystem.h"
 
-IslandMap::IslandMap(const QString & unitID, Player* pOwner)
-      : m_pOwner(pOwner)
+IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
+      : m_pOwner(pOwner),
+        m_pMap(pMap)
 {
     setObjectName("IslandMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -24,7 +25,7 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
         {
             m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
         }
-        spUnit pUnit = spUnit::create(unitID, pOwner, false);
+        spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
         m_MovementType = pUnit->getMovementType();
         qint32 currentIsland = 0;
@@ -37,7 +38,7 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
                 {
                     if (pUnit->canMoveOver(x, y))
                     {
-                        UnitPathFindingSystem pfs(pUnit.get());
+                        UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);
                         pfs.setStartPoint(x, y);

@@ -1,9 +1,9 @@
-CO_CASSIDY.init = function(co)
+CO_CASSIDY.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_CASSIDY.activateSuperpower = function(co, powerMode)
+CO_CASSIDY.activateSuperpower = function(co, powerMode, map)
 {
 	CO_CASSIDY.activatePower(co, powerMode);
 };
@@ -20,7 +20,7 @@ CO_CASSIDY.defaultPowerBonus = 30;
 CO_CASSIDY.powerBonus = 60;
 CO_CASSIDY.superPowerBonus = 60;
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action)
+                                  defender, defPosX, defPosY, isDefender, action, map)
 {
     if (defender !== null)
     {

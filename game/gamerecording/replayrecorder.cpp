@@ -130,7 +130,7 @@ bool ReplayRecorder::loadRecord(const QString & filename, spGameMap & pMap)
             // swap out all ai's / or players with a proxy ai.
             for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
             {
-                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+                m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
             }
             m_playing = true;
         }
@@ -147,7 +147,7 @@ spGameAction ReplayRecorder::nextAction()
             m_progress < m_count)
         {
             m_progress++;
-            spGameAction pAction = spGameAction::create();
+            spGameAction pAction = spGameAction::create(m_pMap);
             pAction->deserializeObject(m_stream);
             return pAction;
         }
@@ -190,7 +190,7 @@ void ReplayRecorder::seekToDay(qint32 day, spGameMap & pMap)
                 m_pMap->setIsHumanMatch(false);
                 for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
                 {
-                    m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+                    m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
                 }
                 m_recordFile.seek(seekPos);
                 found = true;
@@ -215,7 +215,7 @@ void ReplayRecorder::seekToStart()
     // swap out all ai's / or players with a proxy ai.
     for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+        m_pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap, GameEnums::AiTypes::AiTypes_ProxyAi));
     }    
 }
 

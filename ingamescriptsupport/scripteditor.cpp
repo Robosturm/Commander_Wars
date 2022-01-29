@@ -12,8 +12,8 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/scripteditor.h"
 
-ScriptEditor::ScriptEditor()
-    : QObject()
+ScriptEditor::ScriptEditor(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("ScriptEditor");
     Mainapp* pApp = Mainapp::getInstance();
@@ -28,7 +28,7 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_Data = spScriptData::create();
+    m_Data = spScriptData::create(m_pMap);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -428,11 +428,11 @@ void ScriptEditor::addCondition()
             parent = subCondition;
             subCondition = parent->getSubCondition();
         }
-        parent->setSubCondition(ScriptCondition::createCondition(type));
+        parent->setSubCondition(ScriptCondition::createCondition(m_pMap, type));
     }
     else
     {
-        addConditionToData(ScriptCondition::createCondition(type));
+        addConditionToData(ScriptCondition::createCondition(m_pMap, type));
     }
     updateConditios();
 }
@@ -442,7 +442,7 @@ void ScriptEditor::addEvent()
     if (m_CurrentCondition != nullptr)
     {
         ScriptEvent::EventType type = static_cast<ScriptEvent::EventType>(m_Events->getCurrentItem());
-        m_CurrentCondition->addEvent(ScriptEvent::createEvent(type));
+        m_CurrentCondition->addEvent(ScriptEvent::createEvent(m_pMap, type));
         updateEvents();
     }
 }
@@ -462,7 +462,7 @@ void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
     QString data;
     QTextStream stream(&data);
     pEvent->writeEvent(stream);
-    spScriptEvent pNewEvent = ScriptEvent::createEvent(pEvent->getEventType());
+    spScriptEvent pNewEvent = ScriptEvent::createEvent(m_pMap, pEvent->getEventType());
     stream.seek(0);
     QString line = stream.readLine();
     pNewEvent->readEvent(stream, line);
@@ -477,7 +477,7 @@ void ScriptEditor::duplicateCondition()
         QString data;
         QTextStream stream(&data);
         m_CurrentCondition->writeCondition(stream);
-        spScriptCondition pNewCondition = ScriptCondition::createCondition(m_CurrentCondition->getType());
+        spScriptCondition pNewCondition = ScriptCondition::createCondition(m_pMap, m_CurrentCondition->getType());
         stream.seek(0);
         QString line = stream.readLine();
         pNewCondition->readCondition(stream, line);

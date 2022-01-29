@@ -121,7 +121,7 @@ void GameRules::addVictoryRule(const QString & rule)
     }
     if (!found)
     {
-        m_VictoryRules.append(spVictoryRule::create(rule));
+        m_VictoryRules.append(spVictoryRule::create(rule, m_pMap));
     }
 }
 
@@ -281,7 +281,7 @@ void GameRules::addWeather(const QString & weatherId, qint32 weatherChance)
     }
     if (!found)
     {
-        m_Weathers.append(spWeather::create(weatherId));
+        m_Weathers.append(spWeather::create(weatherId, m_pMap));
         m_WeatherChances.append(weatherChance);
     }
 }
@@ -1323,7 +1323,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        m_VictoryRules.append(spVictoryRule::create());
+        m_VictoryRules.append(spVictoryRule::create(m_pMap));
         m_VictoryRules[i]->deserializeObject(pStream);
     }
     qint32 ruleItem = 0;
@@ -1341,7 +1341,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        spWeather pWeather = spWeather::create();
+        spWeather pWeather = spWeather::create(m_pMap);
         pWeather->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;

@@ -1,7 +1,7 @@
 var Constructor = function ()
 {
     
-    this.canBePerformed = function (action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -55,30 +55,29 @@ var Constructor = function ()
 
     };
 
-
-    this.getActionText = function ()
+    this.getActionText = function(map)
     {
         return qsTr("Load");
     };
-    this.getIcon = function ()
+    this.getIcon = function(map)
     {
         return "load";
     };
-    this.isFinalStep = function (action)
+    this.isFinalStep = function (action, map)
     {
         return true;
     };
     this.postAnimationTargetUnit = null;
     this.postAnimationUnit = null;
-    this.perform = function (action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         ACTION_LOAD.postAnimationUnit = action.getTargetUnit();
         ACTION_LOAD.postAnimationTargetUnit = action.getMovementTarget();
-        var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
     };
-    this.performPostAnimation = function (postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         ACTION_LOAD.postAnimationUnit.setHasMoved(true);
         ACTION_LOAD.postAnimationUnit.setCapturePoints(0);

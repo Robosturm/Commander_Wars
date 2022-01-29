@@ -480,7 +480,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
                 {
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
-                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<GameEnums::AiTypes>(aiType)));
+                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap.get(), static_cast<GameEnums::AiTypes>(aiType)));
                 m_pPlayerSelection->updatePlayerData(i);
             }
             m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
@@ -887,7 +887,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         }
         CONSOLE_PRINT("Creating AI for player " + QString::number(i) + " of type " + QString::number(aiType), Console::eDEBUG);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
-        m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
+        m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(m_pMap.get(), aiType));
     }
     GlobalUtils::seed(seed);
     GlobalUtils::setUseSeed(true);
@@ -900,7 +900,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     m_NetworkInterface->setIsServer(false);
     CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-    auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
+    auto window = spGameMenue::create(m_pMap, m_saveGame, m_NetworkInterface);
     oxygine::Stage::getStage()->addChild(window);
     // send game started
     QString command = QString(NetworkCommands::CLIENTINITGAME);
@@ -993,7 +993,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelectionView = spRuleSelection::create(m_pMap.get(), Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
     connect(m_pRuleSelectionView.get(), &RuleSelection::sigSizeChanged, this, &Multiplayermenu::ruleSelectionSizeChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
@@ -1309,7 +1309,7 @@ void Multiplayermenu::countdown()
             m_pMap->updateSprites(-1, -1, false, true);
             // start game
             CONSOLE_PRINT("Leaving Map Selection Menue", Console::eDEBUG);
-            auto window = spGameMenue::create(m_saveGame, m_NetworkInterface);
+            auto window = spGameMenue::create(m_pMap, m_saveGame, m_NetworkInterface);
             oxygine::Stage::getStage()->addChild(window);
             QThread::msleep(200);
             CONSOLE_PRINT("Sending init game to clients", Console::eDEBUG);

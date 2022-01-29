@@ -10,8 +10,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptEventAddFunds::ScriptEventAddFunds()
-    : ScriptEvent (EventType::addFunds)
+ScriptEventAddFunds::ScriptEventAddFunds(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::addFunds)
 {
 
 }

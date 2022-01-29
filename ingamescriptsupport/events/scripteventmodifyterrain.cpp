@@ -12,8 +12,8 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/terrainmanager.h"
 
-ScriptEventModifyTerrain::ScriptEventModifyTerrain()
-    : ScriptEvent (ScriptEvent::EventType::modifyTerrain)
+ScriptEventModifyTerrain::ScriptEventModifyTerrain(GameMap* pMap)
+    : ScriptEvent(pMap, ScriptEvent::EventType::modifyTerrain)
 {
 
 }
@@ -97,7 +97,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     }
     auto creator = [=](QString id)
     {
-        spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "");
+        spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "", m_pMap);
         pTerrain->loadSprites();
         return pTerrain;
     };

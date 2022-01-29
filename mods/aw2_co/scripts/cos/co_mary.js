@@ -1,4 +1,4 @@
-CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -75,7 +75,7 @@ CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
     }
 };
 
-CO_MARY.canBeRepaired = function(co, unit, posX, posY)
+CO_MARY.canBeRepaired = function(co, unit, posX, posY, map)
 {
     // disanle enemy repairs
     switch (co.getPowerMode())
@@ -97,7 +97,7 @@ CO_MARY.canBeRepaired = function(co, unit, posX, posY)
 };
 
 CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -117,7 +117,7 @@ CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -130,7 +130,7 @@ CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action)
+                                          defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -148,7 +148,7 @@ CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_MARY.getAdditionalBuildingActions = function(co, building)
+CO_MARY.getAdditionalBuildingActions = function(co, building, map)
 {
     switch (co.getPowerMode())
     {
@@ -168,7 +168,7 @@ CO_MARY.getAdditionalBuildingActions = function(co, building)
     return "";
 };
 
-CO_MARY.getCaptureBonus = function(co, unit, posX, posY)
+CO_MARY.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

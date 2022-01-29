@@ -29,9 +29,9 @@ const QString ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
 const QString ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
 const QString ScriptCondition::ConditionCheckVariable = "Check Variable";
 
-ScriptCondition::ScriptCondition(ConditionType type)
-    : QObject(),
-      m_Type(type)
+ScriptCondition::ScriptCondition(GameMap* pMap, ConditionType type)
+    : m_Type(type),
+      m_pMap(pMap)
 {
 }
 
@@ -59,7 +59,7 @@ void ScriptCondition::setSubCondition(const spScriptCondition &value)
     }
 }
 
-bool ScriptCondition::readSubCondition(QTextStream& rStream, QString id, QString & line)
+bool ScriptCondition::readSubCondition(GameMap* pMap, QTextStream& rStream, QString id, QString & line)
 {
     line = rStream.readLine();
     line = line.simplified();
@@ -69,7 +69,7 @@ bool ScriptCondition::readSubCondition(QTextStream& rStream, QString id, QString
     }
     if (subCondition.get() == nullptr)
     {
-        setSubCondition(createReadCondition(rStream, line));
+        setSubCondition(createReadCondition(pMap, rStream, line));
     }
     if (subCondition.get() != nullptr)
     {
@@ -88,122 +88,122 @@ ScriptCondition::ConditionType ScriptCondition::getType() const
     return m_Type;
 }
 
-spScriptCondition ScriptCondition::createCondition(ConditionType type)
+spScriptCondition ScriptCondition::createCondition(GameMap* pMap, ConditionType type)
 {
     switch (type)
     {
         case ConditionType::victory:
         {
-            return spScriptConditionVictory::create();
+            return spScriptConditionVictory::create(pMap);
         }
         case ConditionType::startOfTurn:
         {
-            return spScriptConditionStartOfTurn::create();
+            return spScriptConditionStartOfTurn::create(pMap);
         }
         case ConditionType::eachDay:
         {
-            return spScriptConditionEachDay::create();
+            return spScriptConditionEachDay::create(pMap);
         }
         case ConditionType::unitDestroyed:
         {
-            return spScriptConditionUnitDestroyed::create();
+            return spScriptConditionUnitDestroyed::create(pMap);
         }
         case ConditionType::buildingDestroyed:
         {
-            return spScriptConditionBuildingDestroyed::create();
+            return spScriptConditionBuildingDestroyed::create(pMap);
         }
         case ConditionType::buildingCaptured:
         {
-            return spScriptConditionBuildingCaptured::create();
+            return spScriptConditionBuildingCaptured::create(pMap);
         }
         case ConditionType::playerDefeated:
         {
-            return spScriptConditionPlayerDefeated::create();
+            return spScriptConditionPlayerDefeated::create(pMap);
         }
         case ConditionType::unitsDestroyed:
         {
-            return spScriptConditionUnitsDestroyed::create();
+            return spScriptConditionUnitsDestroyed::create(pMap);
         }
         case ConditionType::buildingsOwned:
         {
-            return spScriptConditionBuildingsOwned::create();
+            return spScriptConditionBuildingsOwned::create(pMap);
         }
         case ConditionType::playerReachedArea:
         {
-            return spScriptConditionPlayerReachedArea::create();
+            return spScriptConditionPlayerReachedArea::create(pMap);
         }
         case ConditionType::unitReachedArea:
         {
-            return spScriptConditionUnitReachedArea::create();
+            return spScriptConditionUnitReachedArea::create(pMap);
         }
         case ConditionType::terrainDestroyed:
         {
-            return spScriptConditionTerrainDestroyed::create();
+            return spScriptConditionTerrainDestroyed::create(pMap);
         }
         case ConditionType::checkVariable:
         {
-            return spScriptConditionCheckVariable::create();
+            return spScriptConditionCheckVariable::create(pMap);
         }
     }
     return spScriptCondition();
 }
 
 
-spScriptCondition ScriptCondition::createReadCondition(QTextStream& rStream, QString & line)
+spScriptCondition ScriptCondition::createReadCondition(GameMap* pMap, QTextStream& rStream, QString & line)
 {
     line = line.simplified();
     spScriptCondition ret;
     if (line.endsWith(ConditionEachDay))
     {
-         ret = spScriptConditionEachDay::create();
+         ret = spScriptConditionEachDay::create(pMap);
     }
     else if (line.endsWith(ConditionStartOfTurn))
     {
-        ret = spScriptConditionStartOfTurn::create();
+        ret = spScriptConditionStartOfTurn::create(pMap);
     }
     else if (line.endsWith(ConditionVictory))
     {
-        ret = spScriptConditionVictory::create();
+        ret = spScriptConditionVictory::create(pMap);
     }
     else if (line.endsWith(ConditionUnitDestroyed))
     {
-        ret = spScriptConditionUnitDestroyed::create();
+        ret = spScriptConditionUnitDestroyed::create(pMap);
     }
     else if (line.endsWith(ConditionBuildingDestroyed))
     {
-        ret = spScriptConditionBuildingDestroyed::create();
+        ret = spScriptConditionBuildingDestroyed::create(pMap);
     }
     else if (line.endsWith(ConditionBuildingCaptured))
     {
-        ret = spScriptConditionBuildingCaptured::create();
+        ret = spScriptConditionBuildingCaptured::create(pMap);
     }
     else if (line.endsWith(ConditionPlayerDefeated))
     {
-        ret = spScriptConditionPlayerDefeated::create();
+        ret = spScriptConditionPlayerDefeated::create(pMap);
     }
     else if (line.endsWith(ConditionUnitsDestroyed))
     {
-        ret = spScriptConditionUnitsDestroyed::create();
+        ret = spScriptConditionUnitsDestroyed::create(pMap);
     }
     else if (line.endsWith(ConditionBuildingsOwned))
     {
-        ret = spScriptConditionBuildingsOwned::create();
+        ret = spScriptConditionBuildingsOwned::create(pMap);
     }
     else if (line.endsWith(ConditionUnitReachedArea))
     {
-        ret = spScriptConditionUnitReachedArea::create();
+        ret = spScriptConditionUnitReachedArea::create(pMap);
     }
     else if (line.endsWith(ConditionPlayerReachedArea))
     {
-        ret = spScriptConditionPlayerReachedArea::create();
+        ret = spScriptConditionPlayerReachedArea::create(pMap);
     }
     else if (line.endsWith(ConditionTerrainDestroyed))
     {
-        ret = spScriptConditionTerrainDestroyed::create();
+        ret = spScriptConditionTerrainDestroyed::create(pMap);
     }
     else if (line.endsWith(ConditionCheckVariable))
     {
-        ret = spScriptConditionCheckVariable::create();
+        ret = spScriptConditionCheckVariable::create(pMap);
     }
     if (ret.get() != nullptr)
     {

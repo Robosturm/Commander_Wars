@@ -29,11 +29,12 @@ public:
         bool frontLineCreated{false};
         qint32 highestInfluence{0};
         qint32 ownInfluence{0};
-        qint32 highestEnemyInfluence{0};
+        qint32 highestEnemyInfluence{0};        
     private:
         QVector<qint32> playerValues;
+        GameMap* m_pMap{nullptr};
     };
-    explicit InfluenceFrontMap(const QVector<spIslandMap> & islands);
+    explicit InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> & islands);
     virtual ~InfluenceFrontMap() = default;
     void addBuildingInfluence();
     void addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints);
@@ -116,4 +117,5 @@ private:
     Player* m_pOwner;
     QVector<oxygine::spActor> m_info;
     qint32 m_totalHighestInfluence{0};
+    GameMap* m_pMap{nullptr};
 };

@@ -5,9 +5,9 @@ var Constructor = function()
         return 4;
     };
     this.baseTerrainId = "WASTE";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEWASTELAND.loadBase(terrain, "waste_wasteland")
+        __BASEWASTELAND.loadBase(terrain, "waste_wasteland", map)
     };
     this.getTerrainSprites = function()
     {

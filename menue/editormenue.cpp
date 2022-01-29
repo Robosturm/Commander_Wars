@@ -74,7 +74,7 @@ EditorMenue::EditorMenue()
     m_pInstance = this;
 
 
-    m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen);
+    m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);
 
     m_Topbar = spTopbar::create(0, Settings::getWidth());
@@ -540,7 +540,7 @@ void EditorMenue::showResizeMap()
 
 void EditorMenue::showEditScript()
 {
-    spScriptEditor scriptEditor = spScriptEditor::create();
+    spScriptEditor scriptEditor = spScriptEditor::create(m_pMap.get());
     addChild(scriptEditor);
     connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
     setFocused(false);
@@ -707,7 +707,7 @@ void EditorMenue::editTerrains()
 
 void EditorMenue::showEditPlayers()
 {
-    spPlayerSelectionDialog pDialog = spPlayerSelectionDialog::create();
+    spPlayerSelectionDialog pDialog = spPlayerSelectionDialog::create(m_pMap.get());
     addChild(pDialog);
     connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
     setFocused(false);
@@ -715,7 +715,7 @@ void EditorMenue::showEditPlayers()
 
 void EditorMenue::showEditRules()
 {
-    spRuleSelectionDialog pDialog = spRuleSelectionDialog::create(RuleSelection::Mode::Editor);
+    spRuleSelectionDialog pDialog = spRuleSelectionDialog::create(m_pMap.get(), RuleSelection::Mode::Editor);
     addChild(pDialog);
     connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
     setFocused(false);
@@ -762,16 +762,15 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 {
     CONSOLE_PRINT("EditorMenue::createRandomMap", Console::eDEBUG);
     cleanTemp(-1);
-    spGameMap pGameMap = m_pMap;
-    RandomMapGenerator::randomMap(width, heigth, playerCount, roadSupport, seed,
+    RandomMapGenerator::randomMap(m_pMap.get(), width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
                         units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed,
                         mirrored);
-    pGameMap->setMapName(mapName);
-    pGameMap->setMapAuthor(author);
-    pGameMap->setMapDescription(description);
+    m_pMap->setMapName(mapName);
+    m_pMap->setMapAuthor(author);
+    m_pMap->setMapDescription(description);
     Mainapp::getInstance()->pauseRendering();
-    pGameMap->updateSprites();
+    m_pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
@@ -1197,7 +1196,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             if (pUnit != nullptr)
             {
                 createTempFile();
-                spDialogModifyUnit pDialog = spDialogModifyUnit::create(pUnit);
+                spDialogModifyUnit pDialog = spDialogModifyUnit::create(m_pMap.get(), pUnit);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1210,7 +1209,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             if (pTerrain->getBuilding() == nullptr)
             {
                 createTempFile();
-                spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(pTerrain);
+                spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(m_pMap.get(), pTerrain);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1218,7 +1217,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             else
             {
                 createTempFile();
-                spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(pTerrain->getBuilding());
+                spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(m_pMap.get(), pTerrain->getBuilding());
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1449,7 +1448,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             if (pCurrentBuilding->getBuildingID() != m_pMap->getTerrain(curX, curY)->getTerrainID())
             {
-                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID(), m_pMap.get());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 m_pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
             }
@@ -1509,7 +1508,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
-            spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+            spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false, m_pMap.get());
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             
             m_pMap->getTerrain(curX, curY)->setUnit(pUnit);
@@ -1944,7 +1943,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                         QString baseTerrain = baseTerrains[0];
                                         m_pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
                                     }
-                                    spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID());
+                                    spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID(), m_pMap.get());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
                                     m_pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
@@ -1962,7 +1961,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     QString movementType = pUnit->getMovementType();
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, m_pMap->getTerrain(x + xPos, y + yPos), m_pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
-                                        spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
+                                        spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false, m_pMap.get());
                                         spUnit pUnit;
                                         m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
                                         m_pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);

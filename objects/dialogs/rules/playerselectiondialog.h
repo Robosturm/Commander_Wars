@@ -8,14 +8,15 @@
 
 #include "objects/playerselection.h"
 
+class GameMap;
 class PlayerSelectionDialog;
-typedef oxygine::intrusive_ptr<PlayerSelectionDialog> spPlayerSelectionDialog;
+using spPlayerSelectionDialog = oxygine::intrusive_ptr<PlayerSelectionDialog>;
 
 class PlayerSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit PlayerSelectionDialog();
+    explicit PlayerSelectionDialog(GameMap* pMap);
     virtual ~PlayerSelectionDialog() = default;
 signals:
     void sigPlayersChanged();

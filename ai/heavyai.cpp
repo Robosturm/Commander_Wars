@@ -23,8 +23,8 @@ const QStringList HeavyAi::NeuralNetworkNames = {"Production",
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
-    : CoreAI(aiType),
+HeavyAi::HeavyAi(GameMap* pMap, QString type, GameEnums::AiTypes aiType)
+    : CoreAI(pMap, aiType),
       m_scoreInfos({
 {ACTION_CAPTURE,  std::bind(&HeavyAi::scoreCapture,     this,   _1, _2, _3)},
 {ACTION_FIRE,     std::bind(&HeavyAi::scoreFire,        this,   _1, _2, _3)},
@@ -35,7 +35,7 @@ HeavyAi::HeavyAi(QString type, GameEnums::AiTypes aiType)
 {ACTION_UNLOAD,     std::bind(&HeavyAi::scoreUnload,    this,   _1, _2, _3)},
 {ACTION_WAIT,     std::bind(&HeavyAi::scoreWait,        this,   _1, _2, _3)},
                    }),
-      m_InfluenceFrontMap(m_IslandMaps),
+      m_InfluenceFrontMap(pMap, m_IslandMaps),
       m_timer(this),
       m_aiName(type)
 {
@@ -341,7 +341,7 @@ void HeavyAi::addNewUnitToUnitData(QVector<UnitData> & units, Unit* pUnit, bool 
 {
     UnitData data;
     data.m_pUnit = pUnit;
-    data.m_pPfs = spUnitPathFindingSystem::create(pUnit);
+    data.m_pPfs = spUnitPathFindingSystem::create(m_pMap, pUnit);
     data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
     data.m_pPfs->setMovepoints(data.m_movepoints * 2);
     if (enemyUnits)
@@ -414,7 +414,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, spQmlVectorUnit & pUnits, b
                     qAbs(m_updatePoints[i].y() - units[i2].m_pUnit->Unit::getY()) <=
                     units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
-                    units[i2].m_pPfs = spUnitPathFindingSystem::create(units[i2].m_pUnit);
+                    units[i2].m_pPfs = spUnitPathFindingSystem::create(m_pMap, units[i2].m_pUnit);
                     if (enemyUnits)
                     {
                         units[i2].m_pPfs->setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
@@ -472,7 +472,7 @@ void HeavyAi::updateCaptureBuildings(UnitData & unitData)
     if (unitData.m_pUnit->getActionList().contains(ACTION_CAPTURE))
     {
         unitData.m_capturePoints.clear();
-        GameAction action(ACTION_CAPTURE);
+        GameAction action(ACTION_CAPTURE, m_pMap);
         action.setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
         QVector<QPoint> targets = unitData.m_pPfs->getAllNodePoints(unitData.m_movepoints);
         for (const auto & target : targets)
@@ -509,7 +509,7 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
             {
                 if (GlobalUtils::getDistance(pos, QPoint(hqPos.x(), hqPos.y())) <= dayDistance * movePoints)
                 {
-                    TargetedUnitPathFindingSystem pfs = TargetedUnitPathFindingSystem(enemy.m_pUnit, hqPositions, &m_MoveCostMap);
+                    TargetedUnitPathFindingSystem pfs = TargetedUnitPathFindingSystem(m_pMap, enemy.m_pUnit, hqPositions, &m_MoveCostMap);
                     pfs.setIgnoreEnemies(UnitPathFindingSystem::CollisionIgnore::OnlyNotMovedEnemies);
                     pfs.setMovepoints(movePoints * dayDistance);
                     pfs.setAbortOnCostExceed(true);
@@ -634,14 +634,14 @@ void HeavyAi::mutateActionForFields(UnitData & unitData, const QVector<QPoint> &
         bool mutate = true;
         QVector<qint32> stepPosition;
         QVector<double> baseData(static_cast<qsizetype>(BasicFieldInfo::BasicFieldInfoMaxSize));
-        spGameAction pDummy  = spGameAction::create();
+        spGameAction pDummy  = spGameAction::create(m_pMap);
         pDummy->setActionID(action);
         pDummy->setMovepath(path, costs);
         pDummy->setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
         getBasicFieldInputVector(pDummy, baseData);
         while (mutate)
         {
-            spGameAction pAction  = spGameAction::create();
+            spGameAction pAction  = spGameAction::create(m_pMap);
             pAction->setActionID(action);
             pAction->setMovepath(path, costs);
             pAction->setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
@@ -1281,7 +1281,7 @@ void HeavyAi::prepareWaitPfs(UnitData & unitData, QStringList & actions)
     {
         QVector<QVector3D> targets;
         getMoveTargets(unitData, actions, targets);
-        m_currentTargetedfPfs = spTargetedUnitPathFindingSystem::create(unitData.m_pUnit, targets, &m_MoveCostMap);
+        m_currentTargetedfPfs = spTargetedUnitPathFindingSystem::create(m_pMap, unitData.m_pUnit, targets, &m_MoveCostMap);
         m_currentTargetedfPfs->explore();
     }
 }
@@ -1508,7 +1508,7 @@ void HeavyAi::scoreWait(ScoreData & data, UnitData & unitData, QVector<double> b
     if (unitData.m_pUnit->getLoadedUnitCount() > 0)
     {
         // check if unloading can be performed in that case return a negativ result and go for unloading instead
-        GameAction unloadAction(CoreAI::ACTION_UNLOAD);
+        GameAction unloadAction(CoreAI::ACTION_UNLOAD, m_pMap);
         unloadAction.setTarget(data.m_gameAction->getTarget());
         if (unloadAction.canBePerformed())
         {

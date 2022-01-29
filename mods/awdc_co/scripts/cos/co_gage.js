@@ -1,9 +1,9 @@
-CO_GAGE.init = function(co)
+CO_GAGE.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_GAGE.activateSuperpower = function(co, powerMode)
+CO_GAGE.activateSuperpower = function(co, powerMode, map)
 {
 	CO_GAGE.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_GAGE.getSuperPowerName = function()
     return CO_GAGE.getPowerName();
 };
 CO_GAGE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -44,7 +44,7 @@ CO_GAGE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_GAGE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, map)
 {
     switch (co.getPowerMode())
     {
@@ -72,7 +72,7 @@ CO_GAGE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_GAGE.getFirerangeModifier = function(co, unit, posX, posY)
+CO_GAGE.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {

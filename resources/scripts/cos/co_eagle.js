@@ -12,13 +12,13 @@ var Constructor = function()
         return CO.getAiUsePowerAtEnd(co, powerSurplus, turnMode);
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(6);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -63,7 +63,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -115,7 +115,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -135,7 +135,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -144,7 +144,7 @@ var Constructor = function()
         return "GE";
     };
 
-    this.getFuelCostModifier = function(co, unit, costs)
+    this.getFuelCostModifier = function(co, unit, costs, map)
     {
         if (unit.getUnitType() === GameEnums.UnitType_Air)
         {
@@ -154,7 +154,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -205,7 +205,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -214,7 +214,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {
@@ -226,7 +226,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "AIRPORT" ||

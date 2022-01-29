@@ -1,5 +1,5 @@
 CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -40,7 +40,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
+CO_SAMI.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -58,7 +58,7 @@ CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
     return 0;
 };
 CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -69,7 +69,7 @@ CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
+CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

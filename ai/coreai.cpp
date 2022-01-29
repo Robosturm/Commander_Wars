@@ -50,11 +50,12 @@ const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
 const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
 const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
+const QString CoreAI::ACTION_TRAP = "ACTION_TRAP";
 
 const QString CoreAI::UNIT_INFANTRY = "INFANTRY";
 
-CoreAI::CoreAI(GameEnums::AiTypes aiType)
-    : BaseGameInputIF(aiType)
+CoreAI::CoreAI(GameMap* pMap, GameEnums::AiTypes aiType)
+    : BaseGameInputIF(pMap, aiType)
 {
     setObjectName("CoreAI");
     Interpreter::setCppOwnerShip(this);
@@ -352,7 +353,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
                     directUnits, pEnemyUnits->size(), turnMode);
             if (result == GameEnums::PowerMode_Power)
             {
-                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0);
+                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0, m_pMap);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_POWER_CO_1);
@@ -365,7 +366,7 @@ bool CoreAI::useCOPower(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits)
             }
             else if (result == GameEnums::PowerMode_Superpower)
             {
-                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_SUPERPOWER_CO_0, m_pMap);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_1);
@@ -699,6 +700,8 @@ QRectF CoreAI::calcUnitDamage(spGameAction & pAction, const QPoint & target) con
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
     QJSValueList args1;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue obj1 = pInterpreter->newQObject(pAction.get());
     args1 << obj1;
     args1 << target.x();
@@ -715,6 +718,8 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
     QJSValueList args1;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue obj3 = pInterpreter->newQObject(nullptr);
     args1 << obj3;
     QJSValue obj1 = pInterpreter->newQObject(pAttacker);
@@ -752,7 +757,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
            (isOnProduction ||
            (pTerrain->isLoadingTile() && remainingSpace == 0)))
         {
-            UnitPathFindingSystem turnPfs(pUnit);
+            UnitPathFindingSystem turnPfs(m_pMap, pUnit);
             turnPfs.explore();
             QVector<QPoint> points = turnPfs.getAllNodePoints();
             QPoint target(-1 , -1);
@@ -776,7 +781,7 @@ bool CoreAI::moveAwayFromProduction(spQmlVectorUnit & pUnits)
             }
             if (target.x() >= 0 && target.y() >= 0)
             {
-                spGameAction pAction = spGameAction::create(ACTION_WAIT);
+                spGameAction pAction = spGameAction::create(ACTION_WAIT, m_pMap);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -1452,7 +1457,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding & 
     if (capturUnits.size() > 0)
     {
         spQmlVectorPoint pUnloadArea = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-        GameAction testAction;
+        GameAction testAction(m_pMap);
         testAction.setTargetUnit(capturUnits[0]);
         // store has moved
         bool hasMoved = capturUnits[0]->getHasMoved();
@@ -1658,7 +1663,7 @@ void CoreAI::createIslandMap(const QString & movementType, const QString & unitI
     }
     if (!found)
     {
-        m_IslandMaps.append(spIslandMap::create(unitID, m_pPlayer));
+        m_IslandMaps.append(spIslandMap::create(m_pMap, unitID, m_pPlayer));
     }
 }
 
@@ -1747,7 +1752,7 @@ void CoreAI::finishTurn()
 {
     CONSOLE_PRINT("CoreAI::finishTurn(()", Console::eDEBUG);
     m_usedTransportSystem = false;
-    spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER);
+    spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER, m_pMap);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);
     if (pCO0 != nullptr &&
@@ -1796,7 +1801,7 @@ bool CoreAI::useBuilding(spQmlVectorBuilding & pBuildings)
             {
                 if (actions[i] != ACTION_BUILD_UNITS)
                 {
-                    spGameAction pAction = spGameAction::create(actions[i]);
+                    spGameAction pAction = spGameAction::create(actions[i], m_pMap);
                     pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -1958,7 +1963,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemy
 bool CoreAI::buildCOUnit(spQmlVectorUnit & pUnits)
 {
     CONSOLE_PRINT("CoreAI::buildCOUnit", Console::eDEBUG);
-    spGameAction pAction = spGameAction::create();
+    spGameAction pAction = spGameAction::create(m_pMap);
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
         if (i2 == 0)

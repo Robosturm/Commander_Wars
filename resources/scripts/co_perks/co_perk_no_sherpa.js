@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
     {
         if (CO_PERK.isActive(co))
         {
@@ -28,7 +28,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the attack from mountains by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "no_sherpa";
     };

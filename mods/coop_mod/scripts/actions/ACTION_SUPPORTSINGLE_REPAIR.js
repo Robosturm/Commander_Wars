@@ -1,4 +1,4 @@
-ACTION_SUPPORTSINGLE_REPAIR.getRepairFields = function(action)
+ACTION_SUPPORTSINGLE_REPAIR.getRepairFields = function(action, map)
 {
     var targetField = action.getActionTarget();
     var targetFields = [Qt.point(targetField.x + 1, targetField.y),

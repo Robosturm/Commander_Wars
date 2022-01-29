@@ -10,7 +10,7 @@ class ScriptConditionUnitDestroyed : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionUnitDestroyed();
+    explicit ScriptConditionUnitDestroyed(GameMap* pMap);
 
     /**
      * @brief readCondition

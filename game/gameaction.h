@@ -41,13 +41,13 @@ public:
      * @param actionID
      * @return
      */
-    static QString getActionText(const QString & actionID);
+    static QString getActionText(GameMap* pMap, const QString & actionID);
     /**
      * @brief getActionIcon the icon shown for this menue item
      * @param actionID
      * @return
      */
-    static QString getActionIcon(const QString & actionID);
+    static QString getActionIcon(GameMap* pMap, const QString & actionID);
 
     void setTargetUnit(Unit *pTargetUnit);
     /**

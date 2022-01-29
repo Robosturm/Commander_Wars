@@ -17,11 +17,12 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
+HumanPlayerInputMenu::HumanPlayerInputMenu(GameMap* pMap, const QStringList & texts, const QStringList &  actionIDs, const QVector<oxygine::spActor> & icons,
                                            const QVector<qint32> & costList, const QVector<bool> & enabledList)
     : m_ActionIDs(actionIDs),
       m_CostList(costList),
-      m_EnabledList(enabledList)
+      m_EnabledList(enabledList),
+      m_pMap(pMap)
 {
     setObjectName("HumanPlayerInputMenu");
     Mainapp* pApp = Mainapp::getInstance();
@@ -563,7 +564,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                     if (pUnitSpriteManager->exists(id))
                     {
-                        spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false);
+                        spUnit pDummy = spUnit::create(id, m_pMap->getCurrentPlayer(), false, m_pMap);
                         spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
                         pMenu->addChild(fieldinfo);
                         connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]

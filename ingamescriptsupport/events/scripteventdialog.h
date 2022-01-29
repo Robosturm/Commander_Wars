@@ -35,7 +35,7 @@ public:
     static const QString m_CurrentPlayerCO0;
     static const QString m_CurrentPlayerCO1;
 
-    ScriptEventDialog();
+    explicit ScriptEventDialog(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

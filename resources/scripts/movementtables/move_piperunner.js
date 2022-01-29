@@ -24,7 +24,7 @@ var Constructor = function()
                                 ["ZWASTEWELD_E_W", 1],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_PIPERUNNER.movementpointsTable);
     };

@@ -1,4 +1,4 @@
-CO_ALEXANDER.startOfTurn = function(co)
+CO_ALEXANDER.startOfTurn = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -26,7 +26,7 @@ CO_ALEXANDER.startOfTurn = function(co)
     }
 };
 
-CO_ALEXANDER.getIncomeReduction = function(co, building, income)
+CO_ALEXANDER.getIncomeReduction = function(co, building, income, map)
 {
     // set income to 0 during scop
     if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
@@ -37,7 +37,7 @@ CO_ALEXANDER.getIncomeReduction = function(co, building, income)
     return 0;
 };
 
-CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
+CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -52,13 +52,13 @@ CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
 
 CO_ALEXANDER.coZoneBonus = 0;
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     return 0;
 };
 
 CO_ALEXANDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

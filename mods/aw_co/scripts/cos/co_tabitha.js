@@ -1,9 +1,9 @@
-CO_TABITHA.init = function(co)
+CO_TABITHA.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(5);
 };
-CO_TABITHA.activateSuperpower = function(co, powerMode)
+CO_TABITHA.activateSuperpower = function(co, powerMode, map)
 {
     CO_TABITHA.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_TABITHA.getSuperPowerName = function()
     return CO_TABITHA.getPowerName();
 };
 CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action)
+                                        defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 10;
 };
 CO_TABITHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action)
+                                         defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {

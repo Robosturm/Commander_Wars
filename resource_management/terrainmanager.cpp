@@ -25,7 +25,7 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
 
 QString TerrainManager::getName(const QString & id)
 {
-    spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "");
+    spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "", nullptr);
     return pTerrain->getTerrainName();
 }
 

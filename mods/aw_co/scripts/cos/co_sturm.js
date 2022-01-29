@@ -1,9 +1,9 @@
-CO_STURM.init = function(co)
+CO_STURM.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(5);
 };
-CO_STURM.activateSuperpower = function(co, powerMode)
+CO_STURM.activateSuperpower = function(co, powerMode, map)
 {
     CO_STURM.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_STURM.getSuperPowerName = function()
     return CO_STURM.getPowerName();
 };
 CO_STURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -25,7 +25,7 @@ CO_STURM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_STURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -41,7 +41,7 @@ CO_STURM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_STURM.getMovementcostModifier = function(co, unit, posX, posY)
+CO_STURM.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

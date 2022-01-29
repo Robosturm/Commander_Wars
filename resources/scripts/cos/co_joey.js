@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(3);
@@ -13,7 +13,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -55,7 +55,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -103,7 +103,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -123,7 +123,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -132,7 +132,7 @@ var Constructor = function()
         return "TI";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, map)
     {
         if(defender !== null)
         {
@@ -198,7 +198,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, map)
     {
         if(attacker !== null)
         {
@@ -221,7 +221,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker, isDefender, map)
     {
         if(unit !== null &&
            isDefender)
@@ -246,7 +246,7 @@ var Constructor = function()
         return false;
     };
 
-    this.getCostModifier = function(co, id, baseCost, posX, posY)
+    this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -260,7 +260,7 @@ var Constructor = function()
         }
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

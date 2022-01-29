@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(3);
@@ -18,7 +18,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -38,25 +38,25 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_GRAVES.gravesDamage(co, 1, 3, powerNameAnimation);
+        CO_GRAVES.gravesDamage(co, 1, 3, powerNameAnimation, map);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_GRAVES.gravesDamage(co, 2, 4, powerNameAnimation);
+        CO_GRAVES.gravesDamage(co, 2, 4, powerNameAnimation, map);
     };
 
-    this.gravesDamage = function(co, value, stunLevel, animation2)
+    this.gravesDamage = function(co, value, stunLevel, animation2, map)
     {
         var player = co.getOwner();
         var counter = 0;
@@ -113,7 +113,7 @@ var Constructor = function()
         }
     };
 
-    this.postAnimationDamage = function(postAnimation)
+    this.postAnimationDamage = function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -144,7 +144,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -154,7 +154,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
     {
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -165,7 +165,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -175,7 +175,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
@@ -200,7 +200,7 @@ var Constructor = function()
         }
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

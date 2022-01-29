@@ -14,7 +14,7 @@ var Constructor = function()
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -54,19 +54,19 @@ var Constructor = function()
                 "TEMPORARY_HARBOUR", "OILRIG"];
     };
 
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Capture");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "capture";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_CAPTURE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -77,7 +77,7 @@ var Constructor = function()
     this.postAnimationUnit = null;
     this.postAnimationBuilding = null;
     this.postAnimationTarget = null;
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var maxCapturePoints = 20;
         // capture the building
@@ -133,9 +133,8 @@ var Constructor = function()
         ACTION_CAPTURE.postAnimationBuilding = null;
         ACTION_CAPTURE.postAnimationTarget = null;
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
-
         return true;
     };
     this.getDescription = function()

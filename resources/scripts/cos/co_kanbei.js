@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt", "+alt2", "+alt3", "+alt4"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(3);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,7 +33,7 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -84,7 +84,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -133,7 +133,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 2;
     };
@@ -141,7 +141,7 @@ var Constructor = function()
     {
         return "YC";
     };
-    this.getCostModifier = function(co, id, baseCost, posX, posY)
+    this.getCostModifier = function(co, id, baseCost, posX, posY, map)
     {
         return baseCost * CO_KANBEI.costIncrease / 100;
     };
@@ -149,7 +149,7 @@ var Constructor = function()
     this.globalBonus = 15;
     this.costIncrease = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -172,7 +172,7 @@ var Constructor = function()
         return CO_KANBEI.globalBonus;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -191,12 +191,12 @@ var Constructor = function()
         return CO_KANBEI.globalBonus;
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
 
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

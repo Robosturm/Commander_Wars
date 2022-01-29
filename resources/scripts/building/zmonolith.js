@@ -20,7 +20,7 @@ var Constructor = function()
         return 0;
     };
     this.actionList = ["ACTION_CRYSTALL_HEAL"];
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(1);
     };
@@ -73,7 +73,7 @@ var Constructor = function()
         }
         return false;
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();

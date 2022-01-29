@@ -35,7 +35,7 @@ var Constructor = function()
         return "MOVE_MECH";
     };
     this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
@@ -73,12 +73,12 @@ var Constructor = function()
         return GameEnums.WeaponType_Indirect;
     };
 
-    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action)
+    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, map)
     {
         var bonus = 0;
         if (globals.getDistance(atkX, atkY, defX, defY) > 1 && !isDefender)
         {
-            var indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(attacker, atkX, atkY, defX, defY);
+            var indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(attacker, atkX, atkY, defX, defY, map);
             var baseDamage = Global["WEAPON_DESIGNATOR"].getBaseDamage(defender);
             var targetDamage = -1;
             var weaponId = indirectToUse.getWeapon1ID();
@@ -117,13 +117,13 @@ var Constructor = function()
         return bonus;
     };
 
-    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action)
+    this.postBattleActions = function(unit, damage, otherUnit, gotAttacked, weapon, action, map)
     {
         if (weapon === 1 && gotAttacked === false)
         {
             var unitPos = unit.getPosition();
             var enemyPos = otherUnit.getPosition();
-            var indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(unit, unitPos.x, unitPos.y, enemyPos.x, enemyPos.y);
+            var indirectToUse = ZCOUNIT_RANGER.getIndirectToUse(unit, unitPos.x, unitPos.y, enemyPos.x, enemyPos.y, map);
             if (indirectToUse !== null)
             {
                 indirectToUse.setHasMoved(true);
@@ -142,7 +142,7 @@ var Constructor = function()
         }
     };
 
-    this.getIndirectToUse = function(unit, unitX, unitY, targetX, targetY)
+    this.getIndirectToUse = function(unit, unitX, unitY, targetX, targetY, map)
     {
         if (map.onMap(targetX, targetY))
         {
@@ -200,7 +200,7 @@ var Constructor = function()
         else if (weaponIndex === 1 &&
                  pos.x === unitX &&
                  pos.y === unitY &&
-                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY) !== null)
+                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY, map) !== null)
         {
             return true;
         }

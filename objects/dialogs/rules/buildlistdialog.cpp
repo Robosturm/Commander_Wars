@@ -130,7 +130,7 @@ BuildListDialog::BuildListDialog(GameMap* pMap, qint32 player, QStringList build
         for (qint32 i = 0; i < group.units.size(); ++i)
         {
             QString unitID = group.units[i];
-            spUnit pUnit = spUnit::create(unitID, m_pMap->getPlayer(player), false);
+            spUnit pUnit = spUnit::create(unitID, m_pMap->getPlayer(player), false, m_pMap);
             pLabel = spLabel::create(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pUnit->getName());

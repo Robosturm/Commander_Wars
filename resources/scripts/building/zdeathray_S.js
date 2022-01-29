@@ -28,7 +28,7 @@ var Constructor = function()
         return GameEnums.BuildingTarget_Enemy;
     };
     this.actionList = ["ACTION_DEATHRAY_FIRE"];
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(building.getFireCount() + 1);
     };
@@ -81,7 +81,7 @@ var Constructor = function()
         }
         return false;
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
@@ -94,7 +94,7 @@ var Constructor = function()
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
 
-    this.createRayAnimation = function(building, x, y, fields)
+    this.createRayAnimation = function(building, x, y, fields, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x - 1, y - 1);
         animation.addSprite("deathray_start_loading", 0, 0, 0, 2);
