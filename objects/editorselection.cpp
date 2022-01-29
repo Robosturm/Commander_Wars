@@ -36,7 +36,8 @@ EditorSelection::EditorSelection(qint32 width, bool smallScreen, GameMap* pMap)
         m_BoxPlacementSelection = createV9Box(width / 2, m_startHPlacementSize, width / 2, Settings::getHeight() -  80);
     }
     else
-    {        m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
+    {
+        m_BoxPlacementSize = createV9Box(0, m_startHPlacementSize, width, m_selectionHeight);
         m_BoxSelectionType = createV9Box(0, m_startHSelectionType, width, m_selectionHeight);
         m_BoxSelectedPlayer = createV9Box(0, m_startHSelectedPlayer, width, m_selectionHeight + GameMap::getImageSize());
         m_BoxPlacementSelection = createV9Box(0, m_startHTerrain, width, Settings::getHeight() - m_startHTerrain - 80);

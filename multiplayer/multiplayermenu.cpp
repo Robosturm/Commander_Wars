@@ -699,11 +699,11 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         stream >> mapFile;
         QString scriptFile;
         stream >> scriptFile;
-        spGameMap pNewMap;
+        m_pMap->detach();
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
-            pNewMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
+            m_pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
         }
         else
         {
@@ -735,16 +735,16 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                     Filesupport::writeBytes(scriptFilestream, scriptData);
                     script.close();
                 }
-                pNewMap = spGameMap::create(mapFile, true, false, m_saveGame);
+                m_pMap = spGameMap::create(mapFile, true, false, m_saveGame);
             }
             else
             {
-                pNewMap = createMapFromStream(mapFile, scriptFile, stream);
+                m_pMap = createMapFromStream(mapFile, scriptFile, stream);
             }
         }
         QString command = QString(NetworkCommands::REQUESTRULE);
         CONSOLE_PRINT("Sending command " + command, Console::eDEBUG);
-        m_pMapSelectionView->setCurrentMap(pNewMap);
+        m_pMapSelectionView->setCurrentMap(m_pMap);
         loadMultiplayerMap();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);

@@ -71,8 +71,6 @@ EditorMenue::EditorMenue()
     loadHandling();
     changeBackground("editormenu");
     moveToThread(pApp->getWorkerthread());
-    m_pInstance = this;
-
 
     m_EditorSelection = spEditorSelection::create(selectionWidth, smallScreen, m_pMap.get());
     addChild(m_EditorSelection);

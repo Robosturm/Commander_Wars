@@ -41,7 +41,7 @@ public:
 
     static inline EditorMenue* getInstance()
     {
-        return static_cast<EditorMenue*>(m_pInstance.get());
+        return dynamic_cast<EditorMenue*>(m_pInstance.get());
     }
     /**
      * @brief cleanTemp clean ups undo and redo steps

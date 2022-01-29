@@ -141,7 +141,7 @@ GameMenue::GameMenue(spGameMap pMap)
 
 spGameMenue GameMenue::getInstance()
 {
-    return spGameMenue(static_cast<GameMenue*>(m_pInstance.get()));
+    return oxygine::dynamic_pointer_cast<GameMenue>(m_pInstance);
 }
 
 void GameMenue::onEnter()

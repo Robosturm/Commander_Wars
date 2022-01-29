@@ -32,7 +32,7 @@ public:
      * @brief loadRecord
      * @param filename
      */
-    bool loadRecord(const QString & filename, spGameMap & pMap);
+    bool loadRecord(const QString & filename);
     /**
      * @brief nextAction
      */

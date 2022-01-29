@@ -98,7 +98,7 @@ void ReplayRecorder::recordAction(spGameAction pAction)
     }
 }
 
-bool ReplayRecorder::loadRecord(const QString & filename, spGameMap & pMap)
+bool ReplayRecorder::loadRecord(const QString & filename)
 {
     m_recordFile.setFileName(filename);
     if (m_recordFile.exists())
@@ -123,8 +123,8 @@ bool ReplayRecorder::loadRecord(const QString & filename, spGameMap & pMap)
             m_stream >> m_dailyMapPos;
             // load map
             m_mapPos = m_recordFile.pos();
-            pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
-            m_pMap = pMap.get();
+            m_pMap->clearMap();
+            m_pMap->deserializeObject(m_stream);
             m_pMap->setIsHumanMatch(false);
             m_progress = 0;
             // swap out all ai's / or players with a proxy ai.

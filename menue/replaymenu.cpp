@@ -29,7 +29,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigOneStep, this, &ReplayMenu::oneStep, Qt::QueuedConnection);
     changeBackground("replaymenu");
-    m_valid = m_ReplayRecorder.loadRecord(filename, m_pMap);
+    m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
     {
         m_Viewplayer = spViewplayer::create(m_pMap.get());

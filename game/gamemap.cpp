@@ -1146,6 +1146,8 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
     QJSValueList args;
     args << QJSValue(x);
     args << QJSValue(y);
+    QJSValue objArg5 = pInterpreter->newQObject(this);
+    args << objArg5;
     QJSValue placeable = pInterpreter->doFunction(terrainID, function, args);
     if (placeable.isBool())
     {
