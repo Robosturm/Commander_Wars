@@ -239,7 +239,7 @@ namespace oxygine
 
     void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor, bool addTransparentBorder)
     {
-        if (pAnim.get() != nullptr)
+        if (pAnim.get() != nullptr && !m_noUi)
         {
             pAnim->init(image, columns, rows, scaleFactor, addTransparentBorder);
         }

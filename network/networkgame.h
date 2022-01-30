@@ -9,16 +9,20 @@
 #include "network/tcpclient.h"
 #include "network/localclient.h"
 #include "network/networkgamedata.h"
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+class NetworkGame;
+using spNetworkGame = oxygine::intrusive_ptr<NetworkGame>;
 
 /**
  * @brief The NetworkGame class needs to be run in it's own thread.
  * Handles sending data between the locally spawned pipe connected game instance and the joined players.
  */
-class NetworkGame : public QObject
+class NetworkGame : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    explicit NetworkGame();
+    explicit NetworkGame(QObject* pParent);
     virtual ~NetworkGame() = default;
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
@@ -37,7 +41,16 @@ public:
      * @param slaveRunning
      */
     void setSlaveRunning(bool slaveRunning);
-
+    /**
+     * @brief getId
+     * @return
+     */
+    const QString & getId() const;
+    /**
+     * @brief getId
+     * @param id
+     */
+    void setId(QString & id);
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
@@ -91,13 +104,17 @@ protected slots:
     void checkServerRunning();
     void sendPlayerJoined(qint32 player);
 private:
+    void closeGame();
+private:
     QVector<spTCPClient> m_Clients;
     LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
     QString m_serverName;
     QTimer m_timer;
     bool m_slaveRunning{false};
+    bool m_closing{false};
     NetworkGameData m_data;
+    QString m_id;
 };
 
 #endif // NETWORKGAME_H

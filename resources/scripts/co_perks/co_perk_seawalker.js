@@ -12,9 +12,10 @@ var Constructor = function()
                     {
                         var terrainID = map.getTerrain(posX, posY).getID();
                         var isSea = 	(terrainID === "SEA") ||
-                                (terrainID === "REAF") ||
-                                (terrainID === "ROUGH_SEA") ||
-                                (terrainID === "FOG");
+                                        (terrainID === "LAKE") ||
+                                        (terrainID === "REAF") ||
+                                        (terrainID === "ROUGH_SEA") ||
+                                        (terrainID === "FOG");
                         if (isSea)
                         {
                             return -999;

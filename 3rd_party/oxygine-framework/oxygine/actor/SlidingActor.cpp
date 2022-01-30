@@ -7,18 +7,7 @@
 
 namespace oxygine
 {
-    float SlidingActor::m_defaultTouchThreshold = 15.0f;
-    void SlidingActor::setDefaultTouchThreshold(float val)
-    {
-        m_defaultTouchThreshold = val;
-    }
-
-    SlidingActor::SlidingActor():
-        m_sliding(false),
-        m_rad(m_defaultTouchThreshold),
-        m_ignoreTouchUp(false),
-        m_current(0), m_lastIterTime(0),
-        m_finger(0)
+    SlidingActor::SlidingActor()
     {
         m_clip = spClipRectActor::create();
         m_clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));

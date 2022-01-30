@@ -158,7 +158,7 @@ EditorMenue::EditorMenue()
     Cursor* pCursor = m_Cursor.get();
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             static qint32 lastX = -1;
@@ -188,7 +188,7 @@ EditorMenue::EditorMenue()
     connect(this, &EditorMenue::sigLeftClickUp, this, &EditorMenue::onMapClickedLeftUp, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::keyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
@@ -216,6 +216,7 @@ void EditorMenue::onEnter()
     QString func = "mapEditorMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
@@ -842,12 +843,10 @@ void EditorMenue::optimizePlayers()
     
 }
 
-void EditorMenue::KeyInput(oxygine::KeyEvent event)
-{    
+void EditorMenue::keyInput(oxygine::KeyEvent event)
+{
     if (!event.getContinousPress())
     {
-        InGameMenue::keyInput(event);
-        // for debugging
         Qt::Key cur = event.getKey();
         if (m_Focused)
         {
@@ -925,7 +924,6 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     });
                     setFocused(false);
                 }
-                
             }
             else if (cur == Settings::getKey_cancel() ||
                      cur == Settings::getKey_cancel2())
@@ -939,10 +937,9 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
-            m_EditorSelection->KeyInput(cur);
         }
     }
-    
+    InGameMenue::keyInput(event);
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
@@ -1376,9 +1373,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
-
-            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(spUnit());
-
+            spUnit pUnit;
+            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(pUnit);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
@@ -1970,7 +1966,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
-                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(spUnit());
+                                        spUnit pUnit;
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pUnit);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
                                         pCopyUnit->setAmmo1(pUnit->getAmmo1());

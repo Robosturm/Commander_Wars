@@ -163,9 +163,13 @@ var Constructor = function()
         {
             return false;
         }
-        if (terrain.getID() === "STREET" ||
-            terrain.getID() === "BRIDGE" ||
-            terrain.getID() === "RUIN" )
+        var terrainId = terrain.getID();
+        if (terrainId === "STREET" ||
+            terrainId === "SNOW_STREET" ||
+            terrainId === "STREET1" ||
+            terrainId === "BRIDGE" ||
+            terrainId === "BRIDGE1" ||
+            terrainId === "RUIN" )
         {
             return false;
         }

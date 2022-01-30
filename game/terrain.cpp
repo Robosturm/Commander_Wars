@@ -199,6 +199,14 @@ void Terrain::syncAnimation(oxygine::timeMS syncTime)
             pTween->setElapsed(syncTime);
         }
     }
+    for (auto & sprites : m_pOverlaySprites)
+    {
+        auto & tweens = sprites->getTweens();
+        for (auto & pTween : tweens)
+        {
+            pTween->setElapsed(syncTime);
+        }
+    }
     if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->syncAnimation(syncTime);
@@ -425,7 +433,7 @@ void Terrain::loadBaseSprite(const QString & spriteID, qint32 frameTime)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load terrain sprite: " + spriteID, Console::eDEBUG);
     }
 }
 
@@ -463,8 +471,7 @@ QString Terrain::getFittingResAnim(const QString & spriteIdStart, const QString 
     return ret;
 }
 
-
-QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)
+QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount, bool inverted)
 {
     QStringList searchList = list.split(",");
     QString ret = "";
@@ -534,35 +541,91 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         // check for compare value to find string
         if (compareValue == GameEnums::Directions_North)
         {
-            addString = "+N";
+            if (inverted)
+            {
+                addString = "+S";
+            }
+            else
+            {
+                addString = "+N";
+            }
         }
         else if (compareValue == GameEnums::Directions_East)
         {
-            addString = "+E";
+            if (inverted)
+            {
+                addString = "+W";
+            }
+            else
+            {
+                addString = "+E";
+            }
         }
         else if (compareValue == GameEnums::Directions_South)
         {
-            addString = "+S";
+            if (inverted)
+            {
+                addString = "+N";
+            }
+            else
+            {
+                addString = "+S";
+            }
         }
         else if (compareValue == GameEnums::Directions_West)
         {
-            addString = "+W";
+            if (inverted)
+            {
+                addString = "+E";
+            }
+            else
+            {
+                addString = "+W";
+            }
         }
         else if (compareValue == GameEnums::Directions_NorthEast)
         {
-            addString = "+NE";
+            if (inverted)
+            {
+                addString = "+SW";
+            }
+            else
+            {
+                addString = "+NE";
+            }
         }
         else if (compareValue == GameEnums::Directions_SouthEast)
         {
-            addString = "+SE";
+            if (inverted)
+            {
+                addString = "+NW";
+            }
+            else
+            {
+                addString = "+SE";
+            }
         }
         else if (compareValue == GameEnums::Directions_SouthWest)
         {
-            addString = "+SW";
+            if (inverted)
+            {
+                addString = "+NE";
+            }
+            else
+            {
+                addString = "+SW";
+            }
         }
         else if (compareValue == GameEnums::Directions_NorthWest)
         {
-            addString = "+NW";
+            if (inverted)
+            {
+                addString = "+SE";
+            }
+            else
+            {
+                addString = "+NW";
+            }
         }
         else
         {
@@ -570,13 +633,15 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
         }
         if (pGameMap.get() != nullptr && pGameMap->onMap(curX, curY))
         {
+            QString terrainID = "";
             QString neighbourID = "";
             Terrain* pTerrain = pGameMap->getTerrain(curX, curY);
+            terrainID = pTerrain->getTerrainID();
             if (useBuildingID && pTerrain->getBuilding() != nullptr)
             {
-                neighbourID = pTerrain->getID();
+                terrainID = pTerrain->getID();
             }
-            else if (useBaseTerrainID)
+            if (useBaseTerrainID)
             {
                 if (recursionCount > 0)
                 {
@@ -587,20 +652,18 @@ QString Terrain::getSurroundings(const QString & list, bool useBaseTerrainID, bo
                     neighbourID = pTerrain->getBaseTerrainID();
                 }
             }
-            else
-            {
-                neighbourID = pTerrain->getTerrainID();
-            }
             if (blacklist)
             {
-                if (!searchList.contains(neighbourID))
+                if (!searchList.contains(terrainID) &&
+                    !searchList.contains(neighbourID))
                 {
                     found = true;
                 }
             }
             else
             {
-                if (searchList.contains(neighbourID))
+                if (searchList.contains(terrainID) ||
+                    searchList.contains(neighbourID))
                 {
                     found = true;
                 }
@@ -642,7 +705,7 @@ void Terrain::loadOverlaySprite(const QString & spriteID)
     }
     else
     {
-        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eERROR);
+        CONSOLE_PRINT("Unable to load overlay sprite: " + spriteID, Console::eDEBUG);
     }
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainOverlay));
@@ -694,6 +757,30 @@ QString Terrain::getMinimapIcon()
     else
     {
         return "";
+    }
+}
+
+qint32 Terrain::getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMovementcostModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    args1 << x;
+    args1 << y;
+    args1 << curX;
+    args1 << curY;
+    QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
     }
 }
 
@@ -1128,6 +1215,24 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     else
     {
         return 0;
+    }
+}
+
+bool Terrain::isLoadingTile()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "isLoadingTile";
+    QJSValueList args1;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args1 << obj;
+    QJSValue ret = pInterpreter->doFunction(m_terrainID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
     }
 }
 

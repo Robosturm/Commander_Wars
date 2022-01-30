@@ -51,20 +51,20 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(const QString & id, error_policy ep = ep_show_error) const;
+        Resource* get(const QString & id, error_policy ep = ep_ignore_error) const;
 
         /** get resource by id
         @param resource id
         */
-        virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_show_error) const;
+        virtual ResAnim* getResAnim(const QString & id, error_policy ep = ep_ignore_error) const;
 
         /** get animation resource by id
         @param resource id
         */
-        ResFont* getResFont(const QString & id, error_policy ep = ep_show_error) const;
+        ResFont* getResFont(const QString & id, error_policy ep = ep_ignore_error) const;
 
         template<class T>
-        T* getT(const QString & id, error_policy ep = ep_show_error) const
+        T* getT(const QString & id, error_policy ep = ep_ignore_error) const
         {
             return safeCast<T*>(get(id, ep));
         }

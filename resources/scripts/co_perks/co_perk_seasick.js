@@ -11,6 +11,7 @@ var Constructor = function()
 				{
 					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
                     var isSea = 	(terrainID === "SEA") ||
+                                    (terrainID === "LAKE") ||
 									(terrainID === "REAF") ||
 									(terrainID === "ROUGH_SEA") ||
 									(terrainID === "FOG");

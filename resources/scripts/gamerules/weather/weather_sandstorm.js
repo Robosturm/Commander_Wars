@@ -14,7 +14,7 @@ var Constructor = function()
 
     this.getWeatherSymbol = function()
     {
-        return "weather_symbol_sandstorm";
+        return "weather_symbol_sandstorm_alt";
     };
 
     this.getOffensiveModifier = function()
@@ -46,6 +46,11 @@ var Constructor = function()
         {
             queueAnimation.queueAnimation(animation);
         }
+    };
+
+    this.getDefaultWeatherChance = function()
+    {
+        return 10;
     };
 }
 

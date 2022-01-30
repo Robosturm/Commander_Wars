@@ -136,6 +136,7 @@ var Constructor = function()
     this.defaultModifier = 10;
     this.globalRules = false;
     this.wilderness = ["DESERT_FOREST",
+                       "DESERT_FOREST1",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
                        "DESERT_WASTELAND",
@@ -147,6 +148,8 @@ var Constructor = function()
                        "MOUNTAIN",
                        "WASTELAND",
                        "SNOW_FOREST",
+                       "SNOW_FOREST1",
+                       "SNOW_FOREST2",
                        "SNOW_MOUNTAIN",
                        "SNOW_WASTELAND",
                        "WASTE_FOREST",
@@ -238,6 +241,28 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    {
+        if (CO_CAIRN.isWildernessTile(posX, posY))
+        {
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                break;
+            case GameEnums.PowerMode_Power:
+
+                if (unit.getBaseMaxRange() > 1)
+                {
+                    return 1;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        return 0;
+    };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
         if (CO_CAIRN.isWildernessTile(posX, posY))
@@ -303,7 +328,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     if (CO_CAIRN.isWildernessTile(posX, posY))
                     {
-                        return -999;
+                        return -1;
                     }
                     break;
                 default:

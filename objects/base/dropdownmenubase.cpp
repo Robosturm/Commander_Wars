@@ -115,6 +115,7 @@ void DropDownmenuBase::hideDropDown()
     {
         item->setAddColor(QColor(0, 0, 0, 0));
     }
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (m_OriginalOwner.get() != nullptr &&
         m_OriginalOwner->getParent() == nullptr)
     {
@@ -133,8 +134,10 @@ void DropDownmenuBase::hideDropDown()
         setPosition(m_OriginalPosition);
         m_OriginalOwner = nullptr;
     }
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    
+    else if (oxygine::Stage::getStage().get() == getParent())
+    {
+        detach();
+    }
 }
 
 void DropDownmenuBase::setEnabled(bool value)

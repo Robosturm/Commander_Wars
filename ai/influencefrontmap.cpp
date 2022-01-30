@@ -181,7 +181,7 @@ void InfluenceFrontMap::reset()
 
 void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPfs, qint32 movePoints)
 {
-    qint32 value = pUnit->getUnitValue();
+    qint32 value = pUnit->getCoUnitValue();
     qint32 owner = pUnit->getOwner()->getPlayerID();
     auto points = pPfs->getAllNodePoints();
     for (const auto & point : points)

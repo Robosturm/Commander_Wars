@@ -4,82 +4,16 @@ var Constructor = function()
     {
         return 3;
     };
-    // loader for stuff which needs C++ Support
-    this.init = function (terrain)
-    {
-        terrain.setVisionHigh(2);
-        terrain.setTerrainName(SNOW_MOUNTAIN.getName());
-    };
-    this.getName = function()
-    {
-        return qsTr("Snowy Mountain");
-    };
-    this.getDefense = function()
-    {
-        return 4;
-    };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
-    {
-        if (currentTerrainID === "PLAINS")
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-        else if (currentTerrainID === "DESERT")
-        {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else if (currentTerrainID === "WASTE")
-        {
-            terrain.loadBaseTerrain("WASTE");
-        }
-        else
-        {
-            terrain.loadBaseTerrain("SNOW");
-        }
-    };
+    this.baseTerrainId = "SNOW";
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_East, false);
-        surroundings += terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_West, false);
-        terrain.loadBaseSprite("snow_mountain" + surroundings);
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_snow_mountain";
-    };
-    this.getBonusVision = function(unit)
-    {
-        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
-        {
-            return 3;
-        }
-        else
-        {
-            return 0;
-        }
-    };
-    this.getDescription = function()
-    {
-        return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremly high movement costs for infantry units.</r>");
+        __BASEMOUNTAIN.loadBase(terrain, "snow_mountain")
     };
 
     this.getTerrainSprites = function()
     {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return ["snow_mountain.png",
-                "snow_mountain+E",
-                "snow_mountain+E+W",
-                "snow_mountain+W"];
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var rand = globals.randInt(0, 1);
-        return "back_snowmountain+" + rand.toString();
+        return __BASEMOUNTAIN.getSprites("snow_mountain");
     };
 };
-Constructor.prototype = TERRAIN;
+Constructor.prototype = __BASEMOUNTAIN;
 var SNOW_MOUNTAIN = new Constructor();

@@ -122,10 +122,6 @@ void Mainapp::nextStartUpStep(StartupPhase step)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
-    // if (Settings::getSmallScreenDevice())
-    // {
-    //     m_timerCycle = 33;
-    // }
     switch (step)
     {
         case StartupPhase::General:
@@ -315,19 +311,23 @@ void Mainapp::nextStartUpStep(StartupPhase step)
         }
         case StartupPhase::Finalizing:
         {
+            if (!m_slave)
+            {
+                m_gamepad.init();
+            }
             // only launch the server if the rest is ready for it ;)
             if (Settings::getServer() && !m_slave)
             {
                 MainServer::getInstance();
                 m_GameServerThread.start(QThread::Priority::NormalPriority);
             }
-            if (!m_slave)
+            if (m_slave && m_initScript.isEmpty())
             {
-                emit m_Worker->sigShowMainwindow();
+                emit m_Worker->sigStartSlaveGame();
             }
             else
             {
-                emit m_Worker->sigStartSlaveGame();
+                emit m_Worker->sigShowMainwindow();
             }
             break;
         }
@@ -481,6 +481,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     }
     else
     {
+        CONSOLE_PRINT("keyPressEvent", Console::eDEBUG);
         emit sigKeyDown(oxygine::KeyEvent(event));
     }
 }
@@ -510,7 +511,6 @@ bool Mainapp::event(QEvent *event)
     }
     return handled;
 }
-
 
 bool Mainapp::keyInputMethodEvent(QInputMethodEvent *event)
 {
@@ -618,6 +618,14 @@ void Mainapp::loadArgs(const QStringList & args)
     {
         Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
     }
+    if (args.contains("-initScript"))
+    {
+        m_initScript = args[args.indexOf("-initScript") + 1];
+    }
+    if (args.contains("-createSlaveLogs"))
+    {
+        m_createSlaveLogs = true;
+    }
 }
 
 void Mainapp::onActiveChanged()
@@ -705,4 +713,30 @@ void Mainapp::onQuit()
         m_Networkthread.wait();
     }
     QApplication::processEvents();
+    CONSOLE_PRINT("Shutting down game server", Console::eDEBUG);
+    if (m_GameServerThread.isRunning())
+    {
+        if (MainServer::exists())
+        {
+            MainServer::getInstance()->release();
+        }
+        m_GameServerThread.quit();
+        m_GameServerThread.wait();
+    }
+    QApplication::processEvents();
+}
+
+const QString &Mainapp::getInitScript() const
+{
+    return m_initScript;
+}
+
+bool Mainapp::getCreateSlaveLogs() const
+{
+    return m_createSlaveLogs;
+}
+
+void Mainapp::setCreateSlaveLogs(bool create)
+{
+    m_createSlaveLogs = create;
 }

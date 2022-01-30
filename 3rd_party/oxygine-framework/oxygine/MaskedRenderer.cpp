@@ -6,7 +6,7 @@
 
 namespace oxygine
 {
-    MaskedRenderer::MaskedRenderer(spTexture mask,
+    MaskedRenderer::MaskedRenderer(spTexture & mask,
                                    const RectF& srcRect, const RectF& destRect,
                                    const AffineTransform& t, bool channelR, VideoDriver* driver)
         : STDRenderer(driver)

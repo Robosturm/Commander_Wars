@@ -5,11 +5,13 @@
 #include "multiplayer/networkcommands.h"
 
 #include "coreengine/filesupport.h"
+#include "coreengine/interpreter.h"
 
 #include "game/gamemap.h"
 
-NetworkGame::NetworkGame()
-    : QObject(),
+NetworkGame::NetworkGame(QObject* pParent)
+    : QObject(pParent),
+      m_gameConnection(pParent),
       m_timer(this)
 {
     connect(&m_gameConnection, &LocalClient::sigConnected, this, &NetworkGame::onConnectToLocalServer, Qt::QueuedConnection);
@@ -19,16 +21,19 @@ NetworkGame::NetworkGame()
 
 void NetworkGame::addClient(spTCPClient pClient)
 {
-    m_Clients.append(pClient);
-    pClient->getRXTask()->swapNetworkInterface(pClient.get());
-    disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
-    disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
-    connect(pClient.get(), &TCPClient::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
-    connect(pClient.get(), &TCPClient::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
-    connect(pClient.get(), &TCPClient::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
-    if (m_slaveRunning)
+    if (pClient.get() != nullptr)
     {
-        sendPlayerJoined(m_Clients.size() - 1);
+        m_Clients.append(pClient);
+        pClient->getRXTask()->swapNetworkInterface(pClient.get());
+        disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
+        disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
+        connect(pClient.get(), &TCPClient::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
+        connect(pClient.get(), &TCPClient::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
+        connect(pClient.get(), &TCPClient::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
+        if (m_slaveRunning)
+        {
+            sendPlayerJoined(m_Clients.size() - 1);
+        }
     }
 }
 
@@ -113,7 +118,7 @@ void NetworkGame::slaveRunning(QDataStream &stream)
     }
     else
     {
-        emit sigClose(this);
+        closeGame();
     }
 }
 
@@ -132,6 +137,16 @@ void NetworkGame::sendPlayerJoined(qint32 player)
 void NetworkGame::setSlaveRunning(bool slaveRunning)
 {
     m_slaveRunning = slaveRunning;
+}
+
+const QString & NetworkGame::getId() const
+{
+    return m_id;
+}
+
+void NetworkGame::setId(QString & id)
+{
+    m_id = id;
 }
 
 bool NetworkGame::getSlaveRunning() const
@@ -239,16 +254,27 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     if (isHost || m_Clients.size() == 0)
     {
         CONSOLE_PRINT("Networkgame Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);
-        emit sigClose(this);
+        closeGame();
     }
 }
 
-void NetworkGame::processFinished(int, QProcess::ExitStatus)
+void NetworkGame::processFinished(int value, QProcess::ExitStatus)
 {
     CONSOLE_PRINT("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         emit sigDisconnectSocket(m_Clients[i]->getSocketID());
     }
-    emit sigClose(this);
+    closeGame();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    emit pInterpreter->sigNetworkGameFinished(value - 1, m_id);
+}
+
+void NetworkGame::closeGame()
+{
+    if (!m_closing)
+    {
+        m_closing = true;
+        emit sigClose(this);
+    }
 }

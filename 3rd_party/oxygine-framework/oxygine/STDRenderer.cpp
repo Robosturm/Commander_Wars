@@ -62,7 +62,7 @@ namespace oxygine
         }
     }
 
-    void RenderStateCache::setTexture(qint32 sampler, const spTexture& t)
+    void RenderStateCache::setTexture(qint32 sampler, spTexture& t)
     {
         if (sampler >= MAX_TEXTURES)
         {

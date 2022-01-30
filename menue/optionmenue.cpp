@@ -29,6 +29,7 @@
 #include "objects/base/timespinbox.h"
 #include "objects/base/moveinbutton.h"
 #include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/gamepadinfo.h"
 
 QVector<OptionMenue::GamemodeMods> OptionMenue::m_gamemodeMods =
 {
@@ -90,11 +91,14 @@ OptionMenue::OptionMenue()
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("optionmenu");
-    sprite->setResAnim(pBackground);
-    // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    if (pBackground != nullptr)
+    {
+        sprite->setResAnim(pBackground);
+        // background should be last to draw
+        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/credits_options");
@@ -185,6 +189,7 @@ void OptionMenue::onEnter()
     QString func = "optionMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
@@ -506,6 +511,43 @@ void OptionMenue::showSettings()
     touchPointSensitivity->setPosition(sliderOffset - 130, y);
     connect(touchPointSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setTouchPointSensitivity);
     m_pOptions->addItem(touchPointSensitivity);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Gamepad: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android and linux."));
+    pCheckbox->setChecked(Settings::getGamepadEnabled());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
+    m_pOptions->addItem(pCheckbox);
+
+
+    // gamepad button
+    oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
+    pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
+    m_pOptions->addItem(pButtonGamepad);
+    pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowGamepadInfo();
+    });
+    connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
+    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
+    gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
+    gamepadSensitivity->setPosition(sliderOffset - 130, y);
+    connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
+    m_pOptions->addItem(gamepadSensitivity);
     y += 40;
 
     showSoundOptions(m_pOptions, sliderOffset, y, this);
@@ -1191,3 +1233,10 @@ void OptionMenue::updateModFilter(QString tag)
     }
     m_pMods->setContentHeigth(50 + visibleCounter * 50);
 }
+
+void OptionMenue::showGamepadInfo()
+{
+    spGamepadInfo pGamepadInfo = spGamepadInfo::create();
+    addChild(pGamepadInfo);
+}
+

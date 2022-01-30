@@ -46,9 +46,9 @@ namespace oxygine
             void _newEvent(Event* event);
 
         protected:
-            bool m_sliding;
-            float m_rad;
-            bool m_ignoreTouchUp;
+            bool m_sliding{false};
+            float m_rad{15.0f};
+            bool m_ignoreTouchUp{false};
             Vector2 m_downPos;
             Vector2 m_speed;
             Draggable m_drag;
@@ -61,9 +61,9 @@ namespace oxygine
             };
             enum {NUM = 11};
             iter m_prev[NUM];
-            qint32 m_current;
-            timeMS m_lastIterTime;
-            pointer_index m_finger;
+            qint32 m_current{0};
+            timeMS m_lastIterTime{0};
+            pointer_index m_finger{0};
 
             qint32 m_touchDownId{-1};
             qint32 m_touchUpId{-1};

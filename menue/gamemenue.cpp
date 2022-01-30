@@ -155,6 +155,7 @@ void GameMenue::onEnter()
     QString func = "gameMenu";
     if (pInterpreter->exists(object, func))
     {
+        CONSOLE_PRINT("Executing:" + object + "." + func, Console::eDEBUG);
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
@@ -1709,7 +1710,6 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
 {
     if (!event.getContinousPress())
     {
-        InGameMenue::keyInput(event);
         // for debugging
         Qt::Key cur = event.getKey();
         if (m_Focused && m_pNetworkInterface.get() == nullptr)
@@ -1758,6 +1758,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
             keyInputAll(cur);
         }
     }
+    InGameMenue::keyInput(event);
 }
 
 void GameMenue::keyInputAll(Qt::Key cur)

@@ -13,7 +13,7 @@ var Constructor = function()
 
     this.getWeatherSymbol = function()
     {
-        return "weather_symbol_snow";
+        return "weather_symbol_snow_alt";
     };
 
     this.activate = function(weather)
@@ -40,14 +40,24 @@ var Constructor = function()
         var id = terrain.getID();
         if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
             (id !== "STREET" &&
+             id !== "STREET1" &&
+             id !== "SNOW_STREET" &&
              id !== "BRIDGE" &&
-            id !== "DESERT_PATH" &&
-            id !== "TELEPORTTILE" &&
+             id !== "BRIDGE1" &&
+             id !== "WASTE_PATH" &&
+             id !== "DESERT_PATH" &&
+             id !== "DESERT_PATH1" &&
+             id !== "TELEPORTTILE" &&
             terrain.getBuilding() === null))
         {
             return 1;
         }
         return 0;
+    };
+
+    this.getDefaultWeatherChance = function()
+    {
+        return 10;
     };
 }
 

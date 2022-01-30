@@ -2,7 +2,7 @@
 
 #include "ai/leaf.h"
 
-DecisionNode::DecisionNode(spDecisionQuestion pQuestion, const QVector<spDecisionNode> & pNodes)
+DecisionNode::DecisionNode(spDecisionQuestion & pQuestion, const QVector<spDecisionNode> & pNodes)
 	: m_pQuestion(pQuestion),
       m_pNodes(pNodes)
 {

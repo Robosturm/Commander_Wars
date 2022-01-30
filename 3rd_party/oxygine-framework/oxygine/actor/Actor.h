@@ -245,7 +245,7 @@ namespace oxygine
         /**Extends actor's clickable area from each side. Affects only to Actor::isOn. Max value is 127, Min Value is -128*/
         void setExtendedClickArea(char add) {m_extendedIsOn = add;}
 
-        void setClock(spClock clock);
+        void setClock(spClock & clock);
         void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
@@ -285,7 +285,7 @@ namespace oxygine
         bool isDescendant(const spActor& actor) const;
         void addChild(spActor actor);
         /**Remove one child*/
-        void removeChild(spActor actor);
+        void removeChild(spActor & actor);
         /**Removes all children from Actor*/
         void removeChildren();
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
@@ -345,9 +345,9 @@ namespace oxygine
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
         virtual bool getBounds(RectF&) const;
-        static Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_local2stage(spActor & child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
-        static Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = spActor());
+        static Vector2 convert_stage2local(spActor & child, const Vector2& pos, spActor root = spActor());
         static Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
         static RectF getActorTransformedDestRect(Actor* actor, const AffineTransform& tr);
         /*****************************************************************************************/
@@ -390,11 +390,11 @@ namespace oxygine
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
         void dispatchToParent(Event* event);
-        void insertActor(spActor actor);
+        void insertActor(spActor & actor);
         static Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos);
-        static Vector2 convert_global2local(spActor child, spActor parent, const Vector2& pos);
+        static Vector2 convert_global2local(spActor & child, spActor & parent, const Vector2& pos);
         static Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos);
-        static Vector2 convert_local2global(spActor child, spActor parent, const Vector2& pos);
+        static Vector2 convert_local2global(spActor & child, spActor & parent, const Vector2& pos);
     protected:
         RenderDelegate* m_rdelegate;
         Stage* m_stage;

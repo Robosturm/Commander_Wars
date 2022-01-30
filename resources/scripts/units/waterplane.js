@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return false;
     };
+    this.useTerrainHide = function()
+    {
+        return false;
+    };
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();

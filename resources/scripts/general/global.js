@@ -20,7 +20,7 @@ getFogOfWarColor = function()
 getFogOfMistColor = function()
 {
     // the color used for the fog of war overlay
-    return "#64B4B4B4";
+    return "#64DCDCDC";
 }
 
 getGridColor = function()
@@ -98,6 +98,10 @@ Math.random = function()
     console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)
 }
 
+finalizeLoading = function()
+{
+
+}
 
 sortDataArray = function(data)
 {

@@ -96,11 +96,11 @@ void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemy
                     {
                         if (pUnit->getOwner() == m_pOwner)
                         {
-                            ownValue += pUnit->getUnitValue();
+                            ownValue += pUnit->getCoUnitValue();
                         }
                         else if (m_pOwner->isEnemyUnit(pUnit))
                         {
-                            enemyValue += pUnit->getUnitValue();
+                            enemyValue += pUnit->getCoUnitValue();
                         }
                     }
                 }

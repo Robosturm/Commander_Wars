@@ -142,6 +142,9 @@ public:
     bool isValid();
 
 
+    QPoint getTest() const;
+    void setTest(QPoint newTest);
+
 public slots:
     /**
      * @brief getHasFlowDirection
@@ -309,6 +312,11 @@ public slots:
      */
     qint32 getBonusVision(Unit* pUnit);
     /**
+     * @brief isLoadingTile
+     * @return
+     */
+    bool isLoadingTile();
+    /**
      * @brief getUnit the unit on this terrain
      * @return
      */
@@ -340,9 +348,10 @@ public slots:
      * @param useMapBorder if true the terrain is treated as searched terrain
      * @param useBuildingID if building ID's are used or only terrain id's
      * @param recursionCount how deep the game searches for base terrain id's -1 for infinite
+     * @param inverted for flow direction
      * @return
      */
-    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
+    QString getSurroundings(const QString & list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1, bool inverted = false);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
@@ -378,6 +387,25 @@ public slots:
         else
         {
             return m_terrainID;
+        }
+    }
+    Terrain* getBaseTerrain(QString terrainId)
+    {
+        if (m_pBaseTerrain.get() != nullptr)
+        {
+
+            if (m_pBaseTerrain->m_terrainID == terrainId)
+            {
+                return m_pBaseTerrain.get();
+            }
+            else
+            {
+                return m_pBaseTerrain->getBaseTerrain(terrainId);
+            }
+        }
+        else
+        {
+            return nullptr;
         }
     }
     /**
@@ -467,6 +495,15 @@ public slots:
      * @return
      */
     QStringList getFlowTiles();
+    /**
+     * @brief getMovementcostModifier
+     * @param x
+     * @param y
+     * @param curX
+     * @param curY
+     * @return
+     */
+    qint32 getMovementcostModifier(Unit* pUnit, qint32 x, qint32 y, qint32 curX, qint32 curY);
 protected:
     /**
      * @brief createBuildingDownStream
@@ -544,6 +581,8 @@ private:
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
     QVector<TerrainOverlay> m_terrainOverlay;
+
+    QPoint m_test;
 };
 
 #endif // TERRAIN_H

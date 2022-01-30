@@ -53,16 +53,18 @@ Wikipage::Wikipage()
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
 {
-    // for debugging
-    Qt::Key cur = event.getKey();
-    if (cur == Settings::getKey_information() ||
-        cur == Settings::getKey_information2() ||
-        cur == Settings::getKey_cancel() ||
-        cur == Settings::getKey_cancel2())
+    if (!event.getContinousPress())
     {
-        emit sigFinished();
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (cur == Settings::getKey_information() ||
+            cur == Settings::getKey_information2() ||
+            cur == Settings::getKey_cancel() ||
+            cur == Settings::getKey_cancel2())
+        {
+            emit sigFinished();
+        }
     }
-    
 }
 
 void Wikipage::remove()
@@ -85,7 +87,6 @@ void Wikipage::loadText(QString text)
     m_pPanel->addItem(pLabel);
     m_y += pLabel->getTextRect().getHeight() + 10;
 }
-
 
 void Wikipage::loadHeadline(QString text)
 {

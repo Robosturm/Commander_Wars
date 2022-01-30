@@ -6,11 +6,12 @@
 #include <QThread>
 #include <QCoreApplication>
 #include <QLineEdit>
-#include "QMutex"
+#include <QMutex>
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/Gamepad.h"
 
 class WorkerThread;
 using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
@@ -128,6 +129,14 @@ public:
      */
     static QString qsTr(const char* const text);
     /**
+     * @brief getWorker
+     * @return
+     */
+    static WorkerThread* getWorker()
+    {
+        return m_Worker;
+    }
+    /**
      * @brief qsTr
      * @param text
      * @return
@@ -143,7 +152,26 @@ public:
     {
         return m_pLineEdit;
     }
+    /**
+     * @brief getInitScript
+     * @return
+     */
+    const QString &getInitScript() const;
+    /**
+     * @brief getCreateSlaveLogs
+     * @return
+     */
+    bool getCreateSlaveLogs() const;
+    /**
+     * @brief setCreateSlaveLogs
+     * @param create
+     */
+    void setCreateSlaveLogs(bool create);
 
+    Gamepad& getGamepad()
+    {
+        return m_gamepad;
+    }
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -218,6 +246,9 @@ private:
     static AudioThread* m_Audiothread;
     QThread* m_pMainThread{nullptr};
     static bool m_slave;
+    QString m_initScript;
+    bool m_createSlaveLogs{false};
+    Gamepad m_gamepad{0};
 };
 
 #endif // MAINAPP_H

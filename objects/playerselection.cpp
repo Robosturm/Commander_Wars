@@ -1,4 +1,4 @@
-#include "playerselection.h"
+#include "objects/playerselection.h"
 
 #include "game/gamemap.h"
 
@@ -50,6 +50,16 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 
     addChild(m_pPlayerSelection);
 }
+
+PlayerSelection::~PlayerSelection()
+{
+    for (auto & playerColors : m_playerColors)
+    {
+        playerColors->detach();
+    }
+    m_playerColors.clear();
+}
+
 
 void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterface)
 {
@@ -286,7 +296,6 @@ QColor PlayerSelection::getDisplayColor(qint32 index, bool & exists)
 
 QColor PlayerSelection::tableColorToDisplayColor(QColor tableColor)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 colorCount = getDefaultColorCount();
     QColor displayColor = tableColor;
     for (qint32 i = 0; i < colorCount; ++i)
@@ -308,7 +317,6 @@ QColor PlayerSelection::tableColorToDisplayColor(QColor tableColor)
 
 QColor PlayerSelection::displayColorToTableColor(QColor displayColor)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 colorCount = getDefaultColorCount();
     QColor tableColor = displayColor;
     for (qint32 i = 0; i < colorCount; ++i)
@@ -490,9 +498,9 @@ void PlayerSelection::showPlayerSelection()
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
     QStringList defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
+#if HEAVY_AI
     Interpreter* pInterpreter = Interpreter::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
-#if HEAVY_AI
     // heavy ai enable code
     for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
     {
@@ -1059,8 +1067,7 @@ void PlayerSelection::playerDataChanged()
 }
 
 void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, qint32 item)
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
     QColor tableColor = displayColorToTableColor(displayColor);
     pMap->getPlayer(playerIdx)->setColor(tableColor, item);
@@ -1081,10 +1088,9 @@ void PlayerSelection::playerColorChanged(QColor displayColor, qint32 playerIdx, 
 
 void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
 {
-    
+    spGameMap pMap = GameMap::getInstance();
     if (!m_saveGame)
     {
-        spGameMap pMap = GameMap::getInstance();
         CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
         if (coid == "" ||
             coid == CO::CO_RANDOM ||
@@ -1108,9 +1114,61 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
         }
     }
     updateCO1Sprite(coid, playerIdx);
-    m_pPlayerSelection->setVisible(true);
-    
+    if (getIsCampaign() && m_pCampaign->getAutoSelectPlayerColors(pMap.get()))
+    {
+        autoSelectPlayerColors();
+    }
+    m_pPlayerSelection->setVisible(true);    
 }
+
+void PlayerSelection::autoSelectPlayerColors()
+{
+    QVector<qint32> usedColors;
+    QVector<qint32> openPlayers;
+    spGameMap pMap = GameMap::getInstance();
+    qint32 playerCount = pMap->getPlayerCount();
+    if (m_playerColors.size() == playerCount)
+    {
+        for (qint32 i = 0; i < playerCount; ++i)
+        {
+            CO* pCO = pMap->getPlayer(i)->getCO(0);
+            if (pCO != nullptr)
+            {
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QJSValueList args;
+                args << pCO->getCOArmy().toLower();
+                QJSValue erg = pInterpreter->doFunction("PLAYER", "getDisplayColorFromArmy", args);
+                if (erg.isNumber())
+                {
+                    qint32 index = erg.toInt();
+                    if (index >= 0 && !usedColors.contains(index))
+                    {
+                        usedColors.append(index);
+                        m_playerColors[i]->setCurrentItem(index);
+                    }
+                    else
+                    {
+                        openPlayers.append(i);
+                    }
+                }
+            }
+        }
+        qint32 colors = m_playerColors[0]->getItemCount();
+        for (const auto & openPlayer : qAsConst(openPlayers))
+        {
+            for (qint32 i = 0; i < colors; ++i)
+            {
+                if (!usedColors.contains(i))
+                {
+                    usedColors.append(i);
+                    m_playerColors[openPlayer]->setCurrentItem(i);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
 {
     spGameMap pMap = GameMap::getInstance();
@@ -1800,7 +1858,6 @@ void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
     pPlayer->setColor(tableColor);
     m_playerColors[playerIdx]->setCurrentItem(displayColor);
 }
-
 
 void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
 {

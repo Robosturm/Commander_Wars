@@ -4,128 +4,19 @@ var Constructor = function()
     {
         return 1;
     };
-    // loader for stuff which needs C++ Support
-    this.init = function (terrain)
-    {
-        terrain.setVisionHigh(2);
-        terrain.setTerrainName(WELD.getName());
-        terrain.setHp(100);
-    };
-    this.getName = function()
-    {
-        return qsTr("Weld");
-    };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
-    {
-        if (currentTerrainID === "SNOW")
-        {
-            terrain.loadBaseTerrain("SNOW");
-        }
-        else if (currentTerrainID === "DESERT")
-        {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else if (currentTerrainID === "WASTE")
-        {
-            terrain.loadBaseTerrain("WASTE");
-        }
-        else
-        {
-            terrain.loadBaseTerrain("PLAINS");
-        }
-    };
+    this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
-        var x = terrain.getX();
-        var y = terrain.getY();
-        if (typeof map !== 'undefined')
-        {
-            if (map.onMap(x, y + 1))
-            {
-                var building = map.getTerrain(x, y + 1).getBuilding();
-                if (building !== null &&
-                        building.getBuildingID() === "ZBLACKHOLE_FACTORY" &&
-                        building.getX() - 1 === x && building.getY() - 4 === y)
-                {
-                    if (surroundings.indexOf("+W") >= 0)
-                    {
-                        surroundings = surroundings.replace("+W", "+S+W");
-                    }
-                    else
-                    {
-                        surroundings += "+S";
-                    }
-                }
-            }
-        }
-        if ((surroundings === ""))
-        {
-            terrain.loadBaseSprite("weld+E+W");
-        }
-        else if ((surroundings === "+N+S"))
-        {
-			
-            terrain.loadBaseSprite("weld+N+S");
-        }
-        else if ((surroundings === "+E+W"))
-        {
-            terrain.loadBaseSprite("weld+E+W");
-        }
-        else
-        {
-            terrain.loadBaseSprite("weld+E+W");
-        }
+        __BASEWELD.loadBase(terrain, "weld")
     };
-    this.canBePlaced = function(x, y)
+    this.getTerrainSprites = function()
     {
-        var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, true);
-        if ((surroundings === "+E+W") || (surroundings === "+N+S"))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    };
-    this.getMiniMapIcon = function()
-    {
-        return "minimap_weld";
+        return __BASEWELD.getSprites("weld")
     };
     this.onDestroyed = function(terrain)
     {
-        // called when the terrain is destroyed and replacing of this terrain starts
-        var x = terrain.getX();
-        var y = terrain.getY();
-        map.replaceTerrainOnly("DESTROYEDWELD", x, y);
-        map.getTerrain(x, y).loadSprites();
-        var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
-        animation.addScreenshake(30, 0.95, 1000, 200);
-        animation.setSound("pipe_destroyed.wav");
-    };
-    this.getDescription = function()
-    {
-        return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
-    };
-
-    this.getTerrainSprites = function()
-    {
-        // array of sprites that can be selected as fix sprites for this terrain
-        return ["weld+E+W",
-                "weld+N+S"];
-    };
-    this.getTerrainAnimationForeground = function(unit, terrain)
-    {
-        return "fore_pipeline";
-    };
-    this.getTerrainAnimationBackground = function(unit, terrain)
-    {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
-        return TERRAIN.getTerrainBackgroundId(id, "", true);
+        __BASEWELD.onBaseDestroyed(terrain, "DESTROYEDWELD");
     };
 };
-Constructor.prototype = TERRAIN;
+Constructor.prototype = __BASEWELD;
 var WELD = new Constructor();

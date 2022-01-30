@@ -44,6 +44,7 @@
 
 #include "game/ui/customcoboostinfo.h"
 #include "game/jsData/terrainflowdata.h"
+#include "game/jsData/campaignmapdata.h"
 
 #include "wiki/wikidatabase.h"
 #include "wiki/wikiview.h"
@@ -173,4 +174,5 @@ void MetaTypeRegister::registerInterfaceData()
     qmlRegisterInterface<MapEditDialog>("MapEditDialog", 1);
     qmlRegisterInterface<CustomCoBoostInfo>("CustomCoBoostInfo", 1);
     qmlRegisterInterface<TerrainFlowData>("TerrainFlowData", 1);
+    qmlRegisterInterface<CampaignMapData>("CampaignMapData", 1);
 }

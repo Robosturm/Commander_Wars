@@ -34,13 +34,14 @@ void LoadingScreen::show()
     // load background
     oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
-
-    sprite->setResAnim(pBackground);
-    // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
-
+    if (pBackground != nullptr)
+    {
+        sprite->setResAnim(pBackground);
+        // background should be last to draw
+        sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
     m_BackgroundBar = oxygine::spColorRectSprite::create();
     m_BackgroundBar->setSize(Settings::getWidth(), 60);
     m_BackgroundBar->setY(Settings::getHeight() - 60);

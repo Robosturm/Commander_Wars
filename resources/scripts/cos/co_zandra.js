@@ -174,7 +174,7 @@ var Constructor = function()
         if (typeof map !== 'undefined')
         {
             if (map.getGameRules().getCurrentWeather() !== null &&
-                    map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 if (unit.getBaseMaxRange() > 1)
                 {

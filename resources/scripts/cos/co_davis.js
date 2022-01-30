@@ -264,7 +264,7 @@ var Constructor = function()
     {
         return qsTr("\nSpecial Unit:\nNone\n") +
                qsTr("\nGlobal Effect: \nNone") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain bonus luck based on the amount of troops Davis controls and gain misfortune based on the amount of troops all enemies control.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain bonus luck based on the amount of troops Davis controls and gain missfortune based on the amount of troops all enemies control.");
     };
     this.getPowerDescription = function(co)
     {

@@ -22,11 +22,14 @@ var Constructor = function ()
                 (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
 
                 var unitID = targetUnit.getUnitID();
+                var terrainId = transportTerrain.getID();
                 if (unitID === "TRANSPORTPLANE")
                 {
-                    if ((transportTerrain.getID() === "AIRPORT") ||
-                        (transportTerrain.getID() === "TEMPORARY_AIRPORT") ||
-                        (transportTerrain.getID() === "STREET"))
+                    if ((terrainId === "AIRPORT") ||
+                        (terrainId === "TEMPORARY_AIRPORT") ||
+                        (terrainId === "SNOW_STREET") ||
+                        (terrainId === "STREET") ||
+                        (terrainId === "STREET1"))
                     {
                         return true;
                     }
@@ -39,7 +42,8 @@ var Constructor = function ()
                          unitID === "BLACK_BOAT" ||
                          unitID === "CANNONBOAT")
                 {
-                    if ((transportTerrain.getID() === "BRIDGE"))
+                    if ((terrainId === "BRIDGE") ||
+                        (terrainId === "BRIDGE1"))
                     {
                         return false;
                     }

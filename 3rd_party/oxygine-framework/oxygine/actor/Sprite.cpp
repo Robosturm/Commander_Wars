@@ -53,7 +53,7 @@ namespace oxygine
             return false;
         }
         Vector2 pos = localPosition * pAnim->getAppliedScale();
-        pos = pos.div(m_localScale);
+        pos = pos.div(m_localScale * pAnim->getScaleFactor());
         Point lp = pos.cast<Point>();
         return m_frame.getHits(lp);
     }
@@ -266,11 +266,13 @@ namespace oxygine
             if (GameWindow::getWindow()->isWorker())
             {
                 QMutexLocker lock(&m_Locked);
-                setMaterial(MaterialCache::mc().cache(*mat.get()));
+                auto newMat = MaterialCache::mc().cache(*mat.get());
+                setMaterial(newMat);
             }
             else
             {
-                setMaterial(MaterialCache::mc().cache(*mat.get()));
+                auto newMat = MaterialCache::mc().cache(*mat.get());
+                setMaterial(newMat);
             }
         }
         animFrameChanged(m_frame);

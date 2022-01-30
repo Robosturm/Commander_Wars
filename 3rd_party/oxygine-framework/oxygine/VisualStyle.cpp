@@ -90,7 +90,7 @@ namespace oxygine
         matChanged();
     }
 
-    void VStyleActor::setMaterial(spMaterial mat)
+    void VStyleActor::setMaterial(spMaterial & mat)
     {
         m_mat = mat;
         matChanged();

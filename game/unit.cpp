@@ -18,8 +18,6 @@
 
 #include "menue/editormenue.h"
 
-const float Unit::animationSpeed = 1.5f;
-
 Unit::Unit()
 {
     setObjectName("Unit");
@@ -214,19 +212,19 @@ void Unit::removeShineTween()
     m_ShineTweens.clear();
 }
 
-void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite)
+void Unit::loadSprite(const QString & spriteID, bool addPlayerColor, bool flipSprite, qint32 frameTime)
 {
     if (addPlayerColor)
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, flipSprite);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, flipSprite, frameTime);
     }
     else
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_None, flipSprite);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, flipSprite, frameTime);
     }
 }
 
-void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite)
+void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bool flipSprite, qint32 frameTime)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID, oxygine::ep_ignore_error);
@@ -236,10 +234,10 @@ void Unit::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, bo
         oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pSprite->addTween(tween);
 
-            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pWaitSprite->addTween(tweenWait);
         }
         else
@@ -785,6 +783,16 @@ bool Unit::canMoveOver(qint32 x, qint32 y)
     return  false;
 }
 
+qint32 Unit::getCoUnitValue()
+{
+    qint32 value = getUnitValue();
+    if (m_UnitRank < 0)
+    {
+        value *= 1.5f;
+    }
+    return value;
+}
+
 qint32 Unit::getUnitValue()
 {
     return static_cast<qint32>(getCosts() * m_hp / Unit::MAX_UNIT_HP);
@@ -1218,7 +1226,7 @@ bool Unit::isTransporter()
     return false;
 }
 
-void Unit::postAction(spGameAction pAction)
+void Unit::postAction(spGameAction & pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postAction";
@@ -1611,6 +1619,21 @@ bool Unit::useTerrainDefense()
     return false;
 }
 
+bool Unit::useTerrainHide()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "useVisionHide";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (erg.isBool() && erg.toBool())
+    {
+        return true;
+    }
+    return false;
+}
+
 qint32 Unit::getAttackHpBonus(QPoint position)
 {
     qint32 bonus = 0;
@@ -1885,6 +1908,7 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool
         }
     }
     qint32 weatherCosts = m_pOwner->getWeatherMovementCostModifier(this, QPoint(x, y));
+    weatherCosts += pMap->getTerrain(x, y)->getMovementcostModifier(this, x, y, curX, curY);
 
     if ((costs <= 0) && (baseCosts > 0))
     {
@@ -2599,7 +2623,7 @@ QVector<QVector3D> Unit::getVisionFields(QPoint position)
                 bool visionHide = pTerrain->getVisionHide(m_pOwner);
                 if ((!visionHide) ||
                     ((pUnit != nullptr) && visionHide &&
-                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                     !pUnit->useTerrainHide() && !pUnit->isStatusStealthed()))
                 {
                     visionFields.append(QVector3D(field.x(), field.y(), false));
                 }
@@ -2655,7 +2679,8 @@ void Unit::removeUnit(bool killed)
     createCORange(-1);
     if (m_pTerrain != nullptr)
     {
-        m_pTerrain->setUnit(spUnit());
+        spUnit pUnit;
+        m_pTerrain->setUnit(pUnit);
     }
 }
 
@@ -3164,7 +3189,7 @@ bool Unit::hasTerrainHide(Player* pPlayer)
     qint32 y = Unit::getY();
     bool visibleField = pPlayer->getFieldVisible(x, y);
     spGameMap pMap = GameMap::getInstance();
-    return (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
+    return (m_pTerrain->getVisionHide(pPlayer) && useTerrainHide() && !visibleField &&
             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off);
 }
 

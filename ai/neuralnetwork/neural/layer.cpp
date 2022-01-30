@@ -122,11 +122,11 @@ void Layer::randomizeAllWeights(double abs_value)
     }
 }
 
-void Layer::mutateAllWeights(double mutationChance, double maxWeight)
+void Layer::mutateAllWeights(double mutationChance, double maxWeight, double mutationRate)
 {
     for(auto & neuron : m_neurons)
     {
-        neuron->mutateAllWeights(mutationChance, maxWeight);
+        neuron->mutateAllWeights(mutationChance, maxWeight, mutationRate);
     }
 }
 

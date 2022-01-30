@@ -17,6 +17,11 @@ var Constructor = function()
         unit.setMaxRange(1);
         unit.setVision(2);
     };
+    this.armyData = 		[["os", "os"],
+                             ["bm", "bm"],
+                             ["ge", "ge"],
+                             ["yc", "yc"],
+                             ["bh", "bh"],];
     this.getBaseCost = function()
     {
         return 2500;
@@ -24,7 +29,12 @@ var Constructor = function()
     
     this.loadSprites = function(unit)
     {
-        unit.loadSpriteV2("motorbike+mask", GameEnums.Recoloring_Matrix);
+        // none neutral player
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyDataStanding);
+        // load sprites
+        unit.loadSpriteV2("motorbike+" + armyName +"+mask", GameEnums.Recoloring_Matrix);
     };
     this.getMovementType = function()
     {
@@ -44,8 +54,11 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
+        // none neutral player
+        var player = unit.getOwner();
+        // get army name
+        var armyName = Global.getArmyNameFromPlayerTable(player, INFANTRY.armyData);
+        animation.loadSpriteV2("motorbike+" + armyName + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movebike.wav", -2);
         return animation;
     };

@@ -24,18 +24,16 @@ class MainServer : public QObject, public oxygine::ref_counter
 public:
     static MainServer* getInstance();
     static bool exists();
+    void release();
     virtual ~MainServer();
 
     inline TCPServer* getGameServer()
     {
         return m_pGameServer.get();
     }
-    inline void stopGameServer()
-    {
-        m_pGameServer = nullptr;
-    }    
 signals:
     void sigRemoveGame(NetworkGame* pGame);
+    void sigStartRemoteGame(QString initScript, QString id);
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
@@ -51,14 +49,27 @@ public slots:
      * @param socketId
      */
     void playerJoined(qint64 socketId);
+    /**
+     * @brief startRemoteGame
+     * @param map
+     * @param configuration
+     */
+    void startRemoteGame(const QString & initScript, const QString & id);
 private slots:
     void removeGame(NetworkGame* pGame);
+    /**
+     * @brief startRemoteGame
+     * @param map
+     * @param configuration
+     */
+    void slotStartRemoteGame(QString initScript, QString id);
 private:
-    void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data);
+    void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data, QString configuration = "", QString id = "");
     bool validHostRequest(QStringList mods);
     void sendGameDataToClient(qint64 socketId);
     void joinSlaveGame(quint64 socketID, QDataStream & stream);
     void closeGame(NetworkGame* pGame);
+    void spawnSlave(const QString & initScript, const QStringList & mods, QString id, quint64 socketID, QByteArray& data);
 private:
     class InternNetworkGame;
     typedef oxygine::intrusive_ptr<InternNetworkGame> spInternNetworkGame;
@@ -66,7 +77,7 @@ private:
     {
     public:
         QProcess* process{nullptr};
-        NetworkGame game;
+        spNetworkGame game;
         QThread m_runner;
     };
     explicit MainServer();

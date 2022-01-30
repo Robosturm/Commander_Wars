@@ -16,7 +16,7 @@
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
-MapSelectionView::MapSelectionView()
+MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
     : QObject()
 {
     setObjectName("MapSelectionView");
@@ -61,7 +61,6 @@ MapSelectionView::MapSelectionView()
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
-
     if (Settings::getSmallScreenDevice())
     {
         size = QSize(Settings::getWidth() - 100, Settings::getHeight() - 60);
@@ -69,6 +68,10 @@ MapSelectionView::MapSelectionView()
     else
     {
         size = QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60);
+    }
+    if (mapInfoHeight > 0)
+    {
+        size.setHeight(mapInfoHeight);
     }
     // map info text
     m_MapInfo = spPanel::create(true, size, size);
@@ -316,6 +319,16 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pVictoryInfo->setVisible(false);
         }
     }
+    else
+    {
+        if (m_pCurrentMap.get() != nullptr)
+        {
+            m_pCurrentMap->deleteMap();
+            m_pCurrentMap = nullptr;
+        }
+        m_CurrentLoadedCampaign = nullptr;
+        m_currentMapFile = info;
+    }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
     if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())
     {
@@ -407,6 +420,26 @@ void MapSelectionView::loadMapVictoryInfo()
         }
         posY += 55;
     }
+}
+
+spPanel MapSelectionView::getMapInfo() const
+{
+    return m_MapInfo;
+}
+
+oxygine::spBox9Sprite MapSelectionView::getBuildingBackground() const
+{
+    return m_pBuildingBackground;
+}
+
+spPanel MapSelectionView::getMinimapPanel() const
+{
+    return m_MinimapPanel;
+}
+
+const QFileInfo &MapSelectionView::getCurrentMapFile() const
+{
+    return m_currentMapFile;
 }
 
 spMapSelection MapSelectionView::getMapSelection() const

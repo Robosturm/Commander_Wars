@@ -302,7 +302,7 @@ var Constructor = function()
 
     this.calcBattleDamage3 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
     {
-        return ACTION_FIRE.calcBattleDamage4(action, attacker, 0, atkPosX, atkPosY, null, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
+        return ACTION_FIRE.calcBattleDamage4(action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
     }
 
     this.calcBattleDamage4 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false)
@@ -321,7 +321,8 @@ var Constructor = function()
             }
             if (defUnit !== null)
             {
-                if (unit.isAttackable(defUnit, ignoreOutOfVisionRange, Qt.point(atkPosX, atkPosY)))
+                if (action === null ||
+                    unit.isAttackable(defUnit, ignoreOutOfVisionRange, Qt.point(atkPosX, atkPosY)))
                 {
                     if (defUnit.isAttackable(unit, true, actionTargetField, true) &&
                         defUnit.canCounterAttack(action, Qt.point(x, y), attacker, actionTargetField, luckMode))

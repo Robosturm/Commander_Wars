@@ -76,11 +76,14 @@ void InGameMenue::changeBackground(QString background)
 {
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
-    m_backgroundSprite->setResAnim(pBackground);
-    // background should be last to draw
-    m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    if (pBackground != nullptr)
+    {
+        m_backgroundSprite->setResAnim(pBackground);
+        // background should be last to draw
+        m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+        m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+        m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    }
 }
 
 void InGameMenue::loadHandling()
@@ -91,7 +94,7 @@ void InGameMenue::loadHandling()
         Mainapp* pApp = Mainapp::getInstance();
         addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
             if (pTouchEvent != nullptr)
             {
                 if (m_Focused)
@@ -116,7 +119,7 @@ void InGameMenue::connectMapCursor()
     Cursor* pCursor = m_Cursor.get();
     pMap->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             //pEvent->stopPropagation();
@@ -124,7 +127,7 @@ void InGameMenue::connectMapCursor()
             {
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
                 qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
-                emit pCursor->sigUpdatePosition(curX, curY);
+                pCursor->updatePosition(curX, curY);
             }
             else
             {
@@ -134,7 +137,7 @@ void InGameMenue::connectMapCursor()
     });
     pMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             pEvent->stopPropagation();
@@ -150,7 +153,7 @@ void InGameMenue::connectMapCursor()
     });
     pMap->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
@@ -165,7 +168,7 @@ void InGameMenue::connectMapCursor()
     });
     pMap->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
@@ -276,7 +279,8 @@ Cursor* InGameMenue::getCursor()
 
 void InGameMenue::keyInput(oxygine::KeyEvent event)
 {
-    if (m_Focused && !event.getContinousPress())
+    QPoint mapPoint = m_Cursor->getMapPoint();
+    if (m_Focused && (!event.getContinousPress() || m_lastMapPoint != mapPoint))
     {
         // for debugging
         Qt::Key cur = event.getKey();
@@ -284,11 +288,17 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
             cur == Settings::getKey_confirm2())
         {
             emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            m_lastMapPoint = mapPoint;
         }
         else if (cur == Settings::getKey_cancel() ||
                  cur == Settings::getKey_cancel2())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            m_lastMapPoint = mapPoint;
+        }
+        else
+        {
+            m_lastMapPoint = QPoint(-1, -1);
         }
     }
 }
@@ -366,7 +376,7 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
             QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
             pApp->cursor().setPos(curPos);
         }
-        emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
+        m_Cursor->updatePosition(MousePosX, MousePosY);
     }
 }
 
@@ -402,6 +412,7 @@ void InGameMenue::initSlidingActor(qint32 x, qint32 y, qint32 width, qint32 heig
     m_mapSliding->setSize(width, height);
     m_mapSliding->setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
     updateSlidingActorSize();
+    setFocused(true);
 }
 
 void InGameMenue::updateSlidingActorSize()

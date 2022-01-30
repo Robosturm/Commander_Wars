@@ -2,20 +2,17 @@
 #define DIALOGCOSTYLE_H
 
 #include <QObject>
-
 #include <QImage>
 
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/colorselector.h"
-
 #include "objects/base/panel.h"
-
 #include "objects/base/dropdownmenu.h"
 
 class DialogCOStyle;
-typedef oxygine::intrusive_ptr<DialogCOStyle> spDialogCOStyle;
+using spDialogCOStyle = oxygine::intrusive_ptr<DialogCOStyle>;
 
 class DialogCOStyle : public QObject, public oxygine::Actor
 {

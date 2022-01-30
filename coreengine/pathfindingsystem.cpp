@@ -262,6 +262,15 @@ QVector<QPoint> PathFindingSystem::getTargetPath() const
     return QVector<QPoint>();
 }
 
+QPoint PathFindingSystem::getTarget() const
+{
+    if (m_FinishNode >= 0)
+    {
+        return QPoint(m_FinishNodeX, m_FinishNodeY);
+    }
+    return QPoint(-1, -1);
+}
+
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y) const
 {
     QVector<QPoint> points;

@@ -9,7 +9,7 @@
 #include <qfile.h>
 #include <qdatastream.h>
 
-DecisionTree::DecisionTree(spDecisionNode pRootNode)
+DecisionTree::DecisionTree(spDecisionNode & pRootNode)
 	: m_pRootNode(pRootNode)
 {
     setObjectName("DecisionTree");
@@ -126,7 +126,7 @@ QVector<qint32> DecisionTree::countClassItems(QVector<QVector<float>>& trainingD
 	return ret;
 }
 
-void DecisionTree::seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion question, QVector<QVector<QVector<float>>>& splitData)
+void DecisionTree::seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion & question, QVector<QVector<QVector<float>>>& splitData)
 {
     for (qint32 i = 0; i < question->getSize(); i++)
     {

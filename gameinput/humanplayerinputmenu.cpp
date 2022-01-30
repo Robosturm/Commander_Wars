@@ -57,135 +57,141 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(const QStringList & texts, const QStr
     m_startY = y;
     m_Cursor = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("cursor+menu");
-    if (pAnim->getTotalFrames() > 1)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-        m_Cursor->addTween(tween);
-    }
-    else
-    {
-        m_Cursor->setResAnim(pAnim);
-    }
-    m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
-    m_Cursor->setScale(GameMap::getImageSize() / pAnim->getWidth());
-    qint32 x = 0;
-    qint32 xCount = 0;
-    m_maxXCount = Settings::getMenuItemRowCount();
-    if ((Settings::getWidth() - 120) / width < m_maxXCount)
-    {
-        m_maxXCount = (Settings::getWidth() - 120) / width;
-    }
-    m_rowCount = Settings::getMenuItemCount();
-    if ((Settings::getHeight() - 60) / m_itemHeigth < m_rowCount)
-    {
-        m_rowCount = (Settings::getHeight() - 60) / m_itemHeigth;
-    }
-    qint32 maxY = 0;
-    for (qint32 i = 0; i < actionIDs.size(); i++)
-    {
-        if (i > 0 && i % m_rowCount == 0 && xCount < m_maxXCount)
+        if (pAnim->getTotalFrames() > 1)
         {
-            xCount++;
-            createBottomSprite(x, y, width, pPlayer);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+            m_Cursor->addTween(tween);
+        }
+        else
+        {
+            m_Cursor->setResAnim(pAnim);
+        }
+        m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
+        m_Cursor->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        qint32 x = 0;
+        qint32 xCount = 0;
+        m_maxXCount = Settings::getMenuItemRowCount();
+        if ((Settings::getWidth() - 120) / width < m_maxXCount)
+        {
+            m_maxXCount = (Settings::getWidth() - 120) / width;
+        }
+        m_rowCount = Settings::getMenuItemCount();
+        if ((Settings::getHeight() - 60) / m_itemHeigth < m_rowCount)
+        {
+            m_rowCount = (Settings::getHeight() - 60) / m_itemHeigth;
+        }
+        qint32 maxY = 0;
+        for (qint32 i = 0; i < actionIDs.size(); i++)
+        {
+            if (i > 0 && i % m_rowCount == 0 && xCount < m_maxXCount)
+            {
+                xCount++;
+                createBottomSprite(x, y, width, pPlayer);
+                if (xCount < m_maxXCount)
+                {
+                    x += width;
+                    createTopSprite(x, width, pPlayer);
+                }
+                maxY = y;
+                y = m_startY;
+            }
+            bool enabled = true;
+            if (enabledList.size() > 0)
+            {
+                enabled = enabledList[i];
+            }
+            qint32 costs = 0;
+            if (costList.size() > 0)
+            {
+                costs = costList[i];
+            }
+            QString action = actionIDs[i];
+            oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i, pPlayer);
             if (xCount < m_maxXCount)
             {
-                x += width;
-                createTopSprite(x, width, pPlayer);
-            }
-            maxY = y;
-            y = m_startY;
-        }
-        bool enabled = true;
-        if (enabledList.size() > 0)
-        {
-            enabled = enabledList[i];
-        }
-        qint32 costs = 0;
-        if (costList.size() > 0)
-        {
-            costs = costList[i];
-        }
-        QString action = actionIDs[i];
-        oxygine::spBox9Sprite pItemBox = createMenuItem(enabled, x, y, width, style, texts[i], action, costs, icons[i], i, pPlayer);
-        if (xCount < m_maxXCount)
-        {
-            y += static_cast<qint32>(pItemBox->getHeight());
-        }
-        if (y > maxY)
-        {
-            maxY = y;
-        }
-    }
-
-    if (xCount > 0 && actionIDs.size() < m_rowCount * m_maxXCount)
-    {
-        qint32 emptyItems = ((xCount + 1) * m_rowCount) - xCount * m_rowCount - actionIDs.size() % m_rowCount;
-        if (emptyItems < m_rowCount)
-        {
-            for (qint32 i = 0; i < emptyItems; i++)
-            {
-                oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
-                pAnim = pGameManager->getResAnim("menu+middle+mask");
-                pItemBox->setResAnim(pAnim);
-                pItemBox->setSize(pAnim->getSize());
-                pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
-                pItemBox->setHeight(GameMap::getImageSize());
-                pItemBox->setY(y);
-                pItemBox->setX(x);
-                pItemBox->setWidth(width);
-                pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
-                {
-                    oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-                    if (pTouchEvent != nullptr)
-                    {
-                        pTouchEvent->stopPropagation();
-                        if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-                        {
-                            emit sigCanceled(0, 0);
-                        }
-                    }
-                });
-                addChild(pItemBox);
-                m_ItemActors.append(pItemBox);
                 y += static_cast<qint32>(pItemBox->getHeight());
-                m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+            }
+            if (y > maxY)
+            {
+                maxY = y;
             }
         }
-    }
-    qint32 bottomHeigth = createBottomSprite(x, maxY, width, pPlayer);
-    addChild(m_Cursor);
-    setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
 
-    qint32 scrollbarWidth = 0;
-    if (m_ActionIDs.size() > m_rowCount * m_maxXCount)
-    {
-        qint32 height = maxY + bottomHeigth;
-        qint32 max = m_ItemActors.size() - m_rowCount * m_maxXCount;
-        m_scrollbar = spH_Scrollbar::create(height, height + max * m_itemHeigth * 1.5f);
-        connect(m_scrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, [=](float value)
+        if (xCount > 0 && actionIDs.size() < m_rowCount * m_maxXCount)
         {
-            m_startItem = max * value;
-            updateItemPositionAndVisibility();
-        });
-        scrollbarWidth = m_scrollbar->getWidth() + 25;
-        m_scrollbar->setX(width * xCount + 25);
-        addChild(m_scrollbar);
-        auto* pScrollbar = m_scrollbar.get();
-        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
-        {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
+            qint32 emptyItems = ((xCount + 1) * m_rowCount) - xCount * m_rowCount - actionIDs.size() % m_rowCount;
+            if (emptyItems < m_rowCount)
             {
-                emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
-                pTouchEvent->stopPropagation();
+                for (qint32 i = 0; i < emptyItems; i++)
+                {
+                    oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
+                    pAnim = pGameManager->getResAnim("menu+middle+mask");
+                    if (pAnim != nullptr)
+                    {
+                        pItemBox->setResAnim(pAnim);
+                        pItemBox->setSize(pAnim->getSize());
+                        pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
+                        pItemBox->setHeight(GameMap::getImageSize());
+                        pItemBox->setY(y);
+                        pItemBox->setX(x);
+                        pItemBox->setWidth(width);
+                        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+                        {
+                            oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                            if (pTouchEvent != nullptr)
+                            {
+                                pTouchEvent->stopPropagation();
+                                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                                {
+                                    emit sigCanceled(0, 0);
+                                }
+                            }
+                        });
+                        addChild(pItemBox);
+                        m_ItemActors.append(pItemBox);
+                        y += static_cast<qint32>(pItemBox->getHeight());
+                        m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+                    }
+                }
             }
-        });
+        }
+        qint32 bottomHeigth = createBottomSprite(x, maxY, width, pPlayer);
+        addChild(m_Cursor);
+        setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
+
+        qint32 scrollbarWidth = 0;
+        if (m_ActionIDs.size() > m_rowCount * m_maxXCount)
+        {
+            qint32 height = maxY + bottomHeigth;
+            qint32 max = m_ItemActors.size() - m_rowCount * m_maxXCount;
+            m_scrollbar = spH_Scrollbar::create(height, height + max * m_itemHeigth * 1.5f);
+            connect(m_scrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, [=](float value)
+            {
+                m_startItem = max * value;
+                updateItemPositionAndVisibility();
+            });
+            scrollbarWidth = m_scrollbar->getWidth() + 25;
+            m_scrollbar->setX(width * xCount + 25);
+            addChild(m_scrollbar);
+            auto* pScrollbar = m_scrollbar.get();
+            addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event* pEvent)
+            {
+                oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent != nullptr)
+                {
+                    emit pScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / static_cast<float>(pScrollbar->getContentHeigth()));
+                    pTouchEvent->stopPropagation();
+                }
+            });
+        }
+        setHeight(maxY + bottomHeigth);
+        setWidth(width * xCount + scrollbarWidth);
+        m_columnCount = xCount;
+        updateItemPositionAndVisibility();
+        addTouchMoveEvents();
     }
-    setHeight(maxY + bottomHeigth);
-    setWidth(width * xCount + scrollbarWidth);
-    m_columnCount = xCount;
-    updateItemPositionAndVisibility();
-    addTouchMoveEvents();
 }
 
 void HumanPlayerInputMenu::addTouchMoveEvents()
@@ -286,77 +292,80 @@ oxygine::spBox9Sprite HumanPlayerInputMenu::createMenuItem(bool enabled, qint32&
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+middle+mask");
-    pItemBox->setResAnim(pAnim);
-    pItemBox->setSize(pAnim->getSize());
-    pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
-    pItemBox->addChild(icon);
-    icon->setPosition(3, 0);
-    pItemBox->setHeight(GameMap::getImageSize());
-    pItemBox->setY(y);
-    pItemBox->setX(x);
-    pItemBox->setWidth(width);
-    // text for the item
-    oxygine::spTextField textField = oxygine::spTextField::create();
-    // set color font based
-    if (!enabled)
+    if (pAnim != nullptr)
     {
-        style.color = QColor(255, 0, 0, 255);
-    }
-    else
-    {
-        style.color = FontManager::getFontColor();
-    }
-    textField->setStyle(style);
-    textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
-    textField->setHtmlText(text);
-    pItemBox->addChild(textField);
-    textField->setPosition(3 + GameMap::getImageSize(), 0);
-    textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
-    addChild(pItemBox);
-    oxygine::Actor* pBox = pItemBox.get();
-    oxygine::Sprite* pCursor = m_Cursor.get();
-    pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
-    {
-        Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-        pEvent->stopPropagation();
-        pCursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - pCursor->getScaledHeight() / 2);
-        pCursor->setX(pBox->getX() + width);
-        m_currentAction = item;
-    });
-    if (enabled)
-    {
-        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+        pItemBox->setResAnim(pAnim);
+        pItemBox->setSize(pAnim->getSize());
+        pItemBox->setColorTable(pPlayer->getColorTableAnim(), true);
+        pItemBox->addChild(icon);
+        icon->setPosition(3, 0);
+        pItemBox->setHeight(GameMap::getImageSize());
+        pItemBox->setY(y);
+        pItemBox->setX(x);
+        pItemBox->setWidth(width);
+        // text for the item
+        oxygine::spTextField textField = oxygine::spTextField::create();
+        // set color font based
+        if (!enabled)
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
-            {
-                pEvent->stopPropagation();
-                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
-                {
-                    Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
-                    emit sigItemSelected(action, costs);
-                }
-                else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-                {
-                    emit sigCanceled(0, 0);
-                }
-            }
-        });
-    }
-    else
-    {
-        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            style.color = QColor(255, 0, 0, 255);
+        }
+        else
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
-            {
-                pEvent->stopPropagation();
-                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-                {
-                    emit sigCanceled(0, 0);
-                }
-            }
+            style.color = FontManager::getFontColor();
+        }
+        textField->setStyle(style);
+        textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
+        textField->setHtmlText(text);
+        pItemBox->addChild(textField);
+        textField->setPosition(3 + GameMap::getImageSize(), 0);
+        textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
+        addChild(pItemBox);
+        oxygine::Actor* pBox = pItemBox.get();
+        oxygine::Sprite* pCursor = m_Cursor.get();
+        pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            pEvent->stopPropagation();
+            pCursor->setY(pBox->getY() + GameMap::getImageSize() / 2 - pCursor->getScaledHeight() / 2);
+            pCursor->setX(pBox->getX() + width);
+            m_currentAction = item;
         });
+        if (enabled)
+        {
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            {
+                oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent != nullptr)
+                {
+                    pEvent->stopPropagation();
+                    if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+                    {
+                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                        emit sigItemSelected(action, costs);
+                    }
+                    else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                    {
+                        emit sigCanceled(0, 0);
+                    }
+                }
+            });
+        }
+        else
+        {
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            {
+                oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent != nullptr)
+                {
+                    pEvent->stopPropagation();
+                    if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                    {
+                        emit sigCanceled(0, 0);
+                    }
+                }
+            });
+        }
     }
     m_ItemActors.append(pItemBox);
     return pItemBox;
@@ -367,12 +376,15 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pBottomBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+bottom+mask");
-    pBottomBox->setResAnim(pAnim);
-    pBottomBox->setSize(pAnim->getSize());
-    pBottomBox->setColorTable(pPlayer->getColorTableAnim(), true);
-    pBottomBox->setWidth(width);
-    pBottomBox->setY(y);
-    pBottomBox->setX(x);
+    if (pAnim != nullptr)
+    {
+        pBottomBox->setResAnim(pAnim);
+        pBottomBox->setSize(pAnim->getSize());
+        pBottomBox->setColorTable(pPlayer->getColorTableAnim(), true);
+        pBottomBox->setWidth(width);
+        pBottomBox->setY(y);
+        pBottomBox->setX(x);
+    }
     addChild(pBottomBox);
     return static_cast<qint32>(pBottomBox->getHeight());
 }
@@ -382,11 +394,14 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width, Player* pPl
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pTopBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top+mask");
-    pTopBox->setResAnim(pAnim);
-    pTopBox->setSize(pAnim->getSize());
-    pTopBox->setColorTable(pPlayer->getColorTableAnim(), true);
-    pTopBox->setWidth(width);
-    pTopBox->setX(x);
+    if (pAnim != nullptr)
+    {
+        pTopBox->setResAnim(pAnim);
+        pTopBox->setSize(pAnim->getSize());
+        pTopBox->setColorTable(pPlayer->getColorTableAnim(), true);
+        pTopBox->setWidth(width);
+        pTopBox->setX(x);
+    }
     addChild(pTopBox);
     return static_cast<qint32>(pTopBox->getHeight());
 }
@@ -511,19 +526,22 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_confirm() ||
                      cur == Settings::getKey_confirm2())
             {
-                if (m_ActionIDs.size() > 0)
+                if (!event.getContinousPress())
                 {
-                    if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
-                        (m_EnabledList.size() == 0))
+                    if (m_ActionIDs.size() > 0)
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
-                        if (m_CostList.size() == m_ActionIDs.size())
+                        if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
+                            (m_EnabledList.size() == 0))
                         {
-                            emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
-                        }
-                        else
-                        {
-                            emit sigItemSelected(m_ActionIDs[m_currentAction], 0);
+                            Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
+                            if (m_CostList.size() == m_ActionIDs.size())
+                            {
+                                emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
+                            }
+                            else
+                            {
+                                emit sigItemSelected(m_ActionIDs[m_currentAction], 0);
+                            }
                         }
                     }
                 }
@@ -531,37 +549,43 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_cancel() ||
                      cur == Settings::getKey_cancel2())
             {
-                emit sigCanceled(0, 0);
+                if (!event.getContinousPress())
+                {
+                    emit sigCanceled(0, 0);
+                }
             }
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                QString id = m_ActionIDs[m_currentAction];
-                UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-                if (pUnitSpriteManager->exists(id))
+                if (!event.getContinousPress())
                 {
-                    spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
-                    spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
-                    pMenu->addChild(fieldinfo);
-                    connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                    QString id = m_ActionIDs[m_currentAction];
+                    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+                    if (pUnitSpriteManager->exists(id))
                     {
-                        m_Focused = true;
-                    });
-                    m_Focused = false;
-                }
-                else
-                {
-                    WikiDatabase* pDatabase = WikiDatabase::getInstance();
-                    WikiDatabase::PageData data = pDatabase->getEntry(id);
-                    if (data.m_id != "")
-                    {
-                        spWikipage page = pDatabase->getPage(data);
-                        pMenu->addChild(page);
-                        connect(page.get(), &FieldInfo::sigFinished, this, [=]
+                        spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
+                        spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
+                        pMenu->addChild(fieldinfo);
+                        connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                         {
                             m_Focused = true;
                         });
                         m_Focused = false;
+                    }
+                    else
+                    {
+                        WikiDatabase* pDatabase = WikiDatabase::getInstance();
+                        WikiDatabase::PageData data = pDatabase->getEntry(id);
+                        if (data.m_id != "")
+                        {
+                            spWikipage page = pDatabase->getPage(data);
+                            pMenu->addChild(page);
+                            connect(page.get(), &FieldInfo::sigFinished, this, [=]
+                            {
+                                m_Focused = true;
+                            });
+                            m_Focused = false;
+                        }
                     }
                 }
             }

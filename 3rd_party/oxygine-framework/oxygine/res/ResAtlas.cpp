@@ -9,7 +9,7 @@
 
 namespace oxygine
 {
-    void ResAtlas::init_resAnim(spResAnim rs, const QString & file, const QDomElement & node)
+    void ResAtlas::init_resAnim(spResAnim & rs, const QString & file, const QDomElement & node)
     {
         QString resName = Resource::extractID(node, file, "");
         CONSOLE_PRINT("Registering ressource: " + resName, Console::eDEBUG);

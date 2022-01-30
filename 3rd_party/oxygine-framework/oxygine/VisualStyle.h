@@ -59,7 +59,7 @@ namespace oxygine
         }
     protected:
         virtual void matChanged() {}
-        void setMaterial(spMaterial mat);
+        void setMaterial(spMaterial & mat);
     private:
         void changeAddColor(const QColor& color);
     protected:

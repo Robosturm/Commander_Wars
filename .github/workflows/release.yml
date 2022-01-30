@@ -1,0 +1,125 @@
+on:
+  push:
+    tags:
+      - 'Beta*'
+
+name: Commnader_Wars_Release
+
+env:
+  BUILD_TYPE: Release
+  QT_Version: '6.2.1'
+  
+jobs:
+  create_release:
+    name: Create release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{steps.create_release.outputs.upload_url}}
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: ${{github.ref}}
+          release_name: Release ${{github.ref}}  
+          draft: false
+          prerelease: false        
+          body: | 
+            Latest Commander Wars Release 
+            See the github wiki for the related change log:
+            https://github.com/Robosturm/Commander_Wars/wiki
+            
+  install:
+    name: All
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            COMPILER_VERSION: 'win64_msvc2019_64'
+            # 'win64_mingw81'
+            target: 'desktop'
+            qtPath: 'msvc2019_64'
+            installerCommands1: ''
+            installerCommands2: ''
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_x64.zip'
+            
+          - os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'                
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_Ubuntu.zip'
+            
+          - os: macos-latest
+            COMPILER_VERSION: 'clang_64'
+            qtPath: 'clang_64'
+            target: 'desktop'
+            installerCommands1: ''
+            installerCommands2: ''
+            source_asset: 'Commander_Wars.zip'
+            asset_name: 'Commander_Wars_macOS.zip'
+          #- os: windows-latest
+          #  COMPILER_VERSION: 'android_armv7'
+          #  target: 'android'
+          #  asset_name: 'Commander_Wars_Android.apk'
+
+    needs: create_release
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v2
+          
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: ${{matrix.target}}
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
+          modules: 'qtmultimedia'
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+          
+    - name: Install OS Dependencies 1
+      run: ${{matrix.installerCommands1}}
+    
+    - name: Install OS Dependencies 2
+      run: ${{matrix.installerCommands2}}
+      
+    - name: Configure CMake
+      run: |
+        cmake \
+        -B '${{github.workspace}}/build' \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+    
+    - name: Build
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16
+
+#----------------------------------------------------------------------------------------------------------------------------------------------
+# release creation and upload part
+#----------------------------------------------------------------------------------------------------------------------------------------------
+        
+    - name: build artifacts
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target createReleaseZip
+      
+    - name: upload artifact
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
+        asset_name: '${{matrix.asset_name}}'
+        asset_content_type: application/zip

@@ -12,8 +12,6 @@
 
 #include "ai/coreai.h"
 
-const float Building::animationSpeed = 4.0f;
-
 Building::Building(QString BuildingID)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
@@ -176,19 +174,19 @@ qint32 Building::getOwnerID()
     return -1;
 }
 
-void Building::loadSprite(const QString & spriteID, bool addPlayerColor)
+void Building::loadSprite(const QString & spriteID, bool addPlayerColor, qint32 frameTime)
 {
     if (addPlayerColor)
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, frameTime);
     }
     else
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_None);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, frameTime);
     }
 }
 
-void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
+void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -197,7 +195,7 @@ void Building::loadSpriteV2(const QString & spriteID, GameEnums::Recoloring mode
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pSprite->addTween(tween);
         }
         else
@@ -270,7 +268,7 @@ void Building::onWeatherChanged(Weather* pWeather)
     pInterpreter->doFunction(m_BuildingID, function1, args1);
 }
 
-void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode)
+void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::Recoloring mode, qint32 frameTime)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
@@ -279,7 +277,7 @@ void Building::loadWeatherOverlaySpriteV2(const QString & spriteID, GameEnums::R
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * frameTime)), -1);
             pSprite->addTween(tween);
         }
         else
@@ -428,7 +426,11 @@ void Building::updateBuildingSprites(bool neutral)
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        onWeatherChanged(pMap->getGameRules()->getCurrentWeather());
+        auto* pWeather = pMap->getGameRules()->getCurrentWeather();
+        if (pWeather != nullptr)
+        {
+            onWeatherChanged(pWeather);
+        }
     }
 }
 

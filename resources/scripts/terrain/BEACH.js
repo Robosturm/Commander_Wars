@@ -18,7 +18,14 @@ var Constructor = function()
 
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        terrain.loadBaseTerrain("SEA");
+        if (currentTerrainID === "LAKE")
+        {
+            terrain.loadBaseTerrain("LAKE");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("SEA");
+        }
     };
     this.isSeaTile = function(x, y)
     {
@@ -37,7 +44,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function (terrain)
     {
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+        var surroundingsLand = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
         if (surroundingsLand !== "")
         {
@@ -91,8 +98,8 @@ var Constructor = function()
     };
     this.canBePlaced = function (x, y) {
         var terrain = map.getTerrain(x, y);
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
-        var surroundingsSea = terrain.getSurroundings("SEA", false, true, GameEnums.Directions_All, false);
+        var surroundingsLand = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
+        var surroundingsSea = terrain.getSurroundings("SEA,LAKE", false, true, GameEnums.Directions_All, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
         // var c = (surroundingsLand === "" && surroundingsBeach === "");
         var c = (false);
@@ -132,11 +139,11 @@ var Constructor = function()
             terrain.loadOverlaySprite("sea+desert" + surroundingsDesert);
         }
         // load coast overlay
-        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
         {
-            var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
+            var surroundingsSE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
                 terrain.loadOverlaySprite("sea+overlay" + surroundingsSE);
@@ -145,7 +152,7 @@ var Constructor = function()
         // load overlay north east
         if (!surroundings.includes("+N") && !surroundings.includes("+E"))
         {
-            var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
+            var surroundingsNE = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
                 terrain.loadOverlaySprite("sea+overlay" + surroundingsNE);
@@ -154,7 +161,7 @@ var Constructor = function()
         // load overlay south west
         if (!surroundings.includes("+S") && !surroundings.includes("+W"))
         {
-            var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
+            var surroundingsSW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
                 terrain.loadOverlaySprite("sea+overlay" + surroundingsSW);
@@ -163,7 +170,7 @@ var Constructor = function()
         // load overlay north west
         if (!surroundings.includes("+N") && !surroundings.includes("+W"))
         {
-            var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
+            var surroundingsNW = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
                 terrain.loadOverlaySprite("sea+overlay" + surroundingsNW);
@@ -191,6 +198,11 @@ var Constructor = function()
     this.getDescription = function()
     {
         return qsTr("Beachs over great landing places for landing ground troops.");
+    };
+
+    this.isLoadingTile =  function(terrain)
+    {
+        return true;
     };
 
     this.getTerrainSprites = function()

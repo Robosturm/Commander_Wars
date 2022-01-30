@@ -125,6 +125,11 @@ public:
     virtual void setFinishNode(qint32 x, qint32 y);
 public slots:
     /**
+     * @brief getTarget
+     * @return
+     */
+    QPoint getTarget() const;
+    /**
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x
      * @param y

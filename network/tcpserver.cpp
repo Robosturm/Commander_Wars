@@ -5,10 +5,10 @@
 
 #include "network/tcpserver.h"
 
-TCPServer::TCPServer()
+TCPServer::TCPServer(QObject* pParent)
+    : NetworkInterface(pParent)
 {
     setObjectName("TCPServer");
-    moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = true;
     isConnected = true;
 }
@@ -23,7 +23,6 @@ TCPServer::~TCPServer()
 void TCPServer::connectTCP(QString, quint16 port)
 {
     m_pTCPServer = new QTcpServer(this);
-    m_pTCPServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pTCPServer->listen(QHostAddress::Any, port);
     connect(m_pTCPServer, &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
     connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
@@ -73,7 +72,6 @@ void TCPServer::onConnect()
     if (m_pTCPServer != nullptr)
     {
         QTcpSocket* nextSocket = m_pTCPServer->nextPendingConnection();
-        nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
         connect(nextSocket, &QAbstractSocket::stateChanged, this, &TCPServer::displayStateChange, Qt::QueuedConnection);
         m_idCounter++;
@@ -83,14 +81,12 @@ void TCPServer::onConnect()
         }
         // Start RX-Task
         spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, false);
-        pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(nextSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, false);
-        pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-        spTCPClient pClient = spTCPClient::create(pRXTask, pTXTask, nextSocket, m_idCounter);
+        spTCPClient pClient = spTCPClient::create(this, pRXTask, pTXTask, nextSocket, m_idCounter);
         connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
         quint64 socket = pClient->getSocketID();

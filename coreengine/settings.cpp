@@ -31,6 +31,8 @@ float Settings::m_brightness        = 0.0f;
 float Settings::m_gamma             = 1.0f;
 bool Settings::m_smallScreenDevice  = false;
 bool Settings::m_touchScreen = false;
+bool Settings::m_gamepadEnabled = false;
+float Settings::m_gamepadSensitivity = 1.0f;
 qint32 Settings::m_touchPointSensitivity = 15;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
@@ -159,6 +161,30 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getGamepadSensitivity()
+{
+    return m_gamepadSensitivity;
+}
+
+void Settings::setGamepadSensitivity(float newGamepadSensitivity)
+{
+    m_gamepadSensitivity = newGamepadSensitivity;
+}
+
+bool Settings::getGamepadEnabled()
+{
+    return m_gamepadEnabled;
+}
+
+void Settings::setGamepadEnabled(bool newGamepadEnabled)
+{
+    m_gamepadEnabled = newGamepadEnabled;
+    if (m_gamepadEnabled)
+    {
+        Mainapp::getInstance()->getGamepad().init();
+    }
 }
 
 bool Settings::getUseCoMinis()
@@ -891,7 +917,7 @@ void Settings::loadSettings()
     m_mouseSensitivity           = settings.value("MouseSensitivity", -0.75f).toFloat(&ok);
     if(!ok)
     {
-        QString error = "Error in the Ini File: [General] Setting: MouseSensitivity";
+        QString error = "Error in the Ini File: [%General] Setting: MouseSensitivity";
         CONSOLE_PRINT(error, Console::eERROR);
         m_mouseSensitivity = -0.75f;
     }
@@ -919,6 +945,12 @@ void Settings::loadSettings()
     if (!ok || m_touchPointSensitivity < 0)
     {
         m_touchPointSensitivity = 15;
+    }
+    m_gamepadEnabled = settings.value("GamepadEnabled", false).toBool();
+    m_gamepadSensitivity = settings.value("GamepadSensitivity", 1).toFloat(&ok);
+    if (!ok || m_gamepadSensitivity < 0.1)
+    {
+        m_gamepadSensitivity = 1.0f;
     }
 
     settings.endGroup();
@@ -1409,7 +1441,7 @@ void Settings::loadSettings()
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
     m_autoCamera = settings.value("AutoCamera", true).toBool();    
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
-    m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
+    m_centerOnMarkedField = settings.value("CenterOnSelection", true).toBool();
     m_syncAnimations = settings.value("SyncAnimations", false).toBool();
     m_autoMoveCursor = settings.value("AutoMoveCursor", true).toBool();
     m_useCoMinis = settings.value("UseCoMinis", true).toBool();
@@ -1506,6 +1538,8 @@ void Settings::saveSettings()
         settings.setValue("UserPath",                   m_userPath);
         settings.setValue("TouchScreen",                m_touchScreen);
         settings.setValue("TouchPointSensitivity",      m_touchPointSensitivity);
+        settings.setValue("GamepadEnabled",             m_gamepadEnabled);
+        settings.setValue("GamepadSensitivity",         m_gamepadSensitivity);
         settings.endGroup();
 
         settings.beginGroup("Resolution");
@@ -1607,7 +1641,7 @@ void Settings::saveSettings()
         settings.setValue("ShowIngameCoordinates",          m_showIngameCoordinates);
         settings.setValue("AutoFocusing",                   m_autoFocusing);
         settings.setValue("DialogAnimation",                m_dialogAnimation);
-        settings.setValue("CenterOnMarkedField",            m_centerOnMarkedField);
+        settings.setValue("CenterOnSelection",              m_centerOnMarkedField);
         settings.setValue("SyncAnimations",                 m_syncAnimations);
         settings.setValue("SimpleDeselect",                 m_simpleDeselect);
         settings.setValue("ShowDetailedBattleForcast",      m_showDetailedBattleForcast);

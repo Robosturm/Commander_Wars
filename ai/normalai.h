@@ -96,12 +96,12 @@ public slots:
     /**
      * @brief randomizeIni
      */
-    void randomizeIni(QString name, float chance);
+    void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
 protected:
     static constexpr float maxDayDistance = 6.0f;;
 
-    bool performActionSteps(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits,
-                            spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool performActionSteps(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits,
+                            spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief finishTurn
      */
@@ -120,8 +120,8 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
-                   spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+    bool moveUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings,
+                   spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                    qint32 minfireRange, qint32 maxfireRange, bool supportUnits = false);
     /**
      * @brief refillUnits
@@ -130,7 +130,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool refillUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief getBestRefillTarget
      * @param pfs
@@ -147,7 +147,7 @@ protected:
      * @param pUnits
      * @param targets
      */
-    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendRefillTargets(const QStringList & actions, Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction
@@ -157,16 +157,16 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnits, QStringList& actions,
+    bool moveUnit(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
                   bool shortenPathForTarget,
-                  spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+                  spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief loadUnits
      * @param pUnits
      * @return
      */
-    bool loadUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool loadUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief NormalAi::moveTransporters
      * @param pUnits
@@ -174,7 +174,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool moveTransporters(spQmlVectorUnit & pUnits, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief moveToUnloadArea
      * @param pAction
@@ -183,53 +183,53 @@ protected:
      * @param targets
      * @return
      */
-    bool moveToUnloadArea(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnits, QStringList& actions,
+    bool moveToUnloadArea(spGameAction & pAction, Unit* pUnit, spQmlVectorUnit & pUnits, QStringList& actions,
                           QVector<QVector3D>& targets,
-                          spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+                          spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief unloadUnits
      * @param pAction
      * @param pUnit
      * @return
      */
-    bool unloadUnits(spGameAction pAction, Unit* pUnit);
+    bool unloadUnits(spGameAction & pAction, Unit* pUnit);
     /**
      * @brief repairUnits
      * @param pUnits
      * @param pBuildings
      * @return
      */
-    bool repairUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool repairUnits(spQmlVectorUnit & pUnits, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief getMoveTargetField shortens the movepath so we take no damage
      * @param pUnit
      * @param movePath
      * @return
      */
-    qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit pUnits, UnitPathFindingSystem& turnPfs,
-                              QVector<QPoint>& movePath, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    qint32 getMoveTargetField(Unit* pUnit, spQmlVectorUnit & pUnits, UnitPathFindingSystem& turnPfs,
+                              QVector<QPoint>& movePath, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief moveToSafety
      * @param pUnit
      * @param turnPfs
      * @return
      */
-    std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, spQmlVectorUnit pUnits,
+    std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, spQmlVectorUnit & pUnits,
                                                  UnitPathFindingSystem& turnPfs, QPoint target,
-                                                 spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+                                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief captureBuildings
      * @param pUnits
      * @return
      */
-    bool captureBuildings(spQmlVectorUnit pUnits);
+    bool captureBuildings(spQmlVectorUnit & pUnits);
     /**
      * @brief fireWithIndirectUnits
      * @param pUnits
      * @return
      */
-    bool fireWithUnits(spQmlVectorUnit pUnits, qint32 minfireRange, qint32 maxfireRange,
-                       spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    bool fireWithUnits(spQmlVectorUnit & pUnits, qint32 minfireRange, qint32 maxfireRange,
+                       spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief suicide
      * @param pAction
@@ -237,7 +237,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    bool suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
+    bool suicide(spGameAction & pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
     /**
      * @brief getIndirectTarget
      * @param pUnit
@@ -253,17 +253,17 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector4D>& ret,
+    qint32 getBestAttackTarget(Unit* pUnit, spQmlVectorUnit & pUnits, QVector<QVector4D>& ret,
                                QVector<QVector3D>& moveTargetFields,
-                               spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+                               spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief updateEnemyData
      */
-    void updateEnemyData(spQmlVectorUnit pUnits);
+    void updateEnemyData(spQmlVectorUnit & pUnits);
     /**
      * @brief calcVirtualDamage
      */
-    void calcVirtualDamage(spQmlVectorUnit pUnits);
+    void calcVirtualDamage(spQmlVectorUnit & pUnits);
     /**
      * @brief calculateCaptureBonus
      * @param pUnit
@@ -278,9 +278,9 @@ protected:
      * @param pEnemyUnit
      * @param enemyNewLife
      */
-    float calculateCounterDamage(Unit* pUnit, spQmlVectorUnit pUnits, QPoint newPosition,
+    float calculateCounterDamage(Unit* pUnit, spQmlVectorUnit & pUnits, QPoint newPosition,
                                  Unit* pEnemyUnit, float enemyTakenDamage,
-                                 spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings,
+                                 spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings,
                                  bool ignoreOutOfVisionRange = false);
     /**
      * @brief calculateCounteBuildingDamage
@@ -289,7 +289,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    float calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
+    float calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, spQmlVectorBuilding & pBuildings, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief clearEnemyData
      */
@@ -300,15 +300,15 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
-                    spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+    bool buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pUnits,
+                    spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief getEnemyDamageCounts
      * @param pUnits
      * @param pEnemyUnits
      * @param attackCount
      */
-    void getEnemyDamageCounts(spQmlVectorUnit pUnits,spQmlVectorUnit pEnemyUnits, QVector<QVector4D> & attackCount);
+    void getEnemyDamageCounts(spQmlVectorUnit & pUnits,spQmlVectorUnit & pEnemyUnits, QVector<QVector4D> & attackCount);
     /**
      * @brief getIndexInProductionData
      * @param pBuilding
@@ -322,8 +322,8 @@ protected:
      * @return
      */
     qint32 getUnitProductionIdx(qint32 index, const QString & unitId,
-                                spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
-                                spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+                                spQmlVectorUnit & pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                                spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                                 QVector<QVector4D> & attackCount, QVector<float> & buildData);
     /**
      * @brief calcBuildScore
@@ -342,8 +342,8 @@ protected:
      * @param buildData
      */
     void createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
-                             spQmlVectorUnit pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
-                             spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+                             spQmlVectorUnit & pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                             spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                              QVector<QVector4D> & attackCount, QVector<float> & buildData);
     /**
      * @brief calcCostScore
@@ -360,8 +360,8 @@ protected:
      * @param pEnemyBuildings
      * @param transportTargets
      */
-    void getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, spQmlVectorUnit pUnits,
-                            spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
+    void getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, spQmlVectorUnit & pUnits,
+                            spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings,
                             QVector<std::tuple<Unit*, Unit*>>& transportTargets);
     /**
      * @brief calcTransporterScore
@@ -372,14 +372,14 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    float calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit pUnits, QVector<float>& data);
+    float calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVectorUnit & pUnits, QVector<float>& data);
     /**
      * @brief NormalAi::calcExpectedFundsDamage
      * @param dummy
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor, float myMovepoints);
+    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, const QVector<QVector4D> & attackCount, float bonusFactor, float myMovepoints);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -389,7 +389,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    qint32 getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
+    qint32 getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit & pEnemyUnits, spQmlVectorBuilding & pEnemyBuildings);
     /**
      * @brief calcSupplyScore
      * @param data
@@ -420,96 +420,96 @@ private:
     QVector<ProductionData> m_productionData;
 
 
-    float m_notAttackableDamage{25.0f};
-    float m_midDamage{55.0f};
-    float m_highDamage{75.0f};
-    float m_directIndirectRatio{1.75f};
-    float m_minSiloDamage{7000};
-    float m_minMovementDamage{0.3f};
-    float m_minAttackFunds{0.0f};
-    float m_minSuicideDamage{0.75f};
-    float m_spamingFunds{7500};
-    float m_ownProdctionMalus{5000.0f};
+    double m_notAttackableDamage{25.0f};
+    double m_midDamage{55.0f};
+    double m_highDamage{75.0f};
+    double m_directIndirectRatio{1.75f};
+    double m_minSiloDamage{7000};
+    double m_minMovementDamage{0.3f};
+    double m_minAttackFunds{0.0f};
+    double m_minSuicideDamage{0.75f};
+    double m_spamingFunds{7500};
+    double m_ownProdctionMalus{5000.0f};
 
-    float m_minUnitHealth{3};
-    float m_maxUnitHealth{7};
-    float m_lockedUnitHp{4};
-    float m_noMoveAttackHp{3.5f};
-    float m_ownIndirectAttackValue{2.0f};
-    float m_enemyKillBonus{2.0f};
-    float m_enemyIndirectBonus{3.0f};
-    float m_antiCaptureHqBonus{50.0f};
-    float m_antiCaptureBonus{21.0f};
-    float m_antiCaptureBonusScoreReduction{6.0f};
-    float m_antiCaptureBonusScoreDivider{2.0f};
-    float m_enemyCounterDamageMultiplier{10.0f};
-    float m_watermineDamage{4.0f};
-    float m_enemyUnitCountDamageReductionMultiplier{0.5f};
-    float m_fundsPerBuildingFactorA{2.5f};
-    float m_fundsPerBuildingFactorB{1.65f};
-    float m_ownUnitEnemyUnitRatioAverager{10};
-    float m_maxDayScoreVariancer{10};
-    float m_directIndirectUnitBonusFactor{1.2f};
+    double m_minUnitHealth{3};
+    double m_maxUnitHealth{7};
+    double m_lockedUnitHp{4};
+    double m_noMoveAttackHp{3.5f};
+    double m_ownIndirectAttackValue{2.0f};
+    double m_enemyKillBonus{2.0f};
+    double m_enemyIndirectBonus{3.0f};
+    double m_antiCaptureHqBonus{50.0f};
+    double m_antiCaptureBonus{21.0f};
+    double m_antiCaptureBonusScoreReduction{6.0f};
+    double m_antiCaptureBonusScoreDivider{2.0f};
+    double m_enemyCounterDamageMultiplier{10.0f};
+    double m_watermineDamage{4.0f};
+    double m_enemyUnitCountDamageReductionMultiplier{0.5f};
+    double m_fundsPerBuildingFactorA{2.5f};
+    double m_fundsPerBuildingFactorB{1.65f};
+    double m_ownUnitEnemyUnitRatioAverager{10};
+    double m_maxDayScoreVariancer{10};
+    double m_directIndirectUnitBonusFactor{1.2f};
 
-    float m_scoringCutOffDamageHigh{Unit::DAMAGE_100};
-    float m_scoringCutOffDamageLow{7.5f};
-    float m_smoothingValue{3};
-    float m_maxDistanceMultiplier{1.5f};
-    float m_sameIslandBonusInRangeDays{2};
-    float m_sameIslandOutOfDayMalusFactor{0.2f};
-    float m_highDamageBonus{2};
-    float m_midDamageBonus{1.5f};
-    float m_lowDamageBonus{1};
-    float m_veryLowDamageBonus{0.5f};
-    float m_transportBonus{0.125f};
-    float m_currentlyNotAttackableBonus{0.5};
-    float m_differentIslandBonusInRangeDays{1};
-    float m_differentIslandOutOfDayMalusFactor{0.33f};
-    float m_noTransporterBonus{70};
-    float m_transporterToRequiredPlaceFactor{3};
-    float m_minFlyingTransportScoreForBonus{15};
-    float m_flyingTransporterBonus{15};
-    float m_smallTransporterBonus{30};
-    float m_unitToSmallTransporterRatio{5};
-    float m_additionalLoadingUnitBonus{5};
-    float m_indirectUnitAttackCountMalus{4};
-    float m_minAttackCountBonus{5};
-    float m_lowIndirectUnitBonus{0.3f};
-    float m_lowIndirectMalus{30.0f};
-    float m_highIndirectMalus{0.6f};
-    float m_lowDirectUnitBonus{0.35f};
-    float m_lowDirectMalus{0.3f};
-    float m_highDirectMalus{0.6f};
-    float m_minUnitCountForDamageBonus{3};
-    float m_minInfantryCount{5};
-    float m_currentlyNotAttackableScoreBonus{30};
-    float m_coUnitBuffBonus{17};
-    float m_nearEnemyBonus{10};
-    float m_lowOwnBuildingEnemyBuildingRatio{1.25f};
-    float m_lowInfantryRatio{0.4f};
-    float m_buildingBonusMultiplier{4.0f};
-    float m_lowIncomeInfantryBonusMultiplier{50};
-    float m_movementpointBonus{3.0f};
-    float m_damageToUnitCostRatioBonus{20};
-    float m_superiorityRatio{2.5f};
-    float m_cheapUnitRatio{1.0f};
-    float m_cheapUnitBonusMultiplier{45};
-    float m_normalUnitBonusMultiplier{10};
-    float m_expensiveUnitBonusMultiplier{15};
-    float m_canSupplyBonus{10};
-    float m_maxSupplyUnitRatio{0.05f};
-    float m_averageSupplySupport{8};
-    float m_cappingFunds{4700};
-    float m_cappedFunds{1999};
-    float m_targetPriceDifference{0.3f};
-    float m_highDamageMultiplier{4.0f};
-    float m_fundsPerBuildingFactorC{4};
+    double m_scoringCutOffDamageHigh{Unit::DAMAGE_100};
+    double m_scoringCutOffDamageLow{7.5f};
+    double m_smoothingValue{3};
+    double m_maxDistanceMultiplier{1.5f};
+    double m_sameIslandBonusInRangeDays{2};
+    double m_sameIslandOutOfDayMalusFactor{0.2f};
+    double m_highDamageBonus{2};
+    double m_midDamageBonus{1.5f};
+    double m_lowDamageBonus{1};
+    double m_veryLowDamageBonus{0.5f};
+    double m_transportBonus{0.125f};
+    double m_currentlyNotAttackableBonus{0.5};
+    double m_differentIslandBonusInRangeDays{1};
+    double m_differentIslandOutOfDayMalusFactor{0.33f};
+    double m_noTransporterBonus{70};
+    double m_transporterToRequiredPlaceFactor{3};
+    double m_minFlyingTransportScoreForBonus{15};
+    double m_flyingTransporterBonus{15};
+    double m_smallTransporterBonus{30};
+    double m_unitToSmallTransporterRatio{5};
+    double m_additionalLoadingUnitBonus{5};
+    double m_indirectUnitAttackCountMalus{4};
+    double m_minAttackCountBonus{5};
+    double m_lowIndirectUnitBonus{0.3f};
+    double m_lowIndirectMalus{30.0f};
+    double m_highIndirectMalus{0.6f};
+    double m_lowDirectUnitBonus{0.35f};
+    double m_lowDirectMalus{0.3f};
+    double m_highDirectMalus{0.6f};
+    double m_minUnitCountForDamageBonus{3};
+    double m_minInfantryCount{5};
+    double m_currentlyNotAttackableScoreBonus{30};
+    double m_coUnitBuffBonus{17};
+    double m_nearEnemyBonus{10};
+    double m_lowOwnBuildingEnemyBuildingRatio{1.25f};
+    double m_lowInfantryRatio{0.4f};
+    double m_buildingBonusMultiplier{4.0f};
+    double m_lowIncomeInfantryBonusMultiplier{50};
+    double m_movementpointBonus{3.0f};
+    double m_damageToUnitCostRatioBonus{20};
+    double m_superiorityRatio{2.5f};
+    double m_cheapUnitRatio{1.0f};
+    double m_cheapUnitBonusMultiplier{45};
+    double m_normalUnitBonusMultiplier{10};
+    double m_expensiveUnitBonusMultiplier{15};
+    double m_canSupplyBonus{10};
+    double m_maxSupplyUnitRatio{0.05f};
+    double m_averageSupplySupport{8};
+    double m_cappingFunds{4700};
+    double m_cappedFunds{1999};
+    double m_targetPriceDifference{0.3f};
+    double m_highDamageMultiplier{4.0f};
+    double m_fundsPerBuildingFactorC{4};
 
-    float m_ProducingTransportSearchrange{6};
-    float m_ProducingTransportSizeBonus{10};
-    float m_ProducingTransportRatioBonus{1.7f};
-    float m_ProducingTransportLoadingBonus{15.0f};
-    float m_ProducingTransportMinLoadingTransportRatio{7.0f};
+    double m_ProducingTransportSearchrange{6};
+    double m_ProducingTransportSizeBonus{10};
+    double m_ProducingTransportRatioBonus{1.7f};
+    double m_ProducingTransportLoadingBonus{15.0f};
+    double m_ProducingTransportMinLoadingTransportRatio{7.0f};
 
     QVector<IniData> m_iniData;
 };

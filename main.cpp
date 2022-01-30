@@ -46,6 +46,7 @@ int main(qint32 argc, char* argv[])
     qint32 returncode = app.exec();
     /*************************************************************************************************/
     // shutting down
+    bool slave = window.getSlave();
     Settings::setX(window.x());
     Settings::setY(window.y());
     CrashReporter::setSignalHandler(nullptr);
@@ -58,13 +59,6 @@ int main(qint32 argc, char* argv[])
     Settings::saveSettings();
     // give os time to save the settings
     QThread::currentThread()->msleep(350);
-    if (MainServer::exists())
-    {
-        CONSOLE_PRINT("Shutting dwon game server", Console::eDEBUG);
-        MainServer::getInstance()->deleteLater();
-        window.getGameServerThread()->quit();
-        window.getGameServerThread()->wait();
-    }
     CONSOLE_PRINT("Checking for memory leak during runtime", Console::eDEBUG);
     static constexpr qint32 finalObjects = 0;
     if (oxygine::ref_counter::getAlloctedObjectCount() != finalObjects)
@@ -76,14 +70,17 @@ int main(qint32 argc, char* argv[])
         oxygine::handleErrorPolicy(oxygine::ep_show_error, "js memory leak detected. This happens due to not deleted qml-vectors in a mod. Objects not deleted: " + QString::number(oxygine::ref_counter::getAlloctedObjectCount()));
     }
     //end
-    if (returncode == 1)
+    if (!slave)
     {
+        if (returncode == 1)
+        {
 #ifdef Q_OS_ANDROID
-        CONSOLE_PRINT("No automatic restart on android", Console::eDEBUG);
+            CONSOLE_PRINT("No automatic restart on android", Console::eDEBUG);
 #else
-        CONSOLE_PRINT("Restarting application", Console::eDEBUG);
-        QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
+            CONSOLE_PRINT("Restarting application", Console::eDEBUG);
+            QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
 #endif
+        }
     }
     return returncode;
 }

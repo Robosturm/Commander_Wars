@@ -89,11 +89,11 @@ void NeuralNetwork::randomizeAllWeights()
     }
 }
 
-void NeuralNetwork::mutateAllWeights(double mutationChance)
+void NeuralNetwork::mutateAllWeights(double mutationChance, double mutationRate)
 {
     for(qint32 i_layer = 0; i_layer < m_layers.size() - 1; ++i_layer)
     {
-        m_layers[i_layer]->mutateAllWeights(mutationChance, m_maxWeight);
+        m_layers[i_layer]->mutateAllWeights(mutationChance, m_maxWeight, mutationRate);
     }
 }
 

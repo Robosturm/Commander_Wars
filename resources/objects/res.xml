@@ -68,5 +68,6 @@
         <image file="co_cursor.png"/>
         <!-- ingame stuff -->
         <image file="barforeground.png"/>
+        <image file="gamepad.png"/>
     </atlas>
 </resources>

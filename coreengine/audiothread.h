@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include <QVector>
+#ifdef AUDIOSUPPORT
 #include <QSoundEffect>
 #include <QMediaPlayer>
 #include <QMediaDevices>
 #include <QAudioDevice>
 #include <QAudioOutput>
+#endif
 #include <QIODevice>
 #include <QTimer>
 
@@ -18,6 +20,7 @@ class AudioThread : public QObject
 {
     Q_OBJECT
 private:
+#ifdef AUDIOSUPPORT
     struct SoundData
     {
         static constexpr qint32 MAX_SAME_SOUNDS = 60;
@@ -36,6 +39,7 @@ private:
         qint32 m_currentMedia{-1};
         qint32 m_nextMedia{-1};
     };
+#endif
 public:
     explicit AudioThread();
     virtual ~AudioThread();
@@ -180,6 +184,7 @@ protected:
      * @param file
      */
     void fillSoundCache(qint32 count, QString folder, QString file);
+#ifdef AUDIOSUPPORT
     /**
      * @brief reportReplayError
      * @param error
@@ -211,7 +216,9 @@ protected:
      * @param soundIndex
      */
     void stopSound(std::shared_ptr<SoundData> & soundData, qint32 soundIndex);
+#endif
     void loadMediaForFile(QString filePath);
+
 private:
     // music playback data
     struct PlaylistData
@@ -227,12 +234,12 @@ private:
         QString m_file;
     };
     QTimer m_positionChangedTimer;
+#ifdef AUDIOSUPPORT
     QScopedPointer<Player> m_player;
     QVector<PlaylistData> m_PlayListdata;
     // sound playback data
     QMap<QString, std::shared_ptr<SoundData>> m_soundCaches;
     // general audio info
-#ifdef AUDIOSUPPORT
     QAudioDevice m_audioDevice;
     QAudioOutput m_audioOutput;
 #endif

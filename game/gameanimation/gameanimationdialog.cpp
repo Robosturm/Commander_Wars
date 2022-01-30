@@ -79,7 +79,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_textTimer.start();
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        oxygine::TouchEvent* pTouchEvent = oxygine::safeCast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
@@ -100,14 +100,17 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
 void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 {
-    if (!m_stopped && m_writePosition > 0)
+    if (!event.getContinousPress())
     {
-        // for debugging
-        Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm() ||
-            cur == Settings::getKey_confirm2())
+        if (!m_stopped && m_writePosition > 0)
         {
-            nextDialogStep();
+            // for debugging
+            Qt::Key cur = event.getKey();
+            if (cur == Settings::getKey_confirm() ||
+                cur == Settings::getKey_confirm2())
+            {
+                nextDialogStep();
+            }
         }
     }
 }
@@ -253,14 +256,17 @@ void GameAnimationDialog::setCO(const QString & coid, GameEnums::COMood mood)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString resAnim = coid.toLower() + "+face";
     oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
-    if (pAnim->getColumns() > 0)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnimColumn(pAnim, static_cast<qint32>(mood)), oxygine::timeMS(static_cast<qint64>(pAnim->getColumns() * GameMap::frameTime)), -1);
-        m_COSprite->addTween(tween);
-    }
-    else
-    {
-        m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+        if (pAnim->getColumns() > 0)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnimColumn(pAnim, static_cast<qint32>(mood)), oxygine::timeMS(static_cast<qint64>(pAnim->getColumns() * GameMap::frameTime)), -1);
+            m_COSprite->addTween(tween);
+        }
+        else
+        {
+            m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+        }
     }
 }
 
@@ -339,13 +345,16 @@ void GameAnimationDialog::loadCoSprite(const QString & coid, float offsetX, floa
 {
     if (!coid.isEmpty())
     {
-        oxygine::spSprite pSprite = oxygine::spSprite::create();
         oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
-        pSprite->setSize(pAnim->getSize());
-        pSprite->setFlippedX(flippedX);
-        pSprite->setScale(scale);
-        pSprite->setResAnim(pAnim);
-        pSprite->setPosition(offsetX, offsetY);
-        addChild(pSprite);
+        if (pAnim != nullptr)
+        {
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
+            pSprite->setSize(pAnim->getSize());
+            pSprite->setFlippedX(flippedX);
+            pSprite->setScale(scale);
+            pSprite->setResAnim(pAnim);
+            pSprite->setPosition(offsetX, offsetY);
+            addChild(pSprite);
+        }
     }
 }

@@ -7,7 +7,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class DialogMessageBox;
-typedef oxygine::intrusive_ptr<DialogMessageBox> spDialogMessageBox;
+using spDialogMessageBox = oxygine::intrusive_ptr<DialogMessageBox>;
 
 class DialogMessageBox : public QObject, public oxygine::Actor
 {

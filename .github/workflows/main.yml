@@ -1,33 +1,74 @@
-name: CMake
+name: Commnader_Wars
 on: [push]
 env:
-  BUILD_TYPE: RelWithDebInfo
-  compiler: gcc
-  QT_Version: '5.15.2'
-  COMPILER_VERSION: 'win64_msvc2019_64'
+  BUILD_TYPE: Release
+  QT_Version: '6.2.1'
+  
 jobs:
   install:
     name: All
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            COMPILER_VERSION: 'win64_msvc2019_64'
+            # 'win64_mingw81'
+            target: 'desktop'
+            qtPath: 'msvc2019_64'
+            installerCommands1: ''
+            installerCommands2: ''
+          - os: ubuntu-latest
+            COMPILER_VERSION: ''
+            target: 'desktop'
+            qtPath: ''
+            installerCommands1: 'sudo apt-get update'
+            installerCommands2: 'sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio'
+          - os: macos-latest
+            COMPILER_VERSION: 'clang_64'
+            qtPath: 'clang_64'
+            target: 'desktop'
+            installerCommands1: ''
+            installerCommands2: ''
+          #- os: ubuntu-latest
+          #  COMPILER_VERSION: 'android_armv7'
+          #  target: 'android'
+        
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
+        
     steps:
-    - uses: jurplel/install-qt-action@v2
-      with:
-          version: ${{env.QT_Version}}
-          target: 'desktop'
-          arch: ${{env.COMPILER_VERSION}}
-          dir: '${{ github.workspace }}/qt/'
     - uses: actions/checkout@v2
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{github.workspace}}/build
+          
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.14.0
+      with:      
+          aqtversion: '==2.0.2'
+          target: ${{matrix.target}}
+          version: ${{env.QT_Version}}
+          arch: ${{matrix.COMPILER_VERSION}}
+          modules: 'qtmultimedia'
+          dir: '${{github.workspace}}/qt/'
+          install-deps: "true"
+          
+    - name: Install OS Dependencies 1
+      run: ${{matrix.installerCommands1}}
+    
+    - name: Install OS Dependencies 2
+      run: ${{matrix.installerCommands2}}
+      
     - name: Configure CMake
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DQt5_DIR=$Qt5_Dir -DCMAKE_MODULE_PATH=$Qt5_Dir -DCMAKE_PREFIX_PATH=$Qt5_Dir -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DQT_QMAKE_EXECUTABLE=$Qt5_Dir/bin/qmake.exe
-    - name: Translate
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target Commander_Wars_translations
+      run: |
+        cmake \
+        -B '${{github.workspace}}/build' \
+        -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} \
+        -DCMAKE_INSTALL_PREFIX='${{github.workspace}}/install' \
+        -DCMAKE_PREFIX_PATH="${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/" \
+        -DQt6_DIR=${{github.workspace}}/qt/Qt/${{matrix.qtPath}}/lib/cmake/Qt6/
+    
     - name: Build
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target install
+      working-directory: '${{github.workspace}}/build'
+      run: cmake --build '${{github.workspace}}/build' --config $BUILD_TYPE --target install -j16

@@ -521,7 +521,8 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
     {
         pUnit = nullptr;
     }
-    if (pUnit.get() != nullptr)
+    if (pUnit.get() != nullptr &&
+        pAnim != nullptr)
     {
         qint32 posY = 80;
         qint32 posX = 10;
@@ -753,6 +754,8 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     smallStyle.multiline = false;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
+    if (pAnim != nullptr)
+    {
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     Terrain* pTerrain = pMap->getTerrain(x, y);
@@ -863,26 +866,30 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
         pTextfield->setHtmlText(ownerText);
         m_pCursorInfoBox->addChild(pTextfield);
     }
+    }
 }
 
 void IngameInfoBar::addColorbar(float divider, qint32 posX, qint32 posY, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("barforeground");
-    oxygine::spColorRectSprite pColorBar = oxygine::spColorRectSprite::create();
-    pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
-    pColorBar->setPosition(posX, posY);
-    pColorBar->setColor(color);
-    m_pCursorInfoBox->addChild(pColorBar);
-    pColorBar = oxygine::spColorRectSprite::create();
-    pColorBar->setColor(127, 127, 127, 255);
-    pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
-    pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getWidth(), posY);
-    m_pCursorInfoBox->addChild(pColorBar);
-    oxygine::spSprite pSprite = oxygine::spSprite::create();
-    pSprite->setResAnim(pAnim);
-    pSprite->setPosition(posX, posY);
-    m_pCursorInfoBox->addChild(pSprite);
+    if (pAnim != nullptr)
+    {
+        oxygine::spColorRectSprite pColorBar = oxygine::spColorRectSprite::create();
+        pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(posX, posY);
+        pColorBar->setColor(color);
+        m_pCursorInfoBox->addChild(pColorBar);
+        pColorBar = oxygine::spColorRectSprite::create();
+        pColorBar->setColor(127, 127, 127, 255);
+        pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(posX + pAnim->getWidth() - pColorBar->getWidth(), posY);
+        m_pCursorInfoBox->addChild(pColorBar);
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        pSprite->setResAnim(pAnim);
+        pSprite->setPosition(posX, posY);
+        m_pCursorInfoBox->addChild(pSprite);
+    }
 }
 
 void IngameInfoBar::syncMinimapPosition()

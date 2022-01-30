@@ -52,7 +52,7 @@ void QmlVectorUnit::sortExpensive()
     QVector<qint32> costs;
     for (qint32 i = 0; i < m_Vector.size(); i++)
     {
-        costs.append(m_Vector[i]->getUnitValue());
+        costs.append(m_Vector[i]->getCoUnitValue());
     }
     while (m_Vector.size() > 0)
     {

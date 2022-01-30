@@ -35,6 +35,7 @@ signals:
                         QString name, QString description, QString version,
                         QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                         bool isComsetic, QStringList modTags, QString thumbnail);
+    void sigShowGamepadInfo();
 public slots:
     void exitMenue();
     void showMods();
@@ -52,6 +53,7 @@ private slots:
                      QString name, QString description, QString version,
                      QStringList compatibleMods, QStringList incompatibleMods, QStringList requiredMods,
                      bool isComsetic, QStringList modTags, QString thumbnail);
+    void showGamepadInfo();
 private:
     void updateModSelection();
 private:

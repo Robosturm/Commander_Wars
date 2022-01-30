@@ -40,7 +40,8 @@ Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
     init();
     if (!host)
     {
-        m_NetworkInterface = spTCPClient::create();
+        m_NetworkInterface = spTCPClient::create(nullptr);
+        m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
         initClientAndWaitForConnection();
         emit m_NetworkInterface->sig_connect(adress, Settings::getGamePort());
@@ -1056,7 +1057,8 @@ void Multiplayermenu::buttonNext()
         if (m_local)
         {
             m_pHostAdresse->setVisible(true);
-            m_NetworkInterface = spTCPServer::create();
+            m_NetworkInterface = spTCPServer::create(nullptr);
+            m_NetworkInterface->moveToThread(Mainapp::getInstance()->getNetworkThread());
             m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
             createChat();
             emit m_NetworkInterface->sig_connect("", Settings::getGamePort());

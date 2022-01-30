@@ -8,18 +8,8 @@
 
 namespace oxygine
 {
-    float SlidingActorNoClipRect::m_defaultTouchThreshold = 15.0f;
-    void SlidingActorNoClipRect::setDefaultTouchThreshold(float val)
-    {
-        m_defaultTouchThreshold = val;
-    }
 
-    SlidingActorNoClipRect::SlidingActorNoClipRect():
-        m_sliding(false),
-        m_rad(m_defaultTouchThreshold),
-        m_ignoreTouchUp(false),
-        m_current(0), m_lastIterTime(0),
-        m_finger(0)
+    SlidingActorNoClipRect::SlidingActorNoClipRect()
     {
         m_drag.setNoLockForMiddleButton(true);
     }

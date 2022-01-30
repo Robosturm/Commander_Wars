@@ -156,7 +156,7 @@ public slots:
      * @brief KeyInput called on any key input
      * @param event
      */
-    void KeyInput(oxygine::KeyEvent event);
+    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief clickedTopbar event handling for the top bar
      * @param itemID

@@ -70,6 +70,10 @@ var Constructor = function()
     {
         return false;
     };
+    this.useTerrainHide = function()
+    {
+        return false;
+    };
     this.startOfTurn = function(unit)
     {
         if (unit.getTerrain() !== null)

@@ -71,6 +71,8 @@ class InGameMenue : public Basemenu
         oxygine::spSlidingActorNoClipRect m_mapSliding;
         oxygine::spActor m_mapSlidingActor;
 
+        QPoint m_lastMapPoint{-1, -1};
+
         bool m_handlingLoaded{false};
         static InGameMenue* m_pInstance;
 };

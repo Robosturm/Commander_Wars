@@ -61,10 +61,11 @@ var Constructor = function()
             if (map.onMap(x + point.x, y + point.y))
             {
                 var terrain = map.getTerrain(x + point.x, y + point.y);
+                var baseId = terrain.getBaseTerrainID();
                 var targetUnit = terrain.getUnit();
                 if (targetUnit !== null &&
                     owner.isEnemyUnit(targetUnit) &&
-                    terrain.getBaseTerrainID() === "SEA" &&
+                    (baseId  === "SEA" || baseId  === "LAKE") &&
                     targetUnit.getUnitType() !== GameEnums.UnitType_Air)
                 {
                     explode = true;
@@ -79,10 +80,11 @@ var Constructor = function()
                 point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))
                 {
-                    terrain = map.getTerrain(x + point.x, y + point.y);
+                    var terrain = map.getTerrain(x + point.x, y + point.y);
+                    var baseId = terrain.getBaseTerrainID();
                     targetUnit = terrain.getUnit();
-                    if (targetUnit !== null &&
-                        terrain.getBaseTerrainID() === "SEA" &&
+                    if (targetUnit !== null &&                            
+                       (baseId  === "SEA" || baseId  === "LAKE") &&
                         targetUnit.getUnitType() !== GameEnums.UnitType_Air)
                     {
                         targetUnit.setHp(targetUnit.getHpRounded() - 4);

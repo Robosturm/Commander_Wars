@@ -29,7 +29,7 @@ class PlayerSelection : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit PlayerSelection(qint32 width, qint32 heigth);
-    virtual ~PlayerSelection() = default;
+    virtual ~PlayerSelection();
 
     void showPlayerSelection();
     void resetPlayerSelection();
@@ -248,6 +248,10 @@ protected:
      * @return
      */
     QColor displayColorToTableColor(QColor displayColor);
+    /**
+     * @brief autoSelectPlayerColors
+     */
+    void autoSelectPlayerColors();
 private:
     // player selection
     spPanel m_pPlayerSelection;

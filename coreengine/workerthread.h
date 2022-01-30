@@ -19,7 +19,7 @@ signals:
     void sigStart();
     void sigShowMainwindow();
     void sigStartSlaveGame();
-protected slots:
+public slots:
     void start();
     void showMainwindow();
     void startSlaveGame();

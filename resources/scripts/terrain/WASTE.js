@@ -29,7 +29,7 @@ var Constructor = function()
             terrain.loadBaseSprite("waste+" + random.toString());
         }
     };
-    this.getBonusVision = function(unit)
+    this.getBonusVision = function(unit, terrain)
     {
         return 1;
     };
