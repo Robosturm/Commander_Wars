@@ -1136,7 +1136,7 @@ void PlayerSelection::autoSelectPlayerColors()
                     {
                         usedColors.append(index);
                         m_playerColors[i]->setCurrentItem(index);
-                        playerColorChanged(m_playerColors[i]->getCurrentItemColor(), i, m_playerColors[i]->getCurrentItem());
+                        playerColorChanged(m_playerColors[i]->getCurrentItemColor(), i, index);
                     }
                     else
                     {
@@ -1154,7 +1154,7 @@ void PlayerSelection::autoSelectPlayerColors()
                 {
                     usedColors.append(i);
                     m_playerColors[openPlayer]->setCurrentItem(i);
-                    playerColorChanged(m_playerColors[openPlayer]->getCurrentItemColor(), openPlayer, m_playerColors[openPlayer]->getCurrentItem());
+                    playerColorChanged(m_playerColors[openPlayer]->getCurrentItemColor(), openPlayer, i);
                     break;
                 }
             }
