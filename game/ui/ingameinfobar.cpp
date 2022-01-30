@@ -19,7 +19,7 @@
 #include "objects/base/label.h"
 
 IngameInfoBar::IngameInfoBar(GameMap* pMap)
-    : QObject()
+    : m_pMap(pMap)
 {
     setObjectName("IngameInfoBar");
     Mainapp* pApp = Mainapp::getInstance();
@@ -342,8 +342,7 @@ void IngameInfoBar::updatePlayerInfo()
 
 void IngameInfoBar::updateMinimap()
 {
-    spGameMap pMap(m_pMap);
-    m_pMinimap->updateMinimap(pMap, true);
+    m_pMinimap->updateMinimap(m_pMap, true);
 }
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)

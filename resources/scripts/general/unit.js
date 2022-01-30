@@ -159,17 +159,17 @@ var UNIT =
 
     getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender);
+        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain, defender, map);
     },
 
     getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender);
+        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain, defender, map);
     },
 
     getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
-        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender);
+        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain, defender, map);
     },
 
     getTerrainAnimationMoveSpeed : function(unit, map)

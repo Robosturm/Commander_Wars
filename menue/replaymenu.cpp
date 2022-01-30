@@ -121,7 +121,7 @@ void ReplayMenu::exitReplay()
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    GameMenue::deleteMenu();
+    deleteMenu();
 }
 
 void ReplayMenu::nextReplayAction()

@@ -100,7 +100,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer, bool autosaveC
 
 void CampaignMenu::createCampaignMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create(m_pMap, Settings::getHeight() / 3 - 30);
+    m_pMapSelectionView = spMapSelectionView::create(Settings::getHeight() / 3 - 30);
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     GameManager* pGameManager = GameManager::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -289,8 +289,8 @@ void CampaignMenu::flagAppeared(oxygine::Sprite* pPtrSprite, qint32 map)
 
 void CampaignMenu::showMinimap()
 {
-    
-    if (m_pMap.get() != nullptr)
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    if (pMap.get() != nullptr)
     {
         Mainapp::getInstance()->getAudioThread()->playSound("minimapOpen.wav");
         qint32 x = m_currentMapFlagPosition.x();
@@ -409,7 +409,7 @@ void CampaignMenu::mapSelected(qint32 index, qint32 x, qint32 y)
 
 void CampaignMenu::createMapSelection(spCampaign & campaign)
 {
-    m_pMapSelectionView = spMapSelectionView::create(m_pMap);
+    m_pMapSelectionView = spMapSelectionView::create();
     m_pMapSelectionView->setCurrentSetCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -476,18 +476,18 @@ void CampaignMenu::slotButtonNext()
 {
     Mainapp::getInstance()->getAudioThread()->playSound("moveOut.wav");
     m_pMapSelectionView->loadCurrentMap();
-    
-    if (m_pMap.get() != nullptr)
+    spGameMap pMap = m_pMapSelectionView->getCurrentMap();
+    if (pMap.get() != nullptr)
     {
-        if (m_pMap->getGameScript()->immediateStart())
+        if (pMap->getGameScript()->immediateStart())
         {
-            m_pMap->initPlayersAndSelectCOs();
-            m_pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
-            m_pMap->getGameScript()->gameStart();
-            m_pMap->updateSprites();
+            pMap->initPlayersAndSelectCOs();
+            pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+            pMap->getGameScript()->gameStart();
+            pMap->updateSprites();
             // start game
             CONSOLE_PRINT("Leaving Campaign Menue", Console::eDEBUG);
-            auto window = spGameMenue::create(m_pMap, false, spNetworkInterface());
+            auto window = spGameMenue::create(pMap, false, spNetworkInterface());
             oxygine::Stage::getStage()->addChild(window);
             oxygine::Actor::detach();
         }

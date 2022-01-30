@@ -113,7 +113,7 @@ var Constructor = function()
         animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);
         animation.addSound("repair_2.wav");
         repairUnit.refill(refillMaterial);
-        UNIT.repairUnit(repairUnit, 1);
+        UNIT.repairUnit(repairUnit, 1, map);
         ACTION_SUPPORTSINGLE_REPAIR.postAnimationUnit.setHasMoved(true);
         ACTION_SUPPORTSINGLE_REPAIR.postAnimationUnit = null;
         ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX = -1;

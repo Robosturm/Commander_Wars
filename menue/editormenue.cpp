@@ -222,7 +222,6 @@ void EditorMenue::onEnter()
 EditorMenue::~EditorMenue()
 {
     cleanTemp(-1);
-    m_pInstance = nullptr;
 }
 
 void EditorMenue::cleanTemp(qint32 step)
@@ -1992,6 +1991,7 @@ void EditorMenue::exitEditor()
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
     oxygine::Actor::detach();
+    deleteMenu();
 }
 
 void EditorMenue::autosave()
@@ -2007,10 +2007,4 @@ void EditorMenue::autosave()
         m_pMap->serializeObject(stream);
         file.close();
     }    
-}
-
-void EditorMenue::deleteMenu()
-{
-    m_pInstance = nullptr;
-    oxygine::Actor::detach();
 }

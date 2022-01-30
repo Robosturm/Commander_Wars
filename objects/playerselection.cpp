@@ -27,8 +27,7 @@
 
 constexpr const char* const CO_ARMY = "CO_ARMY";
 
-PlayerSelection::PlayerSelection(qint32 width, qint32 heigth, GameMap* pMap)
-    : m_pMap(pMap)
+PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
 {
     setObjectName("PlayerSelection");
     Mainapp* pApp = Mainapp::getInstance();
@@ -1161,6 +1160,16 @@ void PlayerSelection::autoSelectPlayerColors()
             }
         }
     }
+}
+
+GameMap *PlayerSelection::getMap() const
+{
+    return m_pMap;
+}
+
+void PlayerSelection::setMap(GameMap *newPMap)
+{
+    m_pMap = newPMap;
 }
 
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)

@@ -85,7 +85,7 @@ CO_ALEXIS.startOfTurn = function(co, map)
                         if ((unit !== null) &&
                                 (unit.getOwner() === co.getOwner()))
                         {
-                            UNIT.repairUnit(unit, 1);
+                            UNIT.repairUnit(unit, 1, map);
                             animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                             var delay = globals.randInt(135, 265);
                             if (animations.length < 5)

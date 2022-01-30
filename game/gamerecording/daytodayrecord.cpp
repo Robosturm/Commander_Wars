@@ -12,7 +12,8 @@ DayToDayRecord::DayToDayRecord(GameMap* pMap)
     Interpreter::setCppOwnerShip(this);
 }
 
-DayToDayRecord::DayToDayRecord(qint32 playerCount)
+DayToDayRecord::DayToDayRecord(GameMap* pMap, qint32 playerCount)
+    : m_pMap(pMap)
 {
     setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
@@ -84,8 +85,7 @@ SpecialEvent* DayToDayRecord::getSpecialEvent(qint32 index)
 }
 
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
-{
-    
+{    
     Player* pPlayer = m_pMap->getPlayer(player);
     if (!pPlayer->getIsDefeated())
     {

@@ -1067,6 +1067,8 @@ QString Terrain::getTerrainAnimationBase()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
     QJSValue obj4 = pInterpreter->newQObject(m_pMap);
     args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
@@ -1089,6 +1091,8 @@ QString Terrain::getTerrainAnimationForeground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
     QJSValue obj4 = pInterpreter->newQObject(m_pMap);
     args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);
@@ -1111,6 +1115,8 @@ QString Terrain::getTerrainAnimationBackground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(this);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
     QJSValue obj4 = pInterpreter->newQObject(m_pMap);
     args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_terrainID, function1, args1);

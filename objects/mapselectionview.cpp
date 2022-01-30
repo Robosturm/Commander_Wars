@@ -17,8 +17,7 @@
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
 
-MapSelectionView::MapSelectionView(spGameMap & pMap, qint32 mapInfoHeight)
-    : m_pCurrentMap(pMap)
+MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
 {
     setObjectName("MapSelectionView");
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -265,7 +264,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
             m_pCurrentMap->getGameScript()->init();
             m_pMinimap->clear();
-            m_pMinimap->updateMinimap(m_pCurrentMap);
+            m_pMinimap->updateMinimap(m_pCurrentMap.get());
             m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);
             m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
             if (m_pCurrentMap.get() != nullptr)
@@ -311,7 +310,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
                 m_currentMapFile = QFileInfo();
                 m_pCurrentMap = nullptr;
             }
-            m_pMinimap->updateMinimap(spGameMap());
+            m_pMinimap->updateMinimap(nullptr);
             m_CurrentLoadedCampaign = nullptr;
             m_CurrentLoadedCampaign = spCampaign::create(info.absoluteFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
@@ -422,6 +421,16 @@ void MapSelectionView::loadMapVictoryInfo()
         }
         posY += 55;
     }
+}
+
+spGameMap MapSelectionView::getCurrentMap() const
+{
+    return m_pCurrentMap;
+}
+
+void MapSelectionView::setCurrentMap(spGameMap newCurrentMap)
+{
+    m_pCurrentMap = newCurrentMap;
 }
 
 spPanel MapSelectionView::getMapInfo() const

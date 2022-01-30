@@ -79,6 +79,13 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadMapData();
+    loadMap(map, onlyLoad, fast, savegame);
+}
+
+void GameMap::loadMap(QString map, bool onlyLoad, bool fast, bool savegame)
+{
+    clearMap();
+    m_savegame = savegame;
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
@@ -320,7 +327,7 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
 
 GameMap::~GameMap()
 {
-    CONSOLE_PRINT("desctructing map.", Console::eDEBUG);
+    CONSOLE_PRINT("deleting map.", Console::eDEBUG);
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
@@ -331,7 +338,6 @@ GameMap::~GameMap()
         m_fields[y].clear();
     }
     m_fields.clear();
-    CONSOLE_PRINT("map was deleted", Console::eDEBUG);
 }
 
 QStringList GameMap::getAllUnitIDs()

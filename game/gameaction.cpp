@@ -314,9 +314,9 @@ QString GameAction::getStepInputType()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepInputType";
     QJSValueList args1;
+    args1 << pInterpreter->newQObject(this);
     QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
     args1 << objArg5;
-    args1 << pInterpreter->newQObject(this);
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {

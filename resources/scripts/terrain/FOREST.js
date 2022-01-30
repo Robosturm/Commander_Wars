@@ -7,11 +7,11 @@ var Constructor = function()
     this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain, map, map)
     {
-        __BASEFOREST.loadBase(terrain, "FOREST", "forest_style2")
+        __BASEFOREST.loadBase(terrain, "FOREST", "forest_style2", map)
     };
     this.loadOverlaySprite = function(terrain, map, map)
     {
-        __BASEFOREST.loadOverlay(terrain, "FOREST", "forest_style2");
+        __BASEFOREST.loadOverlay(terrain, "FOREST", "forest_style2", map);
     };
 
     this.getTerrainSprites = function()

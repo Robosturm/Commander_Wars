@@ -111,14 +111,14 @@ var BUILDING =
     {
         return Global[building.getBuildingID()].actionList;
     },
-    startOfTurn : function(building)
+    startOfTurn : function(building, map)
     {
         var owner = building.getOwner();
         if (owner !== null)
         {
             if (!owner.getIsDefeated())
             {
-                BUILDING.replenishUnit(building);
+                BUILDING.replenishUnit(building, map);
             }
         }
     },
@@ -169,7 +169,7 @@ var BUILDING =
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))
             {
-                BUILDING.repairUnit(unit, x, y);
+                BUILDING.repairUnit(unit, x, y, map);
             }
         }
     },
@@ -182,7 +182,7 @@ var BUILDING =
         var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         unit.refill(refillMaterial);
         var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
-        UNIT.repairUnit(unit, repairAmount);
+        UNIT.repairUnit(unit, repairAmount, map);
         if (!unit.isStealthed(map.getCurrentViewPlayer()))
         {
             var animationCount = GameAnimationFactory.getAnimationCount();
@@ -224,13 +224,13 @@ var BUILDING =
         return 0;
     },
 
-    getTerrainAnimationBase : function(unit, terrain, map)
+    getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
         var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     },
 
-    getTerrainAnimationForeground : function(unit, terrain, map)
+    getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
         return "";
     },
@@ -247,7 +247,7 @@ var BUILDING =
                 ["pf", "os"],
                 ["bd", "bm"],],
 
-    getTerrainAnimationBackground : function(unit, terrain)
+    getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("BACKGROUND_ID");

@@ -57,13 +57,16 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
 
 InGameMenue::~InGameMenue()
 {
+    CONSOLE_PRINT("Deleting In Game Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
     m_MapMover = nullptr;
-    m_MapMoveThread.exit();
-    m_MapMoveThread.wait();
-    m_pInstance = nullptr;
+    if (m_MapMoveThread.isRunning())
+    {
+        m_MapMoveThread.quit();
+        m_MapMoveThread.wait();
+    }
 }
 
 void InGameMenue::loadBackground()

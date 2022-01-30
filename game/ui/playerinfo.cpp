@@ -15,7 +15,7 @@
 #include "game/ui/copowermeter.h"
 
 PlayerInfo::PlayerInfo(GameMap* pMap)
-    : m_pMap{pMap}
+    : m_pMap(pMap)
 {
     setObjectName("PlayerInfo");
     Mainapp* pApp = Mainapp::getInstance();

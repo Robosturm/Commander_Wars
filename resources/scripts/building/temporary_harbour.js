@@ -61,7 +61,7 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
     };
-	this.onWeatherChanged = function(building, weather)
+	this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

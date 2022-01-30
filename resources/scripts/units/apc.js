@@ -57,7 +57,7 @@ var Constructor = function()
         {
             ACTION_SUPPORTALL_RATION.giveRation(unit, map);
         }
-        UNIT.transporterRefilling(unit);
+        UNIT.transporterRefilling(unit, map);
     };
 
     this.getDescription = function()

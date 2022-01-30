@@ -86,7 +86,7 @@ var Constructor = function()
             }
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
-        UNIT.transporterRefilling(unit);
+        UNIT.transporterRefilling(unit, map);
     };
     this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {

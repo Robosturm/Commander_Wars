@@ -1081,6 +1081,10 @@ QString Building::getTerrainAnimationBase()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {
@@ -1101,8 +1105,10 @@ QString Building::getTerrainAnimationForeground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {
@@ -1193,8 +1199,10 @@ QString Building::getTerrainAnimationBackground()
     args1 << obj1;
     QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
-    QJSValue objArg5 = pInterpreter->newQObject(m_pMap);
-    args1 << objArg5;
+    QJSValue obj3 = pInterpreter->newQObject(nullptr);
+    args1 << obj3;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args1 << obj4;
     QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (erg.isString())
     {

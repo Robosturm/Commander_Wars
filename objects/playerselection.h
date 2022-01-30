@@ -29,7 +29,7 @@ class PlayerSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit PlayerSelection(qint32 width, qint32 heigth, GameMap* pMap);
+    explicit PlayerSelection(qint32 width, qint32 heigth);
     virtual ~PlayerSelection();
 
     void showPlayerSelection();
@@ -79,6 +79,9 @@ public:
     void setIsServerGame(bool isServerGame);
     bool getIsCampaign();
     bool getIsArmyCustomizationAllowed();
+
+    GameMap *getMap() const;
+    void setMap(GameMap *newPMap);
 
 signals:
     void sigCOsRandom(qint32 mode);

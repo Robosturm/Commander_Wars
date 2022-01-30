@@ -810,6 +810,8 @@ bool RandomMapGenerator::randomMapIsBuildingPlace(GameMap* pMap, QString buildin
         QJSValueList args;
         args << x;
         args << y;
+        QJSValue obj4 = pInterpreter->newQObject(pMap);
+        args << obj4;
         QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingId + "Placeable", args);
         if (erg.isBool())
         {

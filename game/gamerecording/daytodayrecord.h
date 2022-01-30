@@ -20,7 +20,7 @@ class DayToDayRecord : public QObject, public FileSerializable, public oxygine::
     Q_OBJECT
 public:
     explicit DayToDayRecord(GameMap* pMap);
-    explicit DayToDayRecord(qint32 playerCount);
+    explicit DayToDayRecord(GameMap* pMap, qint32 playerCount);
     virtual ~DayToDayRecord() = default;
     /**
      * @brief serialize stores the object

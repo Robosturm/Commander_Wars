@@ -8,7 +8,7 @@
 
 class GameMap;
 class IngameInfoBar;
-typedef oxygine::intrusive_ptr<IngameInfoBar> spIngameInfoBar;
+using spIngameInfoBar = oxygine::intrusive_ptr<IngameInfoBar>;
 
 class IngameInfoBar : public QObject, public oxygine::Actor
 {

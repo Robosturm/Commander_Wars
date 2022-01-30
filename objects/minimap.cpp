@@ -34,11 +34,11 @@ void Minimap::clear()
     m_Items.clear();
 }
 
-void Minimap::updateMinimap(spGameMap pMap, bool useVision)
+void Minimap::updateMinimap(GameMap* pMap, bool useVision)
 {
     Mainapp::getInstance()->pauseRendering();
      // load minimap
-    if (pMap.get() != nullptr)
+    if (pMap != nullptr)
     {
         CONSOLE_PRINT("Minimap::updateMinimap", Console::eDEBUG);
         qint32 width = static_cast<qint32>(pMap->getMapWidth());

@@ -7,7 +7,7 @@ var Constructor = function()
     this.baseTerrainId = "PLAINS";
     this.loadBaseSprite = function(terrain, map)
     {
-        __BASEWASTELAND.loadBase(terrain, "wasteland")
+        __BASEWASTELAND.loadBase(terrain, "wasteland", map)
     };
     this.getTerrainSprites = function()
     {

@@ -209,17 +209,17 @@ public slots:
     void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
     /**
-     * @brief inputMethodQuery dummy function to rerout qlineedit events
-     * @param query
-     * @param ret
-     */
-    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
-    /**
      * @brief slotCursorPositionChanged dummy function to rerout qlineedit events
      * @param oldPos
      * @param newPos
      */
     void slotCursorPositionChanged(int oldPos, int newPos);
+    /**
+     * @brief inputMethodQuery dummy function to rerout qlineedit events
+     * @param query
+     * @param ret
+     */
+    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
 
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
@@ -247,6 +247,7 @@ signals:
      * @param newPos
      */
     void cursorPositionChanged(int oldPos, int newPos);
+    void cursorPositionChanged();
 private slots:
     void createLineEdit();
 protected:

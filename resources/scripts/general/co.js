@@ -283,7 +283,7 @@ var CO =
 
     gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
     {
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack, map)
         co.setPowerFilled(co.getPowerFilled() + powerGain)
     },
 

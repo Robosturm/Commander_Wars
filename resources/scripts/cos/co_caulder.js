@@ -208,7 +208,7 @@ var Constructor = function()
             {
                 var animations = [];
                 var counter = 0;
-                UNIT.repairUnit(counit, 5);
+                UNIT.repairUnit(counit, 5, map);
                 var fields = globals.getCircle(1, coRange);
                 var x = counit.getX();
                 var y = counit.getY();
@@ -225,7 +225,7 @@ var Constructor = function()
                         if ((unit !== null) &&
                             (unit.getOwner() === counit.getOwner()))
                         {
-                            UNIT.repairUnit(unit, CO_CAULDER.coHealing);
+                            UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
                             var delay = globals.randInt(135, 265);
                             if (animations.length < 5)
                             {

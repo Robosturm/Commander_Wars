@@ -46,7 +46,7 @@ var Constructor = function()
             }
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
-        UNIT.transporterRefilling(unit);
+        UNIT.transporterRefilling(unit, map);
     };
     this.createExplosionAnimation = function(x, y, unit, map)
     {

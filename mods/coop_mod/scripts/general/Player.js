@@ -33,7 +33,7 @@ PLAYER.coop_ModDoStartOfTurnRepairing = function(player, map)
                         {
                             unit.refill();
                             var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
-                            UNIT.repairUnit(unit, repairAmount);
+                            UNIT.repairUnit(unit, repairAmount, map);
                             if (!unit.isStealthed(map.getCurrentViewPlayer()))
                             {
                                 var animation = GameAnimationFactory.createAnimation(map, x, y);

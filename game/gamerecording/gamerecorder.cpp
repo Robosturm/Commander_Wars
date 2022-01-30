@@ -180,7 +180,7 @@ void GameRecorder::newDay()
             m_playerDataRecords.append(PlayerData());
         }
     }
-    m_Record.append(spDayToDayRecord::create(playerCount));
+    m_Record.append(spDayToDayRecord::create(m_pMap, playerCount));
 }
 
 void GameRecorder::lostUnit(qint32 player, QString unitId)
