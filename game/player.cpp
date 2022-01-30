@@ -1433,7 +1433,7 @@ qint32 Player::getWeatherMovementCostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
     
-    if (m_pMap != nullptr && !getWeatherImmune())
+    if (m_pMap != nullptr && !pUnit->getWeatherImmune())
     {
         modifier += m_pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, m_pMap->getTerrain(position.x(), position.y()));
     }
@@ -1453,7 +1453,7 @@ qint32 Player::getBonusMovementpoints(Unit* pUnit, QPoint position)
     if (pUnit->getOwner() == this)
     {
         
-        if (m_pMap != nullptr && !getWeatherImmune())
+        if (m_pMap != nullptr && !pUnit->getWeatherImmune())
         {
             movementModifier += m_pMap->getGameRules()->getCurrentWeather()->getMovementpointModifier(pUnit, m_pMap->getTerrain(position.x(), position.y()));
         }
