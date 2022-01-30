@@ -16,7 +16,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
-    : GameMenue(spGameMap())
+    : GameMenue(spGameMap::create(1, 1, 2))
 {
     Interpreter::setCppOwnerShip(this);
     setObjectName("ReplayMenu");
