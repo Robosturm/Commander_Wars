@@ -152,10 +152,12 @@ public:
      */
     void syncAnimation(oxygine::timeMS syncTime);
 
-
-signals:
-
 public slots:
+    /**
+     * @brief getWeatherImmune
+     * @return
+     */
+    bool getWeatherImmune();
     /**
      * @brief getMap
      * @return

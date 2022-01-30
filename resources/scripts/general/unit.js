@@ -207,6 +207,11 @@ var UNIT =
         return 0;
     },
 
+    getWeatherImmune(unit, map)
+    {
+        return false;
+    },
+
     canAttackStealthedUnit : function(attacker, defender, map)
     {
         var attackerType = attacker.getUnitType();

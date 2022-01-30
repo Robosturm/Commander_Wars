@@ -46,6 +46,11 @@ var Constructor = function()
         return animation;
     };
 
+    this.getWeatherImmune = function(unit, map)
+    {
+        return true;
+    };
+
     this.getDescription = function()
     {
         return qsTr("Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.");

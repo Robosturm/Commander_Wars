@@ -540,6 +540,28 @@ void Unit::setUnitRank(const qint32 &UnitRank, bool force)
     }
 }
 
+bool Unit::getWeatherImmune()
+{
+    bool immune = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QString function1 = "getWeatherImmune";
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args << obj1;
+    QJSValue obj4 = pInterpreter->newQObject(m_pMap);
+    args << obj4;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (erg.isBool())
+    {
+        immune = erg.toBool();
+    }
+    if (!immune)
+    {
+        immune = m_pOwner->getWeatherImmune();
+    }
+    return immune;
+}
+
 qint32 Unit::getVision(QPoint position)
 {
     qint32 rangeModifier = 0;
@@ -553,9 +575,7 @@ qint32 Unit::getVision(QPoint position)
         }
     }
     rangeModifier += getCoBonus(position, "getEnemyVisionBonus", &Player::getCoBonus);
-
-
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
     }
@@ -642,7 +662,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
     rangeModifier += getCoBonus(position, "getEnemyFirerangeModifier", &Player::getCoBonus);
 
 
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
     }
@@ -713,7 +733,7 @@ qint32 Unit::getBonusMinRange(QPoint position)
     rangeModifier += getCoBonus(position, "getEnemyMinFirerangeModifier", &Player::getCoBonus);
 
 
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         rangeModifier += m_pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
     }
@@ -1078,7 +1098,8 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
             }
             else
             {
-                if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1 || rangeCheck == GameEnums::AttackRangeCheck_None) ||
+                if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
+                    rangeCheck == GameEnums::AttackRangeCheck_None ||
                     (weaponType == GameEnums::WeaponType::WeaponType_Indirect && inIndirectRange))
                 {
                     ret = true;
@@ -1440,7 +1461,7 @@ qint32 Unit::getBonusOffensive(GameAction* pAction, QPoint position, Unit* pDefe
             }
         }
     }
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         bonus += m_pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
     }
@@ -1711,7 +1732,7 @@ qint32 Unit::getBonusDefensive(GameAction* pAction, QPoint position, Unit* pAtta
             bonus += m_pTerrain->getDeffensiveFieldBonus(pAction, pAttacker, atkPosition, this, position, isAttacker, luckMode);
         }
     }
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         bonus += m_pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
     }
@@ -2759,7 +2780,7 @@ qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
             }
         }
     }
-    if (!m_pOwner->getWeatherImmune())
+    if (!getWeatherImmune())
     {
         ret += m_pMap->getGameRules()->getCurrentWeather()->getMovementFuelCostModifier(this, fuelCost);
     }
