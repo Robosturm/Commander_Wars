@@ -11,18 +11,20 @@ var Constructor = function()
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
+                     ["gs", "gs"],
                      ["ma", "ma"],
                      ["os", "os"],
                      ["pf", "pf"],
                      ["ti", "ti"],
                      ["yc", "yc"],];
 
-    this.animationData = [["ac", [Qt.point(-15, 5), Qt.point(32, 38)]],
+    this.animationData = [["ac", [Qt.point(-5, 5),  Qt.point(43, 36)]],
                           ["bd", [Qt.point(-5, 5),  Qt.point(41, 36)]],
                           ["bh", [Qt.point(-5, 5),  Qt.point(39, 38)]],
                           ["bm", [Qt.point(-5, 5),  Qt.point(39, 36)]],
                           ["dm", [Qt.point(-25, 5), Qt.point(28, 40)]],
                           ["ge", [Qt.point(-5, 5),  Qt.point(40, 37)]],
+                          ["gs", [Qt.point(-15, 5), Qt.point(43, 38)]],
                           ["ma", [Qt.point(-35, 5), Qt.point(13, 43)]],
                           ["os", [Qt.point(-5, 5),  Qt.point(40, 38)]],
                           ["pf", [Qt.point(-5, 5),  Qt.point(41, 39)]],
@@ -30,7 +32,7 @@ var Constructor = function()
                           ["yc", [Qt.point(-5, 5),  Qt.point(40, 38)]],];
 
     // -5 5
-    // 53 40
+    // 48 40
     //  0 9
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
