@@ -1280,7 +1280,7 @@ void GameMenue::victory(qint32 team)
                 CONSOLE_PRINT("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
                 m_pMap->getCampaign()->mapFinished(m_pMap.get(), humanWin);
             }
-            AchievementManager::getInstance()->onVictory(team, humanWin);
+            AchievementManager::getInstance()->onVictory(team, humanWin, m_pMap.get());
             CONSOLE_PRINT("Leaving Game Menue", Console::eDEBUG);
             auto window = spVictoryMenue::create(m_pMap, m_pNetworkInterface);
             oxygine::Stage::getStage()->addChild(window);

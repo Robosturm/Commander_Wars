@@ -65,7 +65,7 @@ var Constructor = function()
     {
         var owner = unit.getOwner();
         var playerId  = owner.getPlayerID();
-        ZCOUNIT_ROYAL_GUARD.addBuff(unit, playerId);
+        ZCOUNIT_ROYAL_GUARD.addBuff(map, unit, playerId);
         var fields = globals.getCircle(1, 1);
         var unitX = unit.getX();
         var unitY = unit.getY();

@@ -142,7 +142,8 @@ NormalAi::NormalAi(GameMap* pMap, QString configurationFile, GameEnums::AiTypes 
                   {"AttackCountBonus", "Production", &m_attackCountBonus, 25.0f, 5.0f, 60.0f},
                   {"MaxOverkillBonus", "Production", &m_maxOverkillBonus, 2.0f, 1.5f, 10.0f},
                   {"CounterDamageBonus", "Production", &m_counterDamageBonus, 25.0f, 1.0f, 100.0f},
-                  {"EarlyGame", "Production", &m_earlyGame, 5.0f, 2.f, 10.0f},};
+                  {"EarlyGame", "Production", &m_earlyGame, 5.0f, 2.f, 10.0f},
+                  {"MaxProductionBuildings", "Production", &m_maxProductionBuildings, 5.0f, 2.f, 10.0f},};
 
     
     if (m_pMap != nullptr &&
@@ -915,6 +916,8 @@ bool NormalAi::unloadUnits(spGameAction & pAction, Unit* pUnit)
                 QJSValue obj1 = pInterpreter->newQObject(pAction.get());
                 args1 << obj1;
                 args1 << unitIDx[i];
+                QJSValue obj2 = pInterpreter->newQObject(m_pMap);
+                args1 << obj2;
                 QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, function1, args1);
                 unloadFields.append(ret.toVariant().toList());
             }
@@ -1909,6 +1912,10 @@ bool NormalAi::buildUnits(spQmlVectorBuilding & pBuildings, spQmlVectorUnit & pU
     data[RequiredSupplyRatio] = static_cast<float>(countData.supplyNeededUnits) / static_cast<float>(pUnits->size() + 1);
     data[InfantryCount] = countData.infantryUnits;
     m_currentDirectIndirectRatio = m_directIndirectRatio * getAiCoBuildRatioModifier();
+    if (productionBuildings > m_maxProductionBuildings)
+    {
+        productionBuildings = m_maxProductionBuildings;
+    }
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds - m_cappedFunds * (productionBuildings - 1) * m_fundsPerBuildingFactorD;
     CONSOLE_PRINT("NormalAI: Funds: " + QString::number(funds) + " funds for the next factory: " + QString::number(fundsPerFactory), Console::eDEBUG);

@@ -200,7 +200,7 @@ var Constructor = function()
         else if (weaponIndex === 1 &&
                  pos.x === unitX &&
                  pos.y === unitY &&
-                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY, map) !== null)
+                 ZCOUNIT_RANGER.getIndirectToUse(unit, unitX, unitY, targetX, targetY, unit.getMap()) !== null)
         {
             return true;
         }

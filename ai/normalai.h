@@ -563,6 +563,7 @@ private:
     double m_ProducingTransportRatioBonus{1.7f};
     double m_ProducingTransportLoadingBonus{15.0f};
     double m_ProducingTransportMinLoadingTransportRatio{7.0f};
+    double m_maxProductionBuildings{5};
 
     float m_currentDirectIndirectRatio{1.0f};};
 

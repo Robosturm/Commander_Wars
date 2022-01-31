@@ -2,7 +2,7 @@ ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
 {
     var owner = unit.getOwner();
     var playerId  = owner.getPlayerID();
-    ZCOUNIT_ROYAL_GUARD.addBuff(unit, playerId);
+    ZCOUNIT_ROYAL_GUARD.addBuff(map, unit, playerId);
     var fields = globals.getCircle(1, 1);
     var unitX = unit.getX();
     var unitY = unit.getY();
@@ -18,7 +18,7 @@ ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
                 var targetOwner = targetUnit.getOwner();
                 if (targetOwner === owner)
                 {
-                    ZCOUNIT_ROYAL_GUARD.addBuff(targetUnit, playerId);
+                    ZCOUNIT_ROYAL_GUARD.addBuff(map, targetUnit, playerId);
                 }
                 else if (targetOwner.isAlly(owner))
                 {
@@ -28,7 +28,7 @@ ZCOUNIT_ROYAL_GUARD.startOfTurn = function(unit, map)
                     var unitId = targetOwner.getUniqueID();
                     boosts.push(unitId);
                     boostVariable.writeDataListInt32(boosts);
-                    ZCOUNIT_ROYAL_GUARD.addBuff(targetUnit, playerId, 2);
+                    ZCOUNIT_ROYAL_GUARD.addBuff(map, targetUnit, playerId, 2);
                 }
             }
         }

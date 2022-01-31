@@ -1084,8 +1084,6 @@ void VictoryMenue::onEnter()
         QJSValueList args;
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
-        QJSValue value1 = pInterpreter->newQObject(m_pMap.get());
-        args << value1;
         pInterpreter->doFunction(object, func, args);
     }
 }

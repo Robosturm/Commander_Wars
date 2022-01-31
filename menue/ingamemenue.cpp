@@ -13,6 +13,8 @@
 
 spInGameMenue InGameMenue::m_pInstance(nullptr);
 
+const char* const JS_GAME_NAME = "game";
+
 InGameMenue::InGameMenue(spGameMap & pMap)
     : m_pMap(pMap)
 {
@@ -28,6 +30,9 @@ InGameMenue::InGameMenue(spGameMap & pMap)
     m_MapMoveThread.start();
     m_Cursor = spCursor::create(m_pMap.get());
     loadBackground();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame)
@@ -53,6 +58,9 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     }
     m_Cursor = spCursor::create(m_pMap.get());
     loadHandling();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue globals = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal(JS_GAME_NAME, globals);
 }
 
 InGameMenue::~InGameMenue()
@@ -62,6 +70,8 @@ InGameMenue::~InGameMenue()
     QCursor cursor = pApp->cursor();
     cursor.setShape(Qt::CursorShape::ArrowCursor);
     m_MapMover = nullptr;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->deleteObject(JS_GAME_NAME);
     if (m_MapMoveThread.isRunning())
     {
         m_MapMoveThread.quit();
