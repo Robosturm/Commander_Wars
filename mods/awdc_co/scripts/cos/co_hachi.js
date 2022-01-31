@@ -21,7 +21,7 @@ CO_HACHI.getAdditionalBuildingActions = function(co, building, map)
 };
 
 CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

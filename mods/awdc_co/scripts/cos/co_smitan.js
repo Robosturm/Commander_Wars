@@ -16,7 +16,7 @@ CO_SMITAN.getSuperPowerName = function()
     return CO_SMITAN.getPowerName();
 };
 CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var inRangeCount = 0;
     if (attacker.getBaseMaxRange() === 1)

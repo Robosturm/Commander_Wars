@@ -134,7 +134,7 @@ var Constructor = function()
     this.zoneTerrainBonus = 10;
     this.terrainDefenseModifier = 1;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if (map !== null)
         {
@@ -168,7 +168,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)

@@ -16,7 +16,7 @@ CO_IK_486_B7.getSuperPowerName = function()
     return CO_IK_486_B7.getPowerName();
 };
 CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action, map)
+                                          defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -74,7 +74,7 @@ CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY, map)
 };
 
 CO_IK_486_B7.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, map)
+                                           defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

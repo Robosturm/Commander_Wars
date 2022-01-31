@@ -16,7 +16,7 @@ CO_KINDLE.getSuperPowerName = function()
     return CO_KINDLE.getPowerName();
 };
 CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (map !== null)
     {

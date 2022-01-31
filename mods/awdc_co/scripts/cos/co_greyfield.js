@@ -16,7 +16,7 @@ CO_GREYFIELD.getSuperPowerName = function()
     return CO_GREYFIELD.getPowerName();
 };
 CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
     switch (co.getPowerMode())
@@ -47,7 +47,7 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
     switch (co.getPowerMode())

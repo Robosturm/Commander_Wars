@@ -16,7 +16,7 @@ CO_ANDY.getSuperPowerName = function()
     return CO_ANDY.getPowerName();
 };
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

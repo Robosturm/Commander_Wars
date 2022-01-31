@@ -1,6 +1,6 @@
 CO_BRENNER.coZoneBonus = 0;
 CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action, map)
+                                         defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -19,7 +19,7 @@ CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_BRENNER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };

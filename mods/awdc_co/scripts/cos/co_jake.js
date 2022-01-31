@@ -16,7 +16,7 @@ CO_JAKE.getSuperPowerName = function()
     return CO_JAKE.getPowerName();
 };
 CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (map !== null)
     {

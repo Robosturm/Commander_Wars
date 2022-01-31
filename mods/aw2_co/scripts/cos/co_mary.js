@@ -97,7 +97,7 @@ CO_MARY.canBeRepaired = function(co, unit, posX, posY, map)
 };
 
 CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, map)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -117,7 +117,7 @@ CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -130,7 +130,7 @@ CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action, map)
+                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

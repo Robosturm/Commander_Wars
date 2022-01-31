@@ -16,7 +16,7 @@ CO_XAVIER.getSuperPowerName = function()
     return CO_XAVIER.getPowerName();
 };
 CO_XAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

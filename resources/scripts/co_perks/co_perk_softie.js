@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
 		if (CO_PERK.isActive(co))
 		{

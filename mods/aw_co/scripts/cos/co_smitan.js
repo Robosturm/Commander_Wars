@@ -73,7 +73,7 @@ CO_SMITAN.getActionModifierList = function(co, unit, map)
 };
 
 CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, map)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

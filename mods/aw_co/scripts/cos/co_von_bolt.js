@@ -16,7 +16,7 @@ CO_VON_BOLT.getSuperPowerName = function()
     return CO_VON_BOLT.getPowerName();
 };
 CO_VON_BOLT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action, map)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -25,7 +25,7 @@ CO_VON_BOLT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_VON_BOLT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action, map)
+                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

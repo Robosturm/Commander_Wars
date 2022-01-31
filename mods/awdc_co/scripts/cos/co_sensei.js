@@ -16,7 +16,7 @@ CO_SENSEI.getSuperPowerName = function()
     return CO_SENSEI.getPowerName();
 };
 CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

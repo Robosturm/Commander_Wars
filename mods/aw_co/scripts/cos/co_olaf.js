@@ -16,7 +16,7 @@ CO_OLAF.getSuperPowerName = function()
     return CO_OLAF.getPowerName();
 };
 CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, map)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
@@ -34,7 +34,7 @@ CO_OLAF.getWeatherImmune = function(co, map)
 };
 
 CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, map)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

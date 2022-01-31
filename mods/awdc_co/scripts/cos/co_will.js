@@ -34,7 +34,7 @@ CO_WILL.getMovementpointModifier = function(co, unit, posX, posY, map)
     }
 };
 CO_WILL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
                      (attacker.getUnitType() === GameEnums.UnitType_Naval);

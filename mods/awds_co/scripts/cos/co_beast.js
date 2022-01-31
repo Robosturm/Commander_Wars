@@ -1,6 +1,6 @@
 CO_BEAST.coZoneBonus = 30;
 CO_BEAST.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -21,7 +21,7 @@ CO_BEAST.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_BEAST.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

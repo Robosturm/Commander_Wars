@@ -16,7 +16,7 @@ CO_ALEXIS.getSuperPowerName = function()
     return CO_ALEXIS.getPowerName();
 };
 CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, map)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -124,7 +124,7 @@ CO_ALEXIS.startOfTurn = function(co, map)
 };
 CO_ALEXIS.coZoneBonus = 0;
 CO_ALEXIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action, map)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

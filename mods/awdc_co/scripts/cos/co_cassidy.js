@@ -20,7 +20,7 @@ CO_CASSIDY.defaultPowerBonus = 30;
 CO_CASSIDY.powerBonus = 60;
 CO_CASSIDY.superPowerBonus = 60;
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (defender !== null)
     {

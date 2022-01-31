@@ -5,7 +5,7 @@ CO_TABITHA.init = function(co, map)
 };
 
 CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -23,7 +23,7 @@ CO_TABITHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_TABITHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

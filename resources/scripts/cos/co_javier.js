@@ -139,7 +139,7 @@ var Constructor = function()
         return "GE";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         var towers = co.getOwner().getBuildingCount("TOWER");
         switch (co.getPowerMode())
@@ -158,7 +158,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
         var towers = co.getOwner().getBuildingCount("TOWER");

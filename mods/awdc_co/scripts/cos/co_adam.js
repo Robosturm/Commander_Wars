@@ -16,7 +16,7 @@ CO_ADAM.getSuperPowerName = function()
     return CO_ADAM.getPowerName();
 };
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var ret = 0;
     var variables = co.getVariables();

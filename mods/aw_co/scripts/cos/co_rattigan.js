@@ -16,7 +16,7 @@ CO_RATTIGAN.getSuperPowerName = function()
     return CO_RATTIGAN.getPowerName();
 };
 CO_RATTIGAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action, map)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -46,7 +46,7 @@ CO_RATTIGAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_RATTIGAN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action, map)
+                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

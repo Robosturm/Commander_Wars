@@ -16,7 +16,7 @@ CO_PENNY.getSuperPowerName = function()
     return CO_PENNY.getPowerName();
 };
 CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (map !== null)
     {

@@ -16,12 +16,12 @@ CO_OZZY.getSuperPowerName = function()
     return CO_OZZY.getPowerName();
 };
 CO_OZZY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, map)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 CO_OZZY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, map)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

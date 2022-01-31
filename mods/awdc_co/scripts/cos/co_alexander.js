@@ -20,7 +20,7 @@ CO_ALEXANDER.getIncomeReduction = function(co, building, income, map)
     return 0;
 };
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

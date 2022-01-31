@@ -16,7 +16,7 @@ CO_SAMI.getSuperPowerName = function()
     return CO_SAMI.getPowerName();
 };
 CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, map)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

@@ -16,7 +16,7 @@ CO_CONRAD.getSuperPowerName = function()
     return CO_CONRAD.getPowerName();
 };
 CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (isDefender)
     {
@@ -54,7 +54,7 @@ CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                              defender, defPosX, defPosY, isDefender, action, map)
+                              defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     // return average luck as true damage
     return attackerBaseHp / 4;

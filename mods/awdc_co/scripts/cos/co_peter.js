@@ -16,7 +16,7 @@ CO_PETER.getSuperPowerName = function()
     return CO_PETER.getPowerName();
 };
 CO_PETER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (defender === null)
     {

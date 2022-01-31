@@ -1,5 +1,5 @@
 CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, map)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -47,7 +47,7 @@ CO_CONRAD.getBonusLuck = function(co, unit, posX, posY, map)
 };
 
 CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -60,7 +60,7 @@ CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                   defender, defPosX, defPosY, isDefender, action, map)
+                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

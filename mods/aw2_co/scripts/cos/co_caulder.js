@@ -5,7 +5,7 @@ CO_CAULDER.superPowerBonus = 50;
 
 CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isAttacker, action, map)
+                                         defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -23,7 +23,7 @@ CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CAULDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action, map)
+                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

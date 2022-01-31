@@ -52,13 +52,13 @@ CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY, map)
 
 CO_ALEXANDER.coZoneBonus = 0;
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_ALEXANDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

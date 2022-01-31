@@ -16,7 +16,7 @@ CO_LIN.getSuperPowerName = function()
     return CO_LIN.getPowerName();
 };
 CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                    defender, defPosX, defPosY, isDefender, action, map)
+                                    defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -44,7 +44,7 @@ CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isAttacker, action, map)
+                                     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

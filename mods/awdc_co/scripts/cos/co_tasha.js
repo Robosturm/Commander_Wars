@@ -16,7 +16,7 @@ CO_TASHA.getSuperPowerName = function()
     return CO_TASHA.getPowerName();
 };
 CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -46,7 +46,7 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

@@ -1,5 +1,5 @@
 CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action, map)
+                                          defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -68,7 +68,7 @@ CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY, map)
 };
 
 CO_IK_486_B7.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, map)
+                                           defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

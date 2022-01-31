@@ -16,7 +16,7 @@ CO_JOEY.getSuperPowerName = function()
     return CO_JOEY.getPowerName();
 };
 CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if(defender !== null)
     {
@@ -70,7 +70,7 @@ CO_JOEY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if(attacker !== null)
     {

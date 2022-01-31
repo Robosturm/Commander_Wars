@@ -16,7 +16,7 @@ CO_MAX.getSuperPowerName = function()
     return CO_MAX.getPowerName();
 };
 CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

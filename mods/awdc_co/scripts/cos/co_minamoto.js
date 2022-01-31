@@ -16,7 +16,7 @@ CO_MINAMOTO.getSuperPowerName = function()
     return CO_MINAMOTO.getPowerName();
 };
 CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                  defender, defPosX, defPosY, isDefender, action, map)
+                                  defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var nearMountains = false;
     if (map !== null)

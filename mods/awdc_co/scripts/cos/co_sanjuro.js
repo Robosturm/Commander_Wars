@@ -16,7 +16,7 @@ CO_SANJURO.getSuperPowerName = function()
     return CO_SANJURO.getPowerName();
 };
 CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (defender !== null)
     {
@@ -41,7 +41,7 @@ CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var variables = co.getVariables();
     var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");

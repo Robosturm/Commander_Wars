@@ -16,7 +16,7 @@ CO_ALEXIS.getSuperPowerName = function()
     return CO_ALEXIS.getPowerName();
 };
 CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, map)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var nearBuildings = false;
     var fields = globals.getCircle(0, 2);

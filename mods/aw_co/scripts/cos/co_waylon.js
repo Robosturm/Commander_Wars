@@ -16,7 +16,7 @@ CO_WAYLON.getSuperPowerName = function()
     return CO_WAYLON.getPowerName();
 };
 CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, map)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -38,7 +38,7 @@ CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action, map)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

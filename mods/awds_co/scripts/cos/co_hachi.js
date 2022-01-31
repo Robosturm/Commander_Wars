@@ -40,7 +40,7 @@ CO_HACHI.getAdditionalBuildingActions = function(co, building, map)
 };
 
 CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, map)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -53,7 +53,7 @@ CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_HACHI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

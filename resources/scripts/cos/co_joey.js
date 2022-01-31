@@ -132,7 +132,7 @@ var Constructor = function()
         return "TI";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         if(defender !== null)
         {
@@ -198,7 +198,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action, map)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if(attacker !== null)
         {

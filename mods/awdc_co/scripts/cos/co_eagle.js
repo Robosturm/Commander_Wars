@@ -16,7 +16,7 @@ CO_EAGLE.getSuperPowerName = function()
     return CO_EAGLE.getPowerName();
 };
 CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

@@ -3,7 +3,7 @@ CO_CASSIDY.defaultPowerBonus = 30;
 CO_CASSIDY.powerBonus = 60;
 CO_CASSIDY.superPowerBonus = 80;
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isDefender, action, map)
+                                        defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -36,7 +36,7 @@ CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CASSIDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action, map)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

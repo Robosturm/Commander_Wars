@@ -16,7 +16,7 @@ CO_AIRA.getSuperPowerName = function()
     return CO_AIRA.getPowerName();
 };
 CO_AIRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -45,7 +45,7 @@ CO_AIRA.getMovementFuelCostModifier = function(co, unit, fuelCost, map)
 };
 
 CO_AIRA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action, map)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)

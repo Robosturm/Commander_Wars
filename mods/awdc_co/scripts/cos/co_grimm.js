@@ -16,7 +16,7 @@ CO_GRIMM.getSuperPowerName = function()
     return CO_GRIMM.getPowerName();
 };
 CO_GRIMM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

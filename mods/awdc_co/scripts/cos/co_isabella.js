@@ -8,7 +8,7 @@ CO_ISABELLA.activateSuperpower = function(co, powerMode, map)
 	CO_ISABELLA.activatePower(co, powerMode);
 };
 CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -27,7 +27,7 @@ CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ISABELLA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

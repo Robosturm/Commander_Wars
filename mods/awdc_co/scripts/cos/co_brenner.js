@@ -18,7 +18,7 @@ CO_BRENNER.getSuperPowerName = function()
     return CO_BRENNER.getPowerName();
 };
 CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action, map)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

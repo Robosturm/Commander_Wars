@@ -16,7 +16,7 @@ CO_ADAM.getSuperPowerName = function()
     return CO_ADAM.getPowerName();
 };
 CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action, map)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -47,7 +47,7 @@ CO_ADAM.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action, map)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var ret = 0;
     if (co.getIsCO0() === true)
@@ -129,7 +129,7 @@ CO_ADAM.getMovementpointModifier = function(co, unit, posX, posY, map)
 };
 
 CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                 defender, defPosX, defPosY, isDefender, action, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

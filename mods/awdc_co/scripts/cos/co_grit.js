@@ -16,7 +16,7 @@ CO_GRIT.getSuperPowerName = function()
     return CO_GRIT.getPowerName();
 };
 CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action, map)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

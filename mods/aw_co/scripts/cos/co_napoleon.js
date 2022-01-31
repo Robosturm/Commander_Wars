@@ -16,7 +16,7 @@ CO_NAPOLEON.getSuperPowerName = function()
     return CO_NAPOLEON.getPowerName();
 };
 CO_NAPOLEON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action, map)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
@@ -50,7 +50,7 @@ CO_NAPOLEON.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY
 };
 
 CO_NAPOLEON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isAttacker, action, map)
+                                          defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -183,7 +183,7 @@ var Constructor = function()
     };
     this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action, map)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -213,7 +213,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isAttacker, action, map)
+                                     defender, defPosX, defPosY, isAttacker, action, luckmode, map)
         {
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
