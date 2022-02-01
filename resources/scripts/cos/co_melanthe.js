@@ -58,7 +58,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
+            if (CO_MELANTHE.isNature(unit.getX(), unit.getY(), map) === true)
             {
                 var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
 
@@ -108,7 +108,7 @@ var Constructor = function()
                     {
                         unit = units.at(i);
 
-                        if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
+                        if (CO_MELANTHE.isNature(unit.getX(), unit.getY(), map) === true)
                         {
                             animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                             animation.writeDataInt32(unit.getX());
@@ -220,7 +220,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Tagpower:
                     case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
-                        if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                        if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                         {
                             return 50;
                         }
@@ -228,7 +228,7 @@ var Constructor = function()
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                            if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                             {
                                 return 40;
                             }

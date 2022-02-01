@@ -56,13 +56,13 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                     {
                         return 20;
                     }
                     return 0;
                 default:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                     {
                         return 15;
                     }

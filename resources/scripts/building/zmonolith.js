@@ -55,9 +55,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 3;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZMONOLITH.getBuildingWidth(), ZMONOLITH.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZMONOLITH.getBuildingWidth(), ZMONOLITH.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {

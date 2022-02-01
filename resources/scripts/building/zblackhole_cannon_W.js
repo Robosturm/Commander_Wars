@@ -47,9 +47,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 3;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_CANNON_W.getBuildingWidth(), ZBLACKHOLE_CANNON_W.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_CANNON_W.getBuildingWidth(), ZBLACKHOLE_CANNON_W.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {

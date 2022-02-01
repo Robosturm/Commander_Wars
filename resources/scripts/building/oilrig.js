@@ -20,7 +20,7 @@ var Constructor = function()
     {
         return OILRIG.baseTerrain;
     };
-	this.canBuildingBePlaced = function(terrain, building)
+	this.canBuildingBePlaced = function(terrain, building, map)
     {
         var id = terrain.getTerrainID();
         return OILRIG.baseTerrain.includes(id);

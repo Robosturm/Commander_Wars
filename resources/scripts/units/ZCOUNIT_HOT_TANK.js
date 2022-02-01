@@ -60,7 +60,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, map)
+    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckmode, map)
     {
         var bonus = 0;
         var tileBonus = 7;

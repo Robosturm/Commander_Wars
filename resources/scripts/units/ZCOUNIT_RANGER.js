@@ -73,7 +73,7 @@ var Constructor = function()
         return GameEnums.WeaponType_Indirect;
     };
 
-    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, map)
+    this.getBonusOffensive = function(attacker, atkX, atkY, defender, defX, defY, isDefender, action, luckmode, map)
     {
         var bonus = 0;
         if (globals.getDistance(atkX, atkY, defX, defY) > 1 && !isDefender)
