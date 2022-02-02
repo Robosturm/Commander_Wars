@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -15,14 +15,14 @@ var Constructor = function()
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
                 (action.getMovementTarget() === null))
         {
-            if (ACTION_PLACE_WATERMINE.getMineFields(action).length > 0)
+            if (ACTION_PLACE_WATERMINE.getMineFields(action, map).length > 0)
             {
                 return true;
             }
         }
         return false;
     };
-    this.getMineFields = function(action)
+    this.getMineFields = function(action, map)
     {
         var targetField = action.getActionTarget();
         var targetFields = [Qt.point(targetField.x + 1, targetField.y),
@@ -56,15 +56,15 @@ var Constructor = function()
         return ret;
     };
 
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Place Mine");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "WATERMINE";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -76,17 +76,17 @@ var Constructor = function()
         }
     };
 
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {        
         return "FIELD";
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         data.setColor("#C800FF00");
-        var fields = ACTION_PLACE_WATERMINE.getMineFields(action);
+        var fields = ACTION_PLACE_WATERMINE.getMineFields(action, map);
         for (var i3 = 0; i3 < fields.length; i3++)
         {
             data.addPoint(Qt.point(fields[i3].x, fields[i3].y));
@@ -95,11 +95,11 @@ var Constructor = function()
 
     this.postAnimationMinePosX = -1;
     this.postAnimationMinePosY = -1;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_PLACE_WATERMINE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -112,7 +112,7 @@ var Constructor = function()
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = x;
         ACTION_PLACE_WATERMINE.postAnimationMinePosY = y;
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         // unloading the units here :)
         var player = map.getCurrentPlayer();

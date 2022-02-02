@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var co = map.getCurrentPlayer().getCO(0);
         if ((co !== null) && co.canUseSuperpower())
@@ -12,7 +12,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         var text = qsTr("Superpower of ");
         if (map !== null &&
@@ -23,11 +23,11 @@ var Constructor = function()
         }
         return text;
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "superpower";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         var player = map.getCurrentPlayer();
         var co = player.getCO(0);
@@ -40,7 +40,7 @@ var Constructor = function()
             ACHIEVEMENT_POWERS.powerUsed("SUPERPOWER");
         }
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };

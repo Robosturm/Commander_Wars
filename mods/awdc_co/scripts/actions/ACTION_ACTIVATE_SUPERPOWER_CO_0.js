@@ -1,4 +1,4 @@
-ACTION_ACTIVATE_SUPERPOWER_CO_0.canBePerformed = function(action)
+ACTION_ACTIVATE_SUPERPOWER_CO_0.canBePerformed = function(action, map)
 {
     var co = map.getCurrentPlayer().getCO(0);
     if ((co !== null) &&
@@ -14,7 +14,7 @@ ACTION_ACTIVATE_SUPERPOWER_CO_0.canBePerformed = function(action)
     }
 };
 
-ACTION_ACTIVATE_SUPERPOWER_CO_0.perform = function(action)
+ACTION_ACTIVATE_SUPERPOWER_CO_0.perform = function(action, map)
 {
     var co = map.getCurrentPlayer().getCO(0);
     co.getCOUnit().setHasMoved(true);

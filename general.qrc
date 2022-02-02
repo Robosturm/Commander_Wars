@@ -913,8 +913,6 @@
         <file>resources/images/units/missile_sub+walk+mask.png</file>
         <file>resources/images/units/missile+mask.png</file>
         <file>resources/images/units/missile+walk+mask.png</file>
-        <file>resources/images/units/motorbike+mask.png</file>
-        <file>resources/images/units/motorbike+walk+mask.png</file>
         <file>resources/images/units/neospider_tank+mask.png</file>
         <file>resources/images/units/neospider_tank+walk+mask.png</file>
         <file>resources/images/units/neotank+mask.png</file>
@@ -4001,7 +3999,6 @@
         <file>resources/images/terrain/beach+SE.png</file>
         <file>resources/images/terrain/beach+SW.png</file>
         <file>maps/advance_wars_days_of_ruin.jsm</file>
-        <file>resources/aidata/heavyai_training.js</file>
         <file>resources/aidata/heavy/heavy_ai1.ini</file>
         <file>resources/aidata/heavy/heavy_ai1.js</file>
         <file>resources/aidata/heavy/heavy_ai2.ini</file>
@@ -4928,7 +4925,6 @@
         <file>resources/images/battleanimations/GeneralSprites/flak_shot.png</file>
         <file>resources/images/battleanimations/GeneralSprites/flak_shot_air.png</file>
         <file>resources/images/game/battlesprites/background/back_bridge+sea.png</file>
-        <file>resources/aidata/normalai_training.js</file>
         <file>resources/images/game/battlesprites/background/back_rainairport.png</file>
         <file>resources/images/game/battlesprites/background/back_rainbeach+sea.png</file>
         <file>resources/images/game/battlesprites/background/back_rainbridge+0.png</file>
@@ -6143,5 +6139,96 @@
         <file>resources/images/terrain/riverend_lake+S.png</file>
         <file>resources/images/terrain/riverend_lake+W.png</file>
         <file>resources/scripts/terrain/LAKE.js</file>
+        <file>resources/images/units/icons/rank+hidden.png</file>
+        <file>resources/images/co/bd/co_cairn+mini.png</file>
+        <file>resources/ui/mainmenu.xml</file>
+        <file>resources/fonts/logoFont.png</file>
+        <file>resources/fonts/logoFont.xml</file>
+        <file>resources/objects/logo.png</file>
+        <file>resources/images/units/motorbike++mask.png</file>
+        <file>resources/images/units/motorbike++walk+mask.png</file>
+        <file>resources/scripts/building/zwasteweld_e_w.js</file>
+        <file>resources/scripts/building/zwasteweld_n_s.js</file>
+        <file>resources/images/building/waste_weld+E+W.png</file>
+        <file>resources/images/building/waste_weld+E+W+mask.png</file>
+        <file>resources/images/building/waste_weld+N+S.png</file>
+        <file>resources/images/building/waste_weld+N+S+mask.png</file>
+        <file>resources/images/units/ranger+mask.png</file>
+        <file>resources/images/units/ranger+walk+mask.png</file>
+        <file>resources/scripts/weapons/weapon_designator.js</file>
+        <file>ai/training/heavyai_training.js</file>
+        <file>ai/training/normalai_training.js</file>
+        <file>ai/training/situation_training.js</file>
+        <file>resources/scripts/units/ZCOUNIT_RANGER.js</file>
+        <file>resources/images/battleanimations/ranger/ranger+dying+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+fire+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+fire+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+idle+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+idle.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+idle+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+stop.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+stop+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+walk.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+walk+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+stop+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+walk+mask.png</file>
+        <file>resources/scripts/battleanimations/BATTLEANIMATION_ZCOUNIT_RANGER.js</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+laser.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+laser+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+designator+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+down+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+up.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+designator+up+mask.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+down.png</file>
+        <file>resources/images/battleanimations/ranger/ranger+river+fire+down+mask.png</file>
+        <file>resources/images/battleanimations/GeneralSprites/designator_shot+up.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/artillery/artillery+gs+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+move+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+move+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+stop+air+mask.png</file>
+        <file>resources/images/battleanimations/flak/flak+gs+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mg+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mg+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+move+mask.png</file>
+        <file>resources/images/battleanimations/heavy_tank/heavy_tank+gs+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+fire+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+mg+stop+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+move+mask.png</file>
+        <file>resources/images/battleanimations/light_tank/light_tank+gs+stop+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ac+fire+mask.png</file>
+        <file>resources/images/battleanimations/missile/missile+ac+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+gs+fire+air+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+gs+fire+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+gs+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+gs+move+mask.png</file>
+        <file>resources/images/battleanimations/recon/recon+gs+stop+mask.png</file>
     </qresource>
 </RCC>

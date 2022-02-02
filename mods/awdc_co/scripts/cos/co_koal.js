@@ -1,9 +1,9 @@
-CO_KOAL.init = function(co)
+CO_KOAL.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_KOAL.activateSuperpower = function(co, powerMode)
+CO_KOAL.activateSuperpower = function(co, powerMode, map)
 {
 	CO_KOAL.activatePower(co, powerMode);
 };
@@ -16,9 +16,9 @@ CO_KOAL.getSuperPowerName = function()
     return CO_KOAL.getPowerName();
 };
 CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         if (map.onMap(atkPosX, atkPosY))
         {
@@ -61,7 +61,7 @@ CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_KOAL.getMovementpointModifier = function(co, unit, posX, posY)
+CO_KOAL.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

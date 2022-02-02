@@ -1,9 +1,9 @@
-CO_DRAKE.init = function(co)
+CO_DRAKE.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_DRAKE.activateSuperpower = function(co, powerMode)
+CO_DRAKE.activateSuperpower = function(co, powerMode, map)
 {
 	CO_DRAKE.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_DRAKE.getSuperPowerName = function()
     return CO_DRAKE.getPowerName();
 };
 CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {

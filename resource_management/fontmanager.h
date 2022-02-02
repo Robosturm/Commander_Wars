@@ -54,6 +54,15 @@ public:
     {
         return getInstance()->getResFont("main72");
     }
+    /**
+     * @brief getLogoFont
+     * @return
+     */
+    inline static oxygine::ResFont* getLogoFont()
+    {
+        return getInstance()->getResFont("logoFont");
+    }
+
 public slots:
     /**
      * @brief setFontColor

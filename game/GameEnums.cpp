@@ -166,6 +166,11 @@ void GameEnums::registerEnums()
     value.setProperty("FlowDirections_East",  FlowDirections_East);
     value.setProperty("FlowDirections_West",  FlowDirections_West);
 
+    value.setProperty("AttackRangeCheck_All", AttackRangeCheck_All);
+    value.setProperty("AttackRangeCheck_None", AttackRangeCheck_None);
+    value.setProperty("AttackRangeCheck_OnlyMin", AttackRangeCheck_OnlyMin);
+    value.setProperty("AttackRangeCheck_OnlyMax", AttackRangeCheck_OnlyMax);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

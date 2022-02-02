@@ -69,5 +69,6 @@
         <!-- ingame stuff -->
         <image file="barforeground.png"/>
         <image file="gamepad.png"/>
+        <image file="logo.png"/>
     </atlas>
 </resources>

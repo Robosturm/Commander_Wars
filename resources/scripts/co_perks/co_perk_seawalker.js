@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if (CO_PERK.isActive(co))
         {
-            if (typeof map !== 'undefined')
+            if (map !== null)
             {
                 if (unit.getOwner() === co.getOwner())
                 {
@@ -31,7 +31,7 @@ var Constructor = function()
     {
         return qsTr("Sets movement costs on sea to 1.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "seamanship";
     };

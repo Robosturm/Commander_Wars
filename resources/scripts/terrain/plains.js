@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseSprite = function(terrain, currentTerrainID)
+    this.loadBaseSprite = function(terrain, currentTerrainID, map)
     {
         var random = globals.randInt(0, 140);
         if (random >= 15)

@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -13,14 +13,26 @@ var Constructor = function()
         var ret = false;
         // are we allowed to attack from this field?
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-                ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
+            ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
         {
-            var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
+            var minRange = unit.getMinRange(actionTargetField);
+            var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));
+            if (unit.hasDirectWeapon() && minRange > 1)
+            {
+                var minFields = globals.getCircle(1, 1);
+                for (var i = 0; i < minFields.size(); ++i)
+                {
+                    fields.append(minFields.at(i))
+                }
+                minFields.remove();
+            }
+
             // check all fields we can attack
             for (var i = 0; i < fields.size(); i++)
             {
-                var x = fields.at(i).x + actionTargetField.x;
-                var y = fields.at(i).y + actionTargetField.y;
+                var field = fields.at(i);
+                var x = field.x + actionTargetField.x;
+                var y = field.y + actionTargetField.y;
                 if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
                 {
                     // check with which weapon we can attack and if we could deal damage with this weapon
@@ -67,19 +79,19 @@ var Constructor = function()
         }
         return ret;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+attack");
         cursorData.setXOffset(- map.getImageSize() / 3);
@@ -95,19 +107,20 @@ var Constructor = function()
         return damage;
     };
 
-    this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckMode, result)
+    this.calcAttackerWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField,
+                                             defUnit, x, y, defenderTakenDamage, luckMode, result, rangeCheck = 0)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
         var weaponID1 = unit.getWeapon1ID();
         if (unit.hasAmmo1() && weaponID1 !== "" &&
-            unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
+            unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y, rangeCheck))
         {
             baseDamage1 = Global[weaponID1].getBaseDamage(defUnit);
         }
         var weaponID2 = unit.getWeapon2ID();
         if (unit.hasAmmo2() && weaponID2 !== "" &&
-            unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
+            unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y, rangeCheck))
         {
             baseDamage2 = Global[weaponID2].getBaseDamage(defUnit);
         }
@@ -116,7 +129,7 @@ var Constructor = function()
         {
             if (baseDamage1 >= baseDamage2)
             {
-                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);;
+                result.x = ACTION_FIRE.calcAttackerDamage(action, unit, weaponID1, attackerTakenDamage, actionTargetField, defUnit, luckMode);
                 result.y = 0;
             }
             else
@@ -129,55 +142,51 @@ var Constructor = function()
     };
     this.calcAttackerDamage = function(action, attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
-        return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getHp() - takenDamage / 10.0),
+        return ACTION_FIRE.calcDamage(action, attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getVirtualHp() - takenDamage / 10.0),
                                       defender, defender.getPosition(), false,
                                       luckMode)
     };
 
-    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result)
+    this.calcDefenderWeaponDamage = function(action, unit, attackerTakenDamage, actionTargetField, defUnit, x, y, defenderTakenDamage, luckModeDefender, result, rangeCheck = 0)
     {
         var baseDamage1 = -1;
         var baseDamage2 = -1;
         var weaponID1 = defUnit.getWeapon1ID();
         if (defUnit.hasAmmo1() && weaponID1 !== "" &&
-            defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y))
+            defUnit.canAttackWithWeapon(0, x, y, actionTargetField.x, actionTargetField.y, rangeCheck))
         {
             baseDamage1 = Global[weaponID1].getBaseDamage(unit);
-
         }
         var weaponID2 = defUnit.getWeapon2ID();
         if (defUnit.hasAmmo2() && weaponID2 !== "" &&
-            defUnit.canAttackWithWeapon(1, x, y, actionTargetField.x, actionTargetField.y))
+            defUnit.canAttackWithWeapon(1, x, y, actionTargetField.x, actionTargetField.y, rangeCheck))
         {
             baseDamage2 = Global[weaponID2].getBaseDamage(unit);
         }
-        if (baseDamage1 >= baseDamage2)
+        if ((baseDamage1 >= 0.0) || (baseDamage2 >= 0.0))
         {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender);
-            result.height = 0;
-        }
-        else
-        {
-            result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender);
-            result.height = 1;
+            if (baseDamage1 >= baseDamage2)
+            {
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID1, defenderTakenDamage, luckModeDefender, x, y);
+                result.height = 0;
+            }
+            else
+            {
+                result.width = ACTION_FIRE.calcDefenderDamage(action, unit, actionTargetField, defUnit, weaponID2, defenderTakenDamage, luckModeDefender, x, y);
+                result.height = 1;
+            }
         }
         return result;
     };
-    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
+    this.calcDefenderDamage = function(action, attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode, defenderX, defenderY)
     {
         var damage = -1;
         // only direct units can deal counter damage
-        if (defender.canCounterAttack(action, defender.getPosition(), attacker, attackerPosition, luckMode))
-        {
-            if (defender.getMinRange(Qt.point(defender.getX(), defender.getY())) === 1 && defenderWeapon !== "")
-            {
-                var health = defender.getHp() - takenDamage / 10.0;                
-                health = globals.roundUp(health);
-                damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defender.getPosition(), health,
-                                                attacker, attackerPosition, true,
-                                                luckMode);
-            }
-        }
+        var defPos = Qt.point(defenderX, defenderY);
+        var health = defender.getVirtualHp() - takenDamage / 10.0;
+        damage = ACTION_FIRE.calcDamage(action, defender, defenderWeapon, defPos, health,
+                                        attacker, attackerPosition, true,
+                                        luckMode);
         return damage;
     };
     this.calcDamage = function(action, attacker, attackerWeapon, attackerPosition, attackerBaseHp,
@@ -192,11 +201,10 @@ var Constructor = function()
         var damage = baseDamage;
         if (baseDamage > 0.0)
         {
-            var hp = attacker.getHp();
-            attacker.setHp(attackerBaseHp);
-            var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defender.getPosition(), isDefender, luckMode);
+            var virtualHp = attacker.getVirtualHpValue();
+            attacker.setVirtualHpValue(attackerBaseHp);
+            var offensive = 100 + attacker.getBonusOffensive(action, attackerPosition, defender, defenderPosition, isDefender, luckMode);
             var defensive = 100 + defender.getBonusDefensive(action, defenderPosition, attacker, attackerPosition, isDefender, luckMode);
-            attacker.setHp(hp);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             var luckDamage = 0;
             if (luckMode !== GameEnums.LuckDamageMode_Off)
@@ -238,6 +246,7 @@ var Constructor = function()
             {
                 damage = 0.0;
             }
+            attacker.setVirtualHpValue(virtualHp);
         }
         return damage;
     };
@@ -289,23 +298,23 @@ var Constructor = function()
         return reduction;
     };
 
-    this.calcBattleDamage = function(action, x, y, luckMode)
+    this.calcBattleDamage = function(map, action, x, y, luckMode)
     {
-        return ACTION_FIRE.calcBattleDamage2(action, action.getTargetUnit(), action.getActionTarget(),
+        return ACTION_FIRE.calcBattleDamage2(map, action, action.getTargetUnit(), action.getActionTarget(),
                                              x, y, luckMode);
     };
 
-    this.calcBattleDamage2 = function(action, attacker, atkPos, x, y, luckMode)
+    this.calcBattleDamage2 = function(map, action, attacker, atkPos, x, y, luckMode)
     {
-        return ACTION_FIRE.calcBattleDamage3(action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
+        return ACTION_FIRE.calcBattleDamage3(map, action, attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
     };
 
-    this.calcBattleDamage3 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage3 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
     {
-        return ACTION_FIRE.calcBattleDamage4(action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
+        return ACTION_FIRE.calcBattleDamage4(map, action, attacker, 0, atkPosX, atkPosY, defender, x, y, 0, luckMode, luckMode, ignoreOutOfVisionRange);
     }
 
-    this.calcBattleDamage4 = function(action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false)
+    this.calcBattleDamage4 = function(map, action, attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, luckModeDefender, ignoreOutOfVisionRange = false)
     {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
@@ -355,7 +364,7 @@ var Constructor = function()
                         (defTerrain.getHp() > 0))
                 {
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
-                            unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
+                        unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
                     {
                         dmg1 = ACTION_FIRE.calcEnviromentDamage(action, unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID(), luckMode);
                     }
@@ -383,12 +392,23 @@ var Constructor = function()
         return result;
     };
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
-        var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
+        var minRange = unit.getMinRange(actionTargetField);
+        var fields = globals.getCircle(minRange, unit.getMaxRange(actionTargetField));
+        if (unit.hasDirectWeapon() && minRange > 1)
+        {
+            var minFields = globals.getCircle(1, 1);
+            for (var i = 0; i < minFields.size(); ++i)
+            {
+                fields.append(minFields.at(i))
+            }
+            minFields.remove();
+        }
+
         data.setColor("#FFFF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
@@ -396,8 +416,9 @@ var Constructor = function()
         // check all fields we can attack
         for (var i = 0; i < fields.size(); i++)
         {
-            var x = fields.at(i).x + actionTargetField.x;
-            var y = fields.at(i).y + actionTargetField.y;
+            var field = fields.at(i)
+            var x = field.x + actionTargetField.x;
+            var y = field.y + actionTargetField.y;
             // generally attacks on shrouded fields are forbidden
             if (map.onMap(x, y) && unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
@@ -407,15 +428,15 @@ var Constructor = function()
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
-                        var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                        var resultNoLuckDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
                                                                             actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                             GameEnums.LuckDamageMode_Off, GameEnums.LuckDamageMode_Off);
                         if (resultNoLuckDmg.x >= 0.0)
                         {
-                            var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                            var resultMaxDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
                                                                              actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                              GameEnums.LuckDamageMode_Max, GameEnums.LuckDamageMode_Min);
-                            var resultMinDmg = ACTION_FIRE.calcBattleDamage4(action, action.getTargetUnit(), 0,
+                            var resultMinDmg = ACTION_FIRE.calcBattleDamage4(map, action, action.getTargetUnit(), 0,
                                                                              actionTargetField.x, actionTargetField.y, null, x, y, 0,
                                                                              GameEnums.LuckDamageMode_Min, GameEnums.LuckDamageMode_Max);
 
@@ -428,7 +449,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+                        var result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
                         if (result.x >= 0.0)
                         {
                             data.addPoint(Qt.point(x, y));
@@ -438,7 +459,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+                    var result = ACTION_FIRE.calcBattleDamage(map, action, x, y, GameEnums.LuckDamageMode_Off);
                     if (result.x >= 0.0)
                     {
                         data.addPoint(Qt.point(x, y));
@@ -449,7 +470,7 @@ var Constructor = function()
         }
         fields.remove();
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -457,7 +478,7 @@ var Constructor = function()
             action.startReading();
             var targetX = action.readDataInt32();
             var targetY = action.readDataInt32();
-            var result = ACTION_FIRE.calcBattleDamage(action, targetX, targetY, GameEnums.LuckDamageMode_On);
+            var result = ACTION_FIRE.calcBattleDamage(map, action, targetX, targetY, GameEnums.LuckDamageMode_On);
             action.writeDataInt32(result.x);
             action.writeDataInt32(result.y);
             action.writeDataInt32(result.width);
@@ -479,7 +500,7 @@ var Constructor = function()
     this.postAnimationDefenderDamage = -1;
     this.postAnimationDefenderWeapon = -1;
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         // read action data
@@ -492,14 +513,14 @@ var Constructor = function()
         ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();        
         // we need to move the unit to the target position
         ACTION_FIRE.postAnimationUnit = action.getTargetUnit();
-        ACTION_FIRE.applPostDamageReduction();
-        var animation = Global[ACTION_FIRE.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        ACTION_FIRE.applyPostDamageReduction(map);
+        var animation = Global[ACTION_FIRE.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
                 currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
-            var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
+            var animation2 = GameAnimationFactory.createAnimation(map, ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 2, 0, 2);
             animation2.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
             animation.queueAnimation(animation2);
@@ -516,7 +537,7 @@ var Constructor = function()
 
     };
 
-    this.applPostDamageReduction = function()
+    this.applyPostDamageReduction = function(map)
     {
         var defTerrain = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY);
         var defBuilding = defTerrain.getBuilding();
@@ -533,9 +554,9 @@ var Constructor = function()
         }
     };
 
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
-        ACTION_FIRE.battle(ACTION_FIRE.postAnimationUnit, ACTION_FIRE.postAnimationAttackerDamage, ACTION_FIRE.postAnimationAttackerWeapon,
+        ACTION_FIRE.battle(map, ACTION_FIRE.postAnimationUnit, ACTION_FIRE.postAnimationAttackerDamage, ACTION_FIRE.postAnimationAttackerWeapon,
                            ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY,
                            ACTION_FIRE.postAnimationDefenderDamage, ACTION_FIRE.postAnimationDefenderWeapon,
                            false);
@@ -548,7 +569,7 @@ var Constructor = function()
         ACTION_FIRE.postAnimationDefenderDamage = -1;
         ACTION_FIRE.postAnimationDefenderWeapon = -1;
     };
-    this.battle = function(attacker, attackerDamage, attackerWeapon,
+    this.battle = function(map, attacker, attackerDamage, attackerWeapon,
                            defenderX, defenderY, defenderDamage, defenderWeapon,
                            dontKillUnits)
     {
@@ -650,12 +671,12 @@ var Constructor = function()
                 var unitBattleAnimation = null;
                 if (defFirststrike && !atkFirststrike && counterdamage >= 0)
                 {
-                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon,
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(map, defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon,
                                                                                      attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon, attackerDamage);
                 }
                 else
                 {
-                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
+                    unitBattleAnimation = GameAnimationFactory.createBattleAnimation(map, attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
                                                                                      defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon, defenderDamage);
                 }
 
@@ -667,7 +688,7 @@ var Constructor = function()
         else
         {
             // we attacked a building or terrain ;)
-            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, -1, -1, attackerWeapon,
+            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(map, attacker.getTerrain(), attacker, -1, -1, attackerWeapon,
                                                                                   defTerrain, null, -1, -1, defenderWeapon, -1);
             buildBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostBuildingAnimation");
             ACTION_FIRE.postBuildingAnimationTerrain = defTerrain;
@@ -700,7 +721,7 @@ var Constructor = function()
     };
     this.postUnitAnimationAttacker = null;
     this.postUnitAnimationDefender = null;
-    this.performPostUnitAnimation = function()
+    this.performPostUnitAnimation = function(postAnimation, map)
     {
         var player = map.getCurrentPlayer();
         var attacker = ACTION_FIRE.postUnitAnimationAttacker;
@@ -737,7 +758,7 @@ var Constructor = function()
     }
 
     this.postBuildingAnimationTerrain = null;
-    this.performPostBuildingAnimation = function()
+    this.performPostBuildingAnimation = function(postAnimation, map)
     {
         var defBuilding = ACTION_FIRE.postBuildingAnimationTerrain.getBuilding();
         var player = map.getCurrentPlayer();
@@ -771,17 +792,17 @@ var Constructor = function()
     };
 
     this.createOverworldBattleAnimation = function(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                             pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage)
+                                             pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage, map)
     {
         var pRet = null;
         // attacking unit
         var atkDamage = globals.roundUp(defStartHp) - globals.roundUp(defEndHp);
         var defDamage = globals.roundUp(atkStartHp) - globals.roundUp(atkEndHp);
-        var pAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY(), 70);
+        var pAtk = GameAnimationFactory.createAnimation(map, pDefTerrain.getX(), pDefTerrain.getY(), 70);
         var imageSize = map.getImageSize();
         pAtk.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
         pAtk.setSound("talongunhit.wav", 1);
-        var pDmgTextAtk = GameAnimationFactory.createAnimation(pDefTerrain.getX(), pDefTerrain.getY());
+        var pDmgTextAtk = GameAnimationFactory.createAnimation(map, pDefTerrain.getX(), pDefTerrain.getY());
         pDmgTextAtk.addText(atkDamage + " Hp", -8, 0, 2.0, "#FF0000");
         pDmgTextAtk.addTweenPosition(Qt.point(pDefTerrain.getX() * imageSize, (pDefTerrain.getY() - 2) * imageSize), 1000);
         pDmgTextAtk.addTweenWait(1500);
@@ -789,11 +810,11 @@ var Constructor = function()
         if (defenderDamage >= 0)
         {
             // counter damage
-            pRet = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
+            pRet = GameAnimationFactory.createAnimation(map, pAtkTerrain.getX(), pAtkTerrain.getY(), 70);
             pRet.addSprite("blackhole_shot", -imageSize * 0.5, -imageSize * 0.5, 0, 2.0);
             pRet.setSound("talongunhit.wav", 1);
             pDmgTextAtk.queueAnimation(pRet);
-            var pDmgTextDef = GameAnimationFactory.createAnimation(pAtkTerrain.getX(), pAtkTerrain.getY());
+            var pDmgTextDef = GameAnimationFactory.createAnimation(map, pAtkTerrain.getX(), pAtkTerrain.getY());
             pDmgTextDef.addText(defDamage + " Hp", -8, 0, 2.0, "#FF0000");
             pDmgTextDef.addTweenPosition(Qt.point(pAtkTerrain.getX() * imageSize, (pAtkTerrain.getY() - 2) * imageSize), 1000);
             pDmgTextDef.addTweenWait(1500);
@@ -804,7 +825,7 @@ var Constructor = function()
     }
 
     // you may implement the following function in a mod to further tweak when a unit can attack with a certain weapon.
-    // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY)
+    // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY, rangeCheck)
 }
 
 

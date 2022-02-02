@@ -12,8 +12,8 @@
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/scripteditor.h"
 
-ScriptEditor::ScriptEditor()
-    : QObject()
+ScriptEditor::ScriptEditor(GameMap* pMap)
+    : m_pMap(pMap)
 {
     setObjectName("ScriptEditor");
     Mainapp* pApp = Mainapp::getInstance();
@@ -28,7 +28,7 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_Data = spScriptData::create();
+    m_Data = spScriptData::create(m_pMap);
 
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont24());
     style.color = FontManager::getFontColor();
@@ -115,13 +115,14 @@ ScriptEditor::ScriptEditor()
     m_Events->setPosition(30, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button
-    oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
-    pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
-    pSpriteBox->addChild(pEventButton);
-    pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+    m_pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
+    m_pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
+    pSpriteBox->addChild(m_pEventButton);
+    m_pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
         emit sigAddEvent();
     });
+    m_pEventButton->setEnabled(false);
     connect(this, &ScriptEditor::sigAddEvent, this, &ScriptEditor::addEvent, Qt::QueuedConnection);
 
     pText = oxygine::spTextField::create();
@@ -318,22 +319,10 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         pSelectButton->setPosition(x + 140 * 2, boxY);
         pSpritebox->addChild(pSelectButton);
         auto pPtrSpritebox = pSpritebox.get();
+        auto pCondition = condition.get();
         pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
         {
-            for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
-            {
-                m_ConditionBoxes[i]->setAddColor(0, 0, 0);
-            }
-            if (m_CurrentCondition == condition.get())
-            {
-                m_CurrentCondition = nullptr;
-            }
-            else
-            {
-                pPtrSpritebox->setAddColor(32, 200, 32);
-                m_CurrentCondition = condition.get();
-            }
-            emit sigUpdateEvents();
+            selectCondition(pPtrSpritebox, pCondition);
         });
         condition = condition->getSubCondition();
         if (condition.get() != nullptr)
@@ -345,6 +334,25 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 
     y += 54 + boxY;
     m_ConditionPanel->setContentWidth(x + 140 * 3 + 30);
+}
+
+void ScriptEditor::selectCondition(oxygine::Box9Sprite* pPtrSpritebox, ScriptCondition* pCondition)
+{
+    for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
+    {
+        m_ConditionBoxes[i]->setAddColor(0, 0, 0);
+    }
+    if (m_CurrentCondition == pCondition)
+    {
+        m_CurrentCondition = nullptr;
+    }
+    else
+    {
+        pPtrSpritebox->setAddColor(32, 200, 32);
+        m_CurrentCondition = pCondition;
+    }
+    m_pEventButton->setEnabled(m_CurrentCondition != nullptr);
+    emit sigUpdateEvents();
 }
 
 void ScriptEditor::updateEvents()
@@ -420,11 +428,11 @@ void ScriptEditor::addCondition()
             parent = subCondition;
             subCondition = parent->getSubCondition();
         }
-        parent->setSubCondition(ScriptCondition::createCondition(type));
+        parent->setSubCondition(ScriptCondition::createCondition(m_pMap, type));
     }
     else
     {
-        addConditionToData(ScriptCondition::createCondition(type));
+        addConditionToData(ScriptCondition::createCondition(m_pMap, type));
     }
     updateConditios();
 }
@@ -434,7 +442,7 @@ void ScriptEditor::addEvent()
     if (m_CurrentCondition != nullptr)
     {
         ScriptEvent::EventType type = static_cast<ScriptEvent::EventType>(m_Events->getCurrentItem());
-        m_CurrentCondition->addEvent(ScriptEvent::createEvent(type));
+        m_CurrentCondition->addEvent(ScriptEvent::createEvent(m_pMap, type));
         updateEvents();
     }
 }
@@ -454,7 +462,7 @@ void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
     QString data;
     QTextStream stream(&data);
     pEvent->writeEvent(stream);
-    spScriptEvent pNewEvent = ScriptEvent::createEvent(pEvent->getEventType());
+    spScriptEvent pNewEvent = ScriptEvent::createEvent(m_pMap, pEvent->getEventType());
     stream.seek(0);
     QString line = stream.readLine();
     pNewEvent->readEvent(stream, line);
@@ -469,7 +477,7 @@ void ScriptEditor::duplicateCondition()
         QString data;
         QTextStream stream(&data);
         m_CurrentCondition->writeCondition(stream);
-        spScriptCondition pNewCondition = ScriptCondition::createCondition(m_CurrentCondition->getType());
+        spScriptCondition pNewCondition = ScriptCondition::createCondition(m_pMap, m_CurrentCondition->getType());
         stream.seek(0);
         QString line = stream.readLine();
         pNewCondition->readCondition(stream, line);

@@ -2,7 +2,7 @@ name: Commnader_Wars
 on: [push]
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.1'
+  QT_Version: '6.2.2'
   
 jobs:
   install:
@@ -14,7 +14,7 @@ jobs:
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
-            # 'win64_mingw81'
+            # 'win64_mingw90
             target: 'desktop'
             qtPath: 'msvc2019_64'
             installerCommands1: ''

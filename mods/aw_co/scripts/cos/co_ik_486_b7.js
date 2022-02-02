@@ -1,9 +1,9 @@
-CO_IK_486_B7.init = function(co)
+CO_IK_486_B7.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_IK_486_B7.activateSuperpower = function(co, powerMode)
+CO_IK_486_B7.activateSuperpower = function(co, powerMode, map)
 {
     CO_IK_486_B7.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_IK_486_B7.getSuperPowerName = function()
     return CO_IK_486_B7.getPowerName();
 };
 CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                          defender, defPosX, defPosY, isDefender, action)
+                                          defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -50,7 +50,7 @@ CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY)
+CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -73,7 +73,7 @@ CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY)
 };
 
 CO_IK_486_B7.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action)
+                                           defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

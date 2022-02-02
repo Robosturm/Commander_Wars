@@ -40,10 +40,10 @@ var Constructor = function()
         return qsTr("Siege Cannon");
     };
 
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("siege_cannon+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
@@ -83,7 +83,7 @@ var Constructor = function()
         }
     };
     this.offBonus = 15;
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var variables = unit.getVariables();
         var turnCount = variables.createVariable("TURN_COUNT");
@@ -114,6 +114,10 @@ var Constructor = function()
     this.getCOSpecificUnit = function(building)
     {
         return true;
+    };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
     };
 }
 

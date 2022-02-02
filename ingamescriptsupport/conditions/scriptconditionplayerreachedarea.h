@@ -10,7 +10,7 @@ class ScriptConditionPlayerReachedArea : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionPlayerReachedArea();
+    explicit ScriptConditionPlayerReachedArea(GameMap* pMap);
     /**
      * @brief readCondition
      * @param rStream

@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionPlayerDefeated::ScriptConditionPlayerDefeated()
-    : ScriptCondition(ConditionType::playerDefeated)
+ScriptConditionPlayerDefeated::ScriptConditionPlayerDefeated(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::playerDefeated)
 {
 
 }
@@ -40,11 +40,11 @@ void ScriptConditionPlayerDefeated::readCondition(QTextStream& rStream, QString 
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionPlayerDefeated, line))
+        if (readSubCondition(m_pMap, rStream, ConditionPlayerDefeated, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

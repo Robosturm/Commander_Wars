@@ -5,9 +5,9 @@ var Constructor = function()
         return 2;
     };
     this.baseTerrainId = "DESERT";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEPIPELINE.loadBase(terrain, "desert_pipeline")
+        __BASEPIPELINE.loadBase(terrain, "desert_pipeline", map)
     };
     this.getTerrainSprites = function()
     {

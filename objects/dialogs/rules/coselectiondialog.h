@@ -16,15 +16,16 @@
 
 #include "game/gamemap.h"
 
+class GameMap;
 class COSelectionDialog;
-typedef oxygine::intrusive_ptr<COSelectionDialog> spCOSelectionDialog;
+using spCOSelectionDialog = oxygine::intrusive_ptr<COSelectionDialog>;
 
 
 class COSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit COSelectionDialog(QString coid, QColor color, qint32 player, QStringList coids = {});
+    explicit COSelectionDialog(GameMap* pMap, QString coid, QColor color, qint32 player, QStringList coids = {});
     virtual ~COSelectionDialog() = default;
 signals:
     void editFinished(QString coid, qint32 player);
@@ -46,6 +47,7 @@ private:
     QString m_currentCOID;
     QStringList m_coids;
     qint32 m_player;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // COSELECTIONDIALOG_H

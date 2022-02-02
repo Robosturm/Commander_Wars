@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -18,7 +18,7 @@ var Constructor = function()
     {
         return qsTr("Increases the indirect-fire defense by 12%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "snipeguard";
     };

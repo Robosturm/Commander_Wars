@@ -11,7 +11,7 @@ class ScriptEventModifyVariable : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventModifyVariable();
+    explicit ScriptEventModifyVariable(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

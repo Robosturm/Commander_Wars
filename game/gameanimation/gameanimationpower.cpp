@@ -17,12 +17,12 @@
 
 GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
 
-spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
+spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap)
 {
     spGameAnimationPower animation;
     if (m_pGameAnimationPower == nullptr)
     {
-        animation = spGameAnimationPower::create(frameTime, color, powerMode, pCO);
+        animation = spGameAnimationPower::create(frameTime, color, powerMode, pCO, pMap);
         m_pGameAnimationPower = animation.get();
     }
     else
@@ -32,8 +32,8 @@ spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameT
     return animation;
 }
 
-GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
-    : GameAnimation (frameTime),
+GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap)
+    : GameAnimation(frameTime, pMap),
       m_endTimer(this),
       m_pCO(pCO)
 {
@@ -97,13 +97,13 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     QString text;
     if (powerMode == GameEnums::PowerMode_Tagpower)
     {
-        spGameMap pMap = GameMap::getInstance();
+        
         QJSValueList args;
-        CO* pCO0 = pMap->getCurrentPlayer()->getCO(0);
+        CO* pCO0 = m_pMap->getCurrentPlayer()->getCO(0);
         createPowerDescription(pCO0, powerMode, true);
         QJSValue obj1 = pInterpreter->newQObject(pCO0);
         args << obj1;
-        CO* pCO1 = pMap->getCurrentPlayer()->getCO(1);
+        CO* pCO1 = m_pMap->getCurrentPlayer()->getCO(1);
         createPowerDescription(pCO1, powerMode, false);
         QJSValue obj2 = pInterpreter->newQObject(pCO1);
         args << obj2;

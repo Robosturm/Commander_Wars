@@ -6,10 +6,8 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class GameMap;
-typedef oxygine::intrusive_ptr<GameMap> spGameMap;
-
 class Minimap;
-typedef oxygine::intrusive_ptr<Minimap> spMinimap;
+using spMinimap = oxygine::intrusive_ptr<Minimap>;
 
 class Minimap : public QObject, public oxygine::Actor
 {
@@ -23,7 +21,7 @@ public:
 signals:
     void clicked(qint32 x, qint32 y, bool updateMinimapPosition);
 public slots:
-    void updateMinimap(spGameMap pMap, bool useVision = false);
+    void updateMinimap(GameMap*, bool useVision = false);
 private:
     struct MinimapFieldInfo
     {

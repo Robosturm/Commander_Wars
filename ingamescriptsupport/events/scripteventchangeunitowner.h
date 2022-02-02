@@ -10,7 +10,7 @@ class ScriptEventChangeUnitOwner : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventChangeUnitOwner();
+    explicit ScriptEventChangeUnitOwner(GameMap* pMap);
     /**
      * @brief removeCustomStart
      * @param text

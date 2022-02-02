@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-	this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY)
+	this.getEnemyTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr(" +1 Enemy Terrain Stars");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "intel_leak";
     };

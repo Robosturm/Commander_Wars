@@ -65,7 +65,7 @@ public slots:
      * @param frameTime in ms
      * @return
      */
-    static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    static GameAnimation* createAnimation(GameMap* pMap, quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createBattleAnimation
      * @param pAtkTerrain
@@ -78,7 +78,7 @@ public slots:
      * @param defEndHp
      * @return
      */
-    static GameAnimation* createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+    static GameAnimation* createBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
     /**
      * @brief createAnimationPower
@@ -88,7 +88,7 @@ public slots:
      * @param frameTime
      * @return
      */
-    static GameAnimationPower* createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationPower* createAnimationPower(GameMap* pMap, QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createGameAnimationDialog
      * @param text
@@ -97,26 +97,26 @@ public slots:
      * @param color
      * @return
      */
-    static GameAnimationDialog* createGameAnimationDialog(const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationDialog* createGameAnimationDialog(GameMap* pMap, const QString & text, const QString & coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createWalkingAnimation creates a walking animation. This doesn't move the unit
      * @param pUnit the unit that will walk
      * @param movePath the path the unit will walk
      * @return
      */
-    static GameAnimationWalk* createWalkingAnimation(Unit* pUnit, GameAction* pAction);
+    static GameAnimationWalk* createWalkingAnimation(GameMap* pMap, Unit* pUnit, GameAction* pAction);
     /**
      * @brief createGameAnimationCapture
      * @return
      */
-    static GameAnimationCapture* createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
+    static GameAnimationCapture* createGameAnimationCapture(GameMap* pMap, qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
     /**
      * @brief createGameAnimationNextDay
      * @param pPlayer
      * @param frameTime
      * @return
      */
-    static GameAnimationNextDay* createGameAnimationNextDay(Player* pPlayer, quint32 frameTime = GameMap::frameTime, quint32 uptimeMs = 2000);
+    static GameAnimationNextDay* createGameAnimationNextDay(GameMap* pMap, Player* pPlayer, quint32 frameTime = GameMap::frameTime, quint32 uptimeMs = 2000);
     /**
      * @brief getAnimationCount
      * @return the current amount of running animations
@@ -159,7 +159,7 @@ private:
      * @param defenderDamage
      * @return
      */
-    static GameAnimation* createOverworldBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+    static GameAnimation* createOverworldBattleAnimation(GameMap* pMap, Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                          Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
 private:
     static spGameAnimationFactory m_pInstance;

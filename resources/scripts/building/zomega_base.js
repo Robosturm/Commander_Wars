@@ -40,9 +40,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 4;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZOMEGA_BASE.getBuildingWidth(), ZOMEGA_BASE.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZOMEGA_BASE.getBuildingWidth(), ZOMEGA_BASE.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {
@@ -53,7 +53,7 @@ var Constructor = function()
         return qsTr("Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.");
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_missile+0";
     };

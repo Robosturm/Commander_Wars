@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(5);
@@ -13,7 +13,7 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,7 +33,7 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -51,7 +51,7 @@ var Constructor = function()
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                 variable.writeDataInt32(1);
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 5)
                 {
@@ -87,7 +87,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -105,7 +105,7 @@ var Constructor = function()
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                 variable.writeDataInt32(2);
-                var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                 var delay = globals.randInt(135, 265);
                 if (animations.length < 7)
                 {
@@ -141,7 +141,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
     {
         if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
@@ -167,7 +167,7 @@ var Constructor = function()
         }
     };
 
-    this.getActionModifierList = function(co, unit)
+    this.getActionModifierList = function(co, unit, map)
     {
         switch (co.getPowerMode())
         {
@@ -192,12 +192,12 @@ var Constructor = function()
         return [];
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         var inRangeCount = 0;
         if (attacker.getBaseMaxRange() === 1)
@@ -255,7 +255,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -264,7 +264,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getFirerangeModifier = function(co, unit, posX, posY)
+    this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -290,7 +290,7 @@ var Constructor = function()
     {
         return "GE";
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         if (unit.getBaseMaxRange() > 1)
         {
@@ -298,7 +298,11 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getCOUnits = function(co, building)
+    this.getAiCoBuildRatioModifier = function(co, map)
+    {
+        return 0.5;
+    };
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

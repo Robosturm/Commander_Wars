@@ -18,6 +18,7 @@
 
 class Player;
 class Unit;
+class GameMap;
 
 class GameRules;
 typedef oxygine::intrusive_ptr<GameRules> spGameRules;
@@ -38,7 +39,7 @@ public:
         Permanent
     };
 
-    explicit GameRules();
+    explicit GameRules(GameMap* pMap);
     virtual ~GameRules() = default;
     /**
      * @brief serialize stores the object
@@ -84,9 +85,15 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
 signals:
     void sigVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief getHpDefenseReduction
      * @return
@@ -591,8 +598,8 @@ private:
     GameEnums::Fog m_FogMode{GameEnums::Fog_Off};
     qint32 m_UnitLimit{0};
 
-    QVector<QVector<oxygine::spSprite>> m_FogSprites;
-    QVector<oxygine::spSprite> m_WeatherSprites;
+    std::vector<std::vector<oxygine::spSprite>> m_FogSprites;
+    std::vector<oxygine::spSprite> m_WeatherSprites;
 
     qint32 roundTime{0};
     Timer m_RoundTimer;
@@ -624,7 +631,8 @@ private:
     GameEnums::PowerGainZone m_powerGainZone{GameEnums::PowerGainZone_GlobalCoZoneBonus};
     GameEnums::PowerGainMode m_powerGainMode{GameEnums::PowerGainMode_Money};
     float m_powerUsageReduction{0.2f};
-    float m_powerLoose{0.5f};
+    float m_powerLoose{0.0f};
+    GameMap* m_pMap{nullptr};
 
     Password m_password;
     QString m_description;

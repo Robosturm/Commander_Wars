@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionBuildingCaptured::ScriptConditionBuildingCaptured()
-    : ScriptCondition (ConditionType::buildingCaptured)
+ScriptConditionBuildingCaptured::ScriptConditionBuildingCaptured(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::buildingCaptured)
 {
 }
 
@@ -53,7 +53,7 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream, QStrin
     line = line.simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
-                            .replace(").getBuilding().getOwner() === null && map.getTerrain(", ",")
+                            .replace(").getBuilding().getOwner() !== null && map.getTerrain(", ",")
                             .replace(").getBuilding().getOwner().getPlayerID() === ", ",")
                             .replace(" && ", ",").split(",");
     if (items.size() >= 6)
@@ -70,11 +70,11 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream, QStrin
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionBuildingCaptured, line))
+        if (readSubCondition(m_pMap, rStream, ConditionBuildingCaptured, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

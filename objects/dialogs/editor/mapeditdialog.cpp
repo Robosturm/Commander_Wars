@@ -176,6 +176,7 @@ void MapEditDialog::scriptFileChanged(QString file)
             pText->objectName() == "ScriptTextbox")
         {
             pText->setCurrentText(file);
+            m_info.scriptFile = file;
         }
     }
 }

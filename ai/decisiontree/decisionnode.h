@@ -1,9 +1,9 @@
 #pragma once
-#include "QObject"
+#include <QObject>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-#include "ai/decisionquestion.h"
+#include "ai/decisiontree/decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 

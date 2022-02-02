@@ -69,11 +69,8 @@ public:
      * @param map path to the map which should be loaded
      */
     explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
+    void loadMap(QString map, bool onlyLoad, bool fast, bool savegame);
     virtual ~GameMap();
-    /**
-     * @brief deleteMap
-     */
-    static void deleteMap();
     /**
      * @brief newMap
      * @param width
@@ -113,14 +110,6 @@ public:
      */
     void rotateY();
 
-    /**
-     * @brief getInstance
-     * @return
-     */
-    inline static spGameMap getInstance()
-    {
-        return m_pInstance;
-    }
     /**
      * @brief getTerrain smart pointer
      * @param x
@@ -321,7 +310,7 @@ public slots:
      * @param unitID
      * @return
      */
-    bool isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs);
+    bool isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs);
     /**
      * @brief getUnit
      * @param uniqueID
@@ -778,7 +767,6 @@ private:
     QColor getGridColor();
     void updateMapFlags() const;
 private:
-    static spGameMap m_pInstance;
     QString m_mapPath;
     MapHeaderInfo m_headerInfo;
     std::vector<std::vector<spTerrain>> m_fields;
@@ -789,9 +777,8 @@ private:
     qint32 m_currentDay{0};
     spGameRules m_Rules;
     spCampaign m_Campaign;
-    spGameRecorder m_Recorder{spGameRecorder::create()};
-    spGameScript m_GameScript{spGameScript::create()};
-    static const QString m_JavascriptName;
+    spGameRecorder m_Recorder{spGameRecorder::create(this)};
+    spGameScript m_GameScript{spGameScript::create(this)};
     static const QString m_GameAnimationFactory;
     bool m_loaded{false};
     QString m_mapMusic;

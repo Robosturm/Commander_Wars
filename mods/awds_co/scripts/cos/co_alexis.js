@@ -1,11 +1,11 @@
 CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
         var nearBuildings = false;
         var fields = globals.getCircle(0, 2);
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             for (var i = 0; i < fields.size(); i++)
             {
@@ -47,7 +47,7 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 
-CO_ALEXIS.startOfTurn = function(co)
+CO_ALEXIS.startOfTurn = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -76,9 +76,9 @@ CO_ALEXIS.startOfTurn = function(co)
                         if ((unit !== null) &&
                                 (unit.getOwner() === co.getOwner()))
                         {
-                            UNIT.repairUnit(unit, 1);
+                            UNIT.repairUnit(unit, 1, map);
 
-                            animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                            animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                             var delay = globals.randInt(135, 265);
                             if (animations.length < 5)
                             {
@@ -116,7 +116,7 @@ CO_ALEXIS.startOfTurn = function(co)
 };
 CO_ALEXIS.coZoneBonus = 0;
 CO_ALEXIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -128,7 +128,7 @@ CO_ALEXIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ALEXIS.getRepairBonus = function(co, unit, posX, posY)
+CO_ALEXIS.getRepairBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

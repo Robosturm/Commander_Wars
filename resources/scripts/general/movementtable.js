@@ -22,4 +22,9 @@ var MOVEMENTTABLE =
         }
         return -1;
     },
+    getSupportsFastPfs : function()
+    {
+        // return false if movepoints aren't the same for the same tile e.g. for hovercrafts
+        return true;
+    },
 };

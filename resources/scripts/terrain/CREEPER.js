@@ -14,7 +14,7 @@ var Constructor = function()
     {
         return qsTr("Creeper");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -33,13 +33,13 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_East, false);
         surroundings += terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_West, false);
         terrain.loadBaseSprite("creeper" + surroundings);
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         // Check every side.
         var surroundings = terrain.getSurroundings("CREEPER", false, false, GameEnums.Directions_Direct, false);
@@ -80,7 +80,7 @@ var Constructor = function()
             }
         }
     };
-    this.startOfTurn = function(terrain)
+    this.startOfTurn = function(terrain, map)
     {
         var unit = terrain.getUnit();
         if (unit !== null)

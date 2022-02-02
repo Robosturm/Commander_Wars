@@ -11,11 +11,13 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
+
 class ScriptCondition;
-typedef oxygine::intrusive_ptr<ScriptCondition> spScriptCondition;
+using spScriptCondition = oxygine::intrusive_ptr<ScriptCondition>;
 
 class ScriptEditor;
-typedef oxygine::intrusive_ptr<ScriptEditor> spScriptEditor;
+using spScriptEditor = oxygine::intrusive_ptr<ScriptEditor>;
 
 class ScriptCondition : public QObject, public oxygine::ref_counter
 {
@@ -56,13 +58,13 @@ public:
      * @param type
      * @return
      */
-    static spScriptCondition createCondition(ConditionType type);
+    static spScriptCondition createCondition(GameMap* pMap, ConditionType type);
     /**
      * @brief createReadCondition
      * @param rStream
      * @return
      */
-    static spScriptCondition createReadCondition(QTextStream& rStream, QString & line);
+    static spScriptCondition createReadCondition(GameMap* pMap, QTextStream& rStream, QString & line);
     /**
      * @brief readCondition
      * @param rStream
@@ -159,14 +161,15 @@ public:
      * @param id
      * @return
      */
-    bool readSubCondition(QTextStream& rStream, QString id, QString & line);
+    bool readSubCondition(GameMap* pMap, QTextStream& rStream, QString id, QString & line);
 protected:
-    explicit ScriptCondition(ConditionType type);
+    explicit ScriptCondition(GameMap* pMap, ConditionType type);
     QVector<spScriptEvent> events;
     spScriptCondition subCondition;
     ScriptCondition* pParent{nullptr};
 
     ConditionType m_Type;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // SCRIPTCONDITION_H

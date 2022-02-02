@@ -20,7 +20,7 @@ var Constructor = function()
         return 0;
     };
     // create and initialize the variables for this rule
-    this.init = function(rule)
+    this.init = function(rule, map)
     {
         var playerCount = map.getPlayerCount();
         for (var i = 0; i < playerCount; i++)
@@ -60,7 +60,7 @@ var Constructor = function()
             }
         }
     };
-    this.checkCOUnitCount = function(rule, player)
+    this.checkCOUnitCount = function(rule, player, map)
     {
         var playerID = player.getPlayerID();
         // get variable names
@@ -111,22 +111,22 @@ var Constructor = function()
         return count;
     };
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
         // get co unit limit
-        var coUnitLimit = VICTORYRULE_COUNITLOST.getRuleValue(rule);
+        var coUnitLimit = VICTORYRULE_COUNITLOST.getRuleValue(rule, map);
         // check limit against current lost count
-        if (VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player) >= coUnitLimit &&
+        if (VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player, map) >= coUnitLimit &&
             coUnitLimit > 0)
         {
             return GameEnums.DefeatType_Defeated;
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
         // return co unit count
-        return VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player);
+        return VICTORYRULE_COUNITLOST.checkCOUnitCount(rule, player, map);
     };
 };
 

@@ -11,7 +11,7 @@ class ScriptEventAddFunds : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventAddFunds();
+    ScriptEventAddFunds(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

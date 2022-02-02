@@ -1,15 +1,15 @@
-CO_RACHEL.init = function(co)
+CO_RACHEL.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(6);
 };
 CO_RACHEL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 CO_RACHEL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -20,12 +20,12 @@ CO_RACHEL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_RACHEL.getBonusLuck = function(co, unit, posX, posY)
+CO_RACHEL.getBonusLuck = function(co, unit, posX, posY, map)
 {
     return 0;
 };
 
-CO_RACHEL.getRepairBonus = function(co, unit, posX, posY)
+CO_RACHEL.getRepairBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

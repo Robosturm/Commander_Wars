@@ -26,7 +26,7 @@ const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFired
 const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
 const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
+BattleAnimationSprite::BattleAnimationSprite(GameMap* pMap, spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
     : QObject(),
       m_pUnit(pUnit),
       m_pTerrain(pTerrain),
@@ -151,6 +151,8 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (m_nextFrames.length() > 0 && !clearSprite)
     {
@@ -220,6 +222,8 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
     QJSValue obj3 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj3;
     args1 << unitIdx;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
     return erg.toVariant().toPoint();
 }
@@ -260,6 +264,8 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit, Unit* pDefender, 
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -283,6 +289,8 @@ bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qin
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
     if (erg.isBool())
     {
@@ -306,6 +314,8 @@ qint32 BattleAnimationSprite::getDyingDurationMS(Unit* pUnit, Unit* pDefender, q
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -349,6 +359,8 @@ qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qi
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -372,6 +384,8 @@ qint32 BattleAnimationSprite::getFiredDurationMS(Unit* pUnit, Unit* pDefender, q
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -395,6 +409,8 @@ qint32 BattleAnimationSprite::getMoveInDurationMS(Unit* pUnit, Unit* pDefender, 
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -418,6 +434,8 @@ qint32 BattleAnimationSprite::getStopDurationMS(Unit* pUnit, Unit* pDefender, qi
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
+    QJSValue obj5 = pInterpreter->newQObject(m_pMap);
+    args1 << obj5;
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (erg.isNumber())
     {
@@ -623,41 +641,34 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
-        if (pAnim->getTotalFrames() > 1)
+        if (frames < 0)
         {
-            if (frames < 0)
-            {
-                frames = pAnim->getColumns() - 1;
-            }
-            if (frames > pAnim->getColumns() - 1)
-            {
-                frames = pAnim->getColumns() - 1;
-            }
-            if (startFrame < 0)
-            {
-                startFrame = 0;
-            }
-            if (startFrame > pAnim->getColumns() - 1)
-            {
-                startFrame = pAnim->getColumns() - 1;
-            }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
-            pSprite->addTween(tween);
-            if (deleteAfter && moveTime <= 0)
-            {
-                tween->addDoneCallback([=](oxygine::Event * pEvent)
-                {
-                    oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
-                    if (pTarget.get() != nullptr)
-                    {
-                        emit sigDetachChild(pTarget);
-                    }
-                });
-            }
+            frames = pAnim->getColumns() - 1;
         }
-        else
+        if (frames > pAnim->getColumns() - 1)
         {
-            pSprite->setResAnim(pAnim);
+            frames = pAnim->getColumns() - 1;
+        }
+        if (startFrame < 0)
+        {
+            startFrame = 0;
+        }
+        if (startFrame > pAnim->getColumns() - 1)
+        {
+            startFrame = pAnim->getColumns() - 1;
+        }
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, startFrame, frames), oxygine::timeMS((frames - startFrame + 1) * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+        pSprite->addTween(tween);
+        if (deleteAfter && moveTime <= 0)
+        {
+            tween->addDoneCallback([=](oxygine::Event * pEvent)
+            {
+                oxygine::spActor pTarget = oxygine::dynamic_pointer_cast<oxygine::Actor>(pEvent->target);
+                if (pTarget.get() != nullptr)
+                {
+                    emit sigDetachChild(pTarget);
+                }
+            });
         }
         constexpr qint32 multiplier = 2;
         qint32 finalPriority = priority * multiplier;
@@ -739,6 +750,11 @@ void BattleAnimationSprite::loadSpriteInternal(oxygine::ResAnim* pAnim, GameEnum
     }
     m_Actor->addChild(pSprite);
     m_lastLoadedSprite = pSprite;
+}
+
+GameMap *BattleAnimationSprite::getMap() const
+{
+    return m_pMap;
 }
 
 void BattleAnimationSprite::loadCoMini(QString spriteID, GameEnums::Recoloring mode, QPoint offset,

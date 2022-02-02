@@ -3,6 +3,8 @@
 
 #include "resource_management/ressourcemanagement.h"
 
+class GameMap;
+
 class AchievementManager : public QObject, public RessourceManagement<AchievementManager>
 {
     Q_OBJECT
@@ -14,7 +16,7 @@ public:
     /**
      * @brief victory
      */
-    void onVictory(qint32 team, bool humanWin);
+    void onVictory(qint32 team, bool humanWin, GameMap* pMap);
 protected:
     friend RessourceManagement<AchievementManager>;
     AchievementManager();

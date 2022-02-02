@@ -10,7 +10,7 @@ class ScriptConditionEachDay : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionEachDay();
+    explicit ScriptConditionEachDay(GameMap* pMap);
 
     /**
      * @brief getDay

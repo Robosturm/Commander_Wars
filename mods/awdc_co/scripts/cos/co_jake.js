@@ -1,9 +1,9 @@
-CO_JAKE.init = function(co)
+CO_JAKE.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_JAKE.activateSuperpower = function(co, powerMode)
+CO_JAKE.activateSuperpower = function(co, powerMode, map)
 {
 	CO_JAKE.activatePower(co, powerMode);
 };
@@ -16,9 +16,9 @@ CO_JAKE.getSuperPowerName = function()
     return CO_JAKE.getPowerName();
 };
 CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
-    if (typeof map !== 'undefined')
+    if (map !== null)
     {
         if (map.onMap(atkPosX, atkPosY))
         {
@@ -52,7 +52,7 @@ CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_JAKE.getMovementpointModifier = function(co, unit, posX, posY)
+CO_JAKE.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };

@@ -12,19 +12,20 @@
 
 #include "objects/base/label.h"
 
-InfluenceFrontMap::InfluenceFrontMap(const QVector<spIslandMap> & islands)
-    : m_islands(islands)
+InfluenceFrontMap::InfluenceFrontMap(GameMap* pMap, const QVector<spIslandMap> & islands)
+    : m_islands(islands),
+      m_pMap(pMap)
 {
     setObjectName("InfluenceFrontMap");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; x++)
     {
-        m_InfluenceMap.append(QVector<InfluenceInfo>(heigth, InfluenceInfo(pMap.get())));
+        m_InfluenceMap.append(QVector<InfluenceInfo>(heigth, InfluenceInfo(m_pMap)));
     }
 }
 
@@ -35,15 +36,15 @@ void InfluenceFrontMap::addBuildingInfluence()
     QVector<qint32> buildingOwners;
     QVector<QStringList> buildLists;
     QMap<QString, qint32> unitIdToIsland;
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     qint32 maxScore = width * heigth;
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            Building* pBuilding = m_pMap->getTerrain(x, y)->getBuilding();
             if (pBuilding != nullptr && pBuilding->getOwner() != nullptr)
             {
                 if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
@@ -72,11 +73,11 @@ void InfluenceFrontMap::addBuildingInfluence()
                         qint32 dis = GlobalUtils::getDistance(curPos, pos);
                         if (dis > 0)
                         {
-                            m_InfluenceMap[x][y].playerValues[buildingOwners[building]] += maxScore / dis;
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore / dis);
                         }
                         else
                         {
-                            m_InfluenceMap[x][y].playerValues[buildingOwners[building]] += maxScore;
+                            m_InfluenceMap[x][y].increaseInfluence(buildingOwners[building], maxScore);
                         }
                     }
                 }
@@ -111,6 +112,7 @@ qint32 InfluenceFrontMap::getIslandFromUnitId(const QString & unitId, QMap<QStri
 }
 
 InfluenceFrontMap::InfluenceInfo::InfluenceInfo(GameMap* pMap)
+    : m_pMap(pMap)
 {
     qint32 playerCount = pMap->getPlayerCount();
     for (qint32 x = 0; x < playerCount; x++)
@@ -127,28 +129,43 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner(Player* pOwner)
     qint32 playerId = pOwner->getPlayerID();
     for (qint32 player = 0; player < playerValues.size(); ++player)
     {
+        qint32 influence = getPlayerInfluence(player);
         if (playerId != player &&
             pOwner->isPlayerIdEnemy(player))
         {
-            if (highestEnemy < playerValues[player])
+            if (highestEnemy < influence)
             {
-                highestEnemy = playerValues[player];
+                highestEnemy = influence;
             }
         }
-        if (playerValues[player] > highestValue)
+        if (influence > highestValue)
         {
-            highestValue = playerValues[player];
+            highestValue = influence;
             owners.clear();
             owners.append(player);
         }
-        else if (playerValues[player] > 0 &&
-                 playerValues[player] == highestValue)
+        else if (influence > 0 &&
+                 influence == highestValue)
         {
             owners.append(player);
         }
     }
-    ownInfluence = playerValues[playerId];
+    ownInfluence = getPlayerInfluence(playerId);
     highestInfluence = highestValue;
+}
+
+qint32 InfluenceFrontMap::InfluenceInfo::getPlayerInfluence(qint32 playerId)
+{
+    qint32 influence = 0;
+    Player* pOwner = m_pMap->getPlayer(playerId);
+    for (qint32 player = 0; player < playerValues.size(); ++player)
+    {
+        if (pOwner->isPlayerIdAlly(player))
+        {
+            influence += playerValues[player];
+        }
+    }
+    return influence;
 }
 
 void InfluenceFrontMap::InfluenceInfo::reset()
@@ -164,11 +181,16 @@ void InfluenceFrontMap::InfluenceInfo::reset()
     frontLineCreated = false;
 }
 
+void InfluenceFrontMap::InfluenceInfo::increaseInfluence(qint32 player, qint32 value)
+{
+    playerValues[player] += value;
+}
+
 void InfluenceFrontMap::reset()
 {
     CONSOLE_PRINT("InfluenceFrontMap::reset()", Console::eDEBUG);
     hide();
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
@@ -186,21 +208,21 @@ void InfluenceFrontMap::addUnitInfluence(Unit* pUnit, UnitPathFindingSystem* pPf
     auto points = pPfs->getAllNodePoints();
     for (const auto & point : points)
     {
-        float divider = 1.0f;
+        float multiplier = 1.0f;
         qint32 fieldCost = pPfs->getTargetCosts(point.x(), point.y());
         if (movePoints > 0 && fieldCost > 0)
         {
-            divider = GlobalUtils::roundUp(static_cast<float>(fieldCost) / static_cast<float>(movePoints));
+            multiplier = GlobalUtils::roundUp(static_cast<float>(movePoints) / static_cast<float>(fieldCost));
         }
-        m_InfluenceMap[point.x()][point.y()].playerValues[owner] += value / divider;
+        m_InfluenceMap[point.x()][point.y()].increaseInfluence(owner, value * multiplier);
     }
 }
 
 void InfluenceFrontMap::updateOwners()
 {
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -212,7 +234,7 @@ void InfluenceFrontMap::updateOwners()
 
 void InfluenceFrontMap::show()
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
@@ -222,12 +244,12 @@ void InfluenceFrontMap::show()
                 qint32 owner = m_InfluenceMap[x][y].owners[0];
                 oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-                QColor color = pMap->getPlayer(owner)->getColor();
+                QColor color = m_pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
                 sprite->setColor(color);
                 sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-                pMap->addChild(sprite);
+                m_pMap->addChild(sprite);
                 m_info.append(sprite);
             }
         }
@@ -236,7 +258,7 @@ void InfluenceFrontMap::show()
 
 void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 x = 0; x < m_InfluenceMap.size(); ++x)
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
@@ -246,7 +268,7 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
             {
                 oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
-                QColor color = pMap->getCurrentPlayer()->getColor();
+                QColor color = m_pMap->getCurrentPlayer()->getColor();
                 if (cost > 0)
                 {
                     color.setAlphaF(0.5f);
@@ -258,7 +280,7 @@ void InfluenceFrontMap::showPfs(UnitPathFindingSystem* pPfs)
                 sprite->setColor(color);
                 sprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-                pMap->addChild(sprite);
+                m_pMap->addChild(sprite);
                 m_info.append(sprite);
             }
         }
@@ -271,7 +293,7 @@ void InfluenceFrontMap::showFrontlines()
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    spGameMap pMap = GameMap::getInstance();
+    
     qint32 count = 0;
     for (auto & frontline : m_frontLines)
     {
@@ -289,12 +311,12 @@ void InfluenceFrontMap::showFrontlines()
                 qint32 owner = info.frontOwners[i];
                 oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
                 sprite->setSize(size, GameMap::getImageSize());
-                QColor color = pMap->getPlayer(owner)->getColor();
+                QColor color = m_pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
                 sprite->setColor(color);
                 sprite->setPosition(field.x() * GameMap::getImageSize() + size * i, field.y() * GameMap::getImageSize());
                 sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-                pMap->addChild(sprite);
+                m_pMap->addChild(sprite);
                 m_info.append(sprite);
             }
             spLabel pTextfield = spLabel::create(GameMap::getImageSize());
@@ -302,7 +324,7 @@ void InfluenceFrontMap::showFrontlines()
             pTextfield->setHtmlText(QString::number(count));
             pTextfield->setPosition(field.x() * GameMap::getImageSize(), field.y() * GameMap::getImageSize());
             pTextfield->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
-            pMap->addChild(pTextfield);
+            m_pMap->addChild(pTextfield);
             m_info.append(pTextfield);
         }
     }
@@ -329,9 +351,9 @@ void InfluenceFrontMap::findFrontLineTiles()
 {
     CONSOLE_PRINT("InfluenceFrontMap::findFrontLineTiles()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)
     {
         for (qint32 y = 0; y < heigth; ++y)
@@ -345,7 +367,7 @@ void InfluenceFrontMap::findFrontLineTiles()
                 {
                     qint32 neighbourX = x + circle->at(neighbours).x();
                     qint32 neighbourY = y + circle->at(neighbours).y();
-                    if (pMap->onMap(neighbourX, neighbourY))
+                    if (m_pMap->onMap(neighbourX, neighbourY))
                     {
                         auto & info2 = m_InfluenceMap[neighbourX][neighbourY];
                         qint32 owner2Size = info2.owners.size();
@@ -401,9 +423,9 @@ void InfluenceFrontMap::createFrontLine()
 {
     CONSOLE_PRINT("InfluenceFrontMap::createFrontLine()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)
     {
         for (qint32 y = 0; y < heigth; ++y)
@@ -424,13 +446,13 @@ void InfluenceFrontMap::createFrontLine()
 
 void InfluenceFrontMap::searchFrontLine(QmlVectorPoint* neighbours, InfluenceInfo & info, qint32 x, qint32 y, QVector<QPoint> & frontline)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 i = 0; i < neighbours->size(); ++i)
     {
         auto neighbour = neighbours->at(i);
         qint32 newX = x + neighbour.x();
         qint32 newY = y + neighbour.y();
-        if (pMap->onMap(newX, newY))
+        if (m_pMap->onMap(newX, newY))
         {
             auto & info2 = m_InfluenceMap[newX][newY];
             if (info2.frontLineCreated == false &&
@@ -448,9 +470,9 @@ void InfluenceFrontMap::updateHighestInfluence()
 {
     CONSOLE_PRINT("InfluenceFrontMap::updateHighestInfluence()", Console::eDEBUG);
     spQmlVectorPoint circle = spQmlVectorPoint(GlobalUtils::getCircle(1, 1));
-    spGameMap pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
+    
+    qint32 width = m_pMap->getMapWidth();
+    qint32 heigth = m_pMap->getMapHeight();
     for (qint32 x = 0; x < width; ++x)
     {
         for (qint32 y = 0; y < heigth; ++y)

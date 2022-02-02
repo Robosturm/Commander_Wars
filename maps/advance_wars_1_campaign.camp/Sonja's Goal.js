@@ -7,60 +7,60 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function(team)
+    this.victory = function(team, map)
     {
         if (team === 0)
         {
             var playername = settings.getUsername();
             // called when a player wins
             // called when a player wins
-            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("All right, Sonja! Now I want some answers! Why have you been attacking us?"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("All in due time, Sami. But first, Andy."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("What?"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("You don't have any weak points."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Well, of course not!"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("But you don't have any special strengths, either."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("I told him I had some new tools for him, and he followed me like a lost puppy."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Huh?"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Ha, ha. But that in itself is your strength. Don't you think Andy's easy to work with, ") + playername + qsTr("? And if things start getting rough, Max and Sami are there to help out. All you need to do is have ") + playername + qsTr(" choose who fights each battle. If you do that, there's no one who can best you on the field of battle."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Hey! Don't ignore me!"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
 
-            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Sami."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Yeah?"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog13 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Very soon you and your friends are going to face an unimaginable foe. Take care of ") + playername + qsTr(", and Andy, too."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog14 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("How do you...?"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-            var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog15 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("That's not your concern. See you again, Sami."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+            var dialog16 = GameAnimationFactory.createGameAnimationDialog(map, 
                         qsTr("Hey! Hold it! She's gone again! She didn't really tell us a doggone thing!"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             dialog1.queueAnimation(dialog2);
@@ -80,7 +80,7 @@ var Constructor = function()
             dialog15.queueAnimation(dialog16);
         }
     };
-    this.gameStart = function()
+    this.gameStart = function(map)
     {
         // called before a game starts
         //we're going to set the game rules here.
@@ -95,69 +95,69 @@ var Constructor = function()
         map.getPlayer(0).setBuildList(list);
         map.getPlayer(1).setBuildList(list);
     };
-    this.actionDone = function(action)
+    this.actionDone = function(action, map)
     {
 
     };
 
-    this.turnStart = function(turn, player)
+    this.turnStart = function(turn, player, map)
     {
         if (turn === 1 && player === 0)
         {
-            gameScript.initDialog();
+            gameScript.initDialog(map);
         }
         else if (turn === 1 && player === 1)
         {
-            gameScript.day1Dialog();
+            gameScript.day1Dialog(map);
         }
         else if (turn === 2 && player === 0)
         {
-            gameScript.day2Dialog();
+            gameScript.day2Dialog(map);
         }
     };
 
-    this.initDialog = function()
+    this.initDialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Andy! Are you okay?"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr(" ...hmm..."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Andy!"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
 
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I'm... so... groggy..."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Wake up!"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog5 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Huh? Oh... morning, Sami."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog6 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Unbelievable! Here I am, working my tail off, and you're sleeping! Why am I the only one who's taking these things seriously?"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog7 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Sonja's been leading us around by our noses like a bunch of sheep! Oooh...! She makes me so mad! Ever since we were classmates, she's been the Queen of Strategy."),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog8 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Now here I am, losing units left and right, and my allies are all sleeping! Get up and get moving, Andy! It's up to you. You've got to go!"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("I've got to battle Sonja?  I really don't want to."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("If you mention that she gave you new tools again, I'm gonna thump you!"),
                     "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yikes!"),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Do you have any idea what I had to go through? New tools! Hah! Oh, and don't expect any sympathy from me if you lose!"),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);
@@ -174,32 +174,32 @@ var Constructor = function()
         dialog11.queueAnimation(dialog12);
     };
 
-    this.day1Dialog = function()
+    this.day1Dialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("This is the last test... Show me what you do, Andy!"),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
     };
 
-    this.day2Dialog = function()
+    this.day2Dialog = function(map)
     {
         var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Um, ") + playername + qsTr("? What's the deal with Sonja and Sami? Do they not get along?"),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Really? I wonder why Sami always gets so mad when she hears Sonja's name."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Well anyway, let's do our best, ") + playername + qsTr("."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Yeah, I thought so. In that case, who knows what'll happen if I lose."),
                     "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+        var dialog4 = GameAnimationFactory.createGameAnimationDialog(map, 
                     qsTr("Let's do it, ") + playername + qsTr("! "),
                     "co_andy", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);

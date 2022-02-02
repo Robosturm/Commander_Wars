@@ -1,9 +1,9 @@
-CO_JAVIER.init = function(co)
+CO_JAVIER.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_JAVIER.activateSuperpower = function(co, powerMode)
+CO_JAVIER.activateSuperpower = function(co, powerMode, map)
 {
 	CO_JAVIER.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_JAVIER.getSuperPowerName = function()
     return CO_JAVIER.getPowerName();
 };
 CO_JAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var towers = co.getOwner().getBuildingCount("TOWER");
     switch (co.getPowerMode())
@@ -33,7 +33,7 @@ CO_JAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
 };
 CO_JAVIER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
     var towers = co.getOwner().getBuildingCount("TOWER");

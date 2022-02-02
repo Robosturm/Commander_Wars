@@ -35,10 +35,10 @@ var Constructor = function()
     {
         return "MOVE_TIRE_A";
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("smuggler+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetire.wav", -2);
         return animation;
@@ -60,7 +60,7 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var terrain = unit.getTerrain();
         if (terrain !== null)
@@ -76,7 +76,7 @@ var Constructor = function()
                 if (!unit.isStealthed(map.getCurrentViewPlayer()))
                 {
                     var animationCount = GameAnimationFactory.getAnimationCount();
-                    var animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                    var animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                     var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
                     animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
                     animation.addSprite("repair", map.getImageSize() / 2 + 4, 4, 400, 2);

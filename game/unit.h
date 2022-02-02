@@ -19,6 +19,7 @@ class Terrain;
 class Unit;
 class GameAction;
 class GameAnimation;
+class GameMap;
 using spGameAction = oxygine::intrusive_ptr<GameAction>;
 using spUnit = oxygine::intrusive_ptr<Unit>;
 
@@ -58,9 +59,9 @@ public:
     /**
      * @brief Unit only for deserialization
      */
-    explicit Unit();
+    explicit Unit(GameMap* pMap);
 
-    explicit Unit(const QString & unitID, Player* pOwner, bool aquireId);
+    explicit Unit(const QString & unitID, Player* pOwner, bool aquireId, GameMap* pMap);
 
     virtual ~Unit();
     /**
@@ -151,9 +152,37 @@ public:
      */
     void syncAnimation(oxygine::timeMS syncTime);
 
-    signals:
-
 public slots:
+    /**
+     * @brief getWeatherImmune
+     * @return
+     */
+    bool getWeatherImmune();
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
+    /**
+     * @brief getCOSpecificUnit
+     * @return
+     */
+    bool getCOSpecificUnit();
+    /**
+     * @brief setVirtualHpValue
+     * @param value
+     */
+    void setVirtualHpValue(const float &value);
+    /**
+     * @brief getVirtualHp
+     * @return
+     */
+    float getVirtualHp() const;
+    /**
+     * @brief getVirtualHpValue
+     * @return
+     */
+    float getVirtualHpValue() const;
     /**
      * @brief transformUnit
      * @param unitID
@@ -279,6 +308,12 @@ public slots:
      */
     bool getHpHidden(Player* pPlayer);
     /**
+     * @brief getRankInfoHidden
+     * @param pPlayer
+     * @return
+     */
+    bool getRankInfoHidden(Player* pPlayer);
+    /**
      * @brief getPerfectHpView
      * @param pPlayer
      * @return
@@ -353,6 +388,8 @@ public slots:
     float getHp() const;
     void setHp(const float &value);
     qint32 getHpRounded() const;
+
+    bool hasDirectWeapon();
 
     qint32 getAmmo1() const;
     void setAmmo1(const qint32 &value);
@@ -436,16 +473,21 @@ public slots:
      * @param pPlayer
      * @return
      */
-    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
+    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);    
     /**
      * @brief hasTerrainHide
      * @param pPlayer
      * @return
      */
     bool hasTerrainHide(Player* pPlayer);
-
+    /**
+     * @brief getBaseDamage
+     * @param pEnemyUnit
+     * @return
+     */
+    float getBaseDamage(Unit* pEnemyUnit);
     qint32 getUnitRank() const;
-    void setUnitRank(const qint32 &UnitRank);
+    void setUnitRank(const qint32 &UnitRank, bool force = false);
 
     qint32 getVision(QPoint position);
     void setVision(const qint32 &value);
@@ -790,7 +832,7 @@ public slots:
      * @brief getUnitCosts
      * @return
      */
-    qint32 getUnitCosts();
+    qint32 getUnitCosts() const;
     /**
      * @brief getRepairBonus
      * @return
@@ -800,7 +842,7 @@ public slots:
      * @brief setUnitVisible
      * @param value
      */
-    void setUnitVisible(bool value);
+    void setUnitVisible(bool value, Player* pPlayer);
     /**
      * @brief makeCOUnit
      * @param co
@@ -887,7 +929,7 @@ public slots:
      * @param targetY
      * @return
      */
-    bool canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY);
+    bool canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY, GameEnums::AttackRangeCheck rangeCheck = GameEnums::AttackRangeCheck_All);
     /**
      * @brief canAttackStealthedUnit
      * @param pDefender
@@ -1010,6 +1052,12 @@ protected:
      * @brief updateCustomRangeActors
      */
     void updateCustomRangeActors();
+    /**
+     * @brief Unit::getEnemyBonus
+     * @param position
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, const QString & function, qint32(Player::*pBonusFunction)(QPoint, Unit*, const QString &));
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
@@ -1063,6 +1111,7 @@ private:
     QVector<spUnit> m_TransportUnits;
     qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
+    float m_virtualHp{0.0f};
 
     QVector<QPoint> m_cloaked;
     bool m_Hidden{false};
@@ -1096,6 +1145,7 @@ private:
     QVector<QPoint> m_FirerangeBonus;
 
     QVector<IconDuration> m_IconDurations;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // UNIT_H

@@ -10,6 +10,7 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
 class RuleSelection;
 typedef oxygine::intrusive_ptr<RuleSelection> spRuleSelection;
 
@@ -23,7 +24,7 @@ public:
         Singleplayer,
         Multiplayer,
     };
-    explicit RuleSelection(qint32 width, Mode mode, bool enabled = true);
+    explicit RuleSelection(GameMap* pMap, qint32 width, Mode mode, bool enabled = true);
     virtual ~RuleSelection() = default;
     void showRuleSelection(bool advanced = false);
     void confirmRuleSelectionSetup();
@@ -37,6 +38,7 @@ signals:
     void sigSizeChanged();
 public slots:
     // slots for changing the rules
+    GameMap *getMap() const;
     void startWeatherChanged(qint32 value);
     void weatherChancesChanged();
     void showCOBannlist();
@@ -51,6 +53,7 @@ private:
     spTextbox m_MapScriptFile;
     Mode m_mode;
     bool m_ruleChangeEabled{true};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // RULESELECTION_H

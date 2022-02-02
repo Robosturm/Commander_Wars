@@ -33,14 +33,10 @@
 
 #include "objects/loadingscreen.h"
 
-const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
 static constexpr qint32 loadingScreenSize = 900;
 qint32 GameMap::m_imagesize = GameMap::defaultImageSize;
-
-
-spGameMap GameMap::m_pInstance;
 
 qint32 GameMap::getFrameTime()
 {
@@ -49,7 +45,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create())
+      m_Rules(spGameRules::create(this))
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -62,7 +58,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create()),
+      m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -75,7 +71,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(spGameRules::create()),
+      m_Rules(spGameRules::create(this)),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -83,6 +79,13 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     loadMapData();
+    loadMap(map, onlyLoad, fast, savegame);
+}
+
+void GameMap::loadMap(QString map, bool onlyLoad, bool fast, bool savegame)
+{
+    clearMap();
+    m_savegame = savegame;
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
@@ -116,8 +119,6 @@ void GameMap::setMapNameFromFilename(QString filename)
 
 void GameMap::loadMapData()
 {
-    deleteMap();
-    m_pInstance = spGameMap(this, true);
     Interpreter::setCppOwnerShip(this);
     registerMapAtInterpreter();
     if (Mainapp::getInstance()->devicePixelRatio() < 2.0f)
@@ -141,7 +142,6 @@ bool GameMap::getIsHumanMatch() const
 void GameMap::registerMapAtInterpreter()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
 }
 
@@ -316,7 +316,7 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
-bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
+bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> & playerIDs)
 {
     return isInArea(area, [=](Unit* pUnit)
     {
@@ -325,19 +325,9 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
     });
 }
 
-void GameMap::deleteMap()
-{
-    CONSOLE_PRINT("deleteMap()", Console::eDEBUG);
-    if (m_pInstance.get() != nullptr)
-    {
-        m_pInstance->detach();
-    }
-    m_pInstance = nullptr;
-}
-
 GameMap::~GameMap()
 {
-    CONSOLE_PRINT("desctructing map.", Console::eDEBUG);
+    CONSOLE_PRINT("deleting map.", Console::eDEBUG);
     // clean up session
     for (qint32 y = 0; y < m_fields.size(); ++y)
     {
@@ -348,13 +338,6 @@ GameMap::~GameMap()
         m_fields[y].clear();
     }
     m_fields.clear();
-    // remove us from the interpreter again
-    if (m_pInstance.get() == nullptr)
-    {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->deleteObject(m_JavascriptName);
-    }
-    CONSOLE_PRINT("map was deleted", Console::eDEBUG);
 }
 
 QStringList GameMap::getAllUnitIDs()
@@ -364,7 +347,7 @@ QStringList GameMap::getAllUnitIDs()
 
 spGameAction GameMap::createAction()
 {
-    return spGameAction::create();
+    return spGameAction::create(this);
 }
 
 void GameMap::queueAction(spGameAction pAction)
@@ -558,7 +541,7 @@ void GameMap::updateFlowTiles(QVector<QPoint> & flowPoints)
     while (flowPoints.size() > 0)
     {
         QPoint pos = flowPoints[0];
-        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
+        spTerrainFindingSystem pPfs = spTerrainFindingSystem::create(this, m_fields[pos.y()][pos.x()]->getFlowTiles(), pos.x(), pos.y());
         pPfs->explore();
         m_fields[pos.y()][pos.x()]->updateFlowSprites(pPfs.get());
         auto points = pPfs->getAllNodePoints();
@@ -737,7 +720,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, const QString & unitID, Player* own
             CONSOLE_PRINT("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
             return nullptr;
         }
-        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true);
+        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true, this);
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
@@ -1079,7 +1062,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             spUnit pUnit = spUnit(pTerrainOld->getUnit());
             pTerrainOld->setUnit(spUnit());
 
-            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID());
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getTerrainID(), this);
 
             Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
@@ -1105,15 +1088,7 @@ void GameMap::replaceTerrainOnly(const QString & terrainID, qint32 x, qint32 y, 
             if (!removeUnit)
             {
                 pTerrain->setUnit(pUnit);
-            }
-            // force consistent rendering order for terrains
-            qint32 mapWidth = getMapWidth();
-            for (qint32 xPos = x + 1; xPos < mapWidth; xPos++)
-            {
-                spTerrain pTerrain = m_fields[y][xPos];
-                pTerrain->detach();
-                addChild(pTerrain);
-            }
+            }            
         }
         else
         {
@@ -1139,7 +1114,7 @@ void GameMap::replaceBuilding(const QString & buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        spBuilding pBuilding = spBuilding::create(buildingID);
+        spBuilding pBuilding = spBuilding::create(buildingID, this);
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
@@ -1177,6 +1152,8 @@ bool GameMap::canBePlaced(const QString & terrainID, qint32 x, qint32 y)
     QJSValueList args;
     args << QJSValue(x);
     args << QJSValue(y);
+    QJSValue objArg5 = pInterpreter->newQObject(this);
+    args << objArg5;
     QJSValue placeable = pInterpreter->doFunction(terrainID, function, args);
     if (placeable.isBool())
     {
@@ -1332,7 +1309,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     for (qint32 i = 0; i < m_headerInfo.m_playerCount; i++)
     {
         // create player
-        m_players.append(spPlayer::create());
+        m_players.append(spPlayer::create(this));
         // get player data from stream
         m_players[i]->deserializer(pStream, fast);
     }
@@ -1354,7 +1331,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         m_fields.push_back(std::vector<spTerrain>());
         for (qint32 x = 0; x < m_headerInfo.m_width; x++)
         {
-            spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
+            spTerrain pTerrain = Terrain::createTerrain("", x, y, "", this);
             m_fields[y].push_back(pTerrain);
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
@@ -1368,12 +1345,12 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             }
             else
             {
-                replaceTerrain("PLAINS", x, y, false, false);
+                replaceTerrain("PLAINS", x, y, false, false, false);
             }
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = spGameRules::create();
+    m_Rules = spGameRules::create(this);
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
@@ -1402,7 +1379,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_GameScript = spGameScript::create();
+            m_GameScript = spGameScript::create(this);
         }
         if (showLoadingScreen)
         {
@@ -1516,7 +1493,7 @@ void GameMap::showUnitStatistics()
 
 void GameMap::startGame()
 {
-    m_Recorder = spGameRecorder::create();
+    m_Recorder = spGameRecorder::create(this);
     for (qint32 y = 0; y < m_fields.size(); y++)
     {
         for (qint32 x = 0; x < m_fields[y].size(); x++)
@@ -2135,13 +2112,13 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             spGameMenue pMenu = GameMenue::getInstance();
             if (pMenu.get() != nullptr)
             {
-                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(m_CurrentPlayer.get(), GameMap::frameTime, true);
+                spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(this, m_CurrentPlayer.get(), GameMap::frameTime, true);
                 pMenu->addChild(pAnim);
             }
         }
         else
         {
-            GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
+            GameAnimationFactory::createGameAnimationNextDay(this, m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
         }
         if (nextDay)
         {
@@ -2189,7 +2166,7 @@ void GameMap::initPlayersAndSelectCOs()
     QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
-        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        Player* pPlayer = getPlayer(i);
         if (pPlayer->getCO(0) != nullptr)
         {
             bannList.removeAll(pPlayer->getCO(0)->getCoID());
@@ -2208,11 +2185,11 @@ void GameMap::initPlayersAndSelectCOs()
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
-        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        Player* pPlayer = getPlayer(i);
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             CONSOLE_PRINT("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
-            pPlayer->setBaseGameInput(spHumanPlayerInput::create());
+            pPlayer->setBaseGameInput(spHumanPlayerInput::create(this));
         }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&

@@ -1,4 +1,4 @@
-FIRE.getVision = function(player)
+FIRE.getVision = function(player, terrain, map)
 {
     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN" &&
         !player.getWeatherImmune())

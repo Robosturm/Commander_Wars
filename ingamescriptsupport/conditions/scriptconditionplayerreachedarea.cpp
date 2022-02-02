@@ -12,8 +12,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea()
-    : ScriptCondition (ConditionType::playerReachedArea)
+ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::playerReachedArea)
 {
 
 }
@@ -98,11 +98,11 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream, QStri
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionPlayerReachedArea, line))
+        if (readSubCondition(m_pMap, rStream, ConditionPlayerReachedArea, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

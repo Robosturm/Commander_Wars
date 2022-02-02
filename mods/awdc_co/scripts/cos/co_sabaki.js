@@ -1,9 +1,9 @@
-CO_SABAKI.init = function(co)
+CO_SABAKI.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_SABAKI.activateSuperpower = function(co, powerMode)
+CO_SABAKI.activateSuperpower = function(co, powerMode, map)
 {
 	CO_SABAKI.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_SABAKI.getSuperPowerName = function()
 {
     return CO_SABAKI.getPowerName();
 };
-CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {

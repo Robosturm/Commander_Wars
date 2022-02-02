@@ -14,7 +14,7 @@ var Constructor = function()
     {
         return qsTr("Reaf");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "LAKE")
         {
@@ -25,7 +25,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("SEA");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundingsPlainsDiagonal = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Diagnonal, false);
         var surroundingsPlainsDirect = terrain.getSurroundings("PLAINS,SNOW,WASTE,DESERT", true, false, GameEnums.Directions_Direct, false);
@@ -90,10 +90,10 @@ var Constructor = function()
             terrain.loadBaseSprite("reaf+" + random.toString() + "+N+E+S+W");
         }
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
-        SEA.loadOverlaySprite(terrain);
-        LAKE.loadOverlaySprite(terrain);
+        SEA.loadOverlaySprite(terrain, map);
+        LAKE.loadOverlaySprite(terrain, map);
     };
     this.getDefense = function()
     {
@@ -103,7 +103,7 @@ var Constructor = function()
     {
         return true;
     };
-    this.canBePlaced = function(x, y)
+    this.canBePlaced = function(x, y, map)
     {
         var terrain = map.getTerrain(x, y);
         var baseId = terrain.getBaseTerrainID();
@@ -158,13 +158,13 @@ var Constructor = function()
     {
         return "minimap_reaf";
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()

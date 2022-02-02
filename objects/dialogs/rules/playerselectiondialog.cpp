@@ -4,8 +4,7 @@
 
 #include "resource_management/objectmanager.h"
 
-PlayerSelectionDialog::PlayerSelectionDialog()
-    : QObject()
+PlayerSelectionDialog::PlayerSelectionDialog(GameMap* pMap)
 {
     setObjectName("PlayerSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -31,6 +30,7 @@ PlayerSelectionDialog::PlayerSelectionDialog()
 
     m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 60,
                                              Settings::getHeight() - 80 - m_OkButton->getHeight());
+    m_pPlayerSelection->setMap(pMap);
     m_pPlayerSelection->setPosition(30, 30);
     m_pPlayerSelection->showPlayerSelection();
     pSpriteBox->addChild(m_pPlayerSelection);

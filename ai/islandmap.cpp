@@ -7,24 +7,25 @@
 #include "game/co.h"
 #include "game/unitpathfindingsystem.h"
 
-IslandMap::IslandMap(const QString & unitID, Player* pOwner)
-      : m_pOwner(pOwner)
+IslandMap::IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner)
+      : m_pOwner(pOwner),
+        m_pMap(pMap)
 {
     setObjectName("IslandMap");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 width = pMap->getMapWidth();
-        qint32 heigth = pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
 
         for (qint32 x = 0; x < width; x++)
         {
             m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
         }
-        spUnit pUnit = spUnit::create(unitID, pOwner, false);
+        spUnit pUnit = spUnit::create(unitID, pOwner, false, pMap);
         pUnit->setIgnoreUnitCollision(true);
         m_MovementType = pUnit->getMovementType();
         qint32 currentIsland = 0;
@@ -37,7 +38,7 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
                 {
                     if (pUnit->canMoveOver(x, y))
                     {
-                        UnitPathFindingSystem pfs(pUnit.get());
+                        UnitPathFindingSystem pfs(m_pMap, pUnit.get());
                         pfs.setMovepoints(-2);
                         pfs.setFast(true);
                         pfs.setStartPoint(x, y);
@@ -55,7 +56,7 @@ IslandMap::IslandMap(const QString & unitID, Player* pOwner)
     }
 }
 
-qint32 IslandMap::getIslandSize(qint32 island)
+qint32 IslandMap::getIslandSize(qint32 island) const
 {
     qint32 count = 0;
     for (const auto & data : qAsConst(m_Islands))
@@ -80,18 +81,18 @@ void IslandMap::getValueOnIsland(qint32 island, qint32 &ownValue, qint32 & enemy
 {
     ownValue = 0;
     enemyValue = 0;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        qint32 width = pMap->getMapWidth();
-        qint32 heigth = pMap->getMapHeight();
+        qint32 width = m_pMap->getMapWidth();
+        qint32 heigth = m_pMap->getMapHeight();
         for (qint32 x = 0; x < width; x++)
         {
             for (qint32 y = 0; y < heigth; y++)
             {
                 if (m_Islands[x][y] == island)
                 {
-                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
                     if (pUnit != nullptr)
                     {
                         if (pUnit->getOwner() == m_pOwner)

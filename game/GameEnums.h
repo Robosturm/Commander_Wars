@@ -240,6 +240,15 @@ public:
     };
     Q_ENUM(WeaponType)
 
+    enum AttackRangeCheck
+    {
+        AttackRangeCheck_All,
+        AttackRangeCheck_None,
+        AttackRangeCheck_OnlyMin,
+        AttackRangeCheck_OnlyMax,
+    };
+    Q_ENUM(AttackRangeCheck)
+
     enum ShopItemType
     {
         ShopItemType_All = -1,

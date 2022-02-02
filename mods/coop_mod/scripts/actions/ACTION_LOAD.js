@@ -1,4 +1,4 @@
-ACTION_LOAD.canBePerformed = function (action)
+ACTION_LOAD.canBePerformed = function(action, map)
 {
     var unit = action.getTargetUnit();
     var actionTargetField = action.getActionTarget();

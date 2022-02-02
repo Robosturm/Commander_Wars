@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -20,23 +20,23 @@ var Constructor = function()
         }
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Unstealth");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "unhide";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_UNSTEALTH", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -44,10 +44,10 @@ var Constructor = function()
 
     };
     this.postAnimationUnit = null;
-    this.performPostAnimation = function(action)
+    this.performPostAnimation = function(action, map)
     {
         // disable unit commandments for this turn
-        var animation = GameAnimationFactory.createAnimation(ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
         if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
             ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
         {

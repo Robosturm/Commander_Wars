@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
@@ -13,22 +13,22 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
     this.postAnimationActionFields = null;
     this.postAnimationActionX = -1;
     this.postAnimationActionY = -1;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
@@ -37,10 +37,10 @@ var Constructor = function()
 
         building.setFireCount(building.getFireCount() - 1);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("laserray+center+start", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 2);
 
-        var animation2 = GameAnimationFactory.createAnimation(x, y);
+        var animation2 = GameAnimationFactory.createAnimation(map, x, y);
         animation2.addSprite("laserray+center", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 2);
         animation2.addSound("laserFire.wav");
         animation.queueAnimation(animation2);
@@ -55,14 +55,14 @@ var Constructor = function()
                 {
                     if (point.y > 1)
                     {
-                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
                         animation2.addSprite("laserray", -map.getImageSize() * 0.4 , -map.getImageSize() * 1.45, 0, 2);
                         animation2.setRotation(90);
                         animation.queueAnimation(animation2);
                     }
                     else if (point.y < -1)
                     {
-                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
                         animation2.addSprite("laserray", 0, -map.getImageSize() * 1.45, 0, 2);
                         animation2.setRotation(90);
                         animation.queueAnimation(animation2);
@@ -72,13 +72,13 @@ var Constructor = function()
                 {
                     if (point.x > 1)
                     {
-                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
                         animation2.addSprite("laserray", -map.getImageSize() * 0.15, -map.getImageSize() * 0.6, 0, 2);
                         animation.queueAnimation(animation2);
                     }
                     else if (point.x < -1)
                     {
-                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2 = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
                         animation2.addSprite("laserray", 0, -map.getImageSize() * 0.6, 0, 2);
                         animation.queueAnimation(animation2);
                     }
@@ -91,7 +91,7 @@ var Constructor = function()
         ACTION_LASER_FIRE.postAnimationActionX = x;
         ACTION_LASER_FIRE.postAnimationActionY = y;
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var x = ACTION_LASER_FIRE.postAnimationActionX;
         var y = ACTION_LASER_FIRE.postAnimationActionY;

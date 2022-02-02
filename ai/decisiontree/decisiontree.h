@@ -3,8 +3,8 @@
 #include <QVector>
 #include <QString>
 
-#include "decisionnode.h"
-#include "decisionquestion.h"
+#include "ai/decisiontree/decisionnode.h"
+#include "ai/decisiontree/decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -28,6 +28,27 @@ public:
     {
         return 1;
     }
+
+    /**
+     * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
+     * @param file
+     * @param trainingData
+     * @param questions
+     */
+    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+    /**
+     * @brief readTrainingFile
+     * @param stream
+     * @param questionsFound
+     * @param types
+     * @param readQuestions
+     * @param trainingData
+     * @param questions
+     */
+    static void readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
+                                 QVector<spDecisionQuestion>& readQuestions,
+                                 QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+
 public slots:
     float getDecision(QVector<float>& input);
     void printTree(DecisionNode* pNode = nullptr, QString spacing = "");

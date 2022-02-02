@@ -13,8 +13,8 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
 
-GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
-    : GameAnimation (frameTime),
+GameAnimationDialog::GameAnimationDialog(quint32 frameTime, GameMap* pMap)
+    : GameAnimation (frameTime, pMap),
       m_finishTimer(this),
       m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
@@ -272,12 +272,12 @@ void GameAnimationDialog::setCO(const QString & coid, GameEnums::COMood mood)
 
 void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get())
+    
+    if (m_pMap)
     {
-        if (player >= 0 && player < pMap->getPlayerCount())
+        if (player >= 0 && player < m_pMap->getPlayerCount())
         {
-            CO* pCo = pMap->getPlayer(player)->getCO(co);
+            CO* pCo = m_pMap->getPlayer(player)->getCO(co);
             if (pCo != nullptr)
             {
                 QString resAnim = pCo->getCoID().toLower() + "+face";

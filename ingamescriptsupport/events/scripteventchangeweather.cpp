@@ -13,8 +13,8 @@
 #include "game/gamemap.h"
 #include "game/weather.h"
 
-ScriptEventChangeWeather::ScriptEventChangeWeather()
-    : ScriptEvent (EventType::changeWeather)
+ScriptEventChangeWeather::ScriptEventChangeWeather(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::changeWeather)
 {
 
 }
@@ -93,10 +93,10 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(pText);
 
     QStringList weatherStrings;
-    spGameMap pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
+    
+    for (qint32 i = 0; i < m_pMap->getGameRules()->getWeatherCount(); i++)
     {
-        Weather* pWeather = pMap->getGameRules()->getWeather(i);
+        Weather* pWeather = m_pMap->getGameRules()->getWeather(i);
         weatherStrings.append(pWeather->getWeatherName());
     }
 

@@ -1,9 +1,9 @@
-CO_OZZY.init = function(co)
+CO_OZZY.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_OZZY.activateSuperpower = function(co, powerMode)
+CO_OZZY.activateSuperpower = function(co, powerMode, map)
 {
     CO_OZZY.activatePower(co, powerMode);
 };
@@ -16,12 +16,12 @@ CO_OZZY.getSuperPowerName = function()
     return CO_OZZY.getPowerName();
 };
 CO_OZZY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 CO_OZZY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

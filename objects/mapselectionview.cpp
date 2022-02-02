@@ -10,6 +10,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/userdata.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
 
 #include "objects/base/moveinbutton.h"
 
@@ -17,7 +18,6 @@
 #include "game/gamerecording/gamerecorder.h"
 
 MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
-    : QObject()
 {
     setObjectName("MapSelectionView");
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -160,7 +160,7 @@ MapSelectionView::MapSelectionView(qint32 mapInfoHeight)
     m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::getImageSize() + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i));
+        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i), nullptr);
         building->updateBuildingSprites(false);
         building->setVisible(false);
         m_content->addChild(building);
@@ -238,6 +238,7 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(QFileInfo info, bool fast)
 {
+    CONSOLE_PRINT("MapSelectionView::loadMap " + info.filePath(), Console::eDEBUG);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
@@ -254,7 +255,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_CurrentLoadedCampaign = nullptr;
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->deleteMap();
+                m_pCurrentMap->detach();
                 m_pCurrentMap = nullptr;
             }
             bool savegame = info.fileName().endsWith(".msav");
@@ -263,7 +264,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap->setMapPath(GlobalUtils::makePathRelative(file, false));
             m_pCurrentMap->getGameScript()->init();
             m_pMinimap->clear();
-            m_pMinimap->updateMinimap(m_pCurrentMap);
+            m_pMinimap->updateMinimap(m_pCurrentMap.get());
             m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);
             m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
             if (m_pCurrentMap.get() != nullptr)
@@ -305,11 +306,11 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         {
             if (m_pCurrentMap.get() != nullptr)
             {
-                m_pCurrentMap->deleteMap();
+                m_pCurrentMap->detach();
                 m_currentMapFile = QFileInfo();
                 m_pCurrentMap = nullptr;
             }
-            m_pMinimap->updateMinimap(spGameMap());
+            m_pMinimap->updateMinimap(nullptr);
             m_CurrentLoadedCampaign = nullptr;
             m_CurrentLoadedCampaign = spCampaign::create(info.absoluteFilePath());
             m_MapDescription->setHtmlText(m_CurrentLoadedCampaign->getDescription());
@@ -323,7 +324,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     {
         if (m_pCurrentMap.get() != nullptr)
         {
-            m_pCurrentMap->deleteMap();
+            m_pCurrentMap->detach();
             m_pCurrentMap = nullptr;
         }
         m_CurrentLoadedCampaign = nullptr;
@@ -420,6 +421,16 @@ void MapSelectionView::loadMapVictoryInfo()
         }
         posY += 55;
     }
+}
+
+spGameMap MapSelectionView::getCurrentMap() const
+{
+    return m_pCurrentMap;
+}
+
+void MapSelectionView::setCurrentMap(spGameMap newCurrentMap)
+{
+    m_pCurrentMap = newCurrentMap;
 }
 
 spPanel MapSelectionView::getMapInfo() const

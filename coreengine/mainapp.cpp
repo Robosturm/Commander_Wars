@@ -17,6 +17,8 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/globalutils.h"
 
+#include "game/gamerecording/gamemapimagesaver.h"
+
 #include "objects/loadingscreen.h"
 
 #include "network/mainserver.h"
@@ -120,13 +122,14 @@ void Mainapp::loadRessources()
 
 void Mainapp::nextStartUpStep(StartupPhase step)
 {
+    Console::print("Loading startup phase: " + QString::number(step), Console::eDEBUG);
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->moveToThread(&m_Workerthread);
     switch (step)
     {
         case StartupPhase::General:
         {
-            m_Audiothread = new AudioThread();
+            m_Audiothread = new AudioThread(m_noAudio);
             m_AudioWorker.start(QThread::Priority::HighPriority);
             m_Audiothread->moveToThread(&m_AudioWorker);
             emit m_Audiothread->sigInitAudio();
@@ -305,6 +308,8 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             if (!m_noUi)
             {
                 update();
+                // refresh timer cycle before using it.
+                Settings::setFramesPerSecond(Settings::getFramesPerSecond());
                 m_Timer.start(m_timerCycle, this);
             }
             break;
@@ -360,8 +365,32 @@ void Mainapp::doScreenshot()
     }
 }
 
+void Mainapp::doMapshot()
+{
+    if (beginRendering())
+    {
+        qint32 i = 0;
+        QDir dir("screenshots/");
+        dir.mkpath(".");
+        while (i < std::numeric_limits<qint32>::max())
+        {
+            QString filename = "screenshots/mapshot+" + QString::number(i) + ".png";
+            if (!QFile::exists(filename))
+            {
+                GamemapImageSaver::saveMapAsImage(filename);
+                break;
+            }
+            ++i;
+        }
+    }
+}
+
 void Mainapp::changeScreenMode(qint32 mode)
 {
+    if (m_noUi)
+    {
+        return;
+    }
     CONSOLE_PRINT("Changing screen mode to " + QString::number(mode), Console::eDEBUG);
     hide();
     switch (mode)
@@ -428,6 +457,10 @@ void Mainapp::changeScreenMode(qint32 mode)
 
 void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 {    
+    if (m_noUi)
+    {
+        return;
+    }
     CONSOLE_PRINT("Changing screen size to width: " + QString::number(width) + " height: " + QString::number(heigth), Console::eDEBUG);
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
@@ -445,6 +478,10 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
 
 void Mainapp::changePosition(QPoint pos, bool invert)
 {
+    if (m_noUi)
+    {
+        return;
+    }
     setPosition(position() + pos);
     if (invert)
     {
@@ -478,6 +515,10 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     else if (cur == Settings::getKey_screenshot())
     {
         doScreenshot();
+    }
+    else if (cur == Settings::getKey_mapshot())
+    {
+        doMapshot();
     }
     else
     {
@@ -614,6 +655,7 @@ void Mainapp::loadArgs(const QStringList & args)
         Settings::setTotalVolume(0);
         m_Timer.stop();
     }
+    m_noAudio = args.contains("-noaudio");
     if (args.contains("-slaveServer"))
     {
         Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
@@ -739,4 +781,14 @@ bool Mainapp::getCreateSlaveLogs() const
 void Mainapp::setCreateSlaveLogs(bool create)
 {
     m_createSlaveLogs = create;
+}
+
+void Mainapp::inputMethodQuery(Qt::InputMethodQuery query, QVariant arg)
+{
+    FocusableObject::handleInputMethodQuery(query, arg);
+}
+
+void Mainapp::slotCursorPositionChanged(int oldPos, int newPos)
+{
+    emit cursorPositionChanged(oldPos, newPos);
 }

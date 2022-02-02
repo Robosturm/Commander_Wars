@@ -17,13 +17,13 @@ var Constructor = function()
         return GameEnums.PowerMode_Off;
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(5);
         co.setSuperpowerStars(4);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -43,16 +43,16 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation);
+        CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation, map);
     };
 
-    this.hawkeDamage = function(co, value, powerNameAnimation)
+    this.hawkeDamage = function(co, value, powerNameAnimation, map)
     {
 
         var player = co.getOwner();
@@ -64,7 +64,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(value);
@@ -108,7 +108,7 @@ var Constructor = function()
                 for (i = 0; i < units.size(); i++)
                 {
                     unit = units.at(i);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.writeDataInt32(unit.getX());
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
@@ -142,16 +142,16 @@ var Constructor = function()
         }
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation);
+        CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation, map);
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -160,7 +160,7 @@ var Constructor = function()
         return "BH";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -179,7 +179,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
@@ -188,7 +188,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

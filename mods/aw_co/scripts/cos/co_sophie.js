@@ -1,9 +1,9 @@
-CO_SOPHIE.init = function(co)
+CO_SOPHIE.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(2);
 };
-CO_SOPHIE.activateSuperpower = function(co, powerMode)
+CO_SOPHIE.activateSuperpower = function(co, powerMode, map)
 {
     CO_SOPHIE.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_SOPHIE.getSuperPowerName = function()
     return CO_SOPHIE.getPowerName();
 };
 CO_SOPHIE.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                        defender, defPosX, defPosY, isDefender, luckMode)
+                                        defender, defPosX, defPosY, isDefender, luckMode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -42,18 +42,18 @@ CO_SOPHIE.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, 
     return 0;
 };
 
-CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
 };
 
 CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_SOPHIE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

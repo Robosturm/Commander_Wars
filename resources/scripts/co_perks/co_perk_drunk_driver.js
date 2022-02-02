@@ -1,11 +1,11 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
 		if (CO_PERK.isActive(co))
 		{
-			if (typeof map !== 'undefined')
+			if (map !== null)
 			{
 				if (map.onMap(atkPosX, atkPosY))
 				{
@@ -32,7 +32,7 @@ var Constructor = function()
     {
         return qsTr("Decreases the attack from roads by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "drunk_driver";
     };

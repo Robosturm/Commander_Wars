@@ -9,6 +9,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "game/co.h"
 
+class GameMap;
 class PerkSelection;
 typedef oxygine::intrusive_ptr<PerkSelection> spPerkSelection;
 
@@ -22,7 +23,7 @@ class PerkSelection : public QObject, public oxygine::Actor
     };
 
 public:
-    explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList);
+    explicit PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList, GameMap* pMap);
     virtual ~PerkSelection() = default;
     void updatePerksView(CO* pCO);
 
@@ -73,6 +74,7 @@ private:
     bool m_banning{false};
     QStringList m_perks;
     QStringList m_hiddenPerks;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // PERKSELECTION_H

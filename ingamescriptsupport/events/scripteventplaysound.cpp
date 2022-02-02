@@ -1,7 +1,7 @@
 #include "ingamescriptsupport/events/scripteventplaysound.h"
 
-ScriptEventPlaySound::ScriptEventPlaySound()
-    : ScriptEventGeneric(EventType::PlayGameSound, ScriptEvent::EventPlaySound)
+ScriptEventPlaySound::ScriptEventPlaySound(GameMap* pMap)
+    : ScriptEventGeneric(pMap, EventType::PlayGameSound, ScriptEvent::EventPlaySound)
 {
 
     m_Items.append(ScriptEventGeneric::Data());

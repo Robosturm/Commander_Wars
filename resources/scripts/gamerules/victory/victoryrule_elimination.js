@@ -41,11 +41,11 @@ var Constructor = function()
     this.init = function(rule)
     {
     };
-    this.getKilledUnits = function(rule, player)
+    this.getKilledUnits = function(rule, player, map)
     {
         var count = map.getGameRecorder().getDestroyedUnits(player.getPlayerID());
         var players = map.getPlayerCount();
-        var teamVictory = VICTORYRULE_ELIMINATION.getRuleValue(rule, 1);
+        var teamVictory = VICTORYRULE_ELIMINATION.getRuleValue(rule, 1, map);
         if (teamVictory === 1)
         {
             for (var i = 0; i < players; i++)
@@ -62,10 +62,10 @@ var Constructor = function()
     };
 
     // checks if the selected player is declared defeated by this rule
-    this.checkDefeat = function(rule, player)
+    this.checkDefeat = function(rule, player, map)
     {
-        var count 		= VICTORYRULE_ELIMINATION.getKilledUnits(rule, player);
-        var killLimit 	= VICTORYRULE_ELIMINATION.getRuleValue(rule, 0);
+        var count 		= VICTORYRULE_ELIMINATION.getKilledUnits(rule, player, map);
+        var killLimit 	= VICTORYRULE_ELIMINATION.getRuleValue(rule, 0, map);
         if (count >= killLimit)
 		{
             // defeat all other player
@@ -81,9 +81,9 @@ var Constructor = function()
 		}
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(rule, player)
+    this.getRuleProgress = function(rule, player, map)
     {
-        return VICTORYRULE_ELIMINATION.getKilledUnits(rule, player);
+        return VICTORYRULE_ELIMINATION.getKilledUnits(rule, player, map);
     };
 };
 

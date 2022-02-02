@@ -1,5 +1,5 @@
 CO_SOPHIE.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                        defender, defPosX, defPosY, isDefender, luckMode)
+                                        defender, defPosX, defPosY, isDefender, luckMode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -30,7 +30,7 @@ CO_SOPHIE.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, 
     return 0;
 };
 
-CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -47,7 +47,7 @@ CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
                     if (variable.readDataBool() === false)
                     {
                         variable.writeDataBool(true);
-                        var damageResult = ACTION_FIRE.calcBattleDamage2(action, attacker, Qt.point(attacker.getX(), attacker.getY()),
+                        var damageResult = ACTION_FIRE.calcBattleDamage2(map, action, attacker, Qt.point(attacker.getX(), attacker.getY()),
                                                                          defender.getX(), defender.getY(), GameEnums.LuckDamageMode_On);
                         // do another attack
                         ACTION_FIRE.battle(attacker, damageResult.x, damageResult.y,
@@ -66,7 +66,7 @@ CO_SOPHIE.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 };
 
 CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -94,7 +94,7 @@ CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_SOPHIE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

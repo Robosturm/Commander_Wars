@@ -27,10 +27,10 @@ var Constructor = function()
     {
         unit.loadSpriteV2("chaperon+mask", GameEnums.Recoloring_Matrix);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("chaperon+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("movetank.wav", -2);
         return animation;
@@ -63,7 +63,7 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var variables = unit.getVariables();
         var unitDefendedVariable = variables.createVariable("UNITDEFENDED");

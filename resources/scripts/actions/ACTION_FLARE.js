@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -18,15 +18,15 @@ var Constructor = function()
         }
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Flare");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "flareshot";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -37,7 +37,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
@@ -56,7 +56,7 @@ var Constructor = function()
         return 2;
     }
 
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
@@ -81,11 +81,11 @@ var Constructor = function()
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
     this.postAnimationPlayer = null;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_FLARE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -98,9 +98,9 @@ var Constructor = function()
         ACTION_FLARE.postAnimationTargetY = action.readDataInt32();
         ACTION_FLARE.postAnimationPlayer = unit.getOwner();
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
-        var animation = GameAnimationFactory.createAnimation(ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
         animation.addSprite("flare_explosion", -map.getImageSize() * 2.5, -map.getImageSize() * 2.5 - 1, 0, 2);
         animation.addSound("flare_launch.wav");
         animation.addSound("flare_explosion.wav", 1, 300);
@@ -119,7 +119,7 @@ var Constructor = function()
         ACTION_FLARE.postAnimationTargetY = -1;
         ACTION_FLARE.postAnimationPlayer = null;
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);

@@ -14,6 +14,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/Gamepad.h"
 
 #include "game/gamemap.h"
 
@@ -107,7 +108,7 @@ OptionMenue::OptionMenue()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     addChild(pButtonExit);
-    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
+    pButtonExit->setPosition(Settings::getWidth()  / 2.0f - 10,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -115,6 +116,15 @@ OptionMenue::OptionMenue()
     });
     connect(this, &OptionMenue::sigExitMenue, this, &OptionMenue::exitMenue, Qt::QueuedConnection);
 
+    oxygine::spButton pButtonReset = ObjectManager::createButton(tr("Reset settings"));
+    addChild(pButtonReset);
+    pButtonReset->setPosition(Settings::getWidth()  / 2.0f - pButtonReset->getWidth() - 10,
+                             Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonReset->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowResetBox();
+    });
+    connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
 
 
     oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
@@ -177,6 +187,8 @@ OptionMenue::OptionMenue()
     m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
     connect(this, &OptionMenue::sigUpdateModFilter, this, &OptionMenue::updateModFilter, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigLoadModInfo, this, &OptionMenue::loadModInfo, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigShowResetBox, this, &OptionMenue::showResetBox, Qt::QueuedConnection);
+
     addChild(m_ModSelector);
     showSettings();
     pApp->continueRendering();
@@ -201,7 +213,7 @@ void OptionMenue::exitMenue()
 {    
     // save changed settings :)
     Settings::saveSettings();
-    if (restartNeeded)
+    if (m_restartNeeded)
     {
         spDialogMessageBox pMessage = spDialogMessageBox::create("Some changes need a restart of the game. The game will restart. Press Ok to restart.", true);
         connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::restart, Qt::QueuedConnection);
@@ -230,7 +242,7 @@ void OptionMenue::reloadSettings()
     CONSOLE_PRINT("Leaving Option Menue", Console::eDEBUG);
     spOptionMenue newMenu = spOptionMenue::create();
     // carry over restart flag
-    newMenu->restartNeeded = restartNeeded;
+    newMenu->m_restartNeeded = m_restartNeeded;
     oxygine::Stage::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
 }
@@ -489,6 +501,19 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Max FPS: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSlider = spSlider::create(Settings::getWidth() - 20 - sliderOffset, 30, 60, "");
+    pSlider->setTooltipText(tr("Selects the maximum FPS use it to reduce power consumption on smartphones."));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getFramesPerSecond());
+    connect(pSlider.get(), &Slider::sliderValueChanged, Settings::getInstance(), &Settings::setFramesPerSecond, Qt::QueuedConnection);
+    m_pOptions->addItem(pSlider);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Touch screen: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -513,43 +538,43 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(touchPointSensitivity);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Gamepad: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pCheckbox = spCheckbox::create();
-    pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android and linux."));
-    pCheckbox->setChecked(Settings::getGamepadEnabled());
-    pCheckbox->setPosition(sliderOffset - 130, y);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
-    m_pOptions->addItem(pCheckbox);
-
-
-    // gamepad button
-    oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
-    pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
-    m_pOptions->addItem(pButtonGamepad);
-    pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    if (Gamepad::isSupported())
     {
-        emit sigShowGamepadInfo();
-    });
-    connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
-    y += 40;
+        pTextfield = spLabel::create(sliderOffset - 140);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Gamepad: "));
+        pTextfield->setPosition(10, y);
+        m_pOptions->addItem(pTextfield);
+        pCheckbox = spCheckbox::create();
+        pCheckbox->setTooltipText(tr("Enables Gamepad support for controllers. Note: This is experimental and won't 100% with all controllers and isn't supported for android, iOS, macOS and linux."));
+        pCheckbox->setChecked(Settings::getGamepadEnabled());
+        pCheckbox->setPosition(sliderOffset - 130, y);
+        connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setGamepadEnabled, Qt::QueuedConnection);
+        m_pOptions->addItem(pCheckbox);
+        // gamepad button
+        oxygine::spButton pButtonGamepad = ObjectManager::createButton(tr("Info"), 100);
+        pButtonGamepad->setPosition(pCheckbox->getX() + 80, y);
+        m_pOptions->addItem(pButtonGamepad);
+        pButtonGamepad->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowGamepadInfo();
+        });
+        connect(this, &OptionMenue::sigShowGamepadInfo, this, &OptionMenue::showGamepadInfo, Qt::QueuedConnection);
+        y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 140);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
-    gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
-    gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
-    gamepadSensitivity->setPosition(sliderOffset - 130, y);
-    connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
-    m_pOptions->addItem(gamepadSensitivity);
-    y += 40;
-
+        pTextfield = spLabel::create(sliderOffset - 140);
+        pTextfield->setStyle(style);
+        pTextfield->setHtmlText(tr("Gamepad Sensitivity: "));
+        pTextfield->setPosition(10, y);
+        m_pOptions->addItem(pTextfield);
+        spSpinBox gamepadSensitivity = spSpinBox::create(200, 0.1, 100);
+        gamepadSensitivity->setTooltipText(tr("Selects how often events are send by the gamepad. Smaller values create a faster cursor."));
+        gamepadSensitivity->setCurrentValue(Settings::getGamepadSensitivity());
+        gamepadSensitivity->setPosition(sliderOffset - 130, y);
+        connect(gamepadSensitivity.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setGamepadSensitivity);
+        m_pOptions->addItem(gamepadSensitivity);
+        y += 40;
+    }
     showSoundOptions(m_pOptions, sliderOffset, y, this);
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -560,7 +585,7 @@ void OptionMenue::showSettings()
     items.clear();
     QLocale english("en");
     items.append(english.nativeLanguageName());
-    languages.append("en");
+    m_languages.append("en");
     qint32 current = 0;
     QStringList paths = {QString(oxygine::Resource::RCC_PREFIX_PATH) + "resources/translation/", "resources/translation/"};
     QStringList filter;
@@ -574,7 +599,7 @@ void OptionMenue::showSettings()
             QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
             if (lang != "en")
             {
-                languages.append(lang);
+                m_languages.append(lang);
                 QLocale langLoc(lang);
                 items.append(langLoc.nativeLanguageName());
                 if (lang == Settings::getLanguage())
@@ -593,8 +618,8 @@ void OptionMenue::showSettings()
             [=](qint32 item)
     {
         CONSOLE_PRINT("Marking restart cause language changed.", Console::eDEBUG);
-        Settings::setLanguage(languages[item]);
-        restartNeeded = true;
+        Settings::setLanguage(m_languages[item]);
+        m_restartNeeded = true;
         emit sigReloadSettings();
     });
     y += 40;
@@ -669,7 +694,7 @@ void OptionMenue::showSettings()
             if (value != Settings::getUsername())
             {
                 CONSOLE_PRINT("Marking restart cause user changed.", Console::eDEBUG);
-                restartNeeded = true;
+                m_restartNeeded = true;
             }
             Settings::setUsername(value);
         }
@@ -722,7 +747,7 @@ void OptionMenue::showSettings()
     {
         CONSOLE_PRINT("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
-        restartNeeded = true;
+        m_restartNeeded = true;
     });
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
@@ -762,6 +787,23 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pTextfield->setHtmlText(tr("Audio Settings"));
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
+    y += 40;
+
+    pTextfield = spLabel::create(sliderOffset - 140);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Muted: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    spCheckbox pCheckbox = spCheckbox::create();
+    pCheckbox->setTooltipText(tr("If checked mutes all sounds and music are muted."));
+    pCheckbox->setChecked(Settings::getMuted());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), [=](bool checked)
+    {
+        Settings::setMuted(checked);
+        pAudio->setVolume(Settings::getMusicVolume());
+    }, Qt::QueuedConnection);
+    pOwner->addItem(pCheckbox);
     y += 40;
 
     pTextfield = spLabel::create(sliderOffset - 140);
@@ -955,7 +997,7 @@ void OptionMenue::showMods()
             {
                 Settings::removeMod(mod);
             }
-            restartNeeded = true;
+            m_restartNeeded = true;
             emit sigUpdateModCheckboxes();
         });
         pBox->setPosition(10, 10 + mods * 50);
@@ -1113,7 +1155,7 @@ void OptionMenue::selectMods(qint32 item)
             Settings::addMod(addMod);
         }
         CONSOLE_PRINT("Marking restart cause mods changed.", Console::eDEBUG);
-        restartNeeded = true;
+        m_restartNeeded = true;
         showMods();
     }
 }
@@ -1240,3 +1282,16 @@ void OptionMenue::showGamepadInfo()
     addChild(pGamepadInfo);
 }
 
+void OptionMenue::showResetBox()
+{
+    spDialogMessageBox pMessage = spDialogMessageBox::create("This will reset most settings including mods and key bindings. Press Ok to reset the settings. This will force a restart upon leaving this menu. ", true);
+    connect(pMessage.get(), &DialogMessageBox::sigOk, this, &OptionMenue::onReset, Qt::QueuedConnection);
+    addChild(pMessage);
+}
+
+void OptionMenue::onReset()
+{
+    Settings::resetSettings();
+    m_restartNeeded = true;
+    reloadSettings();
+}

@@ -15,6 +15,11 @@
 
 int main(qint32 argc, char* argv[])
 {
+    // boot up check for qrect magic
+    QRect rect(20, 10, 10, 10);
+    rect.moveLeft(rect.x() - rect.x());
+    Q_ASSERT(rect.x() == 0 && rect.y() == 10 && rect.width() == 10 && rect.height() == 10);
+
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::NormalPriority);
@@ -42,6 +47,10 @@ int main(qint32 argc, char* argv[])
     if (window.getScreenMode() != 0)
     {
         window.setPosition(Settings::getX(), Settings::getY());
+    }
+    if (window.getNoUi())
+    {
+        window.launchGame();
     }
     qint32 returncode = app.exec();
     /*************************************************************************************************/

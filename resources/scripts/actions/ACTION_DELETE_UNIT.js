@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var units = map.getCurrentPlayer().getUnits();
         var ret = false;
@@ -17,15 +17,15 @@ var Constructor = function()
         return ret;
     };
     
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Delete Unit");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "destroy";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -36,7 +36,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         // read action data
@@ -48,14 +48,14 @@ var Constructor = function()
             unit.killUnit();
         }
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+delete");
         cursorData.setXOffset(0);
         cursorData.setYOffset(0);
         cursorData.setScale(1.0);
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var units = map.getCurrentPlayer().getUnits();
         for (var i = 0; i < units.size(); i++)
@@ -70,7 +70,7 @@ var Constructor = function()
         data.setColor("#C8FF0000");
         units.remove();
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };

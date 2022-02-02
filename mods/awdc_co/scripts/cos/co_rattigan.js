@@ -1,9 +1,9 @@
-CO_RATTIGAN.init = function(co)
+CO_RATTIGAN.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_RATTIGAN.activateSuperpower = function(co, powerMode)
+CO_RATTIGAN.activateSuperpower = function(co, powerMode, map)
 {
 	CO_RATTIGAN.activatePower(co, powerMode);
 };
@@ -16,9 +16,9 @@ CO_RATTIGAN.getSuperPowerName = function()
     return CO_RATTIGAN.getPowerName();
 };
 CO_RATTIGAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
-    var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
+    var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
     switch (co.getPowerMode())
     {
         case GameEnums.PowerMode_Tagpower:
@@ -51,9 +51,9 @@ CO_RATTIGAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_RATTIGAN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
-    var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY);
+    var count = CO_RATTIGAN.getUnitCount(co, defPosX, defPosY, map);
     switch (co.getPowerMode())
     {
         case GameEnums.PowerMode_Tagpower:
@@ -69,7 +69,7 @@ CO_RATTIGAN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_RATTIGAN.getMovementpointModifier = function(co, unit, posX, posY)
+CO_RATTIGAN.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     if (co.getPowerMode() > GameEnums.PowerMode_Off)
     {

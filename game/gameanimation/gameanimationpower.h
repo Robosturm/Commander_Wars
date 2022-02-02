@@ -13,7 +13,7 @@ class GameAnimationPower : public GameAnimation
 {
     Q_OBJECT
 public:
-    static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
+    static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
 
     virtual ~GameAnimationPower();
 
@@ -27,7 +27,7 @@ protected slots:
     virtual void start() override;
 private:
     friend class oxygine::intrusive_ptr<GameAnimationPower>;
-    GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
+    GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO, GameMap * pMap);
     void createPowerDescription(CO* pCo, GameEnums::PowerMode powerMode, bool onTop);
 private:
     QTimer m_endTimer;

@@ -11,8 +11,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionStartOfTurn::ScriptConditionStartOfTurn()
-    : ScriptCondition (ConditionType::startOfTurn)
+ScriptConditionStartOfTurn::ScriptConditionStartOfTurn(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::startOfTurn)
 {
 
 }
@@ -50,12 +50,12 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream, QString lin
         player = items[1].toInt();
         while (!rStream.atEnd())
         {
-            if (readSubCondition(rStream, ConditionStartOfTurn, line))
+            if (readSubCondition(m_pMap, rStream, ConditionStartOfTurn, line))
             {
                 CONSOLE_PRINT("Read ConditionStartOfTurn", Console::eDEBUG);
                 break;
             }
-            spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+            spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
             if (event.get() != nullptr)
             {
                 events.append(event);

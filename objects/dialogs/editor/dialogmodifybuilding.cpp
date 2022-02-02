@@ -12,7 +12,7 @@
 
 #include "game/gamemap.h"
 
-DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
+DialogModifyBuilding::DialogModifyBuilding(GameMap* pMap, Building* pBuilding)
     : QObject(),
       m_pBuilding(pBuilding)
 {
@@ -70,7 +70,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     QStringList items;
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));
@@ -80,16 +80,16 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pBuilding->getOwner()->getPlayerID());
-    GameMap* pPtrMap = pMap.get();
+
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
-        if (value >= pPtrMap->getPlayerCount())
+        if (value >= pMap->getPlayerCount())
         {
             m_pBuilding->setOwner(nullptr);
         }
         else
         {
-            m_pBuilding->setOwner(pPtrMap->getPlayer(value));
+            m_pBuilding->setOwner(pMap->getPlayer(value));
         }
     });
     m_pPanel->addItem(pDropdownmenu);

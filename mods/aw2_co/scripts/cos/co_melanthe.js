@@ -1,8 +1,8 @@
-CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (CO_MELANTHE.isNature(posX, posY) === true)
+        if (CO_MELANTHE.isNature(posX, posY, map) === true)
         {
             switch (co.getPowerMode())
             {
@@ -17,7 +17,7 @@ CO_MELANTHE.getTerrainDefenseModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY)
+CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -26,11 +26,11 @@ CO_MELANTHE.getRepairBonus = function(co, unit, posX, posY)
     return 0;
 };
 CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                         defender, defPosX, defPosY, isDefender, action)
+                                         defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {
@@ -39,13 +39,13 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                     {
                         return 20;
                     }
                     return 0;
                 default:
-                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY, map) === true)
                     {
                         return 15;
                     }
@@ -57,7 +57,7 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_MELANTHE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

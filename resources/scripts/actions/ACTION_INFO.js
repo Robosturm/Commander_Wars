@@ -1,18 +1,18 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         return true;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Info");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "help";
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         action.startReading();
         var id = action.readDataString();
@@ -49,7 +49,7 @@ var Constructor = function()
             map.showUnitStatistics();
         }
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         action.setIsLocal(true);
         var step = action.getInputStep();
@@ -62,11 +62,11 @@ var Constructor = function()
             return true;
         }
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "MENU";
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var step = action.getInputStep();
         data.addData(qsTr("Victory Info"), "VICTORY", "help");

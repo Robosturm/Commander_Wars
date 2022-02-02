@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
@@ -12,19 +12,19 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         return true;
     };
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
@@ -34,7 +34,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
 
         var owner = building.getOwner();
-        var talonGunAnimation = GameAnimationFactory.createAnimation(x, y);
+        var talonGunAnimation = GameAnimationFactory.createAnimation(map, x, y);
         talonGunAnimation.addSprite("talon+gun+fire", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, 0, 1.33);
         talonGunAnimation.addSpriteAnimTable("talon+gun+fire+mask", -map.getImageSize() * 1.0, -map.getImageSize() * 1.6, owner, 0, 1.33, 1.33, 0, 0, GameEnums.Recoloring_Matrix);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
@@ -50,7 +50,7 @@ var Constructor = function()
                 {
                     var damage = Global[building.getBuildingID()].getDamage(building, unit);
                     unit.setHp(unit.getHpRounded() - damage);
-                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("talon+gun+hit", -map.getImageSize() * 1.1, -map.getImageSize() * 1.5, 0, 1.33);
                     talonGunAnimation.queueAnimation(animation);
                     if (unit.getHp() <= 0)

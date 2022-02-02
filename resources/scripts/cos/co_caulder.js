@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(7);
         co.setSuperpowerStars(5);
@@ -22,7 +22,7 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -36,7 +36,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(5);
@@ -75,7 +75,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -88,7 +88,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(10);
@@ -120,7 +120,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -140,7 +140,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -154,7 +154,7 @@ var Constructor = function()
     this.coGlobalBonus = 15;
     this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -176,7 +176,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -197,7 +197,7 @@ var Constructor = function()
         }
     };
 
-    this.startOfTurn = function(co)
+    this.startOfTurn = function(co, map)
     {
         var player = co.getOwner();
         if (!player.getIsDefeated())
@@ -208,7 +208,7 @@ var Constructor = function()
             {
                 var animations = [];
                 var counter = 0;
-                UNIT.repairUnit(counit, 5);
+                UNIT.repairUnit(counit, 5, map);
                 var fields = globals.getCircle(1, coRange);
                 var x = counit.getX();
                 var y = counit.getY();
@@ -225,13 +225,13 @@ var Constructor = function()
                         if ((unit !== null) &&
                             (unit.getOwner() === counit.getOwner()))
                         {
-                            UNIT.repairUnit(unit, CO_CAULDER.coHealing);
+                            UNIT.repairUnit(unit, CO_CAULDER.coHealing, map);
                             var delay = globals.randInt(135, 265);
                             if (animations.length < 5)
                             {
                                 delay *= i;
                             }
-                            animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                            animation = GameAnimationFactory.createAnimation(map, unitX, unitY);
                             animation.setSound("power0.wav", 1, delay);
                             if (animations.length < 5)
                             {
@@ -261,11 +261,11 @@ var Constructor = function()
         }
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

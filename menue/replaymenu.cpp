@@ -16,7 +16,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
-    : GameMenue()
+    : GameMenue(spGameMap::create(1, 1, 2))
 {
     Interpreter::setCppOwnerShip(this);
     setObjectName("ReplayMenu");
@@ -32,7 +32,7 @@ ReplayMenu::ReplayMenu(QString filename)
     m_valid = m_ReplayRecorder.loadRecord(filename);
     if (m_valid)
     {
-        m_Viewplayer = spViewplayer::create();
+        m_Viewplayer = spViewplayer::create(m_pMap.get());
         // store animation modes
         m_storedOverworldAnimations = Settings::getOverworldAnimations();
         m_storedBattleAnimMode = Settings::getBattleAnimationMode();
@@ -43,13 +43,13 @@ ReplayMenu::ReplayMenu(QString filename)
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         m_storedDialogAnimationSpeed = Settings::getDialogAnimationSpeed();
         m_storedCaptureAnimationSpeed = Settings::getCaptureAnimationSpeed();
-        spGameMap pMap = GameMap::getInstance();
+        
         loadHandling();
         loadGameMenue();
-        pMap->registerMapAtInterpreter();
-        pMap->updateSprites();
+        m_pMap->registerMapAtInterpreter();
+        m_pMap->updateSprites();
         loadUIButtons();
-        m_HumanInput = spHumanPlayerInput::create();
+        m_HumanInput = spHumanPlayerInput::create(m_pMap.get());
         m_HumanInput->init();
         m_gameStarted = true;
         CONSOLE_PRINT("emitting sigActionPerformed()", Console::eDEBUG);
@@ -68,6 +68,12 @@ void ReplayMenu::onEnter()
         QJSValue value = pInterpreter->newQObject(this);
         args << value;
         pInterpreter->doFunction(object, func, args);
+    }
+    
+    if (m_pMap.get() != nullptr &&
+        m_pMap->getGameScript() != nullptr)
+    {
+        m_pMap->getGameScript()->onGameLoaded(this);
     }
     if (m_valid)
     {
@@ -110,10 +116,12 @@ void ReplayMenu::exitReplay()
     {
         GameAnimationFactory::finishAllAnimations();
     }
+    CONSOLE_PRINT("Restoring interpreter after record replay", Console::eDEBUG);
+    Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     CONSOLE_PRINT("Leaving Replay Menue", Console::eDEBUG);
     auto window = spMainwindow::create();
     oxygine::Stage::getStage()->addChild(window);
-    GameMenue::deleteMenu();
+    deleteMenu();
 }
 
 void ReplayMenu::nextReplayAction()
@@ -375,22 +383,21 @@ void ReplayMenu::seekToDay(qint32 day)
     {
         CONSOLE_PRINT("Seeking to day " + QString::number(day), Console::eDEBUG);
         Mainapp::getInstance()->pauseRendering();
-        spGameMap pMap = GameMap::getInstance();
+        
         // save map position and scale
-        auto scale = pMap->getScale();
+        auto scale = m_pMap->getScale();
         auto slidingPos = m_mapSliding->getPosition();
         auto actorPos = m_mapSlidingActor->getPosition();
         // load map state during that day
         m_ReplayRecorder.seekToDay(day);
-        pMap = GameMap::getInstance();
-        pMap->registerMapAtInterpreter();
-        m_mapSlidingActor->addChild(pMap);        
+        m_pMap->registerMapAtInterpreter();
+        m_mapSlidingActor->addChild(m_pMap);
         // restore map position and scale
-        pMap->setScale(scale);
+        m_pMap->setScale(scale);
         m_mapSliding->setPosition(slidingPos);
         m_mapSlidingActor->setPosition(actorPos);
-        pMap->updateSprites();
-        pMap->getGameRules()->createFogVision();
+        m_pMap->updateSprites();
+        m_pMap->getGameRules()->createFogVision();
         updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
         connectMap();
@@ -493,15 +500,15 @@ void ReplayMenu::showConfig()
     qint32 y = 10;
     QVector<qint32> teams;
     QStringList teamNames;
-    spGameMap pMap = GameMap::getInstance();
+    
     teamNames.append(tr("Current Team"));
     teamNames.append(tr("All Teams"));
     teamNames.append(tr("Map"));
     qint32 viewType = m_Viewplayer->getViewType();
     bool found = false;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
     {
-        qint32 team = pMap->getPlayer(i)->getTeam();
+        qint32 team = m_pMap->getPlayer(i)->getTeam();
         if (!teams.contains(team))
         {
             if (team == viewType && !found)
@@ -689,7 +696,7 @@ void ReplayMenu::showConfig()
 
 void ReplayMenu::setViewTeam(qint32 item)
 {    
-    spGameMap pMap = GameMap::getInstance();
+    
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
         m_Viewplayer->setViewType(item + Viewplayer::ViewType::CurrentTeam);
@@ -697,9 +704,9 @@ void ReplayMenu::setViewTeam(qint32 item)
     else
     {
         QVector<qint32> teams;
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        for (qint32 i = 0; i < m_pMap->getPlayerCount(); i++)
         {
-            qint32 team = pMap->getPlayer(i)->getTeam();
+            qint32 team = m_pMap->getPlayer(i)->getTeam();
             if (!teams.contains(team))
             {
                 if (teams.size() == item + Viewplayer::ViewType::CurrentTeam)
@@ -711,5 +718,5 @@ void ReplayMenu::setViewTeam(qint32 item)
             }
         }
     }
-    pMap->getGameRules()->createFogVision();    
+    m_pMap->getGameRules()->createFogVision();    
 }

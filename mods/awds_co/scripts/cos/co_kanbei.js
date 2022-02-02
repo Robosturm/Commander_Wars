@@ -1,4 +1,4 @@
-CO_KANBEI.getCostModifier = function(co, id, baseCost)
+CO_KANBEI.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -10,7 +10,7 @@ CO_KANBEI.coZoneBonus = 0;
 CO_KANBEI.globalBonus = 20;
 CO_KANBEI.costIncrease = 20;
 CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -32,7 +32,7 @@ CO_KANBEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_KANBEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                        defender, defPosX, defPosY, isAttacker, action)
+                                        defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

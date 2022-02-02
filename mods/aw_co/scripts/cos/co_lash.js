@@ -1,11 +1,11 @@
 CO_LASH.globalTerrainBonus = 10;
 CO_LASH.zoneTerrainBonus = 0;
-CO_LASH.init = function(co)
+CO_LASH.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(4);
 };
-CO_LASH.activateSuperpower = function(co, powerMode)
+CO_LASH.activateSuperpower = function(co, powerMode, map)
 {
     CO_LASH.activatePower(co, powerMode);
 };
@@ -18,11 +18,11 @@ CO_LASH.getSuperPowerName = function()
     return CO_LASH.getPowerName();
 };
 CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {
@@ -42,7 +42,7 @@ CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_LASH.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -54,7 +54,7 @@ CO_LASH.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY)
+CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -70,7 +70,7 @@ CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY)
     }
     return 0;
 };
-CO_LASH.getMovementcostModifier = function(co, unit, posX, posY)
+CO_LASH.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

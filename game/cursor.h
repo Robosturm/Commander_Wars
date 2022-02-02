@@ -6,8 +6,9 @@
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
+class GameMap;
 class Cursor;
-typedef oxygine::intrusive_ptr<Cursor> spCursor;
+using spCursor = oxygine::intrusive_ptr<Cursor>;
 
 /**
  * @brief The Cursor class is the ingame cursor for the map
@@ -16,7 +17,7 @@ class Cursor : public QObject, public oxygine::Actor
 {
    Q_OBJECT
 public:
-    explicit Cursor();
+    explicit Cursor(GameMap* pMap);
     virtual ~Cursor() = default;
     void changeCursor(const QString & spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
@@ -45,9 +46,15 @@ public:
         return QPoint(m_MapPointX, m_MapPointY);
     }
     void setMapPoint(qint32 x, qint32 y);
+
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
     /**
      * @brief updatePosition calculates the cursor point based on the mouse x and y coordinates
      * @param mousePosX
@@ -63,6 +70,7 @@ private:
     oxygine::spSprite m_CurrentCursor;
     oxygine::spActor m_cursorRangeOutline;
     bool m_onMap{false};
+    GameMap* m_pMap{nullptr};
 
     qint32 m_MapPointX{0};
     qint32 m_MapPointY{0};

@@ -3,8 +3,10 @@
 #include "coreengine/mainapp.h"
 #include "game/gamemap.h"
 
-TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap)
-    : UnitPathFindingSystem (pUnit),
+#include "resource_management/movementtablemanager.h"
+
+TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap)
+    : UnitPathFindingSystem(pMap, pUnit),
       m_Targets(targets),
       m_pMoveCostMap(pMoveCostMap)
 {
@@ -17,6 +19,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(Unit* pUnit, QVecto
             m_Targets[i].setZ(1.0f);
         }
     }
+    m_supportsBasecosts = MovementTableManager::getInstance()->getSupportsFastPfs(pUnit->getMovementType());
     setMovepoints(m_pUnit->getFuel() * 2);
 }
 
@@ -46,13 +49,12 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
     qint32 costs = -1;
-    if (m_useBasecosts)
-    {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr && pMap->onMap(x, y))
+    if (m_useBasecosts && m_supportsBasecosts)
+    {        
+        if (m_pMap != nullptr && m_pMap->onMap(x, y))
         {
             qint32 direction = getMoveDirection(curX, curY, x, y);
-            QString id = pMap->getTerrain(curX, curY)->getID() + pMap->getTerrain(x, y)->getID() + "Base";
+            QString id = m_pMap->getTerrain(curX, curY)->getID() + m_pMap->getTerrain(x, y)->getID() + "Base";
             bool found = m_costInfo.contains(id);
             if (found)
             {
@@ -144,7 +146,7 @@ bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 movement
     {
         m_FinishNodes.append(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
     }
-    Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
+    Unit* pUnit = m_pMap->getTerrain(x, y)->getUnit();
     if ((pUnit == nullptr) ||
         m_pUnit->getIgnoreUnitCollision() ||
         pUnit->getOwner() == m_pUnit->getOwner())

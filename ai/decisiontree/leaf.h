@@ -2,7 +2,7 @@
 #include <QObject>
 #include <QString>
 
-#include "ai/decisionnode.h"
+#include "ai/decisiontree/decisionnode.h"
 #include "coreengine/fileserializable.h"
 
 class Leaf;

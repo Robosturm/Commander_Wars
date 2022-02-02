@@ -12,14 +12,15 @@
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
+class GameMap;
 class PerkSelectionDialog;
-typedef oxygine::intrusive_ptr<PerkSelectionDialog> spPerkSelectionDialog;
+using spPerkSelectionDialog = oxygine::intrusive_ptr<PerkSelectionDialog>;
 
 class PerkSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList);
+    explicit PerkSelectionDialog(GameMap* pMap, Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList);
 protected slots:
     void changeCO(qint32 index);
     /**
@@ -63,6 +64,7 @@ private:
     spPanel m_pPanel;
     spPerkSelection m_pPerkSelection;
     bool m_banning{false};
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // PERKSELECTIONDIALOG_H

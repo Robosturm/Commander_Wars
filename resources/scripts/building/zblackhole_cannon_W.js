@@ -20,7 +20,7 @@ var Constructor = function()
         return 0;
     };
     this.actionList = ["ACTION_CANNON_FIRE"];
-    this.startOfTurn = function(building)
+    this.startOfTurn = function(building, map)
     {
         building.setFireCount(1);
     };
@@ -47,9 +47,9 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 3;
     };
-    this.canBuildingBePlaced = function(terrain, building)
+    this.canBuildingBePlaced = function(terrain, building, map)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_CANNON_W.getBuildingWidth(), ZBLACKHOLE_CANNON_W.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_CANNON_W.getBuildingWidth(), ZBLACKHOLE_CANNON_W.getBuildingHeigth(), map);
     };
     this.getMiniMapIcon = function()
     {
@@ -73,21 +73,21 @@ var Constructor = function()
     {
         return GameEnums.BuildingTarget_Enemy;
     };
-    this.onDestroyed = function(building)
+    this.onDestroyed = function(building, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = building.getX();
         var y = building.getY();
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.addScreenshake(45, 0.98, 3000, 200);
         animation2.setSound("black_canon_destroyed.wav");
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
-    this.getShotAnimation = function(building)
+    this.getShotAnimation = function(building, map)
     {
-        var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
+        var animation = GameAnimationFactory.createAnimation(map, building.getX(), building.getY(), 70);
         animation.addSprite("blackhole_shot_west", -map.getImageSize() * 3.0, -map.getImageSize() * 3.0, 0, 2);
         animation.setSound("blackcanon_shot.wav");
         return animation;

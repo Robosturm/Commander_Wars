@@ -7,13 +7,13 @@ var Constructor = function()
         return ["+alt"];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(5);
         co.setSuperpowerStars(5);
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -33,37 +33,37 @@ var Constructor = function()
         }
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_STURM.throwMeteor(co, 4, powerNameAnimation);
+        CO_STURM.throwMeteor(co, 4, powerNameAnimation, map);
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
-        CO_STURM.throwMeteor(co, 8, powerNameAnimation);
+        CO_STURM.throwMeteor(co, 8, powerNameAnimation, map);
     };
 
-    this.throwMeteor = function(co, damage, powerNameAnimation)
+    this.throwMeteor = function(co, damage, powerNameAnimation, map)
     {
         // let a meteor fall :D
         var meteorTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
-        var animation = GameAnimationFactory.createAnimation(meteorTarget.x + 2, meteorTarget.y - 4);
+        var animation = GameAnimationFactory.createAnimation(map, meteorTarget.x + 2, meteorTarget.y - 4);
         animation.addSprite("meteor", 0, 0, 2500, 4.0);
         animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 2) * map.getImageSize()), 1000);
         animation.addTweenScale(0.65, 1000);
         animation.addTweenColor(0, "#FFFFFFFF", "#00FFFFFF", 1000, false, 1200);
         animation.addSound("meteorFall.wav");
         powerNameAnimation.queueAnimation(animation);
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        var animation2 = GameAnimationFactory.createAnimation(map, 0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
         animation2.addSound("meteorImpact.wav");
@@ -75,7 +75,7 @@ var Constructor = function()
 
     this.postAnimationThrowMeteorTarget = null;
     this.postAnimationThrowMeteorDamage = 0;
-    this.postAnimationThrowMeteor = function(animation)
+    this.postAnimationThrowMeteor = function(animation, map)
     {
         var meteorTarget = CO_STURM.postAnimationThrowMeteorTarget;
         var damage = CO_STURM.postAnimationThrowMeteorDamage;
@@ -109,7 +109,7 @@ var Constructor = function()
         CO_STURM.postAnimationThrowMeteorDamage = 0;
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 3;
     };
@@ -118,7 +118,7 @@ var Constructor = function()
         return "BH";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -137,7 +137,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         switch (co.getPowerMode())
         {
@@ -155,7 +155,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if (unit.getOwner() === co.getOwner())
         {
@@ -170,7 +170,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };

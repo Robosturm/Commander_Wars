@@ -28,10 +28,10 @@ var Constructor = function()
     {
         unit.loadSpriteV2("royal_guard+mask", GameEnums.Recoloring_Matrix);
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         animation.loadSpriteV2("royal_guard+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveheavytank.wav", -2);
         return animation;
@@ -61,11 +61,11 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var owner = unit.getOwner();
         var playerId  = owner.getPlayerID();
-        ZCOUNIT_ROYAL_GUARD.addBuff(unit, playerId);
+        ZCOUNIT_ROYAL_GUARD.addBuff(map, unit, playerId);
         var fields = globals.getCircle(1, 1);
         var unitX = unit.getX();
         var unitY = unit.getY();
@@ -78,7 +78,7 @@ var Constructor = function()
                 var targetUnit = map.getTerrain(x, y).getUnit();
                 if (targetUnit !== null && targetUnit.getOwner() === owner)
                 {
-                    ZCOUNIT_ROYAL_GUARD.addBuff(targetUnit, playerId);
+                    ZCOUNIT_ROYAL_GUARD.addBuff(map, targetUnit, playerId);
                 }
             }
         }
@@ -86,7 +86,7 @@ var Constructor = function()
     };
     this.offBonus = 15;
     this.defBonus = 10;
-    this.addBuff = function(unit, playerId, duration = 1)
+    this.addBuff = function(map, unit, playerId, duration = 1)
     {
         unit.addDefensiveBonus(ZCOUNIT_ROYAL_GUARD.defBonus, duration);
         unit.addOffensiveBonus(ZCOUNIT_ROYAL_GUARD.offBonus, duration);

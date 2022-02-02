@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return 0;
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
 		var random = globals.randInt(0, 140);
         if (random >= 8)
@@ -37,7 +37,7 @@ var Constructor = function()
     {
         return "minimap_waste";
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
@@ -95,13 +95,13 @@ var Constructor = function()
     {
         return qsTr("<r>Waste terrain with reduced defense but clear view. In Fog of War, unit's gain </r><div c='#00ff00'>vision +1.</div>");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        if (TERRAIN.isPipeline(TERRAIN.getTerrainAnimationId(terrain)))
+        if (TERRAIN.isPipeline(TERRAIN.getTerrainAnimationId(terrain, map)))
         {
             return "back_wasteplains+pipe";
         }

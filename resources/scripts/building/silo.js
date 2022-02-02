@@ -29,7 +29,7 @@ var Constructor = function()
         return qsTr("Empty missile silo which provides some defence.");
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "back_missile+1";
     };

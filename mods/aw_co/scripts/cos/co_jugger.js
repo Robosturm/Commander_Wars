@@ -1,9 +1,9 @@
-CO_JUGGER.init = function(co)
+CO_JUGGER.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_JUGGER.activateSuperpower = function(co, powerMode)
+CO_JUGGER.activateSuperpower = function(co, powerMode, map)
 {
     CO_JUGGER.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_JUGGER.getSuperPowerName = function()
 {
     return CO_JUGGER.getPowerName();
 };
-CO_JUGGER.getBonusLuck = function(co, unit, posX, posY)
+CO_JUGGER.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,7 +33,7 @@ CO_JUGGER.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 
-CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY)
+CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -52,13 +52,13 @@ CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY)
 };
 
 CO_JUGGER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_JUGGER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

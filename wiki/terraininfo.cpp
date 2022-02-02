@@ -11,8 +11,8 @@
 
 #include "ai/coreai.h"
 
-TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
-    : QObject()
+TerrainInfo::TerrainInfo(GameMap* pMap, Terrain* pTerrain, qint32 width)
+    : m_pMap(pMap)
 {
     setObjectName("TerrainInfo");
     Mainapp* pApp = Mainapp::getInstance();
@@ -184,19 +184,19 @@ void TerrainInfo::showLink(QString pageID)
 void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 width)
 {
     qint32 x = 0;
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        m_pPlayer = pMap->getSpCurrentPlayer();
+        m_pPlayer = m_pMap->getSpCurrentPlayer();
     }
     if (m_pPlayer.get() == nullptr)
     {
-        m_pPlayer = spPlayer::create();
+        m_pPlayer = spPlayer::create(m_pMap);
         m_pPlayer->init();
     }
     for (qint32 i = 0; i < productionList.size(); i++)
     {
-        spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false);
+        spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false, m_pMap);
         pDummy->setPosition(x, y);
         QString id = productionList[i];
         pDummy->addClickListener([=](oxygine::Event*)

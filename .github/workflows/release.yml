@@ -7,7 +7,7 @@ name: Commnader_Wars_Release
 
 env:
   BUILD_TYPE: Release
-  QT_Version: '6.2.1'
+  QT_Version: '6.2.2'
   
 jobs:
   create_release:
@@ -39,14 +39,12 @@ jobs:
         include:
           - os: windows-latest
             COMPILER_VERSION: 'win64_msvc2019_64'
-            # 'win64_mingw81'
             target: 'desktop'
             qtPath: 'msvc2019_64'
             installerCommands1: ''
             installerCommands2: ''
             source_asset: 'Commander_Wars.zip'
-            asset_name: 'Commander_Wars_x64.zip'
-            
+            asset_name: 'Commander_Wars_Win10_x64.zip'            
           - os: ubuntu-latest
             COMPILER_VERSION: ''
             target: 'desktop'
@@ -122,4 +120,15 @@ jobs:
         upload_url: '${{needs.create_release.outputs.upload_url}}'
         asset_path: '${{github.workspace}}/install/${{matrix.source_asset}}'
         asset_name: '${{matrix.asset_name}}'
+        asset_content_type: application/zip
+
+    - name: upload unofficial compatible pack
+      uses: actions/upload-release-asset@v1.0.2
+      if: ${{ matrix.os == 'windows-latest' }}
+      env:
+        GITHUB_TOKEN: ${{github.token}}
+      with:
+        upload_url: '${{needs.create_release.outputs.upload_url}}'
+        asset_name: 'UnofficialCommanderWars_Win7CompatiblePack.zip'
+        asset_path: '${{github.workspace}}/3rd_party/unofficialWin7Support/UnofficialCommanderWars_Win7CompatiblePack.zip'
         asset_content_type: application/zip

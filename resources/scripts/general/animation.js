@@ -1,7 +1,7 @@
 // this object provides some general call backs for post animation action
 var ANIMATION =
 {
-    postAnimationHeal : function(postAnimation)
+    postAnimationHeal : function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -17,7 +17,7 @@ var ANIMATION =
         }
     },
 
-    postAnimationDamage : function(postAnimation)
+    postAnimationDamage : function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -42,7 +42,7 @@ var ANIMATION =
         }
     },
 
-    postAnimationDamageKill : function(postAnimation)
+    postAnimationDamageKill : function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -62,7 +62,7 @@ var ANIMATION =
         }
     },
 
-    postAnimationSpawnUnit : function(postAnimation)
+    postAnimationSpawnUnit : function(postAnimation, map)
     {
         postAnimation.seekBuffer();
         var x = postAnimation.readDataInt32();
@@ -74,7 +74,7 @@ var ANIMATION =
         map.getTerrain(x, y).getUnit().setHp(hp);
     },
 
-    preOnAnimationChangedAnimation : function(animation)
+    preOnAnimationChangedAnimation : function(animation, map)
     {
         map.getGameRules().onWeatherChanged();
     },

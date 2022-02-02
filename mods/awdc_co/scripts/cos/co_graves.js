@@ -1,9 +1,9 @@
-CO_GRAVES.init = function(co)
+CO_GRAVES.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_GRAVES.activateSuperpower = function(co, powerMode)
+CO_GRAVES.activateSuperpower = function(co, powerMode, map)
 {
 	CO_GRAVES.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_GRAVES.getSuperPowerName = function()
 {
     return CO_GRAVES.getPowerName();
 };
-CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {

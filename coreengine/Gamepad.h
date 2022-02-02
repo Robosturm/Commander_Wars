@@ -46,6 +46,7 @@ public:
     void init();
     DeviceState getDeviceState() const;
 
+    static bool isSupported();
 protected slots:
     void update();
 protected:

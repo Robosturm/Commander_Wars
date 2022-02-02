@@ -33,15 +33,11 @@ class GameMenue : public InGameMenue
     Q_OBJECT
 public:
 
-    explicit GameMenue(bool saveGame, spNetworkInterface pNetworkInterface);
+    explicit GameMenue(spGameMap pMap, bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
-    explicit GameMenue();
-    virtual ~GameMenue();
-    void deleteMenu();
-    static spGameMenue getInstance()
-    {
-        return m_pGameMenuInstance;
-    }
+    explicit GameMenue(spGameMap pMap);
+    virtual ~GameMenue() = default;
+    static spGameMenue getInstance();
     /**
      * @brief attachInterface
      * @param pNetworkInterface
@@ -293,7 +289,7 @@ protected:
     bool shouldSkipDialog(GameAnimationDialog* pDialogAnimation) const;
     bool shouldSkipBattleAnimation(BattleAnimation* pBattleAnimation) const;
     bool shouldSkipOtherAnimation(GameAnimation* pBattleAnimation) const;
-
+    void showChat();
     void doSaveMap();
 protected:
     ReplayRecorder m_ReplayRecorder;
@@ -302,7 +298,6 @@ protected:
     spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
     spHumanQuickButtons m_humanQuickButtons;
-    static spGameMenue m_pGameMenuInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};

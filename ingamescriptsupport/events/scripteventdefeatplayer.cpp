@@ -10,8 +10,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptEventDefeatPlayer::ScriptEventDefeatPlayer()
-    : ScriptEvent (ScriptEvent::EventType::defeatPlayer)
+ScriptEventDefeatPlayer::ScriptEventDefeatPlayer(GameMap* pMap)
+    : ScriptEvent(pMap, ScriptEvent::EventType::defeatPlayer)
 {
 
 }

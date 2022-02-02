@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
 		terrain.loadBaseSprite("snow");
     };
@@ -25,7 +25,7 @@ var Constructor = function()
     {
         return "minimap_snow";
     };
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundingsPlains = terrain.getSurroundings("PLAINS", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsPlains.includes("+N"))
@@ -49,7 +49,7 @@ var Constructor = function()
     {
         return qsTr("Snowy terrain rough to cross.");
     };
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
@@ -66,9 +66,9 @@ var Constructor = function()
         }
         return "fore_snowplains+" + rand.toString();
     };
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
         return TERRAIN.getTerrainBackgroundId(id, "snow");
     };
 };

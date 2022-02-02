@@ -17,7 +17,7 @@ public:
         Map  = -1,
     };
 
-    explicit Viewplayer();
+    explicit Viewplayer(GameMap* pMap);
     virtual ~Viewplayer() = default;
 public slots:
     /**

@@ -17,11 +17,10 @@ MapMover::MapMover(InGameMenue* pOwner)
 }
 
 void MapMover::mouseWheel(float direction)
-{
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get())
+{    
+    if (m_pOwner->getMap())
     {
-        pMap->setZoom(direction);
+        m_pOwner->getMap()->setZoom(direction);
     }
     m_pOwner->centerMapOnCursor();
 }
@@ -40,10 +39,10 @@ void MapMover::autoScroll()
     {
         auto sliding = m_pOwner->getMapSliding();
         auto slidingActor = m_pOwner->getMapSlidingActor();
-        spGameMap pMap = GameMap::getInstance();
+        GameMap* pMap = m_pOwner->getMap();
         if (sliding.get() != nullptr &&
             slidingActor.get() != nullptr &&
-            pMap.get() != nullptr)
+            pMap != nullptr)
         {
             auto position = sliding->getPosition() + slidingActor->getPosition() + pMap->getPosition();
             auto* pCursor = m_pOwner->getCursor();
@@ -61,9 +60,9 @@ void MapMover::autoScroll()
 void MapMover::keyInput(oxygine::KeyEvent event)
 {
     if (m_pOwner->getFocused())
-    {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr)
+    {        
+        GameMap* pMap = m_pOwner->getMap();
+        if (pMap != nullptr)
         {
             constexpr qint64 scrollspeed = 75;
             qint64 currentTimestamp = QDateTime::currentMSecsSinceEpoch();

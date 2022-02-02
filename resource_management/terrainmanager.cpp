@@ -1,4 +1,5 @@
 #include "resource_management/terrainmanager.h"
+#include "game/terrain.h"
 
 TerrainManager::TerrainManager()
     : RessourceManagement<TerrainManager>("/images/terrain/res.xml",
@@ -20,6 +21,12 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
         }
     }
     return 0;
+}
+
+QString TerrainManager::getName(const QString & id)
+{
+    spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "", nullptr);
+    return pTerrain->getTerrainName();
 }
 
 QString TerrainManager::getFittingResAnim(const QString & spriteIdStart, const QString & spriteIdEnd) const

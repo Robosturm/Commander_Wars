@@ -1,9 +1,9 @@
-CO_HACHI.init = function(co)
+CO_HACHI.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_HACHI.activateSuperpower = function(co, powerMode)
+CO_HACHI.activateSuperpower = function(co, powerMode, map)
 {
     CO_HACHI.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_HACHI.getSuperPowerName = function()
 {
     return CO_HACHI.getPowerName();
 };
-CO_HACHI.getCostModifier = function(co, id, baseCost)
+CO_HACHI.getCostModifier = function(co, id, baseCost, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -33,19 +33,19 @@ CO_HACHI.getCostModifier = function(co, id, baseCost)
     return 0;
 };
 
-CO_HACHI.getAdditionalBuildingActions = function(co, building)
+CO_HACHI.getAdditionalBuildingActions = function(co, building, map)
 {
     return "";
 };
 
 CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_HACHI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

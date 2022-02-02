@@ -10,8 +10,8 @@
 #include "game/co.h"
 #include "game/gameanimation/gameanimationfactory.h"
 
-GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath)
-    : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePath, GameMap* pMap)
+    : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
       m_pUnit(pUnit),
       m_movePath(movePath)
 {
@@ -19,7 +19,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, const QVector<QPoint> & movePa
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    m_pUnit->setUnitVisible(false);
+    m_pUnit->setUnitVisible(false, nullptr);
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
 }
 
@@ -28,7 +28,7 @@ void GameAnimationWalk::start()
     if (!m_started)
     {
         m_started = true;
-        Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
+        Player* pPlayer = m_pMap->getCurrentViewPlayer();
         if (m_pUnit->isStealthed(pPlayer))
         {
             setVisible(false);
@@ -49,19 +49,19 @@ void GameAnimationWalk::start()
 
 bool GameAnimationWalk::onFinished(bool skipping)
 {    
-    spGameMap pMap = GameMap::getInstance();
-    Player* pPlayer = pMap->getCurrentViewPlayer();
+    
+    Player* pPlayer = m_pMap->getCurrentViewPlayer();
     Mainapp::getInstance()->getAudioThread()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
-        m_pUnit->setUnitVisible(true);
+        m_pUnit->setUnitVisible(true, pPlayer);
     }
     if (m_movePath.size() > 0)
     {
         QPoint pos = m_movePath[0];
-        if (pMap->getTerrain(pos.x(), pos.y())->getUnit() == nullptr)
+        if (m_pMap->getTerrain(pos.x(), pos.y())->getUnit() == nullptr)
         {
-            pMap->getTerrain(pos.x(), pos.y())->setUnit(m_pUnit);
+            m_pMap->getTerrain(pos.x(), pos.y())->setUnit(m_pUnit);
         }
     }
     bool ret = GameAnimation::onFinished(skipping);
@@ -113,7 +113,7 @@ void GameAnimationWalk::loadSpriteV2(const QString & spriteID, GameEnums::Recolo
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
+        Player* pPlayer = m_pMap->getCurrentViewPlayer();
         oxygine::spSprite pSprite = oxygine::spSprite::create();
         oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
         oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();

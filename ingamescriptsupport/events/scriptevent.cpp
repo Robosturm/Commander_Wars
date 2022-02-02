@@ -42,91 +42,91 @@ const QString ScriptEvent::EventCenterMap = "Center Map";
 const QString ScriptEvent::EventPlaySound = "Play Sound";
 
 
-ScriptEvent::ScriptEvent(EventType type)
-    : QObject(),
-      m_Type(type)
+ScriptEvent::ScriptEvent(GameMap* pMap, EventType type)
+    : m_Type(type),
+      m_pMap(pMap)
 {
 }
 
-spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream, QString line)
+spScriptEvent ScriptEvent::createReadEvent(GameMap* pMap, QTextStream& rStream, QString line)
 {
     line = line.simplified();
     spScriptEvent ret;
     if (line.endsWith(EventDialog))
     {
-         ret = spScriptEventDialog::create();
+         ret = spScriptEventDialog::create(pMap);
     }
     else if (line.endsWith(EventSpawnUnit))
     {
-         ret = spScriptEventSpawnUnit::create();
+         ret = spScriptEventSpawnUnit::create(pMap);
     }
     else if (line.endsWith(EventDefeatPlayer))
     {
-         ret = spScriptEventDefeatPlayer::create();
+         ret = spScriptEventDefeatPlayer::create(pMap);
     }
     else if (line.endsWith(EventAddFunds))
     {
-         ret = spScriptEventAddFunds::create();
+         ret = spScriptEventAddFunds::create(pMap);
     }
     else if (line.endsWith(EventChangeBuildlist))
     {
-         ret = spScriptEventChangeBuildlist::create();
+         ret = spScriptEventChangeBuildlist::create(pMap);
     }
     else if (line.endsWith(EventChangeWeather))
     {
-         ret = spScriptEventChangeWeather::create();
+         ret = spScriptEventChangeWeather::create(pMap);
     }
     else if (line.endsWith(EventChangeCOBar))
     {
-         ret = spScriptEventChangeCOBar::create();
+         ret = spScriptEventChangeCOBar::create(pMap);
     }
     else if (line.endsWith(EventModifyTerrain))
     {
-         ret = spScriptEventModifyTerrain::create();
+         ret = spScriptEventModifyTerrain::create(pMap);
     }
     else if (line.endsWith(EventModifyUnit))
     {
-         ret = spScriptEventModifyUnit::create();
+         ret = spScriptEventModifyUnit::create(pMap);
     }
     else if (line.endsWith(EventAnimation))
     {
-         ret = spScriptEventAnimation::create();
+         ret = spScriptEventAnimation::create(pMap);
     }
     else if (line.endsWith(EventVictoryInfo))
     {
-         ret = spScriptEventVictoryInfo::create();
+         ret = spScriptEventVictoryInfo::create(pMap);
     }
     else if (line.endsWith(EventModifyVariable))
     {
-         ret = spScriptEventModifyVariable::create();
+         ret = spScriptEventModifyVariable::create(pMap);
     }
     else if (line.endsWith(EventChangeUnitAI))
     {
-        ret = spScriptEventChangeUnitAI::create();
+        ret = spScriptEventChangeUnitAI::create(pMap);
     }
     else if (line.endsWith(EventChangeBuildingOwner))
     {
-        ret = spScriptEventChangeBuildingOwner::create();
+        ret = spScriptEventChangeBuildingOwner::create(pMap);
     }
     else if (line.endsWith(EventChangeUnitOwner))
     {
-        ret = spScriptEventChangeUnitOwner::create();
+        ret = spScriptEventChangeUnitOwner::create(pMap);
     }
     else if (line.endsWith(EventChangePlayerTeam))
     {
-        ret = spScriptEventChangePlayerTeam::create();
+        ret = spScriptEventChangePlayerTeam::create(pMap);
     }
     else if (line.endsWith(EventSpawnBuilding))
     {
-        ret = spScriptEventSpawnBuilding::create();
+        ret = spScriptEventSpawnBuilding::create(pMap);
     }
     else if (line.endsWith(EventCenterMap))
     {
-        ret = spScriptEventCenterMap::create();
+        ret = spScriptEventCenterMap::create(pMap);
     }
     else if (line.endsWith(EventPlaySound))
     {
-        ret = spScriptEventPlaySound::create();
+        ret = spScriptEventPlaySound::create(pMap);
     }
     if (ret.get() != nullptr)
     {
@@ -138,85 +138,85 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream, QString line)
     return ret;
 }
 
-spScriptEvent ScriptEvent::createEvent(EventType type)
+spScriptEvent ScriptEvent::createEvent(GameMap* pMap, EventType type)
 {
     switch (type)
     {
         case EventType::dialog:
         {
-            return spScriptEventDialog::create();
+            return spScriptEventDialog::create(pMap);
         }
         case EventType::spawnUnit:
         {
-            return spScriptEventSpawnUnit::create();
+            return spScriptEventSpawnUnit::create(pMap);
         }
         case EventType::defeatPlayer:
         {
-            return spScriptEventDefeatPlayer::create();
+            return spScriptEventDefeatPlayer::create(pMap);
         }
         case EventType::addFunds:
         {
-            return spScriptEventAddFunds::create();
+            return spScriptEventAddFunds::create(pMap);
         }
         case EventType::changeCOBar:
         {
-            return spScriptEventChangeCOBar::create();
+            return spScriptEventChangeCOBar::create(pMap);
         }
         case EventType::changeWeather:
         {
-            return spScriptEventChangeWeather::create();
+            return spScriptEventChangeWeather::create(pMap);
         }
         case EventType::changeBuildlist:
         {
-            return spScriptEventChangeBuildlist::create();
+            return spScriptEventChangeBuildlist::create(pMap);
         }
         case EventType::modifyTerrain:
         {
-            return spScriptEventModifyTerrain::create();
+            return spScriptEventModifyTerrain::create(pMap);
         }
         case EventType::modifyUnit:
         {
-            return spScriptEventModifyUnit::create();
+            return spScriptEventModifyUnit::create(pMap);
         }
         case EventType::animation:
         {
-            return spScriptEventAnimation::create();
+            return spScriptEventAnimation::create(pMap);
         }
         case EventType::victoryInfo:
         {
-            return spScriptEventVictoryInfo::create();
+            return spScriptEventVictoryInfo::create(pMap);
         }
         case EventType::modifyVariable:
         {
-            return spScriptEventModifyVariable::create();
+            return spScriptEventModifyVariable::create(pMap);
         }
         case EventType::ChangeUnitAI:
         {
-            return spScriptEventChangeUnitAI::create();
+            return spScriptEventChangeUnitAI::create(pMap);
         }
         case EventType::ChangeBuildingOwner:
         {
-            return spScriptEventChangeBuildingOwner::create();
+            return spScriptEventChangeBuildingOwner::create(pMap);
         }
         case EventType::ChangeUnitOwner:
         {
-            return spScriptEventChangeUnitOwner::create();
+            return spScriptEventChangeUnitOwner::create(pMap);
         }
         case EventType::ChangePlayerTeam:
         {
-            return spScriptEventChangePlayerTeam::create();
+            return spScriptEventChangePlayerTeam::create(pMap);
         }
         case EventType::SpawnBuilding:
         {
-            return spScriptEventSpawnBuilding::create();
+            return spScriptEventSpawnBuilding::create(pMap);
         }
         case EventType::CenterMap:
         {
-            return spScriptEventCenterMap::create();
+            return spScriptEventCenterMap::create(pMap);
         }
         case EventType::PlayGameSound:
         {
-            return spScriptEventPlaySound::create();
+            return spScriptEventPlaySound::create(pMap);
         }
     }
     return spScriptEvent();

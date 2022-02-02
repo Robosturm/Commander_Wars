@@ -65,10 +65,11 @@ var Constructor = function()
                                 ["CREEPER", 1],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
     {
         var id = terrain.getID();
         var baseId = terrain.getBaseTerrainID();
+        var currentBaseId = currentTerrain.getBaseTerrainID();
         var currentId = currentTerrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
             (unit !== null) &&
@@ -77,7 +78,8 @@ var Constructor = function()
             return 1;
         }
         var costs = MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
-        if (baseId === "LAKE")
+        if (baseId === "LAKE" ||
+            currentBaseId === "LAKE")
         {
             return costs;
         }
@@ -136,6 +138,11 @@ var Constructor = function()
             }
         }
         return -1;
+    };
+
+    this.getSupportsFastPfs = function()
+    {
+        return false;
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

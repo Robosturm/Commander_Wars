@@ -1,9 +1,9 @@
-CO_GREYFIELD.init = function(co)
+CO_GREYFIELD.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_GREYFIELD.activateSuperpower = function(co, powerMode)
+CO_GREYFIELD.activateSuperpower = function(co, powerMode, map)
 {
 	CO_GREYFIELD.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_GREYFIELD.getSuperPowerName = function()
     return CO_GREYFIELD.getPowerName();
 };
 CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
     switch (co.getPowerMode())
@@ -47,7 +47,7 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
     switch (co.getPowerMode())
@@ -74,7 +74,7 @@ CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_GREYFIELD.getMovementpointModifier = function(co, unit, posX, posY)
+CO_GREYFIELD.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };

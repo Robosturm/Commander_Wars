@@ -12,9 +12,9 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/label.h"
 
-DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
-    : QObject(),
-      m_pTerrain(pTerrain)
+DialogModifyTerrain::DialogModifyTerrain(GameMap* pMap, Terrain* pTerrain)
+    : m_pTerrain(pTerrain),
+      m_pMap(pMap)
 {
     setObjectName("DialogModifyTerrain");
     Mainapp* pApp = Mainapp::getInstance();
@@ -87,9 +87,9 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
         oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(id, oxygine::error_policy::ep_ignore_error);
         if (pAnim != nullptr)
         {
-            spTerrain pSprite = Terrain::createTerrain(pTerrain->getBaseTerrainID(), -2, -2, "");
-            pSprite->setTerrainSpriteName(id);
+            spTerrain pSprite = Terrain::createTerrain(pTerrain->getBaseTerrainID(), -2, -2, "", m_pMap);
             pSprite->setFixedSprite(true);
+            pSprite->setTerrainSpriteName(id);
             pSprite->loadSprites();
             pSprite->setScale(2);            
             pSprite->setPosition(x, y);
@@ -144,11 +144,11 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     m_pPanel->setContentHeigth(y + 60);
     if (pTerrain->getFixedSprite())
     {
-        terrainClicked(pTerrain->getTerrainSpriteName());
+        m_pTextbox->setCurrentText(pTerrain->getTerrainSpriteName());
     }
     else
     {
-        terrainClicked("");
+        m_pTextbox->setCurrentText("");
     }
     connect(this, &DialogModifyTerrain::sigFinished, this, &DialogModifyTerrain::remove, Qt::QueuedConnection);
 }
@@ -159,25 +159,21 @@ void DialogModifyTerrain::remove()
 }
 
 void DialogModifyTerrain::terrainClicked(QString id)
-{
-    
+{    
     m_pTerrain->setFixedSprite(!id.isEmpty());
     m_pTerrain->setTerrainSpriteName(id);
-    m_pTextbox->setCurrentText(id);
     m_pTerrain->loadSprites();
-    
+    m_pTextbox->setCurrentText(id);
 }
 
 void DialogModifyTerrain::showLoadDialog()
-{
-    
+{    
     QStringList wildcards;
     wildcards.append("*.png");
     QString path = Settings::getUserPath() + "customTerrainImages";
-    spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName(), true);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_pMap->getMapName(), true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
-    addChild(fileDialog);
-    
+    addChild(fileDialog);    
 }
 
 void DialogModifyTerrain::loadCustomSprite(QString id)

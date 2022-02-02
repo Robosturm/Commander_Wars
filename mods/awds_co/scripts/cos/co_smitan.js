@@ -1,4 +1,4 @@
-CO_SMITAN.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_SMITAN.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -27,7 +27,7 @@ CO_SMITAN.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
     }
 };
 
-CO_SMITAN.getActionModifierList = function(co, unit)
+CO_SMITAN.getActionModifierList = function(co, unit, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -56,7 +56,7 @@ CO_SMITAN.getActionModifierList = function(co, unit)
 };
 
 CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -112,7 +112,7 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_SMITAN.getFirerangeModifier = function(co, unit, posX, posY)
+CO_SMITAN.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

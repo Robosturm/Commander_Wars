@@ -1,9 +1,9 @@
-CO_EPOCH.init = function(co)
+CO_EPOCH.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_EPOCH.activateSuperpower = function(co, powerMode)
+CO_EPOCH.activateSuperpower = function(co, powerMode, map)
 {
 	CO_EPOCH.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_EPOCH.getSuperPowerName = function()
 {
     return CO_EPOCH.getPowerName();
 };
-CO_EPOCH.getBonusLuck = function(co, unit, posX, posY)
+CO_EPOCH.getBonusLuck = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {
@@ -33,7 +33,7 @@ CO_EPOCH.getBonusLuck = function(co, unit, posX, posY)
     return 0;
 };
 CO_EPOCH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -51,7 +51,7 @@ CO_EPOCH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_EPOCH.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isAttacker, action)
+                             defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     switch (co.getPowerMode())
     {
@@ -68,11 +68,11 @@ CO_EPOCH.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_EPOCH.getFirerangeModifier = function(co, unit, posX, posY)
+CO_EPOCH.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };
-CO_EPOCH.getMovementpointModifier = function(co, unit, posX, posY)
+CO_EPOCH.getMovementpointModifier = function(co, unit, posX, posY, map)
 {
     return 0;
 };

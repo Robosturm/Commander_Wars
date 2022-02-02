@@ -181,7 +181,7 @@ void Achievementmenu::searchChanged(QString text)
                 if (achieved)
                 {
                     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(nullptr, achievement.icon, GameMap::defaultImageSize * 2);
                     pIcon->setPosition(x, y + 16);
                     pParent->addChild(pIcon);
                 }

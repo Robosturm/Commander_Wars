@@ -16,7 +16,7 @@ var Constructor = function()
         return qsTr("Beach");
     };
 
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "LAKE")
         {
@@ -27,7 +27,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("SEA");
         }
     };
-    this.isSeaTile = function(x, y)
+    this.isSeaTile = function(x, y, map)
     {
         if (map.onMap(x, y))
         {
@@ -42,7 +42,7 @@ var Constructor = function()
         }
         return false;
     };
-    this.loadBaseSprite = function (terrain)
+    this.loadBaseSprite = function (terrain, map)
     {
         var surroundingsLand = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
@@ -72,19 +72,19 @@ var Constructor = function()
             var y = terrain.getY();
             if (x >= 0 && y >= 0)
             {
-                if (!BEACH.isSeaTile(x, y - 2))
+                if (!BEACH.isSeaTile(x, y - 2, map))
                 {
                     surroundingsBeach = surroundingsBeach.replace("+N", "");
                 }
-                if (!BEACH.isSeaTile(x, y + 2))
+                if (!BEACH.isSeaTile(x, y + 2, map))
                 {
                     surroundingsBeach = surroundingsBeach.replace("+S", "");
                 }
-                if (!BEACH.isSeaTile(x + 2, y))
+                if (!BEACH.isSeaTile(x + 2, y, map))
                 {
                     surroundingsBeach = surroundingsBeach.replace("+E", "");
                 }
-                if (!BEACH.isSeaTile(x - 2, y))
+                if (!BEACH.isSeaTile(x - 2, y, map))
                 {
                     surroundingsBeach = surroundingsBeach.replace("+W", "");
                 }
@@ -96,7 +96,8 @@ var Constructor = function()
             }
         }
     };
-    this.canBePlaced = function (x, y) {
+    this.canBePlaced = function (x, y, map)
+    {
         var terrain = map.getTerrain(x, y);
         var surroundingsLand = terrain.getSurroundings("SEA,LAKE", true, true, GameEnums.Directions_Direct, false);
         var surroundingsSea = terrain.getSurroundings("SEA,LAKE", false, true, GameEnums.Directions_All, false);
@@ -121,7 +122,7 @@ var Constructor = function()
         }
     };
 
-    this.loadOverlaySprite = function(terrain)
+    this.loadOverlaySprite = function(terrain, map)
     {
         var surroundingsSnow = terrain.getSurroundings("SNOW", true, false, GameEnums.Directions_Direct, false);
         if (surroundingsSnow !== "")
@@ -183,9 +184,9 @@ var Constructor = function()
         return "minimap_beach";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain, defender)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         if (typeof defender !== 'undefined' &&
             defender !== null &&
             defender.getUnitType() === GameEnums.UnitType_Naval)
@@ -193,6 +194,11 @@ var Constructor = function()
             return "back_" + weatherModifier + "beach+sea";
         }
         return "back_" + weatherModifier + "beach";
+    };
+
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
+    {
+        return ""  ;
     };
 
     this.getDescription = function()

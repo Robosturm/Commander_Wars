@@ -1,4 +1,4 @@
-MOVE_SHIP.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+MOVE_SHIP.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false, map)
 {
     var currentUnit = terrain.getUnit();
     if ((currentUnit !== null) &&

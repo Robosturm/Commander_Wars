@@ -203,7 +203,24 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
+    /**
+     * @brief doMapshot
+     */
+    void doMapshot();
     void nextStartUpStep(Mainapp::StartupPhase step);
+    /**
+     * @brief slotCursorPositionChanged dummy function to rerout qlineedit events
+     * @param oldPos
+     * @param newPos
+     */
+    void slotCursorPositionChanged(int oldPos, int newPos);
+    /**
+     * @brief inputMethodQuery dummy function to rerout qlineedit events
+     * @param query
+     * @param ret
+     */
+    void inputMethodQuery(Qt::InputMethodQuery query, QVariant arg);
+
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -224,7 +241,13 @@ signals:
 
     void sigNextStartUpStep(Mainapp::StartupPhase step);
     void sigCreateLineEdit();
-    void sigFocusedObjectEvent(std::shared_ptr<QEvent> event);
+    /**
+     * @brief cursorPositionChanged dummy function to rerout qlineedit events
+     * @param oldPos
+     * @param newPos
+     */
+    void cursorPositionChanged(int oldPos, int newPos);
+    void cursorPositionChanged();
 private slots:
     void createLineEdit();
 protected:
@@ -249,6 +272,7 @@ private:
     QString m_initScript;
     bool m_createSlaveLogs{false};
     Gamepad m_gamepad{0};
+    bool m_noAudio{false};
 };
 
 #endif // MAINAPP_H

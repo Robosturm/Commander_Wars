@@ -15,7 +15,7 @@ var Constructor = function()
     {
         return qsTr("Meteor");
     };
-    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    this.loadBaseTerrain = function(terrain, currentTerrainID, map)
     {
         if (currentTerrainID === "SNOW")
         {
@@ -42,7 +42,7 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
         var surroundings = terrain.getSurroundings("PLASMA", false, false, GameEnums.Directions_Direct, false);
 		// get rid of the north identifier
@@ -53,7 +53,7 @@ var Constructor = function()
     {
         return "minimap_meteor";
     };
-    this.onDestroyed = function(terrain)
+    this.onDestroyed = function(terrain, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
@@ -63,7 +63,7 @@ var Constructor = function()
         var i = 0;
         if (map.onMap(x - 1, y))
         {
-            callRet = METEOR.getPlasmaFields(x - 1, y);
+            callRet = METEOR.getPlasmaFields(x - 1, y, map);
             for (i = 0; i < callRet.length; i++)
             {
                 plasmaFields.push(callRet[i]);
@@ -71,7 +71,7 @@ var Constructor = function()
         }
         if (map.onMap(x + 1, y))
         {
-            callRet = METEOR.getPlasmaFields(x + 1, y);
+            callRet = METEOR.getPlasmaFields(x + 1, y, map);
             for (i = 0; i < callRet.length; i++)
             {
                 plasmaFields.push(callRet[i]);
@@ -79,7 +79,7 @@ var Constructor = function()
         }
         if (map.onMap(x, y - 1))
         {
-            callRet = METEOR.getPlasmaFields(x, y - 1);
+            callRet = METEOR.getPlasmaFields(x, y - 1, map);
             for (i = 0; i < callRet.length; i++)
             {
                 plasmaFields.push(callRet[i]);
@@ -87,7 +87,7 @@ var Constructor = function()
         }
         if (map.onMap(x, y + 1))
         {
-            callRet = METEOR.getPlasmaFields(x, y + 1);
+            callRet = METEOR.getPlasmaFields(x, y + 1, map);
             for (i = 0; i < callRet.length; i++)
             {
                 plasmaFields.push(callRet[i]);
@@ -132,12 +132,12 @@ var Constructor = function()
             }
         }
         testFields.remove();
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.addScreenshake(30, 0.95, 1000, 200);
         animation.setSound("explosion+land.wav");
     };
-    this.getPlasmaFields = function (x, y)
+    this.getPlasmaFields = function (x, y, map)
     {
         var plasmaFields = [];
         var terrain = map.getTerrain(x, y);

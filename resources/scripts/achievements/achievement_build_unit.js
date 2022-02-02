@@ -62,7 +62,7 @@ var Constructor = function()
                                     data[2],
                                     qsTr("Build a given amount of ") + Global[data[0]].getName(),
                                     data[0],
-                                    false);
+                                    false, qsTr("Builded unit"));
         }
     };
     this.unitProduced = function(unitID)

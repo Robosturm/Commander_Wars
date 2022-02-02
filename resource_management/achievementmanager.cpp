@@ -2,6 +2,8 @@
 
 #include "coreengine/interpreter.h"
 
+#include "game/gamemap.h"
+
 AchievementManager::AchievementManager()
     : RessourceManagement<AchievementManager>("/images/achievements/res.xml",
                                               "/scripts/achievements")
@@ -20,12 +22,14 @@ void AchievementManager::loadAll()
 }
 
 
-void AchievementManager::onVictory(qint32 team, bool humanWin)
+void AchievementManager::onVictory(qint32 team, bool humanWin, GameMap* pMap)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     args << team;
     args << humanWin;
+    QJSValue value1 = pInterpreter->newQObject(pMap);
+    args << value1;
     for (const auto & achievement : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "onVictory", args);

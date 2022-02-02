@@ -35,36 +35,36 @@ var TERRAIN =
     },
 
     // loader for stuff which needs C++ Support
-    init : function (terrain)
+    init : function (terrain, map)
     {
     },
     // returns the defense of this terrain
-    getDefense : function(terrain)
+    getDefense : function(terrain, map)
     {
         return 0;
     },
 
-    getFirerangeModifier : function(terrain, unit)
+    getFirerangeModifier : function(terrain, unit, map)
     {
         return 0;
     },
 
-    getMinFirerangeModifier : function(terrain, unit)
+    getMinFirerangeModifier : function(terrain, unit, map)
     {
         return 0;
     },
 
     // called for loading a sub image terrain
     // this has only a visual effect
-    loadBaseTerrain : function(terrain, currentTerrainID)
+    loadBaseTerrain : function(terrain, currentTerrainID, map)
     {
     },
     
-    loadBaseSprite : function(terrain)
+    loadBaseSprite : function(terrain, map)
     {
     },
     // called for loading an overlay sprite
-    loadOverlaySprite : function(terrain)
+    loadOverlaySprite : function(terrain, map)
     {
     },
 
@@ -74,38 +74,38 @@ var TERRAIN =
     },
 
     // vision created by this field
-    getVision : function(player, terrain)
+    getVision : function(player, terrain, map)
     {
         return -1;
     },
 
-    getBonusVision : function(unit, terrain)
+    getBonusVision : function(unit, terrain, map)
     {
         return 0;
     },
 
-    getVisionHide : function(terrain, player)
+    getVisionHide : function(terrain, player, map)
     {
         return false;
     },
 
-    getMiniMapIcon : function(terrain)
+    getMiniMapIcon : function(terrain, map)
     {
         return "minimap_plains";
     },
 
-    onDestroyed : function(terrain)
+    onDestroyed : function(terrain, map)
     {
         // called when the terrain is destroyed and replacing of this terrain starts
     },
 
-    getTerrainAnimationBase : function(unit, terrain, defender)
+    getTerrainAnimationBase : function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     },
 
-    getTerrainAnimationForeground : function(unit, terrain, defender)
+    getTerrainAnimationForeground : function(unit, terrain, defender, map)
     {
         var variables = terrain.getVariables();
         var variable = variables.getVariable("FOREGROUND_ID");
@@ -120,16 +120,16 @@ var TERRAIN =
         {
             rand = variable.readDataInt32();
         }
-        var foreground = TERRAIN.getFactoryForeground(terrain);
+        var foreground = TERRAIN.getFactoryForeground(terrain, map);
         if (foreground !== "")
         {
             return foreground;
         }
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "fore_" + weatherModifier + "plains+" + rand.toString();
     },
 
-    getFactoryForeground : function(terrain)
+    getFactoryForeground : function(terrain, map)
     {
         var y = terrain.getY() - 1;
         var x = terrain.getX();
@@ -159,7 +159,7 @@ var TERRAIN =
         return "";
     },
 
-    getTerrainAnimationId : function(terrain)
+    getTerrainAnimationId : function(terrain, map)
     {
         var id = "PLAINS";
         var y = terrain.getY() - 1;
@@ -181,10 +181,10 @@ var TERRAIN =
         return id;
     },
 
-    getTerrainAnimationBackground : function(unit, terrain, defender)
+    getTerrainAnimationBackground : function(unit, terrain, defender, map)
     {
-        var id = TERRAIN.getTerrainAnimationId(terrain);
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var id = TERRAIN.getTerrainAnimationId(terrain, map);
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return TERRAIN.getTerrainBackgroundId(id, weatherModifier);
     },
 
@@ -194,10 +194,10 @@ var TERRAIN =
                      ["weather_sandstorm",    [Qt.point(9, 3),    "desert",  "over_sandstorm"]],
                      ["weather_mist",         [Qt.point(0, 0),    "",        ""]],],
 
-    getWeatherModifier : function()
+    getWeatherModifier : function(map)
     {
         var weatherModifier = "";
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
             var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
@@ -206,10 +206,10 @@ var TERRAIN =
         return weatherModifier;
     },
 
-    getWeatherOverlayId : function(terrain)
+    getWeatherOverlayId : function(terrain, map)
     {
         var overlay = "";
-        if (typeof map !== "undefined")
+        if (map !== null)
         {
             var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
             var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
@@ -218,10 +218,10 @@ var TERRAIN =
         return overlay;
     },
 
-    getWeatherOverlaySpeed : function(terrain)
+    getWeatherOverlaySpeed : function(terrain, map)
     {
         var speed = Qt.point(0, 0);
-        if (typeof map !== "undefined")
+        if (map !== null)
         {
             var weather     = map.getGameRules().getCurrentWeather().getWeatherId();
             var data        = Global.getDataFromTable(weather, TERRAIN.weatherData);
@@ -313,17 +313,17 @@ var TERRAIN =
         }
     },
 
-    getTerrainAnimationMoveSpeed : function(terrain)
+    getTerrainAnimationMoveSpeed : function(terrain, map)
     {
         return 0;
     },
 
-    getMovementcostModifier : function(terrain, x, y, curX, curY)
+    getMovementcostModifier : function(terrain, x, y, curX, curY, map)
     {
         return 0;
     },
 
-    getDescription : function(terrain)
+    getDescription : function(terrain, map)
     {
         return "";
     },
@@ -332,52 +332,52 @@ var TERRAIN =
     // these functions have no influence in the game.
     /***********************************************************************************/
     // defines if a terrain can be placed in the editor at a given location
-    canBePlaced : function(x, y)
+    canBePlaced : function(x, y, map)
     {
         return true;
     },
     // only bridges use this function for now.
     // all other replace the terrain complete with themself
     // and their base terrain
-    useTerrainAsBaseTerrain : function()
+    useTerrainAsBaseTerrain : function(map)
     {
         return false;
     },
 
-    getTerrainSprites : function()
+    getTerrainSprites : function(map)
     {
         // array of sprites that can be selected as fix sprites for this terrain
         return [];
     },
 
-    startOfTurn : function(terrain)
+    startOfTurn : function(terrain, map)
     {
         // needs to be enable by calling setHasStartOfTurn(true) in the js function init
     },
 
     // additional offensive bonus for a unit on this field
     getOffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action, luckMode)
+                                      defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
     //  additional deffensive bonus for a unit on this field
     getDeffensiveFieldBonus : function(terrain, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action, luckMode)
+                                       defender, defPosX, defPosY, isDefender, action, luckMode, map)
     {
         return 0;
     },
 
     // the tiles considered for flowing
-    getFlowTiles : function()
+    getFlowTiles : function(map)
     {
         return [];
     },
     // gets called with a terrain pfs in order to create the flow sprites
-    updateFlowSprites : function(terrain, pPfs)
+    updateFlowSprites : function(terrain, pPfs, map)
     {
     },
-    isLoadingTile :  function(terrain)
+    isLoadingTile :  function(terrain, map)
     {
         // hint for the ai to try to move away if it can't do anything with a unit
         return false;

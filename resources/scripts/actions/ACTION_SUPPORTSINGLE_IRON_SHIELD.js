@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -12,7 +12,7 @@ var Constructor = function()
         }
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null)) &&
-            (ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action).length > 0))
+            (ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action, map).length > 0))
         {
             return true;
         }
@@ -21,30 +21,30 @@ var Constructor = function()
             return false;
         }
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Iron Shield");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "defenseStar";
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         data.setColor("#C800FF00");
-        var fields = ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action);
+        var fields = ACTION_SUPPORTSINGLE_IRON_SHIELD.getDefenseFields(action, map);
         for (var i3 = 0; i3 < fields.length; i3++)
         {
             data.addPoint(Qt.point(fields[i3].x, fields[i3].y));
         }
     };
-    this.getDefenseFields = function(action)
+    this.getDefenseFields = function(action, map)
     {
         var targetField = action.getActionTarget();
         var targetFields = [Qt.point(targetField.x + 1, targetField.y),
@@ -72,7 +72,7 @@ var Constructor = function()
         return ret;
     };
 
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -86,11 +86,11 @@ var Constructor = function()
     this.postAnimationUnit = null;
     this.postAnimationTargetX = -1;
     this.postAnimationTargetY = -1;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_SUPPORTSINGLE_IRON_SHIELD", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -101,11 +101,11 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX = action.readDataInt32();
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY = action.readDataInt32();
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
         var defenseUnit = terrain.getUnit();
-        var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
+        var animation = GameAnimationFactory.createAnimation(map, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
         var width = animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, 2, 1);
         animation.addBox("info", map.getImageSize() / 2, 0, width + 36, map.getImageSize(), 400);
         animation.addSprite("defense", map.getImageSize() / 2 + 4, 4, 400, 2);

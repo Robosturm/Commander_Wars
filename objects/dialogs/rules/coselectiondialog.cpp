@@ -13,9 +13,10 @@
 #include "game/co.h"
 
 
-COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, QStringList coids)
-    : QObject(),
-      m_player(player)
+COSelectionDialog::COSelectionDialog(GameMap* pMap, QString coid, QColor color, qint32 player, QStringList coids)
+    : m_player(player),
+      m_pMap(pMap)
+
 {
     setObjectName("COSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
@@ -131,8 +132,8 @@ void COSelectionDialog::showCOInfo()
     {
         coid = m_coids[0];
     }
-    Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
-    spCO co = spCO::create(coid, pPlayer);
+    Player* pPlayer = m_pMap->getPlayer(m_player);
+    spCO co = spCO::create(coid, pPlayer, m_pMap);
     addChild(spCOInfoDialog::create(co, spPlayer(pPlayer), [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {        
         qint32 index = m_coids.indexOf(pCurrentCO->getCoID());
@@ -150,7 +151,7 @@ void COSelectionDialog::showCOInfo()
         {
             coid = m_coids[index];
         }
-        pCurrentCO = spCO::create(coid, pPlayer);
+        pCurrentCO = spCO::create(coid, pPlayer, m_pMap);
     }, false));
 }
 

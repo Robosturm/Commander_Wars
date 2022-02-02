@@ -2,20 +2,20 @@ var Constructor = function()
 {
     this.getTerrainGroup = function()
     {
-        return 3;
+        return 4;
     };
     this.baseTerrainId = "WASTE";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEWELD.loadBase(terrain, "waste_weld")
+        __BASEWELD.loadBase(terrain, "waste_weld", map)
     };
     this.getTerrainSprites = function()
     {
         return __BASEWELD.getSprites("waste_weld")
     };
-    this.onDestroyed = function(terrain)
+    this.onDestroyed = function(terrain, map)
     {
-        __BASEWELD.onBaseDestroyed(terrain, "WASTE_DESTROYEDWELD");
+        __BASEWELD.onBaseDestroyed(terrain, "WASTE_DESTROYEDWELD", map);
     };
 };
 Constructor.prototype = __BASEWELD;

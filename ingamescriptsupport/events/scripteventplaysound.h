@@ -10,7 +10,7 @@ class ScriptEventPlaySound : public ScriptEventGeneric
 {
     Q_OBJECT
 public:
-    ScriptEventPlaySound();
+    explicit ScriptEventPlaySound(GameMap* pMap);
 };
 
 #endif // SCRIPTEVENTPLAYSOUND_H

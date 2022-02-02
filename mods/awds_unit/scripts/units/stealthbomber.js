@@ -20,7 +20,7 @@ STEALTHBOMBER.getBaseCost = function()
 {
     return 24000;
 };
-STEALTHBOMBER.startOfTurn = function(unit)
+STEALTHBOMBER.startOfTurn = function(unit, map)
 {
     // pay unit upkeep
     var fuelCosts = 5;

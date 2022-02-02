@@ -16,7 +16,7 @@ var Constructor = function()
                                     data[4],
                                     description,
                                     data[1],
-                                    false);
+                                    false, qsTr("Power"));
         }
     };
     this.powerUsed = function(power)

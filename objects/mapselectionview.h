@@ -33,14 +33,6 @@ public:
     {
         return m_pMapSelection.get();
     }
-    inline GameMap* getCurrentMap()
-    {
-        return m_pCurrentMap.get();
-    }
-    inline void setCurrentMap(spGameMap pMap)
-    {
-        m_pCurrentMap = pMap;
-    }
     inline QFileInfo getCurrentFile()
     {
         return m_currentMapFile;
@@ -49,7 +41,7 @@ public:
     {
         m_currentMapFile = QFileInfo(info);
     }
-    inline spCampaign getCurrentSetCampaign()
+    inline spCampaign getCurrentCampaign()
     {
         return m_CurrentSetCampaign;
     }
@@ -69,6 +61,9 @@ public:
     oxygine::spBox9Sprite getBuildingBackground() const;    
     spPanel getMapInfo() const;
 
+    spGameMap getCurrentMap() const;
+    void setCurrentMap(spGameMap newCurrentMap);
+
 public slots:
     void loadMap(QFileInfo info, bool fast = true);
     void loadCurrentMap();
@@ -86,7 +81,7 @@ private:
       * @brief m_currentMapFile stores the current map info
       */
     QFileInfo m_currentMapFile;
-    spGameMap m_pCurrentMap{nullptr};
+    spGameMap m_pCurrentMap;
     // map selection
     spMapSelection m_pMapSelection;
     spPanel m_MapInfo;

@@ -17,6 +17,7 @@
 
 #include "co.h"
 
+class GameMap;
 class Player;
 typedef oxygine::intrusive_ptr<Player> spPlayer;
 
@@ -28,7 +29,7 @@ public:
     /**
      * @brief Player
      */
-    explicit Player();
+    explicit Player(GameMap* pMap);
     virtual ~Player() = default;
     /**
      * @brief init
@@ -120,9 +121,17 @@ public:
      */
     static const QImage &getNeutralTableImage();
 
-signals:
-
 public slots:
+    /**
+     * @brief getMap
+     * @return
+     */
+    GameMap *getMap() const;
+    /**
+     * @brief onUnitDeath
+     * @param pUnit
+     */
+    void onUnitDeath(Unit* pUnit);
     /**
      * @brief postAction
      * @param pAction
@@ -217,6 +226,12 @@ public slots:
      */
     bool isPlayerIdEnemy(qint32 playerId);
     /**
+     * @brief Player::isPlayerIdAlly
+     * @param playerId
+     * @return
+     */
+    bool isPlayerIdAlly(qint32 playerId);
+    /**
      * @brief isAlly
      * @param pOwner
      * @return
@@ -247,7 +262,7 @@ public slots:
      * @param modifier
      * @return
      */
-    qint32 calcIncome(float modifier = 1.0f);
+    qint32 calcIncome(float modifier = 1.0f) const;
     /**
      * @brief calcArmyValue
      * @return
@@ -267,23 +282,33 @@ public slots:
      */
     CO* getCO(quint8 id);
     /**
+     * @brief getMaxCoCount
+     * @return
+     */
+    qint32 getMaxCoCount() const;
+    /**
      * @brief setCO
      * @param coId the co we want to load
      * @param id the index at which we want this co
      */
     void setCO(QString coId, quint8 idx);
     /**
+     * @brief getCoCount
+     * @return
+     */
+    qint32 getCoCount() const;
+    /**
      * @brief getCostModifier
      * @param baseCost
      * @return
      */
-    qint32 getCostModifier(const QString & id, qint32 baseCost);
+    qint32 getCostModifier(const QString & id, qint32 baseCost, QPoint position);
     /**
      * @brief getCosts
      * @param id
      * @return
      */
-    qint32 getCosts(const QString & id);
+    qint32 getCosts(const QString & id, QPoint position);
     /**
      * @brief gainPowerstar
      * @param fundsDamage
@@ -384,7 +409,7 @@ public slots:
      * @brief calculatePlayerStrength
      * @return
      */
-    qint32 calculatePlayerStrength();
+    qint32 calculatePlayerStrength() const;
     /**
      * @brief getBuildingCount
      * @return
@@ -401,14 +426,21 @@ public slots:
      * @brief getUnitCount
      * @return
      */
-    qint32 getUnitCount(const QString & unitID = "");
+    qint32 getUnitCount(const QString & unitID = "") const;
     /**
      * @brief getUnitCount
      * @param pUnit
      * @param unitID
      * @return
      */
-    qint32 getUnitCount(Unit* pUnit, const QString & unitID);
+    qint32 getUnitCount(Unit* pUnit, const QString & unitID) const;
+    /**
+     * @brief getEnemyBonus
+     * @param position
+     * @param pUnit
+     * @return
+     */
+    qint32 getCoBonus(QPoint position, Unit* pUnit, const QString & function);
     /**
      * @brief getTeam
      * @return
@@ -500,6 +532,12 @@ public slots:
      */
     QStringList getCOUnits(Building* pBuilding);
     /**
+     * @brief getTransportUnits
+     * @param pUnit
+     * @return
+     */
+    QStringList getTransportUnits(Unit* pUnit);
+    /**
      * @brief setBuildList
      * @param BuildList
      */
@@ -560,6 +598,14 @@ private:
      * @param directView
      */
     void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
+    /**
+     * @brief calculatePlayerStrength
+     * @param pUnit
+     */
+    qint32 calculatePlayerStrength(Unit* pUnit) const;
+protected:
+    GameMap* m_pMap{nullptr};
+
 private:
     qint32 m_funds{0};
     float m_fundsModifier{1.0f};
@@ -569,7 +615,7 @@ private:
     oxygine::spResAnim m_ColorTableAnim;
     QString m_playerArmy{""};
     qint32 m_team{0};
-    spCO m_playerCOs[2]{spCO(), spCO()};
+    std::array<spCO, 2> m_playerCOs;
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */

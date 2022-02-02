@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.getBonusIncome = function(co, building, income)
+    this.getBonusIncome = function(co, building, income, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return qsTr("Increases the income from each building by 10%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "goldrush";
     };

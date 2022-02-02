@@ -310,7 +310,7 @@ void Console::toggleView()
     }
     else
     {
-       looseFocusInternal();
+       emit sigLooseFocusInternal();
     }
     m_toggled = true;
 }
@@ -1434,16 +1434,18 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::doHandleEvent(std::shared_ptr<QEvent> event)
+bool Console::doHandleEvent(QEvent *event)
 {
+    bool ret = false;
     // for debugging
     if (event->type() == QEvent::KeyPress)
     {
-        QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event.get());
+        QKeyEvent* inputEvent = static_cast<QKeyEvent*>(event);
         Qt::Key cur = static_cast<Qt::Key>(inputEvent->key());
         if (cur == Settings::getKeyConsole())
         {
             toggleView();
+            ret = true;
         }
         else
         {
@@ -1463,6 +1465,7 @@ void Console::doHandleEvent(std::shared_ptr<QEvent> event)
                         setCurrentText(msg);
                         setCursorPosition(msg.size());
                     }
+                    ret = true;
                     break;
                 }
                 case Qt::Key_Down:
@@ -1478,11 +1481,12 @@ void Console::doHandleEvent(std::shared_ptr<QEvent> event)
                         setCurrentText(msg);
                         setCursorPosition(msg.size());
                     }
+                    ret = true;
                     break;
                 }
                 default:
                 {
-                    TextInput::doHandleEvent(event);
+                    ret = TextInput::doHandleEvent(event);
                     break;
                 }
             }
@@ -1490,8 +1494,9 @@ void Console::doHandleEvent(std::shared_ptr<QEvent> event)
     }
     else
     {
-        TextInput::doHandleEvent(event);
+        ret = TextInput::doHandleEvent(event);
     }
+    return ret;
 }
 
 bool Console::onEditFinished()

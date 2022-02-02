@@ -35,7 +35,7 @@ var Constructor = function()
     {
         return qsTr("Fighter");
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         if (unit.getTerrain() !== null)
         {
@@ -48,17 +48,17 @@ var Constructor = function()
             unit.setFuel(unit.getFuel() - fuelCosts);
         }
     };
-    this.createExplosionAnimation = function(x, y, unit)
+    this.createExplosionAnimation = function(x, y, unit, map)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+air.wav");
         return animation;
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveair.wav", -2);
@@ -77,18 +77,18 @@ var Constructor = function()
         return false;
     };
 
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
         return "";
     };

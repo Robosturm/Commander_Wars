@@ -1,5 +1,5 @@
 CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isDefender, action)
+                                       defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -36,7 +36,7 @@ CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_CONRAD.getBonusLuck = function(co, unit, posX, posY)
+CO_CONRAD.getBonusLuck = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -47,7 +47,7 @@ CO_CONRAD.getBonusLuck = function(co, unit, posX, posY)
 };
 
 CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -60,7 +60,7 @@ CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                   defender, defPosX, defPosY, isDefender, action)
+                                   defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -85,7 +85,7 @@ CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attac
     return 0;
 };
 
-CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -117,7 +117,7 @@ CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
     }
 };
 
-CO_CONRAD.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_CONRAD.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

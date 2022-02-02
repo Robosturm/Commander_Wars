@@ -31,14 +31,14 @@ var Constructor = function()
         return AIRPORT.constructionList;
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier + "airport";
     };
 
@@ -56,7 +56,7 @@ var Constructor = function()
     {
         return [GameEnums.UnitType_Air];
     };
-	this.onWeatherChanged = function(building, weather)
+    this.onWeatherChanged = function(building, weather, map)
 	{	
 		var weatherId = weather.getWeatherId();
 		if (weatherId === "WEATHER_SNOW")

@@ -1,37 +1,37 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
         {
-            if (ACTION_CANNON_FIRE.getTargets(building).length > 0)
+            if (ACTION_CANNON_FIRE.getTargets(building, map).length > 0)
             {
                 return true;
             }
         }
         return false;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Fire");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "icon_fire";
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+attack");
         cursorData.setXOffset(- map.getImageSize() / 3);
         cursorData.setYOffset(- map.getImageSize() / 3);
         cursorData.setScale(2);
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -42,7 +42,7 @@ var Constructor = function()
             return false;
         }
     };
-    this.getTargets = function(building)
+    this.getTargets = function(building, map)
     {
         var offset = Global[building.getBuildingID()].getActionTargetOffset(building);
         var x = building.getX() + offset.x;
@@ -71,10 +71,10 @@ var Constructor = function()
         fields.remove();
         return ret;
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var building = action.getTargetBuilding();
-        var targets = ACTION_CANNON_FIRE.getTargets(building);
+        var targets = ACTION_CANNON_FIRE.getTargets(building, map);
         for (var i = 0; i < targets.length; i++)
         {
             var damage = Global[building.getBuildingID()].getDamage(building,
@@ -88,7 +88,7 @@ var Constructor = function()
         data.setShowZData(true);
     };
 
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
@@ -98,8 +98,8 @@ var Constructor = function()
         var targetY = action.readDataInt32();
         ACTION_CANNON_FIRE.postAnimationBuilding = building;
         ACTION_CANNON_FIRE.postAnimationUnit = map.getTerrain(targetX, targetY).getUnit();
-        var animation = Global[building.getBuildingID()].getShotAnimation(building);
-        var animation2 = GameAnimationFactory.createAnimation(targetX, targetY, 70);
+        var animation = Global[building.getBuildingID()].getShotAnimation(building, map);
+        var animation2 = GameAnimationFactory.createAnimation(map, targetX, targetY, 70);
         animation2.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 2);
         animation2.setSound("minicanon_hit.wav");
         animation2.setEndOfAnimationCall("ACTION_CANNON_FIRE", "performPostAnimation");
@@ -107,7 +107,7 @@ var Constructor = function()
     };
     var postAnimationUnit = null;
     var postAnimationBuilding = null;
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation, map)
     {
         var damage = Global[ACTION_CANNON_FIRE.postAnimationBuilding.getBuildingID()].getDamage(ACTION_CANNON_FIRE.postAnimationBuilding,
                                                                                                 ACTION_CANNON_FIRE.postAnimationUnit);

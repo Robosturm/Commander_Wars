@@ -1,9 +1,9 @@
-CO_OLAF.init = function(co)
+CO_OLAF.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_OLAF.activateSuperpower = function(co, powerMode)
+CO_OLAF.activateSuperpower = function(co, powerMode, map)
 {
     CO_OLAF.activatePower(co, powerMode);
 };
@@ -16,12 +16,12 @@ CO_OLAF.getSuperPowerName = function()
     return CO_OLAF.getPowerName();
 };
 CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
-CO_OLAF.getWeatherImmune = function(co)
+CO_OLAF.getWeatherImmune = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -34,7 +34,7 @@ CO_OLAF.getWeatherImmune = function(co)
 };
 
 CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isAttacker, action)
+                                      defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -45,11 +45,11 @@ CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY)
+CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
             {

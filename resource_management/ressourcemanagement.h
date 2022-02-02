@@ -242,7 +242,8 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
         {
             dirIter.next();
             QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
-            if (id.startsWith("__"))
+            if (id.startsWith("__") &&
+               !id.startsWith("___"))
             {
                 pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
             }
@@ -258,13 +259,30 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
         {
             dirIter.next();
             QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
-            if (!id.startsWith("__"))
+            if (!id.startsWith("__") &&
+                !id.startsWith("___"))
             {
                 pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
                 if (!list.contains(id))
                 {
                     list.append(id);
                 }
+            }
+        }
+    }
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString path = searchPaths[i];
+        QStringList filter;
+        filter << "*.js";
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
+            if (id.startsWith("___"))
+            {
+                pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
             }
         }
     }

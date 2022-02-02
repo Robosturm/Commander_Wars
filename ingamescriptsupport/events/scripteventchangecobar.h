@@ -10,7 +10,7 @@ class ScriptEventChangeCOBar : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventChangeCOBar();
+    explicit ScriptEventChangeCOBar(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

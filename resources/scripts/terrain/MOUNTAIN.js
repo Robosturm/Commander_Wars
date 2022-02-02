@@ -5,9 +5,9 @@ var Constructor = function()
         return 1;
     };
     this.baseTerrainId = "PLAINS";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEMOUNTAIN.loadBase(terrain, "mountain")
+        __BASEMOUNTAIN.loadBase(terrain, "mountain", map)
     };
     this.getTerrainSprites = function()
     {

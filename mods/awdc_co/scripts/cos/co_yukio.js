@@ -1,9 +1,9 @@
-CO_YUKIO.init = function(co)
+CO_YUKIO.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_YUKIO.activateSuperpower = function(co, powerMode)
+CO_YUKIO.activateSuperpower = function(co, powerMode, map)
 {
 	CO_YUKIO.activatePower(co, powerMode);
 };

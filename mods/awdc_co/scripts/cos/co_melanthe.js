@@ -1,9 +1,9 @@
-CO_MELANTHE.init = function(co)
+CO_MELANTHE.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_MELANTHE.activateSuperpower = function(co, powerMode)
+CO_MELANTHE.activateSuperpower = function(co, powerMode, map)
 {
 	CO_MELANTHE.activatePower(co, powerMode);
 };

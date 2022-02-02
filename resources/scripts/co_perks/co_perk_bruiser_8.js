@@ -1,7 +1,7 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
 		if (CO_PERK.isActive(co))
 		{
@@ -17,7 +17,7 @@ var Constructor = function()
     {
         return qsTr("Increases the direct attack of units by 8%.");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "brawler";
     };

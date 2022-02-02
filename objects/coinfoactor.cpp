@@ -16,7 +16,8 @@
 
 #include "wiki/wikidatabase.h"
 
-COInfoActor::COInfoActor(qint32 width)
+COInfoActor::COInfoActor(GameMap* pMap, qint32 width)
+    : m_pMap(pMap)
 {
     setObjectName("COInfoActor");
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -119,7 +120,7 @@ COInfoActor::COInfoActor(qint32 width)
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
     addChild(m_InfoText);
 
-    m_pCoPowermeter = spCoPowermeter::create(nullptr);
+    m_pCoPowermeter = spCoPowermeter::create(m_pMap, nullptr);
     addChild(m_pCoPowermeter);
 
     m_PowerSprite = oxygine::spSprite::create();
@@ -291,7 +292,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
             QString coid = pCOSpriteManager->getID(i);
-            spCO testCO = spCO::create(coid, nullptr);
+            spCO testCO = spCO::create(coid, pPlayer.get(), pPlayer->getMap());
 
             QJSValueList args;
             QJSValue obj1 = pInterpreter->newQObject(pCO.get());
@@ -353,48 +354,51 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_GlobalBoosts->setPosition(10, y);
     constexpr qint32 textAdvance = 25;
     y += GameMap::getImageSize() * 2 + textAdvance;
-    qint32 customCount = pCO->getCustomUnitGlobalBoostCount();
-    if (customCount > 0)
+    if (pCO.get() != nullptr)
     {
-        for (qint32 i = 0; i < customCount; i++)
+        qint32 customCount = pCO->getCustomUnitGlobalBoostCount();
+        if (customCount > 0)
         {
-            showCustomCOBoost(pCO, x, y, i, true);
+            for (qint32 i = 0; i < customCount; i++)
+            {
+                showCustomCOBoost(pCO, x, y, i, true);
+            }
+            x = 10;
+            y += GameMap::getImageSize() * 2 + textAdvance;
         }
-        x = 10;
-        y += GameMap::getImageSize() * 2 + textAdvance;
-    }
-    if (pCO->showDefaultUnitGlobalBoost())
-    {
-        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        if (pCO->showDefaultUnitGlobalBoost())
         {
-            QString unitID = sortedUnits[i];
-            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-            pUnit->setVirtuellX(-2);
-            pUnit->setVirtuellY(-2);
-            showCOBoost(pUnit, pCO, x, y);
+            for (qint32 i = 0; i < sortedUnits.size(); i++)
+            {
+                QString unitID = sortedUnits[i];
+                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
+                pUnit->setVirtuellX(-2);
+                pUnit->setVirtuellY(-2);
+                showCOBoost(pUnit, pCO, x, y);
+            }
+            x = 10;
+            y += GameMap::getImageSize() * 2 + textAdvance;
         }
-        x = 10;
+        m_CoBoost->setPosition(10, y);
         y += GameMap::getImageSize() * 2 + textAdvance;
-    }
-    m_CoBoost->setPosition(10, y);
-    y += GameMap::getImageSize() * 2 + textAdvance;
-    customCount = pCO->getCustomUnitZoneBoostCount();
-    if (customCount > 0)
-    {
-        for (qint32 i = 0; i < customCount; i++)
+        customCount = pCO->getCustomUnitZoneBoostCount();
+        if (customCount > 0)
         {
-            showCustomCOBoost(pCO, x, y, i, false);
+            for (qint32 i = 0; i < customCount; i++)
+            {
+                showCustomCOBoost(pCO, x, y, i, false);
+            }
+            x = 10;
+            y += GameMap::getImageSize() * 2 + textAdvance;
         }
-        x = 10;
-        y += GameMap::getImageSize() * 2 + textAdvance;
-    }
-    if (pCO->showDefaultUnitZoneBoost())
-    {
-        for (qint32 i = 0; i < sortedUnits.size(); i++)
+        if (pCO->showDefaultUnitZoneBoost())
         {
-            QString unitID = sortedUnits[i];
-            spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false);
-            showCOBoost(pUnit, pCO, x, y);
+            for (qint32 i = 0; i < sortedUnits.size(); i++)
+            {
+                QString unitID = sortedUnits[i];
+                spUnit pUnit = spUnit::create(unitID, pPlayer.get(), false, pPlayer->getMap());
+                showCOBoost(pUnit, pCO, x, y);
+            }
         }
     }
     setHeight(y + 100);
@@ -526,7 +530,7 @@ void COInfoActor::showCustomCOBoost(spCO pCO, qint32 & x, qint32 & y, qint32 ind
         pCO->getCustomUnitZoneBoost(index, info);
     }
     WikiDatabase* pDatabase = WikiDatabase::getInstance();
-    m_UnitDataActors[i]->addChild(pDatabase->getIcon(info.getIconId(), GameMap::defaultImageSize * 2));
+    m_UnitDataActors[i]->addChild(pDatabase->getIcon(pCO->getMap(), info.getIconId(), GameMap::defaultImageSize * 2));
     QString wikiLink = info.getLink();
     m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
     {

@@ -7,13 +7,13 @@ var Constructor = function()
         return [];
     };
 
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(2);
         co.setSuperpowerStars(3);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
@@ -27,22 +27,22 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
             {
                 delay *= i;
             }
-            animation.setSound("power0.wav", 1, delay);
+            animation.setSound("power1.wav", 1, delay);
             if (animations.length < 5)
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
+                animation.addSprite("power1", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 2, delay);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -55,7 +55,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -69,7 +69,7 @@ var Constructor = function()
         {
             var unit = units.at(i);
 
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {
@@ -104,7 +104,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -123,7 +123,7 @@ var Constructor = function()
                 break;
         }
     };
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 4;
     };
@@ -139,26 +139,21 @@ var Constructor = function()
                        "DESERT_FOREST1",
                        "DESERT_ROCK",
                        "DESERT_TRY_RIVER",
-                       "DESERT_WASTELAND",
                        "FOREST",
                        "FOREST1",
                        "FOREST2",
                        "FOREST3",
                        "RIVER",
                        "MOUNTAIN",
-                       "WASTELAND",
                        "SNOW_FOREST",
                        "SNOW_FOREST1",
                        "SNOW_FOREST2",
                        "SNOW_MOUNTAIN",
-                       "SNOW_WASTELAND",
                        "WASTE_FOREST",
-                       "WASTE_MOUNTAIN",
-                       "WASTE_WASTELAND"];
-    // todo should waste land count?
-    this.isWildernessTile = function(x, y)
+                       "WASTE_MOUNTAIN"];
+    this.isWildernessTile = function(x, y, map)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(x, y))
             {
@@ -172,9 +167,9 @@ var Constructor = function()
         }
         return false;
     };
-    this.getTerrainDefenseModifier = function(co, unit, posX, posY)
+    this.getTerrainDefenseModifier = function(co, unit, posX, posY, map)
     {
-        if (CO_CAIRN.isWildernessTile(posX, posY))
+        if (CO_CAIRN.isWildernessTile(posX, posY, map))
         {
             switch (co.getPowerMode())
             {
@@ -193,9 +188,9 @@ var Constructor = function()
         return 0;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
-        if (typeof map !== 'undefined')
+        if (map !== null)
         {
             if (map.onMap(atkPosX, atkPosY))
             {
@@ -219,14 +214,7 @@ var Constructor = function()
                         return 10 + startpower;
                     }
                 case GameEnums.PowerMode_Power:
-                    if (CO_CAIRN.isWildernessTile(atkPosX, atkPosY))
-                    {
-                        return 10 + CO_CAIRN.defaultModifier;
-                    }
-                    else
-                    {
-                        return 10 + startpower;
-                    }
+                    return 10 + startpower;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -241,9 +229,9 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
-        if (CO_CAIRN.isWildernessTile(posX, posY))
+        if (CO_CAIRN.isWildernessTile(posX, posY, map))
         {
             switch (co.getPowerMode())
             {
@@ -263,9 +251,9 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getFirerangeModifier = function(co, unit, posX, posY)
+    this.getFirerangeModifier = function(co, unit, posX, posY, map)
     {
-        if (CO_CAIRN.isWildernessTile(posX, posY))
+        if (CO_CAIRN.isWildernessTile(posX, posY, map))
         {
             switch (co.getPowerMode())
             {
@@ -286,7 +274,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isAttacker, action, luckMode)
+                                           defender, defPosX, defPosY, isAttacker, action, luckMode, map)
     {
         switch (co.getPowerMode())
         {
@@ -306,7 +294,7 @@ var Constructor = function()
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
 
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
@@ -316,7 +304,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY, map)
     {
         if (unit.getOwner() === co.getOwner())
         {
@@ -326,7 +314,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     break;
                 case GameEnums.PowerMode_Power:
-                    if (CO_CAIRN.isWildernessTile(posX, posY))
+                    if (CO_CAIRN.isWildernessTile(posX, posY, map))
                     {
                         return -1;
                     }
@@ -336,7 +324,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.postAction = function(co, action)
+    this.postAction = function(co, action, map)
     {
         switch (co.getPowerMode())
         {
@@ -368,18 +356,18 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||
             buildingId === "TOWN" ||
             buildingId === "HQ")
         {
-            return [];
+            return ["ZCOUNIT_RANGER"];
         }
         return [];
     };
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         return 1;
     };
@@ -387,7 +375,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function(co)
     {
-        return qsTr("A wilderness survival expert whi excels at using natural terrain to her advantage.");
+        return qsTr("A wilderness survival expert who excels at using natural terrain to her advantage.");
     };
     this.getHits = function(co)
     {
@@ -405,15 +393,15 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nSpecial Unit:\nRanger\n") +
-                   qsTr("\nGlobal Effect: \nNone") +
-                   qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
+                qsTr("\nGlobal Effect: \nNone") +
+                qsTr("\n\nCO Zone Effect: \nWilderness grant her units additional %0 terrain stars. On-property firepower of her units is reduced by %1%.");
         text = replaceTextArgs(text, [CO_CAIRN.coZoneStarBonus, CO_CAIRN.coFirepowerDebuff]);
         return text;
     };
 
     this.getPowerDescription = function(co)
     {
-        var text = qsTr("When on crossing a wilderness tile her units gain increased firepower by %0% and gain indirect range by 1. Additionally movement through wilderness tiles is set to 1.");
+        var text = qsTr("Wilderness movement cost is reduced by 1.  Unit indirect range and vision are increased by 1 in wilderness.");
         text = replaceTextArgs(text, [CO_CAIRN.defaultModifier]);
         return text;
     };
@@ -433,22 +421,19 @@ var Constructor = function()
     };
     this.getPowerSentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo"),];
+        return [qsTr("The flow of battle favors this moment."),];
     };
     this.getVictorySentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo"),
-                qsTr("Todo")];
+        return [qsTr("Nature enpowers the wise."),
+                qsTr("Walk where others fail to tread."),
+                qsTr("Follow the path that naturally leads to victory."),
+                qsTr("Tranquility restored."),
+                qsTr("All is well."),];
     };
     this.getDefeatSentences = function(co)
     {
-        return [qsTr("Todo"),
-                qsTr("Todo")];
+        return [qsTr("A humbling journey to reflect on."),];
     };
     this.getName = function()
     {
@@ -511,9 +496,8 @@ var Constructor = function()
             defenseBoost = 10;
             if (wilderness)
             {
-                info.addBonusIcon("moveRange", "=1");
+                info.addBonusIcon("moveRange", "-1");
                 info.addBonusIcon("atkRange", "+1");
-                offensiveBoost = CO_CAIRN.zoneTerrainBonus * defenseStars + 10;
             }
         }
         else if (CO_CAIRN.globalRules)

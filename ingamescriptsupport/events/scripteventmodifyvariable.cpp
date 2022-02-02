@@ -13,8 +13,8 @@
 #include "objects/base/checkbox.h"
 #include "objects/base/label.h"
 
-ScriptEventModifyVariable::ScriptEventModifyVariable()
-    : ScriptEvent (EventType::modifyVariable)
+ScriptEventModifyVariable::ScriptEventModifyVariable(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::modifyVariable)
 {
 
 }

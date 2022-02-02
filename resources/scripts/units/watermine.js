@@ -38,16 +38,16 @@ var Constructor = function()
     {
         return qsTr("Watermine");
     };
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Matrix, 2);
         animation.setSound("moveship.wav", -2);
         return animation;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         // explode mine?
         var owner = unit.getOwner();
@@ -55,13 +55,15 @@ var Constructor = function()
         var y = unit.getY();
         var fields = globals.getCircle(1, 2);
         var explode = false;
+        var terrain = null;
+        var baseId = "";
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
-                var terrain = map.getTerrain(x + point.x, y + point.y);
-                var baseId = terrain.getBaseTerrainID();
+                terrain = map.getTerrain(x + point.x, y + point.y);
+                baseId = terrain.getBaseTerrainID();
                 var targetUnit = terrain.getUnit();
                 if (targetUnit !== null &&
                     owner.isEnemyUnit(targetUnit) &&
@@ -75,40 +77,90 @@ var Constructor = function()
         }
         if (explode)
         {
+            var animationCount = GameAnimationFactory.getAnimationCount();
+            var queueAnimation = null;
+            if (animationCount > 0)
+            {
+                queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
+            }
             for (i = 0; i < fields.size(); i++)
             {
                 point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))
                 {
-                    var terrain = map.getTerrain(x + point.x, y + point.y);
-                    var baseId = terrain.getBaseTerrainID();
-                    targetUnit = terrain.getUnit();
-                    if (targetUnit !== null &&                            
-                       (baseId  === "SEA" || baseId  === "LAKE") &&
-                        targetUnit.getUnitType() !== GameEnums.UnitType_Air)
+                    var xPos = x + point.x;
+                    var yPos = y + point.y;
+                    terrain = map.getTerrain(xPos, yPos);
+                    baseId = terrain.getBaseTerrainID();
+                    if (baseId === "SEA" ||
+                        baseId === "LAKE")
                     {
-                        targetUnit.setHp(targetUnit.getHpRounded() - 4);
-                        if (targetUnit.getHp() <= 0)
+                        var animation = GameAnimationFactory.createAnimation(map, xPos, yPos);
+                        animation.writeDataInt32(xPos);
+                        animation.writeDataInt32(yPos);
+                        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+                        animation.setEndOfAnimationCall("WATERMINE", "postAnimationMineDamge")
+                        if (queueAnimation !== null)
                         {
-                            // we destroyed a unit
-                            map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
-                            targetUnit.killUnit();
+                            queueAnimation.queueAnimation(animation);
                         }
                     }
-                    var animation = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                    animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
-                    animation.setSound("explosion+water.wav");
+
                 }
             }
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
-            unit.killUnit();
+            var animation = GameAnimationFactory.createAnimation(map, x, y);
+            animation.writeDataInt32(x);
+            animation.writeDataInt32(y);
+            animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+            animation.setSound("explosion+water.wav");
+            animation.setEndOfAnimationCall("WATERMINE", "postAnimationSelfKill")
+            if (queueAnimation !== null)
+            {
+                queueAnimation.queueAnimation(animation);
+            }
         }
         fields.remove();
     };
-    this.createExplosionAnimation = function(x, y, unit)
+
+    this.postAnimationSelfKill = function(postAnimation, map)
     {
-        var animation = GameAnimationFactory.createAnimation(x, y);
+        postAnimation.seekBuffer();
+        var xPos = postAnimation.readDataInt32();
+        var yPos = postAnimation.readDataInt32();
+        var terrain = map.getTerrain(xPos, yPos);
+        var unit = terrain.getUnit();
+        if (unit !== null)
+        {
+            var owner = unit.getOwner();
+            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
+            unit.removeUnit();
+        }
+    }
+
+    this.postAnimationMineDamge = function(postAnimation, map)
+    {
+        postAnimation.seekBuffer();
+        var xPos = postAnimation.readDataInt32();
+        var yPos = postAnimation.readDataInt32();
+        var terrain = map.getTerrain(xPos, yPos);
+        var targetUnit = terrain.getUnit();
+        if (targetUnit !== null &&
+            targetUnit.getUnitType() !== GameEnums.UnitType_Air)
+        {
+            targetUnit.setHp(targetUnit.getHpRounded() - 4);
+            if (targetUnit.getHp() <= 0)
+            {
+                // we destroyed a unit
+                map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
+                targetUnit.killUnit();
+            }
+        }
+    }
+
+    this.createExplosionAnimation = function(x, y, unit, map)
+    {
+        var animation = GameAnimationFactory.createAnimation(map, x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
         animation.setSound("explosion+water.wav");
         return animation;
@@ -117,20 +169,20 @@ var Constructor = function()
     {
         return 0;
     };
-    this.getTerrainAnimationBase = function(unit, terrain)
+    this.getTerrainAnimationBase = function(unit, terrain, defender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "base_" + weatherModifier + "air";
     };
 
-    this.getTerrainAnimationForeground = function(unit, terrain)
+    this.getTerrainAnimationForeground = function(unit, terrain, defender, map)
     {
         return "";
     };
 
-    this.getTerrainAnimationBackground = function(unit, terrain)
+    this.getTerrainAnimationBackground = function(unit, terrain, dfender, map)
     {
-        var weatherModifier = TERRAIN.getWeatherModifier();
+        var weatherModifier = TERRAIN.getWeatherModifier(map);
         return "back_" + weatherModifier +"sea";
     };
     this.getTerrainAnimationMoveSpeed = function()

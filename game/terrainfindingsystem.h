@@ -5,6 +5,7 @@
 
 #include "game/jsData/terrainflowdata.h"
 
+class GameMap;
 class TerrainFindingSystem;
 using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
@@ -21,8 +22,8 @@ class TerrainFindingSystem : public PathFindingSystem
         bool flowDown{true};
     };
 public:
-    explicit TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY);
-    explicit TerrainFindingSystem(QStringList terrainIDs, qint32 startX, qint32 startY);
+    explicit TerrainFindingSystem(GameMap* pMap, QString terrainID, qint32 startX, qint32 startY);
+    explicit TerrainFindingSystem(GameMap* pMap, QStringList terrainIDs, qint32 startX, qint32 startY);
     virtual ~TerrainFindingSystem() = default;
     /**
      * @brief getRemainingCost
@@ -76,6 +77,7 @@ private:
 private:
     QStringList m_terrainIDs;
     TerrainFlowData m_data;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // TERRAINFINDINGSYSTEM_H

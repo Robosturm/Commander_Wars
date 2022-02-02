@@ -11,7 +11,7 @@ class ScriptConditionTerrainDestroyed : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionTerrainDestroyed();
+    explicit ScriptConditionTerrainDestroyed(GameMap* pMap);
 
     /**
      * @brief readCondition

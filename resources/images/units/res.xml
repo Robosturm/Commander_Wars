@@ -25,6 +25,7 @@
         <image file="icons/general.png"  />
         <image file="icons/veteran.png"  />
         <image file="icons/hp+hidden.png"  />
+        <image file="icons/rank+hidden.png"  />
         <image file="icons/defensive.png"  />
         <image file="icons/hold.png"  />
         <image file="icons/normal.png"  />
@@ -160,6 +161,8 @@
         <image file="missile+mask.png" cols = "4"  />
         <image file="missile+walk+mask.png" cols = "3" rows = "4"  />
         <!-- motorbike -->
+        <image file="motorbike++mask.png" cols = "4"  />
+        <image file="motorbike++walk+mask.png" cols = "3" rows = "4"  />
         <image file="motorbike+os+mask.png" cols = "4"  />
         <image file="motorbike+os+walk+mask.png" cols = "3" rows = "4"  />
         <image file="motorbike+bm+mask.png" cols = "4"  />
@@ -275,5 +278,8 @@
         <!-- logi truck -->
         <image file="logi_truck+mask.png" cols = "4"  />
         <image file="logi_truck+walk+mask.png" cols = "4" rows = "4"  />
+        <!-- ranger -->
+        <image file="ranger+mask.png" cols = "4"  />
+        <image file="ranger+walk+mask.png" cols = "4" rows = "4"  />
     </atlas>
 </resources>

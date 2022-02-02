@@ -33,10 +33,10 @@ var Constructor = function()
         return "MOVE_FEET";
     };
     this.actionList = ["ACTION_FIRE", "ACTION_MISSILE", "ACTION_CAPTURE", "ACTION_JOIN", "ACTION_LOAD", "ACTION_WAIT", "ACTION_CO_UNIT_0", "ACTION_CO_UNIT_1"];
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         // none neutral player
         var player = unit.getOwner();
         // get army name
@@ -66,7 +66,7 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Infantry;
     };
-    this.startOfTurn = function(unit)
+    this.startOfTurn = function(unit, map)
     {
         var fields = globals.getCircle(1, 3);
         var x = unit.getX();

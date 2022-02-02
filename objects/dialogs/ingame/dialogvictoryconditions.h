@@ -9,14 +9,15 @@
 
 #include "objects/base/checkbox.h"
 
+class GameMap;
 class DialogVictoryConditions;
-typedef oxygine::intrusive_ptr<DialogVictoryConditions> spDialogVictoryConditions;
+using spDialogVictoryConditions = oxygine::intrusive_ptr<DialogVictoryConditions>;
 
 class DialogVictoryConditions : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit DialogVictoryConditions();
+    explicit DialogVictoryConditions(GameMap* pMap);
     virtual ~DialogVictoryConditions() = default;
 
 signals:
@@ -27,6 +28,7 @@ protected slots:
     void remove();
 private:
     oxygine::spButton m_OkButton;
+    GameMap* m_pMap{nullptr};
 };
 
 #endif // DIALOGVICTORYCONDITIONS_H

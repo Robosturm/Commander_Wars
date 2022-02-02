@@ -10,7 +10,7 @@ class ScriptConditionVictory : public ScriptCondition
 {
     Q_OBJECT
 public:
-    ScriptConditionVictory();
+    explicit ScriptConditionVictory(GameMap* pMap);
 
     qint32 getTeam() const;
     void setTeam(const qint32 &value);

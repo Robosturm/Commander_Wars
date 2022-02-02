@@ -8,11 +8,12 @@
 #include "game/gamemap.h"
 #include "objects/base/label.h"
 
-PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList)
+PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList, GameMap* pMap)
     : m_pCO(pCO),
       m_maxPerks(maxPerks),
       m_banning(banning),
-      m_hiddenPerks(hiddenList)
+      m_hiddenPerks(hiddenList),
+      m_pMap(pMap)
 {
     setObjectName("PerkSelection");
     setWidth(width);
@@ -28,7 +29,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     removeChildren();
     if (m_banning)
     {
-        m_perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+        m_perks = m_pMap->getGameRules()->getAllowedPerks();
     }
     else
     {
@@ -48,7 +49,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     qint32 y = 0;
     qint32 x = 0;
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
-    spGameMap pMap = GameMap::getInstance();
+    
     const qint32 width = 370;
     auto perkGroups = getPerksGrouped();
     for (const auto & group : perkGroups)
@@ -132,7 +133,7 @@ void PerkSelection::updatePerksView(CO* pCO)
 QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
 {
     QVector<PerkSelection::PerkGroup> ret;
-    spGameMap pMap = GameMap::getInstance();
+    
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     qint32 count = pCOPerkManager->getCount();
     for (qint32 i = 0; i < count; i++)
@@ -140,7 +141,7 @@ QVector<PerkSelection::PerkGroup> PerkSelection::getPerksGrouped()
         QString id = pCOPerkManager->getID(i);
         if (pCOPerkManager->isSelectable(i) &&
             !m_hiddenPerks.contains(id) &&
-            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
+            (m_banning || m_pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
             QString groupName = pCOPerkManager->getGroup(i);
             bool found = false;
@@ -247,12 +248,12 @@ void PerkSelection::setPerks(const QStringList &perks)
     }
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     qint32 count = pCOPerkManager->getCount();
-    spGameMap pMap = GameMap::getInstance();
+    
     for (qint32 i = 0; i < count; i++)
     {
         QString id = pCOPerkManager->getID(i);
         if (pCOPerkManager->isSelectable(i) &&
-            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
+            (m_banning || m_pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
             if (m_perks.contains(id))
             {
@@ -269,7 +270,7 @@ void PerkSelection::setPerks(const QStringList &perks)
 
 void PerkSelection::selectRandomPerks(bool fill)
 {
-    QStringList perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+    QStringList perks = m_pMap->getGameRules()->getAllowedPerks();
     QStringList selectedPerks;
     if (fill)
     {

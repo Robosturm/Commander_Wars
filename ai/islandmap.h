@@ -5,16 +5,16 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
-
+class GameMap;
 class IslandMap;
-typedef oxygine::intrusive_ptr<IslandMap> spIslandMap;
+using spIslandMap = oxygine::intrusive_ptr<IslandMap>;
 
 class IslandMap : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
     static constexpr qint32 UNKNOWN = -1;
 public:
-    explicit IslandMap(const QString & unitID, Player* pOwner);
+    explicit IslandMap(GameMap* pMap, const QString & unitID, Player* pOwner);
     virtual ~IslandMap() = default;
 
 
@@ -28,7 +28,7 @@ public slots:
      * @return
      */
     inline bool sameIsland(qint32 x1, qint32 y1,
-                           qint32 x2, qint32 y2)
+                           qint32 x2, qint32 y2) const
     {
         return (m_Islands[x1][y1] > UNKNOWN &&
                 m_Islands[x1][y1] == m_Islands[x2][y2]);
@@ -39,7 +39,7 @@ public slots:
      * @param y
      * @return the island for this point -1 means not reachable
      */
-    inline qint32 getIsland(qint32 x, qint32 y)
+    inline qint32 getIsland(qint32 x, qint32 y) const
     {
         return m_Islands[x][y];
     }
@@ -48,7 +48,7 @@ public slots:
      * @param island
      * @return
      */
-    qint32 getIslandSize(qint32 island);
+    qint32 getIslandSize(qint32 island) const;
     /**
      * @brief getMovementType
      * @return
@@ -65,4 +65,5 @@ private:
     QVector<QVector<qint32>> m_Islands;
     QString m_MovementType;
     Player* m_pOwner;
+    GameMap* m_pMap{nullptr};
 };

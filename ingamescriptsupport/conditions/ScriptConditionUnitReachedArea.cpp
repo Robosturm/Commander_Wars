@@ -10,8 +10,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea()
-    : ScriptCondition (ConditionType::unitReachedArea)
+ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea(GameMap* pMap)
+    : ScriptCondition(pMap, ConditionType::unitReachedArea)
 {
     setObjectName("ScriptConditionUnitReachedArea");
 }
@@ -101,11 +101,11 @@ void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream, QString
     }
     while (!rStream.atEnd())
     {
-        if (readSubCondition(rStream, ConditionUnitReachedArea, line))
+        if (readSubCondition(m_pMap, rStream, ConditionUnitReachedArea, line))
         {
             break;
         }
-        spScriptEvent event = ScriptEvent::createReadEvent(rStream, line);
+        spScriptEvent event = ScriptEvent::createReadEvent(m_pMap, rStream, line);
         if (event.get() != nullptr)
         {
             events.append(event);

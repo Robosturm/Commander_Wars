@@ -8,7 +8,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.damageTable = [["INFANTRY", 120],
+    this.damageTable = [["INFANTRY", 80],
                         ["MECH", 70],
                         ["MOTORBIKE", 70],
                         ["SNIPER", 70],

@@ -8,13 +8,14 @@
 #include "gameinput/basegameinputif.h"
 #include "game/gameaction.h"
 
-#include "ai/decisionquestion.h"
 #include "ai/islandmap.h"
-#include "ai/decisiontree.h"
+
+#include "ai/decisiontree/decisiontree.h"
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
 class Unit;
 class CO;
 class UnitPathFindingSystem;
@@ -58,6 +59,14 @@ public:
         double m_maxValue;
     };
 
+    struct DamageData
+    {
+        qint32 x{-1};
+        qint32 y{-1};
+        float fundsDamage{0};
+        float hpDamage{0};
+        float counterDamage{0.0f};
+    };
 
     /**
      * @brief The AISteps enum
@@ -104,10 +113,11 @@ public:
     static const QString ACTION_CO_UNIT_1;
     static const QString ACTION_EXPLODE;
     static const QString ACTION_FLARE;
+    static const QString ACTION_TRAP;
 
     static const QString UNIT_INFANTRY;
 
-    explicit CoreAI(GameEnums::AiTypes aiType);
+    explicit CoreAI(GameMap* pMap, GameEnums::AiTypes aiType);
     virtual ~CoreAI() = default;
     /**
      * @brief init
@@ -143,7 +153,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
 signals:
     /**
@@ -165,7 +175,28 @@ public slots:
      * @brief readIni
      * @param name
      */
-    virtual void readIni(QString name) = 0;
+    virtual void readIni(QString name);
+    /**
+     * @brief saveIni
+     * @param name
+     */
+    void saveIni(QString name) const;
+    /**
+     * @brief randomizeIni
+     */
+    void randomizeIni(QString name, float chance, float mutationRate = 0.1f);
+    /**
+     * @brief setInitValue changes an ini-file loaded parameter to the given value if the name doesn't exist nothing happens
+     * @param name
+     * @param newValue
+     */
+    void setInitValue(QString name, double newValue);
+    /**
+     * @brief getInitValue gets the current value of an ini-file loaded parameter if the name doesn't exist returns 0.
+     * @param name
+     * @return
+     */
+    double getInitValue(QString name) const;
     /**
      * @brief useCOPower
      * @param pUnits
@@ -179,7 +210,7 @@ public slots:
      * @param pBuilding
      * @return
      */
-    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding);
+    float calcBuildingDamage(Unit* pUnit, const QPoint & newPosition, Building* pBuilding) const;
     /**
      * @brief createMovementMap
      */
@@ -232,7 +263,7 @@ public slots:
      * @param target
      * @return x = unit damage and y = counter damage
      */
-    QRectF calcUnitDamage(spGameAction & pAction, const QPoint & target);
+    QRectF calcUnitDamage(spGameAction & pAction, const QPoint & target) const;
     /**
      * @brief CoreAI::calcVirtuelUnitDamage
      * @param pAttacker
@@ -245,7 +276,7 @@ public slots:
      */
     QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, const QPoint & atkPos,
                                  Unit* pDefender, float defenderTakenDamage, const QPoint & defPos,
-                                 bool ignoreOutOfVisionRange = false);
+                                 bool ignoreOutOfVisionRange = false) const;
     /**
      * @brief getBestTarget
      * @param pUnit
@@ -269,7 +300,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttackTargets(Unit* pUnit, spGameAction & pAction, UnitPathFindingSystem* pPfs, QVector<CoreAI::DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -277,7 +308,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttacksFromField(Unit* pUnit, spGameAction & pAction, QVector<DamageData>& ret, QVector<QVector3D>& moveTargetFields) const;
     /**
      * @brief moveAwayFromProduction
      * @param pUnits
@@ -291,7 +322,7 @@ public slots:
      * @param pDef
      * @return
      */
-    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef);
+    QPointF calcFundsDamage(const QRectF & damage, Unit* pAtk, Unit* pDef) const;
     /**
      * @brief appendAttackTargets
      * @param pUnit
@@ -300,25 +331,6 @@ public slots:
      */
     void appendAttackTargets(Unit* pUnit, spQmlVectorUnit & pEnemyUnits, QVector<QVector3D>& targets);
 
-    /**
-     * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
-     * @param file
-     * @param trainingData
-     * @param questions
-     */
-    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
-    /**
-     * @brief readTrainingFile
-     * @param stream
-     * @param questionsFound
-     * @param types
-     * @param readQuestions
-     * @param trainingData
-     * @param questions
-     */
-    static void readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
-                                 QVector<spDecisionQuestion>& readQuestions,
-                                 QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
     void addMenuItemData(spGameAction & pGameAction, const QString & itemID, qint32 cost);
     void addSelectedFieldData(spGameAction & pGameAction, const QPoint & point);
@@ -327,7 +339,7 @@ protected:
      * @param pTerrain
      * @return
      */
-    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage);
+    bool isAttackOnTerrainAllowed(Terrain* pTerrain, float damage) const;
     /**
      * @brief processPredefinedAi
      * @return
@@ -446,14 +458,14 @@ protected:
      * @param pUnit2
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Unit* pUnit2);
+    bool onSameIsland(Unit* pUnit1, Unit* pUnit2) const;
     /**
      * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
      * @param pUnit1
      * @param pBuilding
      * @return
      */
-    bool onSameIsland(Unit* pUnit1, Building* pBuilding);
+    bool onSameIsland(Unit* pUnit1, Building* pBuilding) const;
     /**
      * @brief onSameIsland
      * @param movemnetType
@@ -463,7 +475,7 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(const QString & movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief onSameIsland
      * @param islandIdx
@@ -473,19 +485,19 @@ protected:
      * @param y1
      * @return
      */
-    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    bool onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1) const;
     /**
      * @brief getIsland
      * @param pUnit1
      * @return
      */
-    qint32 getIsland(Unit* pUnit);
+    qint32 getIsland(Unit* pUnit) const;
     /**
      * @brief getIslandIndex
      * @param pUnit1
      * @return
      */
-    qint32 getIslandIndex(Unit* pUnit);
+    qint32 getIslandIndex(Unit* pUnit) const;
     /**
      * @brief createIslandMap
      * @param movementType
@@ -497,19 +509,19 @@ protected:
      * @param pUnit
      * @return
      */
-    bool needsRefuel(Unit* pUnit);
+    bool needsRefuel(Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param pUnit
      * @return
      */
-    bool isRefuelUnit(Unit* pUnit);
+    bool isRefuelUnit(Unit* pUnit) const;
     /**
      * @brief isRefuelUnit
      * @param actionList
      * @return
      */
-    bool isRefuelUnit(const QStringList & actionList);
+    bool isRefuelUnit(const QStringList & actionList) const;
     /**
      * @brief hasMissileTarget
      * @return
@@ -525,6 +537,12 @@ protected:
      * @return
      */
     float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
+    /**
+     * @brief getAiCoBuildRatioModifier
+     * @param pCO
+     * @return
+     */
+    float getAiCoBuildRatioModifier();
     /**
      * @brief GetUnitCounts
      * @param pUnits
@@ -554,9 +572,14 @@ protected:
      * @param pBuilding
      * @return
      */
-    bool isMoveableTile(Building* pBuilding);
+    bool isMoveableTile(Building* pBuilding) const;
+    /**
+     * @brief deserializeObjectVersion
+     * @param stream
+     * @param version
+     */
+    void deserializeObjectVersion(QDataStream &stream, qint32 version);
 protected:
-    DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
     double m_buildingValue{1.0f};
     double m_ownUnitValue{1.0f};
@@ -575,6 +598,8 @@ protected:
     double m_minSameIslandDistance{2.5};
     double m_slowUnitSpeed{2};
     double m_minTerrainDamage{20.0f};
+
+    QVector<IniData> m_iniData;
 private:
     bool finish{false};
     struct FlareInfo

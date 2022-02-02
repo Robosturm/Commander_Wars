@@ -1,10 +1,9 @@
 #ifndef AI_QUESTION
 #define AI_QUESTION
 
-#include "QObject"
-#include "QVector"
-#include "QString"
-
+#include <QObject>
+#include <QVector>
+#include <QString>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
@@ -19,7 +18,7 @@ class Question : public QObject, public FileSerializable, public oxygine::ref_co
 {
     Q_OBJECT
 public:
-        Question();
+        explicit Question();
         Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Equal);
         Question(float minValue, float maxValue, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Between);
 

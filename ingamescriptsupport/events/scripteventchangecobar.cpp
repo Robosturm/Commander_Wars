@@ -10,8 +10,8 @@
 #include "objects/base/spinbox.h"
 #include "objects/base/label.h"
 
-ScriptEventChangeCOBar::ScriptEventChangeCOBar()
-    : ScriptEvent (EventType::changeCOBar)
+ScriptEventChangeCOBar::ScriptEventChangeCOBar(GameMap* pMap)
+    : ScriptEvent(pMap, EventType::changeCOBar)
 {
 
 }

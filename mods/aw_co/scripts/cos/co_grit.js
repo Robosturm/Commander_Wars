@@ -1,9 +1,9 @@
-CO_GRIT.init = function(co)
+CO_GRIT.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(5);
 };
-CO_GRIT.activateSuperpower = function(co, powerMode)
+CO_GRIT.activateSuperpower = function(co, powerMode, map)
 {
     CO_GRIT.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_GRIT.getSuperPowerName = function()
     return CO_GRIT.getPowerName();
 };
 CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender, action)
+                                     defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -47,7 +47,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 CO_GRIT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -58,7 +58,7 @@ CO_GRIT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-CO_GRIT.getFirerangeModifier = function(co, unit, posX, posY)
+CO_GRIT.getFirerangeModifier = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {

@@ -9,7 +9,8 @@
 
 #include "resource_management/objectmanager.h"
 
-Cursor::Cursor()
+Cursor::Cursor(GameMap* pMap)
+    : m_pMap{pMap}
 {
     setObjectName("Cursor");
     Mainapp* pApp = Mainapp::getInstance();
@@ -49,10 +50,10 @@ void Cursor::changeCursor(const QString & spriteID, qint32 xOffset, qint32 yOffs
 
 void Cursor::setMapPoint(qint32 x, qint32 y)
 {
-    spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    
+    if (m_pMap != nullptr)
     {
-        m_onMap = pMap->onMap(x, y);
+        m_onMap = m_pMap->onMap(x, y);
         if (m_onMap)
         {
             // play tick sound when changing the field
@@ -72,15 +73,20 @@ void Cursor::setMapPoint(qint32 x, qint32 y)
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
-    spGameMap pMap = GameMap::getInstance();
+    
     InGameMenue* pMenu = InGameMenue::getMenuInstance();
-    if (pMap.get() != nullptr && pMenu != nullptr)
+    if (m_pMap != nullptr && pMenu != nullptr)
     {
-        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + pMap->getPosition();
-        qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * pMap->getZoom());
-        qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * pMap->getZoom());
+        auto position = pMenu->getMapSlidingActor()->getPosition() + pMenu->getMapSliding()->getPosition() + m_pMap->getPosition();
+        qint32 x = (mousePosX - position.x) / (GameMap::getImageSize() * m_pMap->getZoom());
+        qint32 y = (mousePosY - position.y) / (GameMap::getImageSize() * m_pMap->getZoom());
         setMapPoint(x, y);
     }
+}
+
+GameMap *Cursor::getMap() const
+{
+    return m_pMap;
 }
 
 void Cursor::addCursorRangeOutline(qint32 range, QColor color)

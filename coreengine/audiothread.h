@@ -41,14 +41,14 @@ private:
     };
 #endif
 public:
-    explicit AudioThread();
+    explicit AudioThread(bool noAudio);
     virtual ~AudioThread();
     qint32 getSoundsBuffered();
     /**
      * @brief createSoundCache
      */
     void createSoundCache();
-    // Qt Signals and Slots
+
 signals:
     void sigInitAudio();
     void sigCreateSoundCache();
@@ -244,6 +244,7 @@ private:
     QAudioOutput m_audioOutput;
 #endif
     bool m_loadBaseGameFolders{true};
+    bool m_noAudio{false};
 };
 
 #endif // AUDIOTHREAD_H

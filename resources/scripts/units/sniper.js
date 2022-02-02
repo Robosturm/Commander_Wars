@@ -53,10 +53,10 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.doWalkingAnimation = function(action)
+    this.doWalkingAnimation = function(action, map)
     {
         var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var animation = GameAnimationFactory.createWalkingAnimation(map, unit, action);
         // none neutral player
         var player = unit.getOwner();
         // get army name
@@ -81,6 +81,10 @@ var Constructor = function()
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Infantry;
+    };
+    this.getTypeOfWeapon1 = function(unit)
+    {
+        return GameEnums.WeaponType_Indirect;
     };
 }
 

@@ -12,8 +12,9 @@
 #include "game/co.h"
 
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
-    : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage,
+                                 GameMap* pMap)
+    : GameAnimation(static_cast<quint32>(GameMap::frameTime), pMap),
       m_battleTimer(this),
       m_pAtkTerrain(pAtkTerrain),
       m_pAtkUnit(pAtkUnit),
@@ -39,13 +40,13 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     createHealthbar(pAtkUnit, atkStartHp, pDefUnit, defStartHp);
 
     // load attacker sprite
-    m_pAttackerAnimation = spBattleAnimationSprite::create(spUnit(pAtkUnit), pAtkTerrain, BattleAnimationSprite::standingAnimation,
+    m_pAttackerAnimation = spBattleAnimationSprite::create(pMap, spUnit(pAtkUnit), pAtkTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(atkStartHp));
     m_pAttackerAnimation->setDyingStartHp(atkStartHp);
     m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     m_pAttackerAnimation->setFireHp(atkStartHp);
     // load defender sprite
-    m_pDefenderAnimation = spBattleAnimationSprite::create(spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
+    m_pDefenderAnimation = spBattleAnimationSprite::create(pMap, spUnit(pDefUnit), pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                            GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);

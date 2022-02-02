@@ -10,7 +10,7 @@ class ScriptEventModifyTerrain  : public ScriptEvent
 {
     Q_OBJECT
 public:
-    ScriptEventModifyTerrain();
+    explicit ScriptEventModifyTerrain(GameMap* pMap);
     /**
      * @brief readEvent
      * @param rStream

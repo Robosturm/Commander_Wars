@@ -1,9 +1,9 @@
-CO_JULIA.init = function(co)
+CO_JULIA.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_JULIA.activateSuperpower = function(co, powerMode)
+CO_JULIA.activateSuperpower = function(co, powerMode, map)
 {
 	CO_JULIA.activatePower(co, powerMode);
 };

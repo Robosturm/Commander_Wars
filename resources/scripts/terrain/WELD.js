@@ -5,17 +5,17 @@ var Constructor = function()
         return 1;
     };
     this.baseTerrainId = "PLAINS";
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, map)
     {
-        __BASEWELD.loadBase(terrain, "weld")
+        __BASEWELD.loadBase(terrain, "weld", map)
     };
     this.getTerrainSprites = function()
     {
         return __BASEWELD.getSprites("weld")
     };
-    this.onDestroyed = function(terrain)
+    this.onDestroyed = function(terrain, map)
     {
-        __BASEWELD.onBaseDestroyed(terrain, "DESTROYEDWELD");
+        __BASEWELD.onBaseDestroyed(terrain, "DESTROYEDWELD", map);
     };
 };
 Constructor.prototype = __BASEWELD;

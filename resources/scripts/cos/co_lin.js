@@ -1,12 +1,12 @@
 var Constructor = function()
 {
-    this.init = function(co)
+    this.init = function(co, map)
     {
         co.setPowerStars(4);
         co.setSuperpowerStars(2);
     };
 
-    this.activatePower = function(co)
+    this.activatePower = function(co, map)
     {
 
         var dialogAnimation = co.createPowerSentence();
@@ -20,7 +20,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 5)
             {
@@ -48,7 +48,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.activateSuperpower = function(co, powerMode)
+    this.activateSuperpower = function(co, powerMode, map)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
@@ -61,7 +61,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
             var delay = globals.randInt(135, 265);
             if (animations.length < 7)
             {
@@ -96,7 +96,7 @@ var Constructor = function()
         units.remove();
     };
 
-    this.loadCOMusic = function(co)
+    this.loadCOMusic = function(co, map)
     {
         // put the co music in here.
         switch (co.getPowerMode())
@@ -116,7 +116,7 @@ var Constructor = function()
         }
     };
 
-    this.getCOUnitRange = function(co)
+    this.getCOUnitRange = function(co, map)
     {
         return 1;
     };
@@ -126,7 +126,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender, action)
+                                 defender, defPosX, defPosY, isDefender, action, luckmode, map)
     {
         var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
                          (attacker.getUnitType() === GameEnums.UnitType_Naval);
@@ -160,7 +160,7 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isAttacker, action)
+                                 defender, defPosX, defPosY, isAttacker, action, luckmode, map)
     {
         var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
                          (defender.getUnitType() === GameEnums.UnitType_Naval);
@@ -193,7 +193,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getVisionrangeModifier = function(co, unit, posX, posY)
+    this.getVisionrangeModifier = function(co, unit, posX, posY, map)
     {
         switch (co.getPowerMode())
         {
@@ -207,7 +207,7 @@ var Constructor = function()
         }
     };
 
-    this.getPerfectVision = function(co)
+    this.getPerfectVision = function(co, map)
     {
         switch (co.getPowerMode())
         {
@@ -220,7 +220,7 @@ var Constructor = function()
         }
     };
 
-    this.getAiCoUnitBonus = function(co, unit)
+    this.getAiCoUnitBonus = function(co, unit, map)
     {
         var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
                          (unit.getUnitType() === GameEnums.UnitType_Naval);
@@ -231,7 +231,7 @@ var Constructor = function()
         }
         return 1;
     };
-    this.getCOUnits = function(co, building)
+    this.getCOUnits = function(co, building, map)
     {
         var buildingId = building.getBuildingID();
         if (buildingId === "FACTORY" ||

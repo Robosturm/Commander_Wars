@@ -1,9 +1,9 @@
-CO_CONRAD.init = function(co)
+CO_CONRAD.init = function(co, map)
 {
     co.setPowerStars(3);
     co.setSuperpowerStars(3);
 };
-CO_CONRAD.activateSuperpower = function(co, powerMode)
+CO_CONRAD.activateSuperpower = function(co, powerMode, map)
 {
 	CO_CONRAD.activatePower(co, powerMode);
 };
@@ -16,7 +16,7 @@ CO_CONRAD.getSuperPowerName = function()
     return CO_CONRAD.getPowerName();
 };
 CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                             defender, defPosX, defPosY, isDefender, action)
+                             defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     if (isDefender)
     {
@@ -54,13 +54,13 @@ CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 };
 
 CO_CONRAD.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                              defender, defPosX, defPosY, isDefender, action)
+                              defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     // return average luck as true damage
     return attackerBaseHp / 4;
 };
 
-CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action)
+CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked, weapon, action, map)
 {
     if (gotAttacked === false && attacker.getOwner() === co.getOwner())
     {
@@ -76,7 +76,7 @@ CO_CONRAD.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
     }
 };
 
-CO_CONRAD.getVisionrangeModifier = function(co, unit, posX, posY)
+CO_CONRAD.getVisionrangeModifier = function(co, unit, posX, posY, map)
 {
     switch (co.getPowerMode())
     {

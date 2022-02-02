@@ -1,9 +1,9 @@
-CO_ALEXANDER.init = function(co)
+CO_ALEXANDER.init = function(co, map)
 {
     co.setPowerStars(0);
     co.setSuperpowerStars(3);
 };
-CO_ALEXANDER.activateSuperpower = function(co, powerMode)
+CO_ALEXANDER.activateSuperpower = function(co, powerMode, map)
 {
     CO_ALEXANDER.activatePower(co, powerMode);
 };
@@ -15,7 +15,7 @@ CO_ALEXANDER.getSuperPowerName = function()
 {
     return CO_ALEXANDER.getPowerName();
 };
-CO_ALEXANDER.startOfTurn = function(co)
+CO_ALEXANDER.startOfTurn = function(co, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -43,12 +43,12 @@ CO_ALEXANDER.startOfTurn = function(co)
     }
 };
 
-CO_ALEXANDER.getIncomeReduction = function(co, building, income)
+CO_ALEXANDER.getIncomeReduction = function(co, building, income, map)
 {
     return 0;
 };
 
-CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
+CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY, map)
 {
     if (co.getIsCO0() === true)
     {
@@ -63,13 +63,13 @@ CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
 
 CO_ALEXANDER.coZoneBonus = 0;
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                      defender, defPosX, defPosY, isDefender, action)
+                                      defender, defPosX, defPosY, isDefender, action, luckmode, map)
 {
     return 0;
 };
 
 CO_ALEXANDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                       defender, defPosX, defPosY, isAttacker, action)
+                                       defender, defPosX, defPosY, isAttacker, action, luckmode, map)
 {
     if (co.getIsCO0() === true)
     {

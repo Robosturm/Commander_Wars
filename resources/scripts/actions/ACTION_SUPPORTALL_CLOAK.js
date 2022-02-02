@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.canBePerformed = function(action)
+    this.canBePerformed = function(action, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
@@ -12,33 +12,33 @@ var Constructor = function()
         }
         return true;
     };
-    this.getActionText = function()
+    this.getActionText = function(map)
     {
         return qsTr("Cloak");
     };
-    this.getIcon = function()
+    this.getIcon = function(map)
     {
         return "dive";
     };
-    this.getStepInputType = function(action)
+    this.getStepInputType = function(action, map)
     {
         return "FIELD";
     };
-    this.getStepCursor = function(action, cursorData)
+    this.getStepCursor = function(action, cursorData, map)
     {
         cursorData.setCursor("cursor+missile");
         cursorData.setXOffset(- map.getImageSize() * 2);
         cursorData.setYOffset(- map.getImageSize() * 2);
         cursorData.setScale(2);
     };
-    this.getStepData = function(action, data)
+    this.getStepData = function(action, data, map)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         data.setColor("#C800FF00");
         data.addPoint(Qt.point(actionTargetField.x, actionTargetField.y));
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function(action, map)
     {
         if (action.getInputStep() === 1)
         {
@@ -51,17 +51,17 @@ var Constructor = function()
     };
 
     this.postAnimationUnit = null;
-    this.perform = function(action)
+    this.perform = function(action, map)
     {
         // we need to move the unit to the target position
         ACTION_SUPPORTALL_CLOAK.postAnimationUnit = action.getTargetUnit();
-        var animation = Global[ACTION_SUPPORTALL_CLOAK.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_SUPPORTALL_CLOAK.postAnimationUnit.getUnitID()].doWalkingAnimation(action, map);
         animation.setEndOfAnimationCall("ACTION_SUPPORTALL_CLOAK", "performPostAnimation");
         // move unit to target position
         ACTION_SUPPORTALL_CLOAK.postAnimationUnit.moveUnitAction(action);
         ACTION_SUPPORTALL_CLOAK.postAnimationUnit.setHasMoved(true);
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function(postAnimation, map)
     {
         var fields = globals.getCircle(0, 2);
         var x = ACTION_SUPPORTALL_CLOAK.postAnimationUnit.getX();
@@ -79,7 +79,7 @@ var Constructor = function()
                     owner === unit.getOwner())
                 {
                     unit.setCloaked(1);
-                    var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    var animation = GameAnimationFactory.createAnimation(map, unit.getX(), unit.getY());
                     animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 2);
                     animation.setSound("stealth.wav", 1);
                 }
