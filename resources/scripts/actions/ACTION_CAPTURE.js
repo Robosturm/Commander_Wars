@@ -3,7 +3,7 @@ var Constructor = function()
     this.armyData = [["ac", "ac"],
                      ["bd", "bd"],
                      ["bh", "bh"],
-                     ["bg", "bh"],
+                     ["bg", "bg"],
                      ["bm", "bm"],
                      ["dm", "dm"],
                      ["ge", "ge"],
