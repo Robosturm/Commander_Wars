@@ -55,13 +55,15 @@ var Constructor = function()
         var y = unit.getY();
         var fields = globals.getCircle(1, 2);
         var explode = false;
+        var terrain = null;
+        var baseId = "";
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
-                var terrain = map.getTerrain(x + point.x, y + point.y);
-                var baseId = terrain.getBaseTerrainID();
+                terrain = map.getTerrain(x + point.x, y + point.y);
+                baseId = terrain.getBaseTerrainID();
                 var targetUnit = terrain.getUnit();
                 if (targetUnit !== null &&
                     owner.isEnemyUnit(targetUnit) &&
@@ -75,29 +77,35 @@ var Constructor = function()
         }
         if (explode)
         {
+            var animationCount = GameAnimationFactory.getAnimationCount();
+            var queueAnimation = null;
+            if (animationCount > 0)
+            {
+                queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
+            }
             for (i = 0; i < fields.size(); i++)
             {
                 point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))
                 {
-                    var terrain = map.getTerrain(x + point.x, y + point.y);
-                    var baseId = terrain.getBaseTerrainID();
-                    targetUnit = terrain.getUnit();
-                    if (targetUnit !== null &&                            
-                       (baseId  === "SEA" || baseId  === "LAKE") &&
-                        targetUnit.getUnitType() !== GameEnums.UnitType_Air)
+                    var xPos = x + point.x;
+                    var yPos = y + point.y;
+                    terrain = map.getTerrain(xPos, yPos);
+                    baseId = terrain.getBaseTerrainID();
+                    if (baseId === "SEA" ||
+                        baseId === "LAKE")
                     {
-                        targetUnit.setHp(targetUnit.getHpRounded() - 4);
-                        if (targetUnit.getHp() <= 0)
+                        var animation = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
+                        animation.writeDataInt32(xPos);
+                        animation.writeDataInt32(yPos);
+                        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
+                        animation.setSound("explosion+water.wav");
+                        if (queueAnimation !== null)
                         {
-                            // we destroyed a unit
-                            map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
-                            targetUnit.killUnit();
+                            queueAnimation.queueAnimation(animation);
                         }
                     }
-                    var animation = GameAnimationFactory.createAnimation(map, x + point.x, y + point.y);
-                    animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 2);
-                    animation.setSound("explosion+water.wav");
+
                 }
             }
             // we destroyed a unit
@@ -106,6 +114,26 @@ var Constructor = function()
         }
         fields.remove();
     };
+
+    this.postAnimationMineDamge = function(postAnimation, map)
+    {
+        var xPos = postAnimation.readDataInt32();
+        var yPos = postAnimation.readDataInt32();
+        var terrain = map.getTerrain(xPos, yPos);
+        var targetUnit = terrain.getUnit();
+        if (targetUnit !== null &&
+            targetUnit.getUnitType() !== GameEnums.UnitType_Air)
+        {
+            targetUnit.setHp(targetUnit.getHpRounded() - 4);
+            if (targetUnit.getHp() <= 0)
+            {
+                // we destroyed a unit
+                map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
+                targetUnit.killUnit();
+            }
+        }
+    }
+
     this.createExplosionAnimation = function(x, y, unit, map)
     {
         var animation = GameAnimationFactory.createAnimation(map, x, y);

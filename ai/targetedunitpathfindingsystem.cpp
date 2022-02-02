@@ -3,6 +3,8 @@
 #include "coreengine/mainapp.h"
 #include "game/gamemap.h"
 
+#include "resource_management/movementtablemanager.h"
+
 TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap)
     : UnitPathFindingSystem(pMap, pUnit),
       m_Targets(targets),
@@ -17,6 +19,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(GameMap* pMap, Unit
             m_Targets[i].setZ(1.0f);
         }
     }
+    m_supportsBasecosts = MovementTableManager::getInstance()->getSupportsFastPfs(pUnit->getMovementType());
     setMovepoints(m_pUnit->getFuel() * 2);
 }
 
@@ -46,9 +49,8 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
     qint32 costs = -1;
-    if (m_useBasecosts)
-    {
-        
+    if (m_useBasecosts && m_supportsBasecosts)
+    {        
         if (m_pMap != nullptr && m_pMap->onMap(x, y))
         {
             qint32 direction = getMoveDirection(curX, curY, x, y);

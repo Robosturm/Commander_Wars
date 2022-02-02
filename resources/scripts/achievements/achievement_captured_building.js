@@ -24,7 +24,7 @@ var Constructor = function()
                                     data[2],
                                     qsTr("Capture a given amount of ") + Global[data[0]].getName(),
                                     data[0],
-                                    false);
+                                    false, qsTr("Captured building"));
         }
     };
     this.buildingCaptured = function(buildingId)

@@ -60,7 +60,7 @@ var Constructor = function()
                                     data[2],
                                     qsTr("Kill the given amount of ") + Global[data[0]].getName() + qsTr(". Only battle kills count."),
                                     data[0],
-                                    false);
+                                    false, qsTr("Kill unit"));
         }
     };
     this.unitKilled = function(unitID)

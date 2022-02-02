@@ -72,3 +72,18 @@ qint32 MovementTableManager::getBaseMovementPoints(const QString & movementID, T
         return -1;
     }
 }
+
+bool MovementTableManager::getSupportsFastPfs(const QString & movementID)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getSupportsFastPfs";
+    QJSValue ret = pInterpreter->doFunction(movementID, function1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return true;
+    }
+}

@@ -30,6 +30,7 @@ public:
         QString name;
         QString description;
         QString icon;
+        QString group;
         bool hide{false};
         bool loaded{false};
     };
@@ -182,7 +183,7 @@ public slots:
      * @param icon
      * @param hide
      */
-    void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false);
+    void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false, QString group = "Unknown");
     /**
      * @brief deleteAchievement
      * @param id

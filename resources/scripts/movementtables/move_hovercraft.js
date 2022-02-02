@@ -139,6 +139,11 @@ var Constructor = function()
         }
         return -1;
     };
+
+    this.getSupportsFastPfs = function()
+    {
+        return false;
+    };
 };
 Constructor.prototype = MOVEMENTTABLE;
 var MOVE_HOVERCRAFT = new Constructor();

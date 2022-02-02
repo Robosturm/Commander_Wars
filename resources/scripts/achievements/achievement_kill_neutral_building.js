@@ -22,7 +22,7 @@ var Constructor = function()
                                     data[3],
                                     qsTr("Kill the given amount of ") + Global[data[1]].getName(null) + qsTr(". Only battle kills count."),
                                     data[1],
-                                    false);
+                                    false, qsTr("Kill building"));
         }
     };
     this.killed = function(id)

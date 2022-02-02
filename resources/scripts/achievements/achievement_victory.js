@@ -88,11 +88,11 @@ var Constructor = function()
                                     data[2],
                                     description,
                                     data[0] + "+face",
-                                    false);
+                                    false, qsTr("CO"));
         }
 
-        userdata.addAchievement("GAME_VICTORY", 500, qsTr("The best!"),       qsTr("Win the given amount of games."),     "s_rang",       false);
-        userdata.addAchievement("GAME_LOST",    100, qsTr("Biggest Looser"),  qsTr("Loose the given amount of games."),   "surrender",    false);
+        userdata.addAchievement("GAME_VICTORY", 500, qsTr("The best!"),       qsTr("Win the given amount of games."),     "s_rang",       false, qsTr("Game"));
+        userdata.addAchievement("GAME_LOST",    100, qsTr("Biggest Looser"),  qsTr("Loose the given amount of games."),   "surrender",    false, qsTr("Game"));
     };
     this.onVictory = function(team, humanWin, map)
     {
