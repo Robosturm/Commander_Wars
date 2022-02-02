@@ -4062,7 +4062,7 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="479"/>
-        <source>CO Power loose: </source>
+        <source>CO Power loss: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
